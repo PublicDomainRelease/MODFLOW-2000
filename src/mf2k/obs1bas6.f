@@ -3673,7 +3673,7 @@ C
       AVE = 0.
       DO 20 N = LCOBCHD, LCOBCHD+NQTCH-1
         NQ1 = N - NHT
-        IF (WTQ(NQ1,NQ1).LT.0.) THEN
+        IF (WTQ(NQ1,NQ1).LT.0.) THEN  ! For constant heads, never true?
           IF (IO.EQ.1) WRITE (IOUT,515) N, OBSNAM(N), HOBS(N)
           IDIS = IDIS + 1
           IDISCH = IDISCH + 1
@@ -3689,6 +3689,7 @@ C
           OWH = 0.0
           DO 10 J = 1, NQTCH
             NQ2 = LCOBCHD + J - 1
+            IF (WTQ(NQ2,NQ2).LT.0.0) GOTO 10 ! For constant heads, never true?
             WTR = WTR + WTQS(NQ1,J)*(HOBS(NQ2)-H(NQ2))
             SWH = SWH + WTQS(NQ1,J)*H(NQ2)
             OWH = OWH + WTQS(NQ1,J)*HOBS(NQ2)
@@ -4116,25 +4117,23 @@ C-------CC--------------------------------------------------------------
   120     CONTINUE
         ENDIF
 C-------CV--------------------------------------------------------------
-        IF (IULPF.NE.0) THEN
-          IF (PIDTMP.EQ.'VK  '. OR. PIDTMP.EQ.'VANI' .OR.
-     &       (PIDTMP.EQ.'HK  ' .AND. LAYVKA(K).NE.0) .OR.
-     &        PIDTMP.EQ.'VKCB') THEN
-            DO 130 KK = KPT-1, KPT+1
-              IF (KK.LT.1 .OR. KK.GT.NLAY) GOTO 130
-              IF(KK.NE.IPCLST(1,ICL)) GOTO 130
-              CALL SSEN1LPF1CV(COD,COU,IBP,IBM,PIDTMP,IL,SF,RMLT,M,
-     &                        NCOL,NROW,LZ1,CV,SV,NLAY,DELR,
-     &                        DELC,JPT,IPT,KK,HK,IZON,IBOUND,
-     &                        NMLTAR,NZONAR,ICL,BOTM,NBOTM,VKA,HNEW)
-              IF (KK.LT.KPT) CO(5) = CO(5) + COD
-              IF (KK.EQ.KPT) THEN
-                CO(5) = CO(5) + COU
-                CO(6) = CO(6) + COD
-              ENDIF
-              IF (KK.GT.KPT) CO(6) = CO(6) + COU
-  130       CONTINUE
-          ENDIF
+        IF (PIDTMP.EQ.'VK  '. OR. PIDTMP.EQ.'VANI' .OR.
+     &      (PIDTMP.EQ.'HK  ' .AND. LAYVKA(K).NE.0) .OR.
+     &      PIDTMP.EQ.'VKCB') THEN
+          DO 130 KK = KPT-1, KPT+1
+            IF (KK.LT.1 .OR. KK.GT.NLAY) GOTO 130
+            IF(KK.NE.IPCLST(1,ICL)) GOTO 130
+            CALL SSEN1LPF1CV(COD,COU,IBP,IBM,PIDTMP,IL,SF,RMLT,M,
+     &                       NCOL,NROW,LZ1,CV,SV,NLAY,DELR,
+     &                       DELC,JPT,IPT,KK,HK,IZON,IBOUND,
+     &                       NMLTAR,NZONAR,ICL,BOTM,NBOTM,VKA,HNEW)
+            IF (KK.LT.KPT) CO(5) = CO(5) + COD
+            IF (KK.EQ.KPT) THEN
+              CO(5) = CO(5) + COU
+              CO(6) = CO(6) + COD
+            ENDIF
+            IF (KK.GT.KPT) CO(6) = CO(6) + COU
+  130     CONTINUE
         ENDIF
   140 CONTINUE
       COL=CO(1)

@@ -588,6 +588,7 @@ C
           OWH = 0.0
           DO 10 J = 1, NQTDR
             NQ2 = LCOBDRN + J - 1
+            IF (WTQ(NQ2,NQ2).LT.0.0) GOTO 10
             WTR = WTR + WTQS(NQ1,J)*(HOBS(NQ2)-H(NQ2))
             SWH = SWH + WTQS(NQ1,J)*H(NQ2)
             OWH = OWH + WTQS(NQ1,J)*HOBS(NQ2)

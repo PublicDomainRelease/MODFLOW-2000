@@ -12,6 +12,42 @@ these packages and processes, see mf2k.txt ("Summary of MODFLOW-2000").
 NOTE: Any use of trade, product or firm names is for descriptive purposes 
       only and does not imply endorsement by the U.S. Government.
 
+o Version 1.12.01 10/03/2003:
+
+The version number (1.12.01) for this release uses a modified identification
+scheme.  The addition of a subrelease number (".01" in this case) is used to
+identify releases that are made only to fix bugs.  This release fixes the
+following bugs:
+
+In previous versions, incorrect final simulated-equivalent sensitivities
+were printed when LASTX > 0 in the PES input file and parameter estimation
+converged.  Note that these simulated-equivalent sensitivities are never
+used in the regression.
+
+Previous versions had an error in the calculation of the weight matrix for
+correlated prior information.  This bug would have affected regression
+results only when correlated prior information is used by entering a WTP
+array in item 9 of the PES input file.
+
+In previous versions, incorrect weighted residuals were printed for
+correlated flow observations when an observation is correlated with another
+observation that is omitted due to drying of cells included in the
+observation.  The bug affected correlated flow observations for the DRN,
+RIV, GHB, STR, and DRT Packages.
+
+In version 1.12 simulated-equivalent sensitivities of constant-head flow
+observations to LPF-Package parameter types HK, VK, VANI, or VKCB were
+incorrectly calculated when a constant-head cell used as a flow observation
+location had an overlying or underlying active cell.
+
+In previous versions of BEALE2K, incorrect results were produced when
+correlated prior information was used.  The new version of BEALE2K has the
+version identifier "1.2.01 10/03/2003".
+
+Numbers up to 30 characters in length can now be read from input files when
+the FREE option of the Basic Package is specified.  The previous limit was
+20 characters.
+
 o Version 1.12 09/08/2003:
 
 The new Subsidence and Aquifer-System Compaction (SUB) Package is introduced
@@ -37,11 +73,10 @@ Unfortunately, due to licensing restrictions, the USGS is no longer able to
 publicly distribute the Algebraic Multi-Grid (AMG) solver, on which the
 Link-AMG (LMG) Package relies.  USGS users can download a version of
 Modflow-2000 that includes AMG from a restricted web site (please contact
-Ned Banta or Arlen Harbaugh for the URL).  Users outside the USGS who intend
-to use AMG strictly for research purposes can request the code directly from
-Dr. Klaus Stuben of Fraunhofer-Institute for Algorithms and Scientific
-Computing (SCAI), Sankt Augustin, Germany, at
-klaus.stueben@scai.fraunhofer.de.
+Ned Banta or Arlen Harbaugh for the URL).  Users outside the USGS can
+request the code directly from Dr. Klaus Stuben of Fraunhofer-Institute for
+Algorithms and Scientific Computing (SCAI), Sankt Augustin, Germany, at
+amg1r5@scai.fraunhofer.de.
 
 A new optional setting in the OBS Process input file is available.  If
 "ALLFILES" is specified following the OUTNAM value, and if the value

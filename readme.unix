@@ -1,7 +1,7 @@
 readme.unix
 
 
-                     MODFLOW-2000 - Version: 1.12 09/08/2002
+                  MODFLOW-2000 - Version: 1.12.01 10/03/2002
          Three-dimensional finite-difference ground-water flow model
 
 
@@ -33,7 +33,7 @@ A. DISTRIBUTION FILE
 
 The following distribution file is for use on computers running Unix:
 
-         mf2k1_12.tar.Z
+         mf2k1_12_01.tar.Z
 
 The distribution file contains:
 
@@ -53,12 +53,12 @@ combined into one file using the tar command and compressed using the
 compress command.  To extract the individual files, the distribution file
 mf2k1_12.tar.Z first must be uncompressed using the command:
 
-uncompress mf2k1_12.tar.Z
+uncompress mf2k1_12_01.tar.Z
 
 Execution of the uncompress command will produce the file mf2k1_12.tar.  This
 file is used to generate the individual files with the command:
 
-tar -xf mf2k1_12.tar
+tar -xf mf2k1_12_01.tar
 
 Execution of the tar command will generate the following directory structure:
 
@@ -102,12 +102,14 @@ The source code provided in the mf2k.1_12\src directories must be compiled to
 produce executable files for use on computers running Unix.  However, no
 support can be provided for users generating their own versions of the
 source code.  In general, the requirements are a Fortran-90 or -95 compiler
-and the knowledge of using the compiler.  When compiling MODFLOW-2000 for
-use on a serial computer, the file mf2k.1_12\src\mf2k\serial\para-non.f must
-be compiled in addition to the other MODFLOW-2000 source files.  The makefile
-in the mf2k.1_12\src\mf2k directory can be used with the "make" command.  It
-will look for para-non.f in the serial directory and will compile and link the
-program for serial processing.
+and the knowledge of using the compiler.  When compiling MODFLOW-2000 for use 
+in the typical serial-processing (as opposed to parallel-processing) mode, 
+all required source-code files except one are in the mf2k.1_12\src\mf2k\ 
+directory.  In addition to the files in the mf2k.1_12\src\mf2k\ directory,the 
+file para-non.f in the  mf2k.1_12\src\mf2k\serial\ directory must be compiled.
+The makefile in the mf2k.1_12\src\mf2k directory can be used with the "make" 
+command.  It will look for para-non.f in the serial directory and will compile 
+and link the program for serial processing.
 
 
 D. INSTALLING

@@ -58,6 +58,9 @@ METHOD
 
 HISTORY
 
+      MODFLOW-2000 Version 1.12.01 2003/10/03 - This is a bug-fix release.
+        Bug fixes are described in release.txt.
+
       MODFLOW-2000 Version 1.12 2003/09/08 - Added the SUB Package to allow 
         simulation of subsidence and aquifer-system compaction.  The HUF 
         Package was upgraded from version 1 to version 2, providing support 

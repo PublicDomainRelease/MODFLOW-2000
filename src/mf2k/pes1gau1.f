@@ -178,8 +178,8 @@ C-------------ESTIMATES OF PARAMETER SUMS
   100   CONTINUE
       ENDIF
 C-------------CORRELATED PRIOR
-      IF (IPR.GT.0) CALL SPES1GAU1PF(IPR,NIPR,WTP,C,G,NPE,NPLIST,PRM,B,
-     &                               BUFF,MPRAR,IPRAR,BPRI)
+      IF (IPR.GT.0) CALL SPES1GAU1PF(IPR,NIPR,WTP,C,G,NPE,NPLIST,B,
+     &                               IPRAR,BPRI)
 C-------QUASI-NEWTON ADDITION TO COEFFICIENT MATRIX
       IF ((NFIT.GT.0.OR.SOSR.GT.0.) .AND. NOPT.EQ.1 .AND. IFO.EQ.0)
      &    CALL SPES1GAU1QN(C,DD,G,NPE,R,GD,U,ITERP,X,ND,HOBS,H,WT,S,
@@ -972,43 +972,36 @@ C         CHECK SOLUTION AND ADD MARQUARDT PARAMETER IF NEEDED
       GOTO 10
       END
 C======================================================================
-      SUBROUTINE SPES1GAU1PF(IPR,NIPR,WTP,C,G,NPE,NPLIST,PRM,B,BUFF,
-     &                       MPRAR,IPRAR,BPRI)
-C     VERSION 20000201 ERB
+      SUBROUTINE SPES1GAU1PF(IPR,NIPR,WTP,C,G,NPE,NPLIST,B,IPRAR,BPRI)
+C     VERSION 20031002 ERB
 C**********************************************************************
 C     ADD COMPONENTS TO THE MATRIX AND VECTOR OF THE REGRESSION
 C     EQUATION FOR PRIOR INFORMATION WITH A FULL WEIGHT MATRIX
 C**********************************************************************
 C      SPECIFICATIONS
-      REAL B, BDIF, BPRI, BUFF, PRM, WPP, XK, XL
-      INTEGER I, IPR, J, K, K1, L, L1, NIPR, NPE, NPLIST
+      REAL B, BDIF, BPRI, WPP, WTP
+      INTEGER I, IPR, IPRAR, J, K, K1, L, L1, NIPR, NPE, NPLIST
       DOUBLE PRECISION C(NPE,NPE), G(NPE)
-      DIMENSION NIPR(IPRAR), PRM(NPLIST+1,MPRAR), B(NPLIST),
-     &          BUFF(MPRAR), BPRI(IPRAR), WTP(IPRAR,IPRAR)
+      DIMENSION NIPR(IPRAR), B(NPLIST), BPRI(IPRAR), WTP(IPRAR,IPRAR)
 C---------------------------------------------------------------------
 C------ADDITIONS TO C AND G
       DO 60 I = 1, NPE
         DO 50 J = I, NPE
           DO 40 K = 1, IPR
             K1 = NIPR(K)
-            XK = 0.0
-            IF (K1.LE.NPLIST .AND. K1.EQ.I) XK = 1.
-            IF (K1.GT.NPLIST) XK = PRM(I,K1-NPLIST)
-            DO 30 L = 1, IPR
-              IF (K.LT.L) WPP = WTP(K,L)
-              IF (K.GE.L) WPP = WTP(K,L)
-              L1 = NIPR(L)
-              XL = 0.0
-              IF (L1.LE.NPLIST .AND. L1.EQ.J) XL = 1.
-              IF (L1.GT.NPLIST) XL = PRM(J,L1-NPLIST)
-              C(I,J) = C(I,J) + XK*WPP*XL
-              IF (J.EQ.I) THEN
-                IF (L1.LE.NPLIST) BDIF = BPRI(L) - B(L1)
-                IF (L1.GT.NPLIST) BDIF = PRM(NPLIST+1,L1-NPLIST) -
-     &                                BUFF(L1-NPLIST)
-                G(I) = G(I) + XK*WPP*BDIF
-              ENDIF
-   30       CONTINUE
+            IF (K1.EQ.I) THEN
+              DO 30 L = 1, IPR
+                WPP = WTP(L,K)
+                L1 = NIPR(L)
+                IF (L1.EQ.J) THEN
+                  C(J,I) = C(J,I) + WPP
+                ENDIF
+                IF (J.EQ.I) THEN
+                  BDIF = BPRI(L) - B(L1)
+                  G(I) = G(I) + WPP*BDIF
+                ENDIF
+   30         CONTINUE
+            ENDIF
    40     CONTINUE
    50   CONTINUE
    60 CONTINUE

@@ -1112,7 +1112,8 @@ C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       CHARACTER*(*) LINE
-      CHARACTER*20 RW,STRING
+      CHARACTER*20 STRING
+      CHARACTER*30 RW
       CHARACTER*1 TAB
 C     ------------------------------------------------------------------
       TAB=CHAR(9)
@@ -1180,11 +1181,11 @@ C
 C6------Convert word to a number if requested.
 100   IF(NCODE.EQ.2 .OR. NCODE.EQ.3) THEN
          RW=' '
-         L=20-ISTOP+ISTART
+         L=30-ISTOP+ISTART
          IF(L.LT.1) GO TO 200
-         RW(L:20)=LINE(ISTART:ISTOP)
-         IF(NCODE.EQ.2) READ(RW,'(I20)',ERR=200) N
-         IF(NCODE.EQ.3) READ(RW,'(F20.0)',ERR=200) R
+         RW(L:30)=LINE(ISTART:ISTOP)
+         IF(NCODE.EQ.2) READ(RW,'(I30)',ERR=200) N
+         IF(NCODE.EQ.3) READ(RW,'(F30.0)',ERR=200) R
       END IF
       RETURN
 C
