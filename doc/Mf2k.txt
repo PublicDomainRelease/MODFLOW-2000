@@ -57,6 +57,22 @@ METHOD
 
 
 HISTORY
+     MODFLOW-2000 Version 1.8 2002/05/01 - Added support for an option
+        that can be used to suppress printing of cell lists in any or all
+        of the RIV, GHB, DRN, DRT, HFB, WEL, and CHD Packages.  This
+        version also includes fixes to (1) problems in the ADV Package
+        related to stagnant particles and incorrect sensitivities for 
+        observation locations in confining units; (2) a bug that caused an
+        invalid value to be put into a hydraulic-property array when the
+        OBS Process was active and the PES Process was inactive; (3) 
+        problems in LPF and HUF related to the sensitivity of vertical 
+        conductance to head in the calculation of sensitivities for 
+        unconfined cells; (4) a problem in HUF related to the rewetting 
+        capability; (5) a problem in LMT related to use of the STR Package
+        and and the Extended-header option of LMT; and (6) problems in in
+        the RESAN2K post-processing program that affected ordering of
+        observation names and plot symbols.
+
      MODFLOW-2000 Version 1.7 2001/12/04 - Added support for time-varying
         parameters.  Time-varying parameters are useful when the user
         desires to estimate one parameter but vary properties included in
@@ -241,7 +257,7 @@ SYSTEM REQUIREMENTS
      MODFLOW-2000 is written in Fortran 77 with the following
      extensions:  use of variable names longer than 6 characters,
      Fortran 90 statements for dynamic memory allocation, a call
-     to SUBROUTINE GETCL to retrieve command-line arguments, and
+     to SUBROUTINE GETARG to retrieve command-line arguments, and
      two calls to DATE_AND_TIME, which is a Fortran 90 intrinsic
      subroutine. Generally, the program is easily installed on
      most computer systems.  The code has been used on UNIX-based
@@ -478,8 +494,8 @@ TRAINING
      (GW3099TC), offered annually at the USGS National Training
      Center.
 
-     Calibration and Uncertainty of Ground-Water Models (GW3089TC),
-     offered annually at the USGS National Training Center.
+     Calibration and Uncertainty of Models (GW3089TC), offered
+     annually at the USGS National Training Center.
 
 
 CONTACTS

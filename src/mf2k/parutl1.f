@@ -1,4 +1,4 @@
-C     Last change:  ERB   6 Dec 2001    2:10 pm
+C     Last change:  ERB  12 Apr 2002    5:10 pm
       SUBROUTINE UPARARRAL(IN,IOUT,LINE,NP)
 C
 C-----VERSION 15SEPT1998 UPARARRAL
@@ -646,10 +646,10 @@ C     READ INSTANCE NAME
       ENDIF
       RETURN
       END
-      SUBROUTINE UPARLSTSUB(IN,PACK,IOUT,PTYP,RLIST,LSTVL,LSTDIM,NREAD,
+      SUBROUTINE UPARLSTSUB(IN,PACK,IOUTU,PTYP,RLIST,LSTVL,LSTDIM,NREAD,
      1                MXLST,NTOT,IPVL1,IPVL2,LABEL,CAUX,NCAUX,NAUX)
 C
-C-----VERSION 20011106 UPARLSTSUB
+C-----VERSION 20020412 UPARLSTSUB
 C     ******************************************************************
 C     Read a list parameter name, look it up in the list of parameters,
 C     and substitute values into active part of package array.
@@ -667,6 +667,7 @@ C     ------------------------------------------------------------------
       CHARACTER*10 CTMP1,CTMP2,CTMP3,CTMP4
 C     ------------------------------------------------------------------
 C
+      IOUT = ABS(IOUTU)
       READ(IN,'(A)') LINE
       LLOC=1
       CALL URWORD(LINE,LLOC,ISTART,ISTOP,0,IDUM,RDUM,IOUT,IN)
@@ -744,7 +745,7 @@ C
           END IF
 C
 C  Write label for list values
-          CALL ULSTLB(IOUT,LABEL,CAUX,NCAUX,NAUX)
+          IF (IOUTU.GT.0) CALL ULSTLB(IOUT,LABEL,CAUX,NCAUX,NAUX)
 C
 C  Substitute values
           DO 90 I=1,NLST
@@ -759,7 +760,8 @@ C  Substitute values
             IL=RLIST(1,II)
             IR=RLIST(2,II)
             IC=RLIST(3,II)
-            WRITE(IOUT,89) II,IL,IR,IC,(RLIST(JJ,II),JJ=4,NREAD)
+            IF (IOUTU.GT.0) WRITE(IOUT,89) II,IL,IR,IC,
+     &          (RLIST(JJ,II),JJ=4,NREAD)
    89       FORMAT(1X,I6,I7,I7,I7,14G16.4)
    90     CONTINUE
           RETURN

@@ -1,5 +1,8 @@
 # NAME file for test case tc3
 #
+# NOTE: Forward slashes (/) in pathnames may need to be converted
+#       to back slashes (\) in some computing environments
+#
 # Output files
 global          11     tc3.glo
 list            12     tc3.lst

@@ -1,14 +1,15 @@
-C     Last change:  ERB  24 Oct 2001   11:08 am
+C     Last change:  ERA  19 Apr 2002
 
 
       SUBROUTINE OBS1ADV2AL(IOUADV,NPTH,NTT2,IOUTT2,KTDIM,KTFLG,KTREV,
-     &                  ADVSTP,IOUT,LCICLS,LCPRST,LCTT2,LCPOFF,
-     &                  LCNPNT,ND,ISUM,ISUMI,NROW,NCOL,NLAY,
-     &                  IUNIT,LCDRAI,MXDRN,NDRAIN,LCRIVR,MXRIVR,LCBNDS,
-     &                  MXBND,NBOUND,LCIRCH,LCRECH,ICSTRM,LCSTRM,MXSTRM,
-     &                  NSTREM,IOBSUM,LCOBADV,NOBADV,ITMXP,LCSSAD,
-     &                  NDRNVL,NGHBVL,NRIVVL,NRIVER,IOBS,FSNK,NBOTM,
-     &                  ILPF,IHUF,LCHANI,LCHKCC,LCHUFTHK,NHUF)
+     &                      ADVSTP,IOUT,LCICLS,LCPRST,LCTT2,LCPOFF,
+     &                      LCNPNT,ND,ISUM,ISUMI,NROW,NCOL,NLAY,IUNIT,
+     &                      NIUNIT,LCDRAI,MXDRN,NDRAIN,LCRIVR,MXRIVR,
+     &                      LCBNDS,MXBND,NBOUND,LCIRCH,LCRECH,ICSTRM,
+     &                      LCSTRM,MXSTRM,NSTREM,IOBSUM,LCOBADV,NOBADV,
+     &                      ITMXP,LCSSAD,NDRNVL,NGHBVL,NRIVVL,NRIVER,
+     &                      IOBS,FSNK,NBOTM,LCHANI,LCHKCC,LCHUFTHK,NHUF,
+     &                      LCWELL,NWELVL,MXWELL,NWELLS)
 C
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR ADVECTIVE-TRANSPORT OBSERVATIONS
@@ -21,7 +22,7 @@ C---ARGUMENTS:
       INTEGER IOUADV, NPTH, NTT2, IOUTT2, KTDIM, KTFLG, KTREV,
      &        IOUT, LCICLS, LCPOFF, LCNPNT, ND, ISUM, 
      &        NROW, NCOL, NLAY, IUNIT, NBOTM
-      DIMENSION IUNIT(40)
+      DIMENSION IUNIT(NIUNIT)
 C---LOCAL:
       INTEGER LCPRST, LCTT2
       CHARACTER*200 LINE
@@ -29,7 +30,7 @@ C----------------------------------------------------------------------
 C     IDENTIFY PROCESS
       WRITE(IOUT,490) IOUADV
   490 FORMAT(/,' ADV2 -- OBSERVATION PROCESS (ADVECTIVE TRANSPORT',
-     &    ' OBSERVATIONS)',/,' VERSION 2.2, 09/21/2001',/,
+     &    ' OBSERVATIONS)',/,' VERSION 2.3, 04/19/2002',/,
      &    ' INPUT READ FROM UNIT ',I3)
 C
 C  Turn off observation package if OBS is not active
@@ -76,7 +77,7 @@ C%%%%%WRITE TRAVEL TIME INFO
      &  ' PARTICLE-TRACKING TIME-STEP FLAG (KTFLG)............',I5,/,
      &  ' TIME STEP (IF KTFLG>1)..............................',G15.8,/,
      &  ' FORWARD OR BACKWARD PARTICLE TRACKING (KTREV).......',I5,/,
-     &  ' WEAK SINK FLAG/FRACTION.............................',G15.8,/)
+     &  ' WEAK SINK FLAG/FRACTION.............................',G15.8)
   510 FORMAT (6I5,F10.0)
 C
 C%%%%%%%%%%%ADVECTIVE-TRANSPORT OBSERVATION DATA ARRAYS
@@ -102,6 +103,12 @@ C     POINTER TO OBSERVATION ARRAYS
 C
 C-------INITIALIZE POINTERS AND DIMESIONS FOR ARRAYS THAT MAY BE REFERENCED
 C       BUT MAY NOT GET ALLOCATED
+      IF (IUNIT(2).EQ.0) THEN
+        LCWELL = 1
+        NWELVL = 1
+        MXWELL = 1
+        NWELLS = 0
+      ENDIF
       IF (IUNIT(3).EQ.0) THEN
         LCDRAI = 1
         NDRNVL = 1
@@ -132,10 +139,10 @@ C       BUT MAY NOT GET ALLOCATED
       ENDIF
 C
 C-------ASSIGN LPF/HUF DUMMY VALUES
-      IF(ILPF.EQ.0) THEN
+      IF(IUNIT(23).EQ.0) THEN
         LCHANI=1
       ENDIF
-      IF(IHUF.EQ.0) THEN
+      IF(IUNIT(37).EQ.0) THEN
         LCHKCC=1
         LCHUFTHK=1
         NHUF=1
@@ -145,10 +152,10 @@ C-------ASSIGN LPF/HUF DUMMY VALUES
 C
 C=======================================================================
 C
-      SUBROUTINE OBS1ADV2RP(IOUT,NROW,NCOL,NLAY,PRST,NPTH,NPNT,NTT2,NHT,
-     &                      NQT,OBSNAM,ICLS,POFF,TT2,HOBS,DELR,DELC,WTQ,
-     &                      ND,KTDIM,IOUADV,NDMH,IOWTQ,BOTM,NBOTM,IPLOT,
-     &                      NAMES,IPR,MPR,JT)
+      SUBROUTINE OBS1ADV2RP(IOUT,NROW,NCOL,NLAY,PRST,NPTH,NPNT,
+     &                      NTT2,NHT,NQT,OBSNAM,ICLS,POFF,TT2,HOBS,DELR,
+     &                      DELC,WTQ,ND,KTDIM,IOUADV,NDMH,IOWTQ,BOTM,
+     &                      NBOTM,IPLOT,NAMES,IPR,MPR,JT)
 C
 C        SPECIFICATIONS:
 C----------------------------------------------------------------------
@@ -415,7 +422,7 @@ C---ARGUMENTS:
      &     HK, HKCC,H, X, TT2, BNDS, RECH, STRM, RIVR,
      &     DRAI, SV, BOTM, VKA, HANI, HUFTHK
       INTEGER NROW, NCOL, NLAY, IOUT, IBOUND, NHT, NQT, NTT2, NPTH, 
-     &        KTDIM, KTFLG, KTREV, ICLS, IP,
+     &        KTDIM, KTFLG, KTREV, ICLS, IP, 
      &        IZON, NPE, ND, IPRINT, ITERP, IOUTT2,
      &        MXBND, NBOUND, NRCHOP, IRCH, MXSTRM, NSTREM, ISTRM,
      &        MXRIVR, NRIVER, MXDRN, NDRAIN, NBOTM,
@@ -444,7 +451,7 @@ C---LOCAL:
       INTEGER I, IEXIT, IND, IPT, IPTH, J, JPT, KPT, KPTH, 
      &        NEWI, NEWJ, NEWK, NPART, NTPNT, OLDK
 C---COMMON:
-      INCLUDE 'PARAM.INC'
+      INCLUDE 'param.inc'
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
 C----------------------------------------------------------------------
       EXTERNAL U2DREL, ULAPRW
@@ -592,7 +599,7 @@ C           PARAMETER IS LOG-TRANSFORMED
      &               ZP,TP,DXP,DYP,DZP,BB,IOUTT2,IND,VXP,VYP,VZP,VP,
      &               KTDIM,OBSNAM(IND),KTFLG,ISCALS,LNIIPP,WTQ(IND-NHT,
      &               IND-NHT))
-
+ 
 C%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 C
 C------START ITERATIONS TO MOVE PARTICLE THROUGH GRID
@@ -670,7 +677,7 @@ C     OTHERWISE CHECK TO SEE IF THE PARTICLE IS GOING INTO A CONFINING LAYER
      &                    H,DZP,X,LN,IIPP,NCOL,NROW,IND,
      &                    OBSNAM(IND),IPRINT,ITERP,IOUT,XP,YP,DXP,DYP,
      &                    IOUTT2,KTDIM,ISCALS,NPE,ND,NPLIST,BOTM,NBOTM,
-     &                    DTP,LNIIPP,WTQ(IND-NHT,IND-NHT),BSCAL,DTC)
+     &                    DTP,LNIIPP,WTQ(IND-NHT,IND-NHT),BSCAL,DTC,ZPC)
           ENDIF
 C     END OF CONFINING LAYER CALCULATIONS
 C
@@ -829,7 +836,7 @@ C---COMMON:
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
       COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
      1               LAYWET(200)
-      INCLUDE 'PARAM.INC'
+      INCLUDE 'param.inc'
 C----------------------------------------------------------------------
       EXTERNAL SOBS1ADV2LPF, SOBS1ADV2HUF
       INTRINSIC IABS
@@ -1309,7 +1316,7 @@ C      DOUBLE PRECISION
 C---COMMON:
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
       COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
-      INCLUDE 'PARAM.INC'
+      INCLUDE 'param.inc'
 C----------------------------------------------------------------------
       EXTERNAL SSEN1HUF1CH, SSEN1HUF1CV, SSEN1HFB6MD
       INTRINSIC IABS
@@ -1510,7 +1517,7 @@ C---COMMON:
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
       COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
      1               LAYWET(200)
-      INCLUDE 'PARAM.INC'
+      INCLUDE 'param.inc'
 C----------------------------------------------------------------------
       EXTERNAL SSEN1LPF1CH, SSEN1LPF1CV, SSEN1HFB6MD
       INTRINSIC IABS
@@ -1679,7 +1686,6 @@ C----------------------------------------------------------------------
   510 FORMAT (12('-'),'PARTICLE DISCHARGED (SOBS1ADV2S)',12('-'))
 C----------------------------------------------------------------------
 C
-      VSTAG=1.0E-6
       HN = HNEW(JPT,IPT,KPT)
       IF (IBOUND(JPT,IPT,KPT).EQ.0 .OR. HN.GT.1.E+29) THEN
         IEXIT = 1
@@ -1811,8 +1817,8 @@ C        IF (DTZ.LT.DTX .AND. DTZ.LT.DTY) THEN
           IF (VZP.LT.0.0) THEN
             NEWK = KPT + 1
             DZ = -ZPC
-            ZPC = BOTM(JPT,IPT,LBOTM(NEWK)-1)
-     &            - BOTM(JPT,IPT,LBOTM(NEWK))
+            IF(NEWK.LT.NLAY) ZPC = BOTM(JPT,IPT,LBOTM(NEWK)-1)
+     &                             - BOTM(JPT,IPT,LBOTM(NEWK))
           ENDIF
           IF (VZP.GT.0.0) THEN
             NEWK = KPT - 1
@@ -1919,11 +1925,9 @@ C%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 C     SUBROUTINE TO COMPUTE TRAVEL TIME OVER A GIVEN DISTANCE
 C%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 C
-      VSTAG=1.0E-6
       DT = 0.0
       NFLG = 0
-      IF (V1.GT.0.0 .AND. V2.LT.0.0) NFLG = 1
-      IF (ABS(VP).LT.VSTAG) NFLG = 1
+      IF (V1.GE.0.0 .AND. V2.LE.0.0) NFLG = 1
       IF (NFLG.NE.1) THEN
 C------1 TO 2
         IF (VP.GT.0.0) THEN
@@ -1958,7 +1962,7 @@ C-----------------------------------------------------------------------
 C---ARGUMENTS:
       REAL HOBS, H, WTQ, D, RSQ, AVET, WTRL
       INTEGER NHT, NTT2, IOUT, IDIS, IDTT,
-     &        JDRY, NRUNS, NPOST, NNEGT, KTDIM, ND, MPR, IPR, IO,
+     &        JDRY, NRUNS, NPOST, NNEGT, KTDIM, ND, MPR, IPR, IO, 
      &        N, NDMH, NRES
       INTEGER IUGDO(6), IPLOT(ND+IPR+MPR), IPLPTR(ND+IPR+MPR)
       CHARACTER*12 OBSNAM(ND)
@@ -2223,7 +2227,7 @@ C----------------------------------------------------------------------
       INTEGER OLDK,KPT,NEWK,IPT,NEWI,JPT,NEWJ,IND
       REAL H,XP,DX,YP,DY,ZP,DZ,TP,DT,DP,VP,DTP
       DIMENSION H(ND),X(NPE,ND),LN(NPLIST)
-      INCLUDE 'PARAM.INC'
+      INCLUDE 'param.inc'
 C----------------------------------------------------------------------
       XP = XP + DX
       YP = YP + DY
@@ -2261,7 +2265,7 @@ C=======================================================================
      &                   H,DZP,X,LN,IIPP,NCOL,NROW,IND,OBSNAM,IPRINT,
      &                   ITERP,IOUT,XP,YP,DXP,DYP,IOUTT2,KTDIM,
      &                   ISCALS,NPE,ND,NPLIST,BOTM,NBOTM,DTP,LNIIPP,WTQ,
-     &                   BSCAL,DTC)
+     &                   BSCAL,DTC,ZPC)
 C     ******************************************************************
 C     TRACK PARTICLE THROUGH CONFINING UNIT
 C     ******************************************************************
@@ -2275,7 +2279,7 @@ C---ARGUMENTS:
       DIMENSION PRST(NCOL,NROW,NBOTM),LN(NPLIST),X(NPE,ND),
      &  BOTM(NCOL,NROW,0:NBOTM),BSCAL(NPLIST), H(ND)
 C---COMMON:
-      INCLUDE 'PARAM.INC'
+      INCLUDE 'param.inc'
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
 C     ------------------------------------------------------------------
 C
@@ -2356,17 +2360,19 @@ C     STEP HAS BEEN REACHED
 C
 C        NOW PRINT THE NEW POSITION AND TIME FROM DISPLACEMENT THROUGH
 C        CONFINING UNIT
-      TP = TP + DT
-      ZP = ZP + DZ
-      DTP = DTP + DZ
-      H(IND) = XP
-      H(IND+1) = YP
-      H(IND+2) = ZP
+      NEWI = IPT
+      NEWJ = JPT
+      NEWK = KPT
+      KOLD = OLDK
+      DX = 0.0
+      DY = 0.0
+      DDX = 0.0
+      DDY = 0.0
+      CALL SOBS1ADV2UP(XP,DX,YP,DY,ZP,DZ,TP,DT,VP,OLDK,KPT,IPT,
+     &                 NEWI,JPT,NEWJ,NEWK,H,IND,KTDIM,IP,DXP,DDX,
+     &                 DYP,DDY,DZP,DDZ,X,LN,NPE,ND,NPLIST,IIPP,DTP)
+      OLDK = KOLD
       IF (IP.GT.0) THEN
-        DZP = DZP + DDZ
-        X(IP,IND) = DXP
-        X(IP,IND+1) = DYP
-        X(IP,IND+2) = DZP
         BB = ABS(B(IIPP))
         IF (LN(IIPP).LE.0) THEN
 C                   PARAMETER IS NOT LOG-TRANSFORMED
@@ -2383,6 +2389,15 @@ C                   PARAMETER IS LOG-TRANSFORMED
      &             JPT,XP,YP,ZP,TP,DXP,DYP,DZP,BB,IOUTT2,IND,
      &             VXP,VYP,VZP,VP,KTDIM,OBSNAM,KTFLG,ISCALS,LNIIPP,
      &             WTQ)
-      IF(DTC.EQ.0.0) WRITE(IOUT,*) 'PARTICLE EXITING CONFINING UNIT'
+      IF(DTC.EQ.0.0) THEN
+C        CALCULATE NEW CELL DISPLACEMENT
+        IF (NEWK.GT.OLDK) THEN
+          ZPC = BOTM(JPT,IPT,LBOTM(NEWK)-1)
+     &        - BOTM(JPT,IPT,LBOTM(NEWK))
+        ELSE
+          ZPC = 0.0
+        ENDIF
+        WRITE(IOUT,*) 'PARTICLE EXITING CONFINING UNIT'
+      ENDIF
       RETURN
       END

@@ -1,8 +1,8 @@
-C     Last change:  ERB   9 Jul 2001    3:25 pm
+C     Last change:  ERA  18 Apr 2002
       SUBROUTINE GWF1HUF1AL(ISUM,LCHK,LCVKA,LCSC1,
-     1  IN,ITRSS,NCOL,NROW,NLAY,IOUT,IHUFCB,LCWETD,
-     2  HDRY,NPER,ISSFLG,LCHGUF,IREWND,
-     3  NHUF,NPHUF,LCHUFTHK,LCHKCC,ISUMI,IOHUF,LAYHDT,LCHUFTMP)
+     &  IN,ITRSS,NCOL,NROW,NLAY,IOUT,IHUFCB,LCWETD,
+     &  HDRY,NPER,ISSFLG,LCHGUF,IREWND,
+     &  NHUF,NPHUF,LCHUFTHK,LCHKCC,ISUMI,IOHUF,LAYHDT,LCHUFTMP)
 C
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR HYDROGEOLOGIC UNIT PACKAGE
@@ -28,7 +28,7 @@ C
 C1------IDENTIFY PACKAGE
       WRITE(IOUT,1) IN
     1 FORMAT(1X,/1X,'HUF1 -- HYDROGEOLOGIC-UNIT FLOW PACKAGE, '
-     1' VERSION 1.02 ERA, 05/31/2001',/,' INPUT READ FROM UNIT',I3,/)
+     1' VERSION 1.03 ERA, 04/18/2002',/,' INPUT READ FROM UNIT',I3,/)
 C
 C2------READ FIRST RECORD AND WRITE
       CALL URDCOM(IN,IOUT,LINE)
@@ -37,7 +37,7 @@ C2------READ FIRST RECORD AND WRITE
       CALL URWORD(LINE,LLOC,ISTART,ISTOP,3,I,HDRY,IOUT,IN)
       CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,NHUF,R,IOUT,IN)
       CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,NPHUF,R,IOUT,IN)
-      CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,IOHUF,R,IOHUF,IN)
+      CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,IOHUF,R,IOUT,IN)
       IF(IHUFCB.LT.0) WRITE(IOUT,8)
     8 FORMAT(1X,'CONSTANT-HEAD CELL-BY-CELL FLOWS WILL BE PRINTED',
      1  ' WHEN ICHUFL IS NOT 0')
@@ -138,6 +138,7 @@ C5------COMPUTE THE NUMBER OF CELLS IN THE ENTIRE GRID AND IN ONE LAYER.
       ISIZ=NRC*NLAY
 C
 C6------ALLOCATE SPACE FOR ARRAYS.
+C      IF(ISUM.EQ.1) ISUM=2
       ISOLD=ISUM
       ISOLDI=ISUMI
       LCHK=ISUM
@@ -233,7 +234,7 @@ C2H-----READ WETDRY CODES IF WETTING CAPABILITY HAS BEEN INVOKED
 C2H-----(LAYWT NOT 0).
       DO 300 K=1,NLAY
       IF(LAYWT(K).NE.0) THEN
-         CALL U2DREL(WETDRY(1,1,LAYWT(K)),ANAME(8),NROW,NCOL,KK,IN,
+         CALL U2DREL(WETDRY(1,1,LAYWT(K)),ANAME(8),NROW,NCOL,K,IN,
      1            IOUT)
       END IF
   300 CONTINUE
@@ -680,7 +681,8 @@ c======================================================================
       SUBROUTINE GWF1HUF1SP(
      1 IBOUND,HNEW,CR,CC,CV,DELR,DELC,BOTM,HK,VKA,SC1,
      2 ITRSS,NCOL,NROW,NLAY,IOUT,WETDRY,NHUF,NBOTM,RMLT,IZON,NMLTAR,
-     3 NZONAR,HUFTHK,HKCC,HDRY,KITER,KSTP,KPER,IHGUFLG,HUFTMP)
+     3 NZONAR,HUFTHK,HKCC,HDRY,KITER,KSTP,KPER,IHGUFLG,HUFTMP,IWETIT,
+     4 IHDWET,WETFCT)
 C
 C     ******************************************************************
 C     SUBSTITUTE AND PREPARE DATA FOR HYDROGEOLOGIC-UNIT FLOW PACKAGE
@@ -723,6 +725,12 @@ C
 
 C     ------------------------------------------------------------------
 C
+C Check for cells that GO DRY/REWET
+      DO 5 K=1,NLAY
+        CALL SGWF1HUF1WETCHK(HNEW,IBOUND,CR,CC,HK,DELR,DELC,BOTM,
+     1   NBOTM,K,KITER,KSTP,KPER,NCOL,NROW,NLAY,IOUT,WETDRY,
+     2   WETFCT,IWETIT,IHDWET,HDRY,HKCC)
+    5 CONTINUE
 C Zero out arrays
       DO 30 J=1,NCOL
         DO 20 I=1,NROW
@@ -789,12 +797,14 @@ C-----Skip unit if thickness is zero
           IF(IFLG.EQ.1) GOTO 130
 C-----Populate arrays
           CALL SGWF1HUF1HK(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,BOTU,KT,
-     2                     KB,HK,HKCC,HUFHK,HUFHANI,NHUF,NU)
+     2                     KB,HK,HKCC,HUFHK,HUFHANI,NHUF,NU,HNEW)
 C
           CALL SGWF1HUF1VKA(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,BOTU,
      2                      VKA,HNEW,IBOUND,HUFHK,HUFVK,NHUF,NU)
-          CALL SGWF1HUF1SC1(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,
-     &                       BOTU,SC1,HUFSS,KT,KB,NHUF,NU)
+          IF(ITRSS.NE.0) THEN
+            CALL SGWF1HUF1SC1(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,
+     &                        BOTU,SC1,HUFSS,KT,KB,NHUF,NU)
+          ENDIF
   130   CONTINUE
   100 CONTINUE
 C
@@ -837,7 +847,7 @@ C
 C3------PREPARE AND CHECK HUF DATA.
       CALL SGWF1HUF1N(HNEW,IBOUND,CR,CC,CV,HK,VKA,DELR,
      1       DELC,NCOL,NROW,NLAY,IOUT,WETDRY,BOTM,NBOTM,SC1,ITRSS,HKCC,
-     2       HDRY,KITER,KSTP,KPER)
+     2       HDRY,KITER,KSTP,KPER,IHDWET,WETFCT)
 C
 C
 C4------RETURN
@@ -914,7 +924,7 @@ C4------RETURN
 c======================================================================
       SUBROUTINE SGWF1HUF1HK(
      1  NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,BOTU,KT,KB,HK,
-     2  HKCC,HUFHK,HUFHANI,NHUF,NU)
+     2  HKCC,HUFHK,HUFHANI,NHUF,NU,HNEW)
 C
 C     ******************************************************************
 C     Substitute for HK parameters.
@@ -923,9 +933,12 @@ C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       INCLUDE 'param.inc'
+      DOUBLE PRECISION HNEW
       DIMENSION HK(NCOL,NROW,NLAY),HKCC(NCOL,NROW,NLAY),
-     1  HUFHK(NHUF),BOTM(NCOL,NROW,0:NBOTM),HUFHANI(NHUF)
+     &  HUFHK(NHUF),BOTM(NCOL,NROW,0:NBOTM),HUFHANI(NHUF),
+     &  HNEW(NCOL,NROW,NLAY)
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
+      COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
 
       IF(KT.EQ.KB) THEN
         HKCR=HUFHK(NU)*(TOPU-BOTU)
@@ -933,14 +946,20 @@ C     ------------------------------------------------------------------
         HKCC(J,I,KT)=HKCC(J,I,KT)+HUFHANI(NU)*HKCR
       ELSE
         DO 300 KL=KT,KB
+          BOTL = BOTM(J,I,LBOTM(KL))
+          TOPL = BOTM(J,I,LBOTM(KL)-1)
+C---Adjust top elevation for water-table layers
+          IF(LTHUF(KL).NE.0.AND.HNEW(J,I,KL).LT.TOPL)
+     &       TOPL=HNEW(J,I,KL)
           IF(KL.EQ.KT) THEN
-            THCK=TOPU-BOTM(J,I,LBOTM(KL))
+            THCK=TOPU-BOTL
           ELSEIF(KL.EQ.KB) THEN
-            THCK=BOTM(J,I,LBOTM(KL)-1)-BOTU
+            THCK=TOPL-BOTU
           ELSE
-            THCK=BOTM(J,I,LBOTM(KL)-1)-BOTM(J,I,LBOTM(KL))
+            THCK=TOPL-BOTL
           ENDIF
-          IF(ABS(THCK).LT.1.E-4) GOTO 300
+C---Check for small or negative thickness
+          IF(THCK.LT.1.E-4) GOTO 300
           HKCR=HUFHK(NU)*THCK
           HK(J,I,KL)=HK(J,I,KL)+HKCR
           HKCC(J,I,KL)=HKCC(J,I,KL)+HUFHANI(NU)*HKCR
@@ -978,18 +997,23 @@ C     ------------------------------------------------------------------
 
       IF(KB.EQ.NLAY) KB=KB-1
         DO 300 KL=KT,KB
+          IF(IBOUND(J,I,KL).EQ.0 .OR. IBOUND(J,I,KL+1).EQ.0) GOTO 300
           TOP1=BOTM(J,I,LBOTM(KL)-1)
           TOP2=BOTM(J,I,LBOTM(KL))
           TOP3=BOTM(J,I,LBOTM(KL)+1)
+C---Adjust top elevation for water-table layers
           IF(LTHUF(KL).NE.0.AND.HNEW(J,I,KL).LT.TOP1)
      &       TOP1=HNEW(J,I,KL)
           RMID1=(TOP1+TOP2)/2.
           RMID2=(TOP2+TOP3)/2.
+C---If layer below is unconfined, it does not contribute
           IF(LTHUF(KL+1).NE.0.AND.HNEW(J,I,KL+1).LT.TOP2)
      &       RMID2=TOP2
           IF(RMID1.GT.TOPU) RMID1=TOPU
           IF(BOTU.GT.RMID2) RMID2=BOTU
           THCK=RMID1-RMID2
+C---Check to see if negative thickness
+          IF(THCK.LE.0.0) GOTO 300
           IF(HGUVANI(NU).EQ.0.) THEN
             VKA(J,I,KL)=VKA(J,I,KL)+THCK/HUFVK(NU)
           ELSE
@@ -1046,6 +1070,7 @@ C---If unit top is between the middle of this layer and the middle of the
 C     next layer, exit loop
         IF(TOPU.LE.RMID1.AND.TOPU.GE.RMID2) GOTO 110
   100 CONTINUE
+      RETURN
   110 CONTINUE
 C Now search for bottom
       DO 200 KKB=KT,NLAY-1
@@ -1084,6 +1109,9 @@ c======================================================================
 C
 C     ******************************************************************
 C     Search for top and bottom layer the unit applies to.
+C     Values for IFLG:
+C       IFLG = 0, Unit successfully found
+C       IFLG = 1, Unit not found
 C     ******************************************************************
 C
 C        SPECIFICATIONS:
@@ -1114,11 +1142,13 @@ C---If unit top is above model top, adjust unit top elevation, exit loop
           GOTO 110
         ENDIF
   100 CONTINUE
+      RETURN
   110 CONTINUE
-C---If unti top has been adjusted to below unit bottom, return
+C---If unit top has been adjusted to below unit bottom, return
       IF(TOPU.LE.BOTU) THEN
         RETURN
       ENDIF
+C
 C Now search for bottom
       DO 200 KKB=KT,NLAY
         IF(IBOUND(J,I,KKB).EQ.0) GOTO 200
@@ -1148,6 +1178,14 @@ C---If unit bottom is below model bottom, set KB=NLAY, return
           RETURN
         ENDIF
   200 CONTINUE
+C---If KB has not been found due to inactive cells, search again from bottom
+      DO 300 KKB=NLAY,1,-1
+        IF(IBOUND(J,I,KKB).EQ.0) GOTO 300
+        KB = KKB
+        IFLG = 0
+        BOTU = BOTM(J,I,LBOTM(KKB))
+        RETURN
+  300 CONTINUE
 C
 C4------RETURN
       RETURN
@@ -1189,8 +1227,8 @@ C4------RETURN
 
 c======================================================================
       SUBROUTINE SGWF1HUF1N(HNEW,IBOUND,CR,CC,CV,HK,VKA,DELR,DELC,NCOL,
-     1  NROW,NLAY,IOUT,WETDRY,BOTM,NBOTM,SC1,ITRSS,HKCC,HDRY,kiter,kstp,
-     2  kper)
+     1  NROW,NLAY,IOUT,WETDRY,BOTM,NBOTM,SC1,ITRSS,HKCC,HDRY,KITER,KSTP,
+     2  KPER,IHDWET,WETFCT)
 C
 C     ******************************************************************
 C     INITIALIZE AND CHECK HUF DATA
@@ -1243,8 +1281,7 @@ C
 C2------WETTING IS ACTIVE.
          DO 40 I=1,NROW
          DO 40 J=1,NCOL
-         IF(IBOUND(J,I,K).EQ.0 .AND. WETDRY(J,I,LAYWT(K)).EQ.ZERO)
-     1                GO TO 40
+         IF(IBOUND(J,I,K).EQ.0) GO TO 40
 C
 C2A-----CHECK HORIZONTAL HYDRAULIC CONDUCTIVITY (HK).
          IF(HK(J,I,K).NE.ZERO) GO TO 40
@@ -1300,9 +1337,11 @@ C-------CONVERT HK TO HYDRAULIC CONDUCTVITY AND SC1 TO SPECIFIC STORAGE
           ENDIF
    71   CONTINUE
       KK=K
-        CALL SGWF1HUF1HCOND(HNEW,IBOUND,CR,CC,HK,DELR,DELC,BOTM,
-     1      NBOTM,KK,KITER,KSTP,KPER,NCOL,NROW,NLAY,IOUT,WETDRY,
-     2      WETFCT,IWETIT,IHDWET,HDRY,HKCC)
+C
+C6------COMPUTE HORIZONTAL BRANCH CONDUCTANCES FROM CELL HYDRAULIC
+C6------CONDUCTIVITY, SATURATED THICKNESS, AND GRID DIMENSIONS.
+         CALL SGWF1HUF1HHARM(CR,CC,HK,IBOUND,DELR,DELC,K,NCOL,NROW,
+     1         NLAY,HKCC)
    70 CONTINUE
 C
 C5------CALCULATE VERTICAL CONDUCTANCE
@@ -1324,11 +1363,11 @@ C7------RETURN.
       END
 
 c======================================================================
-      SUBROUTINE SGWF1HUF1HCOND(HNEW,IBOUND,CR,CC,HK,DELR,DELC,BOTM,
+      SUBROUTINE SGWF1HUF1WETCHK(HNEW,IBOUND,CR,CC,HK,DELR,DELC,BOTM,
      1 NBOTM,K,KITER,KSTP,KPER,NCOL,NROW,NLAY,IOUT,WETDRY,
      2 WETFCT,IWETIT,IHDWET,HDRY,HKCC)
 C     ******************************************************************
-C     COMPUTE HORIZONTAL BRANCH CONDUCTANCE FOR ONE LAYER.
+C     CHECK FOR CELLS THAT GO DRY/REWET
 C     ******************************************************************
 C
 C      SPECIFICATIONS:
@@ -1412,11 +1451,6 @@ C5------ITERATION FROM 30000 to 1.
          IF(IBOUND(J,I,K).EQ.30000) IBOUND(J,I,K)=1
   205    CONTINUE
       END IF
-C
-C6------COMPUTE HORIZONTAL BRANCH CONDUCTANCES FROM CELL HYDRAULIC
-C6------CONDUCTIVITY, SATURATED THICKNESS, AND GRID DIMENSIONS.
-         CALL SGWF1HUF1HHARM(CR,CC,HK,IBOUND,DELR,DELC,K,NCOL,NROW,
-     1         NLAY,HKCC)
 C
 C7------RETURN.
       RETURN
@@ -1681,7 +1715,7 @@ c======================================================================
       SUBROUTINE GWF1HUF1FM(HCOF,RHS,HOLD,SC1,HNEW,IBOUND,CR,CC,CV,HK,
      1    VKA,BOTM,DELR,DELC,DELT,ITRSS,ISS,NCOL,NROW,NLAY,IOUT,WETDRY,
      2    NBOTM,NHUF,RMLT,IZON,NMLTAR,NZONAR,HUFTHK,HKCC,HDRY,KITER,
-     3    KSTP,KPER,HUFTMP,IHGUFLG)
+     3    KSTP,KPER,HUFTMP,IHGUFLG,IWETIT,IHDWET,WETFCT)
 C     ******************************************************************
 C     ADD LEAKAGE CORRECTION AND STORAGE TO HCOF AND RHS, AND CALCULATE
 C     CONDUCTANCE AS REQUIRED.
@@ -1689,7 +1723,7 @@ C     ******************************************************************
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      DOUBLE PRECISION HNEW,HN
+      DOUBLE PRECISION HNEW
 C
       DIMENSION HCOF(NCOL,NROW,NLAY),RHS(NCOL,NROW,NLAY),
      1    HOLD(NCOL,NROW,NLAY),SC1(NCOL,NROW,NLAY),HNEW(NCOL,NROW,NLAY),
@@ -1715,7 +1749,8 @@ C          BRANCH CONDUCTANCES
       IF (KLAYFLG.NE.0) CALL GWF1HUF1SP(
      1 IBOUND,HNEW,CR,CC,CV,DELR,DELC,BOTM,HK,VKA,SC1,
      2 ITRSS,NCOL,NROW,NLAY,IOUT,WETDRY,NHUF,NBOTM,RMLT,IZON,
-     3 NMLTAR,NZONAR,HUFTHK,HKCC,HDRY,KITER,KSTP,KPER,IHGUFLG,HUFTMP)
+     3 NMLTAR,NZONAR,HUFTHK,HKCC,HDRY,KITER,KSTP,KPER,IHGUFLG,HUFTMP,
+     4 IWETIT,IHDWET,WETFCT)
 
 C
 C2------IF THE STRESS PERIOD IS TRANSIENT, ADD STORAGE TO HCOF AND RHS
@@ -1809,13 +1844,13 @@ C8A-----FOR EACH CELL MAKE THE CORRECTION IF NEEDED.
          DO 280 J=1,NCOL
 C
 C8B-----IF CELL IS EXTERNAL (IBOUND<=0) THEN SKIP IT.
-         IF(IBOUND(J,I,K).LE.0) GO TO 280
+           IF(IBOUND(J,I,K).LE.0 .OR. IBOUND(J,I,K+1).LE.0) GO TO 280
 C
 C8C-----IF HEAD IN THE LOWER CELL IS LESS THAN TOP ADD CORRECTION
 C8C-----TERM TO RHS.
-         HTMP=HNEW(J,I,K+1)
-         TOP=BOTM(J,I,LBOTM(K+1)-1)
-         IF(HTMP.LT.TOP) RHS(J,I,K)=RHS(J,I,K)- CV(J,I,K)*(TOP-HTMP)
+           HTMP=HNEW(J,I,K+1)
+           TOP=BOTM(J,I,LBOTM(K+1)-1)
+           IF(HTMP.LT.TOP) RHS(J,I,K)=RHS(J,I,K)- CV(J,I,K)*(TOP-HTMP)
   280    CONTINUE
       END IF
 C
@@ -1831,31 +1866,40 @@ c======================================================================
 C
 C     ******************************************************************
 C     Compute contributions to HCOF and RHS for convertible cell
+C     Enter subroutine when HO and/or HN are below TOP
+C     Values for IFLG:
+C       IFLG = 0, Calculate contributions to HCOF and RHS
+C       IFLG = 1, Calculate contributions to flow within cell
+C       IFLG = 2, Calculate contributions to sensitivity calculations
 C     ******************************************************************
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       INCLUDE 'param.inc'
-      DOUBLE PRECISION HN
       REAL TOPU, BOTU, THCKU, TOP, BOT, CHCOF, CRHS, AREA
       INTEGER IFLG
       DIMENSION HUFTHK(NCOL,NROW,NHUF,2),IZON(NCOL,NROW,NZONAR),
      &  RMLT(NCOL,NROW,NMLTAR)
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
-C
+C      
 C-----Loop through parameters
       DO 100 NP=1,MXPAR
         IF(PARTYP(NP).EQ.'SY') THEN
           BNP=B(NP)*AREA*TLED
-C---------Loop through units
+C---------Loop through units for this parameter to determine if they apply
+C         to this layer
           DO 200 ND=IPLOC(1,NP),IPLOC(2,NP)
             NU=IPCLST(1,ND)
             NM=IPCLST(2,ND)
             NZ=IPCLST(3,ND)
-c      WRITE(98,*) J,I,NU
             TOPU=HUFTHK(J,I,NU,1)
             THCKU=HUFTHK(J,I,NU,2)
             BOTU=TOPU-THCKU
+C-----------Skip this unit if it is not present in this layer
+            IF(TOPU.GT.TOP.AND.BOTU.GE.TOP) GOTO 200
+            IF(TOPU.LE.BOT.AND.BOTU.LT.BOT) GOTO 200
+            IF(TOPU.GT.TOP) TOPU=TOP
+            IF(BOTU.LT.BOT) BOTU=BOT
             RMLT0=1.
             IF(NZ.GT.0) THEN
               RMLT0=0.
@@ -1872,38 +1916,77 @@ C-------------Loop through zones if applicable
             ELSEIF(NM.GT.0) THEN
               RMLT0=RMLT(J,I,NM)
             ENDIF
-C-----------Skip this unit if it is not present in this layer
+C-----------Skip this unit if it does not apply to this cell
             IF(RMLT0.LE.0) GOTO 200
-            IF(TOPU.GT.TOP.AND.BOTU.GE.TOP) GOTO 200
-            IF(TOPU.LE.BOT.AND.BOTU.LT.BOT) GOTO 200
-C-----------Compute contributions for this unit
+C-----------Compute contributions for this unit to flow in layer
             IF(IFLG.LT.2) THEN
               IF(HO.GT.TOP) THEN
+C-------------Layer converts, water table is coming down
                 IF(HN.LT.TOPU.AND.HN.GT.BOTU) THEN
+C---------------New head is in this unit
                   CHCOF=RMLT0*BNP
                   CRHS=CRHS+RMLT0*BNP*TOPU
+                  IF(IFLG.EQ.1) CRHS=CRHS-RMLT0*BNP*HN
                 ELSEIF(HN.LT.BOTU) THEN
+C---------------New head is below this unit
                   CRHS=CRHS+RMLT0*BNP*(TOPU-BOTU)
                 ENDIF
-                IF(IFLG.EQ.1) CRHS=CRHS-RMLT0*BNP*HN
               ELSEIF(HN.GT.TOP) THEN
+C-------------Layer converts, water table is going up
                 IF(HO.LT.TOPU.AND.HO.GT.BOTU) THEN
+C---------------Old head is in this unit
                   CRHS=CRHS+RMLT0*BNP*(HO-TOPU)
                 ELSEIF(HO.LT.BOTU) THEN
-                  CRHS=CRHS+RMLT0*BNP*(TOPU-BOTU)
+C---------------Old head is below this unit
+                  CRHS=CRHS+RMLT0*BNP*(BOTU-TOPU)
                 ENDIF
               ELSEIF(HO.LT.TOP.AND.HN.LT.TOP) THEN
-                IF(HN.LT.TOPU.AND.HN.GT.BOTU) THEN
-                  CHCOF=RMLT0*BNP
-                  CRHS=CRHS+RMLT0*BNP*HO
-                ELSEIF(HN.LT.BOTU) THEN
-                  CRHS=CRHS+RMLT0*BNP*(TOPU-BOTU)
+C-------------Layer does not convert, just use SC2
+                IF(HO.GT.HN) THEN
+C---------------Water table is coming down
+                  IF(HO.LT.TOPU.AND.HO.GT.BOTU .AND.
+     &               HN.LT.TOPU.AND.HN.GT.BOTU) THEN
+C-----------------Old and new heads are both in this unit
+                    CHCOF=RMLT0*BNP
+                    CRHS=CRHS+RMLT0*BNP*HO
+                    IF(IFLG.EQ.1) CRHS=CRHS-RMLT0*BNP*HN
+                  ELSEIF(HO.LT.TOPU.AND.HO.GT.BOTU) THEN
+C-----------------Old head is in this unit
+                    CRHS=CRHS+RMLT0*BNP*(HO-BOTU)
+                  ELSEIF(HN.LT.TOPU.AND.HN.GT.BOTU) THEN
+C-----------------New head is in this unit
+                    CHCOF=RMLT0*BNP
+                    CRHS=CRHS+RMLT0*BNP*TOPU
+                    IF(IFLG.EQ.1) CRHS=CRHS-RMLT0*BNP*HN
+                  ELSEIF(HO.GT.TOPU.AND.HN.LT.BOTU) THEN
+C-----------------Old head is above and new head is below this unit
+                    CRHS=CRHS+RMLT0*BNP*(TOPU-BOTU)
+                  ENDIF
+                ELSE
+C---------------Water table is going up
+                  IF(HO.LT.TOPU.AND.HO.GT.BOTU .AND.
+     &               HN.LT.TOPU.AND.HN.GT.BOTU) THEN
+C-----------------Old and new heads are both in this unit
+                    CHCOF=RMLT0*BNP
+                    CRHS=CRHS+RMLT0*BNP*HO
+                    IF(IFLG.EQ.1) CRHS=CRHS-RMLT0*BNP*HN
+                  ELSEIF(HO.LT.TOPU.AND.HO.GT.BOTU) THEN
+C-----------------Old head is in this unit
+                    CRHS=CRHS+RMLT0*BNP*(HO-TOPU)
+                  ELSEIF(HN.LT.TOPU.AND.HN.GT.BOTU) THEN
+C-----------------New head is in this unit
+                    CHCOF=RMLT0*BNP
+                    CRHS=CRHS+RMLT0*BNP*BOTU
+                    IF(IFLG.EQ.1) CRHS=CRHS-RMLT0*BNP*HN
+                  ELSEIF(HO.LT.BOTU.AND.HN.GT.TOPU) THEN
+C-----------------Old head is below and new head is abov this unit
+                    CRHS=CRHS+RMLT0*BNP*(BOTU-TOPU)
+                  ENDIF
                 ENDIF
-                IF(IFLG.EQ.1) CRHS=CRHS-RMLT0*BNP*HN
               ENDIF
             ELSEIF(IFLG.EQ.2) THEN
               IF(HO.LE.TOPU.AND.HO.GT.BOTU) THEN
-                CRHS=RMLT0*B(NP)*AREA
+                CRHS=CRHS+RMLT0*B(NP)*AREA
                 RETURN
               ENDIF
             ENDIF
@@ -1927,7 +2010,7 @@ C
 C     SPECIFICATIONS:
 C     ------------------------------------------------------------------
       CHARACTER*16 VBNM(MSUM),TEXT
-      DOUBLE PRECISION HNEW,STOIN,STOUT,SSTRG,HN
+      DOUBLE PRECISION HNEW,STOIN,STOUT,SSTRG
 C
       DIMENSION HNEW(NCOL,NROW,NLAY), IBOUND(NCOL,NROW,NLAY),
      1   HOLD(NCOL,NROW,NLAY),SC1(NCOL,NROW,NLAY),VBVL(4,MSUM),
@@ -1997,7 +2080,7 @@ C      STRG=SOLD*(HOLD(J,I,K)-TP) + SNEW*TP - SNEW*HSING
 C
 C7B----ONE STORAGE CAPACITY.
   285     RHO=SC1(J,I,K)*TLED
-          STRG=RHO*(HO-HN)
+          STRG=RHO*HO-RHO*HN
  
 C
 C8-----STORE CELL-BY-CELL FLOW IN BUFFER AND ADD TO ACCUMULATORS.

@@ -1,11 +1,10 @@
-C     Last change:  ERB  24 Oct 2001    1:13 pm
+C     Last change:  ERB   5 Apr 2002    3:55 pm
 C=======================================================================
       SUBROUTINE PES1BAS6DF(IBEFLG,IFO,IOUB,IPES,IPR,IPRAR,IPRINT,
      &                      ITERPF,ITERPK,ITMXP,IUPES,IYCFLG,JMAX,LASTX,
      &                      LCDMXA,LCNIPR,LCNPAR,LCPRM,LCWP,LCWTP,
      &                      LCWTPS,LCW3,LCW4,MPR,MPRAR,NPNGAR,SOSC,SOSR,
-     &                      BEFIRST,LCBPRI,LCPARE,LCRSQA,LCRSPA,LCAMPA,
-     &                      LCAMCA,LCAAP)
+     &                      BEFIRST,LCBPRI,LCPARE,LCAMPA,LCAMCA,LCAAP)
 C     VERSION 20000124
 C     ******************************************************************
 C     INITIALIZE VARIABLES FOR PARAMETER-ESTIMATION PROCESS
@@ -51,8 +50,6 @@ C     OTHERWISE GET ALLOCATED
       LCNPAR = 1
       LCPARE = 1
       LCPRM = 1
-      LCRSPA = 1
-      LCRSQA = 1
       LCWP = 1
       LCWTP = 1
       LCWTPS = 1
@@ -76,13 +73,12 @@ C=======================================================================
       SUBROUTINE PES1BAS6AL(ISUM,ISUMZ,ISUMI,IOUT,NPLIST,LCC,LCSCLE,LCG,
      &                     LCDD,LCWP,MPR,LCPRM,LCPV,LCR,LCU,LCGD,LCS,
      &                     NOPT,IPR,LCWTP,LCWTPS,LCW3,LCW4,LCNIPR,
-     &                     LCEIGL,LCEIGV,LCEIGW,LCIPNG,IU,
-     &                     NPNG,MPRAR,IPRAR,NPNGAR,IREWND,LCPRNT,LCPARE,
-     &                     ITMXP,LCSSPI,LCSSTO,DMAX,TOL,SOSC,IOSTAR,
-     &                     NFIT,SOSR,IPRC,IPRINT,LPRINT,CSA,FCONV,LASTX,
+     &                     LCEIGL,LCEIGV,LCEIGW,LCIPNG,IU,NPNG,MPRAR,
+     &                     IPRAR,NPNGAR,IREWND,LCPRNT,LCPARE,ITMXP,
+     &                     LCSSPI,LCSSTO,DMAX,TOL,SOSC,IOSTAR,NFIT,
+     &                     SOSR,IPRC,IPRINT,LPRINT,CSA,FCONV,LASTX,
      &                     ISEN,IPES,IPAR,IBEFLG,IYCFLG,LCDMXA,LCNPAR,
-     &                     LCBPRI,RMARM,IAP,LCAAP,LCAMCA,LCRSQA,
-     &                     LCRSPA,LCAMPA,RMAR)
+     &                     LCBPRI,RMARM,IAP,LCAAP,LCAMCA,LCAMPA,RMAR)
 C     VERSION 19990722 ERB
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR THE PARAMETER-ESTIMATION PROCESS
@@ -333,10 +329,6 @@ C
       ISUM = ISUM + ITMXP
       LCAMCA = ISUM
       ISUM = ISUM + ITMXP
-      LCRSQA = ISUM
-      ISUM = ISUM + ITMXP + 1
-      LCRSPA = ISUM
-      ISUM = ISUM + ITMXP + 1
       LCAMPA = ISUM
       ISUM = ISUM + ITMXP
 C-------FOR QUASI-NEWTON ADDITION TO THE GAUSS-NEWTON MATRIX
@@ -1227,7 +1219,7 @@ C     OPEN INPUT FILE FOR RESIDUAL ANALYSIS PROGRAM
       IOUR = IGETUNIT(1,1000)
       IF (IOUR.GT.0) THEN
         FN = OUTNAM(1:LENGNAM)//'._rs'
-        OPEN(IOUR,FILE=FN,ERR=20)
+        OPEN(IOUR,FILE=FN,ERR=20,RECL=440)
       ELSE
         GOTO 20
       ENDIF

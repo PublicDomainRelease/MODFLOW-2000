@@ -1,23 +1,27 @@
 # NAME file for etsdrt test case
+#
+# NOTE: Forward slashes (/) in pathnames may need to be converted
+#       to back slashes (\) in some computing environments
+#
 # Output files
 global  11  etsdrt.glo
 list    12  etsdrt.lst
 #
 # Global input files
-dis     21  ..\data\etsdrt.dis
+dis     21  ../data/etsdrt.dis
 #
 # Flow process input files
-bas6    31  ..\data\etsdrt.bas
-oc      32  ..\data\etsdrt.oc
-lpf     33  ..\data\etsdrt.lpf
-drt     34  ..\data\etsdrt.drt
-rch     36  ..\data\etsdrt.rch
-ets     37  ..\data\etsdrt.ets
-pcg     39  ..\data\etsdrt.pcg
+bas6    31  ../data/etsdrt.bas
+oc      32  ../data/etsdrt.oc
+lpf     33  ../data/etsdrt.lpf
+drt     34  ../data/etsdrt.drt
+rch     36  ../data/etsdrt.rch
+ets     37  ../data/etsdrt.ets
+pcg     39  ../data/etsdrt.pcg
 #
 # O-S-P processes input files
-obs     41  ..\data\etsdrt.obs
-hob     42  ..\data\etsdrt.ohd
-dtob    43  ..\data\etsdrt.odt
-sen     45  ..\data\etsdrt.sen
-pes     46  ..\data\etsdrt.pes
+obs     41  ../data/etsdrt.obs
+hob     42  ../data/etsdrt.ohd
+dtob    43  ../data/etsdrt.odt
+sen     45  ../data/etsdrt.sen
+pes     46  ../data/etsdrt.pes

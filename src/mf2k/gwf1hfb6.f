@@ -1,6 +1,6 @@
-C     Last change:  ERB   5 Nov 2001   10:35 am
+C     Last change:  ERB  15 Apr 2002    9:33 am
       SUBROUTINE GWF1HFB6AL(INHFB,IOUT,ISUM,LCHFB,MXACTFB,NHFBNP,
-     &                   NPHFB,MXHFB,IHFB)
+     &                   NPHFB,MXHFB,IHFB,NOPRHB)
 C
 C-----VERSION 11JAN2000 GWF1HFB6AL
 C     ******************************************************************
@@ -35,6 +35,15 @@ C2------READ AND PRINT NPHFB, MXFB, NHFBNP
 C
 C3------SET LCHFB EQUAL TO ADDRESS OF FIRST UNUSED SPACE IN RX.
       LCHFB = ISUM
+C-------READ OPTION.
+      NOPRHB = 0
+      CALL URWORD(LINE,LLOC,ISTART,ISTOP,1,N,R,IOUT,IN)
+      IF(LINE(ISTART:ISTOP).EQ.'NOPRINT') THEN
+        WRITE(IOUT,3)
+    3   FORMAT(1X,
+     &'LISTS OF HORIZONTAL FLOW BARRIER CELLS WILL NOT BE PRINTED')
+        NOPRHB = 1
+      END IF
 C
 C4------CALCULATE AMOUNT OF SPACE USED BY HFB PACKAGE.
       MXACTFB = NHFBNP+MXFBP
@@ -53,8 +62,9 @@ C6------RETURN
       END
 C=======================================================================
       SUBROUTINE GWF1HFB6RP(BOTM,CR,CC,DELR,DELC,HFB,INHFB,MXACTFB,
-     &                  NBOTM,NCOL,NROW,NLAY,NODES,NHFBNP,NHFB,NPHFB,
-     &                  IOUT,IOUTG,ITERP,MXHFB,IHFB,LAYHDT,INAMLOC)
+     &                      NBOTM,NCOL,NROW,NLAY,NODES,NHFBNP,NHFB,
+     &                      NPHFB,IOUT,IOUTG,ITERP,MXHFB,IHFB,LAYHDT,
+     &                      INAMLOC,NOPRHB)
 C
 C-----VERSION 11JAN2000 GWF1HFB6RP
 C     ******************************************************************
@@ -84,6 +94,14 @@ C
         STOP
       ENDIF
 C
+      ITERPU = ITERP
+      IOUTU = IOUT
+      IF (NOPRHB.EQ.1) THEN
+        ITERPU = 99
+        IOUTU = -1
+      ENDIF
+C
+C
 C     READ PARAMETER DEFINITIONS (ITEMS 2 AND 3)
       IF (ITERP.EQ.1) WRITE(IOUTG,500) NPHFB
       IF (NPHFB.GT.0) THEN
@@ -95,7 +113,7 @@ C     READ PARAMETER DEFINITIONS (ITEMS 2 AND 3)
           NLST=LSTSUM-LSTBEG
           CALL SGWF1HFB6RL(NLST,HFB,LSTBEG,7,MXHFB,INHFB,IOUTG,
      &         'BARRIER  LAYER  IROW1  ICOL1  IROW2  ICOL2     FACTOR',
-     &         NCOL,NROW,NLAY,6,6,ITERP)
+     &         NCOL,NROW,NLAY,6,6,ITERPU)
           CALL SGWF1HFB6CK(HFB,MXHFB,LSTBEG,LSTSUM-1,IOUTG)
    20   CONTINUE
       ENDIF
@@ -108,7 +126,8 @@ C     READ BARRIERS NOT DEFINED BY PARAMETERS (ITEM 4)
         WRITE(IOUT,520)
         DO 30 I = 1,NHFBNP
           READ(INHFB,*)LAYER,IROW1,ICOL1,IROW2,ICOL2,HYDCHR
-          WRITE(IOUT,530)I,LAYER,IROW1,ICOL1,IROW2,ICOL2,HYDCHR
+          IF (NOPRHB.EQ.0)
+     &        WRITE(IOUT,530)I,LAYER,IROW1,ICOL1,IROW2,ICOL2,HYDCHR
           HFB(1,I) = LAYER
           HFB(2,I) = IROW1
           HFB(3,I) = ICOL1
@@ -130,7 +149,7 @@ C       READ NUMBER OF ACTIVE HFB PARAMETERS (ITEM 5)
           DO 50 I = 1,NACTHFB
 C           READ AND ACTIVATE AN HFB PARAMETER (ITEM 6)
             NAUX=0
-            CALL UPARLSTSUB(INHFB,'HFB ',IOUT,'HFB ',HFB,7,MXHFB,6,
+            CALL UPARLSTSUB(INHFB,'HFB ',IOUTU,'HFB ',HFB,7,MXHFB,6,
      &                      MXACTFB,NHFB,6,6,
      &         'BARRIER  LAYER  IROW1  ICOL1  IROW2  ICOL2     FACTOR',
      &            AUX,1,NAUX)

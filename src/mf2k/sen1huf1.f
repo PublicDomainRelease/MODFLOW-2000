@@ -1,5 +1,5 @@
-C     Version 1.02
-C     Last change:  ERB   9 Jul 2001    3:26 pm
+C     Version 1.03
+C     Last change:  ERA  19 Feb 2002
       SUBROUTINE SEN1HUF1FM(H,NCOL,NROW,NLAY,PID,HK,HKCC,DELR,
      &                     DELC,IBOUND,RHS,CV,BOTM,NBOTM,HUFTHK,
      &                     NHUF,IP,IZON,NZONAR,RMLT,NMLTAR,IUHFBP,
@@ -15,7 +15,7 @@ C     ------------------------------------------------------------------
       INTEGER I, IBM, IBOUND, IBP, IND, ISS, J, K, LT, IZON, NCOL, NLAY,
      &        NRC, NROW
       CHARACTER*4 PID
-      DOUBLE PRECISION H(NCOL*NROW*NLAY), HO , HP
+      DOUBLE PRECISION H(NCOL*NROW*NLAY) , HP
       DIMENSION DELR(NCOL), DELC(NROW),
      & RHS(NCOL,NROW,NLAY), IBOUND(NCOL,NROW,NLAY),
      & CV(NCOL,NROW,NLAY),BOTM(NCOL,NROW,0:NBOTM),
@@ -116,7 +116,7 @@ C-------CC
      &                          HK,HKCC,NCOL,NROW,NLAY,DELC,DELR,H,
      &                          BOTM(1,1,LBOTM(K)),BOTM(1,1,LBOTM(K)-1),
      &                          NZ,NM,ICL,IZON,NZONAR,RMLT,NMLTAR,C,
-     &                          TH0L,TH1L)
+     &                          TH0L,TH1L,HUFTHK,NHUF,NU)
                 ENDIF
                 IF (IUHFBP.GT.0 .AND. CO.NE.0.)
      &              CALL SSEN1HFB6MD(C,'CC',CO,DELC,DELR,HFBP,I,J,K,
@@ -159,11 +159,11 @@ C-------CV
                 IF(LTHUF(K).NE.0.AND.H(IND).LT.TOP1) TOP1=H(IND)
                 BOT1=BOTM(J,I,LBOTM(K))
                 TOP2=BOTM(J,I,LBOTM(K))
-                IF(LTHUF(K+1).NE.0.AND.H(IND+NRC).LT.TOP2) 
-     &              TOP2=H(IND+NRC)
                 BOT2=BOTM(J,I,LBOTM(K)+1)
                 MID1=0.5*(TOP1+BOT1)
-                  MID2=0.5*(TOP2+BOT2)
+                MID2=0.5*(TOP2+BOT2)
+                IF(LTHUF(K+1).NE.0.AND.H(IND+NRC).LT.TOP2) 
+     &              MID2 = TOP2
                 CALL SSEN1HUF1THK(MID1,MID2,
      1                  HUFTHK(J,I,NU,1),HUFTHK(J,I,NU,2),THK1)
                 IF(THK1.EQ.0.) GOTO 85
@@ -176,6 +176,11 @@ C-------CV
                 IF (K.LT.NLAY .AND. IBP.NE.0) THEN
                   RHS(J,I,K) = RHS(J,I,K) + CO*HH
                   RHS(J,I,K+1) = RHS(J,I,K+1) - CO*HH
+C               ACCOUNT FOR UNCONFINED LAYER UNDERLYING ACTIVE LAYER
+                  IF (LTHUF(K+1).NE.0 .AND.H(IND+NRC).LT.BOT1) THEN
+                    RHS(J,I,K) = RHS(J,I,K) - CO*(BOT1-H(IND+NRC))
+                    RHS(J,I,K+1) = RHS(J,I,K+1) + CO*(BOT1-H(IND+NRC))
+                  ENDIF
                 ENDIF
    85         CONTINUE
    80       CONTINUE
@@ -186,58 +191,58 @@ C-----S
           IF (ISS.NE.0) GOTO 140
           DO 130 I = 1, NROW
             DO 120 J = 1, NCOL
+              RMLT0=1.0
+              IF (NZ.GT.0) THEN
+                RMLT0=0.
+                DO 32 JJ = 5,IPCLST(4,ICL)
+                  IF(IZON(J,I,NZ).EQ.IPCLST(JJ,ICL)) THEN
+                    IF(NM.GT.0) THEN
+                      RMLT0=RMLT(J,I,NM)
+                    ELSE
+                      RMLT0=1.
+                    ENDIF
+                  END IF
+   32           CONTINUE
+              ELSEIF(NM.GT.0) THEN
+                RMLT0=RMLT(J,I,NM)
+              ENDIF
+              IF(RMLT0.EQ.0) GOTO 120
               DO 110 K = 1, NLAY
-                IF (IBOUND(J,I,K).LT.1) GOTO 120
+                IF (IBOUND(J,I,K).LT.1) GOTO 110
                 LT=LTHUF(K)
                 IND = J + NCOL*(I-1) + NRC*(K-1)
                 HO = H(IND)
                 SHO = HOLD(IND)
-                TP = BOTM(J,I,LBOTM(K)-1)
+                TOP = BOTM(J,I,LBOTM(K)-1)
+                BOT = BOTM(J,I,LBOTM(K))
                 IF (LT.NE.0) THEN
-                  IF (PID.EQ.'SS  ' .AND. HO.LT.TP .AND. SHO.LT.TP)
+                  IF (PID.EQ.'SS  ' .AND. HO.LT.TOP .AND. SHO.LT.TOP)
      &              GOTO 110
-                  IF (PID.EQ.'SY  ' .AND. HO.GE.TP .AND. SHO.GE.TP)
+                  IF (PID.EQ.'SY  ' .AND. HO.GE.TOP .AND. SHO.GE.TOP)
      &              GOTO 110
+                ELSEIF(LT.EQ.0 .AND. PID.EQ.'SY  ') THEN
+                  GOTO 110
                 ENDIF
-                RMLT0=1.0
-                IF (NZ.GT.0) THEN
-                  RMLT0=0.
-                  DO 32 JJ = 5,IPCLST(4,ICL)
-                    IF(IZON(J,I,NZ).EQ.IPCLST(JJ,ICL)) THEN
-                      IF(NM.GT.0) THEN
-                        RMLT0=RMLT(J,I,NM)
-                      ELSE
-                        RMLT0=1.
-                      ENDIF
-                    END IF
-   32             CONTINUE
-                ELSEIF(NM.GT.0) THEN
-                  RMLT0=RMLT(J,I,NM)
-                ENDIF
-                IF(RMLT0.EQ.0) GOTO 120
-                TOP0=BOTM(J,I,LBOTM(K)-1)
-                IF(LTHUF(K).NE.0.AND.HO.LT.TOP0) TOP0=HO
-                BOT0=BOTM(J,I,LBOTM(K))
-                CALL SSEN1HUF1THK(TOP0,BOT0,
-     1                          HUFTHK(J,I,NU,1),
-     2                          HUFTHK(J,I,NU,2),TH0)
+                TOPU = HUFTHK(J,I,NU,1)
+                THCKU = HUFTHK(J,I,NU,2)
+                BOTU = TOPU - THCKU
+                CALL SSEN1HUF1THK(TOP,BOT,TOPU,THCKU,TH0)
                 IF(ABS(TH0).LT.1E-6) GOTO 110
                 IF (PID.EQ.'SS  ') THEN
                   CO = RMLT0*TH0*DELR(J)*DELC(I)/DELT
-                ELSE
-                  CO = RMLT0*DELR(J)*DELC(I)/DELT
-                ENDIF
-C        DAH AND DBH
-                IF (LT.NE.0) THEN
-                  IF (SHO.GE.TP .AND. HO.LT.TP) THEN
-                    IF (PID.EQ.'SS  ') HO = TP
-                    IF (PID.EQ.'SY  ') SHO = TP
-                  ELSEIF (SHO.LT.TP .AND. HO.GE.TP) THEN
-                    IF (PID.EQ.'SS  ') SHO = TP
-                    IF (PID.EQ.'SY  ') HO = TP
+                  IF (LT.NE.0) THEN
+                    IF (SHO.GE.TOP .AND. HO.LT.TOP) THEN
+                      HO = TOP
+                    ELSEIF (SHO.LT.TOP .AND. HO.GE.TOP) THEN
+                      SHO = TOP
+                    ENDIF
                   ENDIF
+                  RHS(J,I,K) = RHS(J,I,K) - CO*(SHO-HO)
+                ELSEIF(PID.EQ.'SY  ') THEN
+                  CO = RMLT0*DELR(J)*DELC(I)/DELT
+                  CALL SEN1HUF1SC2(TOP,BOT,TOPU,BOTU,HO,SHO,CRHS,CO)
+                  RHS(J,I,K) = RHS(J,I,K) - CRHS
                 ENDIF
-                RHS(J,I,K) = RHS(J,I,K) - CO*(SHO-HO)
   110         CONTINUE
   120       CONTINUE
   130     CONTINUE
@@ -272,7 +277,7 @@ C     ------------------------------------------------------------------
      &          RMLT(NCOL,NROW,NMLTAR)
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
       COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
-      INCLUDE 'param.inc'
+C      INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
 C
 C-------TERMS FOR UNCONFINED AQUIFERS
@@ -281,7 +286,8 @@ C-------TERMS FOR UNCONFINED AQUIFERS
           LT = LTHUF(K)
           IF (LT.NE.0) THEN
             CALL SSEN1HUF1NL(HNEW,SNEW,NCOL,NROW,NLAY,HK,HKCC,DELR,DELC,
-     &                     IBOUND,RHS,BOTM,NBOTM,CR,CC,K,LT)
+     &                       IBOUND,RHS,BOTM,NBOTM,CR,CC,CV,K,LT,NHUF,
+     &                       HUFTHK,RMLT,IZON,NMLTAR,NZONAR)
           ENDIF
           IF (K.GT.1 .AND. LT.NE.0) THEN
             DO 50 I = 1, NROW
@@ -317,10 +323,12 @@ C-------EQUATION SENSITIVITIES
                 HO=HOLD(J,I,K)
                 TOP=BOTM(J,I,LBOTM(K)-1)
                 BOT=BOTM(J,I,LBOTM(K))
-                IF (HO.LT.TOP)
-     &              CALL SGWF1HUF1SC2(2,J,I,TOP,BOT,1.0D0,HO,1.0,DUM,
+                IF (HO.LT.TOP) THEN
+                    SCC = 0.0
+                    CALL SGWF1HUF1SC2(2,J,I,TOP,BOT,1.0,HO,1.0,DUM,
      &                    SCC,HUFTHK,NCOL,NROW,NHUF,IZON,NZONAR,RMLT,
      &                    NMLTAR,DELR(J)*DELC(I))
+                ENDIF
                 RHS(J,I,K) = RHS(J,I,K) - SOLD(J,I,K)*SCC/DELT
    90         CONTINUE
   100       CONTINUE
@@ -330,22 +338,27 @@ C-------EQUATION SENSITIVITIES
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SSEN1HUF1NL(H,A,NC,NR,NL,HK,HKCC,DELR,DELC,IBOUND,RHS,
-     &                     BOTM,NBOTM,CR,CC,K,LT)
+      SUBROUTINE SSEN1HUF1NL(HN,SN,NC,NR,NL,HK,HKCC,DELR,DELC,IBOUND,
+     &  RHS,BOTM,NBOTM,CR,CC,CV,K,LT,NHUF,HUFTHK,RMLT,IZON,NMLTAR,
+     &  NZONAR)
 C-----VERSION 1000 01FEB1992
 C     ******************************************************************
 C     ADD NONLINEAR TERMS FOR SENSITIVITY EQUATION CALCULATIONS
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL BO, BOTM, BP, CC, CO, CR, D1CC, D1CR, D2CC, D2CR, DELC, DELR,
-     &     RHS, HK, TH1, TH2, TOP1, TOP2, ZERO
+      REAL BO, BOTM, BP, CC, CO, COCC, COCR, CR, D1CC, D1CR, D2CC, D2CR, 
+     &     DELC, DELR,RHS, HK, THO, THI1, THJ1, TOPO, TOPI1, TOPJ1,
+     &     ZERO, MID
       INTEGER I, IBOUND, IND, J, K, LT, NC, NC1, NL, NR, NR1,
      &        NRC
-      DOUBLE PRECISION A(NC*NR*NL), AO, AP, H(NC*NR*NL), HO, HP
+      DOUBLE PRECISION SN(NC,NR,NL),AO,AI1,AJ1,HN(NC,NR,NL),
+     &  HO,HI1,HJ1,HP
       DIMENSION CR(NC,NR,NL), CC(NC,NR,NL), HK(NC,NR,NL),
-     &          DELR(NC), DELC(NR), RHS(NC,NR,NL), IBOUND(NC,NR,NL), 
-     &          BOTM(NC,NR,0:NBOTM),HKCC(NC,NR,NL)
+     &  DELR(NC), DELC(NR), RHS(NC,NR,NL), IBOUND(NC,NR,NL), 
+     &  BOTM(NC,NR,0:NBOTM),HKCC(NC,NR,NL),HUFTHK(NC,NR,NHUF,2),
+     &  HUFTMP(200), CV(NC,NR,NL), RMLT(NC,NR,NMLTAR),
+     &  IZON(NC,NR,NZONAR)
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
       COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
 C     ------------------------------------------------------------------
@@ -355,85 +368,287 @@ C
       NR1 = NR - 1
       NC1 = NC - 1
 C
-C      CR
+C      CR & CC
 C
-      IF (NC.GT.1) THEN
-        DO 20 I = 1, NR
-          DO 10 J = 1, NC1
-            IF (IBOUND(J,I,K).EQ.0 .OR. IBOUND(J+1,I,K).EQ.0) GOTO 10
-            IND = J + NC*(I-1) + NRC*(K-1)
-            HO = H(IND)
-            HP = H(IND+1)
-            TOP1 = ZERO
-            TOP2 = ZERO
-            IF (LT.NE.0) THEN
-              TOP1 = BOTM(J,I,LBOTM(K)-1)
-              TOP2 = BOTM(J+1,I,LBOTM(K)-1)
-              IF (TOP1.LT.HO .AND. TOP2.LT.HP) GOTO 10
-            ENDIF
-            AO = A(IND)
-            AP = A(IND+1)
-            BO = BOTM(J,I,LBOTM(K))
-            BP = BOTM(J+1,I,LBOTM(K))
-            TH1 = HO - BO
-            TH2 = HP - BP
+      DO 20 I = 1, NR
+        DO 10 J = 1, NC
+          IBDO = IBOUND(J,I,K)
+          IF(IBDO.EQ.0) GOTO 10
+          HO = HN(J,I,K)
+          TOPO = BOTM(J,I,LBOTM(K)-1)
+          BO = BOTM(J,I,LBOTM(K))
+          THO = HO - BO
+          TRO = HK(J,I,K) * THO
+          TCO = HKCC(J,I,K) * THO
+          AO = SN(J,I,K)
+          NUO = 0
+          HSING = HO
+          IF(TOPO.GT.HO) CALL SSEN1HUF1HDFND(HUFTHK,NC,NR,NHUF,
+     &                                       HSING,I,J,NUO)
+          IF(NUO.NE.0) CALL SSEN1HUF1HKFND(NC,NR,NHUF,HUFTHK,IZON,
+     &                                     NZONAR,RMLT,NMLTAR,IOUT,
+     &                                     I,J,NUO,HKO,HKCCO)
+          IF(J.LT.NC) THEN
+            IBDJ1 = IBOUND(J+1,I,K)
+          ELSE
+            IBDJ1 = 0
+          ENDIF
+          IF(I.LT.NR) THEN
+            IBDI1 = IBOUND(J,I+1,K)
+          ELSE
+            IBDI1 = 0
+          ENDIF
+          HI1 = ZERO
+          TOPI1 = ZERO
+          IF(IBDI1.NE.0) THEN
+            HI1 = HN(J,I+1,K)
+            TOPI1 = BOTM(J,I+1,LBOTM(K)-1)
+            BI1 = BOTM(J,I+1,LBOTM(K))
+            THI1 = HI1 - BI1
+            TCI1 = HKCC(J,I+1,K) * THI1
+            AI1 = SN(J,I+1,K)
+            NUI1 = 0
+            HSING = HI1
+            IF(TOPI1.GT.HI1) CALL SSEN1HUF1HDFND(HUFTHK,NC,NR,NHUF,
+     &                                           HSING,I+1,J,NUI1)
+            IF(NUI1.NE.0) CALL SSEN1HUF1HKFND(NC,NR,NHUF,HUFTHK,IZON,
+     &                                        NZONAR,RMLT,NMLTAR,IOUT,
+     &                                        I+1,J,NUI1,HKI1,HKCCI1)
+          ENDIF
+          HJ1 = ZERO
+          TOPJ1 = ZERO
+          IF(IBDJ1.NE.0) THEN
+            HJ1 = HN(J+1,I,K)
+            TOPJ1 = BOTM(J+1,I,LBOTM(K)-1)
+            BJ1 = BOTM(J+1,I,LBOTM(K))
+            THJ1 = HJ1 - BJ1
+            TRJ1 = HK(J+1,I,K) * THJ1
+            AJ1 = SN(J+1,I,K)
+            NUJ1 = 0
+            HSING = HJ1
+            IF(TOPJ1.GT.HJ1) CALL SSEN1HUF1HDFND(HUFTHK,NC,NR,NHUF,
+     &                                           HSING,I,J+1,NUJ1)
+            IF(NUJ1.NE.0) CALL SSEN1HUF1HKFND(NC,NR,NHUF,HUFTHK,IZON,
+     &                                        NZONAR,RMLT,NMLTAR,IOUT,
+     &                                        I,J+1,NUJ1,HKJ1,HKCCJ1)
+          ENDIF
 C-------MATRIX DERIVATIVES
-C            D1CR = 0.0
-C            D2CR = 0.0
-            IF (TOP1.GT.HO)
-     &        D1CR = (CR(J,I,K)**2)*DELR(J)/
-     &               (DELC(I)*2.*HKCC(J,I,K)*(TH1**2))
-            IF (TOP2.GT.HP)
-     &        D2CR = (CR(J,I,K)**2)*DELR(J+1)/
-     &               (DELC(I)*2.*HKCC(J+1,I,K)*(TH2**2))
-C-------MULTIPLY BY SENSITIVITIES FROM LAST ITERATION
-            CO = D1CR*AO + D2CR*AP
-C-------MULTIPLY BY HEAD VECTOR AND ADD TO RHS
-            RHS(J,I,K) = RHS(J,I,K) - CO*(HP-HO)
-            RHS(J+1,I,K) = RHS(J+1,I,K) - CO*(HO-HP)
-   10     CONTINUE
-   20   CONTINUE
-      ENDIF
+          COCR = ZERO
+          COCC = ZERO
+          IF(J.LT.NC .AND. IBDJ1.GT.0) THEN
+            D1CR = ZERO
+            D2CR = ZERO
+            IF (TOPO.GT.HO)
+     &        D1CR = (CR(J,I,K)**2)*DELR(J)*HKO/
+     &               (DELC(I)*2.*TRO**2.)
+            IF (TOPJ1.GT.HJ1)
+     &        D2CR = (CR(J,I,K)**2)*DELR(J+1)*HKJ1/
+     &               (DELC(I)*2.*TRJ1**2.)
+            COCR = D1CR*AO + D2CR*AJ1
+            RHS(J,I,K) = RHS(J,I,K) - COCR*(HJ1-HO)
+            RHS(J+1,I,K) = RHS(J+1,I,K) - COCR*(HO-HJ1)
+          ENDIF
+          IF(I.LT.NR .AND. IBDI1.GT.0) THEN
+            D1CC = ZERO
+            D2CC = ZERO
+            IF (TOPO.GT.HO)
+     &          D1CC = (CC(J,I,K)**2)*DELC(I)*HKCCO/
+     &                 (2.*DELR(J)*TCO**2.)
+            IF (TOPI1.GT.HI1)
+     &          D2CC = (CC(J,I,K)**2)*DELC(I+1)*HKCCI1/
+     &                 (2.*DELR(J)*TCI1**2.)
+            COCC = D1CC*AO + D2CC*AI1
+            RHS(J,I,K) = RHS(J,I,K) - COCC*(HI1-HO)
+            RHS(J,I+1,K) = RHS(J,I+1,K) - COCC*(HO-HI1)
+          ENDIF
+   10   CONTINUE
+   20 CONTINUE
 C
-C      CC
+C      CV
 C
-      IF (NR.GT.1) THEN
-        DO 40 J = 1, NC
-          DO 30 I = 1, NR1
-            IF (IBOUND(J,I,K).EQ.0 .OR. IBOUND(J,I+1,K).EQ.0) GOTO 30
-            IND = J + NC*(I-1) + NRC*(K-1)
-            HO = H(IND)
-            HP = H(IND+NC)
+      IF (NL.GT.1.AND.K.LT.NL) THEN
+        DO 60 J = 1, NC
+          DO 50 I = 1, NR
+            IF (IBOUND(J,I,K).EQ.0 .OR. IBOUND(J,I,K+1).EQ.0) GOTO 50
+            HO = HN(J,I,K)
+            HP = HN(J,I,K+1)
             TOP1 = ZERO
-            TOP2 = ZERO
-            IF (LT.NE.0) THEN
-              TOP1 = BOTM(J,I,LBOTM(K)-1)
-              TOP2 = BOTM(J,I+1,LBOTM(K)-1)
-              IF (TOP1.LT.HO .AND. TOP2.LT.HP) GOTO 30
-            ENDIF
-            AO = A(IND)
-            AP = A(IND+NC)
+            IF (LT.NE.0) TOP1 = BOTM(J,I,LBOTM(K)-1)
+            IF (TOP1.LT.HO) GOTO 50
+            AO = SN(J,I,K)
             BO = BOTM(J,I,LBOTM(K))
-            BP = BOTM(J,I+1,LBOTM(K))
-            TH1 = HO - BO
-            TH2 = HP - BP
+            MID = 0.5*(HO + BO)
+C-------FIRST, FIND UNIT THAT LAYER MID POINT IS IN
+            CALL SSEN1HUF1HDFND(HUFTHK,NC,NR,NHUF,MID,I,J,NNU)
+C-------UNIT NOT FOUND, SKIP CALCULATIONS
+            IF(NNU.EQ.0) GOTO 50
+   80       CONTINUE
+C-------NOW FIND THE KV OF THE UNIT
+            HUFTMP(NNU)=0.0
+            CALL SGWF1HUF1POP(HUFTMP,'VK  ',NC,NR,NHUF,I,J,HUFTHK,
+     &                        IZON,NZONAR,RMLT,NMLTAR,NNU,IOUT)
+            CALL SGWF1HUF1POP(HUFTMP,'VANI',NC,NR,NHUF,I,J,HUFTHK,
+     &                        IZON,NZONAR,RMLT,NMLTAR,NNU,IOUT)
+            IF(HGUVANI(NNU).EQ.0.) THEN
+              VK1=HUFTMP(NNU)
+            ELSE
+              IF(HUFTMP(NNU).EQ.0.) THEN
+                VK1 = HGUVANI(NNU)
+              ELSE
+                VK1 = HUFTMP(NNU)
+              ENDIF
+              HUFTMP(NNU)=0.0
+              CALL SGWF1HUF1POP(HUFTMP,'HK  ',NC,NR,NHUF,I,J,HUFTHK,
+     &                          IZON,NZONAR,RMLT,NMLTAR,NNU,IOUT)
+              VK1=HUFTMP(NNU)/VK1
+            ENDIF
 C-------MATRIX DERIVATIVES
+            D1CV=0.
             IF (TOP1.GT.HO)
-     &          D1CC = (CC(J,I,K)**2)*DELC(I)/
-     &                 (2.*DELR(J)*HK(J,I,K)*(TH1**2))
-            IF (TOP2.GT.HP)
-     &          D2CC = (CC(J,I,K)**2)*DELC(I+1)/
-     &                 (2.*DELR(J)*HK(J,I+1,K)*(TH2**2))
+     &          D1CV = -(CV(J,I,K)**2)/(DELC(I)*2.*DELR(J)*VK1)
 C-------MULTIPLY BY DERIVATIVES FROM LAST ITERATION
             CO = ZERO
-            CO = D1CC*AO + D2CC*AP
+            CO = D1CV*AO
 C-------MULTIPLY BY HEAD VECTOR AND ADD TO RHS
             RHS(J,I,K) = RHS(J,I,K) - CO*(HP-HO)
-            RHS(J,I+1,K) = RHS(J,I+1,K) - CO*(HO-HP)
-   30     CONTINUE
-   40   CONTINUE
+            RHS(J,I,K+1) = RHS(J,I,K+1) - CO*(HO-HP)
+   50     CONTINUE
+   60   CONTINUE
       ENDIF
       RETURN
+      END
+c======================================================================
+      SUBROUTINE SEN1HUF1SC2(TOP,BOT,TOPU,BOTU,HN,HO,CRHS,CO)
+C
+C     ******************************************************************
+C     Compute contributions to RHS for sensitivities for convertible cell
+C     ******************************************************************
+C
+C        SPECIFICATIONS:
+C     ------------------------------------------------------------------
+      REAL TOPU, BOTU, THCKU, TOP, BOT, CHCOF, CRHS, AREA
+C
+      CRHS = 0.0
+
+      IF(TOPU.GT.TOP) TOPU=TOP
+      IF(BOTU.LT.BOT) BOTU=BOT
+C-----Compute contributions for this unit to flow in layer
+      IF(HO.GE.TOP) THEN
+C-------Layer converts, water table is coming down
+        IF(HN.LE.TOPU.AND.HN.GE.BOTU) THEN
+C---------New head is in this unit
+          CRHS=CRHS+CO*(TOPU-HN)
+        ELSEIF(HN.LE.BOTU) THEN
+C---------New head is below this unit
+          CRHS=CRHS+CO*(TOPU-BOTU)
+        ENDIF
+      ELSEIF(HN.GE.TOP) THEN
+C-------Layer converts, water table is going up
+        IF(HO.LE.TOPU.AND.HO.GE.BOTU) THEN
+C---------Old head is in this unit
+          CRHS=CRHS+CO*(HO-TOPU)
+        ELSEIF(HO.LE.BOTU) THEN
+C---------Old head is below this unit
+          CRHS=CRHS+CO*(BOTU-TOPU)
+        ENDIF
+      ELSEIF(HO.LE.TOP.AND.HN.LE.TOP) THEN
+C-------Layer does not convert, just use SC2
+        IF(HO.GE.HN) THEN
+C---------Water table is coming down
+          IF(HO.LE.TOPU.AND.HO.GE.BOTU .AND.
+     &       HN.LE.TOPU.AND.HN.GE.BOTU) THEN
+C------------Old and new heads are both in this unit
+            CRHS=CRHS+CO*(HO-HN)
+          ELSEIF(HO.LE.TOPU.AND.HO.GE.BOTU) THEN
+C-----------Old head is in this unit
+            CRHS=CRHS+CO*(HO-BOTU)
+          ELSEIF(HN.LE.TOPU.AND.HN.GE.BOTU) THEN
+C-----------New head is in this unit
+            CRHS=CRHS+CO*(TOPU-HN)
+          ELSEIF(HO.GE.TOPU.AND.HN.LE.BOTU) THEN
+C-----------Old head is above and new head is below this unit
+            CRHS=CRHS+CO*(TOPU-BOTU)
+          ENDIF
+        ELSE
+C---------Water table is going up
+          IF(HO.LE.TOPU.AND.HO.GE.BOTU .AND.
+     &       HN.LE.TOPU.AND.HN.GE.BOTU) THEN
+C-----------Old and new heads are both in this unit
+            CRHS=CRHS+CO*(HO-HN)
+          ELSEIF(HO.LE.TOPU.AND.HO.GE.BOTU) THEN
+C-----------Old head is in this unit
+            CRHS=CRHS+CO*(HO-TOPU)
+          ELSEIF(HN.LE.TOPU.AND.HN.GE.BOTU) THEN
+C-----------New head is in this unit
+            CRHS=CRHS+CO*(BOTU-HN)
+          ELSEIF(HO.LE.BOTU.AND.HN.GE.TOPU) THEN
+C-----------Old head is below and new head is above this unit
+            CRHS=CRHS+CO*(BOTU-TOPU)
+          ENDIF
+        ENDIF
+      ENDIF
+C
+C4------RETURN
+      RETURN
+      END
+c======================================================================
+      SUBROUTINE SSEN1HUF1HKFND(NCOL,NROW,NHUF,HUFTHK,IZON,NZONAR,
+     &  RMLT,NMLTAR,IOUT,I,J,NNU,HKCR,HKCC)
+C
+C     ******************************************************************
+C     Find the horizontal hydraulic conductivity of a hydrogeologic unit.
+C     ******************************************************************
+C
+C        SPECIFICATIONS:
+C     ------------------------------------------------------------------
+      DIMENSION RMLT(NCOL,NROW,NMLTAR),
+     &          IZON(NCOL,NROW,NZONAR), HUFTMP(200),
+     &          HUFTHK(NCOL,NROW,NHUF,2)
+      COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
+C
+      HUFTMP(NNU)=0.0
+      CALL SGWF1HUF1POP(HUFTMP,'HK  ',NCOL,NROW,NHUF,I,J,HUFTHK,
+     &                  IZON,NZONAR,RMLT,NMLTAR,NNU,IOUT)
+      HKCR = HUFTMP(NNU)
+      HUFTMP(NNU)=0.0
+      CALL SGWF1HUF1POP(HUFTMP,'HANI',NCOL,NROW,NHUF,I,J,HUFTHK,
+     &                  IZON,NZONAR,RMLT,NMLTAR,NNU,IOUT)
+      IF(HGUHANI(NNU).GT.0..AND.HUFTMP(NNU).EQ.0.) THEN
+        HANI = HGUHANI(NNU)
+      ELSE
+        HANI = HUFTMP(NNU)
+      ENDIF
+      HKCC = HKCR * HANI
+C
+C4------RETURN
+      RETURN
+      END
+c======================================================================
+      SUBROUTINE SSEN1HUF1HDFND(HUFTHK,NCOL,NROW,NHUF,HD,I,J,NNU)
+C
+C     ******************************************************************
+C     Find the hydrogeologic unit that an elevation is in.
+C     ******************************************************************
+C
+C        SPECIFICATIONS:
+C     ------------------------------------------------------------------
+      REAL HUFTHK(NCOL,NROW,NHUF,2)
+C
+C-------FIRST, FIND UNIT THAT HEAD IS IN
+      NNU = 0
+      DO 70 NU = 1,NHUF
+        TOPU=HUFTHK(J,I,NU,1)
+        THCKU=HUFTHK(J,I,NU,2)
+        IF(ABS(THCKU).LT.1E-4) GOTO 70
+        BOTU=TOPU-THCKU
+        IF(BOTU.LT.HD .AND. HD.LT.TOPU) THEN
+          NNU = NU
+          GOTO 80
+        ENDIF
+   70 CONTINUE
+C
+C4------RETURN
+   80 RETURN
       END
 c======================================================================
       SUBROUTINE SSEN1HUF1THK(TOP,BOT,TOPU,THKU,THCK)
@@ -489,6 +704,7 @@ C     ------------------------------------------------------------------
       ZERO = 0.0
       HP = ZERO
       CO = ZERO
+      C = ZERO
       DR = DELR(J)
       DC = DELC(I)
       II = 0
@@ -556,8 +772,8 @@ C-----CHANGE VALUE TO MACHINE ZERO -- ASK STEVE
       END
 C=======================================================================
       SUBROUTINE SSEN1HUF1CHN(CO,TH0,TH1,HP,I,J,K,RMLT0,
-     &                  HK,HKCC,NCOL,NROW,NLAY,DELC,DELR,H,BOT,TOP,NZ,
-     &                  NM,ICL,IZON,NZONAR,RMLT,NMLTAR,C,TH0L,TH1L)
+     &  HK,HKCC,NCOL,NROW,NLAY,DELC,DELR,H,BOT,TOP,NZ,
+     &  NM,ICL,IZON,NZONAR,RMLT,NMLTAR,C,TH0L,TH1L,HUFTHK,NHUF,NU)
 C     ******************************************************************
 C     CALCULATE THE DERIVATIVE OF THE HORIZONTAL CONDUCTANCES WITH
 C     RESPECT TO HORIZONTAL ANISOTROPY, FOR HARMONIC MEAN CONDUCTANCES
@@ -569,7 +785,8 @@ C     ------------------------------------------------------------------
       INTEGER I, IND, J, K, IZON, NCOL, NLAY, NROW, NZ
       DIMENSION DELC(NROW), DELR(NCOL), HK(NCOL,NROW,NLAY),
      & BOT(NCOL,NROW), TOP(NCOL,NROW),HKCC(NCOL,NROW,NLAY),
-     & RMLT(NCOL,NROW,NMLTAR),IZON(NCOL,NROW,NZONAR)
+     & RMLT(NCOL,NROW,NMLTAR),IZON(NCOL,NROW,NZONAR), HUFTMP(200),
+     & HUFTHK(NCOL,NROW,NHUF,2)
       DOUBLE PRECISION H(NCOL*NROW*NLAY), HP, H0
       COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
       INCLUDE 'param.inc'
@@ -577,6 +794,7 @@ C     ------------------------------------------------------------------
       ZERO = 0.0
       HP = ZERO
       CO = ZERO
+      C = ZERO
       DR = DELR(J)
       DC = DELC(I)
       IND = J + NCOL*(I-1) + NROW*NCOL*(K-1)
@@ -609,8 +827,15 @@ C     ------------------------------------------------------------------
       IF(LTHUF(K).NE.0.AND.HP.LT.TOP1L) TH1L=HP-BOT(J,I+1)
       T0 = HKCC(J,I,K)*TH0L
       T1 = HKCC(J,I+1,K)*TH1L
-      DT0 = HK(J,I,K)*RMLT0*TH0
-      DT1 = HK(J,I+1,K)*RMLT1*TH1
+C--Get horizontal hydraulic conductivity of this unit
+      CALL SSEN1HUF1HKFND(NCOL,NROW,NHUF,HUFTHK,IZON,
+     &                    NZONAR,RMLT,NMLTAR,IOUT,
+     &                    I,J,NU,HKU0,HKCCUO)
+      CALL SSEN1HUF1HKFND(NCOL,NROW,NHUF,HUFTHK,IZON,
+     &                    NZONAR,RMLT,NMLTAR,IOUT,
+     &                    I+1,J,NU,HKU1,HKCCU1)
+      DT0 = HKU0*RMLT0*TH0
+      DT1 = HKU1*RMLT1*TH1
 C U AND V ARE THE NUMERATOR AND DENOMINATOR, RESPECTIVELY, OF THE
 C CONDUCTANCE TERM DIVIDED BY WHAT IS ALREADY IN FAC.
 C DU AND DV ARE THEIR DERIVATIVES WITH RESPECT TO THE PARAMETER.
@@ -669,21 +894,20 @@ C-----First, get (additive) KV for this unit
 C---Vertical Anisotropy
         IF(PID.EQ.'VANI') THEN
 C-----First, get (additive) KH for this unit
-        HUFTMP(NU)=0.0
-        CALL SGWF1HUF1POP(HUFTMP,'HK  ',NCOL,NROW,NHUF,I,J,HUFTHK,
+          HUFTMP(NU)=0.0
+          CALL SGWF1HUF1POP(HUFTMP,'HK  ',NCOL,NROW,NHUF,I,J,HUFTHK,
      &                    IZON,NZONAR,RMLT,NMLTAR,NU,IOUT)
-C          CALL SGWF1HUF1PSRCH('HK  ',NU,NZ,J,I,NROW,NCOL,IZON,
-C     1                  NZONAR,BNP,RMLT,NMLTAR,RMLT1,IOUT)
           COD=DELR(J)*DELC(I)*(HUFTMP(NU)/(RMLT0*B(IP)))**2.
           CO=-(CV(J,I,K)**2)*THK1*RMLT0*(HUFTMP(NU)/
      &          (RMLT0*B(IP))**2)/COD
+C---Horizontal hydraulic conductivity
         ELSEIF(PID.EQ.'HK') THEN
 C-----First, get VANI for this unit
-        HUFTMP(NU)=0.0
-        CALL SGWF1HUF1POP(HUFTMP,'VANI',NCOL,NROW,NHUF,I,J,HUFTHK,
+          HUFTMP(NU)=0.0
+          CALL SGWF1HUF1POP(HUFTMP,'VANI',NCOL,NROW,NHUF,I,J,HUFTHK,
      &                    IZON,NZONAR,RMLT,NMLTAR,NU,IOUT)
-C          CALL SGWF1HUF1PSRCH('VANI',NU,NZ,J,I,NROW,NCOL,IZON,
-C     1                  NZONAR,BNP,RMLT,NMLTAR,RMLT1,IOUT)
+          IF(HGUVANI(NU).GT.0..AND.HUFTMP(NU).EQ.0.)
+     &          HUFTMP(NU) = HGUVANI(NU)
           COD = DELR(J)*DELC(I)*(RMLT0*B(IP)/(HUFTMP(NU)))**2.
           CO = ((CV(J,I,K)**2)*THK1*RMLT0/(HUFTMP(NU)))/COD
         ENDIF

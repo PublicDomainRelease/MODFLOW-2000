@@ -1,0 +1,208 @@
+readme.unix
+
+
+                     MODFLOW-2000 - Version: 1.8 05/01/2002
+         Three-dimensional finite-difference ground-water flow model
+
+
+NOTE: Any use of trade, product or firm names is for descriptive purposes 
+      only and does not imply endorsement by the U.S. Government.
+
+This version of MODFLOW-2000 is packaged for computers using the Unix
+operating system.
+
+This version of MODFLOW is referred to as MODFLOW-2000 in order to
+distinguish it from older versions.  See the file doc\Mf2k.txt for
+descriptions, references, and additional contacts for this software.
+Instructions for installation, execution, and testing are provided
+below.
+
+
+
+                            TABLE OF CONTENTS
+
+                         A. DISTRIBUTION FILE
+                         B. EXTRACTING FILES
+                         C. COMPILING
+                         D. INSTALLING
+                         E. RUNNING THE SOFTWARE
+                         F. TESTING
+
+
+A. DISTRIBUTION FILE
+
+The following distribution file is for use on computers running Unix:
+
+         mf2k1_8.tar.Z
+
+The distribution file contains:
+
+          Source code for MODFLOW-2000.
+          Source code for mf96to2k and mfpto2k data conversion 
+                   programs.
+          Source code for the BEALE-2000, YCINT-2000, RESAN-2000, 
+                   HYDPOST, and HYDFMT postprocessors.
+          MODFLOW-2000 user guides in pdf files.
+          Test data sets.
+
+
+B. EXTRACTING FILES
+
+The distribution file contains numerous individual files that have been
+combined into one file using the tar command and compressed using the
+compress command.  To extract the individual files, the distribution file
+mf2k1_8.tar.Z first must be uncompressed using the command:
+
+uncompress mf2k1_8.tar.Z
+
+Execution of the uncompress command will produce the file mf2k1_8.tar.  This
+file is used to generate the individual files with the command:
+
+tar -xf mf2k1_8.tar
+
+Execution of the tar command will generate the following directory structure:
+
+
+   |
+   |--mf2k.1_8
+   |    |--data      ; standard data sets used in verification tests
+   |    |--doc       ; documentation files
+   |    |--src       ; source code
+   |         |
+   |         |--mf2k      ; MODFLOW-2000 source code
+   |         |    |
+   |         |    |serial    ; serial processing source code
+   |         |    |parallel  ; parallel processing source code
+   |         |
+   |         |--beale2k   ; BEALE-2000 source code
+   |         |--ycint2k   ; YCINT-2000 source code
+   |         |--resan2k   ; RESAN-2000 source code
+   |         |--mf96to2k  ; mf96to2k source code
+   |         |--mfpto2k   ; mfpto2k source code
+   |         |--hydprgm   ; HYDPOST and HYDFMT source code
+   |    |--test      ; empty -- for use in testing MODFLOW-2000
+
+
+It is recommended that no user files are kept in the mf2k.1_8 directory
+structure.  If you do plan to put files in the mf2k.1_8 directory
+structure, do so only by creating subdirectories.
+
+Included in directory mf2k.1_8\doc are various documentation files.  Some of
+them are Portable Document Format (PDF) files. The PDF files are readable
+and printable on various computer platforms using Acrobat Reader from Adobe.
+The Acrobat Reader is freely available from the following World Wide Web
+sites:
+      http://www.adobe.com/
+      http://www.shareware.com/
+
+
+C. COMPILING
+
+The source code provided in the mf2k.1_8\src directories must be compiled to
+produce executable files for use on computers running Unix.  However, no
+support can be provided for users generating their own versions of the
+source code.  In general, the requirements are a Fortran-90 or -95 compiler
+and the knowledge of using the compiler.  When compiling MODFLOW-2000 for
+use on a serial computer, the file mf2k.1_8\src\mf2k\serial\para-non.f must
+be compiled in addition to the other MODFLOW-2000 source files.
+
+
+D. INSTALLING
+
+To make the executable versions of the programs accessible from any
+directory, the directory(ies) containing the executables (generated when the
+programs are compiled) should be included in the PATH environment variable.
+One option would be to put all the executable files in this release into an
+mf2k.1_8/bin directory.  Also, if a prior release of MODFLOW-2000 is
+installed on your system, the directory containing the executables for the
+prior release should be removed from the PATH environment variable.
+
+As an alternative, all of the executable files can be copied into a
+directory already included in the PATH environment variable.
+
+The method for modifying the PATH environment variable depends on the shell
+program that you use to interact with the operating system.  Please ask your
+system administrator for instructions for your computing environment.
+
+
+E. RUNNING THE SOFTWARE
+
+The data arrays in MODFLOW-2000 are dynamically allocated, so models
+are not limited by hard-coded array limits. However, it is best to have
+enough random-access memory (RAM) available to hold all of the required
+data.  If there is less available RAM than this, the program will use
+virtual memory, but this slows computations significantly.
+
+After the executable files are installed in a directory that is included in
+your PATH, the programs are initiated in a command-prompt window using the
+commands:
+
+          mf2k [Fname]
+          mf96to2k
+          mfpto2k
+          beale2k [Fname]
+          resan2k [Fname]
+          ycint2k [Fname]
+          hydpost
+          hydfmt
+
+The optional Fname argument to some of the programs is the name file. 
+If no argument is used, the user is prompted to enter the name file. 
+If the name file ends in ".nam", then the file name can be specified
+without including ".nam".  For example, if the name file is named
+abc.nam, then the simulation can be run by entering:
+
+          mf2k abc
+
+
+F. TESTING
+
+Test data sets are provided to verify that MODFLOW-2000 is correctly
+installed and running on the system.  The tests may also be looked at as
+examples of how to use the program.  The directory MF2K.1_8\data contains
+the input data and expected results for each test.  To run one of the test
+cases (for example, the twri test), cd to the "test" directory and execute
+MODFLOW-2000 in the following form:
+
+mf2k ../data/twri
+
+The output of the test run will be generated in the test directory.  The
+user should compare the output files in the test directory to the
+corresponding files provided in the data directory.  Numerous small
+numerical differences are expected because the output files in the data
+directory were generated on a personal computer.  Different compilers and
+computer hardware produce slightly different results due to the precision
+with which computations are made.  The "diff" utility (not supplied with
+MODFLOW, but generally available on Unix systems) may be useful for
+comparing output files.
+
+The tests are described in the table below.
+
+
+test name      description of test
+------------   -------------------------------------------------------
+ twri          Example problem in OFR 00-92 without parameters
+ twrip         Example problem in OFR 00-92 with parameters
+ tc1obsen      Test Case 1 in OFR 00-184 with OBS and SEN, but not PES
+ tc1           Test Case 1 in OFR 00-184 with PES and noise in
+               observations
+ tc1-TRUE      Test Case 1 in OFR 00-184 with PES and without
+               observation noise 
+ tc2           Test Case 2 in OFR 00-184
+ tc3           Similar to Problem 4.2-2 in TWRI 3-B4 [Cooley and
+               Naff (1990)]
+ bcf2ss        Problem 1 in OFR 91-536 converted to MODFLOW-2000
+ str           Example problem in OFR 88-729 converted to MODFLOW-2000
+ fhb           Example problem in OFR 97-571 converted to MODFLOW-2000
+ restest       Example problem in OFR 96-364 converted to MODFLOW-2000
+ etsdrt        Example described in OFR 00-466
+ tc1huf        Test case is described in OFR 00-342
+ tc2hufv4      Test case is described in OFR 00-342
+ ibs2k         Storage-depletion test problem described in TWRI 6-A2
+               converted to MODFLOW-2000
+ l1a2k         Transient version of Test Simulation 1 in WRIR 00-4167
+               converted to MODFLOW-2000
+ l1b2k         Steady-state version of Test Simulation 1 in WRIR 00-4167
+               converted to MODFLOW-2000
+ tvp           Undocumented test case demonstrating the use of time-
+               varying parameters.

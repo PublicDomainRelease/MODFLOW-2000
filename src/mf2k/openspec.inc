@@ -15,14 +15,14 @@ C
 C  ACCESS specifier --
 C
 C    Standard Fortran -- Use unless there is a reason to do otherwise.
-C      DATA ACCESS/'SEQUENTIAL'/
+      DATA ACCESS/'SEQUENTIAL'/
 C
 C    Non-standard Fortran that causes code compiled by Lahey or Absoft
 C    Fortran on personal computers to use unstructured non-formatted
 C    files. This may make it possible for the non-formatted files used
 C    by MODFLOW to be used with programs that are compiled by other
 C    compilers.
-      DATA ACCESS/'TRANSPARENT'/
+C      DATA ACCESS/'TRANSPARENT'/
 C
 C  FORM specifier --
 C

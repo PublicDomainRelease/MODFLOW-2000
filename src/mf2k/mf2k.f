@@ -1,4 +1,4 @@
-C     Last change:  ERB   5 Dec 2001    9:19 am
+C     Last change:  ERB   3 May 2002   10:07 am
 C     ******************************************************************
 C     MAIN CODE FOR U.S. GEOLOGICAL SURVEY MODULAR MODEL -- MODFLOW
 C           BY MICHAEL G. MCDONALD AND ARLEN W. HARBAUGH
@@ -29,7 +29,7 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
 C-------ASSIGN VERSION NUMBER AND DATE
       CHARACTER*40 VERSION
-      PARAMETER (VERSION='1.7 12/04/2001')
+      PARAMETER (VERSION='1.8 05/01/2002')
 C
 C-----DECLARE ARRAY TYPES
       REAL GX, X, RX, XHS
@@ -205,14 +205,15 @@ C  DEFINE (DF) PROCEDURE
      &                NDMH,NDMHAR,NH,NOBADV,NQ,NQC,NQT,NQT1,NQTDR,
      &                NQTGB,NQTRV,NQTST,NQTCH,NT,NTT2,IOBSUM,LCX,
      &                LCBUF2,NDAR,LCOBDRT,LCSSDT,NQTDT,IOWTQDT,LCSSSF,
-     &                NQTSF,LCOBSFR,IOWTQSF,NHT)
+     &                NQTSF,LCOBSFR,IOWTQSF,NHT,LCRSQA,LCRSPA,LCBUF1,
+     &                LCH,LCHOBS,LCWTQS,LCHANI)
       CALL SEN1BAS6DF(ISENALL,ISEN,IPRINTS,IUNIT(25),LCB1,LCLN,LCSV,NPE,
      &                NPLIST,RCLOSE,IUHEAD,MXSEN,LCSNEW,IOUTG,LCBSCA)
       CALL PES1BAS6DF(IBEFLG,IFO,IOUB,IPES,IPR,IPRAR,IPRINT,ITERPF,
      &                ITERPK,ITMXP,IUNIT(26),IYCFLG,JMAX,LASTX,LCDMXA,
      &                LCNIPR,LCNPAR,LCPRM,LCWP,LCWTP,LCWTPS,LCW3,LCW4,
      &                MPR,MPRAR,NPNGAR,SOSC,SOSR,BEFIRST,LCBPRI,LCPARE,
-     &                LCRSQA,LCRSPA,LCAMPA,LCAMCA,LCAAP)
+     &                LCAMPA,LCAMCA,LCAAP)
 C
 C  GLOBAL ALLOCATE (AL) PROCEDURE
       CALL GLO1BAS6AL(IUNIT(24),NCNFBD,NBOTM,NCOL,NROW,NLAY,LCBOTM,
@@ -292,7 +293,7 @@ C-----ALLOCATE SPACE FOR PARAMETER-ESTIMATION PROCESS
      &                    SOSC,IOSTAR,NFIT,SOSR,IPRC,IPRINT,LPRINT,CSA,
      &                    FCONV,LASTX,ISEN,IPES,IPAR,IBEFLG,IYCFLG,
      &                    LCDMXA,LCNPAR,LCBPRI,RMARM,IAP,LCAAP,
-     &                    LCAMCA,LCRSQA,LCRSPA,LCAMPA,RMAR)
+     &                    LCAMCA,LCAMPA,RMAR)
 C-----READ INPUT RELATED TO ALL OBSERVATIONS AND OPEN
 C     PARAMETER-VALUE FILE ON IOUB
       IF (IOBS.GT.0)
@@ -328,12 +329,12 @@ C-----ALLOCATE SPACE FOR ADVECTIVE TRAVEL OBSERVATIONS (ADV PACKAGE)
      &    CALL OBS1ADV2AL(IUNIT(29),NPTH,NTT2,IOUTT2,KTDIM,KTFLG,KTREV,
      &                    ADVSTP,IOUTG,LCICLS,LCPRST,LCTT2,LCPOFF,
      &                    LCNPNT,ND,ISUMX,ISUMIX,NROW,NCOL,NLAY,IUNIT,
-     &                    LCDRAI,MXDRN,NDRAIN,LCRIVR,MXRIVR,LCBNDS,
-     &                    MXBND,NBOUND,LCIRCH,LCRECH,ICSTRM_,LCSTRM_,
-     &                    MXSTRM,NSTREM,IOBSUM,LCOBADV,NOBADV,ITMXP,
-     &                    LCSSAD,NDRNVL,NGHBVL,NRIVVL,NRIVER,IOBS,FSNK,
-     &                    NBOTM,IUNIT(23),IUNIT(37),LCHANI,LCHKCC,
-     &                    LCHUFTHK,NHUF)
+     &                    NIUNIT,LCDRAI,MXDRN,NDRAIN,LCRIVR,MXRIVR,
+     &                    LCBNDS,MXBND,NBOUND,LCIRCH,LCRECH,ICSTRM_,
+     &                    LCSTRM_,MXSTRM,NSTREM,IOBSUM,LCOBADV,NOBADV,
+     &                    ITMXP,LCSSAD,NDRNVL,NGHBVL,NRIVVL,NRIVER,IOBS,
+     &                    FSNK,NBOTM,LCHANI,LCHKCC,
+     &                    LCHUFTHK,NHUF,LCWELL,NWELVL,MXWELL,NWELLS)
 C-----ALLOCATE SPACE FOR ALL OBSERVATIONS AND FOR RESIDUALS RELATED TO
 C     OBSERVATIONS AND PRIOR INFORMATION. ALSO INITIALIZE SOME ARRAYS
       IF (IOBS.GT.0)
@@ -344,7 +345,7 @@ C     OBSERVATIONS AND PRIOR INFORMATION. ALSO INITIALIZE SOME ARRAYS
      &                    MOBSAR,LCIBT,LCNQOB,LCNQCL,LCIQOB,LCQCLS,
      &                    LCIPLO,LCIPLP,IPR,MPR,IPRAR,LCBUF1,LCSSTO,
      &                    ITMXP,LBUFF,LCOBSE,ISOLDX,ISOLDZ,ISOLDI,MXSEN,
-     &                    LCBUF2,NDAR,NHT)
+     &                    LCBUF2,NDAR,NHT,LCRSQA,LCRSPA)
 C
 C------DYNAMICALLY ALLOCATE X, Z, IX, XHS, NIPRNAM, EQNAM, NAMES, AND
 C      OBSNAM ARRAYS FOR OBS, SEN, AND PES PROCESSES; SOLVERS; AND
@@ -549,15 +550,15 @@ C4------ALLOCATE SPACE IN RX AND IR ARRAYS.
         IF(IUNIT(2).GT.0)
      1      CALL GWF1WEL6AL(ISUMRX,LCWELL,MXWELL,NWELLS,IUNIT(2),IOUT,
      2                      IWELCB,NWELVL,IWELAL,IFREFM,NPWEL,IPWBEG,
-     3                      NNPWEL)
+     3                      NNPWEL,NOPRWL)
         IF(IUNIT(3).GT.0)
      1      CALL GWF1DRN6AL(ISUMRX,LCDRAI,MXDRN,NDRAIN,IUNIT(3),IOUT,
      2                      IDRNCB,NDRNVL,IDRNAL,IFREFM,NPDRN,IDRNPB,
-     3                      NNPDRN)
+     3                      NNPDRN,NOPRDR)
         IF(IUNIT(4).GT.0)
      1      CALL GWF1RIV6AL(ISUMRX,LCRIVR,MXRIVR,NRIVER,IUNIT(4),IOUT,
      2                      IRIVCB,NRIVVL,IRIVAL,IFREFM,NPRIV,IRIVPB,
-     3                      NNPRIV)
+     3                      NNPRIV,NOPRRV)
         IF(IUNIT(5).GT.0)
      1      CALL GWF1EVT6AL(ISUMRX,ISUMIR,LCIEVT,LCEVTR,LCEXDP,LCSURF,
      2                      NCOL,NROW,NEVTOP,IUNIT(5),IOUT,IEVTCB,
@@ -565,7 +566,7 @@ C4------ALLOCATE SPACE IN RX AND IR ARRAYS.
         IF(IUNIT(7).GT.0)
      1      CALL GWF1GHB6AL(ISUMRX,LCBNDS,MXBND,NBOUND,IUNIT(7),IOUT,
      2                      IGHBCB,NGHBVL,IGHBAL,IFREFM,NPGHB,IGHBPB,
-     3                      NNPGHB)
+     3                      NNPGHB,NOPRGB)
         IF(IUNIT(8).GT.0)
      1      CALL GWF1RCH6AL(ISUMRX,ISUMIR,LCIRCH,LCRECH,NRCHOP,NCOL,
      2                      NROW,IUNIT(8),IOUT,IRCHCB,IFREFM,NPRCH,
@@ -585,14 +586,14 @@ C4------ALLOCATE SPACE IN RX AND IR ARRAYS.
      2                  NROW,NLAY,IIBSCB,IIBSOC,IUNIT(19),IOUT,IBSDIM)
         IF(IUNIT(20).GT.0)
      1      CALL GWF1CHD6AL(ISUMRX,LCCHDS,NCHDS,MXCHD,IUNIT(20),IOUT,
-     2                      NCHDVL,IFREFM,NPCHD,IPCBEG,NNPCHD)
+     2                      NCHDVL,IFREFM,NPCHD,IPCBEG,NNPCHD,NOPRCH)
         IF (IUNIT(17).GT.0)
      &      CALL RES1AL(ISUMRX,LCIRES,LCIRSL,LCBRES,LCCRES,LCBBRE,
      &                  LCHRES,LCHRSE,IUNIT(17),IOUT,NRES,IRESCB,NRESOP,
      &                  IRESPT,NPTS,NCOL,NROW,ISUMIR)
         IF (IUNIT(21).GT.0)
      &      CALL GWF1HFB6AL(IUNIT(21),IOUT,ISUMRX,LCHFB,MXACTFB,NHFBNP,
-     &                      NPHFB,MXHFB,IHFB)
+     &                      NPHFB,MXHFB,IHFB,NOPRHB)
 clak
         IF(IUNIT(22).GT.0)
      1               CALL LAK3AL(ISUMRX,ISUMIR,LCCOND,ICLAKE,MXLKND,
@@ -619,7 +620,7 @@ clak
         IF(IUNIT(40).GT.0)
      &      CALL GWF1DRT1AL(ISUMRX,LCDRTF,MXDRT,NDRTCL,IUNIT(40),IOUT,
      &                      IDRTCB,NDRTVL,IDRTAL,IFREFM,NPDRT,IDRTPB,
-     &                      NDRTNP,IDRTFL)
+     &                      NDRTNP,IDRTFL,NOPRDT)
         IF (IUNIT(43).GT.0)
      &      CALL HYD1BAS6AL(ISUMRX,LCHYDM,NHYDM,IHYDMUN,HYDNOH,
      &                      IUNIT(43),IOUT)
@@ -667,26 +668,27 @@ C-------SUBSTITUTE AND PREPARE FOR PACKAGES WITH NO REWIND
      3                      X(LCHK),X(LCVKA),X(LCSC1),ITRSS,NCOL,NROW,
      4                      NLAY,IOUT,X(LCWETD),NHUF,NBOTM,GX(LCRMLT),
      5                      IG(LCIZON),NMLTAR,NZONAR,X(LCHUFTHK),
-     6                      X(LCHKCC),HDRY,0,0,0,IX(LCHGUF),X(LCHUFTMP))
+     6                      X(LCHKCC),HDRY,0,0,0,IX(LCHGUF),X(LCHUFTMP),
+     7                      IWETIT,IHDWET,WETFCT)
 C---------FLOW-SIMULATION OPTIONS
         IF(IUNIT(2).GT.0)
      1      CALL GWF1WEL6RQ(IUNIT(2),IOUTG,NWELVL,IWELAL,NCOL,NROW,NLAY,
      2                      NPWEL,RX(LCWELL),IPWBEG,MXWELL,IFREFM,
-     3                      ITERPK,INAMLOC)
+     3                      ITERPK,INAMLOC,NOPRWL)
         IF(IUNIT(3).GT.0)
      1      CALL GWF1DRN6RQ(IUNIT(3),IOUTG,NDRNVL,IDRNAL,NCOL,NROW,NLAY,
      2                      NPDRN,RX(LCDRAI),IDRNPB,MXDRN,IFREFM,ITERPK,
-     &                      INAMLOC)
+     &                      INAMLOC,NOPRDR)
         IF(IUNIT(4).GT.0)
      1      CALL GWF1RIV6RQ(IUNIT(4),IOUTG,NRIVVL,IRIVAL,NCOL,NROW,NLAY,
      2                      NPRIV,RX(LCRIVR),IRIVPB,MXRIVR,IFREFM,
-     3                      ITERPK,INAMLOC)
+     3                      ITERPK,INAMLOC,NOPRRV)
         IF(IUNIT(5).GT.0)
      &      CALL GWF1EVT6RQ(IUNIT(5),IOUTG,NPEVT,ITERPK,INAMLOC)
         IF(IUNIT(7).GT.0)
      1      CALL GWF1GHB6RQ(IUNIT(7),IOUTG,NGHBVL,IGHBAL,NCOL,NROW,NLAY,
      2                      NPGHB,RX(LCBNDS),IGHBPB,MXBND,IFREFM,ITERPK,
-     &                      INAMLOC)
+     &                      INAMLOC,NOPRGB)
         IF(IUNIT(8).GT.0)
      &      CALL GWF1RCH6RQ(IUNIT(8),IOUTG,NPRCH,ITERPK,INAMLOC)
         IF(IUNIT(16).GT.0)
@@ -706,20 +708,20 @@ C---------FLOW-SIMULATION OPTIONS
         IF(IUNIT(20).GT.0)
      1      CALL GWF1CHD6RQ(IUNIT(20),IOUTG,NCHDVL,NCOL,NROW,NLAY,NPCHD,
      2                      RX(LCCHDS),IPCBEG,MXCHD,IFREFM,ITERPK,
-     &                      INAMLOC)
+     &                      INAMLOC,NOPRCH)
 C
         IF (IUNIT(21).GT.0)
      &      CALL GWF1HFB6RP(GX(LCBOTM),GX(LCCR),GX(LCCC),GX(LCDELR),
      &                      GX(LCDELC),RX(LCHFB),IUNIT(21),MXACTFB,
      &                      NBOTM,NCOL,NROW,NLAY,NODES,NHFBNP,NHFB,
      &                      NPHFB,IOUT,IOUTG,ITERPK,MXHFB,IHFB,LAYHDT,
-     &                      INAMLOC)
+     &                      INAMLOC,NOPRHB)
         IF(IUNIT(39).GT.0)
      &      CALL GWF1ETS1RQ(IUNIT(39),IOUTG,NPETS,ITERPK,INAMLOC)
         IF(IUNIT(40).GT.0)
      &      CALL GWF1DRT1RQ(IUNIT(40),IOUTG,NDRTVL,IDRTAL,NCOL,NROW,
      &                      NLAY,NPDRT,RX(LCDRTF),IDRTPB,MXDRT,IFREFM,
-     &                      ITERPK,IDRTFL,INAMLOC)
+     &                      ITERPK,IDRTFL,INAMLOC,NOPRDT)
 clak
 C  REVISED IF STATEMENT
 C       IF(IUNIT(46).GT.0.AND.(IUNIT(44).GT.0.OR.IUNIT(22).GT.0))
@@ -758,15 +760,15 @@ C----------READ USING PACKAGE READ AND PREPARE MODULES.
           IF(IUNIT(2).GT.0)
      &        CALL GWF1WEL6RP(RX(LCWELL),NWELLS,MXWELL,IUNIT(2),
      1                        IOUT,NWELVL,IWELAL,IFREFM,NCOL,NROW,NLAY,
-     2                        NNPWEL,NPWEL,IPWBEG)
+     2                        NNPWEL,NPWEL,IPWBEG,NOPRWL)
           IF(IUNIT(3).GT.0)
      &        CALL GWF1DRN6RP(RX(LCDRAI),NDRAIN,MXDRN,IUNIT(3),
      1                        IOUT,NDRNVL,IDRNAL,IFREFM,NCOL,NROW,NLAY,
-     2                        NNPDRN,NPDRN,IDRNPB)
+     2                        NNPDRN,NPDRN,IDRNPB,NOPRDR)
           IF(IUNIT(4).GT.0)
      &        CALL GWF1RIV6RP(RX(LCRIVR),NRIVER,MXRIVR,IUNIT(4),IOUT,
      1                        NRIVVL,IRIVAL,IFREFM,NCOL,NROW,NLAY,
-     2                        NNPRIV,NPRIV,IRIVPB)
+     2                        NNPRIV,NPRIV,IRIVPB,NOPRRV)
           IF(IUNIT(5).GT.0)
      &        CALL GWF1EVT6RP(NEVTOP,IR(LCIEVT),RX(LCEVTR),RX(LCEXDP),
      1                        RX(LCSURF),GX(LCDELR),GX(LCDELC),NCOL,
@@ -776,7 +778,7 @@ C----------READ USING PACKAGE READ AND PREPARE MODULES.
           IF(IUNIT(7).GT.0)
      &        CALL GWF1GHB6RP(RX(LCBNDS),NBOUND,MXBND,IUNIT(7),
      1                        IOUT,NGHBVL,IGHBAL,IFREFM,NCOL,NROW,NLAY,
-     2                        NNPGHB,NPGHB,IGHBPB)
+     2                        NNPGHB,NPGHB,IGHBPB,NOPRGB)
           IF(IUNIT(8).GT.0)
      &        CALL GWF1RCH6RP(NRCHOP,IR(LCIRCH),RX(LCRECH),GX(LCDELR),
      1                        GX(LCDELC),NROW,NCOL,IUNIT(8),IOUT,IFREFM,
@@ -796,7 +798,7 @@ C----------READ USING PACKAGE READ AND PREPARE MODULES.
           IF(IUNIT(20).GT.0)
      &        CALL GWF1CHD6RP(RX(LCCHDS),NCHDS,MXCHD,IG(LCIBOU),NCOL,
      &                        NROW,NLAY,IUNIT(20),IOUT,NCHDVL,IFREFM,
-     &                        NNPCHD,NPCHD,IPCBEG)
+     &                        NNPCHD,NPCHD,IPCBEG,NOPRCH)
 clak
           IF(IUNIT(22).GT.0) THEN
             CALL LAK3RP(IR(ICLAKE),LKNODE,MXLKND,
@@ -838,7 +840,7 @@ clak
           IF(IUNIT(40).GT.0)
      &        CALL GWF1DRT1RP(RX(LCDRTF),NDRTCL,MXDRT,IUNIT(40),
      &                        IOUT,NDRTVL,IDRTAL,IFREFM,NCOL,NROW,NLAY,
-     &                        NDRTNP,NPDRT,IDRTPB,IDRTFL,NRFLOW)
+     &                        NDRTNP,NPDRT,IDRTPB,IDRTFL,NRFLOW,NOPRDT)
           IF(IUNIT(43).GT.0 .AND. IUNIT(18).GT.0 .AND. KPER.EQ.1)
      &        CALL HYD1STR6RP(IR(ICSTRM_),RX(LCHYDM),NHYDM,NUMH,
      &                        GX(LCDELR),GX(LCDELC),NCOL,NROW,NLAY,
@@ -932,7 +934,7 @@ C7C2A---FORMULATE THE FINITE DIFFERENCE EQUATIONS.
      &                            NHUF,GX(LCRMLT),IG(LCIZON),NMLTAR,
      &                            NZONAR,X(LCHUFTHK),X(LCHKCC),HDRY,
      &                            KKITER,KSTP,KPER,X(LCHUFTMP),
-     &                            IX(LCHGUF))
+     &                            IX(LCHGUF),IWETIT,IHDWET,WETFCT)
               IF (IUNIT(21).GT.0)
      &            CALL GWF1HFB6FM(GX(LCBOTM),GX(LCCC),GX(LCCR),
      &                            GX(LCDELC),GX(LCDELR),RX(LCHFB),
@@ -1591,7 +1593,7 @@ C-------------HEADS, AND ADD COMPONENTS TO RHS
      &                              GX(LCRHS),X(LCSC1),GX(LCCR),
      &                              GX(LCCC),KKITER,X(LCSC2),X(LCHK),
      &                              GX(LCBOTM),NBOTM,GX(LCHOLD),
-     &                              GX(LCCV),X(LCHANI))
+     &                              GX(LCCV),X(LCHANI),X(LCVKA))
                 IF (IUNIT(37).NE.0)
      &              CALL SEN1HUF1UN(ISSFLG(KKPER),DELT,NCOL,NROW,NLAY,
      &                              X(LCSOLD),GZ(LCHNEW),Z(LCSNEW),

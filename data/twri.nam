@@ -1,9 +1,13 @@
+#
+# NOTE: Forward slashes (/) in pathnames may need to be converted
+#       to back slashes (\) in some computing environments
+#
 LIST  7 twri.lst
-BAS6  8 ..\data\twri.ba6
-BCF6 11 ..\data\twri.bc6
-WEL  12 ..\data\twri.wel
-DRN  13 ..\data\twri.drn
-RCH  18 ..\data\twri.rch
-SIP  19 ..\data\twri.sip
-OC   22 ..\data\twri.oc
-DIS  10 ..\data\twri.dis
+BAS6  8 ../data/twri.ba6
+BCF6 11 ../data/twri.bc6
+WEL  12 ../data/twri.wel
+DRN  13 ../data/twri.drn
+RCH  18 ../data/twri.rch
+SIP  19 ../data/twri.sip
+OC   22 ../data/twri.oc
+DIS  10 ../data/twri.dis

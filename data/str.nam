@@ -1,7 +1,11 @@
+#
+# NOTE: Forward slashes (/) in pathnames may need to be converted
+#       to back slashes (\) in some computing environments
+#
 LIST  7 str.lst
-BAS6  8 ..\data\str.ba6
-SIP  13 ..\data\str.sip
-OC   14 ..\data\str.oc
-str  15 ..\data\str.str
-BCF6  9 ..\data\str.bc6
-DIS  10 ..\data\str.dis
+BAS6  8 ../data/str.ba6
+SIP  13 ../data/str.sip
+OC   14 ../data/str.oc
+str  15 ../data/str.str
+BCF6  9 ../data/str.bc6
+DIS  10 ../data/str.dis

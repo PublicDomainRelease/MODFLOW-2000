@@ -1,4 +1,4 @@
-C     Last change:  ERB   9 Nov 2001   12:12 pm
+C     Last change:  ERB   1 Feb 2002    3:18 pm
 C  Data definitions for Named Parameters
       PARAMETER (MXPAR=500,MXCLST=1000,MXZON=200,MXMLT=200,MXINST=1000)
       COMMON /GLOCOM/B(MXPAR),IPSUM,ICLSUM,IDEFPAR,
@@ -23,6 +23,15 @@ C                n=4 -- Location in INAME of first instance name
 C
 C  IACTIVE(p) -- Flag indicating if parameter is active in the
 C                current time step
+C    Conventions:
+C      IACTIVE = -1 indicates a parameter that is active all stress
+C                      periods
+C      IACTIVE =  0 indicates an inactive parameter
+C      IACTIVE =  1 indicates an active non-time-varying parameter or
+C                      that instance 1 of a time-varying parameter is
+C                      active
+C      IACTIVE >  1 is the number of the active instance of a
+C                      time-varying parameter
 C                            
 C  B(p) -- Parameter value
 C  PARNAM(p) -- Parameter name

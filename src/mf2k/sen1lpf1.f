@@ -1,6 +1,6 @@
-C     Last change:  ERB  31 May 2001    2:35 pm
+C     Last change:  ERB  22 Apr 2002    9:53 am
       SUBROUTINE SEN1LPF1SV(IZON,KPER,NCOL,NLAY,NMLTAR,NPLIST,NROW,
-     &                  NZONAR,RMLT,SV)
+     &                      NZONAR,RMLT,SV)
 C-----VERSION 19980916 ERB
 C     ******************************************************************
 C     INITIALIZE SV ARRAY
@@ -44,10 +44,10 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SEN1LPF1FM(RMLT,H,NCOL,NROW,NLAY,ISS,PID,HK,DELR,
-     &                    DELC,IBOUND,DELT,RHS,HOLD,IZON,CV,SV,NMLTAR,
-     &                    NZONAR,IP,BOTM,NBOTM,VKA,IUHFB,HFB,MXACTFB,
-     &                    NHFB,HANI)
+      SUBROUTINE SEN1LPF1FM(RMLT,H,NCOL,NROW,NLAY,ISS,PID,HK,DELR,DELC,
+     &                      IBOUND,DELT,RHS,HOLD,IZON,CV,SV,NMLTAR,
+     &                      NZONAR,IP,BOTM,NBOTM,VKA,IUHFB,HFB,MXACTFB,
+     &                      NHFB,HANI)
 C     VERSION 19990402 ERB
 C     ******************************************************************
 C      CALCULATE MATRIX DERIVATIVES AND MULTIPLY BY HEADS AS NEEDED.  
@@ -275,9 +275,9 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SEN1LPF1UN(ISS,DELT,NCOL,NROW,NLAY,SOLD,HNEW,
-     &                  SNEW,DELR,DELC,IBOUND,RHS,SC1,CR,CC,KITER,SC2,
-     &                  HK,BOTM,NBOTM,HOLD,CV,HANI)
+      SUBROUTINE SEN1LPF1UN(ISS,DELT,NCOL,NROW,NLAY,SOLD,HNEW,SNEW,DELR,
+     &                      DELC,IBOUND,RHS,SC1,CR,CC,KITER,SC2,HK,BOTM,
+     &                      NBOTM,HOLD,CV,HANI,VKA)
 C     VERSION 19990402 ERB
 C     FORMERLY WAS SEN1AP
 C     ******************************************************************
@@ -296,7 +296,7 @@ C     ------------------------------------------------------------------
      &          CC(NCOL,NROW,NLAY), CR(NCOL,NROW,NLAY),
      &          SC1(NCOL,NROW,NLAY), SC2(NCOL,NROW,NLAY),
      &          HK(NCOL,NROW,NLAY), CV(NCOL,NROW,NLAY),
-     &          HANI(NCOL,NROW,NLAY)
+     &          HANI(NCOL,NROW,NLAY), VKA(NCOL,NROW,NLAY)
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
       COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
      1               LAYWET(200)
@@ -309,8 +309,8 @@ C-------TERMS FOR UNCONFINED AQUIFERS
           LT = LAYTYP(K)
           IF (LT.NE.0) THEN
 C%ERA%HANI
-            CALL SSEN1LPF1NL(HNEW,SNEW,NCOL,NROW,NLAY,HK,DELR,DELC,
-     &                     IBOUND,RHS,BOTM,NBOTM,CR,CC,K,LT,HANI)
+            CALL SSEN1LPF1NL(HNEW,SNEW,NCOL,NROW,NLAY,HK,VKA,DELR,DELC,
+     &                     IBOUND,RHS,BOTM,NBOTM,CR,CC,CV,K,LT,HANI)
             IF (K.GT.1) THEN
               DO 50 I = 1, NROW
                 DO 40 J = 1, NCOL
@@ -414,8 +414,8 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SSEN1LPF1NL(H,A,NC,NR,NL,HK,DELR,DELC,IBOUND,RHS,BOTM,
-     &                     NBOTM,CR,CC,K,LT,HANI)
+      SUBROUTINE SSEN1LPF1NL(H,A,NC,NR,NL,HK,VKA,DELR,DELC,IBOUND,RHS,
+     &                       BOTM,NBOTM,CR,CC,CV,K,LT,HANI)
 C-----VERSION 1000 01FEB1992
 C     ******************************************************************
 C     ADD NONLINEAR TERMS FOR SENSITIVITY EQUATION CALCULATIONS
@@ -423,13 +423,13 @@ C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL BO, BOTM, BP, CC, CO, CR, D1CC, D1CR, D2CC, D2CR, DELC, DELR,
-     &     HO, HP, RHS, HK, TH1, TH2, TOP1, TOP2, YX, ZERO
+     &     HO, HP, RHS, HK, TH1, TH2, TOP1, TOP2, YX, ZERO, KV1
       INTEGER I, IBOUND, IND, J, K, LT, NC, NC1, NL, NR, NR1,
      &        NRC, KHANI
       DOUBLE PRECISION A(NC*NR*NL), AO, AP, H(NC*NR*NL)
-      DIMENSION CR(NC,NR,NL), CC(NC,NR,NL), HK(NC,NR,NL),
-     &          DELR(NC), DELC(NR), RHS(NC,NR,NL), IBOUND(NC,NR,NL), 
-     &          BOTM(NC,NR,0:NBOTM), HANI(NC,NR,NL)
+      DIMENSION CR(NC,NR,NL), CC(NC,NR,NL), CV(NC,NR,NL), HK(NC,NR,NL),
+     &          VKA(NC,NR,NL), DELR(NC), DELC(NR), RHS(NC,NR,NL), 
+     &          IBOUND(NC,NR,NL), BOTM(NC,NR,0:NBOTM), HANI(NC,NR,NL)
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
       COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
      1               LAYWET(200)
@@ -516,6 +516,8 @@ C
             TH1 = HO - BO
             TH2 = HP - BP
 C-------MATRIX DERIVATIVES
+            D1CC = 0.0
+            D2CC = 0.0
             IF (TOP1.GT.HO)
      &          D1CC = (CC(J,I,K)**2)*DELC(I)/
      &                 (2.*DELR(J)*HK(J,I,K)*(TH1**2))
@@ -523,7 +525,6 @@ C-------MATRIX DERIVATIVES
      &          D2CC = (CC(J,I,K)**2)*DELC(I+1)/
      &                 (2.*DELR(J)*HK(J,I+1,K)*(TH2**2))
 C-------MULTIPLY BY DERIVATIVES FROM LAST ITERATION
-            CO = ZERO
             CO = D1CC*AO + D2CC*AP
 C-------MULTIPLY BY HEAD VECTOR AND ADD TO RHS
             RHS(J,I,K) = RHS(J,I,K) - CO*(HP-HO)
@@ -531,12 +532,43 @@ C-------MULTIPLY BY HEAD VECTOR AND ADD TO RHS
    30     CONTINUE
    40   CONTINUE
       ENDIF
+C
+C      CV
+C
+      IF (NL.GT.1.AND.K.LT.NL) THEN
+        DO 60 J = 1, NC
+          DO 50 I = 1, NR
+            IF (IBOUND(J,I,K).EQ.0 .OR. IBOUND(J,I,K+1).EQ.0) GOTO 50
+            IND = J + NC*(I-1) + NRC*(K-1)
+            HO = H(IND)
+            HP = H(IND+NRC)
+            TOP1 = ZERO
+            IF (LT.NE.0) TOP1 = BOTM(J,I,LBOTM(K)-1)
+            IF (TOP1.LT.HO) GOTO 50
+            AO = A(IND)
+            BO = BOTM(J,I,LBOTM(K))
+            TH1 = HO - BO
+            KV1 = VKA(J,I,K)
+            IF(LAYVKA(K).NE.0) KV1= HK(J,I,K)/KV1
+C-------MATRIX DERIVATIVES
+            D1CV=0.
+            IF (TOP1.GT.HO)
+     &          D1CV = -(CV(J,I,K)**2)/(DELC(I)*2.*DELR(J)*KV1)
+C-------MULTIPLY BY DERIVATIVES FROM LAST ITERATION
+            CO = ZERO
+            CO = D1CV*AO
+C-------MULTIPLY BY HEAD VECTOR AND ADD TO RHS
+            RHS(J,I,K) = RHS(J,I,K) - CO*(HP-HO)
+            RHS(J,I,K+1) = RHS(J,I,K+1) - CO*(HO-HP)
+   50     CONTINUE
+   60   CONTINUE
+      ENDIF
       RETURN
       END
 C=======================================================================
       SUBROUTINE SSEN1LPF1CH(CO,TH1,HP,I,J,K,CHAR,IL,M,RMLT0,RMLT,LZ1,
-     &                     IZON,SF,LT,HK,NCOL,NROW,NLAY,DELC,DELR,H,
-     &                     TH0,BOT,TOP,NMLTAR,NZONAR,ICL,C,HANI)
+     &                       IZON,SF,LT,HK,NCOL,NROW,NLAY,DELC,DELR,H,
+     &                       TH0,BOT,TOP,NMLTAR,NZONAR,ICL,C,HANI)
 C-----VERSION 1000 08AUG1995
 C     VERSION 19990405 ERB
 C     FORMERLY SSN1P1
@@ -635,9 +667,9 @@ C-----CHANGE VALUE TO MACHINE ZERO -- ASK STEVE
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SSEN1LPF1CHN(CO,TH1,HP,I,J,K,IL,M,RMLT0,RMLT,LZ1,
-     &                      IZON,SF,LT,HK,NCOL,NROW,NLAY,DELC,DELR,H,
-     &                      TH0,BOT,TOP,NMLTAR,NZONAR,ICL,C,HANI)
+      SUBROUTINE SSEN1LPF1CHN(CO,TH1,HP,I,J,K,IL,M,RMLT0,RMLT,LZ1,IZON,
+     &                        SF,LT,HK,NCOL,NROW,NLAY,DELC,DELR,H,TH0,
+     &                        BOT,TOP,NMLTAR,NZONAR,ICL,C,HANI)
 C-----VERSION 1000 08AUG1995
 C     VERSION 19990405 ERB
 C     FORMERLY SSN1P1
@@ -712,8 +744,9 @@ C-----CHANGE VALUE TO MACHINE ZERO -- ASK STEVE
       END
 C=======================================================================
       SUBROUTINE SSEN1LPF1CV(CO,CO1,IBP,IBM,PID,IL,SF,RMLT,M,NCOL,NROW,
-     &                     LZ1,CV,SV,NLAY,DELR,DELC,J,I,K,HK,IZON,
-     &                     IBOUND,NMLTAR,NZONAR,ICL,BOTM,NBOTM,VKA,HNEW)
+     &                       LZ1,CV,SV,NLAY,DELR,DELC,J,I,K,HK,IZON,
+     &                       IBOUND,NMLTAR,NZONAR,ICL,BOTM,NBOTM,VKA,
+     &                       HNEW)
 C-----VERSION 1000 08AUG1995
 C     VERSION 19990405 ERB
 C     FORMERLY SSN1P2

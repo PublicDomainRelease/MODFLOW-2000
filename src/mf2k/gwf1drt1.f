@@ -1,7 +1,7 @@
-C     Last change:  ERB   4 Dec 2001    2:24 pm
+C     Last change:  ERB  12 Apr 2002    5:23 pm
       SUBROUTINE GWF1DRT1AL(ISUM,LCDRTF,MXDRT,NDRTCL,IN,IOUT,IDRTCB,
      &                      NDRTVL,IDRTAL,IFREFM,NPDRT,IDRTPB,NDRTNP,
-     &                      IDRTFL)
+     &                      IDRTFL,NOPRDT)
 C
 C-----VERSION 20000620 ERB
 C     ******************************************************************
@@ -57,6 +57,7 @@ C
 C3------READ AUXILIARY VARIABLES AND CBC ALLOCATION OPTION.
       IDRTAL=0
       NAUX=0
+      NOPRDT=0
    10 CALL URWORD(LINE,LLOC,ISTART,ISTOP,1,N,R,IOUT,IN)
       IF (LINE(ISTART:ISTOP).EQ.'CBCALLOCATE' .OR.
      &    LINE(ISTART:ISTOP).EQ.'CBC') THEN
@@ -78,7 +79,12 @@ C3------READ AUXILIARY VARIABLES AND CBC ALLOCATION OPTION.
         IDRTFL=4
         WRITE(IOUT,13)
         GOTO 10
-   13 FORMAT(1X,'RETURN FLOW OPTION IS SELECTED')
+   13   FORMAT(1X,'RETURN FLOW OPTION IS SELECTED')
+      ELSE IF(LINE(ISTART:ISTOP).EQ.'NOPRINT') THEN
+         WRITE(IOUT,14)
+   14    FORMAT(1X,'LISTS OF DRAIN-RETURN CELLS WILL NOT BE PRINTED')
+         NOPRDT = 1
+         GO TO 10
       ENDIF
       IF (IDRTAL.EQ.1 .AND. IDRTFL.EQ.4) IDRTAL = 2
       NDRTVL=5+NAUX+IDRTAL+IDRTFL
@@ -92,8 +98,8 @@ C4------ALLOCATE SPACE IN THE RX ARRAY FOR THE DRTF ARRAY.
 C
 C5------PRINT AMOUNT OF SPACE USED BY DRAIN RETURN PACKAGE.
       ISP=ISUM-ISOLD
-      WRITE (IOUT,14)ISP
-   14 FORMAT(1X,I10,' ELEMENTS IN RX ARRAY ARE USED BY DRT')
+      WRITE (IOUT,20)ISP
+   20 FORMAT(1X,I10,' ELEMENTS IN RX ARRAY ARE USED BY DRT')
 C
 C6------RETURN.
       RETURN
@@ -101,7 +107,7 @@ C6------RETURN.
 C=======================================================================
       SUBROUTINE GWF1DRT1RQ(IN,IOUT,NDRTVL,IDRTAL,NCOL,NROW,NLAY,NPDRT,
      &                      DRTF,IDRTPB,MXDRT,IFREFM,ITERP,IDRTFL,
-     &                      INAMLOC)
+     &                      INAMLOC,NOPRDT)
 C
 C-----VERSION 20011108 ERB
 C     ******************************************************************
@@ -122,6 +128,8 @@ C-------READ NAMED PARAMETERS.
       IF (NPDRT.GT.0) THEN
         NAUX=NDRTVL-5-IDRTAL-IDRTFL
         LSTSUM=IDRTPB
+        ITERPU = ITERP
+        IF (NOPRDT .EQ.1) ITERPU = 99
         DO 20 K=1,NPDRT
           LSTBEG=LSTSUM
 C         READ ITEM 2
@@ -143,7 +151,7 @@ C         READ LIST(S) OF CELLS, PRECEDED BY INSTANCE NAME IF NUMINST>0
             ENDIF
 C         READ ITEM 3
             CALL SGWF1DRT1LR(NLST,DRTF,LB,NDRTVL,MXDRT,IDRTAL,IN,IOUT,
-     &                       DRTAUX,5,NAUX,IFREFM,NCOL,NROW,NLAY,ITERP,
+     &                       DRTAUX,5,NAUX,IFREFM,NCOL,NROW,NLAY,ITERPU,
      &                       IDRTFL)
             LB = LB+NLST
    10     CONTINUE
@@ -156,7 +164,7 @@ C6------RETURN
 C=======================================================================
       SUBROUTINE GWF1DRT1RP(DRTF,NDRTCL,MXDRT,IN,IOUT,NDRTVL,IDRTAL,
      &                      IFREFM,NCOL,NROW,NLAY,NDRTNP,NPDRT,IDRTPB,
-     &                      IDRTFL,NRFLOW)
+     &                      IDRTFL,NRFLOW,NOPRDT)
 C
 C-----VERSION 20000620 ERB
 C     ******************************************************************
@@ -190,6 +198,12 @@ C1------NUMBER OF PARAMETERS.
 C
 C------CALCULATE SOME CONSTANTS
       NAUX=NDRTVL-5-IDRTAL-IDRTFL
+      ITERPU = 1
+      IOUTU = IOUT
+      IF (NOPRDT.EQ.1) THEN
+        ITERPU = 99
+        IOUTU = -1
+      ENDIF
 C
 C2------DETERMINE THE NUMBER OF NON-PARAMETER DRAIN-RETURN CELLS.
       IF (ITMP.LT.0) THEN
@@ -211,7 +225,8 @@ C3------IF THERE ARE NEW NON-PARAMETER DRAIN-RETURN CELLS, READ THEM.
           STOP
         ENDIF
         CALL SGWF1DRT1LR(NDRTNP,DRTF,1,NDRTVL,MXDRT,IDRTAL,IN,IOUT,
-     &                   DRTAUX,5,NAUX,IFREFM,NCOL,NROW,NLAY,1,IDRTFL)
+     &                   DRTAUX,5,NAUX,IFREFM,NCOL,NROW,NLAY,ITERPU,
+     &                   IDRTFL)
       ENDIF
       NDRTCL=NDRTNP
 C
@@ -220,7 +235,7 @@ C1C-----IF THERE ARE ACTIVE DRT PARAMETERS, READ THEM AND SUBSTITUTE
       IF (NP.GT.0) THEN
         NREAD=NDRTVL-IDRTAL
         DO 30 N=1,NP
-          CALL SGWF1DRT1LS(IN,IOUT,DRTF,NDRTVL,MXDRT,NREAD,MXADRT,
+          CALL SGWF1DRT1LS(IN,IOUTU,DRTF,NDRTVL,MXDRT,NREAD,MXADRT,
      &                     NDRTCL,DRTAUX,5,NAUX,IDRTFL)
    30   CONTINUE
       ENDIF
@@ -681,10 +696,10 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SGWF1DRT1LS(IN,IOUT,DRTF,NDRTVL,MXDRT,NREAD,MXADRT,
+      SUBROUTINE SGWF1DRT1LS(IN,IOUTU,DRTF,NDRTVL,MXDRT,NREAD,MXADRT,
      &                       NDRTCL,DRTAUX,NCAUX,NAUX,IDRTFL)
 C
-C-----VERSION 20011108 ERB
+C-----VERSION 20020412 ERB
 C     ******************************************************************
 C     Read a list parameter name, look it up in the list of parameters,
 C     and substitute values into active part of package array.
@@ -726,6 +741,7 @@ C
       LABEL1='DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE  '
       LABEL2='          ----DRAIN CELL----  --RECIPIENT CELL--   RETURN'
       LABEL3='DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.'
+      IOUT = ABS(IOUTU)
 C
       READ(IN,'(A)') LINE
       LLOC=1
@@ -789,7 +805,7 @@ C
           ENDIF
 C
 C  Write label for list values
-          CALL ULSTLB(IOUT,LABEL1,DRTAUX,NCAUX,NAUX)
+          IF (IOUTU.GT.0) CALL ULSTLB(IOUT,LABEL1,DRTAUX,NCAUX,NAUX)
 C
 C  Substitute values
           DO 60 I=1,NLST
@@ -804,14 +820,16 @@ C  Substitute values
             IL=DRTF(1,II)
             IR=DRTF(2,II)
             IC=DRTF(3,II)
-            IF (IDRTFL.EQ.0) THEN
-              WRITE(IOUT,530) II,IL,IR,IC,(DRTF(JJ,II),JJ=4,NREAD)
-            ELSE
-              IF (NREAD.GE.10) THEN
-                WRITE(IOUT,530) II,IL,IR,IC,(DRTF(JJ,II),JJ=4,5),
-     &                          (DRTF(JJ,II),JJ=10,NREAD)
+            IF (IOUTU.GT.0) THEN
+              IF (IDRTFL.EQ.0) THEN
+                WRITE(IOUT,530) II,IL,IR,IC,(DRTF(JJ,II),JJ=4,NREAD)
               ELSE
-                WRITE(IOUT,530) II,IL,IR,IC,(DRTF(JJ,II),JJ=4,5)
+                IF (NREAD.GE.10) THEN
+                  WRITE(IOUT,530) II,IL,IR,IC,(DRTF(JJ,II),JJ=4,5),
+     &                            (DRTF(JJ,II),JJ=10,NREAD)
+                ELSE
+                  WRITE(IOUT,530) II,IL,IR,IC,(DRTF(JJ,II),JJ=4,5)
+                ENDIF
               ENDIF
             ENDIF
    60     CONTINUE
@@ -826,7 +844,7 @@ C
   120 CONTINUE
 C
 C     WRITE DATA RELATED TO RETURN-FLOW RECIPIENT CELLS
-      IF (IDRTFL.GT.0) THEN
+      IF (IDRTFL.GT.0 .AND. IOUTU.GT.0) THEN
         WRITE(IOUT,'(/,1X,A,/,1X,A)') LABEL2,LABEL3
         NN = 0
         DO 140 II=NDRTCL-NLST+1,NDRTCL

@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.7 12/04/2001
+                             VERSION 1.8 05/01/2002
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
@@ -12,43 +12,43 @@
  FILE TYPE:LIST   UNIT   2   STATUS:REPLACE
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\twrip.ba6
+ OPENING ../data/twrip.ba6
  FILE TYPE:BAS6   UNIT   3   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\twrip.lpf
+ OPENING ../data/twrip.lpf
  FILE TYPE:LPF   UNIT  11   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\twrip.wel
+ OPENING ../data/twrip.wel
  FILE TYPE:WEL   UNIT  12   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\twrip.drn
+ OPENING ../data/twrip.drn
  FILE TYPE:DRN   UNIT  13   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\twrip.rch
+ OPENING ../data/twrip.rch
  FILE TYPE:RCH   UNIT  18   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\twrip.sip
+ OPENING ../data/twrip.sip
  FILE TYPE:SIP   UNIT  19   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\twrip.oc
+ OPENING ../data/twrip.oc
  FILE TYPE:OC   UNIT  22   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\twrip.mlt
+ OPENING ../data/twrip.mlt
  FILE TYPE:MULT   UNIT   8   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\twrip.zon
+ OPENING ../data/twrip.zon
  FILE TYPE:ZONE   UNIT   9   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\twrip.dis
+ OPENING ../data/twrip.dis
  FILE TYPE:DIS   UNIT  10   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 

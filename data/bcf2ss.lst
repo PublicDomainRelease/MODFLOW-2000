@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.7 12/04/2001
+                             VERSION 1.8 05/01/2002
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -8,35 +8,35 @@
  GLOBAL LISTING FILE: bcf2ss.lst
                          UNIT   7
 
- OPENING ..\data\bcf2ss.ba6
+ OPENING ../data/bcf2ss.ba6
  FILE TYPE:BAS6   UNIT   8   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\bcf2ss.bc6
+ OPENING ../data/bcf2ss.bc6
  FILE TYPE:BCF6   UNIT  11   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\bcf2ss.wel
+ OPENING ../data/bcf2ss.wel
  FILE TYPE:WEL   UNIT  12   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\bcf2ss.riv
+ OPENING ../data/bcf2ss.riv
  FILE TYPE:RIV   UNIT  14   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\bcf2ss.rch
+ OPENING ../data/bcf2ss.rch
  FILE TYPE:RCH   UNIT  18   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\bcf2ss.pcg
+ OPENING ../data/bcf2ss.pcg
  FILE TYPE:PCG   UNIT  19   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\bcf2ss.oc
+ OPENING ../data/bcf2ss.oc
  FILE TYPE:OC   UNIT  20   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\bcf2ss.dis
+ OPENING ../data/bcf2ss.dis
  FILE TYPE:DIS   UNIT  10   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 

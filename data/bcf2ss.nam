@@ -1,9 +1,13 @@
+#
+# NOTE: Forward slashes (/) in pathnames may need to be converted
+#       to back slashes (\) in some computing environments
+#
 LIST  7 bcf2ss.lst
-BAS6  8 ..\data\bcf2ss.ba6
-BCF6 11 ..\data\bcf2ss.bc6
-WEL  12 ..\data\bcf2ss.wel
-RIV  14 ..\data\bcf2ss.riv
-RCH  18 ..\data\bcf2ss.rch
-PCG  19 ..\data\bcf2ss.pcg
-OC   20 ..\data\bcf2ss.oc
-DIS  10 ..\data\bcf2ss.dis
+BAS6  8 ../data/bcf2ss.ba6
+BCF6 11 ../data/bcf2ss.bc6
+WEL  12 ../data/bcf2ss.wel
+RIV  14 ../data/bcf2ss.riv
+RCH  18 ../data/bcf2ss.rch
+PCG  19 ../data/bcf2ss.pcg
+OC   20 ../data/bcf2ss.oc
+DIS  10 ../data/bcf2ss.dis

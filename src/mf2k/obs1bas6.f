@@ -1,4 +1,4 @@
-C     Last change:  ERB   3 Dec 2001    1:41 pm
+C     Last change:  ERB   3 May 2002   10:45 am
 C=======================================================================
       SUBROUTINE OBS1BAS6DF(IFLD,IOBS,IOSTAR,IOWTQ,IOWTQDR,IOWTQGB,
      &                      IOWTQRV,IOWTQST,IQ1,IUOBS,JT,LCCOFF,LCHFB,
@@ -10,7 +10,8 @@ C=======================================================================
      &                      NOBADV,NQ,NQC,NQT,NQT1,NQTDR,NQTGB,NQTRV,
      &                      NQTST,NQTCH,NT,NTT2,IOBSUM,LCX,LCBUF2,NDAR,
      &                      LCOBDRT,LCSSDT,NQTDT,IOWTQDT,LCSSSF,NQTSF,
-     &                      LCOBSFR,IOWTQSF,NHT)
+     &                      LCOBSFR,IOWTQSF,NHT,LCRSQA,LCRSPA,LCBUF1,
+     &                      LCH,LCHOBS,LCWTQS,LCHANI)
 C     VERSION 20000124
 C     ******************************************************************
 C     INITIALIZE VARIABLES FOR OBSERVATION PROCESS
@@ -51,9 +52,13 @@ C     OBSERVATION PROCESS
 C
 C-----INITIALIZE POINTERS AND DIMENSIONS FOR ARRAYS THAT
 C     MAY BE REFERENCED BUT MAY NOT OTHERWISE GET ALLOCATED
+      LCBUF1 = 1
       LCBUF2 = 1
       LCCOFF = 1
+      LCH = 1
+      LCHANI = 1
       LCHFB = 1
+      LCHOBS = 1
       LCIPLO = 1
       LCIPLP = 1
       LCIQOB = 1
@@ -68,6 +73,8 @@ C     MAY BE REFERENCED BUT MAY NOT OTHERWISE GET ALLOCATED
       LCOBSTR = 1
       LCQCLS = 1
       LCROFF = 1
+      LCRSPA = 1
+      LCRSQA = 1
       LCSSAD = 1
       LCSSCH = 1
       LCSSDR = 1
@@ -79,6 +86,7 @@ C     MAY BE REFERENCED BUT MAY NOT OTHERWISE GET ALLOCATED
       LCSSTO = 1
       LCWT = 1
       LCWTQ = 1
+      LCWTQS = 1
       LCX=1
       NDAR= 1
       NDMHAR = 1
@@ -200,8 +208,8 @@ C=======================================================================
      &                      LCNQOB,LCNQCL,LCIQOB,LCQCLS,LCIPLO,LCIPLP,
      &                      IPR,MPR,IPRAR,LCBUF1,LCSSTO,ITMXP,LBUFF,
      &                      LCOBSE,ISOLDX,ISOLDZ,ISOLDI,MXSEN,LCBUF2,
-     &                      NDAR,NHT)
-C     VERSION 19980806 ERB
+     &                      NDAR,NHT,LCRSQA,LCRSPA)
+C     VERSION 20020212 ERB
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR OBSERVATIONS
 C     ******************************************************************
@@ -264,6 +272,10 @@ C       IN PESBAS1AL)
         LCSSTO = ISUM
         ISUM = ISUM + ITMXP + 1
       END IF
+      LCRSQA = ISUM
+      ISUM = ISUM + ITMXP + 1
+      LCRSPA = ISUM
+      ISUM = ISUM + ITMXP + 1
       LCW1 = ISUMZ
       ISUMZ = ISUMZ + NDMH*NDMH
       LCW2 = ISUMZ
@@ -1434,6 +1446,10 @@ C       FOR EACH FILE, FIND AN UNUSED FILE UNIT AND OPEN THE FILE
           IF (IU.GT.0) THEN
             OPEN(IU,FILE=FN,ERR=20)
             CLOSE(UNIT=IU,STATUS='DELETE')
+C           Note that RECL=7530 provides a long enough record length for
+C           500 parameters.  If NPE > 500, RECL will need to be
+C           increased -- ERB 03/06/2002
+cc            OPEN(IU,FILE=FN,ERR=20,RECL=7530)
             OPEN(IU,FILE=FN,ERR=20)
             IUSNO(I) = IU
           ELSE
@@ -3602,8 +3618,6 @@ C
       ENDIF
       RETURN
       END
-
-
 C=======================================================================
       SUBROUTINE SOBS1BAS6FFLW(J,I,K,ICHFLG,IBOUND,HNEW,CR,CC,CV,BOTM,
      &                        NBOTM,NCOL,NROW,NLAY,RATE,LAYHDT)
@@ -3827,11 +3841,12 @@ C-----RETURN
 
 C=======================================================================
       SUBROUTINE SOBS1BAS6FFLWCO(KPT,IPT,JPT,COL,COR,COB,COF,COU,COD,
-     &                          NCOL,NROW,NLAY,PIDTMP,IIPP,LAYHDT,
-     &                          IBOUND,RMLT,NMLTAR,IZON,NZONAR,BOTM,
-     &                          NBOTM,HNEW,DELC,DELR,HFB,NHFB,IUHFB,
-     &                          MXACTFB,CV,SV,VKA,HK,HANI,IERR,IERRU,
-     &                          IOUT,IULPF)
+     &                           NCOL,NROW,NLAY,PIDTMP,IIPP,LAYHDT,
+     &                           IBOUND,RMLT,NMLTAR,IZON,NZONAR,BOTM,
+     &                           NBOTM,HNEW,DELC,DELR,HFB,NHFB,IUHFB,
+     &                           MXACTFB,CV,SV,VKA,HK,HANI,IERR,IERRU,
+     &                           IOUT,IULPF)
+C     VERSION 20020503
 C     ******************************************************************
 C     CALCULATE CONDUCTANCE DERIVATIVES FOR CONSTANT-HEAD BOUNDARY FLOW
 C     SENSITIVITY FOR A GIVEN CELL -- (CURRENTLY SUPPORTED ONLY WHEN LPF
@@ -3859,6 +3874,13 @@ C     ------------------------------------------------------------------
      &' AS CONSTANT-HEAD',/,
      &' ARE SUPPORTED ONLY WHEN THE LPF PACKAGE IS USED',/,
      &' -- STOP EXECUTION (SOBS1BAS6FFLWCO)')
+C
+      IF (IULPF.EQ.0) THEN
+        WRITE(IOUT,600)
+        WRITE(IERRU,600)
+        IERR = 1
+        RETURN
+      ENDIF
 C
       ZERO=0.
       DO 10 I=1,6
@@ -3970,10 +3992,6 @@ C-------CV--------------------------------------------------------------
               IF (KK.GT.KPT) CO(6) = CO(6) + COU
   130       CONTINUE
           ENDIF
-        ELSEIF (NLAY.GT.1) THEN
-          WRITE(IOUT,600)
-          WRITE(IERRU,600)
-          IERR = 1
         ENDIF
   140 CONTINUE
       COL=CO(1)

@@ -1,4 +1,4 @@
-C     Last change:  ERB  30 Nov 2001    4:27 pm
+C     Last change:  ERB   3 May 2002    9:50 am
       SUBROUTINE GLO1BAS6DF(INUNIT,IUNIT,CUNIT,IREWND,NIUNIT,IOUTG,IOUT,
      1                    VERSION,NCOL,NROW,NLAY,NPER,ITMUNI,ISUMGX,
      2                    MXPER,ISUMIG,ISUMGZ,INBAS,LENUNI,ISUMX,ISUMZ,

@@ -1,4 +1,3 @@
-C     Last change:  ERB  12 Jul 2001   12:01 pm
 C
 C ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 C LINK-MT3DMS (LMT) PACKAGE FOR MODFLOW-2000
@@ -10,12 +9,13 @@ C         MT3DMS for multispecies mass transport modeling:
 C         U.S. Geological Survey Open-File Report 01-82
 C
 C Revision History
-C     Version 6.00: last change 05-25-2001 cz
+C     Version 6.0: 05-25-2001 cz
+C     Version 6.1: 05-01-2002 cz
 C ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 C
 C
       SUBROUTINE LMT6BAS6(INUNIT,IOUT,NCOL,NROW,NLAY,NPER,ISS,NODES,
-     & IUNIT,CUNIT,NIUNIT,IBOUND,IMT3D)
+     & IUNIT,CUNIT,NIUNIT,IBOUND,IMT3D,ILMTHEAD)
 C *********************************************************************
 C OPEN AND READ THE INPUT FILE FOR THE LINK-MT3DMS PACKAGE VERSION 6.
 C CHECK KEY FLOW MODEL INFORMATION AND SAVE IT IN THE HEADER OF
@@ -25,7 +25,7 @@ C FILE IS COMPATIBLE WITH ALL VERSIONS OF MT3D/MT3DMS UP TO [3.50].
 C IF THE 'EXTENDED' HEADER OPTION IS SPECIFIED, THE LINK FILE IS
 C COMPATIBLE ONLY WITH MT3DMS VERSION [4.00] OR LATER.
 C *********************************************************************
-C last modified: 05-25-2001
+C last modified: 05-01-2002
 C
       INTEGER     NCOL,NROW,NLAY,IUNIT,NIUNIT,NPER,ISS,NODES,IBOUND,
      &            IU,N,MTISS,MTNPER,MTCHD,IMT3D,MTBCF,MTLPF,MTHUF,
@@ -39,7 +39,7 @@ C
       CHARACTER   CUNIT*4,LINE*200,FNAME*200,NME*200,
      &            OUTPUT_FILE_HEADER*8,OUTPUT_FILE_FORMAT*11
       DIMENSION   IUNIT(NIUNIT),CUNIT(NIUNIT),IBOUND(NODES)
-      COMMON     /LINKMT3D/ILMTHEAD,ILMTFMT
+      COMMON     /LINKMT3D/ILMTFMT
       DATA        INLMT,MTBCF,MTLPF,MTHUF,MTWEL,MTDRN,MTRCH,MTEVT,
      &            MTRIV,MTSTR,MTGHB,MTRES,MTFHB,MTDRT,MTETS,MTTLK,
      &            MTIBS,MTLAK,MTMAW,MTUSR1,MTUSR2,MTUSR3
@@ -317,7 +317,7 @@ C CONSTANT-HEAD CELLS FOR USE BY MT3D.  THIS SUBROUTINE IS CALLED
 C ONLY IF THE 'BCF6' PACKAGE IS USED IN MODFLOW.
 C *********************************************************************
 C Modified from Harbaugh et al. (2000)
-C last modified: 05-25-2001
+C last modified: 05-01-2002
 C
       CHARACTER*16 TEXT
       DOUBLE PRECISION HNEW,HD
@@ -327,7 +327,7 @@ C
      & BOTM(NCOL,NROW,0:NBOTM),BUFF(NCOL,NROW,NLAY),HOLD(NCOL,NROW,NLAY)
       COMMON /BCFCOM/LAYCON(200)
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
-      COMMON /LINKMT3D/ILMTHEAD,ILMTFMT
+      COMMON /LINKMT3D/ILMTFMT
 C
 C--CALCULATE AND SAVE SATURATED THICKNESS
       TEXT='THKSAT'
@@ -679,7 +679,7 @@ C OF CONSTANT-HEAD CELLS FOR USE BY MT3D.  THIS SUBROUTINE IS CALLED
 C ONLY IF THE 'LPF1' PACKAGE IS USED IN MODFLOW.
 C *********************************************************************
 C Modified from Harbaugh et al. (2000)
-C last modified: 05-25-2001
+C last modified: 05-01-2002
 C
       CHARACTER*16 TEXT
       DOUBLE PRECISION HNEW,HD
@@ -690,7 +690,7 @@ C
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
       COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
      &        LAYWET(200)
-      COMMON /LINKMT3D/ILMTHEAD,ILMTFMT
+      COMMON /LINKMT3D/ILMTFMT
 C
 C--CALCULATE AND SAVE SATURATED THICKNESS
       TEXT='THKSAT'
@@ -1041,7 +1041,7 @@ C OF CONSTANT-HEAD CELLS FOR USE BY MT3D.  THIS SUBROUTINE IS CALLED
 C ONLY IF THE 'HUF' PACKAGE IS USED IN MODFLOW.
 C *********************************************************************
 C Modified from Harbaugh et al. (2000)
-C last modified: 05-25-2001
+C last modified: 05-01-2002
 C
       CHARACTER*16 TEXT
       DOUBLE PRECISION HNEW,HN,HD
@@ -1053,7 +1053,7 @@ C
      & BUFF(NCOL,NROW,NLAY),HOLD(NCOL,NROW,NLAY)
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
       COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
-      COMMON /LINKMT3D/ILMTHEAD,ILMTFMT
+      COMMON /LINKMT3D/ILMTFMT
 C
 C--CALCULATE AND SAVE SATURATED THICKNESS
       TEXT='THKSAT'
@@ -1418,11 +1418,11 @@ C *********************************************************************
 C SAVE WELL CELL LOCATIONS AND VOLUMETRIC FLOW RATES FOR USE BY MT3D.
 C *********************************************************************
 C Modified from  Harbaugh et al. (2000)
-C last modified: 05-25-2001
+C last modified: 05-01-2002
 C
       CHARACTER*16 TEXT
       DIMENSION WELL(NWELVL,MXWELL),IBOUND(NCOL,NROW,NLAY)
-      COMMON /LINKMT3D/ILMTHEAD,ILMTFMT
+      COMMON /LINKMT3D/ILMTFMT
       TEXT='WEL'
 C
 C--WRITE AN IDENTIFYING HEADER
@@ -1463,13 +1463,13 @@ C ********************************************************************
 C SAVE DRAIN CELL LOCATIONS AND VOLUMETRIC FLOW RATES FOR USE BY MT3D.
 C ********************************************************************
 C Modified from Harbaugh et al. (2000)
-C last modified: 05-25-2001
+C last modified: 05-01-2002
 C
       CHARACTER*16 TEXT
       DOUBLE PRECISION HNEW,CEL,CC,HHNEW
       DIMENSION DRAI(NDRNVL,MXDRN),
      &           HNEW(NCOL,NROW,NLAY),IBOUND(NCOL,NROW,NLAY)
-      COMMON /LINKMT3D/ILMTHEAD,ILMTFMT
+      COMMON /LINKMT3D/ILMTFMT
       TEXT='DRN'
 C
 C--WRITE AN IDENTIFYING HEADER
@@ -1523,13 +1523,13 @@ C *********************************************************************
 C SAVE RIVER CELL LOCATIONS AND VOLUMETRIC FLOW RATES FOR USE BY MT3D.
 C *********************************************************************
 C Modified from Harbaugh et al. (2000)
-C last modified: 05-25-2001
+C last modified: 05-01-2002
 C
       CHARACTER*16 TEXT
       DOUBLE PRECISION HNEW,CHRIV,CCRIV,RRBOT,HHNEW
       DIMENSION RIVR(NRIVVL,MXRIVR),IBOUND(NCOL,NROW,NLAY),
      &          HNEW(NCOL,NROW,NLAY)
-      COMMON /LINKMT3D/ILMTHEAD,ILMTFMT
+      COMMON /LINKMT3D/ILMTFMT
       TEXT='RIV'
 C
 C--WRITE AN IDENTIFYING HEADER
@@ -1594,12 +1594,12 @@ C SAVE REACHARGE LAYER INDICES (IF NLAY>1) AND VOLUMETRIC FLOW RATES
 C FOR USE BY MT3D.
 C *******************************************************************
 C Modified from Harbaugh et al. (2000)
-C last modified: 05-25-2001
+C last modified: 05-01-2002
 C
       CHARACTER*16 TEXT
       DIMENSION IRCH(NCOL,NROW),RECH(NCOL,NROW),
      &  IBOUND(NCOL,NROW,NLAY),BUFF(NCOL,NROW,NLAY)
-      COMMON /LINKMT3D/ILMTHEAD,ILMTFMT
+      COMMON /LINKMT3D/ILMTFMT
       TEXT='RCH'
 C
 C--WRITE AN IDENTIFYING HEADER
@@ -1662,14 +1662,14 @@ C SAVE EVAPOTRANSPIRATION LAYER INDICES (IF NLAY>1) AND VOLUMETRIC
 C FLOW RATES FOR USE BY MT3D.
 C ******************************************************************
 C Modified from Harbaugh et al. (2000)
-C last modified: 05-25-2001
+C last modified: 05-01-2002
 C
       CHARACTER*16 TEXT
       DOUBLE PRECISION HNEW,HH,XX,DD,SS
       DIMENSION IEVT(NCOL,NROW),EVTR(NCOL,NROW),EXDP(NCOL,NROW),
      &          SURF(NCOL,NROW),IBOUND(NCOL,NROW,NLAY),
      &          HNEW(NCOL,NROW,NLAY),BUFF(NCOL,NROW,NLAY)
-      COMMON /LINKMT3D/ILMTHEAD,ILMTFMT
+      COMMON /LINKMT3D/ILMTFMT
       TEXT='EVT'
 C
 C--WRITE AN IDENTIFYING HEADER
@@ -1760,13 +1760,13 @@ C SAVE HEAD-DEPENDENT BOUNDARY CELL LOCATIONS AND VOLUMETRIC FLOW
 C RATES FOR USE BY MT3D.
 C *****************************************************************
 C Modified from Harbaugh et al. (2000)
-C last modified: 05-25-2001
+C last modified: 05-01-2002
 C
       CHARACTER*16 TEXT
       DOUBLE PRECISION HNEW,CHB,CC,HHNEW
       DIMENSION BNDS(NGHBVL,MXBND),
      &           HNEW(NCOL,NROW,NLAY),IBOUND(NCOL,NROW,NLAY)
-      COMMON /LINKMT3D/ILMTHEAD,ILMTFMT
+      COMMON /LINKMT3D/ILMTFMT
       TEXT='GHB'
 C
 C--WRITE AN IDENTIFYING HEADER
@@ -1823,12 +1823,12 @@ C SAVE SPECIFIED-FLOW CELL LOCATIONS AND VOLUMETRIC FLOW RATES
 C FOR USE BY MT3D.
 C **********************************************************************
 C Modified from Leake and Lilly (1997)
-C last modified: 05-25-2001
+C last modified: 05-01-2002
 C
       CHARACTER*16 TEXT
       DIMENSION IBOUND(NCOL,NROW,NLAY),
      & IFLLOC(4,NFLWDIM),BDFV(IFHBD4,NFLWDIM)
-      COMMON /LINKMT3D/ILMTHEAD,ILMTFMT
+      COMMON /LINKMT3D/ILMTFMT
       TEXT='FHB'
 C
 C--WRITE AN IDENTIFYING HEADER
@@ -1874,14 +1874,14 @@ C SAVE RESERVOIR CELL LOCATIONS AND VOLUMETRIC FLOW RATES
 C FOR USE BY MT3D.
 C **********************************************************************
 C Modified from Fenske et al., (1996)
-C last modified: 05-25-2001
+C last modified: 05-01-2002
 C
       CHARACTER*16 TEXT
       DOUBLE PRECISION HNEW
       DIMENSION IRES(NCOL,NROW),IRESL(NCOL,NROW),BRES(NCOL,NROW),
      & CRES(NCOL,NROW),BBRES(NCOL,NROW),HRES(NRES),
      & IBOUND(NCOL,NROW,NLAY),HNEW(NCOL,NROW,NLAY),BUFF(NCOL,NROW,NLAY)
-      COMMON /LINKMT3D/ILMTHEAD,ILMTFMT
+      COMMON /LINKMT3D/ILMTFMT
       TEXT='RES'
 C
 C--CLEAR BUFFER.
@@ -1984,16 +1984,16 @@ C--NORMAL RETURN
 C
 C
       SUBROUTINE LMT6STR6(NSTREM,STRM,ISTRM,IBOUND,MXSTRM,NCOL,NROW,
-     &  NLAY,KSTP,KPER,IOUT)
+     &  NLAY,KSTP,KPER,IOUT,ILMTHEAD)
 C **********************************************************************
 C SAVE STREAM CELL LOCATIONS AND VOLUMETRIC FLOW RATES FOR USE BY MT3D.
 C **********************************************************************
 C Modified from Prudic (1989)
-C last modified: 05-25-2001
+C last modified: 05-01-2002
 C
       CHARACTER*16 TEXT
       DIMENSION STRM(11,MXSTRM),ISTRM(5,MXSTRM),IBOUND(NCOL,NROW,NLAY)
-      COMMON /LINKMT3D/ILMTHEAD,ILMTFMT
+      COMMON /LINKMT3D/ILMTFMT
       TEXT='RIV'
       IF(ILMTHEAD.EQ.1) TEXT='STR'
 C

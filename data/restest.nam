@@ -1,8 +1,12 @@
+#
+# NOTE: Forward slashes (/) in pathnames may need to be converted
+#       to back slashes (\) in some computing environments
+#
 LIST  7 restest.lst
-BAS6  8 ..\data\restest.ba6
-BCF6 11 ..\data\restest.bc6
-GHB  17 ..\data\restest.ghb
-SIP  19 ..\data\restest.sip
-OC   22 ..\data\restest.oc
-RES  27 ..\data\restest.res
-DIS  10 ..\data\restest.dis
+BAS6  8 ../data/restest.ba6
+BCF6 11 ../data/restest.bc6
+GHB  17 ../data/restest.ghb
+SIP  19 ../data/restest.sip
+OC   22 ../data/restest.oc
+RES  27 ../data/restest.res
+DIS  10 ../data/restest.dis

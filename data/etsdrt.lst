@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.7 12/04/2001
+                             VERSION 1.8 05/01/2002
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -27,31 +27,31 @@
  REWOUND etsdrt.lst
  FILE TYPE:LIST   UNIT  12
 
- REWOUND ..\data\etsdrt.dis
+ REWOUND ../data/etsdrt.dis
  FILE TYPE:DIS   UNIT  21
 
- REWOUND ..\data\etsdrt.bas
+ REWOUND ../data/etsdrt.bas
  FILE TYPE:BAS6   UNIT  31
 
- REWOUND ..\data\etsdrt.oc
+ REWOUND ../data/etsdrt.oc
  FILE TYPE:OC   UNIT  32
 
- REWOUND ..\data\etsdrt.drt
+ REWOUND ../data/etsdrt.drt
  FILE TYPE:DRT   UNIT  34
 
- REWOUND ..\data\etsdrt.rch
+ REWOUND ../data/etsdrt.rch
  FILE TYPE:RCH   UNIT  36
 
- REWOUND ..\data\etsdrt.ets
+ REWOUND ../data/etsdrt.ets
  FILE TYPE:ETS   UNIT  37
 
- REWOUND ..\data\etsdrt.obs
+ REWOUND ../data/etsdrt.obs
  FILE TYPE:OBS   UNIT  41
 
- REWOUND ..\data\etsdrt.ohd
+ REWOUND ../data/etsdrt.ohd
  FILE TYPE:HOB   UNIT  42
 
- REWOUND ..\data\etsdrt.odt
+ REWOUND ../data/etsdrt.odt
  FILE TYPE:DTOB   UNIT  43
  
  # BAS file for ets1, drt1, and etsdrt test cases                                

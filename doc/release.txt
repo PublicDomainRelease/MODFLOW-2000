@@ -12,6 +12,73 @@ these packages and processes, see mf2k.txt ("Summary of MODFLOW-2000").
 NOTE: Any use of trade, product or firm names is for descriptive purposes 
       only and does not imply endorsement by the U.S. Government.
 
+o Version 1.8 05/01/2002:
+
+     This version adds support for an option that can be used to suppress
+printing of cell lists in any or all of the RIV, GHB, DRN, DRT, HFB, WEL,
+and CHD packages.  In input to the RIV, GHB, DRN, WEL, and CHD packages, the
+NOPRINT option is invoked by entering "NOPRINT" as an option on Item 2.  In
+input to the DRT package, the NOPRINT option is invoked by entering
+"NOPRINT" as an option on Item 1.  In input to the HFB package, the NOPRINT
+option is invoked by entering "NOPRINT" in Item 1 after the value entered
+for NHFBNP.
+
+     In the LPF Package, the sensitivity of vertical conductance to head in
+the calculation of sensitivities for unconfined cells is now correctly
+calculated.
+
+     In the HUF Package: a number of small issues were uncovered by John 
+Doherty, and many thanks go to him for his careful scrutiny of the HUF code. 
+Among these changes, geohydrologic units are now truncated if the bottom of 
+the unit is in an inactive cell.  A problem with the rewetting capability 
+was fixed. The sensitivity of vertical conductance to head in the 
+calculation of sensitivities for unconfined cells is now correctly 
+calculated.  The current version of HUF is 1.03.
+
+     In the ADV Package: the current version (2.3) fixes a problem with 
+threshold for stagnant velocities.  Also fixed: a problem with scaled 
+sensitivities in a confining unit.
+
+     In the LMT Package: This version corrects an inconsistency between the
+Link-MT3DMS (LMT6) package and MT3DMS 4.0.  This inconsistency causes an I/O
+error when the flow-transport link file saved by LMT6 is read by MT3DMS.
+The problem only occurs when the STR package is used in the flow simulation,
+and when the Extended header option is specified for saving the
+flow-transport link file.  The current version of LMT is 6.1.
+
+     The RESAN2K, BEALE2K, and YCINT2K post-processing programs were
+converted to use dynamic memory allocation.  This means that the programs
+will not need to be recompiled to accommodate data sets that include large
+numbers of observations.
+
+     This version also fixes the following bugs:
+
+     In previous versions of MODFLOW-2000, when the OBS Process was active
+and the PES Process was inactive, one element (for the cell in layer 1,
+column 1, row 1) of one array (the affected array depended on which flow
+package was active) was overwritten with an invalid value.  The bug did not
+affect parameter estimation, and it did not affect simulations in which that
+cell was specified as inactive.  Thanks to Evan Anderman for identifying
+this bug.
+
+     In previous versions of RESAN2K, observation names were not being
+ordered in the ORDERED, INDEPENDENT NORMAL DEVIATES table.  The ordering
+problem also affected the _rd file, where the plot symbols also were not
+being ordered.  Thanks to Claire Tiedeman for identifying this bug.
+
+     This version fixes compiler- and operating-system-dependent problems
+related to writing of the _sc, _sd, _s1, and _rs files.  Thanks to Terrence
+Conlon for identifying these problems.
+
+     Also included in the 1.8 release is a revised str6.pdf file, which
+describes the implementation of the STR Package in MODFLOW-2000.  The
+revisions describe limitations related to use of parameters in the STR
+Package.
+
+     A distribution file prepared for the Unix operating system is available
+for MODFLOW-2000 for the first time.  For the current version, the Unix
+distribution file is mf2k1_8.tar.Z.
+
 o Version 1.7 12/04/2001:
 
      Time-varying parameters are introduced with this version.  Most

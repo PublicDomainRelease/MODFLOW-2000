@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.7 12/04/2001
+                             VERSION 1.8 05/01/2002
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
@@ -14,59 +14,59 @@
 #                                                                                                                                                                                                       
 # Global input files                                                                                                                                                                                    
 
- OPENING ..\data\etsdrt.dis
+ OPENING ../data/etsdrt.dis
  FILE TYPE:DIS   UNIT  21   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 #                                                                                                                                                                                                       
 # Flow process input files                                                                                                                                                                              
 
- OPENING ..\data\etsdrt.bas
+ OPENING ../data/etsdrt.bas
  FILE TYPE:BAS6   UNIT  31   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\etsdrt.oc
+ OPENING ../data/etsdrt.oc
  FILE TYPE:OC   UNIT  32   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\etsdrt.lpf
+ OPENING ../data/etsdrt.lpf
  FILE TYPE:LPF   UNIT  33   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\etsdrt.drt
+ OPENING ../data/etsdrt.drt
  FILE TYPE:DRT   UNIT  34   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\etsdrt.rch
+ OPENING ../data/etsdrt.rch
  FILE TYPE:RCH   UNIT  36   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\etsdrt.ets
+ OPENING ../data/etsdrt.ets
  FILE TYPE:ETS   UNIT  37   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\etsdrt.pcg
+ OPENING ../data/etsdrt.pcg
  FILE TYPE:PCG   UNIT  39   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 #                                                                                                                                                                                                       
 # O-S-P processes input files                                                                                                                                                                           
 
- OPENING ..\data\etsdrt.obs
+ OPENING ../data/etsdrt.obs
  FILE TYPE:OBS   UNIT  41   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\etsdrt.ohd
+ OPENING ../data/etsdrt.ohd
  FILE TYPE:HOB   UNIT  42   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\etsdrt.odt
+ OPENING ../data/etsdrt.odt
  FILE TYPE:DTOB   UNIT  43   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\etsdrt.sen
+ OPENING ../data/etsdrt.sen
  FILE TYPE:SEN   UNIT  45   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\etsdrt.pes
+ OPENING ../data/etsdrt.pes
  FILE TYPE:PES   UNIT  46   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
@@ -189,7 +189,7 @@
  NUMBER OF PARAMETERS WITH CORRELATED PRIOR INFORMATION (IPR)  =     0
  NUMBER OF PRIOR-INFORMATION EQUATIONS (MPR) ----------------- =     0
 
-    271 ELEMENTS IN X ARRAY ARE USED FOR PARAMETER ESTIMATION
+    229 ELEMENTS IN X ARRAY ARE USED FOR PARAMETER ESTIMATION
      99 ELEMENTS IN Z ARRAY ARE USED FOR PARAMETER ESTIMATION
      22 ELEMENTS IN IX ARRAY ARE USED FOR PARAMETER ESTIMATION
 
@@ -217,7 +217,7 @@
    NUMBER OF CELLS IN DRAIN-CELL GROUPS.............:    1
    NUMBER OF DRAIN-CELL FLOWS.......................:    1
 
-     628 ELEMENTS IN X ARRAY ARE USED FOR OBSERVATIONS
+     670 ELEMENTS IN X ARRAY ARE USED FOR OBSERVATIONS
        6 ELEMENTS IN Z ARRAY ARE USED FOR OBSERVATIONS
      231 ELEMENTS IN IX ARRAY ARE USED FOR OBSERVATIONS
 

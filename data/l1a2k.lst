@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.7 12/04/2001
+                             VERSION 1.8 05/01/2002
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -8,47 +8,47 @@
  GLOBAL LISTING FILE: l1a2k.lst
                          UNIT   1
 
- OPENING ..\data\l1a2k.ba6
+ OPENING ../data/l1a2k.ba6
  FILE TYPE:BAS6   UNIT   7   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\l1a2k.bc6
+ OPENING ../data/l1a2k.bc6
  FILE TYPE:BCF6   UNIT  10   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\l1a2k.evt
+ OPENING ../data/l1a2k.evt
  FILE TYPE:EVT   UNIT  11   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\l1a2k.rch
+ OPENING ../data/l1a2k.rch
  FILE TYPE:RCH   UNIT  12   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\l1a2k.sip
+ OPENING ../data/l1a2k.sip
  FILE TYPE:SIP   UNIT  13   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\l1a2k.oc
+ OPENING ../data/l1a2k.oc
  FILE TYPE:OC   UNIT  17   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\l1a2k.lak
+ OPENING ../data/l1a2k.lak
  FILE TYPE:LAK   UNIT  16   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\l1a2k.dis
+ OPENING ../data/l1a2k.dis
  FILE TYPE:DIS   UNIT  14   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\l1a2k.fhb
+ OPENING ../data/l1a2k.fhb
  FILE TYPE:FHB   UNIT  21   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\l1a2k.gag
+ OPENING ../data/l1a2k.gag
  FILE TYPE:GAGE   UNIT  33   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
- OPENING ..\data\l1a2k.got
+ OPENING ../data/l1a2k.got
  FILE TYPE:DATA   UNIT  37   STATUS:UNKNOWN
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
