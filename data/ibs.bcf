@@ -1,0 +1,10 @@
+         0         0     1.E30         0         0         0         0
+ 0 0
+         0        1.                                TRPY
+         0     1000.                                DELR
+         0     1000.                                DELC
+         0     .0001                                sf1 -layer 1
+         0     1000.                                tran -layer 1
+         0  0.000001                                VCONT -layer 1
+         0     .0001                                sf1 -layer 2
+         0     1000.                                tran -layer 2

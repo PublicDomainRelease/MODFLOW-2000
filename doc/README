@@ -1,0 +1,32 @@
+/usr/opt/wrdapp/modflow/doc/README:
+
+
+This README file lists the minor differences between the modflow
+distribution furnished by Arlen Harbaugh and this distribution:
+
+1.  This README file is added.
+
+2.  A Unix "man" page is added.
+
+3.  An expanded Makefile is added to automate installation and clean-up
+
+4.  Test scripts are provided with standard data sets to allow verification
+    that modflow is installed and functioning correctly.
+
+5.  The following directory structure has been created 
+    (shown at right are the contents of each directory):
+
+   modflow
+     `-----bin             : modflow Data General AViiON executable
+     `-----doc             : text version of man page
+     `-----src             : modflow source code and Makefile
+     `-----test            : scripts to run verification tests
+     `-----data            : standard datasets used in verification tests
+
+
+
+Users should now read the file readme located in the modflow directory for a
+description of the modflow distribution, how to install modflow, how to execute 
+modflow, and how to test the installation.  Refer to the Unix man page (text
+version included in this directory) for additional a brief description of MODFLOW,
+version history, references, and contacts.
