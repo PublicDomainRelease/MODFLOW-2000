@@ -3272,9 +3272,6 @@ C     ------------------------------------------------------------------
   555 FORMAT (4X,F8.0,F6.0,F9.2)
   560 FORMAT (/,' FOR OBS',I5,' STATISTIC RELATED TO WEIGHT < OR =0 -- '
      &        ,'STOP EXECUTION (OBS1BAS6FRP)',/)
-  570 FORMAT (/,' LARGEST OBS TIME STEP (',I5,') LARGER THAN NPER (',I5,
-     &        ') OF BASIC PACKAGE INPUT FILE',/,
-     &        ' -- STOP EXECUTION (OBS1BAS6FRP)',/)
   590 FORMAT (/,' ROW OR COLUMN NUMBER INVALID',
      &        ' -- STOP EXECUTION (OBS1BAS6FRP)',/)
   600 FORMAT (/,' CELL NOT DESIGNATED AS CONSTANT HEAD',

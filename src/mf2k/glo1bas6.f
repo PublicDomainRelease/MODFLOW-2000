@@ -3,7 +3,7 @@ C     Last change:  ERB  29 Aug 2002    1:22 pm
      1                    VERSION,NCOL,NROW,NLAY,NPER,ITMUNI,ISUMGX,
      2                    MXPER,ISUMIG,ISUMGZ,INBAS,LENUNI,ISUMX,ISUMZ,
      3                    ISUMIX,LAYHDT,IUDIS,IFREFM,INAMLOC,IPRTIM,
-     4                    IBDT,SHOWPROG)
+     4                    IBDT,SHOWPROG,NOTICECOUNT)
 C
 C-----VERSION 24JAN2000 GLO1BAS6DF
 C     ******************************************************************
@@ -156,6 +156,7 @@ C     INITIALIZE POINTERS USED IN ALLOCATING SPACE IN MAIN-UNIT ARRAYS
 C
 C     INITIALIZE OTHER POINTERS AND COUNTERS
       INAMLOC=1
+      NOTICECOUNT=0
 C
 C     INITIALIZE HEAD-DEPENDENT THICKNESS INDICATOR TO CODE
 C     INDICATING LAYER IS UNDEFINED
@@ -423,7 +424,7 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE GLO1BAS6ET(IBDT,IOUTG,IPRTIM)
+      SUBROUTINE GLO1BAS6ET(IBDT,IOUTG,IPRTIM,NOTICECOUNT)
 C
 C-----VERSION 20011126
 C     ******************************************************************
@@ -438,6 +439,10 @@ C     ------------------------------------------------------------------
       DATA IDPM/31,28,31,30,31,30,31,31,30,31,30,31/ ! Days per month
       DATA NSPD/86400/  ! Seconds per day
 C     ------------------------------------------------------------------
+  900 FORMAT(/,1X,'A Message has been generated concerning',
+     &' this simulation.',/,' Search above for "NOTICE".')
+  910 FORMAT(/,1X,I3,1X,'Messages have been generated concerning',
+     &' this simulation.',/,' Search above for "NOTICE".')
  1000 FORMAT(1X,'Run end date and time (yyyy/mm/dd hh:mm:ss): ',
      &I4,'/',I2.2,'/',I2.2,1X,I2,':',I2.2,':',I2.2)
  1010 FORMAT(1X,'Elapsed run time: ',I3,' Days, ',I2,' Hours, ',I2,
@@ -447,6 +452,14 @@ C     ------------------------------------------------------------------
  1030 FORMAT(1X,'Elapsed run time: ',I2,' Minutes, ',
      &I2,'.',I3.3,' Seconds',/)
  1040 FORMAT(1X,'Elapsed run time: ',I2,'.',I3.3,' Seconds',/)
+C
+C     If any NOTICEs have been written to GLOBAL file, write a message
+C     directing the user to look for them
+      IF (NOTICECOUNT.EQ.1) THEN
+        WRITE(IOUTG,900)
+      ELSEIF (NOTICECOUNT.GT.1) THEN
+        WRITE(IOUTG,910) NOTICECOUNT
+      ENDIF
 C
 C     Get current date and time, assign to IEDT, and write to screen
       CALL DATE_AND_TIME(CHDATE,CHTIME,CHZONE,IEDT)
@@ -1116,4 +1129,3 @@ C
 
       RETURN
       END
-

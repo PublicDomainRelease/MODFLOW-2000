@@ -3194,14 +3194,14 @@ C-------UNIT ABOVE/BELOW MODEL
             GOTO 300
           ENDIF
 C6------CLEAR VALUES FOR FLOW RATE THROUGH EACH FACE OF CELL.
-          CHCH1=ZERO
-          CHCH2=ZERO
-          CHCH3=ZERO
-          CHCH4=ZERO
-          CHCH5=ZERO
-          CHCH6=ZERO
           RATE=ZERO
           DO 400 K=KT,KB
+            CHCH1=ZERO
+            CHCH2=ZERO
+            CHCH3=ZERO
+            CHCH4=ZERO
+            CHCH5=ZERO
+            CHCH6=ZERO
 C
 C-----------GET CONDUCTANCES
             CALL SGWF1HUF2C(I,J,K,NU,CRL,CRR,CCT,
@@ -3224,7 +3224,6 @@ C
 C7B---------CALCULATE FLOW THROUGH THE LEFT FACE.
             HDIFF=H0-HNEW(J-1,I,K)
             CHCH1=HDIFF*CRL
-            IF(IBOUND(J-1,I,K).LT.0) GO TO 30
 C
 C8----------CALCULATE FLOW THROUGH THE RIGHT FACE.
    30       IF(J.EQ.NCOL) GO TO 60
@@ -3232,7 +3231,6 @@ C8----------CALCULATE FLOW THROUGH THE RIGHT FACE.
             IF(IBOUND(J+1,I,K).LT.0 .AND. ICHFLG.EQ.0) GO TO 60
             HDIFF=H0-HNEW(J+1,I,K)
             CHCH2=HDIFF*CRR
-            IF(IBOUND(J+1,I,K).LT.0) GO TO 60
 C
 C9----------CALCULATE FLOW THROUGH THE BACK FACE.
    60       IF(I.EQ.1) GO TO 90
@@ -3240,7 +3238,6 @@ C9----------CALCULATE FLOW THROUGH THE BACK FACE.
             IF (IBOUND(J,I-1,K).LT.0 .AND. ICHFLG.EQ.0) GO TO 90
             HDIFF=H0-HNEW(J,I-1,K)
             CHCH3=HDIFF*CCT
-            IF(IBOUND(J,I-1,K).LT.0) GO TO 90
 C
 C10---------CALCULATE FLOW THROUGH THE FRONT FACE.
    90       IF(I.EQ.NROW) GO TO 120
@@ -3248,7 +3245,6 @@ C10---------CALCULATE FLOW THROUGH THE FRONT FACE.
             IF(IBOUND(J,I+1,K).LT.0 .AND. ICHFLG.EQ.0) GO TO 120
             HDIFF=H0-HNEW(J,I+1,K)
             CHCH4=HDIFF*CCB
-            IF(IBOUND(J,I+1,K).LT.0) GO TO 120
 C
 C11---------CALCULATE FLOW THROUGH THE UPPER FACE.
   120       IF(K.EQ.1) GO TO 150
@@ -3262,13 +3258,12 @@ C11---------CALCULATE FLOW THROUGH THE UPPER FACE.
             IF(TMP.LT.TOP) HD=TOP
   122       HDIFF=HD-HNEW(J,I,K-1)
             CHCH5=HDIFF*CV(J,I,K-1)
-            IF(IBOUND(J,I,K-1).LT.0) GO TO 150
 C
 C12---------CALCULATE FLOW THROUGH THE LOWER FACE.
-  150       IF(K.EQ.NLAY) GO TO 400
-            IF(K.LT.KB) GO TO 400
-            IF(IBOUND(J,I,K+1).EQ.0) GO TO 400
-            IF(IBOUND(J,I,K+1).LT.0 .AND. ICHFLG.EQ.0) GO TO 400
+  150       IF(K.EQ.NLAY) GO TO 180
+            IF(K.LT.KB) GO TO 180
+            IF(IBOUND(J,I,K+1).EQ.0) GO TO 180
+            IF(IBOUND(J,I,K+1).LT.0 .AND. ICHFLG.EQ.0) GO TO 180
             HD=HNEW(J,I,K+1)
             IF(LTHUF(K+1).EQ.0) GO TO 152
             TMP=HD
@@ -3276,12 +3271,12 @@ C12---------CALCULATE FLOW THROUGH THE LOWER FACE.
             IF(TMP.LT.TOP) HD=TOP
   152       HDIFF=HNEW(J,I,K)-HD
             CHCH6=HDIFF*CV(J,I,K)
-            IF(IBOUND(J,I,K+1).LT.0) GO TO 400
+C
+C13---------SUM THE FLOWS THROUGH SIX FACES OF CONSTANT HEAD CELL
+  180       RATE=CHCH1+CHCH2+CHCH3+CHCH4+CHCH5+CHCH6
   400     CONTINUE
 C
-C13-----SUM THE FLOWS THROUGH SIX FACES OF CONSTANT HEAD CELL, AND
-C13-----STORE SUM IN BUFFER.
-  180     RATE=CHCH1+CHCH2+CHCH3+CHCH4+CHCH5+CHCH6
+C13-------STORE SUM IN BUFFER.
           HNWHGU(J,I,NU) = RATE
   300   CONTINUE
   200 CONTINUE
@@ -3352,6 +3347,7 @@ C Loop through 5 times and calculate conductances
 C Zero out arrays
         HUFHK(GPT)=0.
         HUFHANI(GPT)=0.
+        HUFKDEP(GPT)=0.
 C---Get thickness of unit within cell
         TOPU=HUFTHK(J,I,GPT,1)
         THCKU=HUFTHK(J,I,GPT,2)
@@ -3376,10 +3372,11 @@ C---Calculate transmissivity for cell that pinches out
             IF(ABS(THK).GT.1E-4) THEN
               HUFHK(NU) = 0.0
               HUFHANI(NU) = 0.0
+              HUFKDEP(NU)=0.
               CALL UHUF2POP(HUFHK,'HK  ',NCOL,NROW,NHUF,I,J,HUFTHK,
      &                          IZON,NZONAR,RMLT,NMLTAR,NU,IOUT)
               CALL UHUF2POP(HUFKDEP,'KDEP',NCOL,NROW,NHUF,I,J,
-     &                          HUFTHK,IZON,NZONAR,RMLT,NMLTAR,0,IOUT)
+     &                          HUFTHK,IZON,NZONAR,RMLT,NMLTAR,NU,IOUT)
               CALL UHUF2POP(HUFHANI,'HANI',NCOL,NROW,NHUF,I,J,
      &                          HUFTHK,IZON,NZONAR,RMLT,NMLTAR,NU,IOUT)
               IF(HGUHANI(NU).GT.0..AND.HUFHANI(NU).EQ.0.)
@@ -3399,7 +3396,7 @@ C---Otherwise, calculate transmissivities of cell
           CALL UHUF2POP(HUFHK,'HK  ',NCOL,NROW,NHUF,I,J,HUFTHK,
      &                      IZON,NZONAR,RMLT,NMLTAR,GPT,IOUT)
           CALL UHUF2POP(HUFKDEP,'KDEP',NCOL,NROW,NHUF,I,J,HUFTHK,
-     &                      IZON,NZONAR,RMLT,NMLTAR,0,IOUT)
+     &                      IZON,NZONAR,RMLT,NMLTAR,GPT,IOUT)
           CALL UHUF2POP(HUFHANI,'HANI',NCOL,NROW,NHUF,I,J,HUFTHK,
      &                      IZON,NZONAR,RMLT,NMLTAR,GPT,IOUT)
           IF(HGUHANI(GPT).GT.0..AND.HUFHANI(GPT).EQ.0.)

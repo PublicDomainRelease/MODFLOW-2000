@@ -103,9 +103,6 @@ C     ------------------------------------------------------------------
      &        ,' STOP EXECUTION (OBS1RIV6RP)',/)
   565 FORMAT (/,' RIVER PACKAGE',
      &        ' IS NOT OPEN -- STOP EXECUTION (OBS1RIV6RP)')
-  570 FORMAT (/,' LARGEST OBS TIME STEP (',I5,') LARGER THAN NPER (',I5,
-     &        ') OF BASIC PACKAGE INPUT FILE',/,
-     &        ' -- STOP EXECUTION (OBS1RIV6RP)',/)
   590 FORMAT (/,' ROW OR COLUMN NUMBER INVALID',
      &        ' -- STOP EXECUTION (OBS1RIV6RP)',/)
   605 FORMAT (/,' OBSERVATION ',I6,' EQUALS ZERO, THE STATISTIC ',

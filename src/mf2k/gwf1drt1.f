@@ -31,7 +31,7 @@ C     READ COMMENTS (ITEM 0)
 C     READ ITEM 1
       IF (IFREFM.EQ.0) THEN
         READ(LINE,'(4I10)') MXADRT,IDRTCB,NPDRT,MXL
-        LLOC=21
+        LLOC=41
       ELSE
         LLOC=1
         CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,MXADRT,R,IOUT,IN)
@@ -320,7 +320,7 @@ C=======================================================================
      &                      NCOL,NROW,NLAY,IBOUND,KSTP,KPER,IDRTCB,
      &                      ICBCFL,BUFF,IOUT,PERTIM,TOTIM,NDRTVL,IDRTAL,
      &                      IDRTFL,NRFLOW,IAUXSV)
-C-----VERSION 20000620 ERB
+C-----VERSION 20040113 ERB
 C     ******************************************************************
 C     CALCULATE VOLUMETRIC BUDGET FOR DRAIN-RETURN CELLS
 C     ******************************************************************
@@ -385,6 +385,7 @@ C5C-----GET DRAIN PARAMETERS FROM DRAIN-RETURN LIST.
         EEL=EL
         C=DRTF(5,L)
         HHNEW=HNEW(IC,IR,IL)
+        ILR=0
 C
 C5D-----IF HEAD HIGHER THAN DRAIN, CALCULATE Q=C*(EL-HHNEW).
 C5D-----SUBTRACT Q FROM RATOUT.
@@ -394,7 +395,6 @@ C5D-----SUBTRACT Q FROM RATOUT.
           QQ=CEL - CC*HHNEW
           Q=QQ
           RATOUT=RATOUT-QQ
-          ILR=0
           IF (IDRTFL.GT.0) THEN
             ILR = DRTF(6,L)
             IF (ILR.NE.0) THEN
@@ -467,7 +467,7 @@ C=======================================================================
      &                       INPACK,IOUT,DRTAUX,NCAUX,NAUX,IFREFM,
      &                       NCOL,NROW,NLAY,ITERP,IDRTFL)
 C
-C-----VERSION 20000620 ERB
+C-----VERSION 20040113 ERB
 C     ******************************************************************
 C     Read and print a list of drain and optional associated
 C     return-flow recipient cells.  NAUX of the values in the list are
@@ -586,10 +586,10 @@ C  Read the non-optional values from the line.
      &                      IOUT,IN)
    20         CONTINUE
             ENDIF
-            DRTF(6,II) = KR
-            DRTF(7,II) = IR
-            DRTF(8,II) = JR
           ENDIF
+          DRTF(6,II) = KR
+          DRTF(7,II) = IR
+          DRTF(8,II) = JR
         ENDIF
         DRTF(1,II)=K
         DRTF(2,II)=I

@@ -12,6 +12,38 @@ these packages and processes, see mf2k.txt ("Summary of MODFLOW-2000").
 NOTE: Any use of trade, product or firm names is for descriptive purposes 
       only and does not imply endorsement by the U.S. Government.
 
+o Version 1.13.00 1/22/2004:
+
+This release includes revisions to the LAK3 Package, including changes that
+affect: (1) Simulation of mixed steady-state and transient stress periods;
+(2) Simulation of the top layer as confined; (3) Lake stage saved or printed
+in the head array, rather than HNOFLO; (4) Checking of consistency between
+lake cells and IBOUND; (5) Simulation of lake cells in the bottom layer; and
+(6) other minor output changes.  Please see LakePackage.read_me.txt in the
+doc directory of the Modflow-2000 distribution for more details.
+
+Additional explanatory text is written to the Global output file when the
+simulation time is truncated by the Sensitivity Process, to the time step
+required for the last observtion, to reduce execution time.
+
+The SUB Package was modified to work correctly when batch mode is used.
+
+A minor change was made to the PCG2 Package to correct a problem with
+damping when the polynomial preconditioner is used (NPCOND=2 in PCG2 input).
+
+Documentation of a previously undocumented feature that allows control of
+printing of a multiplier array that is a function of other multiplier
+arrays: An IPRN value can be specified after the last multipler-array name
+in item 4 of the MULT file.  Valid IPRN values are listed on p. 87 of
+Open-File Report 00-92.  Assign IPRN<0 to suppress printing.
+
+A bug that caused a problem reading the DRT Package input file in fixed
+format was corrected.  Other bugs related to the use of DRT-Package
+parameters were fixed.
+
+A revised version of the HUF2 Package, which fixes bugs that affected
+calculation of flow in hydrogeologic units, replaces the previous version.
+
 o Version 1.12.01 10/03/2003:
 
 The version number (1.12.01) for this release uses a modified identification

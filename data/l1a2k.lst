@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.12.01 10/03/2003
+                           VERSION 1.13.00 01/22/2004
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -892,9 +892,17 @@
 
                  RECHARGE =  1.160000E-02
 
+
+ LAKE PACKAGE ACTIVE:  CALCULATED LAKE STAGE FOR EACH EACH TIME STEP WILL BE STORED IN HNEW ARRAY.
+
  INITIAL LAKE STAGE:  LAKE    STAGE
 
                         1   110.000
+
+
+
+
+ If any subsequent steady-state stress periods, min. and max. stages for each lake will be read in Record 9a.
 
 
 
@@ -953,6 +961,8 @@
             LAKE ID ARRAY =              0 FOR LAYER   4
 
             LAKE ID ARRAY =              0 FOR LAYER   5
+
+
 
 
 
@@ -1197,7 +1207,7 @@
 
 
          C               INTERFACE CONDUCTANCES BETWEEN LAKE AND AQUIFER CELLS
-   L     O          (IF TYPE = 0, CONDUCTANCE (L^2/T) IS BETWEEN AQUIFER CELL AND OVERLYING LAKE CELL.)
+   L     O          (IF TYPE = 6, CONDUCTANCE (L^2/T) IS BETWEEN AQUIFER CELL AND OVERLYING LAKE CELL.)
    A     L  L  T    (IF TYPE = 1 TO 4, CONDUCTANCES ARE PER UNIT SATURATED THICKNESS (L/T).)
    Y  R  U  A  Y
    E  O  M  K  P                        LAKEBED      C O N D U C T A N C E S
@@ -1260,6 +1270,16 @@
    1  9 12  1  1    5.00E+02  1.00E+03  1.00E-01  5.00E+01  3.00E+01  1.88E+01
    1 10 12  1  1    5.00E+02  1.00E+03  1.00E-01  5.00E+01  3.00E+01  1.88E+01
    1 11 12  1  1    5.00E+02  1.00E+03  1.00E-01  5.00E+01  3.00E+01  1.88E+01
+
+
+     NOTE: INFORMATION ABOUT CALCULATED LAKE/AQUIFER CONDUCTANCES WHEN USING BCF PACKAGE FOLLOWS: 
+
+ IF WETDRY FLAG NOT TURNED ON, VERTICAL LEAKANCES ARE NOT SAVED:
+ THEREFORE, LAKE/AQUIFER CONDUCTANCES ARE BASED SOLELY ON LAKEBED SPECIFICATION
+
+
+
+
  
  SOLVING FOR HEAD 
 

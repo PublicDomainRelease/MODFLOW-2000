@@ -58,6 +58,10 @@ METHOD
 
 HISTORY
 
+      MODFLOW-2000 Version 1.13.00 2004/01/22 - Includes revisions to the
+        LAK3 Package and bug fixes for the DRT, SUB, HUF2, and PCG2
+        Packages.
+
       MODFLOW-2000 Version 1.12.01 2003/10/03 - This is a bug-fix release.
         Bug fixes are described in release.txt.
 
