@@ -1,16 +1,20 @@
+C -- 12-3-96 -- Change sign for C.B. STORAGE cell-by-cell budget data.
+C This change does not impact computed heads or the overall volumetric
+C budget.  It only affects data written to a cell-by-cell budget file.
       SUBROUTINE TLK1AL(ISUM,LENX,NCOL,NROW,NLAY,LCRAT,LCZCB,
      1 LCA1,LCB1,LCALPH,LCBET,LCRM1,LCRM2,LCRM3,LCRM4,LCTL,LCTLK,LCSLU,
      2 LCSLD,NODES1,NM1,NM2,NUMC,NTM1,ITLKSV,ITLKRS,ITLKCB,ISS,IN,IOUT)
 C
 C-----VERSION 1100 06JAN1994 TLK1AL
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR TRANSIENT LEAKAGE PACKAGE
 C     ******************************************************************
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      COMMON /FLWCOM/ LAYCON(80)
-      COMMON /TLEAK/ IDCON(80),NTOP(80)
+      COMMON /FLWCOM/ LAYCON(200)
+      COMMON /TLEAK/ IDCON(200),NTOP(200)
 C     ------------------------------------------------------------------
 C
 C1------IDENTIFY PACKAGE
@@ -149,6 +153,7 @@ C14-----RETURN
      2 NROW,NCOL,IN,IOUT)
 C
 C-----VERSION 1100 06JAN1994 TLK1RP
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C     ******************************************************************
 C     READ AND INITIALIZE TRANSIENT LEAKAGE ARRAYS
 C     ******************************************************************
@@ -161,7 +166,7 @@ C
      1 BET(2),RM1(NM1),RM2(NM2),RM3(NM1),RM4(NM2),BUFF(NODES1),
      2 DELC(NROW),DELR(NCOL),ANAME(6,3)
 C
-      COMMON /TLEAK/ IDCON(80),NTOP(80)
+      COMMON /TLEAK/ IDCON(200),NTOP(200)
 C
       DATA ANAME(1,1),ANAME(2,1),ANAME(3,1),ANAME(4,1),ANAME(5,1),
      1ANAME(6,1)/'   V','ERTI','CAL ','COND','UCTI','VITY'/
@@ -290,6 +295,7 @@ C6------RETURN
      2 NROW,NCOL,NLAY,DELT,TLKTIM,IN,IOUT)
 C
 C-----VERSION 1100 06JAN1994 TLK1AD
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C     ******************************************************************
 C     COMPUTE TRANSIENT LEAKAGE TERMS AT EVERY TIME STEP
 C     ******************************************************************
@@ -304,7 +310,7 @@ C
      3 RM1(NM1),RM2(NM2),RM3(NM1),RM4(NM2),A1(NTM1),B1(2),
      4 ALPH(NTM1),BET(2),IBOUND(NCOL,NROW,NLAY)
 C
-      COMMON /TLEAK/ IDCON(80),NTOP(80)
+      COMMON /TLEAK/ IDCON(200),NTOP(200)
 C
 C     ------------------------------------------------------------------
 C
@@ -449,6 +455,7 @@ C14-----RETURN
      1 HNEW,IBOUND,TOP,CV,HCOF,RHS,NROW,NCOL,NLAY)
 C
 C-----VERSION 1100 06JAN1994 TLK1FM
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C     ******************************************************************
 C     ADD TRANSIENT LEAKAGE TO RHS AND HCOF
 C     ******************************************************************
@@ -462,7 +469,7 @@ C
      2 SLD(NCOL,NROW,NUMC),CV(NCOL,NROW,NLAY),HCOF(NCOL,NROW,NLAY),
      3 RHS(NCOL,NROW,NLAY),IBOUND(NCOL,NROW,NLAY),RATE(NCOL,NROW,NUMC)
 C
-      COMMON /TLEAK/ IDCON(80),NTOP(80)
+      COMMON /TLEAK/ IDCON(200),NTOP(200)
 C     ------------------------------------------------------------------
 C
 C1------ASSIGN VALUE OF IMPLICIT COEFFICIENT, TLK, TO VERTICAL
@@ -527,6 +534,9 @@ C7------RETURN
      2 DELT,KSTP,KPER,ICBCFL,IOUT)
 C
 C-----VERSION 1100 06JAN1994 TLK1BD
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
+C-----VERSION 03DEC1996 -- change sign for C.B. STORAGE cell-by-cell
+C     budget data.
 C     ******************************************************************
 C     VOLUMETRIC BUDGET FOR TRANSIENT LEAKAGE
 C     ******************************************************************
@@ -540,7 +550,7 @@ C     ------------------------------------------------------------------
      2 SLD(NCOL,NROW,NUMC),RATE(NCOL,NROW,NUMC),CV(NCOL,NROW,NLAY),
      3 VBNM(4,20),VBVL(4,20),IBOUND(NCOL,NROW,NLAY),BUFF(NCOL,NROW,NLAY)
 C
-      COMMON /TLEAK/ IDCON(80),NTOP(80)
+      COMMON /TLEAK/ IDCON(200),NTOP(200)
 C
       DIMENSION TEXT1(4),TEXT2(4),TEXT3(4),TEXT4(4)
 C
@@ -618,7 +628,11 @@ C7------UNITS.
 C
 C8------IF CELL-BY-CELL BUDGET IS REQUESTED THEN PUT RATES IN BUFFER
       IF(IBD.EQ.1) THEN
-       BUFF(IC,IR,IL)=-SRAT
+C -- 12-3-96 -- Change sign for C.B. STORAGE cell-by-cell budget data.
+C -- By convention in MODFLOW, positive values indicate indicate system
+C -- inflow.
+C       BUFF(IC,IR,IL)=-SRAT
+       BUFF(IC,IR,IL)=+SRAT
        TL(IC,IR,ILCB)=-RATT
        TLK(IC,IR,ILCB)=-RATB
       ENDIF

@@ -1,5 +1,5 @@
 #!/bin/sh
-# usr/opt/wrdapp/modflow2.5/test/test.sh -- run MODFLOW test data sets
+# usr/opt/wrdapp/modflw96.3_2/test/test.sh -- run MODFLOW-96 test data sets
 #
 # Usage: test.sh [start [stop]]
 #        test.sh [start [stop] | tee test.out
@@ -15,24 +15,26 @@
 #          04/27/92, mygoze, restructuring
 #          09/01/93, rsregan, modified for use with modflow
 #          09/20/96, rsregan, added RES test
+#          12/17/96, rsregan, updated for modflow-96
+#          01/09/98, rsregan, added FHB test
 #
 # Variable definitions
 # --------------------
 #
   TOPDIR=..
-  PROG=$TOPDIR/bin/modflow
+  PROG=$TOPDIR/bin/modflw96
   DATA=$TOPDIR/data
   CHECK=./check.sh
   CLEAN=./clean.sh
   PROGNM=MODFLOW
-  END=6
+  END=7
   DIVD=========================================
 #
 #
   exec 2>&1                                # stderr shows up in .out file
 
   Start=${1:-1}                            # by default, start at 1
-  Stop=${2:-$END}                          # by default, stop at 6
+  Stop=${7:-$END}                          # by default, stop at 7
   if [ $Start -lt 1 ] ; then Start=1 ; fi
   if [ $Stop -lt 1 ] ; then Stop=$END ; fi
   if [ $Start -gt $END -o $Stop -gt $END ]
@@ -74,16 +76,16 @@
     echo
     echo $DIVD$DIVD
     echo "Test run number $Test"
-    if [ $Test -eq 1 ] ; then Name=ibs.sh ; fi
-    if [ $Test -eq 2 ] ; then Name=str.sh ; fi
-    if [ $Test -eq 3 ] ; then Name=twri.sh ; fi
-    if [ $Test -eq 4 ] ; then Name=bcf2ss.sh ; fi
-    if [ $Test -eq 5 ] ; then Name=tlkp1.sh ; fi
-    if [ $Test -eq 6 ] ; then Name=restest.sh ; fi
-    cp $DATA/$Name .
-    chmod 755 ./$Name
-    echo
-    ./$Name
+    if [ $Test -eq 1 ] ; then Name=ibs ; fi
+    if [ $Test -eq 2 ] ; then Name=str ; fi
+    if [ $Test -eq 3 ] ; then Name=twri ; fi
+    if [ $Test -eq 4 ] ; then Name=bcf2ss ; fi
+    if [ $Test -eq 5 ] ; then Name=tlkp1 ; fi
+    if [ $Test -eq 6 ] ; then Name=restest ; fi
+    if [ $Test -eq 7 ] ; then Name=fhb ; fi
+    rm -f go
+    echo $DATA/$Name.nam > go
+    $PROG < go > $Name.log
     Test=`expr $Test + 1`
   done
   Test=`expr $Test - 1`
@@ -98,4 +100,4 @@
   fi
 
 # check output against original output in $DATA directory
-  $CHECK ibs str twri bcf2ss tlkp1 restest
+  $CHECK ibs str twri bcf2ss tlkp1 restest fhb

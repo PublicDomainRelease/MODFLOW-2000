@@ -1,0 +1,8 @@
+LIST 6 tlkp1.lst
+BAS 5 ../data/tlkp1.bas
+BCF 7 ../data/tlkp1.bcf
+TLK 9 ../data/tlkp1.tlk
+SIP 12 ../data/tlkp1.sip
+OC 60 ../data/tlkp1.oc
+DATA(BINARY) 61 tlkp1.ddn
+DATA(BINARY) 63 tlkp1.bud

@@ -1,6 +1,7 @@
       SUBROUTINE HFB1AL(ISUM,LENX,LCHFBR,NHFB,IN,IOUT)
 C
 C-------VERSION 0001 13JUNE1986 HFB1AL
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR HORIZONTAL FLOW BARRIER PACKAGE
@@ -8,7 +9,7 @@ C     ******************************************************************
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      COMMON/HFBCOM/NBRLAY(80)
+      COMMON/HFBCOM/NBRLAY(200)
 C     ------------------------------------------------------------------
 C
 C1------IDENTIFY PACKAGE.
@@ -46,6 +47,7 @@ C6------RETURN
      1        NHFB,IOUT)
 C
 C-----VERSION 0001 13JUNE1986 HFB1RP
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C
 C     ******************************************************************
 C     READ AND INITIALIZE DATA FOR HORIZONTAL FLOW BARRIER PACKAGE
@@ -55,8 +57,8 @@ C       SPECIFICATIONS:
 C     ------------------------------------------------------------------
       DIMENSION CR(NODES),CC(NODES),DELR(NCOL),DELC(NROW),HFBR(5,NHFB)
 C
-      COMMON/HFBCOM/NBRLAY(80)
-      COMMON/FLWCOM/LAYCON(80)
+      COMMON/HFBCOM/NBRLAY(200)
+      COMMON/FLWCOM/LAYCON(200)
 C     ------------------------------------------------------------------
 C1------PRINT EXPLANATION OF DATA.
       WRITE(IOUT,8)
@@ -113,6 +115,7 @@ C4------RETURN
       SUBROUTINE SHFB1N(CR,CC,DELR,DELC,HFBR,NCOL,NROW,NLAY,NHFB,IOUT)
 C
 C-----VERSION 0001 13JUNE1986 SHFB1N
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C
 C     ******************************************************************
 C     CHECK HFB DATA AND MODIFY HORIZONTAL CONDUCTANCES (CR AND CC)
@@ -124,8 +127,8 @@ C     ------------------------------------------------------------------
       DIMENSION CR(NCOL,NROW,NLAY),CC(NCOL,NROW,NLAY),DELR(NCOL),
      1    DELC(NROW),HFBR(5,NHFB)
 C
-      COMMON/HFBCOM/NBRLAY(80)
-      COMMON/FLWCOM/LAYCON(80)
+      COMMON/HFBCOM/NBRLAY(200)
+      COMMON/FLWCOM/LAYCON(200)
 C     ------------------------------------------------------------------
 C
 C1------INITIALIZE ERROR FLAG TO ZERO.
@@ -206,6 +209,7 @@ C4-----RETURN
      1      NLAY,NHFB)
 C
 C-----VERSION 0001 13JUNE1986 HFB1FM
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C
 C     ******************************************************************
 C     MODIFY HORIZONTAL BRANCH CONDUCTANCES IN VARIABLE-TRANSMISSIVITY
@@ -220,8 +224,8 @@ C
      1    CC(NCOL,NROW,NLAY),BOT(NCOL,NROW,NLAY),TOP(NCOL,NROW,NLAY),
      2    DELR(NCOL),DELC(NROW),HFBR(5,NHFB)
 C
-      COMMON/HFBCOM/NBRLAY(80)
-      COMMON/FLWCOM/LAYCON(80)
+      COMMON/HFBCOM/NBRLAY(200)
+      COMMON/FLWCOM/LAYCON(200)
 C     ------------------------------------------------------------------
       KB=0
       KT=0

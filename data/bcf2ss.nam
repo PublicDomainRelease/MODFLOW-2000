@@ -1,0 +1,8 @@
+LIST 6 bcf2ss.lst
+BAS 5 ../data/bcf2ss.bas
+BCF 11 ../data/bcf2ss.bcf
+WEL 12 ../data/bcf2ss.wel
+RIV 14 ../data/bcf2ss.riv
+RCH 18 ../data/bcf2ss.rch
+PCG 19 ../data/bcf2ss.pcg
+OC  20 ../data/bcf2ss.oc

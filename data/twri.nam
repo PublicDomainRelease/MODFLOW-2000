@@ -1,0 +1,7 @@
+LIST 6 twri.lst
+BAS 5 ../data/twri.bas
+BCF 11 ../data/twri.bcf
+WEL 12 ../data/twri.wel
+DRN 13 ../data/twri.drn
+RCH 18 ../data/twri.rch
+SIP 19 ../data/twri.sip

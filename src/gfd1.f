@@ -2,6 +2,7 @@
      1     LCTOP,LCSC2,IN,ISS,NCOL,NROW,NLAY,IOUT,IGFDCB)
 C
 C-----VERSION 1304 19SEP1989 GFD1AL
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR GENERAL FINITE-DIFFERENCE FLOW PACKAGE
@@ -9,7 +10,7 @@ C     ******************************************************************
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      COMMON /FLWCOM/LAYCON(80)
+      COMMON /FLWCOM/LAYCON(200)
 C     ------------------------------------------------------------------
 C
 C1------IDENTIFY PACKAGE
@@ -31,10 +32,10 @@ C2------PRINTING OR UNIT# FOR RECORDING CELL-BY-CELL FLOW TERMS)
    88 FORMAT(1X,'CONSTANT HEAD CELL-BY-CELL FLOWS WILL BE PRINTED')
 C
 C3------READ TYPE CODE FOR EACH LAYER AND COUNT TOPS AND BOTTOMS
-      IF(NLAY.LE.80) GO TO 50
+      IF(NLAY.LE.200) GO TO 50
       WRITE(IOUT,11)
-   11 FORMAT(1H0,'YOU HAVE SPECIFIED MORE THAN 80 MODEL LAYERS'/1X,
-     1  'SPACE IS RESERVED FOR A MAXIMUM OF 80 LAYERS IN ARRAY LAYCON')
+   11 FORMAT(1H0,'YOU HAVE SPECIFIED MORE THAN 200 MODEL LAYERS'/1X,
+     1  'SPACE IS RESERVED FOR A MAXIMUM OF 200 LAYERS IN ARRAY LAYCON')
       STOP
 C
 C3A-----READ LAYER TYPE CODES.
@@ -108,6 +109,7 @@ C7------RETURN
      1        BOT,TOP,SC2,IN,ISS,NCOL,NROW,NLAY,NODES,IOUT)
 C
 C-----VERSION 1406 19SEP1989 GFD1RP
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C
 C     ******************************************************************
 C     READ AND INITIALIZE DATA FOR GENERAL FLOW PACKAGE
@@ -123,7 +125,7 @@ C
      2          DELC(NROW),BOT(NODES),TOP(NODES),SC2(NODES),
      3          IBOUND(NODES)
 C
-      COMMON /FLWCOM/LAYCON(80)
+      COMMON /FLWCOM/LAYCON(200)
 C
       DATA ANAME(1,1),ANAME(2,1),ANAME(3,1),ANAME(4,1),ANAME(5,1),
      1  ANAME(6,1) /'PRIM','ARY ','STOR','AGE ','CAPA','CITY'/
@@ -207,6 +209,7 @@ C4------RETURN
      1                CDTR,CDTC,BOT,TOP,SC2,DELT,ISS,KITER,KSTP,KPER,
      2                NCOL,NROW,NLAY,IOUT)
 C-----VERSION 0912 19SEP1989 GFD1FM
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C
 C     ******************************************************************
 C     ADD LEAKAGE CORRECTION AND STORAGE TO HCOF AND RHS, AND CALCULATE
@@ -224,7 +227,7 @@ C
      4    CDTC(NCOL,NROW,NLAY),BOT(NCOL,NROW,NLAY),TOP(NCOL,NROW,NLAY),
      5    SC2(NCOL,NROW,NLAY)
 C
-      COMMON /FLWCOM/LAYCON(80)
+      COMMON /FLWCOM/LAYCON(200)
 C     ------------------------------------------------------------------
       KB=0
       KT=0
@@ -344,6 +347,7 @@ C9------RETURN
      1   TOP,SC2,DELT,ISS,NCOL,NROW,NLAY,KSTP,KPER,IGFDCB,
      2   ICBCFL,BUFF,IOUT)
 C-----VERSION 1346 19SEP1989 GFD1BD
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C
 C     ******************************************************************
 C     COMPUTE BUDGET FLOW TERMS FOR GFD -- STORAGE, CONSTANT HEAD, AND
@@ -362,7 +366,7 @@ C
      4   SC2(NCOL,NROW,NLAY),
      5   TOP(NCOL,NROW,NLAY),BUFF(NCOL,NROW,NLAY)
 C
-      COMMON /FLWCOM/LAYCON(80)
+      COMMON /FLWCOM/LAYCON(200)
 C
       DIMENSION TEXT(4)
 C
@@ -458,6 +462,7 @@ C12----RETURN
      1         NCOL,NROW,NLAY,IOUT)
 C
 C-----VERSION 1438 19SEP1989 SGFD1N
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C
 C     ******************************************************************
 C     INITIALIZE AND CHECK GFD DATA
@@ -473,7 +478,7 @@ C
      2    CC(NCOL,NROW,NLAY),CV(NCOL,NROW,NLAY),
      3    CDTC(NCOL,NROW,NLAY)
 C
-      COMMON /FLWCOM/LAYCON(80)
+      COMMON /FLWCOM/LAYCON(200)
 C     ------------------------------------------------------------------
 C
 C1------IF IBOUND=0, SET CR=CC=CV=CDTR=CDTC=0.
@@ -557,6 +562,7 @@ C6------RETURN
      1       TOP,K,KB,KT,KITER,KSTP,KPER,NCOL,NROW,NLAY,IOUT)
 C
 C-----VERSION 1318 19SEP1989 SGFD1H
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C
 C     ******************************************************************
 C     COMPUTE CONDUCTANCE FROM SATURATED THICKNESS AND CONDUCTANCE
@@ -572,7 +578,7 @@ C
      2     CDTR(NCOL,NROW,NLAY), CDTC(NCOL,NROW,NLAY),
      3     BOT(NCOL,NROW,NLAY),TOP(NCOL,NROW,NLAY)
 C
-      COMMON /FLWCOM/LAYCON(80)
+      COMMON /FLWCOM/LAYCON(200)
 C     ------------------------------------------------------------------
 C
 C1------CALCULATE SATURATED THICKNESS AT EACH ACTIVE NODE AND STORE
@@ -656,6 +662,7 @@ C3------RETURN
      1      KSTP,KPER,IGFDCB,BUFF,IOUT)
 C
 C-----VERSION 1328 19SEP1989 SGFD1B
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C
 C     ******************************************************************
 C     COMPUTE FLOW ACROSS EACH CELL WALL
@@ -671,7 +678,7 @@ C
      2     CV(NCOL,NROW,NLAY), TOP(NCOL,NROW,NLAY),
      3     BUFF(NCOL,NROW,NLAY)
 C
-      COMMON /FLWCOM/LAYCON(80)
+      COMMON /FLWCOM/LAYCON(200)
 C
       DIMENSION TEXT(12)
 C
@@ -758,6 +765,7 @@ C10----RETURN
      1   TOP,DELT,NCOL,NROW,NLAY,KSTP,KPER,IBD,IGFDCB,ICBCFL,
      2   BUFF,IOUT)
 C-----VERSION 1429 19SEP1989 SGFD1F
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C
 C     ******************************************************************
 C     COMPUTE FLOW FROM CONSTANT HEAD NODES
@@ -773,7 +781,7 @@ C
      2     CV(NCOL,NROW,NLAY), VBNM(4,20), VBVL(4,20),
      3     TOP(NCOL,NROW,NLAY),BUFF(NCOL,NROW,NLAY)
 C
-      COMMON /FLWCOM/LAYCON(80)
+      COMMON /FLWCOM/LAYCON(200)
 C
       DIMENSION TEXT(4)
 C

@@ -9,14 +9,15 @@ C   IBQ=0 and IBQ>0.
      1                  NCOL,NROW,NLAY,IIBSCB,IIBSOC,ISS,IN,IOUT)
 C
 C-----VERSION 07JUN1996 IBS1AL
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR INTERBED STORAGE PACKAGE
 C     ******************************************************************
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      DIMENSION IBQ1(80)
-      COMMON /IBSCOM/ IBQ(80)
+      DIMENSION IBQ1(200)
+      COMMON /IBSCOM/ IBQ(200)
 C     ------------------------------------------------------------------
 C
 C1------IDENTIFY PACKAGE.
@@ -93,6 +94,7 @@ C10-----RETURN.
      2                  ISUBUN,ICOMUN,IHCUN,IN,IOUT)
 C
 C-----VERSION 1117 02JUN1988 IBS1RP
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C     ******************************************************************
 C     READ INTERBED STORAGE DATA
 C     ******************************************************************
@@ -105,7 +107,7 @@ C     ------------------------------------------------------------------
      1       SCV(NODES),SUB(NODES),ANAME(6,4),
      2       DELR(NCOL),DELC(NROW)
 C
-      COMMON /IBSCOM/ IBQ(80)
+      COMMON /IBSCOM/ IBQ(200)
 C
       DATA ANAME(1,1),ANAME(2,1),ANAME(3,1),ANAME(4,1),ANAME(5,1),
      1  ANAME(6,1) /'   P','RECO','NSOL','IDAT','ION ','HEAD'/
@@ -183,6 +185,7 @@ C6------RETURN
      1                  IBOUND,NCOL,NROW,NLAY,DELT)
 C
 C-----VERSION 07JUN1996 IBS1FM
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C     ******************************************************************
 C        ADD INTERBED STORAGE TO RHS AND HCOF
 C     ******************************************************************
@@ -195,7 +198,7 @@ C     ------------------------------------------------------------------
      2          HOLD(NCOL,NROW,NLAY),HC(NCOL,NROW,NLAY),
      3          SCE(NCOL,NROW,NLAY),SCV(NCOL,NROW,NLAY)
 C
-      COMMON /IBSCOM/ IBQ(80)
+      COMMON /IBSCOM/ IBQ(200)
 C     ------------------------------------------------------------------
 C
 C1------INITIALIZE
@@ -229,6 +232,7 @@ C5------RETURN
      1      NCOL,NROW,NLAY,DELT,VBVL,VBNM,MSUM,KSTP,KPER,IIBSCB,
      2      ICBCFL,BUFF,IOUT)
 C-----VERSION 07JUN1996 IBS1BD
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C     ******************************************************************
 C     CALCULATE VOLUMETRIC BUDGET FOR INTERBED STORAGE
 C     ******************************************************************
@@ -244,7 +248,7 @@ C     ------------------------------------------------------------------
      4          BUFF(NCOL,NROW,NLAY),DELR(NCOL),DELC(NROW)
       DIMENSION TEXT(4)
 C
-      COMMON /IBSCOM/ IBQ(80)
+      COMMON /IBSCOM/ IBQ(200)
       DATA TEXT(1),TEXT(2),TEXT(3),TEXT(4) /'INTE','RBED',' STO','RAGE'/
 C     ------------------------------------------------------------------
 C
@@ -339,6 +343,7 @@ C15-----RETURN
      1           BUFF,SUB,HC,IIBSOC,ISUBFM,ICOMFM,IHCFM,ISUBUN,
      2           ICOMUN,IHCUN,IN,IOUT)
 C-----VERSION 07JUN1996 IBS1OT
+C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C     ******************************************************************
 C     PRINT AND STORE SUBSIDENCE, COMPACTION AND CRITICAL HEAD.
 C     ******************************************************************
@@ -348,7 +353,7 @@ C     ------------------------------------------------------------------
       CHARACTER*4 TEXT
       DIMENSION HC(NCOL,NROW,NLAY),SUB(NCOL,NROW,NLAY),
      1          BUFF(NCOL,NROW,NLAY),TEXT(4,3)
-      COMMON /IBSCOM/ IBQ(80)
+      COMMON /IBSCOM/ IBQ(200)
       DATA TEXT(1,1),TEXT(2,1),TEXT(3,1),TEXT(4,1) /'    ','  SU',
      1     'BSID','ENCE'/,TEXT(1,2),TEXT(2,2),TEXT(3,2),TEXT(4,2)
      2     /'    ','  CO','MPAC','TION'/,TEXT(1,3),TEXT(2,3),
@@ -442,9 +447,9 @@ C
 C10-----SAVE CRITICAL HEAD FOR ALL LAYERS WITH INTERBED STORAGE.
   240 IF(IHCSV.LE.0) GO TO 300
       KQ=0
-      KQ=KQ+1
       DO 260 K=1,NLAY
       IF(IBQ(K).LE.0) GO TO 260
+      KQ=KQ+1
       CALL ULASAV(HC(1,1,KQ),TEXT(1,3),KSTP,KPER,PERTIM,TOTIM,NCOL,
      1            NROW,K,IHCUN)
   260 CONTINUE

@@ -1,0 +1,7 @@
+LIST 6 restest.lst
+BAS 5 ../data/restest.bas
+BCF 11 ../data/restest.bcf
+GHB 17 ../data/restest.ghb
+SIP 19 ../data/restest.sip
+OC 22 ../data/restest.oc
+RES 27 ../data/restest.res

@@ -24,9 +24,9 @@ if [ -f check.out ]; then rm check.out; fi
 
 for Name in $NameList
 do
-  for Test in "" 1 2 3 4 5 6
+  for Test in "" 1 2
   do
-    for Sufx in list lst log out OUT
+    for Sufx in lst out bud ddn cbd hd
     do
       if [ -f $DATA/$Name$Test.$Sufx -a -f $Name$Test.$Sufx ]
       then
