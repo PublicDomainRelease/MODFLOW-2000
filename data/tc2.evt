@@ -1,0 +1,10 @@
+# EVT file for test case tc2
+#
+PARAMETER    1           Item 1: NPEVT
+    1    0               Item 2: NEVTOP IEVTCB
+ETMAX  EVT  4.0e-4   1   Item 3: PARNAM PARTYP Parval NCLU
+NONE  RCHETM   2         Item 4: Mltarr Zonarr IZ
+    1    1    1          Item 5: INSURF INEVTR INEXDP, stress period 1
+CONSTANT   1000.         Item 6: SURF array
+ETMAX  20                Item 8: Pname print-code
+CONSTANT    50.          Item 9: EXDP array

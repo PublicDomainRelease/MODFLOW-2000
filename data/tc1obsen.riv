@@ -1,0 +1,33 @@
+# RIV file for test case tc1obsen
+#
+PARAMETER     1   18                      Item 1: NPRIV MXL
+   18    0                                Item 2: MXACTR IRIVCB
+RIVERS     RIV   1.2E-3  18               Item 3: PARNAM PARTYP Parval NLST
+    1    1    1   100.0    1000.0   90.0  Item 4: Layer Row Column Stage Condfact Rbot
+    1    2    1   100.0    1000.0   90.0
+    1    3    1   100.0    1000.0   90.0
+    1    4    1   100.0    1000.0   90.0
+    1    5    1   100.0    1000.0   90.0
+    1    6    1   100.0    1000.0   90.0
+    1    7    1   100.0    1000.0   90.0
+    1    8    1   100.0    1000.0   90.0
+    1    9    1   100.0    1000.0   90.0
+    1   10    1   100.0    1000.0   90.0
+    1   11    1   100.0    1000.0   90.0
+    1   12    1   100.0    1000.0   90.0
+    1   13    1   100.0    1000.0   90.0
+    1   14    1   100.0    1000.0   90.0
+    1   15    1   100.0    1000.0   90.0
+    1   16    1   100.0    1000.0   90.0
+    1   17    1   100.0    1000.0   90.0
+    1   18    1   100.0    1000.0   90.0
+    0    1                                Item 5: ITMP NP for stress period 1
+RIVERS                                    Item 6: Pname
+    0    1                                Item 5: ITMP NP for stress period 2
+RIVERS                                    Item 6: Pname
+    0    1                                Item 5: ITMP NP for stress period 3
+RIVERS                                    Item 6: Pname
+    0    1                                Item 5: ITMP NP for stress period 4
+RIVERS                                    Item 6: Pname
+    0    1                                Item 5: ITMP NP for stress period 5
+RIVERS                                    Item 6: Pname

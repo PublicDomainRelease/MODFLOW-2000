@@ -1,0 +1,20 @@
+# DROB file for test case tc2
+#
+     5   5   5               Item 1: NQDR NQCDR NQTDR
+   1.0 1.0   0               Item 2: TOMULT EVFDR IOWTQDR
+     1  -1                   Item 3: NQOB NQCLDR
+DRN1 1 0. -573.4080 .30 2 4  Item 4: OBSNAM IREFSP TOFFSET HOBS STAT IST PLOT-SYMBOL
+     1  7  6    1.0          Item 5: LAYER ROW COLUMN FACTOR
+     1 -1                    Item 3
+DRN2 1 0. -848.3383 .30 2 4  Item 4
+     1 10 11    1.0          Item 5
+     1 -1                    Item 3
+DRN3 1 0. -135.1775 .30 2 4  Item 4
+     1 14 14    1.0          Item 5
+     1 -1                    Item 3
+DRN4 1 0. -19.43909 .30 2 4  Item 4
+     1 15 14    1.0          Item 5
+     1 -1                    Item 3
+DRN5 1 0. -6.536743 .30 2 4  Item 4
+     1 16 14    1.0          Item 5
+ 

@@ -1,0 +1,36 @@
+# GHF file for test case tc2hufv4
+#
+  0  -999.  6                Item 1:  IGHFCB HDRY NPGHF
+  0    0    0                Item 2:  LAYTYP
+  0    0    0                Item 3:  LAYAVG
+1.0  1.0  1.0                Item 4:  CHANI
+  1    1    1                Item 5:  LAYVKA: 0 = Kz of model layer; not 0 = Kx/Kz
+  0    0    0                Item 6:  LAYWET
+HK_1       HK      1.0   3   Item 8:  PARNAM PARTYP PARVAL NCLST
+  1        NONE   ZLAY1  1   Item 9:    LAYER MARRAY ZARRAY [zones]
+  2        NONE   ZLAY2  1   Item 9:    LAYER MARRAY ZARRAY [zones]
+  3        NONE   ZLAY3  1   Item 9:    LAYER MARRAY ZARRAY [zones]
+HK_2       HK   1.0E-2   3   Item 8:  PARNAM PARTYP PARVAL NCLST
+  1        NONE   ZLAY1  2   Item 9:    LAYER MARRAY ZARRAY [zones]
+  2        NONE   ZLAY2  2   Item 9:    LAYER MARRAY ZARRAY [zones]
+  3        NONE   ZLAY3  2   Item 9:    LAYER MARRAY ZARRAY [zones]
+HK_3       HK   1.0E-4   3   Item 8:  PARNAM PARTYP PARVAL NCLST
+  1        NONE   ZLAY1  3   Item 9:    LAYER MARRAY ZARRAY [zones]
+  2        NONE   ZLAY2  3   Item 9:    LAYER MARRAY ZARRAY [zones]
+  3        NONE   ZLAY3  3   Item 9:    LAYER MARRAY ZARRAY [zones]
+HK_4       HK    1.0E-6  3   Item 8:  PARNAM PARTYP PARVAL NCLST
+  1        NONE   ZLAY1  4   Item 9:    LAYER MARRAY ZARRAY [zones]
+  2        NONE   ZLAY2  4   Item 9:    LAYER MARRAY ZARRAY [zones]
+  3        NONE   ZLAY3  4   Item 9:    LAYER MARRAY ZARRAY [zones]
+ANIV_12    VKA     4.0   2   Item 8:  PARNAM PARTYP PARVAL NCLST
+  1        NONE       ALL    Item 9:    LAYER MARRAY ZARRAY [zones]
+  2        NONE       ALL    Item 9:    LAYER MARRAY ZARRAY [zones]
+ANIV_3     VKA     1.0   1   Item 8:  PARNAM PARTYP PARVAL NCLST
+  3        NONE       ALL    Item 9:    LAYER MARRAY ZARRAY [zones]
+  2                          Item 10:  print code for HK, layer 1
+  2                          Item 12:  print code for VKA, layer 1
+  2                          Item 10:  print code for HK, layer 2
+  2                          Item 12:  print code for VKA, layer 2
+  2                          Item 10:  print code for HK, layer 3
+  2                          Item 12:  print code for VKA, layer 3
+

@@ -1,0 +1,18 @@
+# WEL file for test case tc1obsen
+#
+PARAMETER 1 2                             Item 1: NPWEL MXPWEL
+         2         0                      Item 2: MXACTW IWELCB
+WELLS_TR  Q -1.1 2                        Item 3: PARNAM PARTYP B NLST
+         1         9        10       1.0  Item 4: Layer Row Column Qfact
+         2         9        10       1.0
+         2         0                      Item 5: ITMP NP, stress period 1
+         1         9        10       0.0  Item 6: Layer Row Column Q
+         2         9        10       0.0
+         0         1                      Item 5: ITMP NP, stress period 2
+WELLS_TR                                  Item 7: Pname
+         0         1                      Item 5: ITMP NP, stress period 3
+WELLS_TR                                  Item 7: Pname
+         0         1                      Item 5: ITMP NP, stress period 4
+WELLS_TR                                  Item 7: Pname
+         0         1                      Item 5: ITMP NP, stress period 5
+WELLS_TR                                  Item 7: Pname

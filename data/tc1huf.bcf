@@ -1,0 +1,8 @@
+  0  0.0  0  0.0  0  0           Item 1:  IBCFCB HDRY IWDFLG WETFCT IWETIT IHDWET  
+  0  0                                             Item 2:  Ltype
+CONSTANT        1.                                 Item 3:  TRPY
+CONSTANT     0.001                                 Item 4:  S, layer 1
+CONSTANT    .02000                                 Item 5:  T, layer 1
+CONSTANT  2.00E-08                                 Item 8: Vcont, layer 1
+CONSTANT    0.0001                                 Item 4:  S, layer 2
+        18   .002200(18F3.0)                       Item 5:  T, layer 2

@@ -1,0 +1,33 @@
+# NAME file for test case tc2
+#
+# NOTE: Forward slashes (/) in pathnames may need to be converted
+#       to back slashes (\) in some computing environments
+#
+# Output files
+global          11   tc2.glo
+list            12   tc2.lst
+data(BINARY)    13   tc2.bin
+#
+# Obs-Sen-Pes process input files
+obs             21   ../data/tc2.obs
+hob             22   ../data/tc2.ohd
+drob            23   ../data/tc2.odr
+gbob            24   ../data/tc2.ogb
+sen             25   ../data/tc2.sen
+pes             26   ../data/tc2.pes
+#adv             27   ../data/tc2.adv
+#
+# Global input files
+dis             31   ../data/tc2.dis
+zone            32   ../data/tc2.zon
+#
+# Flow process input files
+bas6            41   ../data/tc2.bas
+lpf             42   ../data/tc2.lpf
+wel             43   ../data/tc2.wel
+drn             44   ../data/tc2.drn
+evt             45   ../data/tc2.evt
+ghb             46   ../data/tc2.ghb
+rch             47   ../data/tc2.rch
+oc              48   ../data/tc2.oc
+pcg             49   ../data/tc2.pcg

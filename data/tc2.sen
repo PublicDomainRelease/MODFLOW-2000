@@ -1,0 +1,14 @@
+# SEN file for test case tc2
+#
+   10    0  -40   10                           ITEM 1: NPLIST ISENALL IUHEAD MXSEN
+    0    0    0    0                           ITEM 2: IPRINTS ISENSU ISENPU ISENFM
+HK_1     1  0    1.50    -1.4    -0.8  1.0E-3  ITEM 3: PARNAM ISENS LN B BL BU BSCAL
+HK_2     1  0  0.5E-2  2.0E-9  2.0E-7  1.0E-5  (These starting values will result in
+HK_3     1  0  1.2E-4  1.0E-9  1.0E-7  1.0E-7   convergence, at least if ADV is not
+HK_4     1  0  2.0E-6  1.2E-4  1.2E-2  1.0E-9   used)
+ANIV_12  1  0     1.0  1.3E-4  1.3E-2  1.0E-3
+ANIV_3   1  0    10.0  3.0E-5  3.0E-3  1.0E-2
+RCHRAT   1  0  4.4E-4  4.0E-6  4.0E-4  1.0E-7
+ETMAX    1  0  3.0E-4  4.0E-6  4.0E-4  1.0E-7
+C_GHB    1  0     0.5  2.0E-5  2.0E-3  1.0E-4
+C_DRN    1  0     2.0  1.0E-8  1.0E-6  1.0E-3

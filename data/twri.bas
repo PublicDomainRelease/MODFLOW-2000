@@ -1,9 +1,8 @@
-SAMPLE----3 LAYERS, 15 ROWS, 15 COLUMNS; STEADY STATE; CONSTANT HEADS COLUMN 1,
-LAYERS 1 AND 2; RECHARGE, WELLS AND DRAINS
-         3        15        15         1         1
- 11 12 13  0  0  0  0 18 19  0  0 00
-         0         0     IAPART,ISTRT
-         5         1(15I3)                       3    IBOUND-1
+# SAMPLE----3 LAYERS, 15 ROWS, 15 COLUMNS; STEADY STATE; CONSTANT HEADS COLUMN 1,
+# LAYERS 1 AND 2; RECHARGE, WELLS AND DRAINS - test case twri
+#
+FREE                                           Item 1:  options
+INTERNAL  1  (15I3)  3                         Item 2:  IBOUND, layer 1
  -1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
  -1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
  -1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
@@ -19,7 +18,7 @@ LAYERS 1 AND 2; RECHARGE, WELLS AND DRAINS
  -1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
  -1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
  -1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
-         5         1(15I3)                       3    IBOUND-2
+INTERNAL  1  (15I3)  3                         Item 2:  IBOUND, layer 2
  -1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
  -1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
  -1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
@@ -35,9 +34,8 @@ LAYERS 1 AND 2; RECHARGE, WELLS AND DRAINS
  -1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
  -1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
  -1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
-         0         1                                  IBOUND-3
-    999.99
-         0        0.                                  HEAD-1
-         0        0.                                  HEAD-2
-         0        0.                                  HEAD-3
-    86400.         1        1.     PERLEN,NSTP,TSMULT
+CONSTANT  1                                    Item 2:  IBOUND, layer 3
+ 999.99                                        Item 3:  HNOFLO
+CONSTANT  0.0                                  Item 4:  STRT, layer 1
+CONSTANT  0.0                                  Item 4:  STRT, layer 2
+CONSTANT  0.0                                  Item 4:  STRT, layer 3

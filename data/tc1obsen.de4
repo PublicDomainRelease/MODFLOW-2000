@@ -1,0 +1,4 @@
+# DE4 file for test case tc1obsen
+#
+ 10  0  0  0          Item 1: ITMX MXUP MXLOW MXBW
+  2  1 1.  .0001  1   Item 2: IFREQ MUTD4 ACCL HCLOSE IPRD4

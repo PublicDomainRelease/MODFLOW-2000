@@ -1,0 +1,319 @@
+File cases.txt
+
+This directory contains input and output files for 17 test cases for
+MODFLOW-2000 (Harbaugh and others, 2000; Hill and others, 2000).  This file
+briefly describes each test case.  For each test case, the name of the name
+file is the name of the test case followed by a period and the extension
+"nam".  All files for a given test case share the test-case name as a common
+filename base.
+
+1. Test case twri:
+
+  This test case is is the example problem in Harbaugh and
+  others (2000) without parameters
+
+  Grid dimensions: 3 Layers, 15 Rows, 15 Columns
+  Stress periods: 1 steady
+  Optional processes: none
+  Mode: Forward
+  Flow package: BCF6
+  Stress packages: WEL, DRN, RCH
+  Solver: SIP
+  Types of parameters defined / package: none
+  
+2. Test case twrip:
+
+  This test case is is the example problem in Harbaugh and
+  others (2000) with parameters
+
+  Grid dimensions: 3 Layers, 15 Rows, 15 Columns
+  Stress periods: 1 steady
+  Optional processes: none
+  Mode: Forward
+  Flow package: LPF1
+  Stress packages: WEL, DRN, RCH
+  Solver: SIP
+  Types of parameters defined / package:
+    HK / LPF
+    VKCB / LPF
+    Q / WEL
+    DRN / DRN
+    RCH /RCH
+  
+3. Test case tc1obsen:
+
+  This test case is like tc1, except that the Parameter-Estimation (PES)
+Process is inactive, so the program runs in the "Parameter Sensitivity
+with Observations" mode.
+
+4. Test case tc1:
+
+  This test case is described in Hill and others (2000).  Observation values
+include statistically generated "noise", but otherwise are based on "true"
+parameter values.
+
+  Grid dimensions: 2 Layers, 18 Rows, 18 Columns
+  Stress periods: 1 steady, 4 transient
+  Optional processes: OBS, SEN, PES
+  Mode: Parameter Estimation
+  Flow package: LPF
+  Stress packages: WEL, GHB, RIV, RCH
+  Solver: PCG2
+  Observation types: 
+    HOB (32 observations)
+    RVOB (3 observations)
+  Types of parameters defined / package:
+    SS / LPF
+    HK / LPF
+    VANI / LPF
+    VKCB / LPF
+    Q / WEL
+    RIV / RIV
+    RCH / RCH
+
+5. Test case tc1-true:
+
+  This test case is like tc1, except that the observation values do not
+include "noise."
+
+6. Test case tc2:
+
+  This test case is described in Hill and others (2000).
+
+  Grid dimensions: 3 Layers, 18 Rows, 18 Columns
+  Stress periods: 1 steady
+  Optional processes: OBS, SEN, PES
+  Mode: Parameter Estimation
+  Flow package: LPF
+  Stress packages: WEL, DRN, EVT, GHB, RCH
+  Solver: PCG2
+  Observation types: 
+    HOB (42 observations)
+    DROB (5 observations)
+    GBOB (5 observations)
+  Types of parameters defined / package:
+    HK / LPF
+    VANI / LPF
+    DRN / DRN
+    EVT / EVT
+    GHB / GHB
+    RCH / RCH
+
+7. Test case tc3:
+
+  This test case is similar to Problem 4.2-2 in Cooley and Naff (1990)
+
+  Grid dimensions: 1 Layer, 17 Rows, 16 Columns
+  Stress periods: 1 steady
+  Optional processes: OBS, SEN, PES
+  Mode: Parameter Estimation
+  Flow package: LPF
+  Stress packages: WEL, RIV, CHD, RCH
+  Solver: PCG2
+  Observation types: 
+    HOB (32 observations)
+  Types of parameters defined / package:
+    HK / LPF
+    Q / WEL
+    RIV / RIV
+    RCH /RCH
+    CHD /CHD
+
+8. Test case BCF2SS:
+
+  This test case is Problem 1 in McDonald and others (1992) converted
+  to MODFLOW-2000
+
+  Grid dimensions: 2 Layers, 10 Rows, 15 Columns
+  Stress periods: 2 steady
+  Flow package: BCF6
+  Stress packages: WEL, RCH, RIV
+  Solver: PCG2
+
+9. Test case STR:
+
+  This test case is the example problem in OFR 88-729 (1989) converted
+  to MODFLOW-2000
+
+  Grid dimensions: 1 Layers, 6 Rows, 6 Columns
+  Stress periods: 1 steady
+  Flow package: BCF6
+  Stress packages: STR
+  Solver: SIP
+
+10. Test case FHB:
+
+  This test case is the example problem in Leake and Lilly (1997)
+  converted to MODFLOW-2000
+
+  Grid dimensions: 1 Layers, 3 Rows, 10 Columns
+  Stress periods: 3 transient
+  Flow package: BCF6
+  Stress packages: FHB
+  Solver: SIP
+
+11. Test case RESTEST:
+
+  This test case is the example problem in Fenske and others (1996)
+  converted to MODFLOW-2000
+
+  Grid dimensions: 1 Layers, 12 Rows, 12 Columns
+  Stress periods: 3 transient
+  Flow package: BCF6
+  Stress packages: GHB, RES
+  Solver: SIP
+
+
+12. Test case etsdrt:
+
+  This test case is described in Banta (2000)
+
+  Grid dimensions: 1 Layer, 11 Rows, 11 Columns
+  Stress periods: 1 steady
+  Optional processes: OBS, SEN PES
+  Mode: Parameter Estimation
+  Flow package: LPF1
+  Stress packages: DRT, ETS, RCH
+  Solver: PCG
+  Types of parameters defined / package: 
+    ETS / ETS
+    DRT / DRT
+    RCH / RCH
+    HK / LPF
+
+13. Test case tc1huf:
+
+  This test case is described in Anderman and Hill (2000)
+
+  Grid dimensions: 3 Layers, 18 Rows, 18 Columns
+  Stress periods: 4 transient
+  Optional processes: OBS
+  Mode: Forward with Observations
+  Flow package: HUF
+  Stress packages: WEL, GHB, RIV, RCH
+  Solver: PCG
+  Types of parameters defined / package:
+    HK / HUF
+    VK / HUF
+    SS / HUF
+    SY / HUF
+    RCH / RCH
+
+14. Test case tc2hufv4:
+
+  This test case is described in Anderman and Hill (2000)
+
+  Grid dimensions: 3 Layers, 18 Rows, 18 Columns
+  Stress periods: 1 steady
+  Optional processes: OBS, SEN, PES
+  Mode: Parameter Estimation
+  Flow package: HUF
+  Stress packages: WEL, DRN, EVT, GHB, RCH
+  Solver: PCG
+  Types of parameters defined / package:
+    HK / HUF
+    VK / HUF
+    DRN / DRN
+    EVT / EVT
+    GHB / GHB
+    RCH / RCH
+
+15. Test case ibs2k:
+
+  This test case is the storage-depletion test problem described in
+  Leake and Prudic (1991) converted to MODFLOW-2000
+
+  Grid dimensions: 2 Layers, 10 Rows, 12 Columns
+  Stress periods: 3 transient
+  Optional processes: none
+  Mode: Forward
+  Flow package: BCF6
+  Stress packages: IBS
+  Solver: SIP
+  Types of parameters defined / package: none
+
+16. Test case l1a2k:
+
+  This test case is the transient version of Test Simulation 1 in
+  Merritt and Konikow (2000) converted to MODFLOW-2000
+
+  Grid dimensions: 5 Layers, 17 Rows, 17 Columns
+  Stress periods: 1 transient
+  Optional processes: none
+  Mode: Forward
+  Flow package: BCF6
+  Stress packages: EVT, RCH, LAK, FHB
+  Solver: SIP
+  Types of parameters defined / package: none
+
+17. Test case l1b2k:
+
+  This test case is the steady-state version of Test Simulation 1 in
+  Merritt and Konikow (2000) converted to MODFLOW-2000
+
+  Grid dimensions: 5 Layers, 17 Rows, 17 Columns
+  Stress periods: 1 steady
+  Optional processes: none
+  Mode: Forward
+  Flow package: BCF6
+  Stress packages: EVT, RCH, LAK, FHB
+  Solver: SIP
+  Types of parameters defined / package: none
+
+REFERENCES
+
+Anderman, E.R., and Hill, M.C., 2000, MODFLOW-2000, the U.S. Geological
+Survey modular ground-water model -- Documentation of the
+Hydrogeologic-Unit Flow (HUF) Package: U.S. Geological Survey Open-File
+Report 00-342, 89 p.
+
+Banta, E.R., 2000, MODFLOW-2000, the U.S. Geological Survey modular
+ground-water model -- Documentation of packages for simulating
+evapotranspiration with a segmented function (ETS1) and drains with return
+flow (DRT1): U.S. Geological Survey Open-File Report 00-466, 127 p.
+
+Cooley, R.L., and Naff, R.L., 1990, Regression modeling of ground-water
+flow: U.S. Geological Survey Techniques of Water-Resources Investigations,
+Book 3, Chap. B4, 232 p.
+
+Fenske, J.P., Leake, S.A., and Prudic, D.E., 1996, Documentation of a
+computer program (RES1) to simulate leakage from reservoirs using the
+modular finite- difference ground-water flow model (MODFLOW): U.S.
+Geological Survey Open-File Report 96-364, 51 p.
+
+Harbaugh, A.W., Banta, E.R., Hill, M.C., and McDonald, M.G., 2000,
+MODFLOW-2000, the U.S. Geological Survey modular ground-water model -- User
+guide to modularization concepts and the ground-water flow process:
+U.S. Geological Survey Open-File Report 00-92, 121 p.
+
+Hill, M.C., Banta, E.R., Harbaugh, A.W., and Anderman, E.R., 2000,
+MODFLOW-2000, the U.S. Geological Survey modular ground-water model -- User
+guide to the observation, sensitivity, and parameter-estimation processes 
+and three post-processing programs: U.S. Geological Survey Water-Resources 
+Investigations Report 00-184, 210 p.
+
+Leake, S.A., and Lilly, M.R., 1997, Documentation of a computer program
+(FHB1) for assignment of transient specified-flow and specified-head
+boundaries in applications of the modular finite- difference ground-
+water flow model (MODFLOW): U.S. Geological Survey Open-File Report
+97-571, 50 p.
+
+Leake, S.A. and Prudic, D.E., 1991, Documentation of a computer program
+to simulate aquifer-system compaction using the modular
+finite-difference ground-water flow model: U.S. Geological Survey
+Techniques of Water-Resources Investigations, Book 6, Chapter A2, 68 p.
+
+McDonald, M.G., Harbaugh, A.W., Orr, B.R., and Ackerman, D.J., 1992, A
+method of converting no-flow cells to variable-head cells for the U.S.
+Geological Survey modular finite-difference ground-water flow model:
+U.S. Geological Survey Open-File Report 91-536, 99 p.
+
+Merritt, L.M. and Konikow, L.F., 2000, Documentation of a computer
+program to simulate lake-aquifer interaction using the MODFLOW
+ground-water flow model and the MOC3D solute-transport model:  U.S.
+Geological Survey Water-Resources Investigations Report 00-4167, 146 p.
+
+Prudic, D.E., 1989, Documentation of a computer program to simulate
+stream-aquifer relations using a modular, finite-difference,
+ground-water flow model: U.S. Geological Survey Open-File Report
+88-729, 113 p.

@@ -1,6 +1,0 @@
-LIST 6 ibs.lst
-BAS 5 ../data/ibs.bas
-BCF 7 ../data/ibs.bcf
-SIP 9 ../data/ibs.sip
-OC 11 ../data/ibs.oc
-IBS 13 ../data/ibs.ibs

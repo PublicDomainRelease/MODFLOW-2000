@@ -1,0 +1,813 @@
+                                  MODFLOW-2000
+      U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
+                             VERSION 1.5 08/16/2001
+
+
+ This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
+
+ GLOBAL LISTING FILE: etsdrt.glo
+                         UNIT  11
+
+ OPENING etsdrt.lst
+ FILE TYPE:LIST   UNIT  12
+#                                                                                                                                                                                                       
+# Global input files                                                                                                                                                                                    
+
+ OPENING ..\data\etsdrt.dis
+ FILE TYPE:DIS   UNIT  21
+#                                                                                                                                                                                                       
+# Flow process input files                                                                                                                                                                              
+
+ OPENING ..\data\etsdrt.bas
+ FILE TYPE:BAS6   UNIT  31
+
+ OPENING ..\data\etsdrt.oc
+ FILE TYPE:OC   UNIT  32
+
+ OPENING ..\data\etsdrt.lpf
+ FILE TYPE:LPF   UNIT  33
+
+ OPENING ..\data\etsdrt.drt
+ FILE TYPE:DRT   UNIT  34
+
+ OPENING ..\data\etsdrt.rch
+ FILE TYPE:RCH   UNIT  36
+
+ OPENING ..\data\etsdrt.ets
+ FILE TYPE:ETS   UNIT  37
+
+ OPENING ..\data\etsdrt.pcg
+ FILE TYPE:PCG   UNIT  39
+#                                                                                                                                                                                                       
+# O-S-P processes input files                                                                                                                                                                           
+
+ OPENING ..\data\etsdrt.obs
+ FILE TYPE:OBS   UNIT  41
+
+ OPENING ..\data\etsdrt.ohd
+ FILE TYPE:HOB   UNIT  42
+
+ OPENING ..\data\etsdrt.odt
+ FILE TYPE:DTOB   UNIT  43
+
+ OPENING ..\data\etsdrt.sen
+ FILE TYPE:SEN   UNIT  45
+
+ OPENING ..\data\etsdrt.pes
+ FILE TYPE:PES   UNIT  46
+ THE FREE FORMAT OPTION HAS BEEN SELECTED
+
+ DISCRETIZATION INPUT DATA READ FROM UNIT 21
+ # DIS file for ets1, drt1, and etsdrt test cases.  Units: Days, Feet
+    1 LAYERS        11 ROWS        11 COLUMNS
+   1 STRESS PERIOD(S) IN SIMULATION
+ MODEL TIME UNIT IS DAYS
+ MODEL LENGTH UNIT IS FEET
+ THE GROUND-WATER TRANSPORT PROCESS IS INACTIVE
+
+ THE OBSERVATION PROCESS IS ACTIVE
+ THE SENSITIVITY PROCESS IS ACTIVE
+ THE PARAMETER-ESTIMATION PROCESS IS ACTIVE
+
+ MODE: PARAMETER ESTIMATION
+
+  Confining bed flag for each layer:
+   0
+
+       1111  ELEMENTS OF GX ARRAY USED OUT OF       1111
+        121  ELEMENTS OF GZ ARRAY USED OUT OF        121
+        121  ELEMENTS OF IG ARRAY USED OUT OF        121
+
+                     DELR =   100.000    
+
+                     DELC =   100.000    
+
+ TOP ELEVATION OF LAYER 1 =   100.000    
+
+   MODEL LAYER BOTTOM EL. =   0.00000     FOR LAYER   1
+
+
+ STRESS PERIOD     LENGTH       TIME STEPS     MULTIPLIER FOR DELT    SS FLAG
+ ----------------------------------------------------------------------------
+        1         0.000000          1                    1.000         SS
+
+ STEADY-STATE SIMULATION
+
+
+
+
+ LPF1 -- LAYER PROPERTY FLOW PACKAGE, VERSION 1, 1/11/2000
+         INPUT READ FROM UNIT 33
+ # LPF file for etsdrt test case
+ HEAD AT CELLS THAT CONVERT TO DRY=   0.0000    
+     1 Named Parameters     
+
+   LAYER FLAGS:
+ LAYER       LAYTYP        LAYAVG         CHANI        LAYVKA        LAYWET
+ ---------------------------------------------------------------------------
+    1             1             0     1.000E+00             0             0
+
+   INTERPRETATION OF LAYER FLAGS:
+                        INTERBLOCK     HORIZONTAL    DATA IN
+         LAYER TYPE   TRANSMISSIVITY   ANISOTROPY   ARRAY VKA   WETTABILITY
+ LAYER      (LAYTYP)      (LAYAVG)       (CHANI)      (LAYVKA)      (LAYWET)
+ ---------------------------------------------------------------------------
+    1   CONVERTIBLE      HARMONIC     1.000E+00    VERTICAL K  NON-WETTABLE
+
+        242 ELEMENTS IN X ARRAY ARE USED BY LPF
+          6 ELEMENTS IN IX ARRAY ARE USED BY LPF
+
+ PCG2 -- CONJUGATE GRADIENT SOLUTION PACKAGE, VERSION 2.4, 12/29/98
+ # PCG file for ets1, drt1, and etsdrt test cases
+ #
+ MAXIMUM OF     60 CALLS OF SOLUTION ROUTINE
+ MAXIMUM OF      8 INTERNAL ITERATIONS PER CALL TO SOLUTION ROUTINE
+ MATRIX PRECONDITIONING TYPE :    1
+       1323 ELEMENTS IN X ARRAY ARE USED BY PCG
+       3360 ELEMENTS IN IX ARRAY ARE USED BY PCG
+        242 ELEMENTS IN Z ARRAY ARE USED BY PCG
+
+ SEN1BAS6 -- SENSITIVITY PROCESS, VERSION 1.0, 10/15/98
+ INPUT READ FROM UNIT  45
+ # SEN file for etsdrt test case
+
+ NUMBER OF PARAMETER VALUES TO BE READ FROM SEN FILE:    4
+ ISENALL............................................:    0
+ SENSITIVITIES WILL BE STORED IN MEMORY
+ FOR UP TO   4 PARAMETERS
+
+        149 ELEMENTS IN X ARRAY ARE USED FOR SENSITIVITIES
+        121 ELEMENTS IN Z ARRAY ARE USED FOR SENSITIVITIES
+          8 ELEMENTS IN IX ARRAY ARE USED FOR SENSITIVITIES
+
+ PES1BAS6 -- PARAMETER-ESTIMATION PROCESS, VERSION 1.0, 07/22/99
+ INPUT READ FROM UNIT  46
+ # PES file for etsdrt test case
+
+ MAXIMUM NUMBER OF PARAMETER-ESTIMATION ITERATIONS (MAX-ITER)  =    20
+ MAXIMUM PARAMETER CORRECTION (MAX-CHANGE) ------------------- =  2.0000    
+ CLOSURE CRITERION (TOL) ------------------------------------- = 0.10000E-03
+ SUM OF SQUARES CLOSURE CRITERION (SOSC) --------------------- =  0.0000    
+
+ FLAG TO GENERATE INPUT NEEDED BY BEALE-2000 (IBEFLG) -------- =     0
+ FLAG TO GENERATE INPUT NEEDED BY YCINT-2000 (IYCFLG) -------- =     0
+ OMIT PRINTING TO SCREEN (IF = 1) (IOSTAR) ------------------- =     0
+ ADJUST GAUSS-NEWTON MATRIX WITH NEWTON UPDATES (IF = 1)(NOPT) =     0
+ NUMBER OF FLETCHER-REEVES ITERATIONS (NFIT) ----------------- =     0
+ CRITERION FOR ADDING MATRIX R (SOSR) ------------------------ =  0.0000    
+ VALUE USED TO INCREMENT MARQUARDT PARAMETER (RMAR) ---------- = 0.10000E-02
+ MARQUARDT PARAMETER MULTIPLIER (RMARM) ---------------------- =  1.5000    
+ APPLY MAX-CHANGE IN REGRESSION SPACE (IF = 1) (IAP) --------- =     0
+
+ FORMAT CODE FOR COVARIANCE AND CORRELATION MATRICES (IPRCOV)  =     6
+ PRINT PARAMETER-ESTIMATION STATISTICS
+     EACH ITERATION (IF > 0)  (IPRINT) ----------------------- =     0
+ PRINT EIGENVALUES AND EIGENVECTORS OF
+     COVARIANCE MATRIX (IF > 0)  (LPRINT) -------------------- =     0
+
+ SEARCH DIRECTION ADJUSTMENT PARAMETER (CSA) ----------------- = 0.80000E-01
+ MODIFY CONVERGENCE CRITERIA (IF > 0) (FCONV) ---------------- =  0.0000    
+ CALCULATE SENSITIVITIES USING FINAL
+     PARAMETER ESTIMATES (IF > 0) (LASTX) -------------------- =     0
+
+ NUMBER OF USUALLY POS. PARAMETERS THAT MAY BE NEGATIVE (NPNG) =     0
+ NUMBER OF PARAMETERS WITH CORRELATED PRIOR INFORMATION (IPR)  =     0
+ NUMBER OF PRIOR-INFORMATION EQUATIONS (MPR) ----------------- =     0
+
+    271 ELEMENTS IN X ARRAY ARE USED FOR PARAMETER ESTIMATION
+     99 ELEMENTS IN Z ARRAY ARE USED FOR PARAMETER ESTIMATION
+     22 ELEMENTS IN IX ARRAY ARE USED FOR PARAMETER ESTIMATION
+
+ OBS1BAS6 -- OBSERVATION PROCESS, VERSION 1.0, 4/27/99
+ INPUT READ FROM UNIT  41
+ # OBS file for etsdrt test case
+ OBSERVATION GRAPH-DATA OUTPUT FILES
+ WILL BE PRINTED AND NAMED USING THE BASE: etsdrt
+ DIMENSIONLESS SCALED OBSERVATION SENSITIVITIES WILL BE PRINTED
+
+ HEAD OBSERVATIONS -- INPUT READ FROM UNIT  42
+ # HOB file for etsdrt test case
+
+ NUMBER OF HEADS....................................:   22
+   NUMBER OF MULTILAYER HEADS.......................:    0
+   MAXIMUM NUMBER OF LAYERS FOR MULTILAYER HEADS....:    0
+
+ OBS1DRT1 -- OBSERVATION PROCESS (DRAIN FLOW OBSERVATIONS: DRAIN RETURN PACKAGE)
+ VERSION 1.0, 5/2/2000
+ INPUT READ FROM UNIT  43
+ # DTOB file for etsdrt test case
+
+ FOR DRAIN RETURN PACKAGE:
+ NUMBER OF FLOW-OBSERVATION DRAIN-CELL GROUPS.......:    1
+   NUMBER OF CELLS IN DRAIN-CELL GROUPS.............:    1
+   NUMBER OF DRAIN-CELL FLOWS.......................:    1
+
+     628 ELEMENTS IN X ARRAY ARE USED FOR OBSERVATIONS
+       6 ELEMENTS IN Z ARRAY ARE USED FOR OBSERVATIONS
+     231 ELEMENTS IN IX ARRAY ARE USED FOR OBSERVATIONS
+
+ COMMON ERROR VARIANCE FOR ALL OBSERVATIONS SET TO:       1.000    
+
+       2613  ELEMENTS OF X ARRAY USED OUT OF       2613
+        468  ELEMENTS OF Z ARRAY USED OUT OF        468
+       3627  ELEMENTS OF IX ARRAY USED OUT OF       3627
+        484  ELEMENTS OF XHS ARRAY USED OUT OF        484
+
+ INFORMATION ON PARAMETERS LISTED IN SEN FILE
+                                         LOWER         UPPER       ALTERNATE
+                        VALUE IN SEN   REASONABLE    REASONABLE     SCALING
+    NAME     ISENS  LN   INPUT FILE      LIMIT         LIMIT         FACTOR
+ ----------  -----  --  ------------  ------------  ------------  ------------
+ ETS-Max       1     0   0.50000E-02   0.10000E-02   0.10000       0.10000E-03
+ DRT-Cond      1     1    4.0000       0.10000        100.00       0.10000E-01
+ Recharge      1     0   0.30000E-02   0.10000E-04   0.10000       0.10000E-04
+ HydCond       1     1   0.90000E-01   0.10000E-03    10.000       0.10000E-04
+ -----------------------------------------------------------------------------
+ FOR THE PARAMETERS LISTED IN THE TABLE ABOVE, PARAMETER VALUES IN INDIVIDUAL
+ PACKAGE INPUT FILES ARE REPLACED BY THE VALUES FROM THE SEN INPUT FILE.  THE
+ ALTERNATE SCALING FACTOR IS USED TO SCALE SENSITIVITIES IF IT IS LARGER THAN
+ THE PARAMETER VALUE IN ABSOLUTE VALUE AND THE PARAMETER IS NOT LOG-TRANSFORMED.
+
+ ISENS IS GREATER THAN ZERO FOR    4 PARAMETERS
+
+ HEAD OBSERVATION VARIANCES ARE MULTIPLIED BY:       1.000    
+
+ OBSERVED HEAD DATA -- TIME OFFSETS ARE MULTIPLIED BY:   1.0000    
+
+                    REFER.
+       OBSERVATION  STRESS    TIME                              STATISTIC   PLOT
+  OBS#    NAME      PERIOD   OFFSET    OBSERVATION  STATISTIC     TYPE      SYM.
+     1 h-1-8            1    0.000       82.27      0.1000      STD. DEV.      1
+     2 h-2-3            1    0.000       69.13      0.1000      STD. DEV.      1
+     3 h-3-5            1    0.000       76.62      0.1000      STD. DEV.      1
+     4 h-4-9            1    0.000       83.86      0.1000      STD. DEV.      1
+     5 h-5-6            1    0.000       78.48      0.1000      STD. DEV.      1
+     6 h-6-10           1    0.000       88.61      0.1000      STD. DEV.      1
+     7 h-7-2            1    0.000       62.69      0.1000      STD. DEV.      1
+     8 h-8-4            1    0.000       74.07      0.1000      STD. DEV.      1
+     9 h-9-10           1    0.000       88.72      0.1000      STD. DEV.      1
+    10 h-10-7           1    0.000       80.78      0.1000      STD. DEV.      1
+    11 h-11-5           1    0.000       76.85      0.1000      STD. DEV.      1
+    12 h-1-10           1    0.000       88.72      0.1000      STD. DEV.      1
+    13 h-2-7            1    0.000       80.59      0.1000      STD. DEV.      1
+    14 h-3-6            1    0.000       78.74      0.1000      STD. DEV.      1
+    15 h-4-4            1    0.000       73.66      0.1000      STD. DEV.      1
+    16 h-5-8            1    0.000       79.13      0.1000      STD. DEV.      1
+    17 h-6-3            1    0.000       69.76      0.1000      STD. DEV.      1
+    18 h-7-8            1    0.000       82.03      0.1000      STD. DEV.      1
+    19 h-8-9            1    0.000       84.20      0.1000      STD. DEV.      1
+    20 h-9-2            1    0.000       62.25      0.1000      STD. DEV.      1
+    21 h-10-3           1    0.000       69.32      0.1000      STD. DEV.      1
+    22 h-11-9           1    0.000       84.26      0.1000      STD. DEV.      1
+
+                                                     HEAD CHANGE
+                                                      REFERENCE
+        OBSERVATION                   ROW     COL    OBSERVATION
+  OBS#     NAME       LAY  ROW  COL  OFFSET  OFFSET   (IF > 0)
+     1  h-1-8           1    1    8   0.000   0.000        0
+     2  h-2-3           1    2    3   0.000   0.000        0
+     3  h-3-5           1    3    5   0.000   0.000        0
+     4  h-4-9           1    4    9   0.000   0.000        0
+     5  h-5-6           1    5    6   0.000   0.000        0
+     6  h-6-10          1    6   10   0.000   0.000        0
+     7  h-7-2           1    7    2   0.000   0.000        0
+     8  h-8-4           1    8    4   0.000   0.000        0
+     9  h-9-10          1    9   10   0.000   0.000        0
+    10  h-10-7          1   10    7   0.000   0.000        0
+    11  h-11-5          1   11    5   0.000   0.000        0
+    12  h-1-10          1    1   10   0.000   0.000        0
+    13  h-2-7           1    2    7   0.000   0.000        0
+    14  h-3-6           1    3    6   0.000   0.000        0
+    15  h-4-4           1    4    4   0.000   0.000        0
+    16  h-5-8           1    5    8   0.000   0.000        0
+    17  h-6-3           1    6    3   0.000   0.000        0
+    18  h-7-8           1    7    8   0.000   0.000        0
+    19  h-8-9           1    8    9   0.000   0.000        0
+    20  h-9-2           1    9    2   0.000   0.000        0
+    21  h-10-3          1   10    3   0.000   0.000        0
+    22  h-11-9          1   11    9   0.000   0.000        0
+
+ DRT-PACKAGE FLOW OBSERVATION VARIANCES ARE MULTIPLIED BY:       1.000    
+
+ OBSERVED DRT-PACKAGE FLOW DATA
+ -- TIME OFFSETS ARE MULTIPLIED BY:   1.0000    
+
+ GROUP NUMBER:   1     BOUNDARY TYPE: DRT     NUMBER OF CELLS IN GROUP:     1
+ NUMBER OF FLOW OBSERVATIONS:     1
+
+                    REFER.              OBSERVED
+       OBSERVATION  STRESS    TIME     DRAIN FLOW               STATISTIC   PLOT
+  OBS#    NAME      PERIOD   OFFSET     GAIN (-)    STATISTIC     TYPE      SYM.
+    23 D-1              1    0.000      -38.26      0.1000      COEF. VAR.     2
+
+       LAYER  ROW  COLUMN    FACTOR
+          1.    5.     8.     1.00
+
+
+
+                                    SOLUTION BY THE CONJUGATE-GRADIENT METHOD
+                                   -------------------------------------------
+                    MAXIMUM NUMBER OF CALLS TO PCG ROUTINE =       60
+                        MAXIMUM ITERATIONS PER CALL TO PCG =        8
+                               MATRIX PRECONDITIONING TYPE =        1
+        RELAXATION FACTOR (ONLY USED WITH PRECOND. TYPE 1) =    0.10000E+01
+ PARAMETER OF POLYNOMIAL PRECOND. = 2 (2) OR IS CALCULATED :        2
+                         HEAD CHANGE CRITERION FOR CLOSURE =    0.10000E-03
+                     RESIDUAL CHANGE CRITERION FOR CLOSURE =    0.80000E+02
+            PCG HEAD AND RESIDUAL CHANGE PRINTOUT INTERVAL =      999
+     PRINTING FROM SOLVER IS LIMITED(1) OR SUPPRESSED (>1) =        2
+                                         DAMPING PARAMETER =    0.10000E+01
+
+ CONVERGENCE CRITERIA FOR SENSITIVITIES
+ PARAMETER      HCLOSE        RCLOSE
+ ----------  ------------  ------------
+ ETS-Max      0.20000E-03    160.00    
+ DRT-Cond     0.25000E-06   0.20000    
+ Recharge     0.33333E-03    266.67    
+ HydCond      0.11111E-04    8.8889    
+ --------------------------------------
+
+ WETTING CAPABILITY IS NOT ACTIVE IN ANY LAYER
+
+ PARAMETERS DEFINED IN THE LPF PACKAGE
+
+ PARAMETER NAME:HydCond      TYPE:HK     CLUSTERS:   1
+ Parameter value from package file is:   5.00000E-02
+ This value has been changed to:         9.00000E-02, as read from
+ the Sensitivity Process file
+                LAYER:  1    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
+
+    HYD. COND. ALONG ROWS FOR LAYER   1 WILL BE DEFINED BY PARAMETERS
+ (PRINT FLAG=  -1)
+
+      VERTICAL HYD. COND. =  1.000000E-02 FOR LAYER   1
+
+
+     1 Recharge parameters
+
+ PARAMETER NAME:Recharge     TYPE:RCH    CLUSTERS:   1
+ Parameter value from package file is:   1.00000E-03
+ This value has been changed to:         3.00000E-03, as read from
+ the Sensitivity Process file
+                MULTIPLIER ARRAY: none    ZONE ARRAY: all
+
+
+     1 Evapotranspiration segments parameters
+
+ PARAMETER NAME:ETS-Max      TYPE:ETS    CLUSTERS:   1
+ Parameter value from package file is:   1.00000E-02
+ This value has been changed to:         5.00000E-03, as read from
+ the Sensitivity Process file
+                MULTIPLIER ARRAY: none    ZONE ARRAY: all
+
+
+     1 Drain-return parameters
+
+ PARAMETER NAME:DRT-Cond     TYPE:DRT 
+ Parameter value from package file is:    2.0000    
+ This value has been changed to:          4.0000    , as read from
+ the Sensitivity Process file
+   NUMBER OF ENTRIES:      1
+
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
+ ------------------------------------------------------------
+      1      1      5      8       60.00           1.000    
+
+           ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
+ DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
+      1      1      5      8      1      7      3  0.400000
+
+   4 PARAMETERS HAVE BEEN DEFINED IN ALL PACKAGES.
+ (SPACE IS ALLOCATED FOR  500 PARAMETERS.)
+
+ ***SUGGESTION FOR CONVERTIBLE LAYERS:
+ PERFORM INITIAL PARAMETER ESTIMATION RUNS WITH THE LAYERS
+ DESIGNATED AS CONFINED WITH ASSIGNED APPROXIMATE THICKNESSES
+ TO AVOID LONG EXECUTION TIMES AND EXCESSIVE FRUSTRATION.
+ CONVERT TO UNCONFINED AND CONVERTIBLE FOR FINAL PARAMETER 
+ ESTIMATION RUNS WHEN PARAMETERS ARE ALREADY CLOSE TO 
+ OPTIMAL.
+ 
+OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     1
+
+ DIMENSIONLESS SCALED SENSITIVITIES (SCALED BY B*(WT**.5))
+
+         PARAMETER:   ETS-Max     DRT-Cond    Recharge    HydCond   
+ OBS #  OBSERVATION
+     1  h-1-8          -90.2       -2.07        94.0       -1.70    
+     2  h-2-3          -43.2      -0.130        123.       -79.4    
+     3  h-3-5          -69.5       -1.48        113.       -41.8    
+     4  h-4-9          -75.9       -8.82        74.7        9.96    
+     5  h-5-6          -78.5       -5.81        108.       -23.7    
+     6  h-6-10         -52.9       -3.62        46.9        9.57    
+     7  h-7-2          -26.8        10.0        94.5       -77.7    
+     8  h-8-4          -57.5        5.00        116.       -63.5    
+     9  h-9-10         -55.8      -0.543        48.0        8.37    
+    10  h-10-7         -92.1      -0.270        104.       -12.0    
+    11  h-11-5         -72.7       0.630        113.       -41.3    
+    12  h-1-10         -55.2      -0.885        47.9        8.21    
+    13  h-2-7          -88.5       -2.83        104.       -12.2    
+    14  h-3-6          -80.6       -3.06        109.       -25.4    
+    15  h-4-4          -55.2       0.911E-01    116.       -61.0    
+    16  h-5-8          -73.9       -42.3        83.9        32.3    
+    17  h-6-3          -43.9        9.36        121.       -86.9    
+    18  h-7-8          -87.4       -6.08        92.7       0.750    
+    19  h-8-9          -81.1       -2.11        76.7        6.44    
+    20  h-9-2          -27.1        3.29        95.4       -71.6    
+    21  h-10-3         -44.8        2.27        123.       -80.2    
+    22  h-11-9         -83.3      -0.273        77.4        6.22    
+    23  D-1             7.72       -24.9       -8.77       -3.38    
+
+        COMPOSITE SCALED SENSITIVITIES ((SUM OF THE SQUARED VALUES)/ND)**.5
+                        66.7        11.1        95.4        44.6    
+
+  PARAMETER    COMPOSITE SCALED SENSITIVITY
+  ----------   ----------------------------
+  ETS-Max        6.66611E+01
+  DRT-Cond       1.10890E+01
+  Recharge       9.54185E+01
+  HydCond        4.45525E+01
+
+ STARTING VALUES OF REGRESSION PARAMETERS :
+
+   ETS-Max      DRT-Cond     Recharge     HydCond   
+
+   5.0000E-03    4.000       3.0000E-03   9.0000E-02
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.21552E+06
+   DEP. VARIABLES PLUS PARAMETERS:  0.21552E+06
+
+ -----------------------------------------------------------------------
+ PARAMETER VALUES AND STATISTICS FOR ALL PARAMETER-ESTIMATION ITERATIONS
+ -----------------------------------------------------------------------
+
+     MODIFIED GAUSS-NEWTON CONVERGES IF THE ABSOLUTE VALUE OF THE MAXIMUM
+ FRACTIONAL PARAMETER CHANGE (MAX CALC. CHANGE) IS LESS THAN TOL OR IF THE
+ SUM OF SQUARED, WEIGHTED RESIDUALS CHANGES LESS THAN SOSC OVER TWO
+ PARAMETER-ESTIMATION ITERATIONS.
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =     1
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-03) = -.71375    
+        OCCURRED FOR PARAMETER  "Recharge  " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "Recharge  " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   ETS-Max      DRT-Cond     Recharge     HydCond   
+
+   7.6013E-03    2.838       8.5875E-04   7.8182E-02
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:   6107.9    
+   DEP. VARIABLES PLUS PARAMETERS:   6107.9    
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =     2
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-03) = 0.34440    
+        OCCURRED FOR PARAMETER  "ETS-Max   " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "ETS-Max   " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   ETS-Max      DRT-Cond     Recharge     HydCond   
+
+   1.0219E-02    2.153       1.0591E-03   5.2408E-02
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:   96.350    
+   DEP. VARIABLES PLUS PARAMETERS:   96.350    
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =     3
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-03) = -.68346E-01
+        OCCURRED FOR PARAMETER  "DRT-Cond  " TYPE N
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "DRT-Cond  " TYPE N
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   ETS-Max      DRT-Cond     Recharge     HydCond   
+
+   1.0024E-02    2.006       1.0012E-03   5.0150E-02
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.21210    
+   DEP. VARIABLES PLUS PARAMETERS:  0.21210    
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =     4
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-03) = -.30231E-02
+        OCCURRED FOR PARAMETER  "DRT-Cond  " TYPE N
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "DRT-Cond  " TYPE N
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   ETS-Max      DRT-Cond     Recharge     HydCond   
+
+   9.9999E-03    2.000       9.9999E-04   4.9999E-02
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.12006E-04
+   DEP. VARIABLES PLUS PARAMETERS:  0.12006E-04
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =     5
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-03) = 0.20463E-04
+        OCCURRED FOR PARAMETER  "HydCond   " TYPE P
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "HydCond   " TYPE P
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   ETS-Max      DRT-Cond     Recharge     HydCond   
+
+   1.0000E-02    2.000       1.0000E-03   5.0000E-02
+
+ *** PARAMETER ESTIMATION CONVERGED BY SATISFYING THE TOL CRITERION ***
+
+ 
+OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     5
+
+ DIMENSIONLESS SCALED SENSITIVITIES (SCALED BY B*(WT**.5))
+
+         PARAMETER:   ETS-Max     DRT-Cond    Recharge    HydCond   
+ OBS #  OBSERVATION
+     1  h-1-8          -42.3      -0.637        37.8        5.08    
+     2  h-2-3          -44.0      -0.287        93.6       -49.3    
+     3  h-3-5          -71.4       -1.50        105.       -32.3    
+     4  h-4-9          -46.2       -3.88        28.7        21.4    
+     5  h-5-6          -76.4       -4.97        98.8       -17.5    
+     6  h-6-10         -45.1       -1.16        15.8        30.5    
+     7  h-7-2          -25.5        6.53        68.7       -49.7    
+     8  h-8-4          -61.4        3.67        103.       -45.8    
+     9  h-9-10         -44.9      -0.834E-01    14.5        30.4    
+    10  h-10-7         -64.5       0.362E-01    72.2       -7.67    
+    11  h-11-5         -70.8       0.650        103.       -32.8    
+    12  h-1-10         -44.8      -0.142        14.6        30.4    
+    13  h-2-7          -65.2       -1.82        74.3       -7.21    
+    14  h-3-6          -74.4       -2.59        96.4       -19.5    
+    15  h-4-4          -61.1      -0.305        105.       -43.3    
+    16  h-5-8          -56.3       -29.6        54.4        31.5    
+    17  h-6-3          -45.1        6.00        93.2       -54.0    
+    18  h-7-8          -45.6       -2.97        42.1        6.44    
+    19  h-8-9          -43.8      -0.545        24.4        20.0    
+    20  h-9-2          -25.3        2.12        68.9       -45.7    
+    21  h-10-3         -44.5        1.53        92.9       -50.0    
+    22  h-11-9         -43.7      -0.119E-01    23.6        20.1    
+    23  D-1             2.94       -8.45       -2.84       -1.65    
+
+        COMPOSITE SCALED SENSITIVITIES ((SUM OF THE SQUARED VALUES)/ND)**.5
+                        52.6        6.94        71.5        32.6    
+
+  PARAMETER    COMPOSITE SCALED SENSITIVITY
+  ----------   ----------------------------
+  ETS-Max        5.26257E+01
+  DRT-Cond       6.94212E+00
+  Recharge       7.14748E+01
+  HydCond        3.25663E+01
+
+ FINAL PARAMETER VALUES AND STATISTICS:
+
+ PARAMETER NAME(S) AND VALUE(S):
+
+   ETS-Max      DRT-Cond     Recharge     HydCond   
+
+   1.0000E-02    2.000       1.0000E-03   5.0000E-02
+
+ SUMS OF SQUARED WEIGHTED RESIDUALS:
+   OBSERVATIONS   PRIOR INFO.    TOTAL
+    0.407E-07      0.00         0.407E-07
+
+ -----------------------------------------------------------------------
+
+ SELECTED STATISTICS FROM MODIFIED GAUSS-NEWTON ITERATIONS
+
+        MAX. PARAMETER CALC. CHANGE   MAX. CHANGE     DAMPING
+ ITER.     PARNAM     MAX. CHANGE       ALLOWED      PARAMETER
+ -----   ----------  -------------   -------------  ------------
+    1    Recharge    -0.713749         2.00000        1.0000    
+    2    ETS-Max      0.344403         2.00000        1.0000    
+    3    DRT-Cond    -0.683459E-01     2.00000        1.0000    
+    4    DRT-Cond    -0.302309E-02     2.00000        1.0000    
+    5    HydCond      0.204626E-04     2.00000        1.0000    
+
+ SUMS OF SQUARED WEIGHTED RESIDUALS FOR EACH ITERATION
+
+         SUMS OF SQUARED WEIGHTED RESIDUALS
+ ITER.  OBSERVATIONS  PRIOR INFO.      TOTAL
+     1   0.21552E+06    0.0000       0.21552E+06
+     2    6107.9        0.0000        6107.9    
+     3    96.350        0.0000        96.350    
+     4   0.21210        0.0000       0.21210    
+     5   0.12006E-04    0.0000       0.12006E-04
+ FINAL   0.40746E-07    0.0000       0.40746E-07
+
+ *** PARAMETER ESTIMATION CONVERGED BY SATISFYING THE TOL CRITERION ***
+
+ -----------------------------------------------------------------------
+
+          VARIANCE-COVARIANCE MATRIX FOR THE PARAMETERS
+          ---------------------------------------------
+
+            ETS-Max    DRT-Cond   Recharge   HydCond   
+ ......................................................
+ ETS-Max     2.416E-15  2.113E-13  2.395E-16  2.359E-13
+ DRT-Cond    2.113E-13  2.150E-11  2.114E-14  2.115E-11
+ Recharge    2.395E-16  2.114E-14  2.378E-17  2.347E-14
+ HydCond     2.359E-13  2.115E-11  2.347E-14  2.329E-11
+
+
+ _________________
+
+ PARAMETER SUMMARY
+ _________________
+
+ ________________________________________________________________________
+
+ PARAMETER VALUES IN "REGRESSION" SPACE --- LOG TRANSFORMED AS APPLICABLE
+ ________________________________________________________________________
+
+ PARAMETER:        ETS-Max    DRT-Cond   Recharge   HydCond   
+ * = LOG TRNS:                   *                     *
+
+
+ UPPER 95% C.I.     1.00E-02   3.01E-01   1.00E-03  -1.30E+00
+ FINAL VALUES       1.00E-02   3.01E-01   1.00E-03  -1.30E+00
+ LOWER 95% C.I.     1.00E-02   3.01E-01   1.00E-03  -1.30E+00
+
+ STD. DEV.          4.92E-08   2.01E-06   4.88E-09   2.10E-06
+
+ COEF. OF VAR. (STD. DEV. / FINAL VALUE); "--" IF FINAL VALUE = 0.0
+                    4.92E-06   6.69E-06   4.88E-06   1.61E-06                   
+
+ ------------------------------------------------------------------------
+ ------------------------------------------------------------------------
+
+ ________________________________________________________________________
+
+ PHYSICAL PARAMETER VALUES --- EXP10 OF LOG TRANSFORMED PARAMETERS
+ ________________________________________________________________________
+
+ PARAMETER:        ETS-Max    DRT-Cond   Recharge   HydCond   
+ * = LOG TRNS:                   *                     *
+
+ UPPER 95% C.I.     1.00E-02   2.00E+00   1.00E-03   5.00E-02
+ FINAL VALUES       1.00E-02   2.00E+00   1.00E-03   5.00E-02
+ LOWER 95% C.I.     1.00E-02   2.00E+00   1.00E-03   5.00E-02
+
+     REASONABLE
+    UPPER LIMIT     1.00E-01   1.00E+02   1.00E-01   1.00E+01
+     REASONABLE
+    LOWER LIMIT     1.00E-03   1.00E-01   1.00E-05   1.00E-04
+
+ ESTIMATE ABOVE (1)
+ BELOW(-1)LIMITS        0          0          0          0
+ ENTIRE CONF. INT.
+ ABOVE(1)BELOW(-1)      0          0          0          0
+
+
+          -------------------------------------
+          CORRELATION MATRIX FOR THE PARAMETERS
+          -------------------------------------
+
+            ETS-Max    DRT-Cond   Recharge   HydCond   
+ ......................................................
+ ETS-Max      1.00      0.927      0.999      0.995    
+ DRT-Cond    0.927       1.00      0.935      0.945    
+ Recharge    0.999      0.935       1.00      0.997    
+ HydCond     0.995      0.945      0.997       1.00    
+
+ THE CORRELATION OF THE FOLLOWING PARAMETER PAIRS >= .95
+     PARAMETER   PARAMETER   CORRELATION
+     ETS-Max     Recharge        1.00
+     ETS-Max     HydCond         0.99
+     Recharge    HydCond         1.00
+
+ THE CORRELATION OF THE FOLLOWING PARAMETER PAIRS IS BETWEEN .90 AND .95
+     PARAMETER   PARAMETER   CORRELATION
+     ETS-Max     DRT-Cond        0.93
+     DRT-Cond    Recharge        0.93
+     DRT-Cond    HydCond         0.95
+
+ THE CORRELATION OF THE FOLLOWING PARAMETER PAIRS IS BETWEEN .85 AND .90
+     PARAMETER   PARAMETER   CORRELATION
+
+ CORRELATIONS GREATER THAN 0.95 COULD INDICATE THAT THERE IS NOT ENOUGH
+ INFORMATION IN THE OBSERVATIONS AND PRIOR USED IN THE REGRESSION TO ESTIMATE
+ PARAMETER VALUES INDIVIDUALLY.
+ TO CHECK THIS, START THE REGRESSION FROM SETS OF INITIAL PARAMETER VALUES
+ THAT DIFFER BY MORE THAT TWO STANDARD DEVIATIONS FROM THE ESTIMATED 
+ VALUES.  IF THE RESULTING ESTIMATES ARE WELL WITHIN ONE STANDARD DEVIATION
+ OF THE PREVIOUSLY ESTIMATED VALUE, THE ESTIMATES ARE PROBABLY
+ DETERMINED INDEPENDENTLY WITH THE OBSERVATIONS AND PRIOR USED IN
+ THE REGRESSION.  OTHERWISE, YOU MAY ONLY BE ESTIMATING THE RATIO
+ OR SUM OF THE HIGHLY CORRELATED PARAMETERS.
+ THE INITIAL PARAMETER VALUES ARE IN THE SEN FILE.
+
+
+  LEAST-SQUARES OBJ FUNC (DEP.VAR. ONLY)- = 0.40746E-07
+  LEAST-SQUARES OBJ FUNC (W/PARAMETERS)-- = 0.40746E-07
+  CALCULATED ERROR VARIANCE-------------- = 0.21445E-08
+  STANDARD ERROR OF THE REGRESSION------- = 0.46309E-04
+  CORRELATION COEFFICIENT---------------- =  1.0000    
+       W/PARAMETERS---------------------- =  1.0000    
+  ITERATIONS----------------------------- =       5
+
+  MAX LIKE OBJ FUNC = -56.359    
+  AIC STATISTIC---- = -48.359    
+  BIC STATISTIC---- = -43.817    
+
+ SMALLEST AND LARGEST WEIGHTED RESIDUALS
+
+      SMALLEST WEIGHTED RESIDUALS      |       LARGEST WEIGHTED RESIDUALS
+                WEIGHTED   PERCENT OF  |                 WEIGHTED   PERCENT OF
+ NAME           RESIDUAL    OBJ FUNC   |  NAME           RESIDUAL    OBJ FUNC
+ h-2-7         -0.763E-04    14.29     |  h-9-10         0.763E-04    14.29
+ h-1-10        -0.763E-04    14.29     |  h-3-5          0.763E-04    14.29
+ h-10-7        -0.763E-04    14.29     |  h-6-3          0.763E-04    14.29
+ h-11-9          0.00         0.00     |  h-8-9          0.763E-04    14.29
+ h-4-9           0.00         0.00     |  D-1            0.997E-06     0.00
+
+ STATISTICS FOR ALL RESIDUALS :
+ AVERAGE WEIGHTED RESIDUAL  : 0.336E-05
+ # RESIDUALS >= 0. :     20
+ # RESIDUALS < 0.  :      3
+ NUMBER OF RUNS  :    2  IN   23 OBSERVATIONS
+
+ INTERPRETING THE CALCULATED RUNS STATISTIC VALUE OF     -3.72    
+ NOTE: THE FOLLOWING APPLIES ONLY IF 
+        # RESIDUALS >= 0 . IS GREATER THAN 10 AND 
+        # RESIDUALS < 0.   IS GREATER THAN 10
+ THE NEGATIVE VALUE MAY INDICATE TOO FEW RUNS:
+    IF THE VALUE IS LESS THAN -1.28, THERE IS LESS THAN A 10 PERCENT
+       CHANCE THE VALUES ARE RANDOM,
+    IF THE VALUE IS LESS THAN -1.645, THERE IS LESS THAN A 5 PERCENT
+       CHANCE THE VALUES ARE RANDOM,
+    IF THE VALUE IS LESS THAN -1.96, THERE IS LESS THAN A 2.5 PERCENT
+       CHANCE THE VALUES ARE RANDOM.
+
+
+ CORRELATION BETWEEN ORDERED WEIGHTED RESIDUALS AND NORMAL ORDER STATISTICS
+ FOR OBSERVATIONS =    0.738    
+
+ --------------------------------------------------------------------------
+ COMMENTS ON THE INTERPRETATION OF THE CORRELATION BETWEEN
+ WEIGHTED RESIDUALS AND NORMAL ORDER STATISTICS:
+
+ Generally, IF the reported CORRELATION is LESS than the critical value,
+ at the selected significance level (usually 5 or 10%), the hypothesis
+ that the weighted residuals are INDEPENDENT AND NORMALLY DISTRIBUTED
+ would be REJECTED.  HOWEVER, in this case, conditions are outside of
+ the range of published critical values as discussed below.
+
+ The sum of the number of observations and prior information items is    23
+ which is less than 35, the minimum value for which critical values are
+ published.  Therefore, the critical values for the 5 and 10% significance
+ levels are less than 0.943 and 0.952, respectively.
+
+ CORRELATIONS GREATER than these critical values indicate that, probably, the 
+ weighted residuals ARE INDEPENDENT AND NORMALLY DISTRIBUTED.
+
+ Correlations LESS than these critical values MAY BE ACCEPTABLE, and
+ rejection of the hypothesis is not necessarily warranted.
+
+ The Kolmogorov-Smirnov test can be used to further evaluate the residuals.
+ --------------------------------------------------------------------------
+
+
+ *** PARAMETER ESTIMATION CONVERGED BY SATISFYING THE TOL CRITERION ***

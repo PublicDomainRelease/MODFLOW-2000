@@ -1,74 +1,140 @@
- LISTING FILE: restest.lst
-                         UNIT   6
+                                  MODFLOW-2000
+      U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
+                             VERSION 1.5 08/16/2001
 
- OPENING ../data/restest.bas
- FILE TYPE:BAS   UNIT   5
 
- OPENING ../data/restest.bcf
- FILE TYPE:BCF   UNIT  11
+ This model run combines GLOBAL and LIST output into this single file.
 
- OPENING ../data/restest.ghb
+ GLOBAL LISTING FILE: restest.lst
+                         UNIT   7
+
+ OPENING ..\data\restest.ba6
+ FILE TYPE:BAS6   UNIT   8
+
+ OPENING ..\data\restest.bc6
+ FILE TYPE:BCF6   UNIT  11
+
+ OPENING ..\data\restest.ghb
  FILE TYPE:GHB   UNIT  17
 
- OPENING ../data/restest.sip
+ OPENING ..\data\restest.sip
  FILE TYPE:SIP   UNIT  19
 
- OPENING ../data/restest.oc
+ OPENING ..\data\restest.oc
  FILE TYPE:OC   UNIT  22
 
- OPENING ../data/restest.res
+ OPENING ..\data\restest.res
  FILE TYPE:RES   UNIT  27
-1                                 MODFLOW
-      U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
 
- Reservoir Package Example Problem                                               
- June 25, 1996                                                                   
+ OPENING ..\data\restest.dis
+ FILE TYPE:DIS   UNIT  10
+
+ DISCRETIZATION INPUT DATA READ FROM UNIT 10
     1 LAYERS        12 ROWS        12 COLUMNS
    3 STRESS PERIOD(S) IN SIMULATION
  MODEL TIME UNIT IS DAYS
+ MODEL LENGTH UNIT IS UNDEFINED
+ THE GROUND-WATER TRANSPORT PROCESS IS INACTIVE
 
- BAS5 -- BASIC MODEL PACKAGE, VERSION 5, 1/1/95 INPUT READ FROM UNIT  5
- ARRAYS RHS AND BUFF WILL SHARE MEMORY
- INITIAL HEAD WILL BE KEPT THROUGHOUT THE SIMULATION
-       1324 ELEMENTS IN X ARRAY ARE USED BY BAS
-       1324 ELEMENTS OF X ARRAY USED OUT OF    1500000
+ THE OBSERVATION PROCESS IS INACTIVE
+ THE SENSITIVITY PROCESS IS INACTIVE
+ THE PARAMETER-ESTIMATION PROCESS IS INACTIVE
 
- BCF5 -- BLOCK-CENTERED FLOW PACKAGE, VERSION 5, 9/1/93 INPUT READ FROM UNIT 11
+ MODE: FORWARD
+
+  Confining bed flag for each layer:
+   0
+
+       1320  ELEMENTS OF GX ARRAY USED OUT OF       1320
+        144  ELEMENTS OF GZ ARRAY USED OUT OF        144
+        144  ELEMENTS OF IG ARRAY USED OUT OF        144
+
+                     DELR =   100.000    
+
+                     DELC =   100.000    
+
+ TOP ELEVATION OF LAYER 1 =   100.000    
+
+   MODEL LAYER BOTTOM EL. =  -500.000     FOR LAYER   1
+
+
+ STRESS PERIOD     LENGTH       TIME STEPS     MULTIPLIER FOR DELT    SS FLAG
+ ----------------------------------------------------------------------------
+        1         2.000000          2                    1.000         TR
+        2         2.000000          2                    1.000         TR
+        3         5.000000          5                    1.000         TR
+
  TRANSIENT SIMULATION
- HEAD AT CELLS THAT CONVERT TO DRY=       0.    
- WETTING CAPABILITY IS NOT ACTIVE
-      LAYER  LAYER-TYPE CODE     INTERBLOCK T
-      --------------------------------------------
-         1            0          0 -- HARMONIC    
-        145 ELEMENTS IN X ARRAY ARE USED BY BCF
-       1469 ELEMENTS OF X ARRAY USED OUT OF    1500000
 
- GHB5 -- GHB PACKAGE, VERSION 5, 9/1/93 INPUT READ FROM UNIT 17
- MAXIMUM OF   24 HEAD-DEPENDENT BOUNDARY NODES
-        120 ELEMENTS IN X ARRAY ARE USED BY GHB
-       1589 ELEMENTS OF X ARRAY USED OUT OF    1500000
+
+
 
  SIP5 -- STRONGLY IMPLICIT PROCEDURE SOLUTION PACKAGE
                     VERSION 5, 9/1/93 INPUT READ FROM UNIT 19
  MAXIMUM OF  50 ITERATIONS ALLOWED FOR CLOSURE
   5 ITERATION PARAMETERS
-        781 ELEMENTS IN X ARRAY ARE USED BY SIP
-       2370 ELEMENTS OF X ARRAY USED OUT OF    1500000
-0RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
+        631 ELEMENTS IN X ARRAY ARE USED BY SIP
+        150 ELEMENTS IN IX ARRAY ARE USED BY SIP
+
+        631  ELEMENTS OF X ARRAY USED OUT OF        631
+          0  ELEMENTS OF Z ARRAY USED OUT OF          1
+        150  ELEMENTS OF IX ARRAY USED OUT OF        150
+          0  ELEMENTS OF XHS ARRAY USED OUT OF          1
+
+
+
+          SOLUTION BY THE STRONGLY IMPLICIT PROCEDURE
+          -------------------------------------------
+ MAXIMUM ITERATIONS ALLOWED FOR CLOSURE =       50
+                 ACCELERATION PARAMETER =     1.0000    
+      HEAD CHANGE CRITERION FOR CLOSURE =    0.10000E-02
+      SIP HEAD CHANGE PRINTOUT INTERVAL =      999
+
+     5 ITERATION PARAMETERS CALCULATED FROM SPECIFIED WSEED = 0.00080000 :
+
+  0.000000E+00 0.831821E+00 0.971716E+00 0.995243E+00 0.999200E+00
+ 
+ #Reservoir Package Example Problem                                              
+ #June 25, 1996                                                                  
+    1 LAYERS        12 ROWS        12 COLUMNS
+   3 STRESS PERIOD(S) IN SIMULATION
+
+ BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT  8
+          5 ELEMENTS IN IR ARRAY ARE USED BY BAS
+
+ BCF6 -- BLOCK-CENTERED FLOW PACKAGE, VERSION 6, 1/11/2000
+         INPUT READ FROM UNIT 11
+ TRANSIENT SIMULATION
+ HEAD AT CELLS THAT CONVERT TO DRY=   0.0000    
+ WETTING CAPABILITY IS NOT ACTIVE
+      LAYER  LAYER-TYPE CODE     INTERBLOCK T
+      --------------------------------------------
+         1            0          0 -- HARMONIC    
+        145 ELEMENTS IN RX ARRAY ARE USED BY BCF
+
+ GHB6 -- GHB PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 17
+ No named parameters
+ MAXIMUM OF   24 ACTIVE GHB CELLS AT ONE TIME
+        120 ELEMENTS IN RX ARRAY ARE USED BY GHB
+
+RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
  TOTAL NUMBER OF RESERVOIRS:   1
  OPTION 1 -- RESERVOIR CONNECTED TO TOP LAYER
  RESERVOIR HEADS, AREAS, AND VOLUMES WILL BE PRINTED EACH TIME STEP
    15 points will be used in constructing table of reservoir areas and volumes.
-      579 ELEMENTS IN X ARRAY ARE USED FOR RESERVOIRS
-     2949 ELEMENTS OF X ARRAY USED OUT OF 1500000
+      435 ELEMENTS IN RX ARRAY ARE USED FOR RESERVOIRS
+      288 ELEMENTS IN IR ARRAY ARE USED FOR RESERVOIRS
+
+        700  ELEMENTS OF RX ARRAY USED OUT OF        700
+        293  ELEMENTS OF IR ARRAY USED OUT OF        293
 1
- Reservoir Package Example Problem                                               
- June 25, 1996                                                                   
+ #Reservoir Package Example Problem                                              
+ #June 25, 1996                                                                  
 
 
 
                      BOUNDARY ARRAY FOR LAYER   1
- READING ON UNIT   5 WITH FORMAT: (12I2)              
+ READING ON UNIT   8 WITH FORMAT: (20I4)              
 
         1   2   3   4   5   6   7   8   9  10  11  12
  ....................................................
@@ -87,34 +153,20 @@
 
  AQUIFER HEAD WILL BE SET TO  999.00     AT ALL NO-FLOW NODES (IBOUND=0).
 
-             INITIAL HEAD =         0.     FOR LAYER   1
+             INITIAL HEAD =   0.00000     FOR LAYER   1
 
  OUTPUT CONTROL IS SPECIFIED EVERY TIME STEP
  HEAD PRINT FORMAT CODE IS   4    DRAWDOWN PRINT FORMAT CODE IS   4
  HEADS WILL BE SAVED ON UNIT   0    DRAWDOWNS WILL BE SAVED ON UNIT   0
 
- COLUMN TO ROW ANISOTROPY =   1.000000    
+ COLUMN TO ROW ANISOTROPY =   1.00000    
 
-                     DELR =   100.0000    
+     PRIMARY STORAGE COEF =  0.200000     FOR LAYER   1
 
-                     DELC =   100.0000    
-
-     PRIMARY STORAGE COEF =  0.2000000     FOR LAYER   1
-
-     TRANSMIS. ALONG ROWS =   10000.00     FOR LAYER   1
+     TRANSMIS. ALONG ROWS =   10000.0     FOR LAYER   1
 
 
-
-          SOLUTION BY THE STRONGLY IMPLICIT PROCEDURE
-          -------------------------------------------
- MAXIMUM ITERATIONS ALLOWED FOR CLOSURE =       50
-                 ACCELERATION PARAMETER =     1.0000    
-      HEAD CHANGE CRITERION FOR CLOSURE =    0.10000E-02
-      SIP HEAD CHANGE PRINTOUT INTERVAL =      999
-
-     5 ITERATION PARAMETERS CALCULATED FROM SPECIFIED WSEED = 0.00080000 :
-
-  0.000000E+00 0.831821E+00 0.971716E+00 0.995243E+00 0.999200E+00
+     0 GHB parameters
 1
                             STRESS PERIOD NO.   1, LENGTH =   2.000000    
                             ----------------------------------------------
@@ -125,35 +177,34 @@
 
                             INITIAL TIME STEP SIZE =   1.000000    
 
+ BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE   
+ ----------------------------------------------------------
+      1      1      1      1       0.000           1000.    
+      2      1      2      1       0.000           1000.    
+      3      1      3      1       0.000           1000.    
+      4      1      4      1       0.000           1000.    
+      5      1      5      1       0.000           1000.    
+      6      1      6      1       0.000           1000.    
+      7      1      7      1       0.000           1000.    
+      8      1      8      1       0.000           1000.    
+      9      1      9      1       0.000           1000.    
+     10      1     10      1       0.000           1000.    
+     11      1     11      1       0.000           1000.    
+     12      1     12      1       0.000           1000.    
+     13      1      1     12       0.000           1000.    
+     14      1      2     12       0.000           1000.    
+     15      1      3     12       0.000           1000.    
+     16      1      4     12       0.000           1000.    
+     17      1      5     12       0.000           1000.    
+     18      1      6     12       0.000           1000.    
+     19      1      7     12       0.000           1000.    
+     20      1      8     12       0.000           1000.    
+     21      1      9     12       0.000           1000.    
+     22      1     10     12       0.000           1000.    
+     23      1     11     12       0.000           1000.    
+     24      1     12     12       0.000           1000.    
 
-    24 HEAD-DEPENDENT BOUNDARY NODES
-
- LAYER   ROW   COL   ELEVATION   CONDUCTANCE   BOUND NO.
- -------------------------------------------------------
-    1      1     1       0.         1000.           1
-    1      2     1       0.         1000.           2
-    1      3     1       0.         1000.           3
-    1      4     1       0.         1000.           4
-    1      5     1       0.         1000.           5
-    1      6     1       0.         1000.           6
-    1      7     1       0.         1000.           7
-    1      8     1       0.         1000.           8
-    1      9     1       0.         1000.           9
-    1     10     1       0.         1000.          10
-    1     11     1       0.         1000.          11
-    1     12     1       0.         1000.          12
-    1      1    12       0.         1000.          13
-    1      2    12       0.         1000.          14
-    1      3    12       0.         1000.          15
-    1      4    12       0.         1000.          16
-    1      5    12       0.         1000.          17
-    1      6    12       0.         1000.          18
-    1      7    12       0.         1000.          19
-    1      8    12       0.         1000.          20
-    1      9    12       0.         1000.          21
-    1     10    12       0.         1000.          22
-    1     11    12       0.         1000.          23
-    1     12    12       0.         1000.          24
+    24 GHB CELLS
 
 
 
@@ -196,9 +247,9 @@
   11    0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0
   12    0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0   0.0
 
-   RES. BED VERT HYD COND =   1.000000     FOR LAYER   1
+   RES. BED VERT HYD COND =   1.00000     FOR LAYER   1
 
-  RESERVOIR BED THICKNESS =   2.000000     FOR LAYER   1
+  RESERVOIR BED THICKNESS =   2.00000     FOR LAYER   1
  STAGE-VOLUME TABLE FOR RESERVOIR 1
       STAGE       VOLUME         AREA
    ------------------------------------
@@ -223,6 +274,8 @@
   RESERVOIR   HEAD         AREA        VOLUME
   ----------------------------------------------
        1     8.0000     0.19000E+06 0.31000E+06
+ 
+ SOLVING FOR HEAD 
 
      8 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD  1
 
@@ -238,6 +291,8 @@
   RESERVOIR   HEAD         AREA        VOLUME
   ----------------------------------------------
        1     12.000     0.47000E+06 0.18400E+07
+ 
+ SOLVING FOR HEAD 
      8 ITERATIONS FOR TIME STEP   2 IN STRESS PERIOD  1
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
@@ -289,20 +344,20 @@
              STORAGE =           0.0000               STORAGE =           0.0000
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
-     RESERV. LEAKAGE =     1351890.3750       RESERV. LEAKAGE =     1006890.3750
+     RESERV. LEAKAGE =     1351890.2500       RESERV. LEAKAGE =     1006890.2500
 
-            TOTAL IN =     1351890.3750              TOTAL IN =     1006890.3750
+            TOTAL IN =     1351890.2500              TOTAL IN =     1006890.2500
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =     1283286.2500               STORAGE =      950191.8125
+             STORAGE =     1283286.2500               STORAGE =      950191.8130
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =       68620.8906       HEAD DEP BOUNDS =       56722.7422
      RESERV. LEAKAGE =           0.0000       RESERV. LEAKAGE =           0.0000
 
-           TOTAL OUT =     1351907.1250             TOTAL OUT =     1006914.5625
+           TOTAL OUT =     1351907.1300             TOTAL OUT =     1006914.5600
 
-            IN - OUT =         -16.7500              IN - OUT =         -24.1875
+            IN - OUT =         -16.8750              IN - OUT =         -24.3125
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -328,11 +383,15 @@
 
                             INITIAL TIME STEP SIZE =   1.000000    
 
- REUSING HEAD-DEPENDENT BOUNDS FROM LAST STRESS PERIOD
+ REUSING NON-PARAMETER GHB CELLS FROM LAST STRESS PERIOD
+
+    24 GHB CELLS
  RESERVOIR CONDITIONS FOR STRESS PERIOD   2, STEP   1 TIME   3.0000    
   RESERVOIR   HEAD         AREA        VOLUME
   ----------------------------------------------
        1     13.000     0.47000E+06 0.23100E+07
+ 
+ SOLVING FOR HEAD 
 
      8 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD  2
 
@@ -348,6 +407,8 @@
   RESERVOIR   HEAD         AREA        VOLUME
   ----------------------------------------------
        1     14.000     0.47000E+06 0.27800E+07
+ 
+ SOLVING FOR HEAD 
      8 ITERATIONS FOR TIME STEP   2 IN STRESS PERIOD  2
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
@@ -399,20 +460,20 @@
              STORAGE =           0.0000               STORAGE =           0.0000
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
-     RESERV. LEAKAGE =     2770540.0000       RESERV. LEAKAGE =      640179.1250
+     RESERV. LEAKAGE =     2770539.7500       RESERV. LEAKAGE =      640179.1250
 
-            TOTAL IN =     2770540.0000              TOTAL IN =      640179.1250
+            TOTAL IN =     2770539.7500              TOTAL IN =      640179.1250
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =     2452313.0000               STORAGE =      495440.7188
+             STORAGE =     2452313.0000               STORAGE =      495440.7500
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
-     HEAD DEP BOUNDS =      318248.2812       HEAD DEP BOUNDS =      144740.9375
+     HEAD DEP BOUNDS =      318248.2810       HEAD DEP BOUNDS =      144740.9380
      RESERV. LEAKAGE =           0.0000       RESERV. LEAKAGE =           0.0000
 
-           TOTAL OUT =     2770561.2500             TOTAL OUT =      640181.6250
+           TOTAL OUT =     2770561.2500             TOTAL OUT =      640181.6880
 
-            IN - OUT =         -21.2500              IN - OUT =          -2.5000
+            IN - OUT =         -21.5000              IN - OUT =          -2.5625
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -438,11 +499,15 @@
 
                             INITIAL TIME STEP SIZE =   1.000000    
 
- REUSING HEAD-DEPENDENT BOUNDS FROM LAST STRESS PERIOD
+ REUSING NON-PARAMETER GHB CELLS FROM LAST STRESS PERIOD
+
+    24 GHB CELLS
  RESERVOIR CONDITIONS FOR STRESS PERIOD   3, STEP   1 TIME   5.0000    
   RESERVOIR   HEAD         AREA        VOLUME
   ----------------------------------------------
        1     12.000     0.47000E+06 0.18400E+07
+ 
+ SOLVING FOR HEAD 
 
      6 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD  3
 
@@ -458,6 +523,8 @@
   RESERVOIR   HEAD         AREA        VOLUME
   ----------------------------------------------
        1     10.000     0.33000E+06 0.90000E+06
+ 
+ SOLVING FOR HEAD 
      6 ITERATIONS FOR TIME STEP   2 IN STRESS PERIOD  3
 
  HEAD/DRAWDOWN PRINTOUT FLAG = 0     TOTAL BUDGET PRINTOUT FLAG = 0
@@ -467,6 +534,8 @@
   RESERVOIR   HEAD         AREA        VOLUME
   ----------------------------------------------
        1     8.0000     0.19000E+06 0.31000E+06
+ 
+ SOLVING FOR HEAD 
      6 ITERATIONS FOR TIME STEP   3 IN STRESS PERIOD  3
 
  HEAD/DRAWDOWN PRINTOUT FLAG = 0     TOTAL BUDGET PRINTOUT FLAG = 0
@@ -475,7 +544,9 @@
  RESERVOIR CONDITIONS FOR STRESS PERIOD   3, STEP   4 TIME   8.0000    
   RESERVOIR   HEAD         AREA        VOLUME
   ----------------------------------------------
-       1     6.0000          0.          0.    
+       1     6.0000      0.0000      0.0000    
+ 
+ SOLVING FOR HEAD 
      6 ITERATIONS FOR TIME STEP   4 IN STRESS PERIOD  3
 
  HEAD/DRAWDOWN PRINTOUT FLAG = 0     TOTAL BUDGET PRINTOUT FLAG = 0
@@ -484,7 +555,9 @@
  RESERVOIR CONDITIONS FOR STRESS PERIOD   3, STEP   5 TIME   9.0000    
   RESERVOIR   HEAD         AREA        VOLUME
   ----------------------------------------------
-       1     4.0000          0.          0.    
+       1     4.0000      0.0000      0.0000    
+ 
+ SOLVING FOR HEAD 
      5 ITERATIONS FOR TIME STEP   5 IN STRESS PERIOD  3
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
@@ -531,23 +604,23 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =      671650.2500               STORAGE =      140131.1094
+             STORAGE =      671650.1880               STORAGE =      140131.1090
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
-     RESERV. LEAKAGE =     3088022.5000       RESERV. LEAKAGE =           0.0000
+     RESERV. LEAKAGE =     3088022.2500       RESERV. LEAKAGE =           0.0000
 
-            TOTAL IN =     3759672.7500              TOTAL IN =      140131.1094
+            TOTAL IN =     3759672.5000              TOTAL IN =      140131.1090
 
           OUT:                                     OUT:
           ----                                     ----
              STORAGE =     2625537.2500               STORAGE =           0.0000
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
-     HEAD DEP BOUNDS =     1098479.7500       HEAD DEP BOUNDS =      140112.0156
+     HEAD DEP BOUNDS =     1098479.7500       HEAD DEP BOUNDS =      140112.0160
      RESERV. LEAKAGE =       35687.6602       RESERV. LEAKAGE =           0.0000
 
-           TOTAL OUT =     3759704.7500             TOTAL OUT =      140112.0156
+           TOTAL OUT =     3759704.7500             TOTAL OUT =      140112.0160
 
-            IN - OUT =         -32.0000              IN - OUT =          19.0938
+            IN - OUT =         -32.2500              IN - OUT =          19.0938
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.01
 

@@ -1,0 +1,12 @@
+# DRN file for test case tc2
+#
+PARAMETER   1   5                 Item 1: NPDRN MXL
+   5   0                          Item 2: MXACTD IDRNCB
+C_DRN  DRN  1.0 5                 Item 3: PARNAM PARTYP Parval NLST
+   1   7   6      400.   1.0E-00  Item 4: Layer Row Column Elevation Condfact
+   1  10  11      550.   1.0E-00
+   1  14  14     1200.   1.0E-00
+   1  15  14     1200.   1.0E-00
+   1  16  14     1200.   1.0E-00
+   0   1                          Item 5: ITMP NP, stress period 1
+C_DRN                             Item 7: Pname

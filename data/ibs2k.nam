@@ -1,0 +1,8 @@
+LIST  1 ibs2k.lst
+BAS6  2 ..\data\ibs2k.ba6
+BCF6  7 ..\data\ibs2k.bc6
+DIS  10 ..\data\ibs2k.dis
+OC   11 ..\data\ibs2k.oc
+IBS  13 ..\data\ibs2k.ibs
+SIP  19 ..\data\ibs2k.sip
+

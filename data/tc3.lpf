@@ -1,0 +1,17 @@
+# LPF file for test case tc3
+#
+ 0  0.0  3                     Item 1:  ILPFCB HDRY NPLPF
+ 0                             Item 2:  LAYTYP
+ 0                             Item 3:  LAYAVG
+ 1.0                           Item 4:  CHANI
+ 0                             Item 5:  LAYVKA
+ 0                             Item 6:  LAYWET
+HK_1   HK    75.0   1          Item 8:  PARNAM PARTYP PARVAL NCLST
+   1   NONE  L1_T_ZONES  1  4  Item 9:  Layer Mult_array_name Zone_array_name Zones
+HK_2   HK   425.0   1          Item 8:  PARNAM PARTYP PARVAL NCLST
+   1   NONE  L1_T_ZONES  2  5  Item 9:  Layer Mult_array_name Zone_array_name Zones
+HK_3   HK    20.0   1          Item 8:  PARNAM PARTYP PARVAL NCLST
+   1   NONE  L1_T_ZONES  3  6  Item 9:  Layer Mult_array_name Zone_array_name Zones
+ 2                             Item 10:  print code for HK, layer 1
+CONSTANT     1.0               Item 12:  VKA, layer 1
+

@@ -1,0 +1,6 @@
+# DTOB file for etsdrt test case
+   1    1    1               Item 1: NQDT NQCDT NQTDT
+ 1.0  1.0    0               Item 2: TOMULTDT EVFDT IOWTQDT
+ 1  1                        Item 3: NQOBDT NQCLDT
+D-1 1 0.0 -38.25803 0.1 2 2  Item 4: OBSNAM IREFSP TOFFSET HOBS STAT STAT-FLAG PLOTSYM
+ 1  5  8  1.0                Item 5: LAY ROW COL FACTOR

@@ -1,0 +1,29 @@
+# NAME file for test case tc3
+#
+# Output files
+global          11     tc3.glo
+list            12     tc3.lst
+#
+# Obs-Sen-Pes process input files
+obs             21     ../data/tc3.obs
+hob             22     ../data/tc3.hob
+sen             23     ../data/tc3.sen
+pes             24     ../data/tc3.pes
+#
+# Global input files
+dis             31     ../data/tc3.dis
+mult            32     ../data/tc3.mlt
+zone            33     ../data/tc3.zon
+#
+# Flow process input files
+bas6            41     ../data/tc3.bas
+lpf             42     ../data/tc3.lpf
+wel             43     ../data/tc3.wel
+pcg             44     ../data/tc3.pcg
+data            45     ../data/tc3.bnd
+oc              46     ../data/tc3.oc
+data            47     ../data/tc3.shd
+riv             48     ../data/tc3.riv
+chd             49     ../data/tc3.chd
+rch             50     ../data/tc3.rch
+

@@ -1,0 +1,7 @@
+# PES file for test case tc2
+#
+   30  2.0 0.001  0.0                       ITEM 1: MAX-ITER MAX-CHANGE TOL SOSC
+    0    0    0    0   0  0.0  0.001  1.5 0 ITEM 2: IBEFLG IYCFLG IOSTAR NOPT NFIT SOSR RMAR RMARM
+    8    0    0                             ITEM 3: IPRCOV IPRINT LPRINT
+ 0.08  0.0    0                             ITEM 4: CSA FCONV LASTX
+    0    0    0                             ITEM 5: NPNG IPR MPR

@@ -1,0 +1,5 @@
+# PCG file for test case tc2
+#
+        60         8         1                                          Item 1: MXITER ITER1 NPCOND
+  0000.001    80.000        1.         2        00         2      1.00  Item 2
+ HCLOSE,      RCLOSE,    RELAX,    NBPOL,     IPRPCG,   MUTPCG    damp

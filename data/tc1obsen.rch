@@ -1,0 +1,15 @@
+# RCH file for test case tc1obsen
+#
+PARAMETER  2                  Item 1: NPRCH
+         1         0          Item 2: NRCHOP IRCHBD
+RCH_ZONE_1  RCH  63.072   1   Item 3: PARNAM PARTYP B NCLU
+mlt_rch  zones_1          1   Item 4: Mltarr Zonarr IZ
+RCH_ZONE_2  RCH  31.536   1   Item 3: PARNAM PARTYP B NCLU
+mlt_rch  zones_1          2   Item 4: Mltarr Zonarr IZ
+         2         0          Item 5: INRECH INIRICH, stress period 1
+RCH_ZONE_1  20                Item 7: Pname print-code, stress period 1
+RCH_ZONE_2  20                Item 7: Pname print-code, stress period 1
+        -1         0          Item 6: INRECH INIRICH, stress period 2
+        -1         0          Item 6: INRECH INIRICH, stress period 3
+        -1         0          Item 6: INRECH INIRICH, stress period 4
+        -1         0          Item 6: INRECH INIRICH, stress period 5

@@ -1,0 +1,49 @@
+The ADV Package, which provides the capability to specify
+advective-transport observations, has been modifed for use in
+MODFLOW-2000.  This package was documented in
+
+  Anderman, E.R. and Hill, M.C., 1997, Advective-transport observation
+  (ADV) package, a computer program for adding advective-transport
+  observations of steady-state flow fields to the three-dimensional
+  ground-water flow parameter-estimation  model MODFLOWP: U.S. Geological
+  Survey Open-File Report 97-14
+
+Input requirements have been modified from those documented in the
+Anderman and Hill report.  The changes, compared to Appendix A of the
+report are:
+  
+  In the name file, the file type must be listed as "ADV2" instead of "ADV".
+
+  Input to the ADV Package is read from the file that has file type
+  "ADV2" in the MODFLOW name file.  Variables are read in free format
+  (instead of the formats listed in OFR 97-14), except where arrays are
+  read by the U2DREL array reading module or in a user-specified format.
+
+  The following variables are read from Line 1: 
+  
+  NPTH, NTT2, IOUTT2, KTFLG, KTREV, ADVSTP, FSNK
+  
+  Where NPTH, NTT2, IOUTT2, KTFLG, KTREV, and ADVSTP are as documented in
+  OFR 97-14, and FSNK is a flag and a fraction indicating how weak sinks
+  are treated:
+
+    If FSNK < 0, particles will be discharged at cells with any amount of
+    discharge to boundary conditions.
+    
+    If FSNK > 0, particles will be discharged at cells where discharge to
+    sinks is larger than the specified fraction of the total inflow to the
+    cell.
+
+  Data sets 1, 2, and 3 are not required and must be omitted.
+
+  Data sets 4 and 5 are read as originally documented.
+
+  Data set 5A is read as originally documented, with the addition of a new
+  integer variable, PLOT-SYMBOL, which is read in format I5 following TT2.
+  PLOT-SYMBOL is used in ADV as it is in the other observation-process
+  packages.
+
+  A new data-file record, consisting of one line containing one variable,
+  is read after data set 5A.  The variable is IOWTQAD and is read in free
+  format. If IOWTQAD is greater than zero, data sets 6 and 6A are read as
+  originally documented.

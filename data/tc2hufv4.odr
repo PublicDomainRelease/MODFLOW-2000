@@ -1,0 +1,17 @@
+    5    5    5                                      1. NQDR NQCDR NQTDR
+  1.0  1.0    0                                      2. TOMULT EVFDR IOWTQDR
+    1   -1                                           3. NQOB NQCLDR
+DRN1     1      0.  -522.000      0.30    2    4     4. OBSNAM IREFSP TOFFSET HOBS STAT IST PLOT-SYMBOL
+         1         7         6             1.0E-00   5. LAYER ROW COLUMN FACTOR
+    1   -1                                           3.
+DRN1     1      0.  -845.000      0.30    2    4     4.
+         1        10        11             1.0E-00   5.
+    1   -1                                           3.
+DRN1     1      0.  -133.000      0.30    2    4     4.
+         1        14        14             1.0E-00   5.
+    1   -1                                           3.
+DRN1     1      0.   -19.000      0.30    2    4     4.
+         1        15        14             1.0E-00   5.
+    1   -1                                           3.
+DRN1     1      0.    -6.200      0.30    2    4     4.
+         1        16        14             1.0E-00   5.

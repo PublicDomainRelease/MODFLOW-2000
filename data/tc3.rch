@@ -1,0 +1,19 @@
+PARAMETER  4  4                                     NPRCH NRCHC
+         1         0                                NRCHOP IRCHBD
+RCH_ZONE_1  RCH  1.0  1                             PARNAM PARTYP B NCLU
+NONE      L1_T_ZONES  1  0                          Mult_arr_name, Zone_arr_name, Zone numbers
+RCH_ZONE_2  RCH  1.0  1                             PARNAM PARTYP B NCLU
+NONE      L1_T_ZONES  2  0                          Mult_arr_name, Zone_arr_name, Zone numbers
+RCH_ZONE_3  RCH  1.0  1                             PARNAM PARTYP B NCLU
+NONE      L1_T_ZONES  3  0                          Mult_arr_name, Zone_arr_name, Zone numbers
+RCH_Z_4-6   RCH  1.0  1                             PARNAM PARTYP B NCLU
+RCH_MULT  L1_T_ZONES  4 5 6  0                      Mult_arr_name, Zone_arr_name, Zone numbers
+         4         0                                INRECH INIRCH for stress period 1
+RCH_ZONE_1
+RCH_ZONE_2
+RCH_ZONE_3
+RCH_Z_4-6
+
+
+
+

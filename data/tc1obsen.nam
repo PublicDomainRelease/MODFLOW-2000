@@ -1,0 +1,30 @@
+# NAME file for test case tc1obsen
+#
+# NOTE: Forward slashes (/) in pathnames may need to be converted
+#       to back slashes (\) in some computing environments
+#
+# Output files
+global  11  tc1obsen.glo
+list    12  tc1obsen.lst
+#
+# Obs-Sen-Pes process input files
+obs     21  ../data/tc1obsen.obs
+hob     22  ../data/tc1obsen.ohd
+rvob    23  ../data/tc1obsen.orv
+sen     24  ../data/tc1obsen.sen
+#pes     25  ../data/tc1obsen.pes
+#
+# Global input files
+dis     31  ../data/tc1obsen.dis
+zone    32  ../data/tc1obsen.zon
+mult    33  ../data/tc1obsen.mlt
+#
+# Flow process input files
+bas6    41  ../data/tc1obsen.bas
+lpf     42  ../data/tc1obsen.lpf
+wel     43  ../data/tc1obsen.wel
+de4     44  ../data/tc1obsen.de4
+oc      45  ../data/tc1obsen.oc
+ghb     46  ../data/tc1obsen.ghb
+riv     47  ../data/tc1obsen.riv
+rch     48  ../data/tc1obsen.rch

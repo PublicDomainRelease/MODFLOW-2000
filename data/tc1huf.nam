@@ -1,0 +1,31 @@
+# NAME file for test case HUF Package TC1
+#
+# NOTE: Forward slashes (/) in pathnames may need to be converted
+#       to back slashes (\) in some computing environments
+#
+# Ouptut Files
+global        3  tc1huf.glo
+list          4  tc1huf.lst
+
+# Observation-Process Files
+obs          40  ../data/tc1huf.obs
+hob          41  ../data/tc1huf.hob
+gbob         42  ../data/tc1huf.ogb
+
+# Sensitivity and Parameter-Estimation Process Files
+sen          39  ../data/tc1huf.sen
+pes          43  ../data/tc1huf.pes
+
+#Flow-Process files
+bas6         55  ../data/tc1huf.bas
+huf           7  ../data/tc1huf.huf
+wel           8  ../data/tc1huf.wel
+pcg           9  ../data/tc1huf.pcg
+dis          10  ../data/tc1huf.dis
+oc           11  ../data/tc1huf.oc
+ghb          12  ../data/tc1huf.ghb
+riv          13  ../data/tc1huf.riv
+data         14  ../data/tc1huf.sh
+rch          31  ../data/tc1huf.rch
+mult         32  ../data/tc1huf.mlt
+zone         33  ../data/tc1huf.zon

@@ -1,0 +1,25 @@
+    2    2   00    1    1    0       0.0                                 LINE 1: NPTH NTT2 IOUTT2 KTFLG KTREV NCLAY ADVSTP
+         0      0.30                                                     DATA SET 4: Porosity, layer 1
+         0      0.30                                                     DATA SET 4: Porosity, layer 2
+         0      0.30                                                     DATA SET 4: Porosity, layer 3
+    1    1   14   11  0.5  0.0  0.0                                      DATA SET 5: NPNT SLAY SROW SCOL LOFF ROFF COFF
+L_6      1   12    5  0.5-0.09-0.131500.  11500.  1 750.  1   5.59e+8    4    DATA SET 5A: DID LAY ROW COL LOFF ROFF COFF XSTAT IXSTAT YSTAT IYSTAT ZSTAT IZSTAT TT2 PLOT-SYMBOL
+    1    1   13   12  0.5  0.0  0.0                                      DATA SET 5
+C_5      1   10   11 0.48-0.37-0.351500.  11500.  1 750.  1   2.28e+6    4    DATA SET 5A
+    0                                                                    DATA SET 6: IOWTQ
+
+
+
+    1    1   12   13  0.5  0.0  0.0                                      DATA SET 5
+R_1      1    7    7-0.02 0.47 0.291500.  11500.  1 750.  1   4.46e+6    DATA SET 5A
+
+
+L_1      1   15   10  0.5 0.24-0.311500.  11500.  1 750.  1   1.00e+8    DATA SET 5A
+L_2      1   14    8  0.5 0.20-0.231500.  11500.  1 750.  1   2.00e+8    DATA SET 5A
+L_3      1   13    7  0.5 0.33-0.081500.  11500.  1 750.  1   3.00e+8    DATA SET 5A
+L_4      1   13    6  0.5-0.27 0.111500.  11500.  1 750.  1   4.00e+8    DATA SET 5A
+L_5      1   12    5  0.5 0.15 0.241500.  11500.  1 750.  1   5.00e+8    DATA SET 5A
+C_1      1   12   12-0.13 0.40-0.131500.  11500.  1 750.  1   0.50e+6    DATA SET 5A
+C_2      1   11   12-0.36-0.36-0.241500.  11500.  1 750.  1   1.00e+6    DATA SET 5A
+C_3      1   10   11-0.34-0.45 0.111500.  11500.  1 750.  1   1.50e+6    DATA SET 5A
+C_4      1   10   11 0.01-0.39-0.241500.  11500.  1 750.  1   2.00e+6    DATA SET 5A

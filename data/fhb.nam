@@ -1,8 +1,9 @@
-LIST  6 fhb.lst
-BAS   5 ../data/fhb.bas
-BCF  11 ../data/fhb.bcf
-SIP  19 ../data/fhb.sip
-OC   22 ../data/fhb.oc 
-FHB  31 ../data/fhb.fhb
-DATA(BINARY) 41 fhb.hd
-DATA(BINARY) 44 fhb.cbc
+LIST  7 fhb.lst
+BAS6  8 ..\data\fhb.ba6
+BCF6 11 ..\data\fhb.bc6
+SIP  19 ..\data\fhb.sip
+OC   22 ..\data\fhb.oc
+fhb  31 ..\data\fhb.fhb
+DATA(BINARY)  41 fhb.hds
+DATA(BINARY)  44 fhb.cbc
+DIS  10 ..\data\fhb.dis

@@ -1,0 +1,12 @@
+GLOBAL 1 twrip.glo
+LIST   2 twrip.lst
+BAS6   3 ..\data\twrip.ba6
+LPF   11 ..\data\twrip.lpf
+WEL   12 ..\data\twrip.wel
+DRN   13 ..\data\twrip.drn
+RCH   18 ..\data\twrip.rch
+SIP   19 ..\data\twrip.sip
+OC    22 ..\data\twrip.oc
+MULT   8 ..\data\twrip.mlt
+ZONE   9 ..\data\twrip.zon
+DIS   10 ..\data\twrip.dis

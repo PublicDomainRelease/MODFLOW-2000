@@ -1,6 +1,7 @@
-LIST 6 str.lst
-BAS 5 ../data/str.bas
-BCF 7 ../data/str.bcf
-SIP 13 ../data/str.sip
-OC 14 ../data/str.oc
-STR 15 ../data/str.str
+LIST  7 str.lst
+BAS6  8 ..\data\str.ba6
+SIP  13 ..\data\str.sip
+OC   14 ..\data\str.oc
+str  15 ..\data\str.str
+BCF6  9 ..\data\str.bc6
+DIS  10 ..\data\str.dis

@@ -1,0 +1,1067 @@
+                                  MODFLOW-2000
+      U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
+                             VERSION 1.5 08/16/2001
+
+
+ This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
+
+ GLOBAL LISTING FILE: tc2hufv4.glo
+                         UNIT   1
+
+ OPENING tc2hufv4.lst
+ FILE TYPE:LIST   UNIT   2
+
+ OPENING ../data/tc2hufv4.huf
+ FILE TYPE:HUF   UNIT  11
+
+ OPENING tc2hufv4.hds
+ FILE TYPE:DATA   UNIT  90
+#Common files                                                                                                                                                                                           
+
+ OPENING ../data/tc2hufv4.bas
+ FILE TYPE:BAS6   UNIT   8
+
+ OPENING ../data/tc2hufv4.dis
+ FILE TYPE:DIS   UNIT   9
+
+ OPENING ../data/tc2hufv4.wel
+ FILE TYPE:WEL   UNIT  12
+
+ OPENING ../data/tc2hufv4.drn
+ FILE TYPE:DRN   UNIT  13
+
+ OPENING ../data/tc2hufv4.evt
+ FILE TYPE:EVT   UNIT  15
+
+ OPENING ../data/tc2hufv4.ghb
+ FILE TYPE:GHB   UNIT  17
+
+ OPENING ../data/tc2hufv4.rch
+ FILE TYPE:RCH   UNIT  18
+
+ OPENING ../data/tc2hufv4.oc
+ FILE TYPE:OC   UNIT  22
+
+ OPENING ../data/tc2hufv4.pcg
+ FILE TYPE:PCG   UNIT  23
+
+ OPENING ../data/tc2hufv4.obs
+ FILE TYPE:OBS   UNIT  37
+
+ OPENING ../data/tc2hufv4.zon
+ FILE TYPE:ZONE   UNIT  39
+
+ OPENING ../data/tc2hufv4.hob
+ FILE TYPE:HOB   UNIT  40
+
+ OPENING ../data/tc2hufv4.odr
+ FILE TYPE:DROB   UNIT  41
+
+ OPENING ../data/tc2hufv4.ogb
+ FILE TYPE:GBOB   UNIT  42
+ THE FREE FORMAT OPTION HAS BEEN SELECTED
+
+ DISCRETIZATION INPUT DATA READ FROM UNIT  9
+ # DIS file for test case tc2hufv4
+ #
+    3 LAYERS        18 ROWS        18 COLUMNS
+   1 STRESS PERIOD(S) IN SIMULATION
+ MODEL TIME UNIT IS DAYS
+ MODEL LENGTH UNIT IS METERS
+ THE GROUND-WATER TRANSPORT PROCESS IS INACTIVE
+
+ THE OBSERVATION PROCESS IS ACTIVE
+ THE SENSITIVITY PROCESS IS INACTIVE
+ THE PARAMETER-ESTIMATION PROCESS IS INACTIVE
+
+ MODE: FORWARD WITH OBSERVATIONS
+
+
+ ZONE OPTION, INPUT READ FROM UNIT 39
+     4 ZONE ARRAYS
+  Confining bed flag for each layer:
+   0   0   0
+
+       8784  ELEMENTS OF GX ARRAY USED OUT OF       8784
+        972  ELEMENTS OF GZ ARRAY USED OUT OF        972
+       2268  ELEMENTS OF IG ARRAY USED OUT OF       2268
+
+                     DELR =   1500.00    
+
+                     DELC =   1500.00    
+
+
+
+           TOP ELEVATION OF LAYER 1
+ READING ON UNIT   9 WITH FORMAT: (18F10.2)           
+
+
+
+             MODEL LAYER BOTTOM EL. FOR LAYER   1
+ READING ON UNIT   9 WITH FORMAT: (18F10.2)           
+
+
+
+             MODEL LAYER BOTTOM EL. FOR LAYER   2
+ READING ON UNIT   9 WITH FORMAT: (18F10.2)           
+
+
+
+             MODEL LAYER BOTTOM EL. FOR LAYER   3
+ READING ON UNIT   9 WITH FORMAT: (18F10.2)           
+
+
+ STRESS PERIOD     LENGTH       TIME STEPS     MULTIPLIER FOR DELT    SS FLAG
+ ----------------------------------------------------------------------------
+        1         86400.00          1                    1.000         SS
+
+ STEADY-STATE SIMULATION
+
+
+
+
+
+
+             ZONE ARRAY: ZLAY1     
+ READING ON UNIT  39 WITH FORMAT: (I1,17I2)           
+
+
+
+             ZONE ARRAY: ZLAY2     
+ READING ON UNIT  39 WITH FORMAT: (I1,17I2)           
+
+
+
+             ZONE ARRAY: ZLAY3     
+ READING ON UNIT  39 WITH FORMAT: (I1,17I2)           
+
+
+
+             ZONE ARRAY: RCHETM    
+ READING ON UNIT  39 WITH FORMAT: (I1,17I2)           
+
+ HUF1 -- HYDROGEOLOGIC-UNIT FLOW PACKAGE, ' VERSION 1.02 ERA, 05/31/2001
+ INPUT READ FROM UNIT 11
+
+ # HUF file for Test Case 2 Variant 4
+ #
+ HEAD AT CELLS THAT CONVERT TO DRY=  -999.00    
+ Hydrogeologic-Unit Flow Package Active with  12 parameters
+ HEADS IN HYDROGEOLOGIC UNITS WILL BE SAVED ON UNIT 90
+    12 Named Parameters     
+ STEADY-STATE SIMULATION
+
+   INTERPRETATION OF LAYER FLAGS:
+ LAYER     LTHUF    LAYER TYPE     LAYWT WETTABILITY
+ ---------------------------------------------------------------------------
+    1         0      CONFINED         0  NON-WETTABLE
+    2         0      CONFINED         0  NON-WETTABLE
+    3         0      CONFINED         0  NON-WETTABLE
+
+       7776 ELEMENTS IN X ARRAY ARE USED BY HUF
+         25 ELEMENTS IN IX ARRAY ARE USED BY HUF
+
+ PCG2 -- CONJUGATE GRADIENT SOLUTION PACKAGE, VERSION 2.4, 12/29/98
+ MAXIMUM OF    250 CALLS OF SOLUTION ROUTINE
+ MAXIMUM OF      8 INTERNAL ITERATIONS PER CALL TO SOLUTION ROUTINE
+ MATRIX PRECONDITIONING TYPE :    1
+       6916 ELEMENTS IN X ARRAY ARE USED BY PCG
+      14000 ELEMENTS IN IX ARRAY ARE USED BY PCG
+       1944 ELEMENTS IN Z ARRAY ARE USED BY PCG
+
+ OBS1BAS6 -- OBSERVATION PROCESS, VERSION 1.0, 4/27/99
+ INPUT READ FROM UNIT  37
+ OBSERVATION GRAPH-DATA OUTPUT FILES WILL NOT BE PRINTED
+
+ HEAD OBSERVATIONS -- INPUT READ FROM UNIT  40
+
+ NUMBER OF HEADS....................................:   42
+   NUMBER OF MULTILAYER HEADS.......................:    2
+   MAXIMUM NUMBER OF LAYERS FOR MULTILAYER HEADS....:    3
+
+ OBS1DRN6 -- OBSERVATION PROCESS (DRAIN FLOW OBSERVATIONS)
+ VERSION 1.0, 10/15/98
+ INPUT READ FROM UNIT  41
+
+ NUMBER OF FLOW-OBSERVATION DRAIN-CELL GROUPS.......:    5
+   NUMBER OF CELLS IN DRAIN-CELL GROUPS.............:    5
+   NUMBER OF DRAIN-CELL FLOWS.......................:    5
+
+ OBS1GHB6 -- OBSERVATION PROCESS (GENERAL HEAD BOUNDARY FLOW OBSERVATIONS)
+ VERSION 1.0, 10/15/98
+ INPUT READ FROM UNIT  42
+
+ NUMBER OF FLOW-OBSERVATION GENERAL-HEAD-CELL GROUPS:    5
+   NUMBER OF CELLS IN GENERAL-HEAD-CELL GROUPS......:    5
+   NUMBER OF GENERAL-HEAD-CELL FLOWS................:    5
+
+     877 ELEMENTS IN X ARRAY ARE USED FOR OBSERVATIONS
+     132 ELEMENTS IN Z ARRAY ARE USED FOR OBSERVATIONS
+     509 ELEMENTS IN IX ARRAY ARE USED FOR OBSERVATIONS
+
+ COMMON ERROR VARIANCE FOR ALL OBSERVATIONS SET TO:       1.000    
+
+      15569  ELEMENTS OF X ARRAY USED OUT OF      15569
+       2076  ELEMENTS OF Z ARRAY USED OUT OF       2076
+      14534  ELEMENTS OF IX ARRAY USED OUT OF      14534
+          0  ELEMENTS OF XHS ARRAY USED OUT OF          1
+
+ HEAD OBSERVATION VARIANCES ARE MULTIPLIED BY:       1.000    
+
+ OBSERVED HEAD DATA -- TIME OFFSETS ARE MULTIPLIED BY:   1.0000    
+
+                    REFER.
+       OBSERVATION  STRESS    TIME                              STATISTIC   PLOT
+  OBS#    NAME      PERIOD   OFFSET    OBSERVATION  STATISTIC     TYPE      SYM.
+     1 W2L              1    0.000       979.0       5.000      STD. DEV.      1
+     2 WL2              1    0.000       1015.       5.000      STD. DEV.      1
+     3 WL2              1    0.000       1186.       5.000      STD. DEV.      1
+     4 WL4              1    0.000       291.7       5.000      STD. DEV.      1
+     5 WL4              1    0.000       964.4       5.000      STD. DEV.      1
+     6 WL4              1    0.000       1177.       5.000      STD. DEV.      1
+     7 WL4              1    0.000       1192.       5.000      STD. DEV.      1
+     8 WL5              1    0.000       760.7       5.000      STD. DEV.      1
+     MULTIPLE LAYERS AND PROPORTIONS :    1, 0.34       2, 0.33       3, 0.33
+     9 WL6              1    0.000       188.8       5.000      STD. DEV.      1
+    10 WL6              1    0.000       892.6       5.000      STD. DEV.      1
+    11 WL6              1    0.000       906.9       5.000      STD. DEV.      1
+    12 WL6              1    0.000       1201.       5.000      STD. DEV.      1
+    13 WL6              1    0.000       1198.       5.000      STD. DEV.      1
+    14 WL6              1    0.000       1198.       5.000      STD. DEV.      1
+    15 WL8              1    0.000       210.0       5.000      STD. DEV.      1
+    16 WL8              1    0.000       642.5       5.000      STD. DEV.      1
+    17 WL8              1    0.000       1014.       5.000      STD. DEV.      1
+    18 WL8              1    0.000       1233.       5.000      STD. DEV.      1
+    19 WL8              1    0.000       1257.       5.000      STD. DEV.      1
+    20 WL8              1    0.000       1201.       5.000      STD. DEV.      1
+    21 WL9              1    0.000       445.0       5.000      STD. DEV.      1
+    22 WL10             1    0.000       635.4       5.000      STD. DEV.      1
+    23 WL10             1    0.000       941.0       5.000      STD. DEV.      1
+     MULTIPLE LAYERS AND PROPORTIONS :    1, 0.34       2, 0.33       3, 0.33
+    24 WL10             1    0.000       1108.       5.000      STD. DEV.      1
+    25 WL10             1    0.000       1395.       5.000      STD. DEV.      1
+    26 WL10             1    0.000       1277.       5.000      STD. DEV.      1
+    27 WL10             1    0.000       1159.       5.000      STD. DEV.      1
+    28 WL11             1    0.000       336.4       5.000      STD. DEV.      1
+    29 WL12             1    0.000       1063.       5.000      STD. DEV.      1
+    30 WL12             1    0.000       1312.       5.000      STD. DEV.      1
+    31 WL12             1    0.000       1479.       5.000      STD. DEV.      1
+    32 WL12             1    0.000       1219.       5.000      STD. DEV.      1
+    33 WL13             1    0.000       1483.       5.000      STD. DEV.      1
+    34 WL13             1    0.000       1315.       5.000      STD. DEV.      1
+    35 WL14             1    0.000       1225.       5.000      STD. DEV.      1
+    36 WL14             1    0.000       1405.       5.000      STD. DEV.      1
+    37 WL14             1    0.000       1193.       5.000      STD. DEV.      1
+    38 WL15             1    0.000       1219.       5.000      STD. DEV.      1
+    39 WL16             1    0.000       1263.       5.000      STD. DEV.      1
+    40 WL16             1    0.000       1197.       5.000      STD. DEV.      1
+    41 WL18             1    0.000       1235.       5.000      STD. DEV.      1
+    42 WL18             1    0.000       1194.       5.000      STD. DEV.      1
+
+                                                     HEAD CHANGE
+                                                      REFERENCE
+        OBSERVATION                   ROW     COL    OBSERVATION
+  OBS#     NAME       LAY  ROW  COL  OFFSET  OFFSET   (IF > 0)
+     1  W2L             1    2    4   0.000   0.000        0
+     2  WL2             1    2    7   0.000   0.000        0
+     3  WL2             1    2   10   0.000   0.000        0
+     4  WL4             1    4    2   0.000   0.000        0
+     5  WL4             1    4    6   0.000   0.000        0
+     6  WL4             1    4    9   0.000   0.000        0
+     7  WL4             1    4   12   0.000   0.000        0
+     8  WL5            -3    5    4   0.000   0.000        0
+     9  WL6             1    6    2   0.000   0.000        0
+    10  WL6             1    6    6   0.000   0.000        0
+    11  WL6             1    6    8   0.000   0.000        0
+    12  WL6             1    6   11   0.000   0.000        0
+    13  WL6             1    6   14   0.000   0.000        0
+    14  WL6             1    6   16   0.000   0.000        0
+    15  WL8             1    8    2   0.000   0.000        0
+    16  WL8             1    8    4   0.000   0.000        0
+    17  WL8             1    8    7   0.000   0.000        0
+    18  WL8             1    8   10   0.000   0.000        0
+    19  WL8             1    8   13   0.000   0.000        0
+    20  WL8             1    8   16   0.000   0.000        0
+    21  WL9             1    9    3   0.000   0.000        0
+    22  WL10            1   10    4   0.000   0.000        0
+    23  WL10           -3   10    6   0.000   0.000        0
+    24  WL10            1   10    9   0.000   0.000        0
+    25  WL10            1   10   11   0.000   0.000        0
+    26  WL10            1   10   14   0.000   0.000        0
+    27  WL10            1   10   17   0.000   0.000        0
+    28  WL11            1   11    2   0.000   0.000        0
+    29  WL12            1   12    8   0.000   0.000        0
+    30  WL12            1   12   10   0.000   0.000        0
+    31  WL12            1   12   13   0.000   0.000        0
+    32  WL12            1   12   16   0.000   0.000        0
+    33  WL13            1   13   11   0.000   0.000        0
+    34  WL13            1   13   15   0.000   0.000        0
+    35  WL14            1   14    9   0.000   0.000        0
+    36  WL14            1   14   12   0.000   0.000        0
+    37  WL14            1   14   17   0.000   0.000        0
+    38  WL15            1   15   14   0.000   0.000        0
+    39  WL16            1   16   12   0.000   0.000        0
+    40  WL16            1   16   16   0.000   0.000        0
+    41  WL18            1   18   13   0.000   0.000        0
+    42  WL18            1   18   18   0.000   0.000        0
+
+ DRAIN-CELL FLOW OBSERVATION VARIANCES ARE MULTIPLIED BY:       1.000    
+
+ OBSERVED DRAIN-CELL FLOW DATA
+ -- TIME OFFSETS ARE MULTIPLIED BY:   1.0000    
+
+ GROUP NUMBER:   1     BOUNDARY TYPE: DRN     NUMBER OF CELLS IN GROUP:    -1
+ NUMBER OF FLOW OBSERVATIONS:     1
+
+                    REFER.              OBSERVED
+       OBSERVATION  STRESS    TIME     DRAIN FLOW               STATISTIC   PLOT
+  OBS#    NAME      PERIOD   OFFSET     GAIN (-)    STATISTIC     TYPE      SYM.
+    43 DRN1             1    0.000      -522.0      0.3000      COEF. VAR.     4
+
+       LAYER  ROW  COLUMN    FACTOR
+          1.    7.     6.     1.00
+
+ GROUP NUMBER:   2     BOUNDARY TYPE: DRN     NUMBER OF CELLS IN GROUP:    -1
+ NUMBER OF FLOW OBSERVATIONS:     1
+
+                    REFER.              OBSERVED
+       OBSERVATION  STRESS    TIME     DRAIN FLOW               STATISTIC   PLOT
+  OBS#    NAME      PERIOD   OFFSET     GAIN (-)    STATISTIC     TYPE      SYM.
+    44 DRN1             1    0.000      -845.0      0.3000      COEF. VAR.     4
+
+       LAYER  ROW  COLUMN    FACTOR
+          1.   10.    11.     1.00
+
+ GROUP NUMBER:   3     BOUNDARY TYPE: DRN     NUMBER OF CELLS IN GROUP:    -1
+ NUMBER OF FLOW OBSERVATIONS:     1
+
+                    REFER.              OBSERVED
+       OBSERVATION  STRESS    TIME     DRAIN FLOW               STATISTIC   PLOT
+  OBS#    NAME      PERIOD   OFFSET     GAIN (-)    STATISTIC     TYPE      SYM.
+    45 DRN1             1    0.000      -133.0      0.3000      COEF. VAR.     4
+
+       LAYER  ROW  COLUMN    FACTOR
+          1.   14.    14.     1.00
+
+ GROUP NUMBER:   4     BOUNDARY TYPE: DRN     NUMBER OF CELLS IN GROUP:    -1
+ NUMBER OF FLOW OBSERVATIONS:     1
+
+                    REFER.              OBSERVED
+       OBSERVATION  STRESS    TIME     DRAIN FLOW               STATISTIC   PLOT
+  OBS#    NAME      PERIOD   OFFSET     GAIN (-)    STATISTIC     TYPE      SYM.
+    46 DRN1             1    0.000      -19.00      0.3000      COEF. VAR.     4
+
+       LAYER  ROW  COLUMN    FACTOR
+          1.   15.    14.     1.00
+
+ GROUP NUMBER:   5     BOUNDARY TYPE: DRN     NUMBER OF CELLS IN GROUP:    -1
+ NUMBER OF FLOW OBSERVATIONS:     1
+
+                    REFER.              OBSERVED
+       OBSERVATION  STRESS    TIME     DRAIN FLOW               STATISTIC   PLOT
+  OBS#    NAME      PERIOD   OFFSET     GAIN (-)    STATISTIC     TYPE      SYM.
+    47 DRN1             1    0.000      -6.200      0.3000      COEF. VAR.     4
+
+       LAYER  ROW  COLUMN    FACTOR
+          1.   16.    14.     1.00
+
+ GENERAL-HEAD-CELL FLOW OBSERVATION VARIANCES ARE MULTIPLIED BY:       1.000    
+
+ OBSERVED GENERAL-HEAD-CELL FLOW DATA
+ -- TIME OFFSETS ARE MULTIPLIED BY:   1.0000    
+
+   GROUP NUMBER:   6   BOUNDARY TYPE: GHB   NUMBER OF CELLS IN GROUP:    -1
+   NUMBER OF FLOW OBSERVATIONS:     1
+
+                                        OBSERVED
+                    REFER.            BOUNDARY FLOW
+       OBSERVATION  STRESS    TIME     GAIN (-) OR              STATISTIC   PLOT
+  OBS#    NAME      PERIOD   OFFSET     LOSS (+)    STATISTIC     TYPE      SYM.
+    48 GHB1             1    0.000      -608.0      0.3000      COEF. VAR.     3
+
+       LAYER  ROW  COLUMN    FACTOR
+          1.    3.     6.     1.00
+
+   GROUP NUMBER:   7   BOUNDARY TYPE: GHB   NUMBER OF CELLS IN GROUP:    -1
+   NUMBER OF FLOW OBSERVATIONS:     1
+
+                                        OBSERVED
+                    REFER.            BOUNDARY FLOW
+       OBSERVATION  STRESS    TIME     GAIN (-) OR              STATISTIC   PLOT
+  OBS#    NAME      PERIOD   OFFSET     LOSS (+)    STATISTIC     TYPE      SYM.
+    49 GHB2             1    0.000      -687.0      0.3000      COEF. VAR.     3
+
+       LAYER  ROW  COLUMN    FACTOR
+          1.    3.    11.     1.00
+
+   GROUP NUMBER:   8   BOUNDARY TYPE: GHB   NUMBER OF CELLS IN GROUP:    -1
+   NUMBER OF FLOW OBSERVATIONS:     1
+
+                                        OBSERVED
+                    REFER.            BOUNDARY FLOW
+       OBSERVATION  STRESS    TIME     GAIN (-) OR              STATISTIC   PLOT
+  OBS#    NAME      PERIOD   OFFSET     LOSS (+)    STATISTIC     TYPE      SYM.
+    50 GHB3             1    0.000      -660.0      0.3000      COEF. VAR.     3
+
+       LAYER  ROW  COLUMN    FACTOR
+          1.    4.    11.     1.00
+
+   GROUP NUMBER:   9   BOUNDARY TYPE: GHB   NUMBER OF CELLS IN GROUP:    -1
+   NUMBER OF FLOW OBSERVATIONS:     1
+
+                                        OBSERVED
+                    REFER.            BOUNDARY FLOW
+       OBSERVATION  STRESS    TIME     GAIN (-) OR              STATISTIC   PLOT
+  OBS#    NAME      PERIOD   OFFSET     LOSS (+)    STATISTIC     TYPE      SYM.
+    51 GHB4             1    0.000      -654.0      0.3000      COEF. VAR.     3
+
+       LAYER  ROW  COLUMN    FACTOR
+          1.    5.    11.     1.00
+
+   GROUP NUMBER:  10   BOUNDARY TYPE: GHB   NUMBER OF CELLS IN GROUP:    -1
+   NUMBER OF FLOW OBSERVATIONS:     1
+
+                                        OBSERVED
+                    REFER.            BOUNDARY FLOW
+       OBSERVATION  STRESS    TIME     GAIN (-) OR              STATISTIC   PLOT
+  OBS#    NAME      PERIOD   OFFSET     LOSS (+)    STATISTIC     TYPE      SYM.
+    52 GHB5             1    0.000      -36.70      0.3000      COEF. VAR.     3
+
+       LAYER  ROW  COLUMN    FACTOR
+          1.   12.     9.     1.00
+
+
+
+                                    SOLUTION BY THE CONJUGATE-GRADIENT METHOD
+                                   -------------------------------------------
+                    MAXIMUM NUMBER OF CALLS TO PCG ROUTINE =      250
+                        MAXIMUM ITERATIONS PER CALL TO PCG =        8
+                               MATRIX PRECONDITIONING TYPE =        1
+        RELAXATION FACTOR (ONLY USED WITH PRECOND. TYPE 1) =    0.10000E+01
+ PARAMETER OF POLYNOMIAL PRECOND. = 2 (2) OR IS CALCULATED :        2
+                         HEAD CHANGE CRITERION FOR CLOSURE =    0.10000E-03
+                     RESIDUAL CHANGE CRITERION FOR CLOSURE =    0.80000E+02
+            PCG HEAD AND RESIDUAL CHANGE PRINTOUT INTERVAL =      999
+     PRINTING FROM SOLVER IS LIMITED(1) OR SUPPRESSED (>1) =        1
+                                         DAMPING PARAMETER =    0.10000E+01
+
+ WETTING CAPABILITY IS NOT ACTIVE IN ANY LAYER
+
+
+ HUF1 -- HYDROGEOLOGIC-UNIT FLOW PACKAGE
+ ---------------------------------------------------------------------------
+
+
+
+            TOP ELEVATN: HGU1      
+ READING ON UNIT  11 WITH FORMAT: (9F10.2)            
+
+            1           2           3           4           5           6
+            7           8           9          10          11          12
+           13          14          15          16          17          18
+ ........................................................................
+   1    0.000       466.7       970.9       979.2       979.5       980.1    
+        1025.       1124.       1184.       1186.       1187.       9999.    
+        9999.       9999.       9999.       9999.       9999.       9999.    
+   2    0.000       460.5       968.8       979.0       979.2       979.8    
+        1015.       1103.       1171.       1186.       1187.       1189.    
+        9999.       9999.       9999.       9999.       9999.       9999.    
+   3    0.000       433.0       961.2       973.6       978.5       957.7    
+        987.5       1089.       1180.       1187.       1187.       1190.    
+        1192.       9999.       9999.       9999.       9999.       9999.    
+   4    0.000       291.7       752.5       967.2       971.5       964.3    
+        990.4       1083.       1177.       1177.       1160.       1192.    
+        1194.       1195.       9999.       9999.       9999.       9999.    
+   5    0.000       220.9       552.0       799.2       897.5       929.4    
+        956.1       983.7       1078.       1148.       1154.       1194.    
+        1195.       1196.       1197.       9999.       9999.       9999.    
+   6    0.000       188.8       463.0       692.6       852.1       892.6    
+        932.8       906.9       1008.       1148.       1201.       1196.    
+        1196.       1198.       1198.       1198.       9999.       9999.    
+   7    27.65       189.7       420.5       653.2       857.1       922.1    
+        1015.       951.2       1024.       1184.       1260.       1242.    
+        1215.       1201.       1200.       1199.       1197.       9999.    
+   8    50.33       210.0       431.3       642.5       850.8       944.4    
+        1014.       953.3       1037.       1233.       1337.       1346.    
+        1257.       1205.       1204.       1201.       1197.       1100.    
+   9    67.18       233.9       445.0       634.7       835.3       925.8    
+        971.0       931.5       1050.       1276.       1407.       1450.    
+        1357.       1210.       1209.       1205.       1177.       1100.    
+  10    77.44       262.6       462.4       635.4       812.4       951.3    
+        990.3       999.7       1108.       1286.       1395.       1453.    
+        1425.       1277.       1214.       1202.       1159.       1100.    
+  11    207.6       336.4       484.5       641.0       809.6       926.6    
+        996.2       1046.       1130.       1312.       1441.       1457.    
+        1448.       1316.       1217.       1205.       1157.       1100.    
+  12    9999.       9999.       9999.       9999.       871.6       949.9    
+        1018.       1063.       1037.       1312.       1460.       1460.    
+        1479.       1376.       1285.       1219.       1165.       1100.    
+  13    9999.       9999.       9999.       9999.       9999.       1000.    
+        1063.       1124.       1185.       1337.       1483.       1514.    
+        1515.       1419.       1315.       1229.       1182.       1154.    
+  14    9999.       9999.       9999.       9999.       9999.       9999.    
+        1118.       1183.       1225.       1283.       1375.       1405.    
+        1388.       1333.       1276.       1216.       1193.       1178.    
+  15    9999.       9999.       9999.       9999.       9999.       9999.    
+        9999.       1239.       1241.       1243.       1283.       1304.    
+        1287.       1219.       1241.       1207.       1193.       1189.    
+  16    9999.       9999.       9999.       9999.       9999.       9999.    
+        9999.       9999.       1242.       1242.       1256.       1263.    
+        1249.       1206.       1216.       1197.       1193.       1192.    
+  17    9999.       9999.       9999.       9999.       9999.       9999.    
+        9999.       9999.       9999.       1242.       1247.       1247.    
+        1239.       1221.       1209.       1196.       1194.       1194.    
+  18    9999.       9999.       9999.       9999.       9999.       9999.    
+        9999.       9999.       9999.       9999.       1245.       1242.    
+        1235.       1223.       1208.       1195.       1195.       1194.    
+
+    THICKNESS: HGU1       =   300.000    
+
+
+
+            TOP ELEVATN: HGU2      
+ READING ON UNIT  11 WITH FORMAT: (9F10.2)            
+
+            1           2           3           4           5           6
+            7           8           9          10          11          12
+           13          14          15          16          17          18
+ ........................................................................
+   1   -300.0       166.7       670.9       679.2       679.5       680.1    
+        725.0       823.7       884.3       885.8       886.5       0.000    
+        0.000       0.000       0.000       0.000       0.000       0.000    
+   2   -300.0       160.5       668.8       679.0       679.2       679.8    
+        715.1       803.0       870.6       886.5       887.3       888.7    
+        0.000       0.000       0.000       0.000       0.000       0.000    
+   3   -300.0       132.9       661.2       673.6       678.5       657.7    
+        687.5       788.8       879.7       886.8       887.4       890.0    
+        891.8       0.000       0.000       0.000       0.000       0.000    
+   4   -300.0      -8.310       452.5       667.2       671.5       664.3    
+        690.4       782.6       876.5       877.2       859.7       892.4    
+        893.5       894.9       0.000       0.000       0.000       0.000    
+   5   -300.0      -79.14       252.0       499.1       597.5       629.4    
+        656.1       683.7       777.5       847.7       854.3       894.2    
+        895.1       896.3       897.3       0.000       0.000       0.000    
+   6   -300.0      -111.2       163.0       392.6       552.1       592.6    
+        632.8       606.9       707.6       847.7       901.2       895.8    
+        896.4       897.9       898.3       898.3       0.000       0.000    
+   7   -272.4      -110.3       120.5       353.2       557.1       622.1    
+        714.7       651.2       723.8       884.0       959.7       942.4    
+        915.4       900.6       900.0       898.8       897.3       0.000    
+   8   -249.7      -90.01       131.3       342.5       550.8       644.4    
+        714.5       653.3       736.8       933.0       1037.       1046.    
+        956.8       905.0       903.7       900.9       897.3       800.0    
+   9   -232.8      -66.07       145.0       334.7       535.3       625.8    
+        671.0       631.5       749.6       975.6       1107.       1150.    
+        1057.       910.0       909.1       904.7       876.9       800.0    
+  10   -222.6      -37.41       162.4       335.4       512.4       651.3    
+        690.3       699.7       807.8       986.3       1095.       1153.    
+        1125.       976.8       914.3       902.2       859.1       800.0    
+  11   -92.35       36.39       184.5       341.0       509.6       626.6    
+        696.2       745.8       829.6       1012.       1141.       1157.    
+        1148.       1016.       917.3       904.8       857.2       800.0    
+  12    0.000       0.000       0.000       0.000       571.6       649.9    
+        718.2       762.9       736.7       1012.       1160.       1160.    
+        1179.       1076.       984.8       918.5       864.7       800.0    
+  13    0.000       0.000       0.000       0.000       0.000       700.4    
+        763.0       823.8       885.0       1037.       1183.       1214.    
+        1215.       1119.       1015.       928.8       882.0       853.7    
+  14    0.000       0.000       0.000       0.000       0.000       0.000    
+        817.5       883.2       925.0       983.5       1075.       1105.    
+        1088.       1033.       976.0       915.9       893.0       877.7    
+  15    0.000       0.000       0.000       0.000       0.000       0.000    
+        0.000       939.2       941.1       942.5       982.9       1004.    
+        986.9       919.0       940.7       906.7       893.3       888.8    
+  16    0.000       0.000       0.000       0.000       0.000       0.000    
+        0.000       0.000       941.5       942.1       955.5       962.5    
+        949.1       906.2       916.2       897.5       893.3       892.3    
+  17    0.000       0.000       0.000       0.000       0.000       0.000    
+        0.000       0.000       0.000       942.2       946.7       947.3    
+        938.5       921.5       909.4       895.8       894.2       893.7    
+  18    0.000       0.000       0.000       0.000       0.000       0.000    
+        0.000       0.000       0.000       0.000       944.5       942.2    
+        934.8       922.8       908.1       895.5       894.6       894.1    
+
+    THICKNESS: HGU2       =   200.000    
+
+
+
+            TOP ELEVATN: HGU3      
+ READING ON UNIT  11 WITH FORMAT: (9F10.2)            
+
+            1           2           3           4           5           6
+            7           8           9          10          11          12
+           13          14          15          16          17          18
+ ........................................................................
+   1   -500.0      -33.34       470.9       479.2       479.5       480.1    
+        525.0       623.7       684.3       685.8       686.5       9999.    
+        9999.       9999.       9999.       9999.       9999.       9999.    
+   2   -500.0      -39.47       468.8       479.0       479.2       479.8    
+        515.1       603.0       670.6       686.5       687.3       688.7    
+        9999.       9999.       9999.       9999.       9999.       9999.    
+   3   -500.0      -67.05       461.2       473.6       478.5       457.7    
+        487.5       588.8       679.7       686.8       687.4       690.0    
+        691.8       9999.       9999.       9999.       9999.       9999.    
+   4   -500.0      -208.3       252.5       467.2       471.5       464.4    
+        490.4       582.6       676.5       677.2       659.7       692.4    
+        693.5       694.9       9999.       9999.       9999.       9999.    
+   5   -500.0      -279.1       52.04       299.1       397.5       429.4    
+        456.1       483.7       577.5       647.7       654.3       694.2    
+        695.1       696.3       697.3       9999.       9999.       9999.    
+   6   -500.0      -311.2      -37.00       192.6       352.1       392.6    
+        432.8       406.9       507.6       647.7       701.2       695.8    
+        696.4       697.9       698.3       698.3       9999.       9999.    
+   7   -472.4      -310.3      -79.49       153.2       357.1       422.1    
+        514.7       451.2       523.8       684.0       759.7       742.4    
+        715.4       700.6       700.0       698.8       697.3       9999.    
+   8   -449.7      -290.0      -68.66       142.5       350.8       444.4    
+        514.5       453.3       536.8       733.0       837.0       846.4    
+        756.8       705.0       703.7       700.9       697.3       600.0    
+   9   -432.8      -266.1      -55.03       134.7       335.3       425.8    
+        471.0       431.5       549.6       775.6       907.2       949.9    
+        856.6       710.0       709.1       704.7       676.9       600.0    
+  10   -422.6      -237.4      -37.62       135.4       312.4       451.3    
+        490.3       499.7       607.8       786.3       895.3       953.3    
+        924.8       776.8       714.3       702.2       659.1       600.0    
+  11   -292.4      -163.6      -15.52       140.9       309.6       426.6    
+        496.2       545.8       629.6       812.3       941.1       957.0    
+        948.0       815.5       717.3       704.8       657.2       600.0    
+  12    9999.       9999.       9999.       9999.       371.6       449.9    
+        518.2       562.9       536.7       812.1       959.7       959.8    
+        979.2       876.0       784.8       718.5       664.7       600.0    
+  13    9999.       9999.       9999.       9999.       9999.       500.4    
+        563.0       623.8       685.0       836.6       983.0       1014.    
+        1015.       919.2       814.9       728.8       682.0       653.7    
+  14    9999.       9999.       9999.       9999.       9999.       9999.    
+        617.5       683.2       725.0       783.5       875.4       905.0    
+        888.1       833.3       776.0       715.9       693.0       677.7    
+  15    9999.       9999.       9999.       9999.       9999.       9999.    
+        9999.       739.2       741.1       742.5       782.9       803.6    
+        786.9       719.0       740.7       706.7       693.3       688.8    
+  16    9999.       9999.       9999.       9999.       9999.       9999.    
+        9999.       9999.       741.5       742.1       755.5       762.5    
+        749.1       706.2       716.2       697.5       693.3       692.3    
+  17    9999.       9999.       9999.       9999.       9999.       9999.    
+        9999.       9999.       9999.       742.2       746.7       747.3    
+        738.5       721.5       709.4       695.8       694.2       693.7    
+  18    9999.       9999.       9999.       9999.       9999.       9999.    
+        9999.       9999.       9999.       9999.       744.5       742.2    
+        734.8       722.8       708.1       695.5       694.6       694.1    
+
+    THICKNESS: HGU3       =   550.000    
+
+
+
+            TOP ELEVATN: HGU4      
+ READING ON UNIT  11 WITH FORMAT: (9F10.2)            
+
+            1           2           3           4           5           6
+            7           8           9          10          11          12
+           13          14          15          16          17          18
+ ........................................................................
+   1   -1050.      -583.3      -79.11      -70.83      -70.52      -69.93    
+       -25.00       73.69       134.3       135.8       136.5       0.000    
+        0.000       0.000       0.000       0.000       0.000       0.000    
+   2   -1050.      -589.5      -81.17      -70.98      -70.79      -70.23    
+       -34.89       53.04       120.6       136.5       137.3       138.6    
+        0.000       0.000       0.000       0.000       0.000       0.000    
+   3   -1050.      -617.0      -88.76      -76.40      -71.45      -92.26    
+       -62.53       38.84       129.7       136.8       137.4       140.1    
+        141.8       0.000       0.000       0.000       0.000       0.000    
+   4   -1050.      -758.3      -297.5      -82.78      -78.53      -85.65    
+       -59.57       32.56       126.5       127.2       109.7       142.4    
+        143.5       144.9       0.000       0.000       0.000       0.000    
+   5   -1050.      -829.1      -498.0      -250.9      -152.5      -120.6    
+       -93.93      -66.27       27.55       97.71       104.3       144.1    
+        145.1       146.3       147.3       0.000       0.000       0.000    
+   6   -1050.      -861.2      -587.0      -357.4      -197.9      -157.4    
+       -117.2      -143.1      -42.37       97.73       151.1       145.8    
+        146.4       147.9       148.3       148.3       0.000       0.000    
+   7   -1022.      -860.3      -629.5      -396.8      -192.9      -127.9    
+       -35.27      -98.84      -26.24       134.0       209.7       192.4    
+        165.4       150.6       150.0       148.8       147.3       0.000    
+   8   -999.7      -840.0      -618.7      -407.5      -199.2      -105.6    
+       -35.54      -96.69      -13.20       183.1       287.0       296.4    
+        206.8       155.1       153.7       150.9       147.3       50.00    
+   9   -982.8      -816.1      -605.0      -415.3      -214.7      -124.2    
+       -78.95      -118.5     -0.3900       225.6       357.2       399.9    
+        306.6       159.9       159.1       154.7       126.9       50.00    
+  10   -972.6      -787.4      -587.6      -414.6      -237.6      -98.69    
+       -59.72      -50.27       57.81       236.3       345.4       403.3    
+        374.8       226.8       164.3       152.2       109.1       50.00    
+  11   -842.3      -713.6      -565.5      -409.0      -240.4      -123.4    
+       -53.81      -4.200       79.56       262.3       391.1       407.0    
+        398.0       265.5       167.3       154.8       107.2       50.00    
+  12    0.000       0.000       0.000       0.000      -178.4      -100.1    
+       -31.84       12.88      -13.27       262.1       409.7       409.8    
+        429.2       326.0       234.8       168.5       114.7       50.00    
+  13    0.000       0.000       0.000       0.000       0.000      -49.62    
+        13.05       73.83       135.0       286.6       433.0       463.5    
+        465.4       369.2       264.9       178.8       132.0       103.7    
+  14    0.000       0.000       0.000       0.000       0.000       0.000    
+        67.51       133.2       175.0       233.5       325.4       355.0    
+        338.1       283.4       226.1       165.9       143.0       127.7    
+  15    0.000       0.000       0.000       0.000       0.000       0.000    
+        0.000       189.2       191.1       192.5       232.9       253.6    
+        236.9       169.0       190.7       156.7       143.3       138.8    
+  16    0.000       0.000       0.000       0.000       0.000       0.000    
+        0.000       0.000       191.6       192.1       205.6       212.5    
+        199.1       156.2       166.1       147.5       143.4       142.3    
+  17    0.000       0.000       0.000       0.000       0.000       0.000    
+        0.000       0.000       0.000       192.2       196.7       197.3    
+        188.5       171.5       159.4       145.9       144.2       143.7    
+  18    0.000       0.000       0.000       0.000       0.000       0.000    
+        0.000       0.000       0.000       0.000       194.5       192.2    
+        184.8       172.8       158.1       145.4       144.6       144.1    
+
+    THICKNESS: HGU4       =   200.000    
+
+
+
+            TOP ELEVATN: HGU5      
+ READING ON UNIT  11 WITH FORMAT: (9F10.2)            
+
+            1           2           3           4           5           6
+            7           8           9          10          11          12
+           13          14          15          16          17          18
+ ........................................................................
+   1   -1250.      -783.3      -279.1      -270.8      -270.5      -269.9    
+       -225.0      -126.3      -65.72      -64.24      -63.49       9999.    
+        9999.       9999.       9999.       9999.       9999.       9999.    
+   2   -1250.      -789.5      -281.2      -271.0      -270.8      -270.2    
+       -234.9      -147.0      -79.39      -63.51      -62.74      -61.35    
+        9999.       9999.       9999.       9999.       9999.       9999.    
+   3   -1250.      -817.0      -288.8      -276.4      -271.5      -292.3    
+       -262.5      -161.2      -70.31      -63.22      -62.61      -59.95    
+       -58.21       9999.       9999.       9999.       9999.       9999.    
+   4   -1250.      -958.3      -497.5      -282.8      -278.5      -285.6    
+       -259.6      -167.4      -73.46      -72.76      -90.34      -57.64    
+       -56.46      -55.08       9999.       9999.       9999.       9999.    
+   5   -1250.      -1029.      -698.0      -450.9      -352.5      -320.6    
+       -293.9      -266.3      -172.4      -102.3      -95.67      -55.85    
+       -54.91      -53.71      -52.71       9999.       9999.       9999.    
+   6   -1250.      -1061.      -787.0      -557.4      -397.9      -357.4    
+       -317.2      -343.1      -242.4      -102.3      -48.85      -54.23    
+       -53.63      -52.12      -51.72      -51.66       9999.       9999.    
+   7   -1222.      -1060.      -829.5      -596.8      -392.9      -327.9    
+       -235.3      -298.8      -226.2      -66.04       9.680      -7.610    
+       -34.60      -49.40      -49.97      -51.17      -52.67       9999.    
+   8   -1200.      -1040.      -818.7      -607.5      -399.2      -305.6    
+       -235.5      -296.7      -213.2      -16.95       87.05       96.38    
+        6.780      -44.95      -46.28      -49.08      -52.70      -150.0    
+   9   -1183.      -1016.      -805.0      -615.3      -414.7      -324.2    
+       -279.0      -318.5      -200.4       25.58       157.2       199.9    
+        106.6      -40.05      -40.89      -45.30      -73.06      -150.0    
+  10   -1173.      -987.4      -787.6      -614.6      -437.6      -298.7    
+       -259.7      -250.3      -142.2       36.30       145.4       203.3    
+        174.8       26.80      -35.73      -47.82      -90.91      -150.0    
+  11   -1042.      -913.6      -765.5      -609.0      -440.4      -323.4    
+       -253.8      -204.2      -120.4       62.27       191.1       207.0    
+        198.0       65.52      -32.70      -45.19      -92.85      -150.0    
+  12    9999.       9999.       9999.       9999.      -378.4      -300.1    
+       -231.8      -187.1      -213.3       62.10       209.7       209.8    
+        229.2       126.0       34.80      -31.50      -85.29      -150.0    
+  13    9999.       9999.       9999.       9999.       9999.      -249.6    
+       -186.9      -126.2      -65.03       86.58       233.0       263.5    
+        265.4       169.2       64.91      -21.19      -68.04      -96.34    
+  14    9999.       9999.       9999.       9999.       9999.       9999.    
+       -132.5      -66.83      -24.98       33.48       125.4       155.0    
+        138.1       83.35       26.05      -34.14      -56.99      -72.33    
+  15    9999.       9999.       9999.       9999.       9999.       9999.    
+        9999.      -10.79      -8.930      -7.480       32.86       53.60    
+        36.91      -31.00      -9.270      -43.32      -56.72      -61.24    
+  16    9999.       9999.       9999.       9999.       9999.       9999.    
+        9999.       9999.      -8.450      -7.940       5.550       12.52    
+      -0.9000      -43.80      -33.85      -52.53      -56.65      -57.72    
+  17    9999.       9999.       9999.       9999.       9999.       9999.    
+        9999.       9999.       9999.      -7.780      -3.320      -2.750    
+       -11.48      -28.52      -40.57      -54.15      -55.82      -56.34    
+  18    9999.       9999.       9999.       9999.       9999.       9999.    
+        9999.       9999.       9999.       9999.      -5.490      -7.840    
+       -15.20      -27.25      -41.88      -54.55      -55.40      -55.90    
+
+    THICKNESS: HGU5       =   1500.00    
+
+
+   INTERPRETATION OF UNIT FLAGS:
+     UNIT      HANI           VK/VANI
+ ---------------------------------------------------------------------------
+ HGU1        1.000000        VERTICAL K
+ HGU2        1.000000        VERTICAL K
+ HGU3        1.000000        VERTICAL K
+ HGU4        1.000000        VERTICAL K
+ HGU5        1.000000        VERTICAL K
+
+ PARAMETER NAME:HK1          TYPE:HK   UNITS:   5
+ The parameter value from the package file is:   1.0000    
+UNIT HGU1      CORRESPONDS TO UNIT NO.     1
+                LAYER:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                ZONE VALUES:    1
+UNIT HGU2      CORRESPONDS TO UNIT NO.     2
+                LAYER:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                ZONE VALUES:    1
+UNIT HGU3      CORRESPONDS TO UNIT NO.     3
+                LAYER:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                ZONE VALUES:    1
+UNIT HGU4      CORRESPONDS TO UNIT NO.     4
+                LAYER:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                ZONE VALUES:    1
+UNIT HGU5      CORRESPONDS TO UNIT NO.     5
+                LAYER:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                ZONE VALUES:    1
+
+ PARAMETER NAME:HK2          TYPE:HK   UNITS:   5
+ The parameter value from the package file is:  1.00000E-02
+UNIT HGU1      CORRESPONDS TO UNIT NO.     1
+                LAYER:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                ZONE VALUES:    2
+UNIT HGU2      CORRESPONDS TO UNIT NO.     2
+                LAYER:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                ZONE VALUES:    2
+UNIT HGU3      CORRESPONDS TO UNIT NO.     3
+                LAYER:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                ZONE VALUES:    2
+UNIT HGU4      CORRESPONDS TO UNIT NO.     4
+                LAYER:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                ZONE VALUES:    2
+UNIT HGU5      CORRESPONDS TO UNIT NO.     5
+                LAYER:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                ZONE VALUES:    2
+
+ PARAMETER NAME:HK3          TYPE:HK   UNITS:   5
+ The parameter value from the package file is:  1.00000E-04
+UNIT HGU1      CORRESPONDS TO UNIT NO.     1
+                LAYER:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                ZONE VALUES:    3
+UNIT HGU2      CORRESPONDS TO UNIT NO.     2
+                LAYER:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                ZONE VALUES:    3
+UNIT HGU3      CORRESPONDS TO UNIT NO.     3
+                LAYER:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                ZONE VALUES:    3
+UNIT HGU4      CORRESPONDS TO UNIT NO.     4
+                LAYER:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                ZONE VALUES:    3
+UNIT HGU5      CORRESPONDS TO UNIT NO.     5
+                LAYER:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                ZONE VALUES:    3
+
+ PARAMETER NAME:HK4          TYPE:HK   UNITS:   5
+ The parameter value from the package file is:  1.00000E-06
+UNIT HGU1      CORRESPONDS TO UNIT NO.     1
+                LAYER:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                ZONE VALUES:    4
+UNIT HGU2      CORRESPONDS TO UNIT NO.     2
+                LAYER:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                ZONE VALUES:    4
+UNIT HGU3      CORRESPONDS TO UNIT NO.     3
+                LAYER:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                ZONE VALUES:    4
+UNIT HGU4      CORRESPONDS TO UNIT NO.     4
+                LAYER:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                ZONE VALUES:    4
+UNIT HGU5      CORRESPONDS TO UNIT NO.     5
+                LAYER:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                ZONE VALUES:    4
+
+ PARAMETER NAME:VKA12_1      TYPE:VK   UNITS:   4
+ The parameter value from the package file is:  0.25000    
+UNIT HGU1      CORRESPONDS TO UNIT NO.     1
+                LAYER:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                ZONE VALUES:    1
+UNIT HGU2      CORRESPONDS TO UNIT NO.     2
+                LAYER:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                ZONE VALUES:    1
+UNIT HGU3      CORRESPONDS TO UNIT NO.     3
+                LAYER:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                ZONE VALUES:    1
+UNIT HGU4      CORRESPONDS TO UNIT NO.     4
+                LAYER:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                ZONE VALUES:    1
+
+ PARAMETER NAME:VKA12_2      TYPE:VK   UNITS:   4
+ The parameter value from the package file is:  2.50000E-03
+UNIT HGU1      CORRESPONDS TO UNIT NO.     1
+                LAYER:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                ZONE VALUES:    2
+UNIT HGU2      CORRESPONDS TO UNIT NO.     2
+                LAYER:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                ZONE VALUES:    2
+UNIT HGU3      CORRESPONDS TO UNIT NO.     3
+                LAYER:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                ZONE VALUES:    2
+UNIT HGU4      CORRESPONDS TO UNIT NO.     4
+                LAYER:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                ZONE VALUES:    2
+
+ PARAMETER NAME:VKA12_3      TYPE:VK   UNITS:   4
+ The parameter value from the package file is:  2.50000E-05
+UNIT HGU1      CORRESPONDS TO UNIT NO.     1
+                LAYER:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                ZONE VALUES:    3
+UNIT HGU2      CORRESPONDS TO UNIT NO.     2
+                LAYER:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                ZONE VALUES:    3
+UNIT HGU3      CORRESPONDS TO UNIT NO.     3
+                LAYER:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                ZONE VALUES:    3
+UNIT HGU4      CORRESPONDS TO UNIT NO.     4
+                LAYER:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                ZONE VALUES:    3
+
+ PARAMETER NAME:VKA12_4      TYPE:VK   UNITS:   4
+ The parameter value from the package file is:  2.50000E-07
+UNIT HGU1      CORRESPONDS TO UNIT NO.     1
+                LAYER:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                ZONE VALUES:    4
+UNIT HGU2      CORRESPONDS TO UNIT NO.     2
+                LAYER:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                ZONE VALUES:    4
+UNIT HGU3      CORRESPONDS TO UNIT NO.     3
+                LAYER:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                ZONE VALUES:    4
+UNIT HGU4      CORRESPONDS TO UNIT NO.     4
+                LAYER:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                ZONE VALUES:    4
+
+ PARAMETER NAME:VKA3_1       TYPE:VK   UNITS:   1
+ The parameter value from the package file is:   1.0000    
+UNIT HGU5      CORRESPONDS TO UNIT NO.     5
+                LAYER:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                ZONE VALUES:    1
+
+ PARAMETER NAME:VKA3_2       TYPE:VK   UNITS:   1
+ The parameter value from the package file is:  1.00000E-02
+UNIT HGU5      CORRESPONDS TO UNIT NO.     5
+                LAYER:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                ZONE VALUES:    2
+
+ PARAMETER NAME:VKA3_3       TYPE:VK   UNITS:   1
+ The parameter value from the package file is:  1.00000E-04
+UNIT HGU5      CORRESPONDS TO UNIT NO.     5
+                LAYER:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                ZONE VALUES:    3
+
+ PARAMETER NAME:VKA3_4       TYPE:VK   UNITS:   1
+ The parameter value from the package file is:  1.00000E-06
+UNIT HGU5      CORRESPONDS TO UNIT NO.     5
+                LAYER:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                ZONE VALUES:    4
+ ITRSS 0
+
+Reading PRINTCODE information
+UNIT HGU2      CORRESPONDS TO UNIT NO.     2
+
+
+PRINTCODE FLAGS ARE SET AS FOLLOWS
+   UNIT       HK   HANI   VK    SS    SY
+------------------------------------------
+HGU1           0     0     0     0     0
+HGU2          20    20    20     0     0
+HGU3           0     0     0     0     0
+HGU4           0     0     0     0     0
+HGU5           0     0     0     0     0
+
+
+     0 Well parameters
+
+
+     1 Drain parameters
+
+ PARAMETER NAME:DRAIN        TYPE:DRN 
+ Parameter value from package file is:    1.0000    
+   NUMBER OF ENTRIES:      5
+
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
+ ------------------------------------------------------------
+      1      1      7      6       400.0           1.000    
+      2      1     10     11       550.0           1.000    
+      3      1     14     14       1200.           1.000    
+      4      1     15     14       1200.           1.000    
+      5      1     16     14       1200.           1.000    
+
+
+     1 Evapotranspiration parameters
+
+ PARAMETER NAME:ETM          TYPE:EVT    CLUSTERS:   1
+ Parameter value from package file is:   4.00000E-04
+                MULTIPLIER ARRAY: NONE    ZONE ARRAY: RCHETM
+                ZONE VALUES:    2
+
+
+     1 GHB parameters
+
+ PARAMETER NAME:GHB          TYPE:GHB 
+ Parameter value from package file is:    1.0000    
+   NUMBER OF ENTRIES:      5
+
+ BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR   
+ ----------------------------------------------------------
+      1      1      3      6       350.0           1.000    
+      2      1      3     11       500.0           1.000    
+      3      1      4     11       500.0           1.000    
+      4      1      5     11       500.0           1.000    
+      5      1     12      9       1000.           1.000    
+
+
+     1 Recharge parameters
+
+ PARAMETER NAME:RCH          TYPE:RCH    CLUSTERS:   1
+ Parameter value from package file is:   3.10000E-04
+                MULTIPLIER ARRAY: NONE    ZONE ARRAY: RCHETM
+                ZONE VALUES:    1
+
+  16 PARAMETERS HAVE BEEN DEFINED IN ALL PACKAGES.
+ (SPACE IS ALLOCATED FOR  500 PARAMETERS.)
+
+ SMALLEST AND LARGEST WEIGHTED RESIDUALS
+
+      SMALLEST WEIGHTED RESIDUALS      |       LARGEST WEIGHTED RESIDUALS
+                WEIGHTED   PERCENT OF  |                 WEIGHTED   PERCENT OF
+ NAME           RESIDUAL    OBJ FUNC   |  NAME           RESIDUAL    OBJ FUNC
+ GHB3          -0.173E-02     3.05     |  DRN1           0.879E-02    78.52
+ GHB1          -0.142E-02     2.04     |  GHB5           0.232E-02     5.49
+ WL12          -0.122E-03     0.02     |  GHB2           0.188E-02     3.59
+ WL12          -0.122E-03     0.02     |  GHB4           0.167E-02     2.82
+ WL4           -0.977E-04     0.01     |  DRN1           0.139E-02     1.96
+
+ STATISTICS FOR ALL RESIDUALS :
+ AVERAGE WEIGHTED RESIDUAL  : 0.295E-03
+ # RESIDUALS >= 0. :     34
+ # RESIDUALS < 0.  :     18
+ NUMBER OF RUNS  :   21  IN   52 OBSERVATIONS
+
+ INTERPRETING THE CALCULATED RUNS STATISTIC VALUE OF    -0.942    
+ NOTE: THE FOLLOWING APPLIES ONLY IF 
+        # RESIDUALS >= 0 . IS GREATER THAN 10 AND 
+        # RESIDUALS < 0.   IS GREATER THAN 10
+ THE NEGATIVE VALUE MAY INDICATE TOO FEW RUNS:
+    IF THE VALUE IS LESS THAN -1.28, THERE IS LESS THAN A 10 PERCENT
+       CHANCE THE VALUES ARE RANDOM,
+    IF THE VALUE IS LESS THAN -1.645, THERE IS LESS THAN A 5 PERCENT
+       CHANCE THE VALUES ARE RANDOM,
+    IF THE VALUE IS LESS THAN -1.96, THERE IS LESS THAN A 2.5 PERCENT
+       CHANCE THE VALUES ARE RANDOM.
+
+
+ CORRELATION BETWEEN ORDERED WEIGHTED RESIDUALS AND NORMAL ORDER STATISTICS
+ FOR OBSERVATIONS =    0.404    
+
+ --------------------------------------------------------------------------
+ COMMENTS ON THE INTERPRETATION OF THE CORRELATION BETWEEN
+ WEIGHTED RESIDUALS AND NORMAL ORDER STATISTICS:
+
+ The critical value for correlation at the 5% significance level is 0.956
+
+ IF the reported CORRELATION is GREATER than the 5% critical value, ACCEPT
+ the hypothesis that the weighted residuals are INDEPENDENT AND NORMALLY
+ DISTRIBUTED at the 5% significance level.  The probability that this   
+ conclusion is wrong is less than 5%.
+
+ IF the reported correlation IS LESS THAN the 5% critical value REJECT the,
+ hypothesis that the weighted residuals are INDEPENDENT AND NORMALLY
+ DISTRIBUTED at the 5% significance level.
+
+ The analysis can also be done using the 10% significance level.
+ The associated critical value is 0.964
+ --------------------------------------------------------------------------
+

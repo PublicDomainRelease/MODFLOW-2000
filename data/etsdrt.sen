@@ -1,0 +1,21 @@
+# SEN file for etsdrt test case
+4  0  0  4                                     Item 1: NPLIST ISENALL IUHEAD MXSEN
+1  0 12  1                                     Item 2: IPRINTS ISENSU ISENPU ISENFM
+ETS-Max     1  0  .005    1.E-3  1.E-1  1.E-4  Item 3: PARNAM ISENS LN B BL BU BSCAL
+DRT-Cond    1  1   4.0     0.1   100.0   0.01  Item 3: PARNAM ISENS LN B BL BU BSCAL
+Recharge    1  0  3.E-3   1.E-5  1.E-1  1.E-5  Item 3: PARNAM ISENS LN B BL BU BSCAL
+HydCond     1  1  9.E-2   1.E-4  1.E1   1.E-5  Item 3: PARNAM ISENS LN B BL BU BSCAL
+
+
+"True" values:
+ETS-Max     1  0  0.01    1.E-3  1.E-1  1.E-4  Item 3: PARNAM ISENS LN B BL BU BSCAL
+DRT-Cond    1  1   2.0     0.1   100.0   0.01  Item 3: PARNAM ISENS LN B BL BU BSCAL
+Recharge    1  0  1.E-3   1.E-5  1.E-1  1.E-5  Item 3: PARNAM ISENS LN B BL BU BSCAL
+HydCond     1  1  5.E-2   1.E-4  1.E1   1.E-5  Item 3: PARNAM ISENS LN B BL BU BSCAL
+
+
+Starting values:
+ETS-Max     1  0  .005    1.E-3  1.E-1  1.E-4  Item 3: PARNAM ISENS LN B BL BU BSCAL
+DRT-Cond    1  1   4.0     0.1   100.0   0.01  Item 3: PARNAM ISENS LN B BL BU BSCAL
+Recharge    1  0  3.E-3   1.E-5  1.E-1  1.E-5  Item 3: PARNAM ISENS LN B BL BU BSCAL
+HydCond     1  1  9.E-2   1.E-4  1.E1   1.E-5  Item 3: PARNAM ISENS LN B BL BU BSCAL

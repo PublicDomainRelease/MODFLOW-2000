@@ -1,0 +1,26 @@
+# NAME file for test case HUF Package TC2 Variant 4
+#
+# NOTE: Forward slashes (/) in pathnames may need to be converted
+#       to back slashes (\) in some computing environments
+#
+# Files for this variant
+global           1   tc2hufv4.glo
+list             2   tc2hufv4.lst
+huf             11   ../data/tc2hufv4.huf
+DATA            90   tc2hufv4.hds
+
+#Common files
+bas6             8   ../data/tc2hufv4.bas
+dis              9   ../data/tc2hufv4.dis
+wel             12   ../data/tc2hufv4.wel
+drn             13   ../data/tc2hufv4.drn
+evt             15   ../data/tc2hufv4.evt
+ghb             17   ../data/tc2hufv4.ghb
+rch             18   ../data/tc2hufv4.rch
+oc              22   ../data/tc2hufv4.oc
+pcg             23   ../data/tc2hufv4.pcg
+obs             37   ../data/tc2hufv4.obs
+zone            39   ../data/tc2hufv4.zon
+hob             40   ../data/tc2hufv4.hob
+drob            41   ../data/tc2hufv4.odr
+gbob            42   ../data/tc2hufv4.ogb

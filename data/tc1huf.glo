@@ -1,0 +1,1722 @@
+                                  MODFLOW-2000
+      U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
+                             VERSION 1.5 08/16/2001
+
+
+ This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
+
+ GLOBAL LISTING FILE: tc1huf.glo
+                         UNIT   3
+
+ OPENING tc1huf.lst
+ FILE TYPE:LIST   UNIT   4
+# Observation-Process Files                                                                                                                                                                             
+
+ OPENING ../data/tc1huf.obs
+ FILE TYPE:OBS   UNIT  40
+
+ OPENING ../data/tc1huf.hob
+ FILE TYPE:HOB   UNIT  41
+
+ OPENING ../data/tc1huf.ogb
+ FILE TYPE:GBOB   UNIT  42
+# Sensitivity and Parameter-Estimation Process Files                                                                                                                                                    
+
+ OPENING ../data/tc1huf.sen
+ FILE TYPE:SEN   UNIT  39
+
+ OPENING ../data/tc1huf.pes
+ FILE TYPE:PES   UNIT  43
+#Flow-Process files                                                                                                                                                                                     
+
+ OPENING ../data/tc1huf.bas
+ FILE TYPE:BAS6   UNIT  55
+
+ OPENING ../data/tc1huf.huf
+ FILE TYPE:HUF   UNIT   7
+
+ OPENING ../data/tc1huf.wel
+ FILE TYPE:WEL   UNIT   8
+
+ OPENING ../data/tc1huf.pcg
+ FILE TYPE:PCG   UNIT   9
+
+ OPENING ../data/tc1huf.dis
+ FILE TYPE:DIS   UNIT  10
+
+ OPENING ../data/tc1huf.oc
+ FILE TYPE:OC   UNIT  11
+
+ OPENING ../data/tc1huf.ghb
+ FILE TYPE:GHB   UNIT  12
+
+ OPENING ../data/tc1huf.riv
+ FILE TYPE:RIV   UNIT  13
+
+ OPENING ../data/tc1huf.sh
+ FILE TYPE:DATA   UNIT  14
+
+ OPENING ../data/tc1huf.rch
+ FILE TYPE:RCH   UNIT  31
+
+ OPENING ../data/tc1huf.mlt
+ FILE TYPE:MULT   UNIT  32
+
+ OPENING ../data/tc1huf.zon
+ FILE TYPE:ZONE   UNIT  33
+ THE FREE FORMAT OPTION HAS BEEN SELECTED
+
+ DISCRETIZATION INPUT DATA READ FROM UNIT 10
+ # DIS file for test case tc1tr
+ #
+    3 LAYERS        18 ROWS        18 COLUMNS
+   4 STRESS PERIOD(S) IN SIMULATION
+ MODEL TIME UNIT IS SECONDS
+ MODEL LENGTH UNIT IS FEET
+ THE GROUND-WATER TRANSPORT PROCESS IS INACTIVE
+
+ THE OBSERVATION PROCESS IS ACTIVE
+ THE SENSITIVITY PROCESS IS ACTIVE
+ THE PARAMETER-ESTIMATION PROCESS IS ACTIVE
+
+ MODE: PARAMETER ESTIMATION
+
+
+ ZONE OPTION, INPUT READ FROM UNIT 33
+     1 ZONE ARRAYS
+
+ MULTIPLIER OPTION, INPUT READ FROM UNIT 32
+   2 MULTIPLIER ARRAYS
+  Confining bed flag for each layer:
+   0   0   0
+
+       9432  ELEMENTS OF GX ARRAY USED OUT OF       9432
+        972  ELEMENTS OF GZ ARRAY USED OUT OF        972
+       1296  ELEMENTS OF IG ARRAY USED OUT OF       1296
+
+                     DELR =   1000.00    
+
+                     DELC =   1000.00    
+
+ TOP ELEVATION OF LAYER 1 =   150.000    
+
+   MODEL LAYER BOTTOM EL. =   100.000     FOR LAYER   1
+
+   MODEL LAYER BOTTOM EL. =   90.0000     FOR LAYER   2
+
+   MODEL LAYER BOTTOM EL. =   40.0000     FOR LAYER   3
+
+
+ STRESS PERIOD     LENGTH       TIME STEPS     MULTIPLIER FOR DELT    SS FLAG
+ ----------------------------------------------------------------------------
+        1         87162.00          1                    1.200         TR
+        2         261486.0          1                    1.200         TR
+        3         522972.0          1                    1.200         TR
+        4        2.3567440E+07      9                    1.200         TR
+
+ TRANSIENT SIMULATION
+
+
+
+
+
+
+            MULT. ARRAY: TMULT     
+ READING ON UNIT  32 WITH FORMAT: (18F3.0)            
+
+
+
+            MULT. ARRAY: RCHMULT   
+ READING ON UNIT  32 WITH FORMAT: (9F8.0)             
+
+
+
+             ZONE ARRAY: RCHZONE   
+ READING ON UNIT  33 WITH FORMAT: (18I2)              
+
+ HUF1 -- HYDROGEOLOGIC-UNIT FLOW PACKAGE, ' VERSION 1.02 ERA, 05/31/2001
+ INPUT READ FROM UNIT  7
+
+ # HUF file for Test Case 1
+ #
+ HEAD AT CELLS THAT CONVERT TO DRY=  -999.00    
+ Hydrogeologic-Unit Flow Package Active with  16 parameters
+    16 Named Parameters     
+ TRANSIENT SIMULATION
+
+   INTERPRETATION OF LAYER FLAGS:
+ LAYER     LTHUF    LAYER TYPE     LAYWT WETTABILITY
+ ---------------------------------------------------------------------------
+    1         1   CONVERTIBLE         0  NON-WETTABLE
+    2         2   CONVERTIBLE         0  NON-WETTABLE
+    3         3   CONVERTIBLE         0  NON-WETTABLE
+
+       7776 ELEMENTS IN X ARRAY ARE USED BY HUF
+         20 ELEMENTS IN IX ARRAY ARE USED BY HUF
+
+ PCG2 -- CONJUGATE GRADIENT SOLUTION PACKAGE, VERSION 2.4, 12/29/98
+ MAXIMUM OF    500 CALLS OF SOLUTION ROUTINE
+ MAXIMUM OF      8 INTERNAL ITERATIONS PER CALL TO SOLUTION ROUTINE
+ MATRIX PRECONDITIONING TYPE :    1
+      10916 ELEMENTS IN X ARRAY ARE USED BY PCG
+      28000 ELEMENTS IN IX ARRAY ARE USED BY PCG
+       1944 ELEMENTS IN Z ARRAY ARE USED BY PCG
+
+ SEN1BAS6 -- SENSITIVITY PROCESS, VERSION 1.0, 10/15/98
+ INPUT READ FROM UNIT  39
+
+ NUMBER OF PARAMETER VALUES TO BE READ FROM SEN FILE:   16
+ ISENALL............................................:    0
+ SENSITIVITIES WILL BE STORED IN MEMORY
+ FOR UP TO  16 PARAMETERS
+
+       1260 ELEMENTS IN X ARRAY ARE USED FOR SENSITIVITIES
+        972 ELEMENTS IN Z ARRAY ARE USED FOR SENSITIVITIES
+         32 ELEMENTS IN IX ARRAY ARE USED FOR SENSITIVITIES
+
+ PES1BAS6 -- PARAMETER-ESTIMATION PROCESS, VERSION 1.0, 07/22/99
+ INPUT READ FROM UNIT  43
+ # PES file for test case tc2
+ #
+
+ MAXIMUM NUMBER OF PARAMETER-ESTIMATION ITERATIONS (MAX-ITER)  =    30
+ MAXIMUM PARAMETER CORRECTION (MAX-CHANGE) ------------------- =  2.0000    
+ CLOSURE CRITERION (TOL) ------------------------------------- = 0.10000E-02
+ SUM OF SQUARES CLOSURE CRITERION (SOSC) --------------------- =  0.0000    
+
+ FLAG TO GENERATE INPUT NEEDED BY BEALE-2000 (IBEFLG) -------- =     0
+ FLAG TO GENERATE INPUT NEEDED BY YCINT-2000 (IYCFLG) -------- =     0
+ OMIT PRINTING TO SCREEN (IF = 1) (IOSTAR) ------------------- =     0
+ ADJUST GAUSS-NEWTON MATRIX WITH NEWTON UPDATES (IF = 1)(NOPT) =     0
+ NUMBER OF FLETCHER-REEVES ITERATIONS (NFIT) ----------------- =     0
+ CRITERION FOR ADDING MATRIX R (SOSR) ------------------------ =  0.0000    
+ VALUE USED TO INCREMENT MARQUARDT PARAMETER (RMAR) ---------- = 0.10000E-02
+ MARQUARDT PARAMETER MULTIPLIER (RMARM) ---------------------- =  1.5000    
+ APPLY MAX-CHANGE IN REGRESSION SPACE (IF = 1) (IAP) --------- =     0
+
+ FORMAT CODE FOR COVARIANCE AND CORRELATION MATRICES (IPRCOV)  =     8
+ PRINT PARAMETER-ESTIMATION STATISTICS
+     EACH ITERATION (IF > 0)  (IPRINT) ----------------------- =     0
+ PRINT EIGENVALUES AND EIGENVECTORS OF
+     COVARIANCE MATRIX (IF > 0)  (LPRINT) -------------------- =     0
+
+ SEARCH DIRECTION ADJUSTMENT PARAMETER (CSA) ----------------- = 0.80000E-01
+ MODIFY CONVERGENCE CRITERIA (IF > 0) (FCONV) ---------------- =  0.0000    
+ CALCULATE SENSITIVITIES USING FINAL
+     PARAMETER ESTIMATES (IF > 0) (LASTX) -------------------- =     0
+
+ NUMBER OF USUALLY POS. PARAMETERS THAT MAY BE NEGATIVE (NPNG) =     0
+ NUMBER OF PARAMETERS WITH CORRELATED PRIOR INFORMATION (IPR)  =     0
+ NUMBER OF PRIOR-INFORMATION EQUATIONS (MPR) ----------------- =     0
+
+    873 ELEMENTS IN X ARRAY ARE USED FOR PARAMETER ESTIMATION
+    817 ELEMENTS IN Z ARRAY ARE USED FOR PARAMETER ESTIMATION
+     32 ELEMENTS IN IX ARRAY ARE USED FOR PARAMETER ESTIMATION
+
+ OBS1BAS6 -- OBSERVATION PROCESS, VERSION 1.0, 4/27/99
+ INPUT READ FROM UNIT  40
+ OBSERVATION GRAPH-DATA OUTPUT FILES
+ WILL BE PRINTED AND NAMED USING THE BASE: tc1huf
+ DIMENSIONLESS SCALED OBSERVATION SENSITIVITIES WILL BE PRINTED
+
+ HEAD OBSERVATIONS -- INPUT READ FROM UNIT  41
+
+ NUMBER OF HEADS....................................:   48
+   NUMBER OF MULTILAYER HEADS.......................:    0
+   MAXIMUM NUMBER OF LAYERS FOR MULTILAYER HEADS....:    0
+
+ OBS1GHB6 -- OBSERVATION PROCESS (GENERAL HEAD BOUNDARY FLOW OBSERVATIONS)
+ VERSION 1.0, 10/15/98
+ INPUT READ FROM UNIT  42
+
+ NUMBER OF FLOW-OBSERVATION GENERAL-HEAD-CELL GROUPS:    1
+   NUMBER OF CELLS IN GENERAL-HEAD-CELL GROUPS......:   72
+   NUMBER OF GENERAL-HEAD-CELL FLOWS................:    4
+
+    3655 ELEMENTS IN X ARRAY ARE USED FOR OBSERVATIONS
+      30 ELEMENTS IN Z ARRAY ARE USED FOR OBSERVATIONS
+     503 ELEMENTS IN IX ARRAY ARE USED FOR OBSERVATIONS
+
+ COMMON ERROR VARIANCE FOR ALL OBSERVATIONS SET TO:       1.000    
+
+      24480  ELEMENTS OF X ARRAY USED OUT OF      24480
+       3763  ELEMENTS OF Z ARRAY USED OUT OF       3763
+      28587  ELEMENTS OF IX ARRAY USED OUT OF      28587
+      15552  ELEMENTS OF XHS ARRAY USED OUT OF      15552
+
+ INFORMATION ON PARAMETERS LISTED IN SEN FILE
+                                         LOWER         UPPER       ALTERNATE
+                        VALUE IN SEN   REASONABLE    REASONABLE     SCALING
+    NAME     ISENS  LN   INPUT FILE      LIMIT         LIMIT         FACTOR
+ ----------  -----  --  ------------  ------------  ------------  ------------
+ HK1           1     0   0.70000E-04   -1.4000      -0.80000       0.80000    
+ HK2           0     0   0.20000E-06   0.20000E-08   0.20000E-06   0.20000E-06
+ HK3           1     0   0.40000E-04   0.10000E-08   0.10000E-06   0.10000E-06
+ HK4           1     0   0.63000E-04   0.10000E-08   0.10000E-06   0.10000E-06
+ VKA1          0     0   0.30000E-03   -1.4000      -0.80000       0.80000    
+ VKA2          0     0   0.20000E-06   0.20000E-08   0.20000E-06   0.20000E-06
+ VKA3          0     0   0.40000E-04   0.10000E-08   0.10000E-06   0.10000E-06
+ VKA4          0     0   0.40000E-04   0.10000E-08   0.10000E-06   0.10000E-06
+ SS1           1     0   0.14000E-02   0.10000E-03   0.10000E-01   0.10000E-01
+ SS2           0     0   0.10000E-05   0.10000E-03   0.10000E-01   0.10000E-01
+ SS3           1     0   0.13000E-02   0.10000E-03   0.10000E-01   0.10000E-01
+ SS4           1     0   0.12000E-02   0.10000E-03   0.10000E-01   0.10000E-01
+ SY1           1     0   0.80000E-01   0.10000E-03   0.10000E-01   0.10000E-01
+ SY2           0     0   0.10000E-01   0.10000E-03   0.10000E-01   0.10000E-01
+ SY3           0     0   0.10000       0.10000E-03   0.10000E-01   0.10000E-01
+ SY4           0     0   0.10000       0.10000E-03   0.10000E-01   0.10000E-01
+ -----------------------------------------------------------------------------
+ FOR THE PARAMETERS LISTED IN THE TABLE ABOVE, PARAMETER VALUES IN INDIVIDUAL
+ PACKAGE INPUT FILES ARE REPLACED BY THE VALUES FROM THE SEN INPUT FILE.  THE
+ ALTERNATE SCALING FACTOR IS USED TO SCALE SENSITIVITIES IF IT IS LARGER THAN
+ THE PARAMETER VALUE IN ABSOLUTE VALUE AND THE PARAMETER IS NOT LOG-TRANSFORMED.
+
+ ISENS IS GREATER THAN ZERO FOR    7 PARAMETERS
+
+ HEAD OBSERVATION VARIANCES ARE MULTIPLIED BY:       1.000    
+
+ OBSERVED HEAD DATA -- TIME OFFSETS ARE MULTIPLIED BY:   1.0000    
+
+                    REFER.
+       OBSERVATION  STRESS    TIME                              STATISTIC   PLOT
+  OBS#    NAME      PERIOD   OFFSET    OBSERVATION  STATISTIC     TYPE      SYM.
+     1 W2L             -4    0.000       979.0       5.000      STD. DEV.      1
+  TRANSIENT DATA AT THIS LOCATION, ITT =   1
+     1 H1_8_8_1         1   0.8716E+05   152.3       1.000      STD. DEV.      1
+     2 H1_8_8_2         2   0.2615E+06   152.3       1.000      STD. DEV.      1
+     3 H1_8_8_3         3   0.5230E+06   152.2       1.000      STD. DEV.      1
+     4 H1_8_8_4         4   0.2357E+08   140.9       1.000      STD. DEV.      1
+ 
+     5 W2L             -4    0.000       979.0       5.000      STD. DEV.      1
+  TRANSIENT DATA AT THIS LOCATION, ITT =   1
+     5 H2_8_8_1         1   0.8716E+05   152.3       1.000      STD. DEV.      1
+     6 H2_8_8_2         2   0.2615E+06   152.3       1.000      STD. DEV.      1
+     7 H2_8_8_3         3   0.5230E+06   152.2       1.000      STD. DEV.      1
+     8 H2_8_8_4         4   0.2357E+08   140.1       1.000      STD. DEV.      1
+ 
+     9 W2L             -4    0.000       979.0       5.000      STD. DEV.      1
+  TRANSIENT DATA AT THIS LOCATION, ITT =   1
+     9 H3_8_8_1         1   0.8716E+05   152.3       1.000      STD. DEV.      1
+    10 H3_8_8_2         2   0.2615E+06   152.2       1.000      STD. DEV.      1
+    11 H3_8_8_3         3   0.5230E+06   152.1       1.000      STD. DEV.      1
+    12 H3_8_8_4         4   0.2357E+08   139.3       1.000      STD. DEV.      1
+ 
+    13 W2L             -4    0.000       979.0       5.000      STD. DEV.      1
+  TRANSIENT DATA AT THIS LOCATION, ITT =   1
+    13 H1_2_2_1         1   0.8716E+05   110.0       1.000      STD. DEV.      1
+    14 H1_2_2_2         2   0.2615E+06   110.1       1.000      STD. DEV.      1
+    15 H1_2_2_3         3   0.5230E+06   110.3       1.000      STD. DEV.      1
+    16 H1_2_2_4         4   0.2357E+08   117.7       1.000      STD. DEV.      1
+ 
+    17 W2L             -4    0.000       979.0       5.000      STD. DEV.      1
+  TRANSIENT DATA AT THIS LOCATION, ITT =   1
+    17 H2_2_2_1         1   0.8716E+05   110.0       1.000      STD. DEV.      1
+    18 H2_2_2_2         2   0.2615E+06   110.1       1.000      STD. DEV.      1
+    19 H2_2_2_3         3   0.5230E+06   110.2       1.000      STD. DEV.      1
+    20 H2_2_2_4         4   0.2357E+08   117.2       1.000      STD. DEV.      1
+ 
+    21 W2L             -4    0.000       979.0       5.000      STD. DEV.      1
+  TRANSIENT DATA AT THIS LOCATION, ITT =   1
+    21 H3_2_2_1         1   0.8716E+05   110.0       1.000      STD. DEV.      1
+    22 H3_2_2_2         2   0.2615E+06   110.0       1.000      STD. DEV.      1
+    23 H3_2_2_3         3   0.5230E+06   110.1       1.000      STD. DEV.      1
+    24 H3_2_2_4         4   0.2357E+08   116.6       1.000      STD. DEV.      1
+ 
+    25 W2L             -4    0.000       979.0       5.000      STD. DEV.      1
+  TRANSIENT DATA AT THIS LOCATION, ITT =   1
+    25 H1_16_16_1       1   0.8716E+05   176.2       1.000      STD. DEV.      1
+    26 H1_16_16_2       2   0.2615E+06   176.2       1.000      STD. DEV.      1
+    27 H1_16_16_3       3   0.5230E+06   176.7       1.000      STD. DEV.      1
+    28 H1_16_16_4       4   0.2357E+08   240.1       1.000      STD. DEV.      1
+ 
+    29 W2L             -4    0.000       979.0       5.000      STD. DEV.      1
+  TRANSIENT DATA AT THIS LOCATION, ITT =   1
+    29 H2_16_16_1       1   0.8716E+05   176.1       1.000      STD. DEV.      1
+    30 H2_16_16_2       2   0.2615E+06   176.2       1.000      STD. DEV.      1
+    31 H2_16_16_3       3   0.5230E+06   176.7       1.000      STD. DEV.      1
+    32 H2_16_16_4       4   0.2357E+08   240.2       1.000      STD. DEV.      1
+ 
+    33 W2L             -4    0.000       979.0       5.000      STD. DEV.      1
+  TRANSIENT DATA AT THIS LOCATION, ITT =   1
+    33 H3_16_16_1       1   0.8716E+05   176.1       1.000      STD. DEV.      1
+    34 H3_16_16_2       2   0.2615E+06   176.2       1.000      STD. DEV.      1
+    35 H3_16_16_3       3   0.5230E+06   176.6       1.000      STD. DEV.      1
+    36 H3_16_16_4       4   0.2357E+08   240.3       1.000      STD. DEV.      1
+ 
+    37 W2L             -4    0.000       979.0       5.000      STD. DEV.      1
+  TRANSIENT DATA AT THIS LOCATION, ITT =   1
+    37 H1_16_2_1        1   0.8716E+05   110.0       1.000      STD. DEV.      1
+    38 H1_16_2_2        2   0.2615E+06   110.1       1.000      STD. DEV.      1
+    39 H1_16_2_3        3   0.5230E+06   110.3       1.000      STD. DEV.      1
+    40 H1_16_2_4        4   0.2357E+08   117.7       1.000      STD. DEV.      1
+ 
+    41 W2L             -4    0.000       979.0       5.000      STD. DEV.      1
+  TRANSIENT DATA AT THIS LOCATION, ITT =   1
+    41 H2_16_2_1        1   0.8716E+05   110.0       1.000      STD. DEV.      1
+    42 H2_16_2_2        2   0.2615E+06   110.1       1.000      STD. DEV.      1
+    43 H2_16_2_3        3   0.5230E+06   110.2       1.000      STD. DEV.      1
+    44 H2_16_2_4        4   0.2357E+08   117.2       1.000      STD. DEV.      1
+ 
+    45 W2L             -4    0.000       979.0       5.000      STD. DEV.      1
+  TRANSIENT DATA AT THIS LOCATION, ITT =   1
+    45 H3_16_2_1        1   0.8716E+05   110.0       1.000      STD. DEV.      1
+    46 H3_16_2_2        2   0.2615E+06   110.0       1.000      STD. DEV.      1
+    47 H3_16_2_3        3   0.5230E+06   110.1       1.000      STD. DEV.      1
+    48 H3_16_2_4        4   0.2357E+08   116.6       1.000      STD. DEV.      1
+ 
+
+                                                     HEAD CHANGE
+                                                      REFERENCE
+        OBSERVATION                   ROW     COL    OBSERVATION
+  OBS#     NAME       LAY  ROW  COL  OFFSET  OFFSET   (IF > 0)
+     1  H1_8_8_1        1    8    8   0.000   0.000        0
+     2  H1_8_8_2        1    8    8   0.000   0.000        0
+     3  H1_8_8_3        1    8    8   0.000   0.000        0
+     4  H1_8_8_4        1    8    8   0.000   0.000        0
+     5  H2_8_8_1        2    8    8   0.000   0.000        0
+     6  H2_8_8_2        2    8    8   0.000   0.000        0
+     7  H2_8_8_3        2    8    8   0.000   0.000        0
+     8  H2_8_8_4        2    8    8   0.000   0.000        0
+     9  H3_8_8_1        3    8    8   0.000   0.000        0
+    10  H3_8_8_2        3    8    8   0.000   0.000        0
+    11  H3_8_8_3        3    8    8   0.000   0.000        0
+    12  H3_8_8_4        3    8    8   0.000   0.000        0
+    13  H1_2_2_1        1    2    2   0.000   0.000        0
+    14  H1_2_2_2        1    2    2   0.000   0.000        0
+    15  H1_2_2_3        1    2    2   0.000   0.000        0
+    16  H1_2_2_4        1    2    2   0.000   0.000        0
+    17  H2_2_2_1        2    2    2   0.000   0.000        0
+    18  H2_2_2_2        2    2    2   0.000   0.000        0
+    19  H2_2_2_3        2    2    2   0.000   0.000        0
+    20  H2_2_2_4        2    2    2   0.000   0.000        0
+    21  H3_2_2_1        3    2    2   0.000   0.000        0
+    22  H3_2_2_2        3    2    2   0.000   0.000        0
+    23  H3_2_2_3        3    2    2   0.000   0.000        0
+    24  H3_2_2_4        3    2    2   0.000   0.000        0
+    25  H1_16_16_1      1   16   16   0.000   0.000        0
+    26  H1_16_16_2      1   16   16   0.000   0.000        0
+    27  H1_16_16_3      1   16   16   0.000   0.000        0
+    28  H1_16_16_4      1   16   16   0.000   0.000        0
+    29  H2_16_16_1      2   16   16   0.000   0.000        0
+    30  H2_16_16_2      2   16   16   0.000   0.000        0
+    31  H2_16_16_3      2   16   16   0.000   0.000        0
+    32  H2_16_16_4      2   16   16   0.000   0.000        0
+    33  H3_16_16_1      3   16   16   0.000   0.000        0
+    34  H3_16_16_2      3   16   16   0.000   0.000        0
+    35  H3_16_16_3      3   16   16   0.000   0.000        0
+    36  H3_16_16_4      3   16   16   0.000   0.000        0
+    37  H1_16_2_1       1   16    2   0.000   0.000        0
+    38  H1_16_2_2       1   16    2   0.000   0.000        0
+    39  H1_16_2_3       1   16    2   0.000   0.000        0
+    40  H1_16_2_4       1   16    2   0.000   0.000        0
+    41  H2_16_2_1       2   16    2   0.000   0.000        0
+    42  H2_16_2_2       2   16    2   0.000   0.000        0
+    43  H2_16_2_3       2   16    2   0.000   0.000        0
+    44  H2_16_2_4       2   16    2   0.000   0.000        0
+    45  H3_16_2_1       3   16    2   0.000   0.000        0
+    46  H3_16_2_2       3   16    2   0.000   0.000        0
+    47  H3_16_2_3       3   16    2   0.000   0.000        0
+    48  H3_16_2_4       3   16    2   0.000   0.000        0
+
+ GENERAL-HEAD-CELL FLOW OBSERVATION VARIANCES ARE MULTIPLIED BY:       1.000    
+
+ OBSERVED GENERAL-HEAD-CELL FLOW DATA
+ -- TIME OFFSETS ARE MULTIPLIED BY:   1.0000    
+
+   GROUP NUMBER:   1   BOUNDARY TYPE: GHB   NUMBER OF CELLS IN GROUP:   -18
+   NUMBER OF FLOW OBSERVATIONS:     4
+
+                                        OBSERVED
+                    REFER.            BOUNDARY FLOW
+       OBSERVATION  STRESS    TIME     GAIN (-) OR              STATISTIC   PLOT
+  OBS#    NAME      PERIOD   OFFSET     LOSS (+)    STATISTIC     TYPE      SYM.
+    49 GHB1             1   0.8716E+05   30.60      0.5000E-01  COEF. VAR.     3
+    50 GHB2             2   0.2615E+06   29.20      0.5000E-01  COEF. VAR.     3
+    51 GHB3             3   0.5230E+06   26.90      0.5000E-01  COEF. VAR.     3
+    52 GHB4             4   0.2357E+08   9.620      0.5000E-01  COEF. VAR.     3
+
+       LAYER  ROW  COLUMN    FACTOR
+          1.    1.    18.     1.00
+          1.    2.    18.     1.00
+          1.    3.    18.     1.00
+          1.    4.    18.     1.00
+          1.    5.    18.     1.00
+          1.    6.    18.     1.00
+          1.    7.    18.     1.00
+          1.    8.    18.     1.00
+          1.    9.    18.     1.00
+          1.   10.    18.     1.00
+          1.   11.    18.     1.00
+          1.   12.    18.     1.00
+          1.   13.    18.     1.00
+          1.   14.    18.     1.00
+          1.   15.    18.     1.00
+          1.   16.    18.     1.00
+          1.   17.    18.     1.00
+          1.   18.    18.     1.00
+
+ NQC CAN BE REDUCED FROM   72 TO   18
+
+
+
+                                    SOLUTION BY THE CONJUGATE-GRADIENT METHOD
+                                   -------------------------------------------
+                    MAXIMUM NUMBER OF CALLS TO PCG ROUTINE =      500
+                        MAXIMUM ITERATIONS PER CALL TO PCG =        8
+                               MATRIX PRECONDITIONING TYPE =        1
+        RELAXATION FACTOR (ONLY USED WITH PRECOND. TYPE 1) =    0.10000E+01
+ PARAMETER OF POLYNOMIAL PRECOND. = 2 (2) OR IS CALCULATED :        2
+                         HEAD CHANGE CRITERION FOR CLOSURE =    0.10000E-03
+                     RESIDUAL CHANGE CRITERION FOR CLOSURE =    0.10000E-03
+            PCG HEAD AND RESIDUAL CHANGE PRINTOUT INTERVAL =      999
+     PRINTING FROM SOLVER IS LIMITED(1) OR SUPPRESSED (>1) =        2
+                                         DAMPING PARAMETER =    0.10000E+01
+
+ CONVERGENCE CRITERIA FOR SENSITIVITIES
+ PARAMETER      HCLOSE        RCLOSE
+ ----------  ------------  ------------
+ HK1          0.14286E-01   0.14286E-01
+ HK3          0.25000E-01   0.25000E-01
+ HK4          0.15873E-01   0.15873E-01
+ SS1          0.71429E-03   0.71429E-03
+ SS3          0.76923E-03   0.76923E-03
+ SS4          0.83333E-03   0.83333E-03
+ SY1          0.12500E-04   0.12500E-04
+ --------------------------------------
+
+ WETTING CAPABILITY IS NOT ACTIVE IN ANY LAYER
+
+
+ HUF1 -- HYDROGEOLOGIC-UNIT FLOW PACKAGE
+ ---------------------------------------------------------------------------
+
+  TOP ELEVATN: HGU1       =   150.000    
+
+    THICKNESS: HGU1       =   50.0000    
+
+  TOP ELEVATN: HGU2       =   100.000    
+
+    THICKNESS: HGU2       =   10.0000    
+
+  TOP ELEVATN: HGU3       =   90.0000    
+
+
+
+              THICKNESS: HGU3      
+ READING ON UNIT   7 WITH FORMAT: (15F5.0)            
+
+
+
+            TOP ELEVATN: HGU4      
+ READING ON UNIT   7 WITH FORMAT: (15F5.0)            
+
+
+
+              THICKNESS: HGU4      
+ READING ON UNIT   7 WITH FORMAT: (15F5.0)            
+
+
+   INTERPRETATION OF UNIT FLAGS:
+     UNIT      HANI           VK/VANI
+ ---------------------------------------------------------------------------
+ HGU1        1.000000        VERTICAL K
+ HGU2        1.000000        VERTICAL K
+ HGU3        1.000000        VERTICAL K
+ HGU4        1.000000        VERTICAL K
+
+ PARAMETER NAME:HK1          TYPE:HK   UNITS:   1
+ The parameter value from the package file is:  3.00000E-04
+ This parameter value has been replaced by the value from the
+ Sensitivity Process file:  7.00000E-05
+UNIT HGU1      CORRESPONDS TO UNIT NO.     1
+                LAYER:  1   MULTIPLIER:NONE   ZONE:ALL
+
+ PARAMETER NAME:HK2          TYPE:HK   UNITS:   1
+ The parameter value from the package file is:  2.00000E-07
+UNIT HGU2      CORRESPONDS TO UNIT NO.     2
+                LAYER:  2   MULTIPLIER:NONE   ZONE:ALL
+
+ PARAMETER NAME:HK3          TYPE:HK   UNITS:   1
+ The parameter value from the package file is:  4.00000E-05
+UNIT HGU3      CORRESPONDS TO UNIT NO.     3
+                LAYER:  3   MULTIPLIER:TMULT   ZONE:ALL
+
+ PARAMETER NAME:HK4          TYPE:HK   UNITS:   1
+ The parameter value from the package file is:  4.00000E-05
+ This parameter value has been replaced by the value from the
+ Sensitivity Process file:  6.30000E-05
+UNIT HGU4      CORRESPONDS TO UNIT NO.     4
+                LAYER:  4   MULTIPLIER:TMULT   ZONE:ALL
+
+ PARAMETER NAME:VKA1         TYPE:VK   UNITS:   1
+ The parameter value from the package file is:  3.00000E-04
+UNIT HGU1      CORRESPONDS TO UNIT NO.     1
+                LAYER:  1   MULTIPLIER:NONE   ZONE:ALL
+
+ PARAMETER NAME:VKA2         TYPE:VK   UNITS:   1
+ The parameter value from the package file is:  2.00000E-07
+UNIT HGU2      CORRESPONDS TO UNIT NO.     2
+                LAYER:  2   MULTIPLIER:NONE   ZONE:ALL
+
+ PARAMETER NAME:VKA3         TYPE:VK   UNITS:   1
+ The parameter value from the package file is:  4.00000E-05
+UNIT HGU3      CORRESPONDS TO UNIT NO.     3
+                LAYER:  3   MULTIPLIER:TMULT   ZONE:ALL
+
+ PARAMETER NAME:VKA4         TYPE:VK   UNITS:   1
+ The parameter value from the package file is:  4.00000E-05
+UNIT HGU4      CORRESPONDS TO UNIT NO.     4
+                LAYER:  4   MULTIPLIER:TMULT   ZONE:ALL
+
+ PARAMETER NAME:SS1          TYPE:SS   UNITS:   1
+ The parameter value from the package file is:  1.00000E-03
+ This parameter value has been replaced by the value from the
+ Sensitivity Process file:  1.40000E-03
+UNIT HGU1      CORRESPONDS TO UNIT NO.     1
+                LAYER:  1   MULTIPLIER:NONE   ZONE:ALL
+
+ PARAMETER NAME:SS2          TYPE:SS   UNITS:   1
+ The parameter value from the package file is:  1.00000E-06
+UNIT HGU2      CORRESPONDS TO UNIT NO.     2
+                LAYER:  2   MULTIPLIER:NONE   ZONE:ALL
+
+ PARAMETER NAME:SS3          TYPE:SS   UNITS:   1
+ The parameter value from the package file is:  1.00000E-03
+ This parameter value has been replaced by the value from the
+ Sensitivity Process file:  1.30000E-03
+UNIT HGU3      CORRESPONDS TO UNIT NO.     3
+                LAYER:  3   MULTIPLIER:NONE   ZONE:ALL
+
+ PARAMETER NAME:SS4          TYPE:SS   UNITS:   1
+ The parameter value from the package file is:  1.00000E-03
+ This parameter value has been replaced by the value from the
+ Sensitivity Process file:  1.20000E-03
+UNIT HGU4      CORRESPONDS TO UNIT NO.     4
+                LAYER:  4   MULTIPLIER:NONE   ZONE:ALL
+
+ PARAMETER NAME:SY1          TYPE:SY   UNITS:   1
+ The parameter value from the package file is:  0.10000    
+ This parameter value has been replaced by the value from the
+ Sensitivity Process file:  8.00000E-02
+UNIT HGU1      CORRESPONDS TO UNIT NO.     1
+                LAYER:  1   MULTIPLIER:NONE   ZONE:ALL
+
+ PARAMETER NAME:SY2          TYPE:SY   UNITS:   1
+ The parameter value from the package file is:  1.00000E-02
+UNIT HGU2      CORRESPONDS TO UNIT NO.     2
+                LAYER:  2   MULTIPLIER:NONE   ZONE:ALL
+
+ PARAMETER NAME:SY3          TYPE:SY   UNITS:   1
+ The parameter value from the package file is:  0.10000    
+UNIT HGU3      CORRESPONDS TO UNIT NO.     3
+                LAYER:  3   MULTIPLIER:NONE   ZONE:ALL
+
+ PARAMETER NAME:SY4          TYPE:SY   UNITS:   1
+ The parameter value from the package file is:  0.10000    
+UNIT HGU4      CORRESPONDS TO UNIT NO.     4
+                LAYER:  4   MULTIPLIER:NONE   ZONE:ALL
+ ITRSS 1
+
+Reading PRINTCODE information
+UNIT HGU3      CORRESPONDS TO UNIT NO.     3
+
+
+PRINTCODE FLAGS ARE SET AS FOLLOWS
+   UNIT       HK   HANI   VK    SS    SY
+------------------------------------------
+HGU1           0     0     0     0     0
+HGU2           0     0     0     0     0
+HGU3          20    20    20    20    20
+HGU4           0     0     0     0     0
+
+
+     0 Well parameters
+
+
+     0 River parameters
+
+
+     0 GHB parameters
+
+
+     2 Recharge parameters
+
+ PARAMETER NAME:RCH1         TYPE:RCH    CLUSTERS:   1
+ Parameter value from package file is:   1.00000E-08
+                MULTIPLIER ARRAY: NONE    ZONE ARRAY: RCHZONE
+                ZONE VALUES:    1
+
+ PARAMETER NAME:RCH2         TYPE:RCH    CLUSTERS:   1
+ Parameter value from package file is:   1.50000E-08
+                MULTIPLIER ARRAY: NONE    ZONE ARRAY: RCHZONE
+                ZONE VALUES:    2
+
+  18 PARAMETERS HAVE BEEN DEFINED IN ALL PACKAGES.
+ (SPACE IS ALLOCATED FOR  500 PARAMETERS.)
+
+ ***SUGGESTION FOR CONVERTIBLE LAYERS:
+ PERFORM INITIAL PARAMETER ESTIMATION RUNS WITH THE LAYERS
+ DESIGNATED AS CONFINED WITH ASSIGNED APPROXIMATE THICKNESSES
+ TO AVOID LONG EXECUTION TIMES AND EXCESSIVE FRUSTRATION.
+ CONVERT TO UNCONFINED AND CONVERTIBLE FOR FINAL PARAMETER 
+ ESTIMATION RUNS WHEN PARAMETERS ARE ALREADY CLOSE TO 
+ OPTIMAL.
+ 
+OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     1
+
+ FOR THE SCALING OF THE SENSITIVITIES BELOW, B IS REPLACED BY
+ BSCAL (THE ALTERNATE SCALING FACTOR) FOR PARAMETER(S):
+     HK1         SS1         SS3         SS4       
+
+ DIMENSIONLESS SCALED SENSITIVITIES (SCALED BY B*(WT**.5))
+
+         PARAMETER:   HK1         HK3         HK4         SS1         SS3       
+ OBS #  OBSERVATION
+     1  H1_8_8_1       -17.0      -0.750E-04   0.948E-04  -0.743E-01  -0.510E-04
+     2  H1_8_8_2       -70.3      -0.161E-02   0.261E-03  -0.257       0.105E-01
+     3  H1_8_8_3       -233.      -0.144E-01  -0.654E-02  -0.398       0.155    
+     4  H1_8_8_4      -0.388E+04  -0.343       0.659        7.51        20.4    
+     5  H2_8_8_1       -8.71      -0.156E-02   0.204E-02  -0.381E-01  -0.178E-02
+     6  H2_8_8_2       -38.2      -0.114E-01   0.210E-02  -0.138       0.651E-01
+     7  H2_8_8_3       -138.      -0.551E-01  -0.265E-01  -0.216       0.545    
+     8  H2_8_8_4      -0.179E+04  -0.301       0.818        7.42        21.8    
+     9  H3_8_8_1      -0.453      -0.305E-02   0.400E-02  -0.195E-02  -0.353E-02
+    10  H3_8_8_2       -6.03      -0.212E-01   0.395E-02  -0.190E-01   0.120    
+    11  H3_8_8_3       -43.1      -0.960E-01  -0.465E-01  -0.333E-01   0.937    
+    12  H3_8_8_4        309.      -0.258       0.978        7.34        23.2    
+    13  H1_2_2_1        97.8       0.853E-04   0.579E-04  -0.309E-16  -0.105E-02
+    14  H1_2_2_2        380.       0.107E-02   0.699E-03  -0.291E-12  -0.138E-01
+    15  H1_2_2_3        899.       0.557E-02   0.350E-02  -0.994E-10  -0.760E-01
+    16  H1_2_2_4       0.161E+05   0.399       0.369      -0.445E-02   -9.16    
+    17  H2_2_2_1        50.7       0.205E-02   0.139E-02  -0.279E-15  -0.251E-01
+    18  H2_2_2_2        207.       0.859E-02   0.558E-02  -0.159E-11  -0.111    
+    19  H2_2_2_3        527.       0.228E-01   0.141E-01  -0.330E-09  -0.313    
+    20  H2_2_2_4       0.143E+05   0.405       0.389      -0.485E-02   -9.73    
+    21  H3_2_2_1        2.53       0.407E-02   0.275E-02  -0.530E-15  -0.498E-01
+    22  H3_2_2_2        30.1       0.163E-01   0.106E-01  -0.291E-11  -0.211    
+    23  H3_2_2_3        147.       0.404E-01   0.249E-01  -0.566E-09  -0.556    
+    24  H3_2_2_4       0.125E+05   0.410       0.408      -0.526E-02   -10.3    
+    25  H1_16_16_1     -19.6      -0.546E-04  -0.979E-04  -0.114       0.191E-03
+    26  H1_16_16_2     -42.8       0.455E-04   0.513E-02  -0.464      -0.114E-01
+    27  H1_16_16_3      174.       0.579E-02   0.773E-01   -1.63      -0.167    
+    28  H1_16_16_4     0.409E+05  -0.390E-02    7.94       -169.       -25.5    
+    29  H2_16_16_1     -10.0      -0.116E-02  -0.220E-02  -0.587E-01   0.435E-02
+    30  H2_16_16_2     -20.5       0.548E-03   0.380E-01  -0.272      -0.828E-01
+    31  H2_16_16_3      130.       0.247E-01   0.312       -1.19      -0.658    
+    32  H2_16_16_4     0.332E+05  -0.522E-01    8.45       -152.       -26.8    
+    33  H3_16_16_1    -0.462      -0.228E-02  -0.430E-02  -0.371E-02   0.852E-02
+    34  H3_16_16_2      1.71       0.105E-02   0.709E-01  -0.792E-01  -0.154    
+    35  H3_16_16_3      85.4       0.436E-01   0.546      -0.755       -1.15    
+    36  H3_16_16_4     0.255E+05  -0.101        8.95       -135.       -28.0    
+    37  H1_16_2_1       97.8       0.853E-04   0.579E-04  -0.309E-16  -0.105E-02
+    38  H1_16_2_2       380.       0.107E-02   0.699E-03  -0.291E-12  -0.138E-01
+    39  H1_16_2_3       899.       0.557E-02   0.350E-02  -0.994E-10  -0.760E-01
+    40  H1_16_2_4      0.161E+05   0.399       0.369      -0.385E-02   -9.16    
+    41  H2_16_2_1       50.7       0.205E-02   0.139E-02  -0.279E-15  -0.251E-01
+    42  H2_16_2_2       207.       0.859E-02   0.558E-02  -0.159E-11  -0.111    
+    43  H2_16_2_3       527.       0.228E-01   0.141E-01  -0.330E-09  -0.313    
+    44  H2_16_2_4      0.143E+05   0.404       0.388      -0.418E-02   -9.73    
+    45  H3_16_2_1       2.53       0.407E-02   0.275E-02  -0.530E-15  -0.498E-01
+    46  H3_16_2_2       30.1       0.163E-01   0.106E-01  -0.291E-11  -0.211    
+    47  H3_16_2_3       147.       0.404E-01   0.249E-01  -0.566E-09  -0.556    
+    48  H3_16_2_4      0.125E+05   0.410       0.408      -0.452E-02   -10.3    
+    49  GHB1            14.0       0.219E-04   0.239E-03    1.72       0.503E-02
+    50  GHB2            150.       0.554E-03   0.601E-02    6.42       0.510E-01
+    51  GHB3            717.       0.410E-02   0.440E-01    14.2       0.208    
+    52  GHB4           0.237E+05   0.543        3.98        36.6        4.54    
+
+        COMPOSITE SCALED SENSITIVITIES ((SUM OF THE SQUARED VALUES)/ND)**.5
+                       0.101E+05   0.175        2.12        37.2        8.96    
+
+ DIMENSIONLESS SCALED SENSITIVITIES (SCALED BY B*(WT**.5))
+
+         PARAMETER:   SS4         SY1       
+ OBS #  OBSERVATION
+     1  H1_8_8_1      -0.161E-04  -0.404E-04
+     2  H1_8_8_2       0.834E-02  -0.468E-03
+     3  H1_8_8_3       0.120      -0.224E-02
+     4  H1_8_8_4        15.4        4.36    
+     5  H2_8_8_1      -0.903E-03  -0.226E-04
+     6  H2_8_8_2       0.511E-01  -0.307E-03
+     7  H2_8_8_3       0.419      -0.174E-02
+     8  H2_8_8_4        16.3        3.95    
+     9  H3_8_8_1      -0.180E-02  -0.458E-05
+    10  H3_8_8_2       0.940E-01  -0.145E-03
+    11  H3_8_8_3       0.718      -0.124E-02
+    12  H3_8_8_4        17.3        3.54    
+    13  H1_2_2_1      -0.116E-03  -0.191E-01
+    14  H1_2_2_2      -0.154E-02  -0.715E-01
+    15  H1_2_2_3      -0.850E-02  -0.162    
+    16  H1_2_2_4       -1.22       -2.15    
+    17  H2_2_2_1      -0.278E-02  -0.988E-02
+    18  H2_2_2_2      -0.123E-01  -0.390E-01
+    19  H2_2_2_3      -0.348E-01  -0.951E-01
+    20  H2_2_2_4       -1.29       -1.96    
+    21  H3_2_2_1      -0.553E-02  -0.490E-03
+    22  H3_2_2_2      -0.234E-01  -0.567E-02
+    23  H3_2_2_3      -0.617E-01  -0.267E-01
+    24  H3_2_2_4       -1.36       -1.77    
+    25  H1_16_16_1     0.349E-03  -0.637E-20
+    26  H1_16_16_2    -0.735E-01  -0.141E-14
+    27  H1_16_16_3    -0.993      -0.190E-11
+    28  H1_16_16_4     -120.       0.352E-02
+    29  H2_16_16_1     0.961E-02  -0.117E-18
+    30  H2_16_16_2    -0.522      -0.949E-14
+    31  H2_16_16_3     -3.83      -0.728E-11
+    32  H2_16_16_4     -125.       0.412E-02
+    33  H3_16_16_1     0.189E-01  -0.228E-18
+    34  H3_16_16_2    -0.970      -0.176E-13
+    35  H3_16_16_3     -6.67      -0.127E-10
+    36  H3_16_16_4     -129.       0.471E-02
+    37  H1_16_2_1     -0.116E-03  -0.191E-01
+    38  H1_16_2_2     -0.154E-02  -0.715E-01
+    39  H1_16_2_3     -0.850E-02  -0.162    
+    40  H1_16_2_4      -1.22       -2.15    
+    41  H2_16_2_1     -0.278E-02  -0.988E-02
+    42  H2_16_2_2     -0.123E-01  -0.390E-01
+    43  H2_16_2_3     -0.348E-01  -0.951E-01
+    44  H2_16_2_4      -1.29       -1.96    
+    45  H3_16_2_1     -0.553E-02  -0.490E-03
+    46  H3_16_2_2     -0.234E-01  -0.567E-02
+    47  H3_16_2_3     -0.617E-01  -0.267E-01
+    48  H3_16_2_4      -1.36       -1.77    
+    49  GHB1           0.453E-01   0.848E-24
+    50  GHB2           0.457       0.129E-17
+    51  GHB3            1.84       0.513E-14
+    52  GHB4            26.5      -0.118E-02
+
+        COMPOSITE SCALED SENSITIVITIES ((SUM OF THE SQUARED VALUES)/ND)**.5
+                        30.5        1.16    
+
+  PARAMETER    COMPOSITE SCALED SENSITIVITY
+  ----------   ----------------------------
+  HK1            1.00537E+04
+  HK3            1.74560E-01
+  HK4            2.12085E+00
+  SS1            3.72154E+01
+  SS3            8.96489E+00
+  SS4            3.04635E+01
+  SY1            1.16414E+00
+
+ STARTING VALUES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   7.0000E-05   4.0000E-05   6.3000E-05   1.4000E-03   1.3000E-03   1.2000E-03
+   8.0000E-02
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:   620.68    
+   DEP. VARIABLES PLUS PARAMETERS:   620.68    
+
+ -----------------------------------------------------------------------
+ PARAMETER VALUES AND STATISTICS FOR ALL PARAMETER-ESTIMATION ITERATIONS
+ -----------------------------------------------------------------------
+
+     MODIFIED GAUSS-NEWTON CONVERGES IF THE ABSOLUTE VALUE OF THE MAXIMUM
+ FRACTIONAL PARAMETER CHANGE (MAX CALC. CHANGE) IS LESS THAN TOL OR IF THE
+ SUM OF SQUARED, WEIGHTED RESIDUALS CHANGES LESS THAN SOSC OVER TWO
+ PARAMETER-ESTIMATION ITERATIONS.
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =     1
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) =  3.7871    
+        OCCURRED FOR PARAMETER  "HK3       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ = 0.52811    
+        CONTROLLED BY PARAMETER "HK3       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   1.8604E-04   1.2000E-04   2.7349E-05   1.4073E-03   1.4746E-03   5.8121E-04
+   0.1133    
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:   195.18    
+   DEP. VARIABLES PLUS PARAMETERS:   195.18    
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =     2
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = 0.63000    
+        OCCURRED FOR PARAMETER  "SS4       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "SS4       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   2.3934E-04   1.3946E-04   3.7924E-05   9.2380E-04   1.2300E-03   9.4738E-04
+   7.2285E-02
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:   3.6814    
+   DEP. VARIABLES PLUS PARAMETERS:   3.6814    
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =     3
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = -.32364    
+        OCCURRED FOR PARAMETER  "HK3       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "HK3       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   2.7249E-04   9.4324E-05   3.9610E-05   9.7585E-04   1.0793E-03   9.5019E-04
+   8.9364E-02
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.14453    
+   DEP. VARIABLES PLUS PARAMETERS:  0.14453    
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =     4
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = -.11997    
+        OCCURRED FOR PARAMETER  "HK3       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "HK3       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   2.8547E-04   8.3009E-05   3.8166E-05   9.8934E-04   1.0658E-03   9.4328E-04
+   9.4275E-02
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.73801E-01
+   DEP. VARIABLES PLUS PARAMETERS:  0.73801E-01
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =     5
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = -.51064E-01
+        OCCURRED FOR PARAMETER  "HK3       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "HK3       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   2.9170E-04   7.8770E-05   3.7337E-05   9.9803E-04   1.0627E-03   9.3402E-04
+   9.6214E-02
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.68749E-01
+   DEP. VARIABLES PLUS PARAMETERS:  0.68749E-01
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =     6
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = -.27953E-01
+        OCCURRED FOR PARAMETER  "HK3       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "HK3       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   2.9519E-04   7.6568E-05   3.6860E-05   1.0028E-03   1.0639E-03   9.2816E-04
+   9.7173E-02
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.67734E-01
+   DEP. VARIABLES PLUS PARAMETERS:  0.67734E-01
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =     7
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = -.19166E-01
+        OCCURRED FOR PARAMETER  "HK3       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "HK3       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   2.9751E-04   7.5100E-05   3.6545E-05   1.0059E-03   1.0652E-03   9.2413E-04
+   9.7791E-02
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.67312E-01
+   DEP. VARIABLES PLUS PARAMETERS:  0.67312E-01
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =     8
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = -.15504E-01
+        OCCURRED FOR PARAMETER  "HK3       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "HK3       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   2.9929E-04   7.3936E-05   3.6307E-05   1.0084E-03   1.0664E-03   9.2102E-04
+   9.8262E-02
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.67062E-01
+   DEP. VARIABLES PLUS PARAMETERS:  0.67062E-01
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =     9
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = -.14374E-01
+        OCCURRED FOR PARAMETER  "HK3       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "HK3       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   3.0087E-04   7.2873E-05   3.6102E-05   1.0106E-03   1.0676E-03   9.1828E-04
+   9.8671E-02
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.66869E-01
+   DEP. VARIABLES PLUS PARAMETERS:  0.66869E-01
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =    10
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = -.14998E-01
+        OCCURRED FOR PARAMETER  "HK3       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "HK3       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   3.0244E-04   7.1780E-05   3.5902E-05   1.0127E-03   1.0688E-03   9.1556E-04
+   9.9077E-02
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.66653E-01
+   DEP. VARIABLES PLUS PARAMETERS:  0.66653E-01
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =    11
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = -.17739E-01
+        OCCURRED FOR PARAMETER  "HK3       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "HK3       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   3.0419E-04   7.0507E-05   3.5686E-05   1.0151E-03   1.0702E-03   9.1260E-04
+   9.9532E-02
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.66368E-01
+   DEP. VARIABLES PLUS PARAMETERS:  0.66368E-01
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =    12
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = -.24330E-01
+        OCCURRED FOR PARAMETER  "HK3       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "HK3       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   3.0644E-04   6.8792E-05   3.5422E-05   1.0182E-03   1.0722E-03   9.0891E-04
+   0.1001    
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.65878E-01
+   DEP. VARIABLES PLUS PARAMETERS:  0.65878E-01
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =    13
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = -.40203E-01
+        OCCURRED FOR PARAMETER  "HK3       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "HK3       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   3.0980E-04   6.6026E-05   3.5054E-05   1.0228E-03   1.0750E-03   9.0371E-04
+   0.1010    
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.64610E-01
+   DEP. VARIABLES PLUS PARAMETERS:  0.64610E-01
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =    14
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = -.86996E-01
+        OCCURRED FOR PARAMETER  "HK3       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "HK3       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   3.1587E-04   6.0282E-05   3.4482E-05   1.0309E-03   1.0796E-03   8.9559E-04
+   0.1026    
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.59354E-01
+   DEP. VARIABLES PLUS PARAMETERS:  0.59354E-01
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =    15
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = -.25865    
+        OCCURRED FOR PARAMETER  "HK3       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "HK3       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   3.2704E-04   4.4690E-05   3.4020E-05   1.0451E-03   1.0818E-03   8.9043E-04
+   0.1059    
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.35816E-01
+   DEP. VARIABLES PLUS PARAMETERS:  0.35816E-01
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =    16
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = -.25514    
+        OCCURRED FOR PARAMETER  "HK3       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "HK3       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   3.1615E-04   3.3288E-05   3.7400E-05   1.0255E-03   1.0412E-03   9.5279E-04
+   0.1044    
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.14466    
+   DEP. VARIABLES PLUS PARAMETERS:  0.14466    
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =    17
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = 0.15659    
+        OCCURRED FOR PARAMETER  "HK3       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- = 0.66032    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ = 0.66032    
+        CONTROLLED BY PARAMETER "HK3       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   3.0670E-04   3.6730E-05   3.8946E-05   1.0107E-03   1.0189E-03   9.8107E-04
+   0.1017    
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.22977E-01
+   DEP. VARIABLES PLUS PARAMETERS:  0.22977E-01
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =    18
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = 0.81425E-01
+        OCCURRED FOR PARAMETER  "HK3       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "HK3       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   3.0096E-04   3.9721E-05   3.9811E-05   1.0025E-03   1.0014E-03   9.9609E-04
+   0.1003    
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.12771E-02
+   DEP. VARIABLES PLUS PARAMETERS:  0.12771E-02
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =    19
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = 0.11081E-01
+        OCCURRED FOR PARAMETER  "HK3       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "HK3       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   3.0048E-04   4.0161E-05   3.9863E-05   1.0020E-03   9.9911E-04   9.9689E-04
+   0.1002    
+
+ SUMS OF SQUARED, WEIGHTED RESIDUALS:
+   ALL DEPENDENT VARIABLES:  0.11054E-02
+   DEP. VARIABLES PLUS PARAMETERS:  0.11054E-02
+
+ MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =    20
+
+ VALUES FROM SOLVING THE NORMAL EQUATION :
+   MARQUARDT PARAMETER ------------------- =  0.0000    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-02) = 0.52128E-04
+        OCCURRED FOR PARAMETER  "HK4       " TYPE U
+
+ CALCULATION OF DAMPING PARAMETER
+   MAX-CHANGE SPECIFIED:   2.0       USED:   2.0    
+   OSCILL. CONTROL FACTOR (1, NO EFFECT)-- =  1.0000    
+   DAMPING PARAMETER (RANGE 0 TO 1) ------ =  1.0000    
+        CONTROLLED BY PARAMETER "HK4       " TYPE U
+
+ UPDATED ESTIMATES OF REGRESSION PARAMETERS :
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   3.0047E-04   4.0160E-05   3.9865E-05   1.0020E-03   9.9914E-04   9.9691E-04
+   0.1002    
+
+ *** PARAMETER ESTIMATION CONVERGED BY SATISFYING THE TOL CRITERION ***
+
+ 
+OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION    20
+
+ FOR THE SCALING OF THE SENSITIVITIES BELOW, B IS REPLACED BY
+ BSCAL (THE ALTERNATE SCALING FACTOR) FOR PARAMETER(S):
+     HK1         SS1         SS3         SS4       
+
+ DIMENSIONLESS SCALED SENSITIVITIES (SCALED BY B*(WT**.5))
+
+         PARAMETER:   HK1         HK3         HK4         SS1         SS3       
+ OBS #  OBSERVATION
+     1  H1_8_8_1       -24.0      -0.147E-03   0.893E-04  -0.702E-01   0.877E-03
+     2  H1_8_8_2       -121.      -0.345E-02  -0.347E-03  -0.282E-01   0.563E-01
+     3  H1_8_8_3       -471.      -0.269E-01  -0.100E-01    1.40       0.583    
+     4  H1_8_8_4       0.368E+04   0.221        1.08        2.20        16.1    
+     5  H2_8_8_1       -12.4      -0.206E-02   0.157E-02  -0.362E-01   0.415E-02
+     6  H2_8_8_2       -66.7      -0.167E-01   0.377E-04  -0.120E-01   0.150    
+     7  H2_8_8_3       -281.      -0.830E-01  -0.310E-01   0.871        1.11    
+     8  H2_8_8_4       0.414E+04   0.970E-01    1.05        2.07        17.8    
+     9  H3_8_8_1      -0.806      -0.399E-02   0.306E-02  -0.224E-02   0.742E-02
+    10  H3_8_8_2       -12.5      -0.300E-01   0.425E-03   0.430E-02   0.243    
+    11  H3_8_8_3       -91.6      -0.139      -0.520E-01   0.343        1.65    
+    12  H3_8_8_4       0.459E+04  -0.275E-01    1.02        1.94        19.5    
+    13  H1_2_2_1        78.3       0.879E-04   0.378E-04  -0.234E-13  -0.128E-02
+    14  H1_2_2_2        308.       0.110E-02   0.458E-03  -0.503E-10  -0.188E-01
+    15  H1_2_2_3        741.       0.567E-02   0.230E-02  -0.655E-08  -0.114    
+    16  H1_2_2_4       0.136E+05  -0.851E-02   0.236      -0.427E-01   -15.7    
+    17  H2_2_2_1        40.9       0.264E-02   0.112E-02  -0.145E-13  -0.384E-01
+    18  H2_2_2_2        171.       0.109E-01   0.442E-02  -0.396E-10  -0.187    
+    19  H2_2_2_3        448.       0.276E-01   0.108E-01  -0.599E-08  -0.568    
+    20  H2_2_2_4       0.123E+05  -0.105       0.234      -0.403E-01   -17.0    
+    21  H3_2_2_1        2.59       0.526E-02   0.223E-02  -0.603E-14  -0.764E-01
+    22  H3_2_2_2        30.7       0.209E-01   0.848E-02  -0.300E-10  -0.359    
+    23  H3_2_2_3        148.       0.500E-01   0.194E-01  -0.542E-08   -1.03    
+    24  H3_2_2_4       0.110E+05  -0.203       0.232      -0.378E-01   -18.2    
+    25  H1_16_16_1     -20.0      -0.861E-04  -0.617E-04  -0.185       0.123E-03
+    26  H1_16_16_2      113.       0.435E-03   0.788E-02   -1.72      -0.270E-01
+    27  H1_16_16_3     0.121E+04   0.126E-01   0.102       -9.42      -0.353    
+    28  H1_16_16_4     0.116E+05  -0.353        4.39       -207.       -34.1    
+    29  H2_16_16_1     -10.2      -0.142E-02  -0.161E-02  -0.964E-01   0.465E-02
+    30  H2_16_16_2      64.4       0.170E-02   0.357E-01  -0.992      -0.104    
+    31  H2_16_16_3      729.       0.406E-01   0.304       -6.07      -0.902    
+    32  H2_16_16_4     0.962E+04  -0.387        5.23       -195.       -36.2    
+    33  H3_16_16_1    -0.542      -0.275E-02  -0.317E-02  -0.793E-02   0.920E-02
+    34  H3_16_16_2      16.0       0.296E-02   0.635E-01  -0.269      -0.181    
+    35  H3_16_16_3      249.       0.687E-01   0.506       -2.72       -1.45    
+    36  H3_16_16_4     0.765E+04  -0.421        6.06       -183.       -38.4    
+    37  H1_16_2_1       78.3       0.879E-04   0.378E-04  -0.234E-13  -0.128E-02
+    38  H1_16_2_2       308.       0.110E-02   0.458E-03  -0.503E-10  -0.188E-01
+    39  H1_16_2_3       741.       0.567E-02   0.230E-02  -0.655E-08  -0.114    
+    40  H1_16_2_4      0.136E+05  -0.119E-01   0.234      -0.284E-01   -15.7    
+    41  H2_16_2_1       40.9       0.264E-02   0.112E-02  -0.145E-13  -0.384E-01
+    42  H2_16_2_2       171.       0.109E-01   0.442E-02  -0.396E-10  -0.187    
+    43  H2_16_2_3       448.       0.276E-01   0.108E-01  -0.599E-08  -0.568    
+    44  H2_16_2_4      0.123E+05  -0.108       0.232      -0.268E-01   -16.9    
+    45  H3_16_2_1       2.59       0.526E-02   0.223E-02  -0.603E-14  -0.764E-01
+    46  H3_16_2_2       30.7       0.209E-01   0.848E-02  -0.300E-10  -0.359    
+    47  H3_16_2_3       148.       0.500E-01   0.194E-01  -0.541E-08   -1.03    
+    48  H3_16_2_4      0.110E+05  -0.206       0.231      -0.251E-01   -18.2    
+    49  GHB1            23.9       0.425E-04   0.293E-03    3.16       0.101E-01
+    50  GHB2            222.       0.102E-02   0.700E-02    10.6       0.974E-01
+    51  GHB3            870.       0.694E-02   0.470E-01    20.4       0.372    
+    52  GHB4           0.139E+05   0.566        2.09        47.6        6.77    
+
+        COMPOSITE SCALED SENSITIVITIES ((SUM OF THE SQUARED VALUES)/ND)**.5
+                       0.528E+04   0.137        1.33        47.5        11.3    
+
+ DIMENSIONLESS SCALED SENSITIVITIES (SCALED BY B*(WT**.5))
+
+         PARAMETER:   SS4         SY1       
+ OBS #  OBSERVATION
+     1  H1_8_8_1       0.703E-03  -0.183E-03
+     2  H1_8_8_2       0.448E-01  -0.192E-02
+     3  H1_8_8_3       0.466      -0.741E-02
+     4  H1_8_8_4        10.1        3.79    
+     5  H2_8_8_1       0.326E-02  -0.964E-04
+     6  H2_8_8_2       0.114      -0.110E-02
+     7  H2_8_8_3       0.855      -0.476E-02
+     8  H2_8_8_4        11.1        3.59    
+     9  H3_8_8_1       0.583E-02  -0.963E-05
+    10  H3_8_8_2       0.184      -0.285E-03
+    11  H3_8_8_3        1.25      -0.211E-02
+    12  H3_8_8_4        12.2        3.40    
+    13  H1_2_2_1      -0.144E-03  -0.378E-01
+    14  H1_2_2_2      -0.211E-02  -0.144    
+    15  H1_2_2_3      -0.129E-01  -0.332    
+    16  H1_2_2_4       -2.25       -4.72    
+    17  H2_2_2_1      -0.425E-02  -0.197E-01
+    18  H2_2_2_2      -0.207E-01  -0.799E-01
+    19  H2_2_2_3      -0.632E-01  -0.201    
+    20  H2_2_2_4       -2.37       -4.33    
+    21  H3_2_2_1      -0.848E-02  -0.124E-02
+    22  H3_2_2_2      -0.398E-01  -0.144E-01
+    23  H3_2_2_3      -0.115      -0.671E-01
+    24  H3_2_2_4       -2.50       -3.93    
+    25  H1_16_16_1    -0.694E-03  -0.212E-16
+    26  H1_16_16_2    -0.184      -0.584E-12
+    27  H1_16_16_3     -2.24      -0.259E-09
+    28  H1_16_16_4     -149.       0.200E-01
+    29  H2_16_16_1     0.102E-01  -0.129E-16
+    30  H2_16_16_2    -0.642      -0.446E-12
+    31  H2_16_16_3     -5.20      -0.229E-09
+    32  H2_16_16_4     -158.       0.200E-01
+    33  H3_16_16_1     0.212E-01  -0.462E-17
+    34  H3_16_16_2     -1.10      -0.308E-12
+    35  H3_16_16_3     -8.17      -0.198E-09
+    36  H3_16_16_4     -166.       0.200E-01
+    37  H1_16_2_1     -0.144E-03  -0.378E-01
+    38  H1_16_2_2     -0.211E-02  -0.144    
+    39  H1_16_2_3     -0.129E-01  -0.332    
+    40  H1_16_2_4      -2.23       -4.71    
+    41  H2_16_2_1     -0.425E-02  -0.197E-01
+    42  H2_16_2_2     -0.207E-01  -0.799E-01
+    43  H2_16_2_3     -0.632E-01  -0.201    
+    44  H2_16_2_4      -2.35       -4.32    
+    45  H3_16_2_1     -0.848E-02  -0.124E-02
+    46  H3_16_2_2     -0.398E-01  -0.144E-01
+    47  H3_16_2_3     -0.115      -0.671E-01
+    48  H3_16_2_4      -2.48       -3.92    
+    49  GHB1           0.907E-01   0.149E-20
+    50  GHB2           0.871       0.320E-15
+    51  GHB3            3.28       0.495E-12
+    52  GHB4            35.2      -0.618E-02
+
+        COMPOSITE SCALED SENSITIVITIES ((SUM OF THE SQUARED VALUES)/ND)**.5
+                        38.4        1.71    
+
+  PARAMETER    COMPOSITE SCALED SENSITIVITY
+  ----------   ----------------------------
+  HK1            5.27522E+03
+  HK3            1.37235E-01
+  HK4            1.32890E+00
+  SS1            4.74597E+01
+  SS3            1.13413E+01
+  SS4            3.83869E+01
+  SY1            1.70847E+00
+
+ FINAL PARAMETER VALUES AND STATISTICS:
+
+ PARAMETER NAME(S) AND VALUE(S):
+
+   HK1          HK3          HK4          SS1          SS3          SS4       
+   SY1       
+
+   3.0047E-04   4.0160E-05   3.9865E-05   1.0020E-03   9.9914E-04   9.9691E-04
+   0.1002    
+
+ SUMS OF SQUARED WEIGHTED RESIDUALS:
+   OBSERVATIONS   PRIOR INFO.    TOTAL
+    0.111E-02      0.00         0.111E-02
+
+ -----------------------------------------------------------------------
+
+ SELECTED STATISTICS FROM MODIFIED GAUSS-NEWTON ITERATIONS
+
+        MAX. PARAMETER CALC. CHANGE   MAX. CHANGE     DAMPING
+ ITER.     PARNAM     MAX. CHANGE       ALLOWED      PARAMETER
+ -----   ----------  -------------   -------------  ------------
+    1    HK3           3.78707         2.00000       0.52811    
+    2    SS4          0.630002         2.00000        1.0000    
+    3    HK3         -0.323638         2.00000        1.0000    
+    4    HK3         -0.119967         2.00000        1.0000    
+    5    HK3         -0.510643E-01     2.00000        1.0000    
+    6    HK3         -0.279532E-01     2.00000        1.0000    
+    7    HK3         -0.191663E-01     2.00000        1.0000    
+    8    HK3         -0.155041E-01     2.00000        1.0000    
+    9    HK3         -0.143741E-01     2.00000        1.0000    
+   10    HK3         -0.149983E-01     2.00000        1.0000    
+   11    HK3         -0.177393E-01     2.00000        1.0000    
+   12    HK3         -0.243305E-01     2.00000        1.0000    
+   13    HK3         -0.402027E-01     2.00000        1.0000    
+   14    HK3         -0.869963E-01     2.00000        1.0000    
+   15    HK3         -0.258649         2.00000        1.0000    
+   16    HK3         -0.255137         2.00000        1.0000    
+   17    HK3          0.156591         2.00000       0.66032    
+   18    HK3          0.814250E-01     2.00000        1.0000    
+   19    HK3          0.110810E-01     2.00000        1.0000    
+   20    HK4          0.521284E-04     2.00000        1.0000    
+
+ SUMS OF SQUARED WEIGHTED RESIDUALS FOR EACH ITERATION
+
+         SUMS OF SQUARED WEIGHTED RESIDUALS
+ ITER.  OBSERVATIONS  PRIOR INFO.      TOTAL
+     1    620.68        0.0000        620.68    
+     2    195.18        0.0000        195.18    
+     3    3.6814        0.0000        3.6814    
+     4   0.14453        0.0000       0.14453    
+     5   0.73801E-01    0.0000       0.73801E-01
+     6   0.68749E-01    0.0000       0.68749E-01
+     7   0.67734E-01    0.0000       0.67734E-01
+     8   0.67312E-01    0.0000       0.67312E-01
+     9   0.67062E-01    0.0000       0.67062E-01
+    10   0.66869E-01    0.0000       0.66869E-01
+    11   0.66653E-01    0.0000       0.66653E-01
+    12   0.66368E-01    0.0000       0.66368E-01
+    13   0.65878E-01    0.0000       0.65878E-01
+    14   0.64610E-01    0.0000       0.64610E-01
+    15   0.59354E-01    0.0000       0.59354E-01
+    16   0.35816E-01    0.0000       0.35816E-01
+    17   0.14466        0.0000       0.14466    
+    18   0.22977E-01    0.0000       0.22977E-01
+    19   0.12771E-02    0.0000       0.12771E-02
+    20   0.11054E-02    0.0000       0.11054E-02
+ FINAL   0.11053E-02    0.0000       0.11053E-02
+
+ *** PARAMETER ESTIMATION CONVERGED BY SATISFYING THE TOL CRITERION ***
+
+ -----------------------------------------------------------------------
+
+          VARIANCE-COVARIANCE MATRIX FOR THE PARAMETERS
+          ---------------------------------------------
+
+             HK1          HK3          HK4          SS1          SS3       
+             SS4          SY1       
+ ...........................................................................
+ HK1         3.60270E-13  1.17469E-13 -1.21895E-13  1.02567E-12 -8.67961E-13
+            -1.87587E-12  1.42722E-10
+ HK3         1.17469E-13  2.29208E-13 -5.72558E-14  3.04572E-13  8.55463E-14
+            -9.23718E-13  2.49632E-11
+ HK4        -1.21895E-13 -5.72558E-14  4.52411E-14 -3.49083E-13  2.36712E-13
+             6.93347E-13 -4.59094E-11
+ SS1         1.02567E-12  3.04572E-13 -3.49083E-13  4.45743E-12 -6.21454E-13
+            -7.65156E-12  3.56718E-10
+ SS3        -8.67961E-13  8.55463E-14  2.36712E-13 -6.21454E-13  4.89820E-11
+            -9.22844E-12 -2.14765E-09
+ SS4        -1.87587E-12 -9.23718E-13  6.93347E-13 -7.65156E-12 -9.22844E-12
+             1.64688E-11 -2.34747E-10
+ SY1         1.42722E-10  2.49632E-11 -4.59094E-11  3.56718E-10 -2.14765E-09
+            -2.34747E-10  1.28195E-07
+
+
+ _________________
+
+ PARAMETER SUMMARY
+ _________________
+
+ ________________________________________________________________________
+
+ PHYSICAL PARAMETER VALUES --- NONE OF THE PARAMETERS IS LOG TRANSFORMED
+ ________________________________________________________________________
+
+ PARAMETER:        HK1        HK3        HK4        SS1        SS3       
+ * = LOG TRNS:                                                     
+
+
+ UPPER 95% C.I.     3.02E-04   4.11E-05   4.03E-05   1.01E-03   1.01E-03
+ FINAL VALUES       3.00E-04   4.02E-05   3.99E-05   1.00E-03   9.99E-04
+ LOWER 95% C.I.     2.99E-04   3.92E-05   3.94E-05   9.98E-04   9.85E-04
+
+ STD. DEV.          6.00E-07   4.79E-07   2.13E-07   2.11E-06   7.00E-06
+
+ COEF. OF VAR. (STD. DEV. / FINAL VALUE); "--" IF FINAL VALUE = 0.0
+                    2.00E-03   1.19E-02   5.34E-03   2.11E-03   7.00E-03        
+
+     REASONABLE
+    UPPER LIMIT    -8.00E-01   1.00E-07   1.00E-07   1.00E-02   1.00E-02
+     REASONABLE
+    LOWER LIMIT    -1.40E+00   1.00E-09   1.00E-09   1.00E-04   1.00E-04
+
+ ESTIMATE ABOVE (1)
+ BELOW(-1)LIMITS        1          1          1          0          0
+ ENTIRE CONF. INT.
+ ABOVE(1)BELOW(-1)      1          1          1          0          0
+
+ ________________________________________________________________________
+
+ PHYSICAL PARAMETER VALUES --- NONE OF THE PARAMETERS IS LOG TRANSFORMED
+ ________________________________________________________________________
+
+ PARAMETER:        SS4        SY1       
+ * = LOG TRNS:                    
+
+
+ UPPER 95% C.I.     1.01E-03   1.01E-01
+ FINAL VALUES       9.97E-04   1.00E-01
+ LOWER 95% C.I.     9.89E-04   9.95E-02
+
+ STD. DEV.          4.06E-06   3.58E-04
+
+ COEF. OF VAR. (STD. DEV. / FINAL VALUE); "--" IF FINAL VALUE = 0.0
+                    4.07E-03   3.57E-03                                         
+
+     REASONABLE
+    UPPER LIMIT     1.00E-02   1.00E-02
+     REASONABLE
+    LOWER LIMIT     1.00E-04   1.00E-04
+
+ ESTIMATE ABOVE (1)
+ BELOW(-1)LIMITS        0          1
+ ENTIRE CONF. INT.
+ ABOVE(1)BELOW(-1)      0          1
+
+ SOME PARAMETER VALUES ARE OUTSIDE THEIR USER-SPECIFIED REASONABLE
+ RANGES TO A STATISTICALLY SIGNIFICANT EXTENT, BASED ON LINEAR THEORY.
+ THIS IMPLIES THAT THERE ARE PROBLEMS WITH THE OBSERVATIONS, THE MODEL
+ DOES NOT ADEQUATELY REPRESENT THE PHYSICAL SYSTEM, THE DATA ARE NOT
+ CONSISTENT WITH THEIR SIMULATED EQUIVALENTS, OR THE SPECIFIED MINIMUM
+ AND/OR MAXIMUM ARE NOT REASONABLE.  CHECK YOUR DATA, CONCEPTUAL MODEL,
+ AND MODEL DESIGN.
+
+
+          -------------------------------------
+          CORRELATION MATRIX FOR THE PARAMETERS
+          -------------------------------------
+
+             HK1          HK3          HK4          SS1          SS3       
+             SS4          SY1       
+ ...........................................................................
+ HK1          1.0000      0.40878     -0.95478      0.80938     -0.20662    
+            -0.77012      0.66411    
+ HK3         0.40878       1.0000     -0.56226      0.30132      2.55310E-02
+            -0.47544      0.14563    
+ HK4        -0.95478     -0.56226       1.0000     -0.77735      0.15901    
+             0.80325     -0.60284    
+ SS1         0.80938      0.30132     -0.77735       1.0000     -4.20580E-02
+            -0.89305      0.47190    
+ SS3        -0.20662      2.55310E-02  0.15901     -4.20580E-02   1.0000    
+            -0.32492     -0.85705    
+ SS4        -0.77012     -0.47544      0.80325     -0.89305     -0.32492    
+              1.0000     -0.16156    
+ SY1         0.66411      0.14563     -0.60284      0.47190     -0.85705    
+            -0.16156       1.0000    
+
+ THE CORRELATION OF THE FOLLOWING PARAMETER PAIRS >= .95
+     PARAMETER   PARAMETER   CORRELATION
+     HK1         HK4            -0.95
+
+ THE CORRELATION OF THE FOLLOWING PARAMETER PAIRS IS BETWEEN .90 AND .95
+     PARAMETER   PARAMETER   CORRELATION
+
+ THE CORRELATION OF THE FOLLOWING PARAMETER PAIRS IS BETWEEN .85 AND .90
+     PARAMETER   PARAMETER   CORRELATION
+     SS1         SS4            -0.89
+     SS3         SY1            -0.86
+
+ CORRELATIONS GREATER THAN 0.95 COULD INDICATE THAT THERE IS NOT ENOUGH
+ INFORMATION IN THE OBSERVATIONS AND PRIOR USED IN THE REGRESSION TO ESTIMATE
+ PARAMETER VALUES INDIVIDUALLY.
+ TO CHECK THIS, START THE REGRESSION FROM SETS OF INITIAL PARAMETER VALUES
+ THAT DIFFER BY MORE THAT TWO STANDARD DEVIATIONS FROM THE ESTIMATED 
+ VALUES.  IF THE RESULTING ESTIMATES ARE WELL WITHIN ONE STANDARD DEVIATION
+ OF THE PREVIOUSLY ESTIMATED VALUE, THE ESTIMATES ARE PROBABLY
+ DETERMINED INDEPENDENTLY WITH THE OBSERVATIONS AND PRIOR USED IN
+ THE REGRESSION.  OTHERWISE, YOU MAY ONLY BE ESTIMATING THE RATIO
+ OR SUM OF THE HIGHLY CORRELATED PARAMETERS.
+ THE INITIAL PARAMETER VALUES ARE IN THE SEN FILE.
+
+
+  LEAST-SQUARES OBJ FUNC (DEP.VAR. ONLY)- = 0.11053E-02
+  LEAST-SQUARES OBJ FUNC (W/PARAMETERS)-- = 0.11053E-02
+  CALCULATED ERROR VARIANCE-------------- = 0.24562E-04
+  STANDARD ERROR OF THE REGRESSION------- = 0.49560E-02
+  CORRELATION COEFFICIENT---------------- =  1.0000    
+       W/PARAMETERS---------------------- =  1.0000    
+  ITERATIONS----------------------------- =      20
+
+  MAX LIKE OBJ FUNC =  96.307    
+  AIC STATISTIC---- =  110.31    
+  BIC STATISTIC---- =  123.97    
+
+ SMALLEST AND LARGEST WEIGHTED RESIDUALS
+
+      SMALLEST WEIGHTED RESIDUALS      |       LARGEST WEIGHTED RESIDUALS
+                WEIGHTED   PERCENT OF  |                 WEIGHTED   PERCENT OF
+ NAME           RESIDUAL    OBJ FUNC   |  NAME           RESIDUAL    OBJ FUNC
+ GHB3          -0.127E-01    14.54     |  GHB1           0.242E-01    52.81
+ H2_8_8_4      -0.172E-02     0.27     |  GHB2           0.186E-01    31.20
+ H3_16_16_4    -0.113E-02     0.12     |  GHB4           0.144E-02     0.19
+ H1_8_8_4      -0.717E-03     0.05     |  H1_16_16_3     0.119E-02     0.13
+ H1_16_2_4     -0.687E-03     0.04     |  H3_8_8_4       0.102E-02     0.09
+
+ STATISTICS FOR ALL RESIDUALS :
+ AVERAGE WEIGHTED RESIDUAL  : 0.527E-03
+ # RESIDUALS >= 0. :     21
+ # RESIDUALS < 0.  :     31
+ NUMBER OF RUNS  :   30  IN   52 OBSERVATIONS
+
+ THE NUMBER OF RUNS EQUALS THE EXPECTED NUMBER OF RUNS
+
+ CORRELATION BETWEEN ORDERED WEIGHTED RESIDUALS AND NORMAL ORDER STATISTICS
+ FOR OBSERVATIONS =    0.379    
+
+ --------------------------------------------------------------------------
+ COMMENTS ON THE INTERPRETATION OF THE CORRELATION BETWEEN
+ WEIGHTED RESIDUALS AND NORMAL ORDER STATISTICS:
+
+ The critical value for correlation at the 5% significance level is 0.956
+
+ IF the reported CORRELATION is GREATER than the 5% critical value, ACCEPT
+ the hypothesis that the weighted residuals are INDEPENDENT AND NORMALLY
+ DISTRIBUTED at the 5% significance level.  The probability that this   
+ conclusion is wrong is less than 5%.
+
+ IF the reported correlation IS LESS THAN the 5% critical value REJECT the,
+ hypothesis that the weighted residuals are INDEPENDENT AND NORMALLY
+ DISTRIBUTED at the 5% significance level.
+
+ The analysis can also be done using the 10% significance level.
+ The associated critical value is 0.964
+ --------------------------------------------------------------------------
+
+
+ *** PARAMETER ESTIMATION CONVERGED BY SATISFYING THE TOL CRITERION ***

@@ -1,0 +1,334 @@
+                                  MODFLOW-2000
+      U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
+                             VERSION 1.5 08/16/2001
+
+
+ This model run produced both GLOBAL and LIST files.  This is the LIST file.
+
+
+ THIS FILE CONTAINS OUTPUT UNIQUE TO FINAL PARAMETER VALUES
+   --REGRESSION HAS CONVERGED
+ SENSITIVITIES ARE CALCULATED USING PREVIOUS SET OF PARAMETER VALUES
+
+ CURRENT VALUES OF PARAMETERS LISTED IN THE SEN FILE:
+
+ PARAMETER   PARAMETER   PARAMETER    FOOT-
+    NAME        TYPE       VALUE      NOTE
+ ----------  ---------  ------------  -----
+ ETS-Max        ETS      1.00000E-02    *
+ DRT-Cond       DRT       2.0000        *
+ Recharge       RCH      1.00000E-03    *
+ HydCond        HK       5.00000E-02    *
+ ------------------------------------------
+ * INDICATES VALUE ADJUSTABLE BY PARAMETER-
+   ESTIMATION PROCESS
+
+
+ REWOUND etsdrt.lst
+ FILE TYPE:LIST   UNIT  12
+
+ REWOUND ..\data\etsdrt.dis
+ FILE TYPE:DIS   UNIT  21
+
+ REWOUND ..\data\etsdrt.bas
+ FILE TYPE:BAS6   UNIT  31
+
+ REWOUND ..\data\etsdrt.oc
+ FILE TYPE:OC   UNIT  32
+
+ REWOUND ..\data\etsdrt.drt
+ FILE TYPE:DRT   UNIT  34
+
+ REWOUND ..\data\etsdrt.rch
+ FILE TYPE:RCH   UNIT  36
+
+ REWOUND ..\data\etsdrt.ets
+ FILE TYPE:ETS   UNIT  37
+
+ REWOUND ..\data\etsdrt.obs
+ FILE TYPE:OBS   UNIT  41
+
+ REWOUND ..\data\etsdrt.ohd
+ FILE TYPE:HOB   UNIT  42
+
+ REWOUND ..\data\etsdrt.odt
+ FILE TYPE:DTOB   UNIT  43
+ 
+ # BAS file for ets1, drt1, and etsdrt test cases                                
+ THE FREE FORMAT OPTION HAS BEEN SELECTED
+    1 LAYERS        11 ROWS        11 COLUMNS
+   1 STRESS PERIOD(S) IN SIMULATION
+
+ BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 31
+          5 ELEMENTS IN IR ARRAY ARE USED BY BAS
+
+ RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 36
+ # RCH file for etsdrt test case
+     1 Named Parameters     
+ OPTION 1 -- RECHARGE TO TOP LAYER
+        121 ELEMENTS IN RX ARRAY ARE USED BY RCH
+        121 ELEMENTS IN IR ARRAY ARE USED BY RCH
+
+ ETS1 -- EVAPOTRANSPIRATION SEGMENTS PACKAGE, VERSION 1, 5/2/2000
+         INPUT READ FROM UNIT 37
+ # ETS input file for ets1 and etsdrt test cases
+ #
+ OPTION 1 -- EVAPOTRANSPIRATION FROM TOP LAYER
+     1 Named Parameters     
+     2 SEGMENTS DEFINE EVAPOTRANSPIRATION RATE FUNCTION
+        605 ELEMENTS IN RX ARRAY ARE USED BY ETS
+        121 ELEMENTS IN IR ARRAY ARE USED BY ETS
+
+ DRT1 -- DRAIN RETURN PACKAGE, VERSION 1, 5/2/2000
+ INPUT READ FROM UNIT 34
+ # DRT file for drt1 and etsdrt test cases
+ MAXIMUM OF    1 ACTIVE DRAINS WITH RETURN FLOW AT ONE TIME
+     1 Named Parameters         1 List entries
+ RETURN FLOW OPTION IS SELECTED
+         18 ELEMENTS IN RX ARRAY ARE USED BY DRT
+
+        744  ELEMENTS OF RX ARRAY USED OUT OF        744
+        247  ELEMENTS OF IR ARRAY USED OUT OF        247
+1
+ # BAS file for ets1, drt1, and etsdrt test cases                                
+                                                                                 
+
+
+
+                     BOUNDARY ARRAY FOR LAYER   1
+ READING ON UNIT  31 WITH FORMAT: (FREE)              
+
+ AQUIFER HEAD WILL BE SET TO -999.00     AT ALL NO-FLOW NODES (IBOUND=0).
+
+
+
+                       INITIAL HEAD FOR LAYER   1
+ READING ON UNIT  31 WITH FORMAT: (FREE)              
+ # OC file for ets1, drt1, and etsdrt test cases
+
+ OUTPUT CONTROL IS SPECIFIED ONLY AT TIME STEPS FOR WHICH OUTPUT IS DESIRED
+ HEAD PRINT FORMAT CODE IS   8    DRAWDOWN PRINT FORMAT CODE IS   0
+ HEADS WILL BE SAVED ON UNIT   0    DRAWDOWNS WILL BE SAVED ON UNIT   0
+
+    HYD. COND. ALONG ROWS is defined by the following parameters:
+ HydCond   
+
+    HYD. COND. ALONG ROWS =  5.000001E-02 FOR LAYER   1
+1
+                            STRESS PERIOD NO.   1, LENGTH =   0.000000    
+                            ----------------------------------------------
+
+                              NUMBER OF TIME STEPS =     1
+
+                               MULTIPLIER FOR DELT =     1.000
+
+                            INITIAL TIME STEP SIZE =   0.000000    
+
+
+
+ RECH array defined by the following parameters:
+  Parameter:  recharge
+                 RECHARGE =  9.999996E-04
+
+        ET SURFACE (ETSS) =   100.000    
+
+
+
+ ETSR array defined by the following parameters:
+  Parameter:  ETS-Max
+  EVAPOTRANS. RATE (ETSR) =  9.999997E-03
+
+  EXTINCTION DEPTH (ETSX) =   36.0000    
+
+ PXDP AND PETM ARRAYS FOR INTERSECTION    1 OF HEAD/ET RELATION:
+
+ EXTINCT. DEP. PROPORTION =  0.500000    
+
+       ET RATE PROPORTION =  0.100000    
+
+ Parameter:  DRT-Cond
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE     
+ ------------------------------------------------------------
+      1      1      5      8       60.00           2.000    
+
+           ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
+ DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
+      1      1      5      8      1      7      3  0.400000
+
+     1 DRAIN-RETURN CELLS
+ 
+ SOLVING FOR HEAD 
+
+ OUTPUT CONTROL FOR STRESS PERIOD  1   TIME STEP  1
+    PRINT HEAD FOR ALL LAYERS
+1
+              HEAD IN LAYER  1 AT END OF TIME STEP  1 IN STRESS PERIOD  1
+  -----------------------------------------------------------------------
+
+         1     2     3     4     5     6     7     8     9    10    11
+ .....................................................................
+   1   50.0  62.0  69.1  73.6  76.7  78.9  80.7  82.3  84.2  88.7 100.0
+   2   50.0  62.0  69.1  73.6  76.7  78.8  80.6  82.2  84.2  88.7 100.0
+   3   50.0  62.0  69.2  73.6  76.6  78.7  80.4  82.0  84.1  88.7 100.0
+   4   50.0  62.1  69.2  73.7  76.6  78.6  80.0  81.3  83.9  88.6 100.0
+   5   50.0  62.2  69.4  73.8  76.6  78.5  79.5  79.1  83.5  88.5 100.0
+   6   50.0  62.4  69.8  74.0  76.7  78.7  80.1  81.3  83.9  88.6 100.0
+   7   50.0  62.7  70.8  74.3  76.9  78.9  80.5  82.0  84.1  88.7 100.0
+   8   50.0  62.4  69.8  74.1  76.9  79.0  80.7  82.2  84.2  88.7 100.0
+   9   50.0  62.2  69.5  73.9  76.9  79.0  80.7  82.3  84.2  88.7 100.0
+  10   50.0  62.2  69.3  73.8  76.9  79.0  80.8  82.3  84.3  88.7 100.0
+  11   50.0  62.1  69.3  73.8  76.8  79.0  80.8  82.3  84.3  88.7 100.0
+1
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  1
+  -----------------------------------------------------------------------------
+
+     CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
+     ------------------                 ------------------------
+
+           IN:                                      IN:
+           ---                                      ---
+             STORAGE =           0.0000               STORAGE =           0.0000
+       CONSTANT HEAD =           0.0000         CONSTANT HEAD =         585.5527
+            RECHARGE =           0.0000              RECHARGE =         989.9996
+         ET SEGMENTS =           0.0000           ET SEGMENTS =           0.0000
+        DRAINS (DRT) =           0.0000          DRAINS (DRT) =          15.3032
+
+            TOTAL IN =           0.0000              TOTAL IN =        1590.8555
+
+          OUT:                                     OUT:
+          ----                                     ----
+             STORAGE =           0.0000               STORAGE =           0.0000
+       CONSTANT HEAD =           0.0000         CONSTANT HEAD =         372.6607
+            RECHARGE =           0.0000              RECHARGE =           0.0000
+         ET SEGMENTS =           0.0000           ET SEGMENTS =        1179.9368
+        DRAINS (DRT) =           0.0000          DRAINS (DRT) =          38.2580
+
+           TOTAL OUT =           0.0000             TOTAL OUT =        1590.8556
+
+            IN - OUT =           0.0000              IN - OUT =      -1.2207E-04
+
+ PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
+
+
+
+
+
+
+          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  1
+                    SECONDS     MINUTES      HOURS       DAYS        YEARS
+                    -----------------------------------------------------------
+   TIME STEP LENGTH  0.0000      0.0000      0.0000      0.0000      0.0000    
+ STRESS PERIOD TIME  0.0000      0.0000      0.0000      0.0000      0.0000    
+         TOTAL TIME  0.0000      0.0000      0.0000      0.0000      0.0000    
+1
+
+ DATA AT HEAD LOCATIONS
+
+       OBSERVATION      MEAS.       CALC.                            WEIGHTED
+  OBS#    NAME          HEAD        HEAD      RESIDUAL  WEIGHT**.5   RESIDUAL
+
+     1 h-1-8             82.268      82.268    0.00        10.0        0.00    
+     2 h-2-3             69.134      69.134    0.00        10.0        0.00    
+     3 h-3-5             76.624      76.624   0.763E-05    10.0       0.763E-04
+     4 h-4-9             83.859      83.859    0.00        10.0        0.00    
+     5 h-5-6             78.478      78.478    0.00        10.0        0.00    
+     6 h-6-10            88.609      88.609    0.00        10.0        0.00    
+     7 h-7-2             62.689      62.689    0.00        10.0        0.00    
+     8 h-8-4             74.068      74.068    0.00        10.0        0.00    
+     9 h-9-10            88.723      88.723   0.763E-05    10.0       0.763E-04
+    10 h-10-7            80.778      80.778  -0.763E-05    10.0      -0.763E-04
+    11 h-11-5            76.848      76.848    0.00        10.0        0.00    
+    12 h-1-10            88.717      88.717  -0.763E-05    10.0      -0.763E-04
+    13 h-2-7             80.587      80.587  -0.763E-05    10.0      -0.763E-04
+    14 h-3-6             78.743      78.743    0.00        10.0        0.00    
+    15 h-4-4             73.664      73.664    0.00        10.0        0.00    
+    16 h-5-8             79.129      79.129    0.00        10.0        0.00    
+    17 h-6-3             69.763      69.763   0.763E-05    10.0       0.763E-04
+    18 h-7-8             82.034      82.034    0.00        10.0        0.00    
+    19 h-8-9             84.204      84.204   0.763E-05    10.0       0.763E-04
+    20 h-9-2             62.247      62.247    0.00        10.0        0.00    
+    21 h-10-3            69.318      69.318    0.00        10.0        0.00    
+    22 h-11-9            84.259      84.259    0.00        10.0        0.00    
+
+ STATISTICS FOR HEAD RESIDUALS :
+ MAXIMUM WEIGHTED RESIDUAL  : 0.763E-04 OBS#      3
+ MINIMUM WEIGHTED RESIDUAL  :-0.763E-04 OBS#     10
+ AVERAGE WEIGHTED RESIDUAL  : 0.347E-05
+ # RESIDUALS >= 0. :     19
+ # RESIDUALS < 0.  :      3
+ NUMBER OF RUNS  :    2  IN   22 OBSERVATIONS
+
+ SUM OF SQUARED WEIGHTED RESIDUALS (HEADS ONLY)  0.40745E-07
+
+ DATA FOR FLOWS REPRESENTED USING THE DRAIN RETURN PACKAGE
+
+       OBSERVATION      MEAS.      CALC.                          WEIGHTED
+  OBS#    NAME          FLOW       FLOW     RESIDUAL  WEIGHT**.5  RESIDUAL
+
+    23 D-1            -38.3      -38.3      0.381E-05  0.261      0.997E-06
+
+ STATISTICS FOR DRT PACKAGE FLOW RESIDUALS :
+ MAXIMUM WEIGHTED RESIDUAL  : 0.997E-06 OBS#     23
+ MINIMUM WEIGHTED RESIDUAL  : 0.997E-06 OBS#     23
+ AVERAGE WEIGHTED RESIDUAL  : 0.997E-06
+ # RESIDUALS >= 0. :      1
+ # RESIDUALS < 0.  :      0
+ NUMBER OF RUNS  :    1  IN    1 OBSERVATIONS
+
+ SUM OF SQUARED WEIGHTED RESIDUALS (DRT FLOWS ONLY)  0.99420E-12
+
+ SUM OF SQUARED WEIGHTED RESIDUALS (ALL DEPENDENT VARIABLES)  0.40746E-07
+
+ STATISTICS FOR ALL RESIDUALS :
+ AVERAGE WEIGHTED RESIDUAL  : 0.336E-05
+ # RESIDUALS >= 0. :     20
+ # RESIDUALS < 0.  :      3
+ NUMBER OF RUNS  :    2  IN   23 OBSERVATIONS
+
+ INTERPRETING THE CALCULATED RUNS STATISTIC VALUE OF     -3.72    
+ NOTE: THE FOLLOWING APPLIES ONLY IF 
+        # RESIDUALS >= 0 . IS GREATER THAN 10 AND 
+        # RESIDUALS < 0.   IS GREATER THAN 10
+ THE NEGATIVE VALUE MAY INDICATE TOO FEW RUNS:
+    IF THE VALUE IS LESS THAN -1.28, THERE IS LESS THAN A 10 PERCENT
+       CHANCE THE VALUES ARE RANDOM,
+    IF THE VALUE IS LESS THAN -1.645, THERE IS LESS THAN A 5 PERCENT
+       CHANCE THE VALUES ARE RANDOM,
+    IF THE VALUE IS LESS THAN -1.96, THERE IS LESS THAN A 2.5 PERCENT
+       CHANCE THE VALUES ARE RANDOM.
+
+
+ ORDERED DEPENDENT-VARIABLE WEIGHTED RESIDUALS
+ NUMBER OF RESIDUALS INCLUDED:        23
+    -0.763E-04 -0.763E-04 -0.763E-04   0.00       0.00       0.00       0.00    
+      0.00       0.00       0.00       0.00       0.00       0.00       0.00    
+      0.00       0.00       0.00       0.00      0.997E-06  0.763E-04  0.763E-04
+     0.763E-04  0.763E-04
+
+ CORRELATION BETWEEN ORDERED WEIGHTED RESIDUALS AND NORMAL ORDER STATISTICS
+ FOR OBSERVATIONS =    0.738    
+
+ --------------------------------------------------------------------------
+ COMMENTS ON THE INTERPRETATION OF THE CORRELATION BETWEEN
+ WEIGHTED RESIDUALS AND NORMAL ORDER STATISTICS:
+
+ Generally, IF the reported CORRELATION is LESS than the critical value,
+ at the selected significance level (usually 5 or 10%), the hypothesis
+ that the weighted residuals are INDEPENDENT AND NORMALLY DISTRIBUTED
+ would be REJECTED.  HOWEVER, in this case, conditions are outside of
+ the range of published critical values as discussed below.
+
+ The sum of the number of observations and prior information items is    23
+ which is less than 35, the minimum value for which critical values are
+ published.  Therefore, the critical values for the 5 and 10% significance
+ levels are less than 0.943 and 0.952, respectively.
+
+ CORRELATIONS GREATER than these critical values indicate that, probably, the 
+ weighted residuals ARE INDEPENDENT AND NORMALLY DISTRIBUTED.
+
+ Correlations LESS than these critical values MAY BE ACCEPTABLE, and
+ rejection of the hypothesis is not necessarily warranted.
+
+ The Kolmogorov-Smirnov test can be used to further evaluate the residuals.
+ --------------------------------------------------------------------------
+

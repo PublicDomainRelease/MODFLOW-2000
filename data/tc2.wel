@@ -1,0 +1,7 @@
+# WEL file for test case tc2
+#
+         3         0                      Item 2: MXACTW IWELCB
+         3                                Item 5: ITMP NP, stress period 1
+         1         9         7     -100.  Item 6: Layer Row Column Q
+         1         8        16     -200.
+         1        11        13     -150.

@@ -1,0 +1,26 @@
+# PES file for test case tc3
+#
+   15  2.0 1E-5 1E-4                              ITEM 1: MAX-ITER MAX-CHANGE TOL SOSC
+    0    0    0    0    0  0.0  0.001  1.5 0      ITEM 2: IBEFLG IYCFLG IOSTAR NOPT NFIT SOSR RMAR RMARM IAP
+    2    0    0                                   ITEM 3: IPRCOV IPRINT LPRINT
+ 0.08  0.0    0                                   ITEM 4: CSA FCONV LASTX
+    0    0    6                                   ITEM 5: NPNG IPR MPR
+EQ-Q_3 -97000. = WQ_3 STAT 1940 1  9              ITEM 9: PRIOR-INFORMATION EQUATION
+EQ-Q_4 -51000. = WQ_4 STAT 1020 1  9              ITEM 9: PRIOR-INFORMATION EQUATION
+EQ-HK_2   420. = HK_2 STAT 0.0880  11  9          ITEM 9: PRIOR-INFORMATION EQUATION (HK_2 is log-transformed)
+EQ-RCH_1 0.0004  = RCH_ZONE_1 STAT 1.2E-4 1 9     ITEM 9: PRIOR-INFORMATION EQUATION
+EQ-RCH_3 1.7E-4  = RCH_ZONE_3 STAT 5.1E-5 1 9     ITEM 9: PRIOR-INFORMATION EQUATION
+EQ-KRB_1 0.08    = RIVERS  stat 0.0080445 1 9     ITEM 9: PRIOR-INFORMATION EQUATION (RIVERS is log-transformed)
+
+Note: For prior information on log-transformed parameters, STATP is in
+      log (base 10) space if STAT-FLAG is one of (10,11,12) or in native
+      space if STAT-FLAG is one of (0,1,2).
+
+original:
+EQ-Q_3 -97000. = WQ_3 STAT 1940 1  9              ITEM 9: PRIOR-INFORMATION EQUATION
+EQ-Q_4 -51000. = WQ_4 STAT 1020 1  9              ITEM 9: PRIOR-INFORMATION EQUATION
+EQ-HK_2   420. = HK_2 STAT 0.0880  11  9          ITEM 9: PRIOR-INFORMATION EQUATION (HK_2 is log-transformed)
+EQ-RCH_1 0.0004  = RCH_ZONE_1 STAT 1.2E-4 1 9     ITEM 9: PRIOR-INFORMATION EQUATION
+EQ-RCH_3 1.7E-4  = RCH_ZONE_3 STAT 5.1E-5 1 9     ITEM 9: PRIOR-INFORMATION EQUATION
+EQ-KRB_1 0.08    = RIVERS  stat 0.0080445 1 9     ITEM 9: PRIOR-INFORMATION EQUATION (RIVERS is log-transformed)
+

@@ -1,0 +1,24 @@
+PARAMETER 2 2
+         1         0
+RCH1 RCH  1.0E-8   1
+NONE RCHZONE 1
+RCH2 RCH  1.5E-8   1
+NONE RCHZONE 2
+         2         0
+RCH1  -20
+RCH2  -20
+         2         0
+RCH1  -20
+RCH2  -20
+         2         0
+RCH1  -20
+RCH2  -20
+         2         0
+RCH1  -20
+RCH2  -20
+         2         0
+RCH1  -20
+RCH2  -20
+         2         0
+RCH1  -20
+RCH2  -20

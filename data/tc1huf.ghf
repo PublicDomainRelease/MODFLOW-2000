@@ -1,0 +1,50 @@
+# GHF file for test case ymptc
+#
+  0  -999.  12               Item 1:  IGHFCB HDRY NHGU NPHGU
+  1    1    1                Item 2:  LAYTYP
+  0    0    0                Item 3:  LAYAVG
+1.0  1.0  1.0                Item 4:  CHANI
+  0    0    0                Item 5:  LAYVKA: 0 = Kz of model layer; not 0 = Kx/Kz
+  0    0    0                Item 6:  LAYWET
+HK1        HK   3.0E-4   1
+   1    NONE   ALL       
+HK2        HK   2.0E-7   1   Item 8:  PARNAM PARTYP PARVAL NCLST
+   2    NONE   ALL       
+HK3        HK   4.0E-5   1   Item 8:  PARNAM PARTYP PARVAL NCLST
+   3    TMULT  ALL     
+VKA1       VKA  3.0E-4   1   Item 8:  PARNAM PARTYP PARVAL NCLST
+   1    NONE   ALL     
+VKA2       VKA  2.0E-7   1   Item 8:  PARNAM PARTYP PARVAL NCLST
+   2    NONE   ALL     
+VKA3       VKA  4.0E-5   1   Item 8:  PARNAM PARTYP PARVAL NCLST
+   3    TMULT  ALL     
+SS1        SS   1.0E-3   1   Item 8:  PARNAM PARTYP PARVAL NCLST
+   1    NONE   ALL     
+SS2        SS   1.0E-6   1   Item 8:  PARNAM PARTYP PARVAL NCLST
+   2    NONE   ALL     
+SS3        SS   1.0E-3   1   Item 8:  PARNAM PARTYP PARVAL NCLST
+   3    NONE   ALL     
+SY1        SY   1.0E-1   1   Item 8:  PARNAM PARTYP PARVAL NCLST
+   1    NONE   ALL     
+SY2        SY   1.0E-2   1   Item 8:  PARNAM PARTYP PARVAL NCLST
+   2    NONE   ALL     
+SY3        SY   1.0E-1   1   Item 8:  PARNAM PARTYP PARVAL NCLST
+   3    NONE   ALL     
+  2                          Item 10:  print code for HK, layer 1
+  2                          Item 12:  print code for VKA, layer 1
+  2                          Item 10:  print code for SS, layer 1
+  2                          Item 10:  print code for HK, layer 2
+  2                          Item 12:  print code for VKA, layer 2
+  2                          Item 10:  print code for SS, layer 2
+  2                          Item 10:  print code for HK, layer 3
+  2                          Item 12:  print code for VKA, layer 3
+  2                          Item 10:  print code for SS, layer 3
+  2                          Item 10:  print code for SS, layer 2
+  2                          Item 10:  print code for HK, layer 3
+  2                          Item 12:  print code for VKA, layer 3
+  2                          Item 10:  print code for SS, layer 3
+  2                          Item 10:  print code for SS, layer 2
+  2                          Item 10:  print code for HK, layer 3
+  2                          Item 12:  print code for VKA, layer 3
+  2                          Item 10:  print code for SS, layer 3
+

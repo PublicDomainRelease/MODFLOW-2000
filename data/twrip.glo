@@ -1,0 +1,264 @@
+                                  MODFLOW-2000
+      U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
+                             VERSION 1.5 08/16/2001
+
+
+ This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
+
+ GLOBAL LISTING FILE: twrip.glo
+                         UNIT   1
+
+ OPENING twrip.lst
+ FILE TYPE:LIST   UNIT   2
+
+ OPENING ..\data\twrip.ba6
+ FILE TYPE:BAS6   UNIT   3
+
+ OPENING ..\data\twrip.lpf
+ FILE TYPE:LPF   UNIT  11
+
+ OPENING ..\data\twrip.wel
+ FILE TYPE:WEL   UNIT  12
+
+ OPENING ..\data\twrip.drn
+ FILE TYPE:DRN   UNIT  13
+
+ OPENING ..\data\twrip.rch
+ FILE TYPE:RCH   UNIT  18
+
+ OPENING ..\data\twrip.sip
+ FILE TYPE:SIP   UNIT  19
+
+ OPENING ..\data\twrip.oc
+ FILE TYPE:OC   UNIT  22
+
+ OPENING ..\data\twrip.mlt
+ FILE TYPE:MULT   UNIT   8
+
+ OPENING ..\data\twrip.zon
+ FILE TYPE:ZONE   UNIT   9
+
+ OPENING ..\data\twrip.dis
+ FILE TYPE:DIS   UNIT  10
+
+ DISCRETIZATION INPUT DATA READ FROM UNIT 10
+    3 LAYERS        15 ROWS        15 COLUMNS
+   1 STRESS PERIOD(S) IN SIMULATION
+ MODEL TIME UNIT IS SECONDS
+ MODEL LENGTH UNIT IS UNDEFINED
+ THE GROUND-WATER TRANSPORT PROCESS IS INACTIVE
+
+ THE OBSERVATION PROCESS IS INACTIVE
+ THE SENSITIVITY PROCESS IS INACTIVE
+ THE PARAMETER-ESTIMATION PROCESS IS INACTIVE
+
+ MODE: FORWARD
+
+
+ ZONE OPTION, INPUT READ FROM UNIT  9
+     1 ZONE ARRAYS
+
+ MULTIPLIER OPTION, INPUT READ FROM UNIT  8
+   1 MULTIPLIER ARRAYS
+  Confining bed flag for each layer:
+   1   1   0
+
+       6780  ELEMENTS OF GX ARRAY USED OUT OF       6780
+        675  ELEMENTS OF GZ ARRAY USED OUT OF        675
+        900  ELEMENTS OF IG ARRAY USED OUT OF        900
+
+                     DELR =   5000.00    
+
+                     DELC =   5000.00    
+
+ TOP ELEVATION OF LAYER 1 =   200.000    
+
+   MODEL LAYER BOTTOM EL. =  -150.000     FOR LAYER   1
+
+ BOT. EL. OF QUASI-3D BED =  -200.000     FOR LAYER   1
+
+   MODEL LAYER BOTTOM EL. =  -300.000     FOR LAYER   2
+
+ BOT. EL. OF QUASI-3D BED =  -350.000     FOR LAYER   2
+
+   MODEL LAYER BOTTOM EL. =  -450.000     FOR LAYER   3
+
+
+ STRESS PERIOD     LENGTH       TIME STEPS     MULTIPLIER FOR DELT    SS FLAG
+ ----------------------------------------------------------------------------
+        1         86400.00          1                    1.000         SS
+
+ STEADY-STATE SIMULATION
+
+
+
+
+  MULT. ARRAY: MULT1      =  1.000000E-06
+
+
+
+             ZONE ARRAY: RCHZONES  
+ READING ON UNIT   9 WITH FORMAT: (15I2)              
+
+      1 2 3 4 5 6 7 8 9101112131415
+ ..................................
+   1  1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+   2  1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+   3  1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+   4  1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+   5  1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+   6  1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+   7  1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+   8  1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+   9  1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+  10  1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+  11  1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+  12  1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+  13  1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+  14  1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+  15  1 1 1 1 1 1 1 2 2 2 2 2 2 2 2
+
+ LPF1 -- LAYER PROPERTY FLOW PACKAGE, VERSION 1, 1/11/2000
+         INPUT READ FROM UNIT 11
+ #  LPF Package input data for example problem
+ HEAD AT CELLS THAT CONVERT TO DRY=  1.00000E+30
+     5 Named Parameters     
+
+   LAYER FLAGS:
+ LAYER       LAYTYP        LAYAVG         CHANI        LAYVKA        LAYWET
+ ---------------------------------------------------------------------------
+    1             1             0     1.000E+00             0             0
+    2             0             0     1.000E+00             0             0
+    3             0             0     1.000E+00             0             0
+
+   INTERPRETATION OF LAYER FLAGS:
+                        INTERBLOCK     HORIZONTAL    DATA IN
+         LAYER TYPE   TRANSMISSIVITY   ANISOTROPY   ARRAY VKA   WETTABILITY
+ LAYER      (LAYTYP)      (LAYAVG)       (CHANI)      (LAYVKA)      (LAYWET)
+ ---------------------------------------------------------------------------
+    1   CONVERTIBLE      HARMONIC     1.000E+00    VERTICAL K  NON-WETTABLE
+    2      CONFINED      HARMONIC     1.000E+00    VERTICAL K  NON-WETTABLE
+    3      CONFINED      HARMONIC     1.000E+00    VERTICAL K  NON-WETTABLE
+
+       1800 ELEMENTS IN X ARRAY ARE USED BY LPF
+         18 ELEMENTS IN IX ARRAY ARE USED BY LPF
+
+ SIP5 -- STRONGLY IMPLICIT PROCEDURE SOLUTION PACKAGE
+                    VERSION 5, 9/1/93 INPUT READ FROM UNIT 19
+ MAXIMUM OF  50 ITERATIONS ALLOWED FOR CLOSURE
+  5 ITERATION PARAMETERS
+       2755 ELEMENTS IN X ARRAY ARE USED BY SIP
+        150 ELEMENTS IN IX ARRAY ARE USED BY SIP
+
+       4555  ELEMENTS OF X ARRAY USED OUT OF       4555
+          0  ELEMENTS OF Z ARRAY USED OUT OF          1
+        168  ELEMENTS OF IX ARRAY USED OUT OF        168
+          0  ELEMENTS OF XHS ARRAY USED OUT OF          1
+
+
+
+          SOLUTION BY THE STRONGLY IMPLICIT PROCEDURE
+          -------------------------------------------
+ MAXIMUM ITERATIONS ALLOWED FOR CLOSURE =       50
+                 ACCELERATION PARAMETER =     1.0000    
+      HEAD CHANGE CRITERION FOR CLOSURE =    0.10000E-02
+      SIP HEAD CHANGE PRINTOUT INTERVAL =        1
+
+     5 ITERATION PARAMETERS CALCULATED FROM SPECIFIED WSEED = 0.00100000 :
+
+  0.000000E+00 0.822172E+00 0.968377E+00 0.994377E+00 0.999000E+00
+
+ WETTING CAPABILITY IS NOT ACTIVE IN ANY LAYER
+
+ PARAMETERS DEFINED IN THE LPF PACKAGE
+
+ PARAMETER NAME:HK1          TYPE:HK     CLUSTERS:   1
+ Parameter value from package file is:   1.00000E-03
+                LAYER:  1    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
+
+ PARAMETER NAME:HK2          TYPE:HK     CLUSTERS:   1
+ Parameter value from package file is:   1.00000E-04
+                LAYER:  2    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
+
+ PARAMETER NAME:HK3          TYPE:HK     CLUSTERS:   1
+ Parameter value from package file is:   2.00000E-04
+                LAYER:  3    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
+
+ PARAMETER NAME:VKCB1        TYPE:VKCB   CLUSTERS:   1
+ Parameter value from package file is:    1.0000    
+                LAYER:  1    MULTIPLIER ARRAY: MULT1    ZONE ARRAY: ALL
+
+ PARAMETER NAME:VKCB2        TYPE:VKCB   CLUSTERS:   1
+ Parameter value from package file is:   0.50000    
+                LAYER:  2    MULTIPLIER ARRAY: MULT1    ZONE ARRAY: ALL
+
+    HYD. COND. ALONG ROWS FOR LAYER   1 WILL BE DEFINED BY PARAMETERS
+ (PRINT FLAG=   0)
+
+      VERTICAL HYD. COND. =   1.00000     FOR LAYER   1
+
+ QUASI3D VERT. HYD. COND. FOR LAYER   1 WILL BE DEFINED BY PARAMETERS
+ (PRINT FLAG=   0)
+
+    HYD. COND. ALONG ROWS FOR LAYER   2 WILL BE DEFINED BY PARAMETERS
+ (PRINT FLAG=   0)
+
+      VERTICAL HYD. COND. =   1.00000     FOR LAYER   2
+
+ QUASI3D VERT. HYD. COND. FOR LAYER   2 WILL BE DEFINED BY PARAMETERS
+ (PRINT FLAG=   0)
+
+    HYD. COND. ALONG ROWS FOR LAYER   3 WILL BE DEFINED BY PARAMETERS
+ (PRINT FLAG=   0)
+
+      VERTICAL HYD. COND. =   1.00000     FOR LAYER   3
+
+
+     1 Well parameters
+
+ PARAMETER NAME:WELL1        TYPE:Q   
+ Parameter value from package file is:    1.0000    
+   NUMBER OF ENTRIES:     12
+
+ WELL NO.  LAYER   ROW   COL   STRESS FACTOR   
+ ----------------------------------------------
+      1      1      9      8      -5.000    
+      2      1      9     10      -5.000    
+      3      1      9     12      -5.000    
+      4      1      9     14      -5.000    
+      5      1     11      8      -5.000    
+      6      1     11     10      -5.000    
+      7      1     11     12      -5.000    
+      8      1     11     14      -5.000    
+      9      1     13      8      -5.000    
+     10      1     13     10      -5.000    
+     11      1     13     12      -5.000    
+     12      1     13     14      -5.000    
+
+
+     1 Drain parameters
+
+ PARAMETER NAME:DRN1         TYPE:DRN 
+ Parameter value from package file is:    1.0000    
+   NUMBER OF ENTRIES:      2
+
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
+ ------------------------------------------------------------
+      1      1      8      2       0.000           1.000    
+      2      1      8      3       0.000           1.000    
+
+
+     2 Recharge parameters
+
+ PARAMETER NAME:RCH1         TYPE:RCH    CLUSTERS:   1
+ Parameter value from package file is:   3.00000E-08
+                MULTIPLIER ARRAY: NONE    ZONE ARRAY: RCHZONES
+                ZONE VALUES:    1
+
+ PARAMETER NAME:RCH2         TYPE:RCH    CLUSTERS:   1
+ Parameter value from package file is:   3.00000E-08
+                MULTIPLIER ARRAY: NONE    ZONE ARRAY: RCHZONES
+                ZONE VALUES:    2
+
+   9 PARAMETERS HAVE BEEN DEFINED IN ALL PACKAGES.
+ (SPACE IS ALLOCATED FOR  500 PARAMETERS.)

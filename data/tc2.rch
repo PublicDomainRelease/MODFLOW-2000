@@ -1,0 +1,8 @@
+# RCH file for test case tc2
+#
+PARAMETER  1  1          NPRCH NRCHC
+         1         0     NRCHOP IRCHBD
+RCHRAT  RCH  3.1E-4   1  PARNAM PARTYP B NCLU
+NONE  RCHETM       1     Mult_arr_name, Zone_arr_name, Zone numbers
+         1         0     INRECH INIRICH for stress period 1
+RCHRAT  20               Name of active parameter and print code
