@@ -170,7 +170,7 @@ typedef struct CCFD_MG_operator
 int CCFD_MG_allocate(GEN_operator* GEN_ptr, 
                      GEN_operator* GEN_CCFD_ptr,
                      r_data* rdp, int SM, int SC);
-                    
+		    
 void CCFD_MG_free(void* A_ptr);
 
 int CCFD_MG_assemble(GEN_operator* GEN_CCFD_MG_ptr, double w);

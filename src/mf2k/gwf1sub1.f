@@ -1,3 +1,4 @@
+! Time of File Save by ERB: 4/1/2005 11:49AM
 C     Last change:  SAL   3 Sep 2003    7:37 am
       MODULE SUBARRAYS
       LOGICAL NDF,NNDF,OCFLGS,OCLAY
@@ -29,7 +30,7 @@ C     Last change:  SAL   3 Sep 2003    7:37 am
      1    ITMIN,NNDB,NDB,NMZ,NN,NND1,ND1,ND2,IDSAVE,IDREST,ISSFLG,NPER,
      2    NSTP,NSTPT,IN,IOUT,ISIP,LCV,ISEN)
 C
-C-----VERSION 0000 03SEP2003 GWF1SUB1ALP
+C-----VERSION 0000 22SEP2004 GWF1SUB1ALP
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR SUBSIDENCE PACKAGE
 C     ******************************************************************
@@ -221,17 +222,22 @@ C -----READ IN ARRAY RND TO SEE HOW MANY STRINGS OF NN CELLS ARE NEEDED.
   190  CONTINUE
        ND2=NN*NNSUM
       ENDIF
-      IF(ND2.LT.1) THEN
+      IF(ND2.LT.1.AND.NDF) THEN
          WRITE(IOUT,*) ' STOPPING-- Delay beds were not found in ',
      &                 ' array specifying numbers of delay beds (RNB).'
          CALL USTOP(' ')
       ENDIF
 C
+      IF(ITERP.EQ.1) THEN
+         ALLOCATE(OCFLGS(13,NSTPT))
+         ALLOCATE(OCLAY(NLAY))
+      ENDIF
       IF(NNDF.AND. ITERP.EQ.1) THEN
          ALLOCATE(HC(NND1))
          ALLOCATE(SCE(NND1))
          ALLOCATE(SCV(NND1))
          ALLOCATE(SUB(NND1))
+         ALLOCATE(ILSYS(NNDB))
       ENDIF
       IF(NDF.AND. ITERP.EQ.1) THEN
          ALLOCATE(NZ(ND1))
@@ -245,9 +251,6 @@ C
          ALLOCATE(A1(NN))
          ALLOCATE(A2(NN))
          ALLOCATE(BB(NN))
-         ALLOCATE(OCFLGS(13,NSTPT))
-         ALLOCATE(OCLAY(NLAY))
-         ALLOCATE(ILSYS(NNDB))
       ENDIF
 C ------ALLOCATE SPACE FOR OUTPUT CONTROL FLAGS
 C

@@ -1,3 +1,4 @@
+! Time of File Save by ERB: 3/31/2005 1:32PM
 C     Last change:  ERB  10 Jan 2003   10:59 am
 C=======================================================================
       SUBROUTINE UNOITER(RHS,HNEW,NODES,ISA)
@@ -200,7 +201,11 @@ C5------LOAD THE COLUMN #'S INTO THE BUFFER.
       I2=I2-I3*10+1
       BF(NBF-1)=DG(I2)
       IF(I3.EQ.0) GO TO 30
-      BF(NBF-2)=DG(I3+1)
+      I4=I3/10
+      I3=I3-I4*10+1
+      BF(NBF-2)=DG(I3)
+      IF(I4.EQ.0) GO TO 30
+      BF(NBF-3)=DG(I4+1)
    30 CONTINUE
 C
 C6------PRINT THE CONTENTS OF THE BUFFER (I.E. PRINT THE LINE).
@@ -2134,10 +2139,18 @@ C     ------------------------------------------------------------------
      &I5,', BUT IT MUST BE',/,
      &' BETWEEN 1 AND NPER (OF THE DISCRETIZATION INPUT FILE)',/,
      &' -- STOP EXECUTION (UOBSTI)')
+ 510  FORMAT(/,' TOFFSET IS NEGATIVE FOR OBSERVATION "',A,
+     &'" -- STOP EXECUTION (UOBSTI)')
 C
 C-----ENSURE THAT SPECIFIED REFERENCE STRESS PERIOD IS VALID
       IF (IREFSP.LT.1 .OR. IREFSP.GT.NPER) THEN
         WRITE(IOUT,505) IREFSP
+        CALL USTOP(' ')
+      ENDIF
+C
+C-----ENSURE THAT TOFFSET IS NOT NEGATIVE
+      IF (TOFFSET.LT.0.0) THEN
+        WRITE(IOUT,510) TRIM(ID)
         CALL USTOP(' ')
       ENDIF
 C

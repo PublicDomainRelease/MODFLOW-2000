@@ -1,4 +1,4 @@
-! Time of File Save by ERB: 3/24/2004 10:13AM
+! Time of File Save by ERB: 3/31/2005 12:58PM
 C     revised:      DEP  09 Feb 2004 & 22 Mar 2004
 C     Last change:  ERB  15 Jan 2003    2:44 pm
 C     REVISED:      LFK  07 Aug 2003
@@ -45,7 +45,7 @@ C     ******************************************************************
       IF(IUNITSFR.LE.0.AND.IUNITLAK.LE.0) THEN
          WRITE(IOUT,1)
     1    FORMAT(1X,' GAGE PACKAGE ACTIVE EVEN THOUGH SFR AND LAK3 ',
-     &         'PACKAGES ARE INACTIVE: '
+     &         'PACKAGES ARE INACTIVE: ',
      &         'GAGE PACKAGE IS BEING TURNED OFF')
          INGAGE=0
          LSGAGE=1
@@ -409,7 +409,7 @@ C
      *   ' DIVERSION TYPE (IPRIOR)',/10X,
      *   ' RESETTING OUTTYPE FROM 5 TO 0')
  202  FORMAT (/2X,'*** WARNING ***  GAGE ',I3,' ON STREAM SEGMENT ',I3,
-     *   ' REACH NO. ',I3,' IS NOT LOCATED ON FIRST REACH OF A'
+     *   ' REACH NO. ',I3,' IS NOT LOCATED ON FIRST REACH OF A',
      *   ' DIVERSION',/10X,' RESETTING OUTTYPE FROM 5 TO 0')
  203  FORMAT (/2X,'STREAM SEGMENT ',I3,' IS DIVERTED FROM SEGMENT ',I3,
      *        ' DIVERSION TYPE IS IPRIOR OF ',I3)
@@ -733,7 +733,7 @@ C                GET OUTTYPE
                   WRITE (LFRMAT,452) NSOL
                   WRITE (IG3,LFRMAT) GAGETM,STRM(15,II),
      *                      STRM(9,II),
-     *                      ((COUT(II,ISOL),CLOAD(ISOL)),ISOL=1,NSOL)
+     *                      (COUT(II,ISOL),CLOAD(ISOL),ISOL=1,NSOL)
                  CASE(4)
                   DO 6 ISOL=1,NSOL
                      CLOAD(ISOL)=STRM(9,II)*COUT(II,ISOL)
@@ -742,7 +742,7 @@ C                GET OUTTYPE
                   WRITE (IG3,LFRMAT) GAGETM,STRM(15,II),STRM(9,II),
      *                    DEPTH,STRM(5,II),SFRQ(1,II),
      *                    STRM(16,II),STRM(17,II),STRM(18,II),
-     *                    ((COUT(II,ISOL),CLOAD(ISOL)),ISOL=1,NSOL)
+     *                    (COUT(II,ISOL),CLOAD(ISOL),ISOL=1,NSOL)
 C              OUTTYPE 5 IS USED TO PRINT TIME SERIES OF DIVERSIONS
                    CASE (5)
                  DO 7 ISOL=1,NSOL
@@ -751,7 +751,7 @@ C              OUTTYPE 5 IS USED TO PRINT TIME SERIES OF DIVERSIONS
                   WRITE (LFRMAT,470) NSOL
                   WRITE (IG3,LFRMAT) GAGETM,STRM(15,II),PMXDVRT,
      *                    STRM(10,II),UPSTRFLW,
-     *                    ((COUT(II,ISOL),CLOAD(ISOL)),ISOL=1,NSOL)
+     *                    (COUT(II,ISOL),CLOAD(ISOL),ISOL=1,NSOL)
                  END SELECT
                END IF
          ELSE

@@ -1,3 +1,4 @@
+! Time of File Save by ERB: 3/11/2005 9:02AM
 C     Last change:  ERB  30 Sep 2002    1:40 pm
       SUBROUTINE GWF1LPF1ALG(ISUM,LCHK,LCVKA,LCSC1,LCSC2,LCHANI,
      1  LCVKCB,IN,NCOL,NROW,NLAY,IOUT,ILPFCB,LCWETD,
@@ -782,11 +783,23 @@ C2B-----CHECK VERTICAL HYDRAULIC CONDUCTIVITY AND CONFINING BED
 C2B-----VERTICAL HYDRAULIC CONDUCTIVITY.
          IF(NLAY.GT.1) THEN
             IF(VKA(J,I,K).NE.ZERO) THEN
-               IF(K.NE.NLAY .AND. LAYCBD(K).NE.0) THEN
-                  IF(VKCB(J,I,LAYCBD(K)).NE.ZERO) GO TO 40
+               IF(K.NE.NLAY) THEN
+                  IF (VKA(J,I,K+1).NE.ZERO) THEN
+                     IF(LAYCBD(K).NE.0) THEN
+                        IF(VKCB(J,I,LAYCBD(K)).NE.ZERO) GO TO 40
+                     ELSE
+                        GO TO 40
+                     END IF
+                  END IF
                END IF
-               IF(K.NE.1 .AND. LAYCBD(K-1).NE.0) THEN
-                  IF(VKCB(J,I,LAYCBD(K-1)).NE.ZERO) GO TO 40
+               IF(K.NE.1) THEN
+                  IF (VKA(J,I,K-1).NE.ZERO) THEN
+                     IF (LAYCBD(K-1).NE.0) THEN
+                        IF(VKCB(J,I,LAYCBD(K-1)).NE.ZERO) GO TO 40
+                     ELSE
+                        GO TO 40
+                     END IF
+                  ENDIF
                END IF
             END IF
          END IF
@@ -812,11 +825,23 @@ C3B-----CHECK VERTICAL HYDRAULIC CONDUCTIVITY AND CONFINING BED
 C3B-----VERTICAL HYDRAULIC CONDUCTIVITY.
          IF(NLAY.GT.1) THEN
             IF(VKA(J,I,K).NE.ZERO) THEN
-               IF(K.NE.NLAY .AND. LAYCBD(K).NE.0) THEN
-                  IF(VKCB(J,I,LAYCBD(K)).NE.ZERO) GO TO 50
+               IF(K.NE.NLAY) THEN
+                  IF (VKA(J,I,K+1).NE.ZERO) THEN
+                     IF(LAYCBD(K).NE.0) THEN
+                        IF(VKCB(J,I,LAYCBD(K)).NE.ZERO) GO TO 50
+                     ELSE
+                        GO TO 50
+                     END IF
+                  END IF
                END IF
-               IF(K.NE.1 .AND. LAYCBD(K-1).NE.0) THEN
-                  IF(VKCB(J,I,LAYCBD(K-1)).NE.ZERO) GO TO 50
+               IF(K.NE.1) THEN
+                  IF (VKA(J,I,K-1).NE.ZERO) THEN
+                     IF (LAYCBD(K-1).NE.0) THEN
+                        IF(VKCB(J,I,LAYCBD(K-1)).NE.ZERO) GO TO 50
+                     ELSE
+                        GO TO 50
+                     END IF
+                  ENDIF
                END IF
             END IF
          END IF

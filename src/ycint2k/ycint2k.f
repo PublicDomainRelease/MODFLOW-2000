@@ -1,3 +1,4 @@
+! Time of File Save by ERB: 1/5/2005 10:23AM
 C     Last change:  ERB  25 Feb 2002    2:21 pm
       PROGRAM YCINT2K
 C
@@ -43,13 +44,13 @@ C
      &           '"SIMULTANEOUS PREDICTION INTERVALS, INFINITE"'/
       VERSN =
      &    '$Id: ycint.f,v 3.1 1997/07/24 15:14:34 rsregan Exp rsregan $'
-      VERSN = 
+      VERSN =
      &'@(#)YCINT - MODFLOWP UTILITY TO CALCULATE LINEAR CONFIDENCE INTER
      &VALS ON'
-      VERSN = 
+      VERSN =
      &'@(#)YCINT - SIMULATED HYDRAULIC HEADS AND FLOWS ALONG HEAD-DEPEND
      &ENT BOUNDARIES'
-      VERSN = 
+      VERSN =
      &'@(#)YCINT - MODIFIED BY M.C. HILL FROM UNPUBLISHED PROGRAM RELIAB
      & BY R.L COOLEY'
       VERSN = '@(#)YCINT - CONTACT: H2OSOFT@USGS.GOV'
@@ -457,7 +458,8 @@ C
             IF (IPRED.EQ.1) S2 = S2 + V(N)
             S2 = S2**.5
             IF (IDIF.EQ.1) THEN
-              S21 = S21 + V(N) + V1(N)
+C              S21 = S21 + V(N) + V1(N) ! Change suggested by E. Poeter 10/4/04
+              IF (IPRED.EQ.1) S21 = S21 + V(N) + V1(N)
               S21 = S21**.5
             ENDIF
             HL = H(N) - FSTAT*S2
@@ -491,17 +493,17 @@ C        SPECIFICATIONS:
       INTEGER IDOF, I, ITABLE
 C     ------------------------------------------------------------------
       DIMENSION ITABLE(35), TABLE(35)
-      DATA (ITABLE(I),I=1,35)/1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 
-     &      13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 
+      DATA (ITABLE(I),I=1,35)/1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+     &      13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
      &      28, 29, 30, 40, 60, 120, 240, 500/
       DATA (TABLE(I),I=1,35)/12.706, 4.303, 3.182, 2.776, 2.571, 2.447,
      &      2.365, 2.306, 2.262, 2.228, 2.201, 2.179, 2.160, 2.145,
      &      2.131, 2.120, 2.110, 2.101, 2.093, 2.086, 2.080, 2.074,
-     &      2.069, 2.064, 2.060, 2.056, 2.052, 2.048, 2.045, 2.042, 
+     &      2.069, 2.064, 2.060, 2.056, 2.052, 2.048, 2.045, 2.042,
      &      2.021, 2.000, 1.980, 1.970, 1.960/
 C     ------------------------------------------------------------------
 C
-      IF (IDOF.LE.30) THEN  
+      IF (IDOF.LE.30) THEN
         TST=TABLE(IDOF)
         RETURN
       ENDIF
@@ -1299,7 +1301,7 @@ C4------LOOP THROUGH THE ROWS PRINTING EACH ONE IN ITS ENTIRETY.
       DO 1000 I=1,NPE
 C
 C------------ FORMAT 11G10.3
-        IF (IP.EQ.1) THEN 
+        IF (IP.EQ.1) THEN
           WRITE(IOUT,11) PARNAM(I),(BUF(J,I),J=1,NPE)
    11     FORMAT(1X,A,1X,1PG10.3,10(1X,G10.3):/(11X,11(1X,G10.3)))
 C
@@ -1324,7 +1326,7 @@ C------------ FORMAT 8G14.7
    51     FORMAT(1X,A,1X,1PG14.7,7(1X,G14.7):/(11X,8(1X,G14.7)))
 C
 C------------ FORMAT 6G10.3
-        ELSEIF (IP.EQ.6) THEN 
+        ELSEIF (IP.EQ.6) THEN
           WRITE(IOUT,61) PARNAM(I),(BUF(J,I),J=1,NPE)
    61     FORMAT(1X,A,1X,1PG10.3,5(1X,G10.3):/(11X,6(1X,G10.3)))
 C

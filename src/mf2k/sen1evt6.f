@@ -1,3 +1,4 @@
+! Time of File Save by ERB: 3/31/2005 2:42PM
 C     Last change:  ERB  21 Nov 2001   10:00 am
       SUBROUTINE SEN1EVT6FM(NCOL,NROW,NLAY,DELR,DELC,RMLT,NEVTOP,IEVT,
      &                  IBOUND,RHS,SURF,EXDP,HNEW,IZON,NMLTAR,NZONAR,IP)
@@ -13,13 +14,13 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL DDD, DELC, DELR, EXDP, H, RHS, S, SM,
      &     RMLT, SURF, XXX, ZERO
-      INTEGER IBOUND, IC, IFL, NEVTOP, IEVT, IR, IZ, K, 
-     &        KK, IZON, NCOL, NLAY, 
+      INTEGER IBOUND, IC, IFL, IL, NEVTOP, IEVT, IR, IZ, K,
+     &        KK, IZON, NCOL, NLAY,
      &        NROW, NZ
       DOUBLE PRECISION RO, HNEW(NCOL,NROW,NLAY)
-      DIMENSION DELR(NCOL), DELC(NROW), IEVT(NCOL,NROW), 
-     &          RMLT(NCOL,NROW,NMLTAR), IBOUND(NCOL,NROW,NLAY), 
-     &          RHS(NCOL,NROW,NLAY), SURF(NCOL,NROW), 
+      DIMENSION DELR(NCOL), DELC(NROW), IEVT(NCOL,NROW),
+     &          RMLT(NCOL,NROW,NMLTAR), IBOUND(NCOL,NROW,NLAY),
+     &          RHS(NCOL,NROW,NLAY), SURF(NCOL,NROW),
      &          EXDP(NCOL,NROW), IZON(NCOL,NROW,NZONAR)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
@@ -68,6 +69,19 @@ C--------NEVTOP=2
                 RO = SM*DELR(IC)*DELC(IR)
                 KK = IEVT(IC,IR)
               ENDIF
+            ENDIF
+C--------NEVTOP=3 -- added 3/31/05 ERB
+            IF (NEVTOP.EQ.3) THEN
+              KK = 0
+              DO IL=I,NLAY
+                IF (IBOUND(IC,IR,IL).LT.0) GOTO 50
+                IF (IBOUND(IC,IR,IL).GT.0) THEN
+                  RO = SM*DELR(IC)*DELC(IR)
+                  KK = IL
+                  EXIT
+                ENDIF
+              ENDDO
+              IF (KK.EQ.0) GOTO 50
             ENDIF
 C--------ADJUST
             RO = -RO

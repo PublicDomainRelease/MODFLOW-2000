@@ -15,7 +15,7 @@
  *
  *  The fine-grid CCFD operator is allocated and assembled in this
  *  library.  MF2K internal arrays are aliased with the fine-grid
- *  CCFD operator.  
+ *  CCFD operator.
  *
  *  MF2K internal data includes:
  *
@@ -52,11 +52,11 @@
  *    BIGH  -- Max head change
  */
 
-/* 
- * Allocates GMG data 
+/*
+ * Allocates GMG data
  */
 void MF2KGMG_ALLOCATE(int* NCOL, int* NROW, int* NLAY,
-                      int* IPREC, int* ISM, int* ISC, 
+                      int* IPREC, int* ISM, int* ISC,
                       double* RELAX, int* ISIZ, int* IERR)
 {
   int size,total_size=0;   /* Number of bytes allocated. */
@@ -90,10 +90,10 @@ void MF2KGMG_ALLOCATE(int* NCOL, int* NROW, int* NLAY,
   total_size+=size;
 
   /*
-   * Allocate fine-grid CCFD operator: 
-   * The fine-grid CCFD operator is allocated and assembled 
-   * outside of the normal context of the CCFD operator.   
-   */  
+   * Allocate fine-grid CCFD operator:
+   * The fine-grid CCFD operator is allocated and assembled
+   * outside of the normal context of the CCFD operator.
+   */
   CCFD_ptr=(CCFD_operator*)calloc(1,sizeof(CCFD_operator));
   if(CCFD_ptr==NULL)
   {
@@ -162,8 +162,8 @@ void MF2KGMG_FREE()
   return;
 }
 
-/* 
- * Local functions for assembling CCFD matrix. 
+/*
+ * Local functions for assembling CCFD matrix.
  */
 /* Single precision CCFD assembly method. */
 void MF2KGMG_SCCFD_ASSEMBLE(double* BIGR0, float* RHS, float* HCOF,
@@ -177,7 +177,7 @@ void MF2KGMG_DCCFD_ASSEMBLE(double* BIGR0, double* RHS, double* HCOF,
  * Arguments that are pointer to void are either singel precision
  * or double precision and are resolved at run time.
  */
-void MF2KGMG_ASSEMBLE(double* BIGR0, void* CR, void* CC, void* CV, 
+void MF2KGMG_ASSEMBLE(double* BIGR0, void* CR, void* CC, void* CV,
                       void* HCOF, double* HNEW, void* RHS,
                       void* HNOFLO, int* IBOUND, int* IERR)
 {
@@ -197,7 +197,7 @@ void MF2KGMG_ASSEMBLE(double* BIGR0, void* CR, void* CC, void* CV,
     MF2KGMG_SCCFD_ASSEMBLE(BIGR0,RHS,HCOF,HNOFLO,HNEW);
   else
     MF2KGMG_DCCFD_ASSEMBLE(BIGR0,RHS,HCOF,HNOFLO,HNEW);
-                            
+
   size=CCFD_MG_assemble(&CCFDMG,w);
   if(size<0)
   {
@@ -215,9 +215,9 @@ void MF2KGMG_ASSEMBLE(double* BIGR0, void* CR, void* CC, void* CV,
  *  MF2KGMG_EVAL: Computes head change returning l2-norm of residual (BIGR)
  *  and number of iterations (ITER).
  */
-void MF2KGMG_EVAL(int* ITER, double* BIGR, double* DRCLOSE, 
+void MF2KGMG_EVAL(int* ITER, double* BIGR, double* DRCLOSE,
                   int* IITER, int* IOUTGMG, int* IOUT)
-                
+
 {
   /* Pointer to access PCG data */
   PCG_operator *PCG_ptr=PCG.A_ptr;
@@ -231,14 +231,14 @@ void MF2KGMG_EVAL(int* ITER, double* BIGR, double* DRCLOSE,
 
   /* Approximate head change. */
   *ITER=GEN_eval(&z,&r,&PCG);
-  
+
   *BIGR=PCG_ptr->BIGR;
 
   return;
 }
 
 /*
- *  MF2KGMG_UPDATE: Adds damped head change to current approximation. 
+ *  MF2KGMG_UPDATE: Adds damped head change to current approximation.
  */
 void MF2KGMG_UPDATE(double* HNEW, double* DDAMP)
 {
@@ -251,7 +251,7 @@ void MF2KGMG_UPDATE(double* HNEW, double* DDAMP)
 }
 
 
-/* Calculate l2-norm of residual and return location 
+/* Calculate l2-norm of residual and return location
  * of max residual.
  */
 void MF2KGMG_BIGR(double* BIGR, int* IBIGR, int* JBIGR, int* KBIGR)
@@ -428,7 +428,7 @@ void MF2KGMG_SCCFD_ASSEMBLE(double* BIGR0, float* RHS, float* HCOF,
             EE+=COND;
             RSUM+=COND*HNEW[e+lm];
           }
-          
+
           if(fabs(EE)<=DBL_MIN)
           {
             IBOUND[e]=0;
@@ -468,7 +468,7 @@ void MF2KGMG_DCCFD_ASSEMBLE(double* BIGR0, double* RHS, double* HCOF,
   int *IBOUND;          /* Specified head flags */
 
   double *RES;          /* Residual vector */
-  double EE,RSUM,COND;  /* Work variables */ 
+  double EE,RSUM,COND;  /* Work variables */
 
   l=CCFD_ptr->rdp->l;
   m=CCFD_ptr->rdp->m;
@@ -544,7 +544,7 @@ void MF2KGMG_DCCFD_ASSEMBLE(double* BIGR0, double* RHS, double* HCOF,
             EE+=COND;
             RSUM+=COND*HNEW[e+lm];
           }
-          
+
           if(fabs(EE)<=DBL_MIN)
           {
             IBOUND[e]=0;

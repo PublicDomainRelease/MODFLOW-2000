@@ -1,16 +1,16 @@
 #include "solvers.h"
 #include <limits.h>
 
-/* 
+/*
  *  Generic PCG:
  *
- *    Iterative method for approximating the solution to Ax=b  
+ *    Iterative method for approximating the solution to Ax=b
  *    where x is an r_vector structure representing the initial guess
  *    and b is an r_vector structure representing the right-hand side.
  *    Upon completion, the x vector contains the approximate solution
  *    computed by the PCG method.
  *
- *    The matrix A and the preconditioner B are passed in 
+ *    The matrix A and the preconditioner B are passed in
  *    as pointers to generic operators.
  *
  *    Specifications:
@@ -19,8 +19,8 @@
  *
  *     RCLOSE        Stopping criterion for PCG.
  *
- *     pf            Print flag: If pf is non-zero, then the 
- *                   l2-norm of the preconditioned residual, 
+ *     pf            Print flag: If pf is non-zero, then the
+ *                   l2-norm of the preconditioned residual,
  *                 the residual and the max-norm of the residual
  *                 are printed.  The average reduction is also
  *                 printed at the end of the iterations.
@@ -29,7 +29,7 @@
  *
  *     ow            If ow is non-zero, then the right-hand side
  *                   is overwritten with the residual.  This
- *                 saves memory.  For non-zero ow a zero 
+ *                 saves memory.  For non-zero ow a zero
  *                 initial guess is used.
  *
  *  The iteration parameters are set using PCG_set.  For example:
@@ -44,7 +44,7 @@
  *
  *    iter=PCG_eval(&x,&b,&PCG);
  *
- *  The final l2-norm of the residual squared 
+ *  The final l2-norm of the residual squared
  *  is stored in the PCG structure, PCG.BIGR
  */
 
@@ -111,12 +111,12 @@ int PCG_assemble(GEN_operator* PCG_GEN_ptr,
   return 1;
 }
 
-int PCG_set(GEN_operator* GEN_ptr, int IITER, 
+int PCG_set(GEN_operator* GEN_ptr, int IITER,
             double RCLOSE, int pf, int IOUT)
 {
   PCG_operator *PCG_ptr=GEN_ptr->A_ptr;
 
-  PCG_ptr->IITER=IITER; 
+  PCG_ptr->IITER=IITER;
   PCG_ptr->RCLOSE=RCLOSE;
   PCG_ptr->pf=pf;
   PCG_ptr->IOUT=IOUT;
@@ -207,26 +207,26 @@ int PCG_eval(r_vector* x_ptr, r_vector* b_ptr, void* A_ptr)
       /* Solve Mz = r and computes bknum=(r,z). */
       mu1=GEN_eval(z_ptr,r_ptr,PCG_ptr->B_ptr);
       bknum = r_dotprd(r_ptr,z_ptr);
-  
+
       k++;
-  
+
       /* Calculate p = z + bk*p. */
       bk=bknum/bkden;
       r1_gets_cr1_plus_r2(p_ptr,z_ptr,bk);
       bkden=bknum;
-  
+
       /* Calculate akden = (p, Ap) and ak. */
       GEN_eval(z_ptr,p_ptr,PCG_ptr->A_ptr);
       akden = r_dotprd(p_ptr,z_ptr);
       ak    = bknum/akden;
-  
+
       /* Update x and r. */
       r1_gets_r1_plus_cr2(x_ptr,p_ptr,ak);
       r1_gets_r1_plus_cr2(r_ptr,z_ptr,-ak);
-  
+
       /* Compute L2-norm of residual */
       RES=r_dotprd(r_ptr,r_ptr);
-  
+
       if(pf)
       {
         BIGR=sqrt(RES);
@@ -247,7 +247,7 @@ int PCG_eval(r_vector* x_ptr, r_vector* b_ptr, void* A_ptr)
  *
  *  MG_r_data contains a list of r_data structures and number of levels.
  *
- *  An mg_vector contains a list of r_vector's.  
+ *  An mg_vector contains a list of r_vector's.
  *  The r_vectors are allocated for a range of levels
  *  i0,..,i1.
  *
@@ -266,7 +266,7 @@ int PCG_eval(r_vector* x_ptr, r_vector* b_ptr, void* A_ptr)
  *  solvers.
  */
 
-/*  
+/*
  *  Local Subroutines used by MG_eval method.
  */
 int compute_MNUr(int i, MG_operator* MG_ptr);
@@ -292,7 +292,7 @@ void MG_r_data_free(MG_r_data* mgrdp)
 /* Allocate an array of r_vector objects.  An r_vector object
  * is allocated on each level between i0 and i1.
  *
- * Returns number of bytes allocated or a negative value if 
+ * Returns number of bytes allocated or a negative value if
  * allocation failed.
  */
 int mg_vector_allocate(mg_vector* mgp, int i0, int i1, MG_r_data* mgrdp)
@@ -320,7 +320,7 @@ int mg_vector_allocate(mg_vector* mgp, int i0, int i1, MG_r_data* mgrdp)
 
   return total_size;
 }
-    
+
 void mg_vector_free(mg_vector* mgp)
 {
   int i,i0,i1;
@@ -335,7 +335,7 @@ void mg_vector_free(mg_vector* mgp)
 
 /* Allocates an array of generic operators.
  *
- * Returns number of bytes allocated or a negative value if 
+ * Returns number of bytes allocated or a negative value if
  * allocation failed.
  */
 int MG_GEN_allocate(MG_GEN_operator* MG_GEN_ptr, MG_r_data* mgrdp)
@@ -348,7 +348,7 @@ int MG_GEN_allocate(MG_GEN_operator* MG_GEN_ptr, MG_r_data* mgrdp)
   MG_GEN_ptr->GEN_list=(GEN_operator*)calloc(levels,sizeof(GEN_operator));
   if(MG_GEN_ptr->GEN_list==NULL)
     return -1;
-  size=levels*sizeof(GEN_operator); 
+  size=levels*sizeof(GEN_operator);
 
   return size;
 }
@@ -364,7 +364,7 @@ void MG_GEN_free(MG_GEN_operator* MG_GEN_ptr)
 
 /* Allocates MG_operator multilevel solution vector,
  * multilevel right-hand side vector, multilevel residual vector,
- * and multilevel work vector.  
+ * and multilevel work vector.
  *
  * The multilevel solution and rhs vectors not allocated on finest level.
  * The multilevel residual vector not allocated on coarsest level.
@@ -374,10 +374,10 @@ void MG_GEN_free(MG_GEN_operator* MG_GEN_ptr)
  * residual.  The smoother may be able to overwrite the residual with the
  * preconditioned residual in which case ow can be set to non-zero
  * and the multilevel work vector is not allocated.
- * In either case, the multilevel work vector is not allocated on 
+ * In either case, the multilevel work vector is not allocated on
  * the coarsest level.
  *
- * Returns number of bytes allocated or a negative value if 
+ * Returns number of bytes allocated or a negative value if
  * allocation failed.
  */
 int MG_allocate(GEN_operator* GEN_ptr, int ow, MG_r_data* mgrdp)
@@ -411,7 +411,7 @@ int MG_allocate(GEN_operator* GEN_ptr, int ow, MG_r_data* mgrdp)
     return -1;
   total_size+=size;
 
-  /* Multilevel work */ 
+  /* Multilevel work */
   if(ow==0)
   {
     size=mg_vector_allocate(&MG_ptr->mgw,1,levels-1,mgrdp);
@@ -419,7 +419,7 @@ int MG_allocate(GEN_operator* GEN_ptr, int ow, MG_r_data* mgrdp)
       return -1;
     total_size+=size;
   }
-  else 
+  else
     /* Alias multilevel work vector with multilevel residual vector. */
     MG_ptr->mgw=MG_ptr->mgr;
 
@@ -441,7 +441,7 @@ void MG_free(void* A_ptr)
   free(MG_ptr);
 }
 
-/* Assign pointers to multilevel generic operators 
+/* Assign pointers to multilevel generic operators
  * assembled outside contex of MG operator.
  */
 int MG_assemble(GEN_operator* GEN_ptr,

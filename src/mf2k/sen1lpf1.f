@@ -215,6 +215,7 @@ C               NEXT, MAKE CORRECTION IF NEEDED FOR CV ABOVE
 C-----S
         IF (PID.EQ.'SS  ' .OR. PID.EQ.'SY  ') THEN
           IF (ISS.NE.0) GOTO 140
+          IF (PID.EQ.'SY' .AND. LAYTYP(K).EQ.0) GOTO 140
           DO 130 I = 1, NROW
             DO 120 J = 1, NCOL
               IF (IBOUND(J,I,K).LT.1) GOTO 120
@@ -272,7 +273,6 @@ C        DAH AND DBH
   130     CONTINUE
         ENDIF
   140 CONTINUE
- 150  CONTINUE
 C
       RETURN
       END

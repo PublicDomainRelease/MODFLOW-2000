@@ -58,6 +58,9 @@ METHOD
 
 HISTORY
 
+      MODFLOW-2000 Version 1.15.01 2005/04/05 - This is a bug-fix release.
+        Bug fixes are described in release.txt.
+
       MODFLOW-2000 version 1.15.00 2004/08/06 - Added the GMG Solver Package.
         Modifications were made to the SFR Package.
 

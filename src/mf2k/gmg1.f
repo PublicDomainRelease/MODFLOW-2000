@@ -311,7 +311,8 @@ C
      &       1X,'DAMPING                           : ',0P,F5.3,/,
      &       1X,'L2-NORM OF RESIDUAL               : ',1P,E10.4,/,
      &       1X,'MAX HEAD CHANGE                   : ',1P,E10.4,/,
-     &       1X,'MAX HEAD CHANGE AT (COL,ROW,LAY)  : ('I6','I6','I6')'/,
+     &       1X,'MAX HEAD CHANGE AT (COL,ROW,LAY)  : (',
+     &           I6,',',I6,',',I6,')',/,
      &       1X,'-------------------------------------',
      &          '--------------------',/)
 C

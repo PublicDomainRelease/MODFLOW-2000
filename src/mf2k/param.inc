@@ -1,11 +1,11 @@
-! Time of File Save by ERB: 2/9/2004 5:32PM
+! Time of File Save by ERB: 3/31/2005 2:48PM
 C  Data definitions for Named Parameters
 C  Explicitly declare all variables to enable subroutines that include
 C  this file to use the IMPLICIT NONE statement - ERB 2/9/2004.
       INTEGER ICLSUM, IDEFPAR, IACTIVE, IPCLST, IPLOC, IPPTR, IPSUM,
      &        MXCLST, MXINST, MXMLT, MXPAR, MXZON
       REAL B
-      PARAMETER (MXPAR=500,MXCLST=1000,MXZON=500,MXMLT=500,MXINST=1000)
+      PARAMETER (MXPAR=500,MXCLST=5000,MXZON=500,MXMLT=500,MXINST=1000)
       COMMON /GLOCOM/B(MXPAR),IPSUM,ICLSUM,IDEFPAR,
      1               IPLOC(4,MXPAR),IACTIVE(MXPAR),IPCLST(14,MXCLST),
      2               IPPTR(MXPAR)

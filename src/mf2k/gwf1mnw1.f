@@ -1,7 +1,8 @@
-! Time of File Save by ERB: 4/27/2004 11:46AM
+! Time of File Save by ERB: 4/6/2005 2:28PM
 C                  KJH  20030327      -- Patched Hyd.K term in LPF option -- cel2wel function
-C     Last change: KJH  20030717      -- Patched budget output switch -- subroutine GWF1MNW1bd
+C                  KJH  20030717      -- Patched budget output switch -- subroutine GWF1MNW1bd
 c                                        Cleaned output so outrageous pointers are not printed
+c     Last change: GZH  20050405      -- Converted calculations to use double precision
       SUBROUTINE GWF1MNW1DF(LCHANI,LCHK,LCHKCC,LCHUFTHK,LCHY,LCSSHMN,
      &                      LCTRPY,NHUFAR)
 C     VERSION 20020129 ERB
@@ -35,6 +36,7 @@ c
 c        specifications:
 c     ------------------------------------------------------------------
       common /rev23/ iwelpt
+      double precision rn
       dimension rn(25), iowell2(3), icF(3)
       character*6 ftag(3)
       character*200 FNAME, MNWname                          !!08/19/02KJH-MODIFIED
@@ -58,17 +60,17 @@ c2------unit or flag for cell-by-cell flow terms.
       call UPCASE(txt)
 c
       ki = index(txt,'REF')
-      if( ki.gt.0 ) then  
+      if( ki.gt.0 ) then
         tx2 = txt(ki:256)
         call qread(rn,1,tx2,ierr)
         if( ierr.eq.0 ) kspref = ifrl( rn(1) )
         txt(ki:256) = '                                '
       else
         kspref = 1
-      endif  
+      endif
 c
       call qread(rn,4,txt,ierr)
-      mxwel2 = ifrl( rn(1) )      
+      mxwel2 = ifrl( rn(1) )
       iwl2cb = 0
       if(ierr.le.2) iwl2cb = ifrl( rn(2) )
       iwelpt = 0
@@ -229,6 +231,9 @@ c     ******************************************************************
 c
 c        specifications:
 c     ------------------------------------------------------------------
+      double precision well2,href,rn
+      double precision zero,Qfrcmn,Qfrcmx,Qreject,small,hmax,DryTest,
+     * ipole,hlim,hrfw,qsum,rw,cond,Qact,sk,Cf
       dimension MNWsite(mxwel2)
       dimension well2(17,mxwel2+1),hold(nodes),href(nodes),ibound(nodes)
       dimension delr(ncol), delc(nrow),cr(nodes),cc(nodes)
@@ -245,13 +250,14 @@ c     ------------------------------------------------------------------
       DIMENSION BOTM(NCOL,NROW,0:NBOTM),
      &          HANI(NCOL,NROW,NLAY), HK(NODES), HKCC(NCOL,NROW,NLAY),
      &          LAYHDT(NLAY), TRPY(NLAY)
+      double precision cel2wel
       SAVE HMAX
 C
       tab = char(9)
-      zero = 1.e-25
+      zero = 1.D-25
       Qfrcmn = zero
       Qfrcmx = zero
-      Qreject  = 0.00000000000
+      Qreject  = 0.00000000000D0
       NQreject = 0
       NL = 0
       if( PLoss.gt.1.001 ) NL = 1  !!  Read NL loss Coefficient after Skin
@@ -327,7 +333,7 @@ c   Read additional well info
           call UPCASE(txt)
 c   Attempt read with QREAD first
           call qread(rn,4,txt,ierr)
-          if( ierr.eq.0 .and. rn(5).lt.0.5 ) then
+          if( ierr.eq.0 .and. rn(5).lt.0.5D0 ) then
             k = ifrl( rn(1) )
             j = ifrl( rn(2) )
             i = ifrl( rn(3) )
@@ -376,20 +382,20 @@ c    Look for limit modifications
               tx2 = txt(kqc+kpc+5:256)
               call qread(rn,2,tx2,ierr)
               if( kqc.gt.0 ) then          !!  Absolute value was provided
-                rn(1) = 100.* rn(1) / q    !!  Convert to percentage
-                rn(2) = 100.* rn(2) / q
+                rn(1) = 100.D0 * rn(1) / q    !!  Convert to percentage
+                rn(2) = 100.D0 * rn(2) / q
               endif
               if( ierr.ge.1 ) rn(2) = rn(1)
-              well2(13,ipt) = rn(1) * 0.01   !! convert percentages to fractions
-              well2(14,ipt) = rn(2) * 0.01
+              well2(13,ipt) = rn(1) * 0.01D0   !! convert percentages to fractions
+              well2(14,ipt) = rn(2) * 0.01D0
               if( index(tx2,'DEFAULT').gt.0 ) then
-                Qfrcmn = rn(1) * 0.01        !!  New default lower limit
-                Qfrcmx = rn(2) * 0.01        !!  New default upper limit
+                Qfrcmn = rn(1) * 0.01D0        !!  New default lower limit
+                Qfrcmx = rn(2) * 0.01D0        !!  New default upper limit
               endif
             endif
 c
 c    Look for NonLinear coefficient
-            well2(16,ipt) = 0.000000      !!  NonLinear Loss Coefficient
+            well2(16,ipt) = 0.000000D0      !!  NonLinear Loss Coefficient
             kCp = index(txt,'CP:')
             if( kCp.gt.0 .and. NL.gt.0 ) then
               tx2 = txt(kCp+3:256)
@@ -434,10 +440,10 @@ c   Move from well data from temp to permanent locations
 c  Compute HLIM relative to reference elevation if HLIM read was a DrawDown (DD)
             if( index(txt,'DD').gt.0 )
      +        well2(7,ipt) = ipole*well2(7,ipt) + well2(8,ipt)
-            if( ierr.ge.3 ) well2(7,ipt) = ipole * 1.0E+26
-            if( ierr.ge.4 ) well2(6,ipt) =  0.0000
-            if( ierr.ge.5 ) well2(5,ipt) =  0.0000
-            if( ierr.ge.6 ) well2(4,ipt) = -1.0000
+            if( ierr.ge.3 ) well2(7,ipt) = ipole * 1.0D+26
+            if( ierr.ge.4 ) well2(6,ipt) =  0.0000D0
+            if( ierr.ge.5 ) well2(5,ipt) =  0.0000D0
+            if( ierr.ge.6 ) well2(4,ipt) = -1.0000D0
 c  Flag as 2-point definition of a multi-node well if MULTI is detected.
             if( index(tx2,'MULTI') .gt. 0  .and.
      +          abs(well2(5,ipt))  .gt. zero  ) then
@@ -449,7 +455,7 @@ c  Define direction and # of points in well
                 ipt = ipt + 1
                 nwell2 = nwell2 + 1
                 well2(1,ipt) = nn
-                well2(2,ipt) = 0.0000
+                well2(2,ipt) = 0.0000D0
                 well2(3,ipt) = well2(2,ipt)
                 well2(4,ipt) = well2(4,ipt-1)
                 well2(5,ipt) = well2(5,ipt-1)
@@ -457,8 +463,8 @@ c  Define direction and # of points in well
                 well2(16,ipt)= well2(16,ipt-1)  !!  NonLinear Loss Coefficient
                 well2(9,ipt) = well2(9,ipt-1)
                 well2(8,ipt) = -1.0E31
-                well2(13,ipt) = 0.0000
-                well2(14,ipt) = 0.0000
+                well2(13,ipt) = 0.0000D0
+                well2(14,ipt) = 0.0000D0
                 icmn = icmn + 1
                 well2(7,ipt) = icmn
               enddo
@@ -483,7 +489,7 @@ c   Process wells that are screened across multiple nodes
 c
 c Check for extreme contrast in conductance
 c
-        well2(8,nwell2+1) = 0.0000
+        well2(8,nwell2+1) = 0.0000D0
         if( nstart.lt.1 )      nstart = 1
         if( nstart.gt.nwell2 ) nstart = nwell2 - itmp + 1
         do i = nstart, nwell2
@@ -494,16 +500,16 @@ c
             nb   = ne - ngrp + 1
             hlim = well2(7,nb)
             hrfw = well2(8,nb)
-            qsum = 0.0000
+            qsum = 0.0000D0
             TempSite = 'NO-PRINT                     '
             do iin = nb, ne
               qsum = qsum + well2(2,iin)
               if( MNWsite(iin)(1:8).ne. 'NO-PRINT' ) then
                 TempSite = MNWsite(iin)
               endif
-              well2(2,iin) = 0.000000
-              well2(7,iin) = 1.0E31
-              well2(8,iin) = 1.0E31
+              well2(2,iin) = 0.000000D0
+              well2(7,iin) = 1.0D31
+              well2(8,iin) = 1.0D31
 c   Set to very large +value to flag MN status
             enddo
 c   Set All SiteIDs in a multinode well to a common tag
@@ -571,13 +577,13 @@ c
             cond = cel2wel(delr,delc,cr,cc,hy,hnew,ncol,nrow,nodes,n,rw,
      &                 sk,Qact,Cf,PLoss,small,Hdry,LAYHDT,BOTM,NBOTM,HK,
      &                     IUBCF,IULPF,IUHUF,NLAY,TRPY,HKCC,HANI)
-            if( rw .lt. zero ) cond = cond * 1.0E3
+            if( rw .lt. zero ) cond = cond * 1.0D3
           endif
           well2(11,m) = cond
 c
 c ---------Modified OUTPUT to hide internal pointers that "Look Funny" --KJH-- July 10, 2003
-          if( well2(8,m) .gt. 1.0e30 )then
-            if( well2(7,m) .lt. 1.0e30 )then
+          if( well2(8,m) .gt. 1.0D30 )then
+            if( well2(7,m) .lt. 1.0D30 )then
               ne = ifrl(well2(7,m))
               hlim = well2(7,ne)
               hrfw = well2(8,ne)
@@ -615,7 +621,7 @@ c
         m = 0
         do while( m .lt. nwell2 )
           m = m + 1
-          if( well2(8,m) .gt. 1.0E30 ) then
+          if( well2(8,m) .gt. 1.0D30 ) then
             ne  = ifrl( well2(7,m) )
             write (abs(iowell2(3)),'(a32,1x,i5.5,1h-,i5.5)')
      +             MNWsite(m),m,ne
@@ -643,6 +649,9 @@ c     ******************************************************************
 c
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
+      double precision well2
+      double precision qres,rw,cond,Qact,sk,Cf,qoff,qon,Qsmall,qdes,
+     * csum,chsum,hwell,hlim,href,ipole,ddmax,ddsim,qpot,ratio,small
       dimension well2(17,mxwel2), ibound(nodes)
       dimension delr(ncol), delc(nrow),cr(nodes),cc(nodes)
       dimension hy(nodes)
@@ -652,8 +661,9 @@ C     ------------------------------------------------------------------
       DIMENSION BOTM(NCOL,NROW,0:NBOTM),
      &          HANI(NCOL,NROW,NLAY), HK(NODES), HKCC(NCOL,NROW,NLAY),
      &          LAYHDT(NLAY), TRPY(NLAY)
+      double precision cel2wel
 C
-      zero = 1.0E-8
+      zero = 1.0D-8
 c
 c1------if number of wells <= 0 then return.
       if(nwell2.le.0) return
@@ -675,7 +685,7 @@ c-----if the cell is inactive or specified then bypass processing.
             cond = cel2wel(delr,delc,cr,cc,hy,hnew,ncol,nrow,nodes,n,rw,
      &                 sk,Qact,Cf,PLoss,small,Hdry,LAYHDT,BOTM,NBOTM,HK,
      &                     IUBCF,IULPF,IUHUF,NLAY,TRPY,HKCC,HANI)
-            if( rw .lt. zero ) cond = cond * 1.0E3
+            if( rw .lt. zero ) cond = cond * 1.0D3
           endif
           well2(11,m) = cond
         endif
@@ -693,13 +703,13 @@ c
 c
 c   A very large # in WL reference array (8,m) triggers multi-node calculation
 c
-        if( well2(8,m) .gt. 1.0E30 ) then
+        if( well2(8,m) .gt. 1.0D30 ) then
 c     Compute hwell / Qpot for multi-node well
           ne  = ifrl( well2(7,m) )
           qdes = well2(15,ne)
-          csum = 0.000
-          chsum = 0.000
-          qact = 0.0000
+          csum = 0.000D0
+          chsum = 0.000D0
+          qact = 0.0000D0
           Qsmall = small*abs(qdes)
           do iin = m, ne
             n = ifrl( well2(1,iin) )
@@ -708,7 +718,7 @@ c     Compute hwell / Qpot for multi-node well
               chsum = chsum + well2(11,iin)*hnew(n)
               qact  = qact  + well2( 3,iin)
             else
-              qact  = 0.0000
+              qact  = 0.0000D0
             endif
           enddo
 c---div0 ---  CSUM could go to zero if the entire well is dry
@@ -741,15 +751,15 @@ c     Compute hwell / Qpot for single-node well
         endif
 c
 c  Compute ratio of potential/desired flow rates
-        ratio = 1.00
+        ratio = 1.00D0
         if( abs(qdes) .gt. small ) ratio =  qpot / qdes
-        if( ratio .gt. 0.9999 ) then
-          ratio =  1.000
+        if( ratio .gt. 0.9999D0 ) then
+          ratio =  1.000D0
           Qpot = Qdes
         endif
 c  Check if potential flow rate is below cutoff
         if( ratio .lt. Qoff ) then
-          Qact = 0.000
+          Qact = 0.000D0
           Qdes = Qact
           well2(2,m) = Qdes
           well2(3,m) = Qact
@@ -783,12 +793,16 @@ c     ******************************************************************
 c
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
+      double precision well2
+      double precision zero,qres,rw,cond,Qact,sk,Cf,qdes,csum,chsum,
+     * hwell,ipole,hlim,href,ddmax,ddsim,ratio,dhc2w,small
       dimension well2(17,mxwel2), ibound(nodes)
       dimension delr(ncol), delc(nrow),cr(nodes),cc(nodes)
       dimension hy(nodes)
       dimension hcof(nodes), rhs(nodes)
       dimension hnew(nodes)
       double precision hnew
+      double precision cel2wel
       COMMON /BCFCOM/LAYCON(999)
       DIMENSION BOTM(NCOL,NROW,0:NBOTM),
      &          HANI(NCOL,NROW,NLAY), HK(NODES), HKCC(NCOL,NROW,NLAY),
@@ -873,7 +887,11 @@ c      DD constraints that stop production are not tested until after the 2nd it
               if( abs(qdes) .gt. small ) ratio =  qact / qdes
               if( ratio .lt. 0.00001 ) then
                 qact  = 0.000
-                hwell = chsum / csum
+                if (csum .gt. 0.0) then
+                  hwell = chsum / csum
+                else
+                  hwell = hnew(n)
+                endif
               endif
             endif
           endif
@@ -968,6 +986,9 @@ c     ******************************************************************
 c
 c        specifications:
 c     ------------------------------------------------------------------
+      double precision well2
+      double precision zero,ratin,ratout,qwsum,qsum,qwbarDryTest,q,
+     * qd,hlim,href,hwel,dd,s,ipole,sNL,sL,qin,qout,qwfsum
       dimension MNWsite(mxwel2)
       dimension vbvl(4,msum),well2(17,mxwel2),
      1          ibound(nodes), buff(nodes)
@@ -1030,8 +1051,8 @@ c
         do m = 1, nwell2
           igrp1 = ifrl( well2(9,m) )
           if( well2(12,m) .lt. 0.5 ) then
-            qwsum = 0.0000
-            qsum = 0.0000
+            qwsum = 0.0000D0
+            qsum = 0.0000D0
             do m2 = m, nwell2
               igrp2 = ifrl( well2(9,m2) )
               if( igrp1.eq.igrp2 .and. well2(12,m2).lt.0.5) then
@@ -1090,7 +1111,7 @@ c -----print the individual rates if requested(iwl2cb<0).
               s   = hnew(n) - hwell
               IPOLE = 0
               if( abs(s).gt.zero )  ipole = s / abs(s)
-              sNL = ipole * well2(16,m) * q**PLoss
+              sNL = ipole * well2(16,m) * abs(q)**PLoss
               sL  = s - sNL
               write(iout,'(1x,i6,3i4,9(1x,g12.6))')
      +         m,il,ir,ic,q, hwell,hnew(n), dd, qwbar, sL, sNL
@@ -1136,25 +1157,25 @@ c
           m = m + 1
           if( well2(8,m) .gt. 1.0E30 ) then
             ne  = ifrl( well2(7,m) )
-            qwsum = 0.000
-            qwfsum = 0.000
-            qsum = 0.000
-            qin  = 0.000
-            qout = 0.000
+            qwsum = 0.000D0
+            qwfsum = 0.000D0
+            qsum = 0.000D0
+            qin  = 0.000D0
+            qout = 0.000D0
             do iin = m, ne
               n = ifrl( well2(1,iin) )
-              if( ibound(n).eq.0 ) well2(3,iin) = 0.0
+              if( ibound(n).eq.0 ) well2(3,iin) = 0.0D0
               if( well2(4,iin).ge.0.0 .and. well2(3,iin).le.0.0 ) then
                 qwfsum  = qwfsum + well2(3,iin)
                 qwsum   = qwsum  + well2(3,iin)*well2(4,iin)
               endif
-              if( well2(3,iin).le.0.0 ) then
+              if( well2(3,iin).le.0.0D0 ) then
                 qin = qin  + well2(3,iin)
               else
                 qout = qout  + well2(3,iin)
               endif
               qsum  = qsum  + well2(3,iin)
-              well2(3,iin) = 0.00000
+              well2(3,iin) = 0.00000D0
             enddo
             well2(3,ne) = qsum
 c -----print the summed rates if requested(iwl2cb<0).
@@ -1232,6 +1253,8 @@ c     ******************************************************************
 c
 c        specifications:
 c     ------------------------------------------------------------------
+      double precision well2
+      double precision zero,Tnow,hwell,conc,Qt,Qin,Qout,Q,TimeIN
       dimension MNWsite(mxwel2)
       dimension well2(17,mxwel2)
       dimension iowell2(3)
@@ -1411,7 +1434,7 @@ c
 c
 c_________________________________________________________________________________
 c
-      function cel2wel(delr,delc,cr,cc,hy,hnew,
+      DOUBLE PRECISION function cel2wel(delr,delc,cr,cc,hy,hnew,
      +                 ncol,nrow,nodes,n,rw,skin,Q,Cf,PLoss,small,Hdry,
      &                 LAYHDT,BOTM,NBOTM,HK,IUBCF,IULPF,IUHUF,NLAY,TRPY,
      &                 HKCC,HANI)
@@ -1435,6 +1458,9 @@ C     ERB 1/29/01.
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
+      double precision rw,Q,Cf,zero,pi,skin,small,ro,AH,KY,TempKX,
+     * dx,dy,top,bot,dxp,dxm,Txm,Txp,dyp,dym,Typ,Tym,div,Txx,Tyy,
+     * THICK,upper,yx4,xy4,Tpi2,A,B,C
       dimension delr(ncol), delc(nrow),cr(nodes),cc(nodes)
       dimension hy(nodes)
       dimension hnew(nodes)
@@ -1446,7 +1472,6 @@ C     ------------------------------------------------------------------
       COMMON /BCFCOM/LAYCON(999)
       COMMON /LPFCOM/LAYTYP(999),LAYAVG(999),CHANI(999),LAYVKA(999),
      1               LAYWET(999)
-      REAL KY
 C     ------------------------------------------------------------------
  1000 FORMAT(/1X,
      &'***ERROR: MNW1 PACKAGE DOES NOT SUPPORT HEAD-DEPENDENT',/,
@@ -1454,8 +1479,8 @@ C     ------------------------------------------------------------------
      &' (MNW1 DOES FULLY SUPPORT BCF, LPF, AND HUF PACKAGES)',/,
      &' -- STOP EXECUTION (CEL2WEL)')
 C
-      pi = 3.141592654
-      zero = 1.e-25
+      pi = 3.1415926535897932D0
+      zero = 1.D-25
 C
       ix   = mod((n-1),ncol)+1
       dx   = delr(ix)
@@ -1466,7 +1491,7 @@ C
       bot = BOTM(IX,IY,LBOTM(IZ))
 C
 C     FIND HORIZONTAL ANISOTROPY, THE RATIO Ky/Kx
-      AH = 1.0
+      AH = 1.0D0
       IF (IULPF.GT.0) THEN
         IF (CHANI(IZ).GT.0.0) THEN
           AH = CHANI(IZ)
@@ -1486,31 +1511,31 @@ C       THICKNESS IS NOT HEAD-DEPENDENT
         IF (IULPF.EQ.0 .AND. IUHUF.EQ.0) THEN
 C         BCF OR ANOTHER FLOW PACKAGE, OTHER THAN LPF OR HUF, IS ACTIVE
           dxp  = dx
-          Txp  = 0.00000
+          Txp  = 0.00000D0
           if( ix .lt. ncol ) then
             dxp = delr(ix+1)
-            Txp  = cr(n) * (dx+dxp) / 2
+            Txp  = cr(n) * (dx+dxp) / 2.D0
           endif
           dxm = dx
           Txm  = Txp
           if( ix .gt. 1  ) then
             dxm = delr(ix-1)
-            Txm  = cr(n-1) * (dx+dxm) / 2
+            Txm  = cr(n-1) * (dx+dxm) / 2.D0
           endif
           if( Txp.lt.small ) Txp = Txm
           if( Txm.lt.small ) Txm = Txp
 c
           dyp  = dy
-          Typ  = 0.00000
+          Typ  = 0.00000D0
           if( iy .lt. nrow ) then
             dyp = delc(iy+1)
-            Typ  = cc(n) * (dy+dyp) / 2
+            Typ  = cc(n) * (dy+dyp) / 2.D0
           endif
           dym = dy
           Tym  = Typ
           if( iy .gt. 1 ) then
             dym = delc(iy-1)
-            Tym  = cc(n-ncol) * (dy+dym) / 2
+            Tym  = cc(n-ncol) * (dy+dym) / 2.D0
           endif
           if( Typ.lt.small ) Typ = Tym
           if( Tym.lt.small ) Tym = Typ
@@ -1533,10 +1558,10 @@ c
 c
 c   Assuming expansion of grid is slight, if present, & that Txx and Tyy of the adjacent
 c  cells are about the same value.
-          Txx = 0.00000000
+          Txx = 0.00000000D0
           div  = Txp + Txm
           if( div.gt.small ) Txx  = 2*Txp*Txm / div
-          Tyy = 0.00000000
+          Tyy = 0.00000000D0
           div  = Typ + Tym
           if( div.gt.small ) Tyy  = 2*Typ*Tym / div
           if( Txx.gt.small .and. Tyy.lt.small ) Tyy = Txx
@@ -1552,42 +1577,41 @@ C       THICKNESS IS HEAD-DEPENDENT
 c  Estimate T to well in an unconfined system
 c
         upper = hnew(n)
-        TempKX = hy(n)        !!  BCF Hydraulic Conductivity array
         IF (IUBCF.GT.0) THEN
           if (LAYCON(IZ).EQ.3) then
             if( upper.gt.top ) upper = top
           endif
+          TempKX = hy(n)        !!  BCF Hydraulic Conductivity array
         ELSEIF (IULPF.GT.0 .OR. IUHUF.GT.0) THEN
           if( upper.gt.top ) upper = top
           TempKX = hk(n)        !!  LPF Hydraulic Conductivity array
-        ELSE
         ENDIF
         thick = upper - bot
 c   set thickness / conductance to 0 if cell is dry
-        if( (hnew(n)-Hdry )**2 .lt. zero ) thick = 0.000000000000
+        if( (hnew(n)-Hdry )**2 .lt. zero ) thick = 0.000000000000D0
         Txx = TempKX * thick
-        if( Txx .lt.zero ) Txx = 0.000000000000000
+        if( Txx .lt.zero ) Txx = 0.000000000000000D0
         Tyy = Txx * AH
       endif
 c
       if( rw.lt.zero .or. Txx.lt.zero .or. Tyy.lt.zero ) then
-        cel2wel = ( Txx * Tyy )** 0.5
+        cel2wel = ( Txx * Tyy )** 0.5D0
       else
-        yx4 = (Tyy/Txx)**0.25
-        xy4 = (Txx/Tyy)**0.25
-        ro = 0.28 *((yx4*dx)**2 +(xy4*dy)**2)**0.5 / (yx4+xy4)
+        yx4 = (Tyy/Txx)**0.25D0
+        xy4 = (Txx/Tyy)**0.25D0
+        ro = 0.28 *((yx4*dx)**2 +(xy4*dy)**2)**0.5D0 / (yx4+xy4)
 c
-        Tpi2 = 2*pi * (Txx*Tyy)**0.5
-        A = alog(ro/rw) / Tpi2
+        Tpi2 = 2.D0*pi * (Txx*Tyy)**0.5D0
+        A = log(ro/rw) / Tpi2
         if( Ploss .gt. 0.99 ) then
           B = Skin
           C = Cf * abs(Q)**(PLoss-1)
         else
           B = Skin / Tpi2
-          C = 0.000000000
+          C = 0.000000000D0
         endif
         cel2wel = A + B + C
-        cel2wel = 1.000000 / cel2wel
+        cel2wel = 1.000000D0 / cel2wel
       endif
 c
       return
@@ -1626,8 +1650,9 @@ c
 c_________________________________________________________________________________
 c
       integer function ifrl( r )
-      ip = abs(r) + 0.5
-      if( r .lt. 0.000 )  ip = -ip
+      DOUBLE PRECISION R
+      ip = abs(r) + 0.5D0
+      if( r .lt. 0.000D0 )  ip = -ip
       ifrl = ip
       return
       end
@@ -1763,6 +1788,7 @@ c_______________________________________________________________________________
 c
       subroutine qread(r,ni,ain,ierr)
       parameter (mrnv=25)
+      double precision r
       dimension r(mrnv)
       character*1   tab
       character*16  form
@@ -1772,7 +1798,7 @@ c
 c   r(ni+1) records the number of non-numeric entries that were attempted to be read as a number
 c   r(ni+2) records the last column that was read from the card
 c
-      r(ni+1) = -1.0000
+      r(ni+1) = -1.0000D0
       a256 = ain
       do i = 1, 256
         if( a256(i:i).eq.tab ) a256(i:i) = ' '
@@ -1782,7 +1808,7 @@ c
       enddo
       n = 1
       i = 0
-   11 r(ni+1) = r(ni+1) + 1
+   11 r(ni+1) = r(ni+1) + 1.D0
    10 i = i+1
       if( i.ge.256) goto 15
       if( a256(i:i).eq.' ' ) then

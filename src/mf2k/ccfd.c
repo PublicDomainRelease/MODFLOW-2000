@@ -112,6 +112,7 @@ void CCFD_free(void* A_ptr)
   free(CCFD_ptr->CR);
   free(CCFD_ptr->CV);
   free(CCFD_ptr->DD);
+  free(CCFD_ptr->IBOUND);
   free(CCFD_ptr);
 }
 
@@ -1510,6 +1511,7 @@ void CCFD_MG_free(void* A_ptr)
 
   GEN_free(&CCFD_MG_ptr->MG);
   MG_r_data_free(&CCFD_MG_ptr->mgrd);
+  free(CCFD_MG_ptr);
 }
 
 /* Assemble multilevel operators */

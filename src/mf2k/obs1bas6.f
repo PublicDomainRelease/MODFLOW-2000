@@ -1,4 +1,4 @@
-! Time of File Save by ERB: 5/5/2004 9:38AM
+! Time of File Save by ERB: 10/21/2004 9:32AM
 C     Last change:  ERB  14 Jan 2003    3:53 pm
 C=======================================================================
       SUBROUTINE OBS1BAS6DF(IOBS,IOSTAR,IOWTQ,IOWTQDR,IOWTQGB,
@@ -779,6 +779,20 @@ C
      &       4X,'ITERATIONS BECAUSE THE SUM OF SQUARED, WEIGHTED',
      &       ' RESIDUALS HAS NOT CHANGED',/,
      &       4X,'MORE THAN',F7.4,' PERCENT IN 2 ITERATIONS')
+  552 FORMAT(1X,'*** WARNING: COMPOSITE SCALED SENSITIVITY = 0.0 FOR',
+     &    ' PARAMETER "',A,'"')
+  553 FORMAT(1X,'*** ERROR: COMPOSITE SCALED SENSITIVITY = 0.0 FOR',
+     &    ' PARAMETER "',A,'"')
+  556 FORMAT(/,1X,'PARAMETER(S) LISTED IN WARNING(S) ABOVE',
+     &    ' APPARENTLY IS (ARE) UNUSED.',/,' EXECUTION TIME',
+     &    ' CAN BE SAVED',
+     &    ' BY TURNING OFF CALCULATION OF SENSITIVITIES',/,
+     &    ' FOR LISTED PARAMETER(S).')
+  557 FORMAT(/,1X,'PARAMETER(S) LISTED IN ERROR(S) ABOVE',
+     &    ' APPARENTLY IS (ARE) UNUSED.  TO ALLOW',/,
+     &    ' PARAMETER ESTIMATION TO CONTINUE, ELIMINATE PARAMETER(S)',
+     &    ' OR SET ISENS <= 0 IN',/,
+     &    ' THE SENSITIVITY PROCESS INPUT FILE.')
   560 FORMAT (/,' STARTING VALUES OF REGRESSION PARAMETERS :',/)
   570 FORMAT (6(3X,A10))
   580 FORMAT (6(2X,1PG11.4))
@@ -819,13 +833,37 @@ C-----TEST FOR REDUCTION IN SUM OF SQUARED, WEIGHTED RESIDUALS
 C-----IF REQUESTED, PRINT UNSCALED OR SCALED OBSERVATION SENSITIVITIES
       IF (IPAR.NE.-1) THEN
         IF (IFO.NE.0 .OR. IPRINT.NE.0 .OR. ITERP.EQ.1) THEN
-          IF (MYID.EQ.MPROC)
-     &        CALL SOBS1BAS6ST(BUF1,IOUTG,IOWTQ,IPLOT,IPR,ISCALS,LN,MPR,
-     &                         ND,NDMH,NDMHAR,NHT,NPE,NPLIST,OBSNAM,
-     &                         OUTNAM,WT,WTQ,WTQS,X,ITERP,BUF2,BSCAL,
-     &                         OBSALL)
+          IF (MYID.EQ.MPROC) THEN
+            CALL SOBS1BAS6ST(BUF1,IOUTG,IOWTQ,IPLOT,IPR,ISCALS,LN,MPR,
+     &                       ND,NDMH,NDMHAR,NHT,NPE,NPLIST,OBSNAM,
+     &                       OUTNAM,WT,WTQ,WTQS,X,ITERP,BUF2,BSCAL,
+     &                       OBSALL)
+C           LOOP THROUGH COMPOSITE SCALED SENSITIVITIES.
+C           IF ANY VALUE=0, PRINT WARNING OR ERROR FOR THAT PARAMETER.
+            KERR = 0
+            DO 100 IP=1,NPE
+              IF (BUF1(IP).EQ.0.0) THEN
+                IF (KERR.EQ.0) WRITE(IOUTG,'(1X)')
+                IF (IPAR.LT.1) THEN
+                  WRITE(IOUTG,552)PARNAM(IPPTR(IP))
+                ELSE
+                  WRITE(IOUTG,553)PARNAM(IPPTR(IP))
+                ENDIF
+                KERR = KERR+1
+              ENDIF
+  100       CONTINUE
+            IF (KERR.GT.0) THEN
+              IF (IPAR.LT.1) THEN
+                WRITE(IOUTG,556)
+              ELSE
+                WRITE(IOUTG,557)
+                CALL USTOP(' ')
+              ENDIF
+            ENDIF
+          ENDIF
         ENDIF
       ENDIF
+C
 C
 C     IF THIS IS THE FIRST ITERATION, PRINT STARTING PARAMETER VALUES
       IF (IPAR.GT.0 .AND. ITERP.EQ.1) THEN
@@ -1518,7 +1556,7 @@ C     ------------------------------------------------------------------
       CHARACTER*12 OBSNAM(ND)
       CHARACTER*200 OUTNAM
       CHARACTER*84 FN
-      LOGICAL LOP, OBSALL
+      LOGICAL LOP, OBSALL, PRCSS
       DIMENSION BUF1(NPE), BUF2(NPE,ND), IPLOT(ND+IPR+MPR),
      &          LN(NPLIST), WT(ND), WTQ(NDMHAR,NDMHAR),
      &          WTQS(NDMHAR,NDMHAR), X(NPE,ND), BSCAL(NPLIST)
@@ -1552,6 +1590,11 @@ C     ------------------------------------------------------------------
   630 FORMAT (2X,A,4X,1P,E12.5)
 C     ------------------------------------------------------------------
 C
+C     SET FLAG IF COMPOSITE SCALED SENSITIVITIES ARE TO BE PRINTED
+      PRCSS = .FALSE.
+      IF (ISCALS.LT.0 .OR. ISCALS.EQ.1 .OR. ISCALS.EQ.3 .OR.
+     &    OUTNAM.NE.'NONE') PRCSS = .TRUE.
+C
 C     OPEN OBSERVATION-SENSITIVITY OUTPUT FILES
       IF (OUTNAM.NE.'NONE') THEN
         LENGNAM = NONB_LEN(OUTNAM,200)
@@ -1567,8 +1610,8 @@ C       FOR EACH FILE, FIND AN UNUSED FILE UNIT AND OPEN THE FILE
 C           Note that RECL=7530 provides a long enough record length for
 C           500 parameters.  If NPE > 500, RECL will need to be
 C           increased -- ERB 03/06/2002
-cc            OPEN(IU,FILE=FN,ERR=20,RECL=7530)
-            OPEN(IU,FILE=FN,ERR=20)
+            OPEN(IU,FILE=FN,ERR=20,RECL=7530)
+C            OPEN(IU,FILE=FN,ERR=20)
             IUSNO(I) = IU
           ELSE
             GOTO 20
@@ -1617,102 +1660,101 @@ C     WRITE MATRIX OF UNSCALED SENSITIVITIES TO _su FILE
    55   CONTINUE
       ENDIF
 C
-      IF (ISCALS.LT.0 .OR. ISCALS.EQ.1 .OR. ISCALS.EQ.3 .OR.
-     &    OUTNAM.NE.'NONE') THEN
-C       IF BSCAL WILL OVERRIDE B IN SCALING FOR ANY PARAMETERS, WRITE
-C       MESSAGE INDICATING WHICH PARAMETERS
-        IF (ISCALS.LT.0 .OR. ISCALS.EQ.1 .OR. ISCALS.EQ.3)
-     &      CALL SOBS1BAS6BS(BSCAL,IOUT,LN,NPE,NPLIST)
-C       PRINT DIMENSIONLESS SCALED SENSITIVITIES
-        DO 140 IS = 1,NSECTS
-          IG1 = IS*5 - 4
-          IG2 = IS*5
-          IF (IG2.GT.NPE) IG2 = NPE
-          IF (ISCALS.EQ.1 .OR. ISCALS.EQ.3) THEN
-            WRITE (IOUT,530) (PARNAM(IPPTR(IIP)),IIP=IG1,IG2)
-            WRITE (IOUT,540)
-          ENDIF
-          IF (OUTNAM.NE.'NONE' .AND. IS.EQ.NSECTS) WRITE (IUSNO(2),590)
-     &        (PARNAM(IPPTR(I)),I=1,NPE)
-          DO 70 IIP = IG1, IG2
-            BUF1(IIP) = 0.
-   70     CONTINUE
-          IF (NHT.GT.0) THEN
-            DO 90 N = 1, NHT
-              DO 80 IIP = IG1, IG2
-                IF (WT(N).LT.0.) THEN
-                  BUF2(IIP,N) = 0.
-                  GOTO 80
-                ENDIF
-                IIPP = IPPTR(IIP)
-                BB = ABS(B(IIPP))
-                IF (LN(IIPP).LE.0) THEN
-C                 PARAMETER IS NOT LOG-TRANSFORMED
-                  IF (BB.LT.BSCAL(IIPP)) BB = BSCAL(IIPP)
-                ELSE
-C                 PARAMETER IS LOG-TRANSFORMED
-                  BB = 1.0
-                ENDIF
-                BUF2(IIP,N) = BB*X(IIP,N)*(WT(N)**.5)
-                BUF1(IIP) = BUF1(IIP) + (BUF2(IIP,N)*BUF2(IIP,N))
-   80         CONTINUE
-              IF (ISCALS.EQ.1 .OR. ISCALS.EQ.3)
-     &            WRITE (IOUT,550) N, OBSNAM(N),
-     &                             (BUF2(IIP,N),IIP=IG1,IG2)
-              IF (OUTNAM.NE.'NONE' .AND. IS.EQ.NSECTS)
-     &            WRITE (IUSNO(2),600) OBSNAM(N), IPLOT(N),
-     &                                 (BUF2(IIP,N),IIP=1,NPE)
-   90       CONTINUE
-          ENDIF
-          IF (NDMH.GT.0) THEN
-            DO 120 N = NHT+1, ND
-              NQ1 = N - NHT
-              DO 110 IIP = IG1,IG2
-                IIPP = IPPTR(IIP)
-                IF (WTQ(NQ1,NQ1).LT.0.) THEN
-                  BUF2(IIP,N) = 0.
-                  GOTO 110
-                ENDIF
-                BB = ABS(B(IIPP))
-                IF (LN(IIPP).LE.0) THEN
-C                 PARAMETER IS NOT LOG-TRANSFORMED
-                  IF (BB.LT.BSCAL(IIPP)) BB = BSCAL(IIPP)
-                ELSE
-C                 PARAMETER IS LOG-TRANSFORMED
-                  BB = 1.0
-                ENDIF
-                IF (IOWTQ.GT.0) THEN
-                  TMP = 0.
-                  DO 100 K = 1, NDMH
-                    IF (WTQ(K,K).GT.0.) TMP = TMP + WTQS(NQ1,K)
-     &                                        *X(IIP,NHT+K)
-  100             CONTINUE
-                  BUF2(IIP,N) = BB*TMP
-                ELSE
-                  BUF2(IIP,N) = BB*X(IIP,N)*WTQS(NQ1,NQ1)
-                ENDIF
-C               CONTRIBUTION TO COMPOSITE SCALED SENSITIVITY
-                BUF1(IIP) = BUF1(IIP) + (BUF2(IIP,N)*BUF2(IIP,N))
-  110         CONTINUE
-              IF (ISCALS.EQ.1 .OR. ISCALS.EQ.3)
-     &            WRITE (IOUT,550) N, OBSNAM(N),
-     &                             (BUF2(IIP,N),IIP=IG1,IG2)
-              IF (OUTNAM.NE.'NONE' .AND. IS.EQ.NSECTS)
-     &            WRITE (IUSNO(2),600) OBSNAM(N), IPLOT(N),
-     &                                 (BUF2(IIP,N),IIP=1,NPE)
-  120       CONTINUE
-          ENDIF
-C         COMPLETE CALCULATION OF COMPOSITE SCALED SENSITIVITIES
-          DO 130 IIP = IG1, IG2
-            BUF1(IIP) = (BUF1(IIP)/ND)**.5
-  130     CONTINUE
-          IF (ISCALS.EQ.1 .OR. ISCALS.EQ.3)
-     &        WRITE (IOUT,560) (BUF1(IIP),IIP=IG1,IG2)
-          IF (OUTNAM.NE.'NONE' .AND. IS.EQ.NSECTS)
-     &        WRITE (IUSNO(1),610)
-     &            (PARNAM(IPPTR(IIP)),BUF1(IIP),IIP=1,NPE)
-  140   CONTINUE
-C       PRINT COMPOSITE SCALED SENSITIVITY FOR ALL PARAMETERS
+C     IF BSCAL WILL OVERRIDE B IN SCALING FOR ANY PARAMETERS, WRITE
+C     MESSAGE INDICATING WHICH PARAMETERS
+      IF (ISCALS.LT.0 .OR. ISCALS.EQ.1 .OR. ISCALS.EQ.3)
+     &    CALL SOBS1BAS6BS(BSCAL,IOUT,LN,NPE,NPLIST)
+C     PRINT DIMENSIONLESS SCALED SENSITIVITIES
+      DO 140 IS = 1,NSECTS
+        IG1 = IS*5 - 4
+        IG2 = IS*5
+        IF (IG2.GT.NPE) IG2 = NPE
+        IF (ISCALS.EQ.1 .OR. ISCALS.EQ.3) THEN
+          WRITE (IOUT,530) (PARNAM(IPPTR(IIP)),IIP=IG1,IG2)
+          WRITE (IOUT,540)
+        ENDIF
+        IF (OUTNAM.NE.'NONE' .AND. IS.EQ.NSECTS) WRITE (IUSNO(2),590)
+     &      (PARNAM(IPPTR(I)),I=1,NPE)
+        DO 70 IIP = IG1, IG2
+          BUF1(IIP) = 0.
+   70   CONTINUE
+        IF (NHT.GT.0) THEN
+          DO 90 N = 1, NHT
+            DO 80 IIP = IG1, IG2
+              IF (WT(N).LT.0.) THEN
+                BUF2(IIP,N) = 0.
+                GOTO 80
+              ENDIF
+              IIPP = IPPTR(IIP)
+              BB = ABS(B(IIPP))
+              IF (LN(IIPP).LE.0) THEN
+C               PARAMETER IS NOT LOG-TRANSFORMED
+                IF (BB.LT.BSCAL(IIPP)) BB = BSCAL(IIPP)
+              ELSE
+C               PARAMETER IS LOG-TRANSFORMED
+                BB = 1.0
+              ENDIF
+              BUF2(IIP,N) = BB*X(IIP,N)*(WT(N)**.5)
+              BUF1(IIP) = BUF1(IIP) + (BUF2(IIP,N)*BUF2(IIP,N))
+   80       CONTINUE
+            IF (ISCALS.EQ.1 .OR. ISCALS.EQ.3)
+     &          WRITE (IOUT,550) N, OBSNAM(N),
+     &                           (BUF2(IIP,N),IIP=IG1,IG2)
+            IF (OUTNAM.NE.'NONE' .AND. IS.EQ.NSECTS)
+     &          WRITE (IUSNO(2),600) OBSNAM(N), IPLOT(N),
+     &                               (BUF2(IIP,N),IIP=1,NPE)
+   90     CONTINUE
+        ENDIF
+        IF (NDMH.GT.0) THEN
+          DO 120 N = NHT+1, ND
+            NQ1 = N - NHT
+            DO 110 IIP = IG1,IG2
+              IIPP = IPPTR(IIP)
+              IF (WTQ(NQ1,NQ1).LT.0.) THEN
+                BUF2(IIP,N) = 0.
+                GOTO 110
+              ENDIF
+              BB = ABS(B(IIPP))
+              IF (LN(IIPP).LE.0) THEN
+C               PARAMETER IS NOT LOG-TRANSFORMED
+                IF (BB.LT.BSCAL(IIPP)) BB = BSCAL(IIPP)
+              ELSE
+C               PARAMETER IS LOG-TRANSFORMED
+                BB = 1.0
+              ENDIF
+              IF (IOWTQ.GT.0) THEN
+                TMP = 0.
+                DO 100 K = 1, NDMH
+                  IF (WTQ(K,K).GT.0.) TMP = TMP + WTQS(NQ1,K)
+     &                                      *X(IIP,NHT+K)
+  100           CONTINUE
+                BUF2(IIP,N) = BB*TMP
+              ELSE
+                BUF2(IIP,N) = BB*X(IIP,N)*WTQS(NQ1,NQ1)
+              ENDIF
+C             CONTRIBUTION TO COMPOSITE SCALED SENSITIVITY
+              BUF1(IIP) = BUF1(IIP) + (BUF2(IIP,N)*BUF2(IIP,N))
+  110       CONTINUE
+            IF (ISCALS.EQ.1 .OR. ISCALS.EQ.3)
+     &          WRITE (IOUT,550) N, OBSNAM(N),
+     &                           (BUF2(IIP,N),IIP=IG1,IG2)
+            IF (OUTNAM.NE.'NONE' .AND. IS.EQ.NSECTS)
+     &          WRITE (IUSNO(2),600) OBSNAM(N), IPLOT(N),
+     &                               (BUF2(IIP,N),IIP=1,NPE)
+  120     CONTINUE
+        ENDIF
+C       COMPLETE CALCULATION OF COMPOSITE SCALED SENSITIVITIES
+        DO 130 IIP = IG1, IG2
+          BUF1(IIP) = (BUF1(IIP)/ND)**.5
+  130   CONTINUE
+        IF (ISCALS.EQ.1 .OR. ISCALS.EQ.3)
+     &      WRITE (IOUT,560) (BUF1(IIP),IIP=IG1,IG2)
+        IF (OUTNAM.NE.'NONE' .AND. IS.EQ.NSECTS)
+     &      WRITE (IUSNO(1),610)
+     &          (PARNAM(IPPTR(IIP)),BUF1(IIP),IIP=1,NPE)
+  140 CONTINUE
+C     PRINT COMPOSITE SCALED SENSITIVITY FOR ALL PARAMETERS
+      IF (PRCSS) THEN
         WRITE (IOUT,620)
         DO 150 IIP = 1, NPE
           WRITE (IOUT,630) PARNAM(IPPTR(IIP)),BUF1(IIP)

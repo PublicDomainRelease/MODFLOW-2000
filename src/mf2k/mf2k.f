@@ -1,4 +1,4 @@
-! Time of File Save by ERB: 7/16/2004 5:11PM
+! Time of File Save by ERB: 4/5/2005 3:05PM
 C     ******************************************************************
 C     MAIN CODE FOR U.S. GEOLOGICAL SURVEY MODULAR MODEL -- MODFLOW
 C           BY MICHAEL G. MCDONALD AND ARLEN W. HARBAUGH
@@ -29,11 +29,12 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
 C-------ASSIGN VERSION NUMBER AND DATE
       CHARACTER*40 VERSION
-      PARAMETER (VERSION='1.15.00 08/06/2004')
+      PARAMETER (VERSION='1.15.01 04/05/2005')
 C
 C-----DECLARE ARRAY TYPES
       REAL GX, X, RX, XHS
-      DOUBLE PRECISION GZ, VAR, Z
+cgzh mnw dp
+      DOUBLE PRECISION GZ, VAR, Z, RZ
       INTEGER IG, IX, IR
       CHARACTER*10 EQNAM, NIPRNAM
       CHARACTER*12 NAMES, OBSNAM
@@ -55,7 +56,9 @@ C
 C *** FOR STATIC MEMORY ALLOCATION, THE FOLLOWING ALLOCATABLE
 C *** STATEMENT MUST BE COMMENTED OUT
       ALLOCATABLE GX(:), IG(:), X(:), IX(:), RX(:), IR(:), GZ(:), Z(:),
-     &            XHS(:), NIPRNAM(:), EQNAM(:), NAMES(:), OBSNAM(:)
+cgzh mnw dp
+     &            RZ(:), XHS(:), NIPRNAM(:), EQNAM(:), NAMES(:),
+     &            OBSNAM(:)
 C
       ALLOCATABLE MNWSITE(:)
 C
@@ -96,6 +99,7 @@ C
       INTEGER NPEVT, NPGHB, NPDRN, NPHFB, NPRIV, NPSTR, NPWEL, NPRCH
       INTEGER IUBE(2), IBDT(8)
       INTEGER IOWELL2(3)  ! FOR MNW1 PACKAGE
+      DOUBLE PRECISION SMALL  ! FOR MNW1 PACKAGE
       CHARACTER*4 CUNIT(NIUNIT)
       CHARACTER*10 PARNEG(MXPAR)
       DATA CUNIT/'BCF6', 'WEL ', 'DRN ', 'RIV ', 'EVT ', '    ', 'GHB ',  !  7
@@ -106,7 +110,8 @@ C
      &           'STOB', 'HUF2', 'CHOB', 'ETS ', 'DRT ', 'DTOB', 'GMG ',  ! 42
      &           'HYD ', 'SFR ', 'sfob', 'GAGE', 'LVDA', '    ', 'LMT6',  ! 49
      &           'MNW1', 'DAF ', 'DAFG', 'KDEP', 'SUB ', '    ', '    ',  ! 56
-     &           44*'    '/
+     &           '    ', '    ', '    ', 'unc ', '    ', '    ', '    ',  ! 63
+     &           37*'    '/
 C     ------------------------------------------------------------------
 cc      open(78,file='mf2k.dbg')
 cc      write(*,*)' Opened file mf2k.dbg for debugging'
@@ -617,8 +622,9 @@ C-------INITIALIZE H AND X ARRAYS, AND UNFLAG OMITTED OBSERVATIONS
      &      CALL OBS1BAS6DR(ND,NPE,X(LCX))
 C4------ALLOCATE SPACE IN RX AND IR ARRAYS.
         CALL GWF1BAS6ALP(HEADNG,NPER,TOTIM,NCOL,NROW,NLAY,NODES,INBAS,
-     1                   IOUT,IXSEC,ICHFLG,IFREFM,ISUMRX,ISUMIR,LCIOFL,
-     2                   ISTRT,IAPART)
+cgzh mnw dp
+     1                   IOUT,IXSEC,ICHFLG,IFREFM,ISUMRX,ISUMIR,ISUMRZ,
+     2                   LCIOFL,ISTRT,IAPART)
         IF(IUNIT(1).GT.0)
      1      CALL GWF1BCF6ALP(ISUMRX,LCSC1,LCHY,LCSC2,LCTRPY,ITRSS,ISS,
      2                       IUNIT(1),NCOL,NROW,NLAY,IOUT,IBCFCB,LCWETD,
@@ -724,7 +730,7 @@ CLAK
      1      CALL GWF1DAF1ALP(IERR,IUNIT(52)+1,IUNIT(52),IUNIT(51),IOUT,
      2                       IDAFCB,IDAFBK)
         IF(IUNIT(50).GT.0) THEN
-          CALL GWF1MNW1AL(ISUMRX,LCWEL2,MXWEL2,NWELL2,LCHREF,NODES,
+          CALL GWF1MNW1AL(ISUMRZ,LCWEL2,MXWEL2,NWELL2,LCHREF,NODES,
      &                    KSPREF,IUNIT(50),IOUT,IWL2CB,IOWELL2,
      &                    NOMOITER,PLOSSMNW,MNWNAME,FNAME)
 C
@@ -749,10 +755,15 @@ C      COMMENTED OUT
           IF(LENRX.LE.0) LENRX=1
           LENIR = ISUMIR - 1
           IF(LENIR.LE.0) LENIR=1
-          ALLOCATE (RX(LENRX),IR(LENIR),STAT=ISTAT)
+cgzh mnw dp
+          LENRZ = ISUMRZ - 1
+          IF(LENRZ.LE.0) LENRZ=1
+cgzh mnw dp
+          ALLOCATE (RX(LENRX),IR(LENIR),RZ(LENRZ),STAT=ISTAT)
           IF (ISTAT.NE.0) THEN
             WRITE(*,704)ISTAT
-  704       FORMAT(1X,'ALLOCATION OF ARRAYS RX, IR FAILED,',/,
+cgzh mnw dp
+  704       FORMAT(1X,'ALLOCATION OF ARRAYS RX, IR, RZ FAILED,',/,
      &      ' RETURNED ERROR MESSAGE NUMBER: ',I6)
             CALL USTOP(' ')
           ENDIF
@@ -1013,8 +1024,9 @@ CLAK
      &                        NUMH,IHYDMUN,0.0,HYDNOH,NROW,NCOL,
      &                        ITMUNI,IOUT)
           IF(IUNIT(50).GT.0)
-     &        CALL GWF1MNW1RP(MNWSITE,RX(LCWEL2),NWELL2,MXWEL2,
-     &                         GX(LCHOLD),RX(LCHREF),IG(LCIBOU),
+cgzh mnw dp
+     &        CALL GWF1MNW1RP(MNWSITE,RZ(LCWEL2),NWELL2,MXWEL2,
+     &                         GX(LCHOLD),RZ(LCHREF),IG(LCIBOU),
      &                         GX(LCDELR),GX(LCDELC),GX(LCCR),GX(LCCC),
      &                         RX(LCHY),GZ(LCHNEW),HCLOSE,SMALL,HDRY,
      &                         NODES,NROW,NCOL,KPER,KSPREF,IUNIT(50),
@@ -1071,7 +1083,8 @@ CLAK
             IF(IUNIT(51).GT.0)
      1          CALL GWF1DAF1AD(DELT,IERR,ITMUNI,IUNIT(51),IOUT)
             IF(IUNIT(50).GT.0)
-     &          CALL GWF1MNW1AD(NWELL2,MXWEL2,RX(LCWEL2),IG(LCIBOU),
+cgzh mnw dp
+     &          CALL GWF1MNW1AD(NWELL2,MXWEL2,RZ(LCWEL2),IG(LCIBOU),
      &                          GX(LCDELR),GX(LCDELC),GX(LCCR),GX(LCCC),
      &                          RX(LCHY),SMALL,HDRY,GZ(LCHNEW),NCOL,
      &                          NROW,NODES,LAYHDT,GX(LCBOTM),NBOTM,
@@ -1246,7 +1259,8 @@ CLAK
      3                            GX(LCRHS),NCOL,NROW,NLAY,KITER,
      4                            IDAFBK)
               IF (IUNIT(50).GT.0)
-     &            CALL GWF1MNW1FM(NWELL2,MXWEL2,RX(LCWEL2),IG(LCIBOU),
+cgzh mnw dp
+     &            CALL GWF1MNW1FM(NWELL2,MXWEL2,RZ(LCWEL2),IG(LCIBOU),
      &                            GX(LCDELR),GX(LCDELC),GX(LCCR),
      &                            GX(LCCC),RX(LCHY),SMALL,HDRY,
      &                            GX(LCHCOF),GX(LCRHS),GZ(LCHNEW),NCOL,
@@ -1610,7 +1624,8 @@ C--DRAINS WITH RETURN FLOW
 C--MULTINODE WELLS
             IF(IUNIT(50).GT.0)
      &          CALL GWF1MNW1BD(MNWSITE,NWELL2,MXWEL2,VBNM,VBVL,MSUM,
-     &                          DELT,RX(LCWEL2),IG(LCIBOU),GZ(LCHNEW),
+cgzh mnw dp
+     &                          DELT,RZ(LCWEL2),IG(LCIBOU),GZ(LCHNEW),
      &                          NCOL,NROW,NODES,NSTP(KKPER),KKSTP,KKPER,
      &                          IWL2CB,ICBCFL,GX(LCBUFF),IOUT,IOWELL2,
      &                          TOTIM,PLOSSMNW,HDRY)
@@ -2201,7 +2216,8 @@ C
 C
 C       Post-processing of MNW list output --- Parses to time series for
 C       individual wells
-        IF (IUNIT(50).GT.0) CALL GWF1MNW1OT(MNWSITE,RX(LCWEL2),NWELL2,
+cgzh mnw dp
+        IF (IUNIT(50).GT.0) CALL GWF1MNW1OT(MNWSITE,RZ(LCWEL2),NWELL2,
      &                                      MXWEL2,IOWELL2,MNWNAME)
 C
 C       PRINT DATA FOR OBSERVED HEADS AND FLOWS.

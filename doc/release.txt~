@@ -12,7 +12,7 @@ these packages and processes, see mf2k.txt ("Summary of MODFLOW-2000").
 NOTE: Any use of trade, product or firm names is for descriptive purposes 
       only and does not imply endorsement by the U.S. Government.
 
-o Version 1.15.01 04/05/2005:
+o Version 1.15.00 04/05/2005:
 
 This version includes fixes to bugs in the following packages and
 post-processing program:

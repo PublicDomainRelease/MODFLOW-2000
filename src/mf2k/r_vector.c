@@ -8,7 +8,7 @@
  *  An r_vector structure contains a pointer
  *  to a double vector and a ponter to an r_data structure.
  *
- *  The r_data structure contains the length of the 
+ *  The r_data structure contains the length of the
  *  double vector and the number of elements in the
  *  x-direstion (l), y-direstion (m) and z-direction (n).
  *
@@ -38,14 +38,14 @@ void r_free(r_vector* r_ptr)
 
 /* BLAS-like functions */
 
-double r_dotprd(r_vector* r1_ptr, r_vector* r2_ptr) 
+double r_dotprd(r_vector* r1_ptr, r_vector* r2_ptr)
 {
   double dot;
   double *r1,*r2;
   int i,m,neq;
 
   neq=r1_ptr->rdp->neq;
-  if(neq<=0) 
+  if(neq<=0)
     return 0;
   if(neq!=r2_ptr->rdp->neq)
     return 0;
@@ -118,13 +118,13 @@ int r_zero(r_vector* r_ptr)
   return 1;
 }
 
-int r1_gets_r1_plus_cr2(r_vector* r1_ptr, r_vector* r2_ptr, double c) 
+int r1_gets_r1_plus_cr2(r_vector* r1_ptr, r_vector* r2_ptr, double c)
 {
   double *r1,*r2;
   int i,m,neq;
 
   neq=r1_ptr->rdp->neq;
-  if(neq<=0) 
+  if(neq<=0)
     return 0;
   if(neq!=r2_ptr->rdp->neq)
     return 0;
@@ -147,13 +147,13 @@ int r1_gets_r1_plus_cr2(r_vector* r1_ptr, r_vector* r2_ptr, double c)
   return 1;
 }
 
-int r1_gets_cr1_plus_r2(r_vector* r1_ptr, r_vector* r2_ptr, double c) 
+int r1_gets_cr1_plus_r2(r_vector* r1_ptr, r_vector* r2_ptr, double c)
 {
   double *r1,*r2;
   int i,m,neq;
 
   neq=r1_ptr->rdp->neq;
-  if(neq<=0) 
+  if(neq<=0)
     return 0;
   if(neq!=r2_ptr->rdp->neq)
     return 0;
@@ -182,7 +182,7 @@ int r1_gets_r2_minus_r1(r_vector* r1_ptr, r_vector* r2_ptr)
   int i,m,neq;
 
   neq=r1_ptr->rdp->neq;
-  if(neq<=0) 
+  if(neq<=0)
     return 0;
   if(neq!=r2_ptr->rdp->neq)
     return 0;
@@ -211,7 +211,7 @@ int r1_gets_r1_minus_r2(r_vector* r1_ptr, r_vector* r2_ptr)
   int i,m,neq;
 
   neq=r1_ptr->rdp->neq;
-  if(neq<=0) 
+  if(neq<=0)
     return 0;
   if(neq!=r2_ptr->rdp->neq)
     return 0;
@@ -240,7 +240,7 @@ int r1_gets_r2_plus_r1(r_vector* r1_ptr, r_vector* r2_ptr)
   int i,m,neq;
 
   neq=r1_ptr->rdp->neq;
-  if(neq<=0) 
+  if(neq<=0)
     return 0;
   if(neq!=r2_ptr->rdp->neq)
     return 0;
@@ -269,7 +269,7 @@ int r1_gets_r1_plus_r2(r_vector* r1_ptr, r_vector* r2_ptr)
   int i,m,neq;
 
   neq=r1_ptr->rdp->neq;
-  if(neq<=0) 
+  if(neq<=0)
     return 0;
   if(neq!=r2_ptr->rdp->neq)
     return 0;
@@ -298,7 +298,7 @@ int r_copy(r_vector* r1_ptr, r_vector* r2_ptr)
   int i,m,neq;
 
   neq=r1_ptr->rdp->neq;
-  if(neq<=0) 
+  if(neq<=0)
     return 0;
   if(neq!=r2_ptr->rdp->neq)
     return 0;
@@ -329,7 +329,7 @@ int r1_gets_r2_times_r3(r_vector* r1_ptr, r_vector* r2_ptr, void* D_ptr)
   int i,m,neq;
 
   neq=r1_ptr->rdp->neq;
-  if(neq<=0) 
+  if(neq<=0)
     return 0;
   if(neq!=r2_ptr->rdp->neq)
     return 0;
@@ -360,22 +360,22 @@ int r_perm(r_vector* r1_ptr,r_vector* r2_ptr,int* perm)
 {
   int i;
   int neq;
-  
+
   double *r1,*r2;
-  
+
   r1= r1_ptr->vec;
   r2= r2_ptr->vec;
-  
+
   neq=r1_ptr->rdp->neq;
-  
+
   for(i= 0;i<neq;i++)
     r1[i]= r2[perm[i]-1];
 
   return 1;
 }
 
-/* 
- * Fill vector with random values between a0 and a1.  If seed is 
+/*
+ * Fill vector with random values between a0 and a1.  If seed is
  * zero, then fill vector with constant a1-a0;
  */
 int r_random(r_vector* r_ptr, double a0, double a1, long unsigned seed)
@@ -452,8 +452,8 @@ void p_print(FILE* fp, r_vector* r_ptr)
 
 int r_write(FILE* fp, r_vector* r_ptr)
 {
-  fwrite((r_data *) r_ptr->rdp,sizeof(r_data),1,fp); 
-  fwrite((double *) r_ptr->vec,sizeof(double),r_ptr->rdp->neq,fp); 
+  fwrite((r_data *) r_ptr->rdp,sizeof(r_data),1,fp);
+  fwrite((double *) r_ptr->vec,sizeof(double),r_ptr->rdp->neq,fp);
   fflush(fp);
 
   return 1;
@@ -540,10 +540,10 @@ int GEN_eval(r_vector* r2_ptr, r_vector* r1_ptr, GEN_operator* G_ptr)
  *  to by fp.  This is done by repeated evaluation of the coordinate
  *  vector p[i]=1 for i=0,..,neq.
  *
- *  row_data points to the row-space r_data and col_data points to the 
+ *  row_data points to the row-space r_data and col_data points to the
  *  column-space r_data.
  */
-int GEN_write(FILE* fp, GEN_operator* A_ptr, 
+int GEN_write(FILE* fp, GEN_operator* A_ptr,
               r_data* row_data, r_data* col_data)
 {
   r_vector r1,r2;
@@ -576,5 +576,5 @@ int GEN_write(FILE* fp, GEN_operator* A_ptr,
 
   return 1;
 }
-    
+
 
