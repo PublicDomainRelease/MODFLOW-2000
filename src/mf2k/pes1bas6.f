@@ -1,4 +1,4 @@
-C     Last change:  ERB  10 Jul 2002    4:05 pm
+C     Last change:  ERB  14 Jan 2003    4:09 pm
 C=======================================================================
       SUBROUTINE PES1BAS6DF(IBEFLG,IFO,IOUB,IPES,IPR,IPRAR,IPRINT,
      &                      ITERPF,ITERPK,ITMXP,IUPES,IYCFLG,JMAX,LASTX,
@@ -71,7 +71,7 @@ C
       END
 C=======================================================================
       SUBROUTINE PES1BAS6AL(ISUM,ISUMZ,ISUMI,IOUT,NPLIST,LCC,LCSCLE,LCG,
-     &                     LCDD,LCWP,MPR,LCPRM,LCPV,LCR,LCU,LCGD,LCS,
+     &                     LCDD,LCWP,MPR,LCPRM,LCR,LCU,LCGD,LCS,
      &                     NOPT,IPR,LCWTP,LCWTPS,LCW3,LCW4,LCNIPR,
      &                     LCEIGL,LCEIGV,LCEIGW,LCIPNG,IU,NPNG,MPRAR,
      &                     IPRAR,NPNGAR,IREWND,LCPRNT,LCPARE,ITMXP,
@@ -86,7 +86,7 @@ C     ******************************************************************
 C     SPECIFICATIONS:
 C     ------------------------------------------------------------------
       INTEGER IOUT, IPR, ISOLD, ISP, ISUM, LCC, LCDD, LCEIGL, LCEIGV,
-     &        LCEIGW, LCG, LCGD, LCNIPR, LCPRM, LCPV, LCR, LCS, LCSCLE,
+     &        LCEIGW, LCG, LCGD, LCNIPR, LCPRM, LCR, LCS, LCSCLE,
      &        LCU, LCWP, LCWTP, LCWTPS, LCW3, LCW4, MPR, NOPT, NPLIST,
      &        LCPRNT, LCPARE, LCAAP, LCAMCA
       CHARACTER*200 LINE
@@ -124,11 +124,16 @@ C       ESTIMATION ITERATION
         DMAX = 1.0E-6
         TOL = 1.0E35
         WRITE (IOUT,515) DMAX,TOL
+      ELSEIF (ITMXP.LT.0) THEN
+        WRITE (IOUT,517)
+        CALL USTOP(' ')
       ENDIF
   515 FORMAT (/,
      &1X,'MAX-ITER SPECIFIED AS ZERO -- MAX-CHANGE HAS BEEN SET TO ',
      &1P,G8.1,' AND TOL HAS',/,' BEEN SET TO ',G8.1,' TO FORCE',
      &' CONVERGENCE IN ONE PARAMETER-ESTIMATION ITERATION')
+  517 FORMAT (/,1X,'ERROR: MAX-ITER IS LESS THAN ZERO -- STOP',
+     &' EXECUTION (PES1BAS6AL)')
 C
 C     READ AND PRINT ITEM 2 OF THE PES INPUT FILE
       READ(IU,'(A)') LINE
@@ -165,21 +170,21 @@ C     READ AND PRINT ITEM 2 OF THE PES INPUT FILE
 C
       IF (IBEFLG.LT.0 .OR. IBEFLG.GT.2) THEN
         WRITE (IOUT,521)
-        STOP
+        CALL USTOP(' ')
       ENDIF
   521 FORMAT (/,1X,'ERROR: IBEFLG MUST BE 0, 1, OR 2 -- STOP',
      &' EXECUTION (PES1BAS6AL)')
 C
       IF (IYCFLG.LT.-1 .OR. IYCFLG.GT.2) THEN
         WRITE (IOUT,522)
-        STOP
+        CALL USTOP(' ')
       ENDIF
   522 FORMAT (/,1X,'ERROR: IYCFLG MUST BE -1, 0, 1, OR 2 -- STOP',
      &' EXECUTION (PES1BAS6AL)')
 C
       IF (IYCFLG.GT.0 .AND. ITMXPO.NE.0) THEN
         WRITE (IOUT,523)
-        STOP
+        CALL USTOP(' ')
       ENDIF
   523 FORMAT(/,' ERROR: MAX-ITER MUST BE SET TO 0 WHEN IYCFLG > 0',
      &' -- STOP EXECUTION (PES1BAS6AL)')
@@ -193,7 +198,7 @@ C
 C
       IF (IAP.NE.0 .AND. IAP.NE.1) THEN
         WRITE (IOUT,526)
-        STOP
+        CALL USTOP(' ')
       ENDIF
   526 FORMAT(/,1X,
      &'ERROR: IAP MUST BE 0 OR 1 -- STOP EXECUTION (PES1BAS6AL)')
@@ -308,7 +313,6 @@ C
       LCSCLE = ISUMZ
       ISUMZ = ISUMZ + NPLIST
       IF (IPR.GE.NPLIST) ISUMZ = ISUMZ + (IPR-NPLIST+1)
-      LCPV = ISUMZ
       LCDD = ISUMZ
       ISUMZ = ISUMZ + NPLIST
       LCEIGL = ISUMZ
@@ -423,7 +427,7 @@ C-------READ ITEM 6
             ENDIF
     4     CONTINUE
           WRITE (IOUT,640) PARNEG(I)
-          STOP
+          CALL USTOP(' ')
     6     CONTINUE
     8   CONTINUE
         WRITE (IOUT,541)
@@ -512,7 +516,7 @@ C-------CHECK NPE VERSUS ND
 C-------STOP IF THERE ARE ERRORS IN THE DATA
       IF (IERR.GT.0) THEN
         WRITE(IOUT,620)
-        STOP
+        CALL USTOP(' ')
       ENDIF
 C-------INITIALIZE DD
       DO 150 IP = 1, NPLIST
@@ -521,57 +525,6 @@ C-------INITIALIZE DD
 C
       INQUIRE(UNIT=IU,OPENED=LOP)
       IF (LOP) CLOSE(UNIT=IU)
-C
-      RETURN
-      END
-C=======================================================================
-      SUBROUTINE PES1BAS6CN(B1,IOUT,IPNG,ITERP,LN,NPE,NPLIST,NPNG,
-     &                     NPNGAR)
-C-----VERSION 19990804 ERB
-C     ******************************************************************
-C     CHECK FOR PARAMETER VALUES <= 0 THAT SHOULD BE > 0.
-C     ******************************************************************
-C        SPECIFICATIONS:
-C     ------------------------------------------------------------------
-      REAL B1
-      INTEGER I, IIP, IOUT, IPNG, LN, NPE, NPNG, NPLIST
-      CHARACTER*4 PIDTMP
-      DIMENSION B1(NPLIST), IPNG(NPNGAR), LN(NPLIST)
-      INCLUDE 'param.inc'
-C     ------------------------------------------------------------------
-  500 FORMAT (/,'  PARAMETER "',A,
-     &        '" < 0 : NOT PHYSICALLY REASONABLE.',/,
-     &        '  CHANGED TO ',G13.6,' (PES1BAS6CN)')
-  505 FORMAT (/,'  LN PARAMETER "',A,'" <= 0 : NOT ',
-     &        'PHYSICALLY OR MATHEMATICALLY REASONABLE.  CHANGED TO ',
-     &        G13.6,' (PES1BAS6CN)')
-C
-      IF (ITERP.GT.1) THEN
-        DO 20 IIP = 1, NPE
-          IIPP = IPPTR(IIP)
-          PIDTMP = PARTYP(IIPP)
-          IF (B(IIPP).LE.B1(IIPP)/1.E6 .AND. LN(IIPP).LE.0 .AND.
-     &        (PIDTMP.EQ.'HK  ' .OR. PIDTMP.EQ.'SS  ' .OR.
-     &        PIDTMP.EQ.'SY  ' .OR. PIDTMP.EQ.'VK ' .OR.
-     &        PIDTMP.EQ.'VANI' .OR. PIDTMP.EQ.'GHB ' .OR.
-     &        PIDTMP.EQ.'RIV ' .OR. PIDTMP.EQ.'STR ' .OR.
-     &        PIDTMP.EQ.'DRN ' .OR. PIDTMP.EQ.'ANI ' .OR.
-     &        PIDTMP.EQ.'EVT ' .OR. PIDTMP.EQ.'VKCB' .OR.
-     &        PIDTMP.EQ.'DRT ' .OR. PIDTMP.EQ.'ETS ')) THEN
-            IF (NPNG.GT.0) THEN
-              DO 10 I = 1, NPNG
-                IF (IIPP.EQ.IPNG(I)) GOTO 20
-   10         CONTINUE
-            ENDIF
-            B(IIPP) = B1(IIPP)/100.
-            WRITE (IOUT,500) PARNAM(IIPP), B(IIPP)
-          ENDIF
-          IF (B(IIPP).LT.1.E-14 .AND. LN(IIPP).GT.0) THEN
-            B(IIPP) = 1.E-14
-            WRITE (IOUT,505) PARNAM(IIPP), B(IIPP)
-          ENDIF
-   20   CONTINUE
-      ENDIF
 C
       RETURN
       END
@@ -762,7 +715,7 @@ C-------CHECK NPNG PARAMETER NUMBERS
               CONTINUE
             ELSE
               WRITE (IOUTG,540) I, IPNG(I), IPNG(I), PIDTMP
-              STOP
+              CALL USTOP(' ')
             ENDIF
    60     CONTINUE
         ENDIF
@@ -1116,7 +1069,7 @@ C-----WRITE FINAL PARAMETER-ESTIMATION OUTPUT
 C-----SINGULAR COEFFICIENT MATRIX
       IF (IND.GT.0) THEN
         WRITE (IOUT,500)
-        STOP
+        CALL USTOP(' ')
       ENDIF
 C
       IF (IFO.EQ.0) THEN
@@ -1164,7 +1117,7 @@ C-------PRINT PARAMETER STATISTICS
         CALL SPES1BAS6WS(NPE,BUFF,LN,IOUT,SCLE,ND,MPR,BL,BU,C,IPRC,
      &                   NPLIST,PRNT,OUTNAM)
 C-------CALCULATE CORRELATION COEFFICIENT
-        CALL SOBS1BAS6CC(ND,WT,HOBS,H,R,R1,MPR,NPE,WP,B,PRM,BUFF,IPR,
+        CALL SOBS1BAS6CC(ND,WT,HOBS,H,R,R1,MPR,WP,B,PRM,IPR,
      &                   NIPR,WTPS,NHT,WTQ,WTQS,IOWTQ,NDMH,NPLIST,MPRAR,
      &                   IPRAR,NDMHAR,BPRI)
 C-------PRINT FINAL RSQ'S, ERROR VARIANCE, CORRELATION, ITERATIONS
@@ -1775,9 +1728,9 @@ C-------PRINT FINAL PARAMETER VALUES, STD. DEV., COEFFICIENTS OF
 C-------VARIATION, AND PARAMETER 95-PERCENT LINEAR CONFIDENCE INTERVALS
 C---------BUFF(IP,3) IS LOG10(B) AND THEN THE PHYSICAL PARAMETER VALUES
 C---------BUFF(IP,1) IS THE PHYSICAL PARAMETER VALUES, THEN  THE
-C---------           STANDARD DEVIATION OF LOG10(B), AND THEN 
+C---------           STANDARD DEVIATION OF LOG10(B), AND THEN
 C---------           THE LOWER LIMIT OF THE CONFIDENCE INTERVAL OF LOG10(B)
-C---------BUFF(10,2) IS THE UPPER CONFIDENCE INTERVAL OF LOG10(B) 
+C---------BUFF(10,2) IS THE UPPER CONFIDENCE INTERVAL OF LOG10(B)
 C---------LOG TRANSFORM
       I95 = 0
       LNFLAG = 0
@@ -2031,7 +1984,7 @@ C--------CHECK FOR HIGHLY CORRELATED PARAMETER PAIRS
           I1 = IP + 1
           DO 240 I = I1, NPE
             TMP = ABS(BUFF(IP,I))
-            IF (TMP.GE..90 .AND. TMP.LT..95) 
+            IF (TMP.GE..90 .AND. TMP.LT..95)
      &          WRITE (IOUT,520) PARNAM(IIPP),PARNAM(IPPTR(I)),
      &                           BUFF(IP,I)
   240     CONTINUE
@@ -2042,7 +1995,7 @@ C--------CHECK FOR HIGHLY CORRELATED PARAMETER PAIRS
           I1 = IP + 1
           DO 260 I = I1, NPE
             TMP = ABS(BUFF(IP,I))
-            IF (TMP.GE..85 .AND. TMP.LT..90) 
+            IF (TMP.GE..85 .AND. TMP.LT..90)
      &          WRITE (IOUT,520) PARNAM(IIPP),PARNAM(IPPTR(I)),
      &                           BUFF(IP,I)
   260     CONTINUE
@@ -2122,7 +2075,7 @@ C-------GET EQUAL SIGN
           WRITE(IOUT,1020)EQNAM(I)
  1020     FORMAT(' "=" SYMBOL NOT FOUND IN PRIOR-INFORMATION',
      &           ' EQUATION "',A10,'"',/,' -- STOP EXECUTION')
-          STOP
+          CALL USTOP(' ')
         ENDIF
         SIGN = 1.0
 C
@@ -2159,7 +2112,7 @@ C---------IF STRING IS A COEFFICIENT, GET "*" AND PARAMETER NAME
             WRITE(IOUT,1030) EQNAM(I)
  1030       FORMAT(' "*" SYMBOL NOT FOUND IN PRIOR-INFORMATION',
      &             ' EQUATION "',A10,'"',/,' -- STOP EXECUTION')
-            STOP
+            CALL USTOP(' ')
           ENDIF
           CALL URWORD(LINE,ICOL,ISTART,ISTOP,1,N,R,IOUT,0)
           PNAM = LINE(ISTART:ISTOP)
@@ -2182,7 +2135,7 @@ C-------IF NO MATCH FOUND FOR PARAMETER NAME, PRINT ERROR MESSAGE
  1040   FORMAT(' PARAMETER NAME "',A10,'" IN PRIOR-',
      &         'INFORMATION EQUATION "',A10,'"',/' NOT FOUND',
      &         ' -- STOP EXECUTION (SPES1BAS6PI)')
-        STOP
+        CALL USTOP(' ')
 C
  50     CONTINUE
 C
@@ -2238,7 +2191,7 @@ C       SHOULD BE ONLY ONE PARAMETER
      &           '" CONTAINS A LOG-TRANSFORMED PARAMETER',/,
      &           ' AND MORE THAN ONE PARAMETER',/,
      &           ' -- STOP EXECUTION (SPES1BAS6PI)')
-          STOP
+          CALL USTOP(' ')
         ENDIF
 C
 C-------GET STATP AND ISP (STAT-FLAG)
@@ -2259,12 +2212,12 @@ C       CHECK FOR VALID VALUE OF ISP
           IF (ISP.GE.10) ISP1 = ISP - 10
           IF (ISP1.LT.0 .OR. ISP1.GT.2) THEN
             WRITE(IOUT,1055) EQNAM(I),ISP
-            STOP
+            CALL USTOP(' ')
           ENDIF
         ELSE
           IF (ISP.LT.0 .OR. ISP.GT.2) THEN
             WRITE(IOUT,1056) EQNAM(I),ISP
-            STOP
+            CALL USTOP(' ')
           ENDIF
         ENDIF
  1055   FORMAT(/,' *** ERROR: PRIOR-INFORMATION EQUATION "',A,
@@ -2335,7 +2288,7 @@ C       ENSURE THAT WPP IS NOT TOO SMALL
  1057     FORMAT(/,
      &' ERROR: THE VARIANCE FOR EQUATION "',A,'"  EVALUATES AS ZERO',/,
      &' -- STOP EXECUTION (SPES1BAS6PI)')
-          STOP
+          CALL USTOP(' ')
         ELSEIF (WPP.LT.VARMIN) THEN
           WRITE(IOUT,1058) EQNAM(I),WPP,VARMIN
  1058     FORMAT(/,
@@ -2356,12 +2309,12 @@ C-----PRINT END-OF-FILE ERROR MESSAGE
       WRITE(IOUT,1060)
  1060 FORMAT(' END-OF-FILE REACHED DURING ATTEMPT TO ',
      &        'READ PRIOR INFORMATION--STOP EXECUTION')
-      STOP
+      CALL USTOP(' ')
 C
       END
 C=======================================================================
       SUBROUTINE SPES1BAS6PE(IO,IOUT,MPR,PRM,LN,WP,D,RSQP,NRUNS,AVET,
-     &                      NPOST,NNEGT,IPR,ND,WTRL,NRES,NPLIST,MPRAR,
+     &                      NPOST,NNEGT,IPR,ND,WTRL,NRSO,NPLIST,MPRAR,
      &                      IUGDO,OUTNAM,IPLOT,EQNAM,IPLPTR,
      &                      ISSWR,SSPI,ITMXP)
 C-----VERSION 1000 01OCT1996
@@ -2373,10 +2326,10 @@ C     PRIOR INFORMATION
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL AVE, AVET, BB, BDIF, BWP, D, PRM, RSQP, TEMP, TEMP1, 
+      REAL AVE, AVET, BB, BDIF, BWP, D, PRM, RSQP, TEMP, TEMP1,
      &     TEMP1E, TEMPE, VMAX, VMIN, WP, WPSR, WTRL
       INTEGER IIP, IMP, IO, IOUT, IPR, LFLAG, LN, MPR, ND, NNEG, NNEGT,
-     &        NPOS, NPOST, NRES, NRESPE, NRUNS, NRUNSPE
+     &        NPOS, NPOST, NRSO, NRESPE, NRUNS, NRUNSPE
       INTEGER IUGDO(6), IPLOT(ND+IPR+MPR), IPLPTR(ND+IPR+MPR)
       CHARACTER*200 OUTNAM
       CHARACTER*10 EQNAM(MPRAR)
@@ -2414,7 +2367,7 @@ C
       VMIN = 1.E20
       AVE = 0.
       DO 20 IMP = 1, MPR
-        IPLPTR(NRES+IMP) = ND + IMP
+        IPLPTR(NRSO+IMP) = ND + IMP
         TEMP = 0.0
         LFLAG = 0
         DO 10 IIP = 1, NPLIST
@@ -2455,7 +2408,7 @@ C           PRM ALLOWED TO SUM LOGS
             WRITE (IUGDO(4),550) BDIF, IPLOT(ND+IMP), EQNAM(IMP)
             WRITE (IUGDO(5),550) BWP, IPLOT(ND+IMP), EQNAM(IMP)
           ENDIF
-          IF (OUTNAM.NE.'NONE') D(NRES+IMP) = BWP
+          IF (OUTNAM.NE.'NONE') D(NRSO+IMP) = BWP
         ENDIF
         RSQP = RSQP + (BWP**2)
         RSQMPR = RSQMPR + (BWP**2)
@@ -2463,7 +2416,7 @@ C           PRM ALLOWED TO SUM LOGS
         IF (BWP.LT.VMIN) VMIN = BWP
         IF (BWP.GE.0.) NPOS = NPOS + 1
         IF (BWP.LT.0.) NNEG = NNEG + 1
-        IF (NRES+IMP.GT.1 .AND. (WTRL*BWP).LT.0.) NRUNS = NRUNS + 1
+        IF (NRSO+IMP.GT.1 .AND. (WTRL*BWP).LT.0.) NRUNS = NRUNS + 1
         IF (IMP.GT.1 .AND. (WTRLPE*BWP).LT.0.)
      &      NRUNSPE = NRUNSPE + 1
         WTRL = BWP
@@ -2471,7 +2424,7 @@ C           PRM ALLOWED TO SUM LOGS
         AVE = AVE + BWP
    20 CONTINUE
       IF (ISSWR.GT.0) SSPI(ISSWR) = SSPI(ISSWR) + RSQMPR
-      NRES = NRES + MPR
+      NRSO = NRSO + MPR
       NRESPE = NRESPE + MPR
       AVET = AVET + AVE
       NPOST = NPOST + NPOS
@@ -2482,31 +2435,30 @@ C           PRM ALLOWED TO SUM LOGS
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SPES1BAS6PC(IPR,NIPR,BUFF,PRM,LN,IO,IOUT,WTPS,D,NRUNS,
-     &                      AVET,NPOST,NNEGT,RSQP,MPR,ND,WTRL,NRES,
-     &                      NPLIST,MPRAR,IPRAR,IPLOT,NAMES,OUTNAM,IUGDO,
+      SUBROUTINE SPES1BAS6PC(IPR,NIPR,LN,IO,IOUT,WTPS,D,NRUNS,
+     &                      AVET,NPOST,NNEGT,RSQP,MPR,ND,WTRL,NRSO,
+     &                      NPLIST,IPRAR,IPLOT,NAMES,OUTNAM,IUGDO,
      &                      IPLPTR,ISSWR,SSPI,ITMXP,BPRI)
 C     VERSION 19990504 ERB
 C     ******************************************************************
-C     CALCULATE AND PRINT WEIGHTED RESIDUALS FOR PARAMETERS AND
-C     PARAMETER SUMS WITH CORRELATED PRIOR INFORMATION
+C     CALCULATE AND PRINT WEIGHTED RESIDUALS FOR PARAMETERS WITH
+C     CORRELATED PRIOR INFORMATION
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL AVE, AVET, BCALWP, BDIF1, BDIF2, BOBSWP, BPRI, BUFF, BWP, D,
-     &     PRM, RSQP, VMAX, VMIN, WPSR, WTRL
+      REAL AVE, AVET, BCALWP, BDIF1, BDIF2, BOBSWP, BPRI, BWP, D,
+     &     RSQP, VMAX, VMIN, WPSR, WTRL
       INTEGER I, I1, IO, IOUT, IPR, L, L1, LN, MPR, N, ND, NIPR, NNEG,
-     &        NNEGT, NPOS, NPOST, NRES, NRESPC, NRUNS, NRUNSPC
+     &        NNEGT, NPOS, NPOST, NRSO, NRESPC, NRUNS, NRUNSPC
       INTEGER IPLOT(ND+IPR+MPR), IUGDO(6), IPLPTR(ND+IPR+MPR)
       CHARACTER*12 NAMES(ND+IPR+MPR)
       CHARACTER*200 OUTNAM
-      DIMENSION BPRI(IPRAR), PRM(NPLIST+1,MPRAR), LN(NPLIST),
-     &          NIPR(IPRAR), BUFF(IPRAR), D(ND+MPR+IPR), SSPI(ITMXP+1),
-     &          WTPS(IPRAR,IPRAR)
+      DIMENSION BPRI(IPRAR), LN(NPLIST), NIPR(IPRAR), D(ND+MPR+IPR),
+     &          SSPI(ITMXP+1), WTPS(IPRAR,IPRAR)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
 C
-  500 FORMAT (/,' PARAMETERS AND PARAMETER SUMS WITH CORRELATED PRIOR',
+  500 FORMAT (/,' PARAMETERS WITH CORRELATED PRIOR',
      &        ' INFORMATION',//,16X,'UNWEIGHTED VALUES',2X,'UNWEIGHTED',
      &        4X,'WEIGHTED VALUES',6X,'WEIGHTED',/,1X,'PARAMETER',7X,
      &        'MEAS.',6X,'CALC.',3X,'RESIDUAL',5X,'MEAS.',6X,'CALC.',5X,
@@ -2535,25 +2487,20 @@ C
       AVE = 0.0
       N = 0
       DO 40 I1 = 1, IPR
-        IPLPTR(NRES+I1) = ND + MPR + I1
+        IPLPTR(NRSO+I1) = ND + MPR + I1
         I = NIPR(I1)
         BOBSWP = 0.0
         BCALWP = 0.0
         DO 30 L1 = 1, IPR
           L = NIPR(L1)
           WPSR = WTPS(I1,L1)
-          IF (L.LE.NPLIST) THEN
-            BDIF1 = BPRI(L1)
+          BDIF1 = BPRI(L1)
 C---CHANGES SUGGESTED BY STEEN FOR LOG-TRANSFORMED PARAMETERS,  NEW NOT
 CC MH: "LET STEEN LOOK AT THIS"
-            IF (LN(L).GT.0) THEN
-              BDIF2 = LOG(B(L))
-            ELSE
-              BDIF2 = B(L)
-            ENDIF
-          ELSEIF (L.GT.NPLIST) THEN
-            BDIF1 = PRM(NPLIST+1,L-NPLIST)
-            BDIF2 = BUFF(L-NPLIST)
+          IF (LN(L).GT.0) THEN
+            BDIF2 = LOG(B(L))
+          ELSE
+            BDIF2 = B(L)
           ENDIF
           BOBSWP = BOBSWP + WPSR*BDIF1
           BCALWP = BCALWP + WPSR*BDIF2
@@ -2577,7 +2524,7 @@ CC MH: "LET STEEN LOOK AT THIS"
      &                           NAMES(ND+MPR+I1)
             WRITE (IUGDO(5),550) BWP, IPLOT(ND+MPR+I1), NAMES(ND+MPR+I1)
           ENDIF
-          IF (OUTNAM.NE.'NONE') D(NRES+I1) = BWP
+          IF (OUTNAM.NE.'NONE') D(NRSO+I1) = BWP
         ENDIF
         IF (BWP.GT.VMAX) VMAX = BWP
         IF (BWP.LT.VMIN) VMIN = BWP
@@ -2591,7 +2538,7 @@ CC MH: "LET STEEN LOOK AT THIS"
         AVE = AVE + BWP
    40 CONTINUE
       IF (ISSWR.GT.0) SSPI(ISSWR) = SSPI(ISSWR) + RSQIPR
-      NRES = NRES + IPR
+      NRSO = NRSO + IPR
       NRESPC = NRESPC + IPR
       AVET = AVET + AVE
       NPOST = NPOST + NPOS
@@ -2668,7 +2615,7 @@ C-------CALCULATE EIGENVALUES AND EIGENVECTORS
    90   CONTINUE
   100 CONTINUE
       CALL SPES1BAS6TR(EIGV,NPE,NPE,EIGL,EIGW)
-      CALL SPES1BAS6TQ(EIGL,EIGW,NPE,NPE,EIGV)
+      CALL SPES1BAS6TQ(EIGL,EIGW,NPE,NPE,EIGV,IOUT)
       CALL SPES1BAS6ES(EIGL,EIGV,NPE,NPE)
 C-------SCALE EIGENVECTORS TO FORM UNIT VECTORS
       DO 130 I = 1, NPE
@@ -2706,7 +2653,7 @@ C-------EIGENVECTOR TEST (FROM PRESS AND OTHERS, 1989)
   150     CONTINUE
   160   CONTINUE
         WRITE (IOUT,'(/1X,A,I3)') 'VECTOR NUMBER', J
-        WRITE (IOUT,'(/1X,T7,A,T18,A,T31,A)') 'VECTOR', 'MTRX*VEC ', 
+        WRITE (IOUT,'(/1X,T7,A,T18,A,T31,A)') 'VECTOR', 'MTRX*VEC ',
      &                                        'RATIO'
         DO 170 L = 1, NPE
           RATIO = EIGW(L)/EIGV(L,J)
@@ -2756,8 +2703,8 @@ C      SPECIFICATIONS
       INCLUDE 'param.inc'
 C-----------------------------------------------------------------------
   500 FORMAT (//,6X,'WEIGHT MATRIX FOR CORRELATED PRIOR',/,6X,75('-'))
-  505 FORMAT (//,6X,'SQUARE-ROOT OF WEIGHT MATRIX FOR CORREALTED PRIOR',
-     &        /,6X,75('-'))
+  505 FORMAT (//,6X,'SQUARE-ROOT OF WEIGHT MATRIX FOR CORRELLATED PRIOR'
+     &        ,/,6X,75('-'))
 C
   510 FORMAT (1X,6G13.6)
   515 FORMAT (/,' PARAMETER NUMBER',I5,' PID=',A4,' HAS WEIGHTING ',
@@ -2777,6 +2724,8 @@ C
      &        /,' -- STOP EXECUTION (SPES1BAS6WR)',/)
   550 FORMAT (/,' CAN NOT USE AN UNESTIMATED PARAMETER',I5,
      &        ' -- STOP EXECUTION (SPES1BAS6WR)',/)
+  551 FORMAT(/,' PARAMETER IS LOG-TRANSFORMED - VALUE MUST BE > 0 FOR',
+     &       ' PRIOR',I5,' -- STOP EXECUTION (SPES1BAS6WR)',/)
   555 FORMAT (/,' "',A10,'" IN ITEM 7 IS NOT DEFINED AS A ',
      &        'PARAMETER -- STOP EXECUTION (SPES1BAS6WR)',/)
   560 FORMAT (1X,A10,2X,I7)
@@ -2812,6 +2761,15 @@ C
           WRITE (IOUT,550) N
           IERR = 1
         ENDIF
+C SC-CHANGE 27MAR2003: BLOCK ADDED TO LOG-TRANSFORM PRIOR
+        IF (LN(N).GT.0) THEN
+          IF (BPRI(I).GT.0.0) THEN
+            BPRI(I) = LOG(BPRI(I))
+          ELSE
+            WRITE(IOUT,551) N
+            IERR = 1
+          END IF
+        END IF
    10 CONTINUE
 C------READ AND WRITE MATRIX USED TO DEFINE THE WEIGHTING
 C     READ PES ITEM 8
@@ -2830,10 +2788,12 @@ C    CONVERT LOG10 TO LOG
         ENDIF
 C     CONVERT COEFFICIENTS OF VARIATION TO STANDARD DEVIATIONS
         IF(IWTP .EQ. 1) THEN
-          IF (LN(NIPR(K)).LE.0 .AND. BPRI(K).NE.0.0)
-     &               WTP(K,K) = WTP(K,K) * BPRI(K)
-          IF (LN(NIPR(K)).GT.0 .AND. LOG(BPRI(K)).NE.0.0)
-     &               WTP(K,K) = WTP(K,K) * LOG(BPRI(K))
+C SC-CHANGE 27MAR2003: CHANGE BECAUSE PRIOR HAS BEEN LOG-TRANSFORMED
+          IF (BPRI(K).NE.0.0) WTP(K,K) = WTP(K,K) * BPRI(K)
+C          IF (LN(NIPR(K)).LE.0 .AND. BPRI(K).NE.0.0)   !! SC commented-
+C     &               WTP(K,K) = WTP(K,K) * BPRI(K)     !! out these
+C          IF (LN(NIPR(K)).GT.0 .AND. LOG(BPRI(K)).NE.0.0) !! lines.
+C     &               WTP(K,K) = WTP(K,K) * LOG(BPRI(K)) !! - ERB 4/2/03
         ENDIF
    20 CONTINUE
 C     CONVERT CORRELATIONS TO COVARIANCES, AND STANDARD DEVIATIONS TO
@@ -2963,7 +2923,7 @@ C     ------------------------------------------------------------------
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SPES1BAS6TQ(D,E,N,NP,Z)
+      SUBROUTINE SPES1BAS6TQ(D,E,N,NP,Z,IOUT)
 C-----VERSION 1000 01FEB1992
 C
 C     ******************************************************************
@@ -2976,7 +2936,6 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       DOUBLE PRECISION B, C, D, DD, E, F, G, P, R, S, Z
       INTEGER I, ITER, K, L, M, N, NP
-      CHARACTER*1 CHR
       DIMENSION D(NP), E(NP), Z(NP,NP)
 C     ------------------------------------------------------------------
       IF (N.GT.1) THEN
@@ -2993,8 +2952,9 @@ C     ------------------------------------------------------------------
           M = N
    40     IF (M.NE.L) THEN
             IF (ITER.EQ.30) THEN
-              WRITE (*,*) ' TOO MANY ITERATIONS'
-              READ (*,'(A)') CHR
+              WRITE (IOUT,45)
+   45         FORMAT(/,' WARNING:  TOO MANY ITERATIONS IN SPES1BAS6TQ',
+     &               /)
             ENDIF
             ITER = ITER + 1
             G = (D(L+1)-D(L))/(2.0*E(L))
@@ -3090,17 +3050,17 @@ C        SPECIFICATIONS:
       INTEGER IDOF, I, ITABLE
 C     ------------------------------------------------------------------
       DIMENSION ITABLE(35), TABLE(35)
-      DATA (ITABLE(I),I=1,35)/1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 
-     &      13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 
+      DATA (ITABLE(I),I=1,35)/1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+     &      13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
      &      28, 29, 30, 40, 60, 120, 240, 500/
       DATA (TABLE(I),I=1,35)/12.706, 4.303, 3.182, 2.776, 2.571, 2.447,
      &      2.365, 2.306, 2.262, 2.228, 2.201, 2.179, 2.160, 2.145,
      &      2.131, 2.120, 2.110, 2.101, 2.093, 2.086, 2.080, 2.074,
-     &      2.069, 2.064, 2.060, 2.056, 2.052, 2.048, 2.045, 2.042, 
+     &      2.069, 2.064, 2.060, 2.056, 2.052, 2.048, 2.045, 2.042,
      &      2.021, 2.000, 1.980, 1.970, 1.960/
 C     ------------------------------------------------------------------
 C
-      IF (IDOF.LE.30) THEN  
+      IF (IDOF.LE.30) THEN
         TST=TABLE(IDOF)
         RETURN
       ENDIF

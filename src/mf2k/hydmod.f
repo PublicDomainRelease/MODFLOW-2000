@@ -1,9 +1,9 @@
-C     Last change:  ERB   5 Jan 2001    2:20 pm
+C     Last change:  ERB  12 Sep 2002    5:04 pm
 C*******************************************************************************
-      SUBROUTINE HYD1BAS6AL(ISUM,LCHYDM,NHYDM,IHYDMUN,HYDNOH,
+      SUBROUTINE GWF1HYD1ALP(ISUM,LCHYDM,NHYDM,IHYDMUN,HYDNOH,
      1IN,IOUT)
 C
-C-----VERSION 14SEPT2000 HYD1BAS6AL
+C-----VERSION 14SEPT2000 GWF1HYD1ALP
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR HYDROGRAPH PROGRAM
 C     ******************************************************************
@@ -34,7 +34,7 @@ C4------HYDROGRAPH FILE AND NUMERIC FLAG FOR DRY/INACTIVE CELLS
       IF(NHYDM.GT.NPTSLBL) THEN
          WRITE(IOUT,*)
      1   ' PTSLBL is not dimensioned large enough in HYDROGRAPH Option'
-         STOP
+         CALL USTOP(' ')
       END IF
 C
 C3------SET LCHYDM EQUAL TO ADDRESS OF FIRST UNUSED SPACE IN X.
@@ -53,11 +53,11 @@ C6------RETURN
       RETURN
       END
 C========================================================================
-      SUBROUTINE HYD1BAS6RP(HYDM,STRT,NHYDM,NUMH,DELR,DELC,
+      SUBROUTINE GWF1HYD1RPP(HYDM,STRT,NHYDM,NUMH,DELR,DELC,
      1NCOL,NROW,NLAY,LCHNEW,LCIBOU,IN,IOUT)
 C
 C
-C-----VERSION SEPT142000 HYD1BAS6RP
+C-----VERSION SEPT142000 GWF1HYD1RPP
 C     ******************************************************************
 C     READ BASIC PACKAGE DATA FOR HYDROGRAPHS
 C     ******************************************************************
@@ -114,7 +114,7 @@ cc    TIME SERIES FOR THE DRAWDOWN ARRAY
          WRITE(IOUT,*) 'Hydrograph Record will be ignored.'
          GO TO 10
       ENDIF
-      CALL SHYD1GRDLOC(XL,YL,DELR,DELC,NROW,NCOL,NR1,NC1,NR2,NC2,
+      CALL SGWF1HYD1GRDLOC(XL,YL,DELR,DELC,NROW,NCOL,NR1,NC1,NR2,NC2,
      & X1,X2,Y1,Y2)
       IF(INTYP.EQ.'C') THEN
          NWT=1
@@ -154,7 +154,7 @@ cc    TIME SERIES FOR THE DRAWDOWN ARRAY
          LOC2=LOC1+1
          LOC3=LOC2-NCOL
          LOC4=LOC3-1
-         CALL SHYD1MW(XL,YL,X1,X2,Y1,Y2,W1,W2,W3,W4)
+         CALL SGWF1HYD1MW(XL,YL,X1,X2,Y1,Y2,W1,W2,W3,W4)
          IF(IBCHK) THEN
             IBLOC1=LCIBOU+(KLAY-1)*NIJ+(NR2-1)*NCOL+NC2-1
             IBLOC2=IBLOC1+1
@@ -177,7 +177,7 @@ cc    TIME SERIES FOR THE DRAWDOWN ARRAY
       IF(NUMH.GT.NHYDM) THEN
          WRITE(IOUT,*)
      1   ' NHYDM is not large enough in HYDROGRAPH Option'
-         STOP
+         CALL USTOP(' ')
       END IF
       HYDM(1,NUMH)=LOC1
       HYDM(2,NUMH)=LOC2
@@ -216,11 +216,11 @@ CC
       RETURN
       END
 C========================================================================
-      SUBROUTINE HYD1IBS2RP(HYDM,NHYDM,NUMH,DELR,DELC,
+      SUBROUTINE GWF1HYD1IBS2RPP(HYDM,NHYDM,NUMH,DELR,DELC,
      1NCOL,NROW,NLAY,LCIBOU,LCSUB,LCHC,IN,IOUT)
 C
 C
-C-----VERSION 14SEPT2000 HYD1IBS2RP
+C-----VERSION 14SEPT2000 GWF1HYD1IBS2RPP
 C     ******************************************************************
 C     READ SUBSIDENCE PACKAGE DATA FOR HYDROGRAPHS
 C     ******************************************************************
@@ -287,7 +287,7 @@ C ----- SET THE CORRECT LAYER COUNTER FOR SUBSIDENCE ARRAYS
          WRITE(IOUT,*) 'Hydrograph Record will be ignored.'
          GO TO 10
       ENDIF
-      CALL SHYD1GRDLOC(XL,YL,DELR,DELC,NROW,NCOL,NR1,NC1,NR2,NC2,
+      CALL SGWF1HYD1GRDLOC(XL,YL,DELR,DELC,NROW,NCOL,NR1,NC1,NR2,NC2,
      & X1,X2,Y1,Y2)
       IF(INTYP.EQ.'C') THEN
          NWT=1
@@ -327,7 +327,7 @@ C ----- SET THE CORRECT LAYER COUNTER FOR SUBSIDENCE ARRAYS
          LOC2=LOC1+1
          LOC3=LOC2-NCOL
          LOC4=LOC3-1
-         CALL SHYD1MW(XL,YL,X1,X2,Y1,Y2,W1,W2,W3,W4)
+         CALL SGWF1HYD1MW(XL,YL,X1,X2,Y1,Y2,W1,W2,W3,W4)
          IF(IBCHK) THEN
             IBLOC1=LCIBOU+(KLAY-1)*NIJ+(NR1-1)*NCOL+NC1-1
             IBLOC2=IBLOC1+1
@@ -350,7 +350,7 @@ C ----- SET THE CORRECT LAYER COUNTER FOR SUBSIDENCE ARRAYS
       IF(NUMH.GT.NHYDM) THEN
          WRITE(IOUT,*)
      1   ' NHYDM is not large enough in HYDROGRAPH Option'
-         STOP
+         CALL USTOP(' ')
       END IF
       HYDM(1,NUMH)=LOC1
       HYDM(2,NUMH)=LOC2
@@ -379,11 +379,11 @@ C ----- SET THE CORRECT LAYER COUNTER FOR SUBSIDENCE ARRAYS
 CC
 
 C========================================================================
-      SUBROUTINE HYD1STR6RP(ISTRM,HYDM,NHYDM,NUMH,DELR,DELC,
+      SUBROUTINE GWF1HYD1STR6RPS(ISTRM,HYDM,NHYDM,NUMH,DELR,DELC,
      1NCOL,NROW,NLAY,LCIBOU,LCSTRM,NSTREM,IN,IOUT,MXSTRM)
 C
 C
-C-----VERSION 14SEPT2000 HYD1STR6RP
+C-----VERSION 14SEPT2000 GWF1HYD1STR6RPS
 C     ******************************************************************
 C     READ STREAM PACKAGE DATA FOR HYDROGRAPHS
 C     ******************************************************************
@@ -527,7 +527,7 @@ C
       IF(NUMH.GT.NHYDM) THEN
          WRITE(IOUT,*)
      1   ' NHYDM is not large enough in HYDROGRAPH Option'
-         STOP
+         CALL USTOP(' ')
       END IF
       HYDM(1,NUMH)=LOC1
       HYDM(2,NUMH)=LOC2
@@ -556,11 +556,11 @@ CC
       END
 
 C========================================================================
-      SUBROUTINE HYD1BAS6OT(GZ,LENGZ,RX,LENRX,IG,LENIG,HYDM,NUMH,
+      SUBROUTINE GWF1HYD1OT(GZ,LENGZ,RX,LENRX,IG,LENIG,HYDM,NUMH,
      1            IHYDMUN,TOTIM,HYDNOH,NROW,NCOL,ITMUNI,IOUT)
 C
 C
-C-----VERSION 14SEPT2000 HYD1BAS6OT
+C-----VERSION 14SEPT2000 GWF1HYD1OT
 C     ******************************************************************
 C     WRITE HYDROGRAPH RECORDS
 C     ******************************************************************
@@ -665,11 +665,11 @@ C ------ RETURN
       RETURN
       END
 C========================================================================
-      SUBROUTINE SHYD1GRDLOC(XL,YL,DELR,DELC,NROW,NCOL,NR1,NC1,NR2,NC2,
-     & XX1,XX2,YY1,YY2)
+      SUBROUTINE SGWF1HYD1GRDLOC(XL,YL,DELR,DELC,NROW,NCOL,NR1,NC1,NR2,
+     & NC2,XX1,XX2,YY1,YY2)
 C
 C
-C-----VERSION 14SEPT2000 SHYD1GRDLOC
+C-----VERSION 14SEPT2000 SGWF1HYD1GRDLOC
 C     ******************************************************************
 C     LOCATE CELLS FOR HYDROGRAPH POINTS
 C     ******************************************************************
@@ -776,9 +776,9 @@ C     ------------------------------------------------------------------
       RETURN
       END
 C========================================================================
-      SUBROUTINE SHYD1MW(X0,Y0,X1,X2,Y1,Y2,W1,W2,W3,W4)
+      SUBROUTINE SGWF1HYD1MW(X0,Y0,X1,X2,Y1,Y2,W1,W2,W3,W4)
 C
-C-----VERSION 14SEPT2000 SHYD1MW
+C-----VERSION 14SEPT2000 SGWF1HYD1MW
 C     ******************************************************************
 C     COMPUTE WEIGHTS FOR BILINEAR INTERPOLATION
 C     ******************************************************************

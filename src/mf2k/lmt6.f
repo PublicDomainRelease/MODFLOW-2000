@@ -138,7 +138,7 @@ C--CHECK FOR "OUTPUT_FILE_UNIT" KEYWORD AND GET UNIT NUMBER
         ELSEIF(IU.LT.0) THEN
           WRITE(IOUT,11) IU
           WRITE(*,11) IU
-          STOP
+          CALL USTOP(' ')
         ENDIF
 C
 C--CHECK FOR "OUTPUT_FILE_HEADER" KEYWORD AND GET INPUT VALUE
@@ -154,7 +154,7 @@ C--CHECK FOR "OUTPUT_FILE_HEADER" KEYWORD AND GET INPUT VALUE
         ELSE
           WRITE(IOUT,12) LINE(ISTART:ISTOP)
           WRITE(*,12) LINE(ISTART:ISTOP)
-          STOP
+          CALL USTOP(' ')
         ENDIF
 C
 C--CHECK FOR "OUTPUT_FILE_FORMAT" KEYWORD AND GET INPUT VALUE
@@ -170,14 +170,14 @@ C--CHECK FOR "OUTPUT_FILE_FORMAT" KEYWORD AND GET INPUT VALUE
         ELSE
           WRITE(IOUT,14) LINE(ISTART:ISTOP)
           WRITE(*,14) LINE(ISTART:ISTOP)
-          STOP
+          CALL USTOP(' ')
         ENDIF
 C
 C--ERROR DECODING LMT INPUT KEYWORDS
       ELSE
         WRITE(IOUT,28) LINE
         WRITE(*,28) LINE
-        STOP
+        CALL USTOP(' ')
       ENDIF
 C
 C--CONTINUE TO THE NEXT INPUT RECORD IN LMT FILE
@@ -228,34 +228,34 @@ C--ERROR CHECKING
       IF(OUTPUT_FILE_HEADER.EQ.'STANDARD') THEN
         IF(MTRIV.GT.0.AND.MTSTR.GT.0) THEN
           WRITE(*,1200)
-          STOP
+          CALL USTOP(' ')
         ELSEIF(MTFHB.GT.0) THEN
           WRITE(*,1202)
-          STOP
+          CALL USTOP(' ')
         ELSEIF(MTRES.GT.0) THEN
           WRITE(*,1204)
-          STOP
+          CALL USTOP(' ')
         ELSEIF(MTTLK.GT.0) THEN
           WRITE(*,1206)
-          STOP
+          CALL USTOP(' ')
         ELSEIF(MTIBS.GT.0) THEN
           WRITE(*,1208)
-          STOP
+          CALL USTOP(' ')
         ELSEIF(MTLAK.GT.0) THEN
           WRITE(*,1210)
-          STOP
+          CALL USTOP(' ')
         ELSEIF(MTMAW.GT.0) THEN
           WRITE(*,1212)
-          STOP
+          CALL USTOP(' ')
         ELSEIF(MTDRT.GT.0) THEN
           WRITE(*,1214)
-          STOP
+          CALL USTOP(' ')
         ELSEIF(MTETS.GT.0) THEN
           WRITE(*,1216)
-          STOP
+          CALL USTOP(' ')
         ELSEIF(MTUSR1.GT.0.OR.MTUSR2.GT.0.OR.MTUSR3.GT.0) THEN
           WRITE(*,1224)
-          STOP
+          CALL USTOP(' ')
         ENDIF
       ENDIF
  1200 FORMAT(/1X,'Both RIV and STR packages are used in flow model;',

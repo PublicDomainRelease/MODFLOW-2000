@@ -1,12 +1,12 @@
-C     Last change:  SWM  22 JUL 2002     4:35 pm
-      SUBROUTINE LMG1AL(ISUM,ISUMI,LCA,LCIA,LCJA,LCU1,LCFRHS,LCIG,
-     1                  ISIZ1,ISIZ2,ISIZ3,ISIZ4,ICG,NCOL,NROW,NLAY,
-     2                  IN,IOUT,IFREFM)
+C     Last change:  SWM  01 OCT 2002     4:28 pm
+      SUBROUTINE LMG1ALG(ISUM,ISUMI,LCA,LCIA,LCJA,LCU1,LCFRHS,LCIG,
+     1                   ISIZ1,ISIZ2,ISIZ3,ISIZ4,ICG,NCOL,NROW,NLAY,
+     2                   IN,IOUT,IFREFM)
 C
-C-----VERSION 1.0 25JUL2001 LMG1AL 
+C-----VERSION 1.0 25JUL2001 LMG1ALG
 C
 C     ******************************************************************
-C     ALLOCATE STORAGE IN THE X ARRAY FOR LMG ARRAYS
+C     ALLOCATE STORAGE IN THE IX AND Z ARRAYS FOR LMG ARRAYS
 C     ******************************************************************
 C
 C        SPECIFICATIONS:
@@ -17,7 +17,7 @@ C
 C1------PRINT A MESSAGE IDENTIFYING AMG PACKAGE
       WRITE(IOUT,500)
   500 FORMAT(1X,/1X,'LMG -- ALGEBRAIC MULTI-GRID SOLUTION PACKAGE',
-     &     ', VERSION 1.1, 07/25/2001')
+     &     ', VERSION 1.2, 09/19/2002')
       
 C
 C2-------READ AND PRINT COMMENTS, STOR1, STOR2, STOR3, ICG
@@ -81,10 +81,10 @@ C4------CALCULATE AND PRINT THE SPACE USED IN THE Z AND IX ARRAYS
       END
 C
 C***********************************************************************
-      SUBROUTINE LMG1RP(IN,MXITER,MXCYC,BCLOSE,DAMP,IOUTAMG,IOUT,
+      SUBROUTINE LMG1RPG(IN,MXITER,MXCYC,BCLOSE,DAMP,IOUTAMG,IOUT,
      &                  IFREFM,ICG,IADAMP,DUP,DLOW,HCLOSE) 
 C
-C-----VERSION 21FEB2001 LMG1RP
+C-----VERSION 19SEP2002 LMG1RPG
 C     ******************************************************************
 C     READ DATA FOR AMG
 C     ******************************************************************
@@ -92,7 +92,7 @@ C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
 C     ------------------------------------------------------------------
-C1-------INITIALIZE HCLOSE SO IT ISN'T UNDERFINED---erb 8/18/00
+C1-------INITIALIZE HCLOSE SO IT ISN'T UNDEFINED---erb 8/18/00
       HCLOSE = 0.0
       IADAMP = 0
       DUP=0.
@@ -181,12 +181,12 @@ C***********************************************************************
      &                  KSTP,KPER,MXITER,MXCYC,NCOL,NROW,NLAY,NODES,
      &                  HNOFLO,IOUT,IOUTAMG,ICG,IADAMP,DUP,DLOW) 
 C
-C-----VERSION 1.1  25JUL2001 LMG1AP
+C-----VERSION 1.2  19SEP2002 LMG1AP
 C     ******************************************************************
 C     THIS SUBROUTINE SETS UP THE MATRIX EQUATIONS IN A FORMAT THAT IS
-C     COMPATIBLE WITH THE ALGEGRAIC MULTIGRID SOLVER PROVIDED BY GMD 
-C     (AMG1R5).  THE 'AMG1R5' ALGORITHM IS THEN USED TO SOLVE FOR HEADS
-C     OR SENSITIVITIES.
+C     COMPATIBLE WITH THE ALGEGRAIC MULTIGRID SOLVER PROVIDED BY KLAUS
+C     STUEBEN (AMG1R6).  THE 'AMG1R6' ALGORITHM IS THEN USED TO SOLVE 
+C     FOR HEADS OR SENSITIVITIES.
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
@@ -241,125 +241,165 @@ C1
   110 CONTINUE
 C
 C2------LOOP THROUGH ALL NODES IN THE GRID AND SET UP MATRIX EQUATIONS.
+C2------NOTE THAT THE FORMULATION OF THESE EQUATIONS IS OPPOSITE IN SIGN
+C2------FROM WHAT IS GIVEN IN THE MODFLOW MANUAL SO THAT THE DIAGONAL
+C2------AND RHS ARE BOTH POSITIVE (LHS AND RHS ARE MULTIPLIED BY -1)
 C2------THIS LOOP STRUCTURE AND INDEXING IS IDENTICAL TO THAT OF PCG2 
 C2------AND IS BLATANTLY COPIED FROM HILL, 1990.
       DO 115 K=1,NLAY
       DO 115 I=1,NROW
       DO 115 J=1,NCOL
-        N = J + (I-1)*NCOL + (K-1)*NRC
+C2
 C2------CALCULATE 1 DIMENSIONAL SUBSCRIPT OF CURRENT CELL AND
-C2------SKIP CALCULATIONS IF CELL IS INACTIVE
+C2------INITIALIZE MATRIX COEFFICIENTS TO ZERO. CHECK IF CELL IS ACTIVE 
+C2------SKIP COEFFICIENT CALCULATIONS IF CELL IS INACTIVE
+C2
+        N = J + (I-1)*NCOL + (K-1)*NRC
+        E = DZERO
+        Z = DZERO
+        B = DZERO
+        D = DZERO
+        F = DZERO
+        H = DZERO
+        S = DZERO
+        IINACTIVE = 1
+        IF(IBOUND(N) .GT. 0)THEN
+          IINACTIVE = 0
 C2
 C2------CALCULATE 1 DIMENSIONAL SUBSCRIPTS FOR LOCATING THE 6
 C2------SURROUNDING CELLS
-        NRN = N + NCOL
-        NRL = N - NCOL
-        NCN = N + 1
-        NCL = N - 1
-        NLN = N + NRC
-        NLL = N - NRC
+          NRN = N + NCOL
+          NRL = N - NCOL
+          NCN = N + 1
+          NCL = N - 1
+          NLN = N + NRC
+          NLL = N - NRC
 C2
 C2------CALCULATE 1 DIMENSIONAL SUBSCRIPTS FOR CONDUCTANCE TO THE 6
 C2------SURROUNDING CELLS.
-        NCF = N
-        NCD = N - 1
-        NRB = N - NCOL
-        NRH = N
-        NLS = N
-        NLZ = N - NRC
+          NCF = N
+          NCD = N - 1
+          NRB = N - NCOL
+          NRH = N
+          NLS = N
+          NLZ = N - NRC
 C2
-C2------GET CONDUCTANCES TO NEIGHBORING CELLS
+C2------STORE DOUBLE PRECISION VALUE OF RHS FOR CALCULATION OF RESIDUALS
+          RRHS = RHS(N)
+          FRHS(N) = -RRHS
+C2
+C2------GET CONDUCTANCES TO NEIGHBORING CELLS.  
+C2------ACCUMULATE CONTRIBUTIONS TO DIAGONAL COEFFICIENT. IF NEIGHBOR IS 
+C2------CONSTANT HEAD, MODIFY RHS AND SET OFF-DIAGONAL COEFFICIENT TO 0
+C2
 C2------NEIGHBOR IS 1 ROW BACK
-        B = DZERO
-        BHNEW = DZERO
-        IF (I.NE.1) THEN
-          B = CC(NRB)
-          BHNEW = B*(HNEW(NRL)-HNEW(N))
-        ENDIF
+          BHNEW = DZERO
+          IF (I.NE.1) THEN
+            B = CC(NRB)
+            E = E + B
+            BHNEW = B*(HNEW(NRL) - HNEW(N))
+            IF(IBOUND(NRL) .LT. 0)THEN
+              FRHS(N) = FRHS(N) + B*HNEW(NRL) 
+              B = DZERO
+            ENDIF 
+          ENDIF
 C2
 C2------NEIGHBOR IS 1 ROW AHEAD
-        H = DZERO
-        HHNEW = DZERO
-        IF (I.NE.NROW) THEN
-          H = CC(NRH)
-          HHNEW = H*(HNEW(NRN)-HNEW(N))
-        ENDIF
+          HHNEW = DZERO
+          IF (I.NE.NROW) THEN
+            H = CC(NRH)
+            E = E + H
+            HHNEW = H*(HNEW(NRN) - HNEW(N))
+            IF(IBOUND(NRN) .LT. 0)THEN
+              FRHS(N) = FRHS(N) + H*HNEW(NRN) 
+              H = DZERO
+            ENDIF 
+          ENDIF
 C2
 C2------NEIGHBOR IS 1 COLUMN BACK
-        D = DZERO
-        DHNEW = DZERO
-        IF (J.NE.1) THEN
-          D = CR(NCD)
-          DHNEW = D*(HNEW(NCL)-HNEW(N))
-        ENDIF
+          DHNEW = DZERO
+          IF (J.NE.1) THEN
+            D = CR(NCD)
+            E = E + D
+            DHNEW = D*(HNEW(NCL) - HNEW(N))
+            IF(IBOUND(NCL) .LT. 0)THEN
+              FRHS(N) = FRHS(N) + D*HNEW(NCL) 
+              D = DZERO
+            ENDIF 
+          ENDIF
 C2
 C2------NEIGHBOR IS 1 COLUMN AHEAD
-        F = DZERO
-        FHNEW = DZERO
-        IF (J.NE.NCOL) THEN
-          F = CR(NCF)
-          FHNEW = F*(HNEW(NCN)-HNEW(N))
-        ENDIF
+          FHNEW = DZERO
+          IF (J.NE.NCOL) THEN
+            F = CR(NCF)
+            E = E + F
+            FHNEW = F*(HNEW(NCN) - HNEW(N))
+            IF(IBOUND(NCN) .LT. 0)THEN
+              FRHS(N) = FRHS(N) + F*HNEW(NCN) 
+              F = DZERO 
+            ENDIF
+          ENDIF
 C2
 C2------NEIGHBOR IS 1 LAYER BEHIND
-        Z = DZERO
-        ZHNEW = DZERO
-        IF (K.NE.1) THEN
-          Z = CV(NLZ)
-          ZHNEW = Z*(HNEW(NLL)-HNEW(N))
-        ENDIF
+          ZHNEW = DZERO
+          IF (K.NE.1) THEN
+            Z = CV(NLZ)
+            E = E + Z 
+            ZHNEW = Z*(HNEW(NLL) - HNEW(N))
+            IF(IBOUND(NLL) .LT. 0)THEN
+              FRHS(N) = FRHS(N) + Z*HNEW(NLL) 
+              Z = DZERO
+            ENDIF
+          ENDIF
 C2
 C2------NEIGHBOR IS 1 LAYER AHEAD
-        S = DZERO
-        SHNEW = DZERO
-        IF (K.NE.NLAY) THEN
-          S = CV(NLS)
-          SHNEW = S*(HNEW(NLN)-HNEW(N))
-        ENDIF
-C2    
-C2------SKIP CALCULATIONS AND MAKE CELL INACTIVE IF ALL
-C2------SURROUNDING CELLS ARE INACTIVE AND SET HNEW TO HNOFLO
-        IF (B+H+D+F+Z+S.EQ.0. .AND. IBOUND(N) .NE. 0) THEN
-          IBOUND(N) = 0
-          HNEW(N) = HNOFLO
-        ENDIF
-C2
-C2------CALCULATE L2 NORM FOR ACTIVE CELLS.  
-        IF(IBOUND(N) .GT. 0)THEN
-          RRHS = RHS(N)
-          HHCOF = HNEW(N)*HCOF(N)
-          RSQ = RSQ + (RRHS - ZHNEW - BHNEW - DHNEW - HHCOF - FHNEW - 
-     &          HHNEW - SHNEW)**2
+          SHNEW = DZERO
+          IF (K.NE.NLAY) THEN
+            S = CV(NLS)
+            E = E + S
+            SHNEW = S*(HNEW(NLN) - HNEW(N))
+            IF(IBOUND(NLN) .LT. 0)THEN
+              FRHS(N) = FRHS(N) + S*HNEW(NLN) 
+              S = DZERO
+            ENDIF
+          ENDIF
+C3    
+C3------CHECK IF SURROUNDING CELLS ARE ACTIVE (E > 0).  IF SO, CALCULATE 
+C3------L2 NORM.  ACCUMULATE THE AVERAGE ABSOLUTE VALUE  OF THE RHS 
+C3------VECTOR FOR ALL ACTIVE CELLS.  THIS IS USED TO SCALE THE THE 
+C3------CLOSURE CRITERIA. 
+C3------IF SURROUNDING CELLS ARE INACTIVE BUT CURRENT CELL IS ACTIVE,
+C3------SET HNEW TO HNOFLO, IBOUND TO 0, AND CHANGE INACTIVE FLAG TO 1
+          IF (E .GT. 0.) THEN
+            HHCOF = HNEW(N)*HCOF(N)
+            RSQ = RSQ + (RRHS - ZHNEW - BHNEW - DHNEW - HHCOF - FHNEW - 
+     &            HHNEW - SHNEW)**2
+            E = E - HCOF(N)
+            FBAR = FBAR + ABS(FRHS(N))
+            NCOUNT = NCOUNT + 1
+          ELSE
+            HNEW(N) = HNOFLO
+            IBOUND(N) = 0
+            IINACTIVE = 1
+          ENDIF
+C3
+C3------END IBOUND(N) .GT. 0
         ENDIF
 C3
-C3------SET THE DIAGONAL AND RHS AS A POSITIVE VALUE.  CHECK FOR ACTIVE 
-C3------CELLS.  IF INACTIVE OR CONSTANT HEAD, SET DIAGONAL TO 1.0, OFF-
-C3------DIAGONALS TO ZERO, AND ADJUST RHS ACCORDINGLY.  
-C3------ACCUMULATE THE AVERAGE ABSOLUTE VALUE AND MAXIMUM VALUE OF THE 
-C3------RHS VECTOR FOR ALL ACTIVE CELLS.  THIS IS USED TO SCALE THE 
-C3------THE CLOSURE CRITERIA.
-        E=Z+B+D+F+H+S-HCOF(N)
-        IF(IBOUND(N) .GT. 0)THEN
-          FRHS(N)=-RHS(N)
-        ELSE
-          E=DONE
-          Z=DZERO
-          B=DZERO
-          D=DZERO
-          F=DZERO
-          H=DZERO
-          S=DZERO
-          FRHS(N)= HNEW(N)
+C3------CHECK INACTIVE FLAG (IIINACTIVE)
+C3------IF INACTIVE OR CONSTANT HEAD, SET DIAGONAL TO 1.0, AND ADJUST
+C3------RHS ACCORDINGLY.  
+        IF(IINACTIVE .EQ. 1)THEN
+          E = DONE
+          FRHS(N) = HNEW(N)
         ENDIF
 C3
+C3------FIND THE MAXIMUM VALUE OF THE RHS VECTOR FOR ALL CELLS (ACTIVE
+C3------AND INACTIVE) FOR CLOSURE SCALING USED BY THE AMG1R6
         FMAX=MAX(FMAX,ABS(FRHS(N)))
-        IF(IBOUND(N) .NE. 0)THEN
-          FBAR=FBAR+ABS(FRHS(N))
-          NCOUNT=NCOUNT+1
-        ENDIF
 C4
 C4------USE A TYPE OF SKYLINE STORAGE WHICH AMG WANTS (SEE THE README 
-C4------FILE DISTRIBUTED WITH THE AMG1R5 ALGORITHM). FOR EACH ROW, 
+C4------FILE DISTRIBUTED WITH THE AMG1R6 ALGORITHM). FOR EACH ROW, 
 C4------START AT THE DIAGONAL.  THEN PICK UP ELEMENTS MOVING FROM LEFT 
 C4------TO RIGHT (SKIPPING THE DIAGONAL). 'A' STORES ALL THE COEFFICENTS
 C4------OF THE MATRIX IN A SINGLE VECTOR.  'IA' STORES THE LOCATION OF 
@@ -417,20 +457,19 @@ C4------REMEMBER THAT 'NA' AND 'NJ' HAVE ALWAYS BEEN INDEXED 1 AHEAD.
       IA(N+1) = NA              
       NA = NA - 1               
       NJ = NJ - 1               
-C
 C5
 C5------SET THE DIMENSIONS USED FOR THESE VARIABLES AND PASS TO THE AMG
-C5------SOLVER (AMG1R5).  IT USES THIS EXTRA SPACE TO WORK IN.
+C5------SOLVER (AMG1R6).  IT USES THIS EXTRA SPACE TO WORK IN.
 C5------ALSO SET VARIABLES FOR SOLVER CONTROL
       NDA = ISIZ1
-      NDIA= ISIZ2
-      NDJA= ISIZ1
-      NNU= NODES
-      NDU= ISIZ4
-      NDF= ISIZ4
-      NDIG= ISIZ3
+      NDIA = ISIZ2
+      NDJA = ISIZ1
+      NNU = NODES
+      NDU = ISIZ4
+      NDF = ISIZ4
+      NDIG = ISIZ3
 C5
-      MATRIX=22
+      MATRIX = 12
       ISWTCH = 4
       IFIRST = 10
 C
@@ -488,9 +527,9 @@ C8------FOR ZERO-PARAMETERS STANDARD VALUES ARE USED BY AMG1R5
       NWT    = 2
       NTR    = 0
 C8
-C8------CALL THE ACTUAL AMG SOLVER AS PROVIDED BY GMD.  RETURNS THE 
-C8------SOLUTION IN VECTOR 'U'
-      CALL AMG1R5(A,IA,JA,U,FRHS,IG,
+C8------CALL THE ACTUAL AMG1R6 SOLVER PROVIDED BY KLAUS STUEBEN.  
+C8------RETURNS THE SOLUTION IN VECTOR 'U'
+      CALL AMG1R6(A,IA,JA,U,FRHS,IG,
      +            NDA,NDIA,NDJA,NDU,NDF,NDIG,NNU,MATRIX,
      +            ISWTCH,IOUTAMG,IPRINT,
      +            LEVELX,IFIRST,NCYC,EPS,MADAPT,NRD,NSOLCO,NRU,
@@ -508,7 +547,7 @@ C9------CLOSE AMG TEMPORARY FILE IF NECCESSARY
         IF(IERR .EQ. 2 .OR. IERR .EQ. 4 .OR. IERR .EQ. 5)
      &       WRITE(IOUT,602)
         IF(IERR .EQ. 6) WRITE(IOUT,603)
-        STOP
+        CALL USTOP(' ')
       ENDIF
   600 FORMAT(/,1X,'AMG SOLVER ERROR --> IERR= ',I3,/,
      &         1X,'SOLVE UNSUCCESSFUL.  CHECK VALUE OF IERR')

@@ -12,6 +12,167 @@ these packages and processes, see mf2k.txt ("Summary of MODFLOW-2000").
 NOTE: Any use of trade, product or firm names is for descriptive purposes 
       only and does not imply endorsement by the U.S. Government.
 
+o Version 1.11 04/10/2003:
+
+     This version includes two new packages.  The DAF Package supports
+coupling of Modflow-2000 with the Diffusion Analogy Surface-Water Flow Model
+(DAFLOW), documented in Jobson, H.E. and Harbaugh, A.W. (1999, Modifications
+to the Diffusion Analogy Surface-Water Flow Model (DAFLOW) for coupling to
+the modular finite-difference ground-water flow model (MODFLOW), USGS
+Open-File Report 99-217, 107 p.).  The MNW Package allows simulation of
+wells completed in intervals represented by multiple cells.  The MNW Package
+is documented in Halford, K.J. and Hanson, R.T. (2002, User guide for the
+Drawdown-Limited, Multi-Node Well (MNW) Package for the U.S. Geological
+Survey's modular three-dimensional finite-difference ground-water flow
+model, versions MODFLOW-96 and MODFLOW-2000, USGS Open-File Report 02-293,
+33 p.).
+
+     A modification to the PCG2 Package changes the way the DAMP variable
+works.  In previous versions of PCG2, DAMP was used to control oscillations
+that could occur within a single call to the solver routine, among inner
+iterations.  In the current version of PCG2, DAMP does not affect inner
+iterations; instead, it affects outer iterations.  This change likely will
+allow the solver to behave more predictably in solving highly nonlinear
+problems.  Note that for a given model, DAMP may need to be set to a
+different value than for previous versions to achieve optimum results.  In
+addition, this version of PCG2 includes changes that should make the solver
+less prone to errors that cause the program to abort, possibly generating
+diagnostic messages referring to a floating overflow exception in PCG2AP.
+
+     A new Output Control option allows users to specify that drawdowns,
+which can be printed to the List file or saved in a separate output file,
+are to be calculated relative to model-calculated heads at specified time
+steps.  In previous versions of Modflow and by default in the current
+version, all drawdowns are calculated relative to heads entered by the user
+in the STRT array read by the BAS Package.  The new option allows the user,
+when using the word method of Output Control, to indicate one or more time
+steps, relative to which subsequent drawdowns are to be calculated.  To use
+this option, the keyword "DDREFERENCE" is entered following the value
+entered for ITSOC of item 2 of the Output Control file (USGS Open-File
+Report 00-92, pp.  52-54) for a time step relative to which drawdown in
+later time steps is to be calculated.  "DDREFERENCE" can be entered for as
+many time steps as desired.  In each case, heads calculated for the time
+step for which "DDREFERENCE" is entered will serve as the basis relative to
+which drawdowns for subsequent time steps are to be calculated, until the
+next occurrence of "DDREFERENCE" is found.  The following example of an
+Output Control file illustrates the use of the DDREFERENCE option:
+
+          DRAWDOWN PRINT FORMAT 11
+          PERIOD 1 STEP 1 DDREFERENCE
+              PRINT DRAWDOWN
+          PERIOD 2 STEP 3
+              PRINT DRAWDOWN
+          PERIOD 2 STEP 5 DDREFERENCE
+              PRINT DRAWDOWN
+          PERIOD 3 STEP 5
+              PRINT DRAWDOWN
+          
+In this example, drawdowns printed (in the List file in format 20F5.4) for
+stress period 1 time step 1 are the differences between the heads entered by
+the user in the STRT array and heads calculated for stress period 1 time
+step 1.  No output control is entered for time steps 1 and 2 of stress
+period 2, so no drawdown arrays are printed for these time steps.  Drawdowns
+printed for stress period 2 time step 3 are the differences between heads
+calculated for the end of stress period 1 time step 1 and heads calculated
+for the end of stress period 2 time step 3.  Drawdowns printed for stress
+period 2 time step 5 are the differences between heads calculated for the
+end of stress period 1 time step 1 and heads calculated for the end of
+stress period 2 time step 5.  Drawdowns printed for stress period 3 time
+step 5 are the differences between heads calculated for the end of stress
+period 2 time step 5 and heads calculated for the end of stress period 3
+time step 5.
+
+     A new BASIC Package option, which allows progress to be monitored as
+the program solves the ground-water flow and sensitivity equations, has been
+added.  To invoke this option, list the keyword "SHOWPROGRESS" as an option
+in item 1 of the BAS input file.  When invoked, this option displays on the
+monitor the stress period, time step, and the equation currently being
+solved.  Unfortunately, support for this option is processor-dependent; as a
+result, when this option is selected on some systems, lines showing progress
+will not be overwritten by subsequent lines.  In these cases, use of this
+option will cause the display to scroll as the progress line is updated.
+
+     Prior to the current version, duplicate observation names were accepted
+without notifying the user of the duplication.  However, support in
+Modflow-2000 for duplicate observation names is obsolescent -- future
+versions of Modflow-2000 may require unique names.  The current version
+accepts duplicate observation names, but if duplicate names are found, a
+warning concerning the duplication is written to the Global file.
+
+     The maximum allowed numbers of zone and multiplier arrays were
+increased from 200 to 500.
+
+     The effect of the IFHBSS variable in input to the FHB Package was
+modified slightly.  Please see Readme_FHB.txt in the doc directory for
+details.
+
+     The format of the "DATA AT HEAD LOCATIONS" table was modified slightly
+to match that of the "DATA FOR FLOWS" tables.
+
+     Observations specified at the exact end of the simulation are no longer
+flagged as being after the end of the simulation.
+
+     The table of residuals for parameters with correlated prior information
+no longer refers to "parameter sums".
+
+     A rarely-encountered bug, identified by an error message referring to a
+floating division exception in SSEN1LPF1NL, was fixed.
+
+     For the LMG Package, the AMG1R5 solver was updated to AMG1R6, which
+fixes a bug related to memory usage. 
+
+     For the HFB Package, minor output changes were made, and bugs related
+to calculation of sensitivities were fixed.
+
+     Two bugs related to correlated flow observations were fixed.  A minor
+bug in the NOPRINT capability was fixed.  A minor bug related to the
+printing of DRN and DRT Package observations was fixed.
+
+     If MAX-ITER of the PES-Process input is less than zero, the program
+now stops with an appropriate error message.
+
+     Now, when a parameter value is changed because it is unreasonable (for
+example, a negative hydraulic conductivity) in the final parameter-
+estimation iteration, the reasonable value that takes its place is written
+to the Global and _b files and to the screen.  In previous versions, the
+unreasonable value was written.
+
+     A bug related to correlated prior information for log-transformed
+parameters was fixed.
+
+     The program now stops with an error message if sensitivities are to be
+calculated for HK or HANI type parameters of the LPF Package if the
+transmissivity averaging method for a layer affected by the parameter is
+other than HARMONIC MEAN.
+
+     For developers, all STOP statements have been replaced by calls to a
+new subroutine, USTOP.
+
+     Richard Yager of USGS in Ithaca, NY, kindly supplied the following 
+information related to the _rc and _rb files produced by RESAN-2000:
+
+     The "_rc" file lists Cook's D, a measure of the influence of the
+     observation on the set of estimated parameter values, along with the
+     observation name and plot symbol. The "_rb" file lists the name and
+     plot symbol of each observation along with the set of DFBETAS, a
+     measure of the influence of the observation on each parameter value.
+     The derivation of Cook's D is given in Cook and Weisburg (1982) and
+     the derivation of DFBETAS is given in Belsley and others (1980). The
+     application of both influence statistics to nonlinear regression of
+     ground-water flow modeling is discussed by Yager (1998).
+
+     Belsley, D.A., Kuh, E., and Welsch, R.E., 1980, Regression
+     diagnostics: identifying influential data and sources of colinearity,
+     John Wiley, New York.
+
+     Cook, R.D., and Weisburg, S., 1982, Residuals and influence in
+     regression, Monographs on Statistics and Applied Probability, v. 128,
+     Chapman and Hall, New York.
+
+     Yager, R.M., 1998, Detecting influential observations in nonlinear
+     regression modeling of groundwater flow: Water Resources Research,
+     v. 34, no. 7, p. 1623-1633.
+
 o Version 1.10 07/26/2002:
 
      This version incorporates fixes to bugs that showed up when compiling
@@ -83,11 +244,11 @@ o Version 1.8 05/01/2002:
      This version adds support for an option that can be used to suppress
 printing of cell lists in any or all of the RIV, GHB, DRN, DRT, HFB, WEL,
 and CHD packages.  In input to the RIV, GHB, DRN, WEL, and CHD packages, the
-NOPRINT option is invoked by entering "NOPRINT" as an option on Item 2.  In
-input to the DRT package, the NOPRINT option is invoked by entering
-"NOPRINT" as an option on Item 1.  In input to the HFB package, the NOPRINT
-option is invoked by entering "NOPRINT" in Item 1 after the value entered
-for NHFBNP.
+NOPRINT option is invoked by entering the keyword "NOPRINT" as an option on
+Item 2.  In input to the DRT package, the NOPRINT option is invoked by
+entering "NOPRINT" as an option on Item 1.  In input to the HFB package, the
+NOPRINT option is invoked by entering "NOPRINT" in Item 1 after the value
+entered for NHFBNP.
 
      In the LPF Package, the sensitivity of vertical conductance to head in
 the calculation of sensitivities for unconfined cells is now correctly
@@ -422,10 +583,11 @@ than head observations.  Array dimensions were increased to allow up to
 
 o Version 1.1 01/17/2001:
 
-     Added IBS, HUF, LAK, ETS, and DRT Packages.  Added HYDMOD option.  The
-EVT Package was modified as described in the LAK documentation to include
-the option (NEVTOP=3) to apply ET to the uppermost wet cell in a vertical
-column of cells as done in the RCH Package.
+     Added IBS, HUF, LAK, ETS, and DRT Packages.  Added support for the
+HYDMOD option -- Please see Hanson and Leake (1999, USGS Open-File Report
+98-564) for documentation.  The EVT Package was modified as described in the
+LAK documentation to include the option (NEVTOP=3) to apply ET to the
+uppermost wet cell in a vertical column of cells as done in the RCH Package.
 
      Added support for generation of an output file with the extension _pc
 when OUTNAM is not 'NONE', the Parameter-Estimation Process is active, and

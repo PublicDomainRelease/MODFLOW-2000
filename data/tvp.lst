@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.10 07/26/2002
+                             VERSION 1.11 04/10/2003
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -248,12 +248,12 @@
  MAXIMUM OF     50 CALLS OF SOLUTION ROUTINE
  MAXIMUM OF      5 INTERNAL ITERATIONS PER CALL TO SOLUTION ROUTINE
  MATRIX PRECONDITIONING TYPE :    1
-       2444 ELEMENTS IN X ARRAY ARE USED BY PCG
+       1796 ELEMENTS IN X ARRAY ARE USED BY PCG
        1750 ELEMENTS IN IX ARRAY ARE USED BY PCG
-       1296 ELEMENTS IN Z ARRAY ARE USED BY PCG
+       2592 ELEMENTS IN Z ARRAY ARE USED BY PCG
 
-       4712  ELEMENTS OF X ARRAY USED OUT OF       4712
-       1296  ELEMENTS OF Z ARRAY USED OUT OF       1296
+       4064  ELEMENTS OF X ARRAY USED OUT OF       4064
+       2592  ELEMENTS OF Z ARRAY USED OUT OF       2592
        1762  ELEMENTS OF IX ARRAY USED OUT OF       1762
           0  ELEMENTS OF XHS ARRAY USED OUT OF          1
 
@@ -1451,7 +1451,7 @@
 
            TOTAL OUT =           6.2378             TOTAL OUT =           6.2378
 
-            IN - OUT =       4.0054E-05              IN - OUT =       4.0054E-05
+            IN - OUT =       4.0058E-05              IN - OUT =       4.0058E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -1813,7 +1813,7 @@
        RIVER LEAKAGE =           0.0000         RIVER LEAKAGE =           0.0000
                   ET =           0.0000                    ET =           0.0000
      HEAD DEP BOUNDS =          40.6399       HEAD DEP BOUNDS =       4.7060E-04
-            RECHARGE =      530416.5630              RECHARGE =           6.1390
+            RECHARGE =      530416.5620              RECHARGE =           6.1390
       STREAM LEAKAGE =       58633.7852        STREAM LEAKAGE =           0.5912
          ET SEGMENTS =           0.0000           ET SEGMENTS =           0.0000
         DRAINS (DRT) =        2624.7478          DRAINS (DRT) =       3.0158E-02
@@ -1836,7 +1836,7 @@
 
            TOTAL OUT =      833893.3750             TOTAL OUT =           9.4030
 
-            IN - OUT =          -0.1250              IN - OUT =       1.0490E-05
+            IN - OUT =          -0.1294              IN - OUT =       9.9648E-06
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -2178,9 +2178,9 @@
          ET SEGMENTS =      112511.9770           ET SEGMENTS =           0.3165
         DRAINS (DRT) =       12828.1543          DRAINS (DRT) =       3.6259E-02
 
-           TOTAL OUT =     3269309.7500             TOTAL OUT =           9.2368
+           TOTAL OUT =     3269309.5000             TOTAL OUT =           9.2368
 
-            IN - OUT =         -32.7500              IN - OUT =      -1.2302E-04
+            IN - OUT =         -32.5246              IN - OUT =      -1.2373E-04
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -2519,12 +2519,12 @@
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
             RECHARGE =           0.0000              RECHARGE =           0.0000
       STREAM LEAKAGE =      533459.8750        STREAM LEAKAGE =           0.7275
-         ET SEGMENTS =      350871.8130           ET SEGMENTS =           0.4537
+         ET SEGMENTS =      350871.8120           ET SEGMENTS =           0.4537
         DRAINS (DRT) =       30849.8066          DRAINS (DRT) =       3.3971E-02
 
            TOTAL OUT =     8746344.0000             TOTAL OUT =          10.3846
 
-            IN - OUT =         -42.0000              IN - OUT =      -9.5367E-06
+            IN - OUT =         -42.1964              IN - OUT =      -9.3665E-06
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -2898,7 +2898,7 @@
 
            TOTAL OUT =   264705280.0000             TOTAL OUT =           9.8276
 
-            IN - OUT =        -448.0000              IN - OUT =      -1.1253E-04
+            IN - OUT =        -446.2109              IN - OUT =      -1.1168E-04
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 

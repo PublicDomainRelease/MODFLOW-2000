@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.10 07/26/2002
+                             VERSION 1.11 04/10/2003
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -363,9 +363,9 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
      HEAD DEP BOUNDS =       68620.8906       HEAD DEP BOUNDS =       56722.7422
      RESERV. LEAKAGE =           0.0000       RESERV. LEAKAGE =           0.0000
 
-           TOTAL OUT =     1351907.1300             TOTAL OUT =     1006914.5600
+           TOTAL OUT =     1351907.1200             TOTAL OUT =     1006914.5600
 
-            IN - OUT =         -16.8750              IN - OUT =         -24.3125
+            IN - OUT =         -16.8906              IN - OUT =         -24.3047
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -481,7 +481,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
 
            TOTAL OUT =     2770561.2500             TOTAL OUT =      640181.6880
 
-            IN - OUT =         -21.5000              IN - OUT =          -2.5625
+            IN - OUT =         -21.5312              IN - OUT =          -2.5625
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -628,7 +628,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
 
            TOTAL OUT =     3759704.7500             TOTAL OUT =      140112.0160
 
-            IN - OUT =         -32.2500              IN - OUT =          19.0938
+            IN - OUT =         -32.2227              IN - OUT =          19.0938
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.01
 

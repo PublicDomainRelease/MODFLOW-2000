@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.10 07/26/2002
+                             VERSION 1.11 04/10/2003
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -126,7 +126,7 @@
  FLOW WILL BE SPECIFIED AT A TOTAL OF    1 CELLS.
  HEAD WILL BE SPECIFIED AT A TOTAL OF    3 CELLS.
  FHB STEADY-STATE OPTION FLAG WILL BE IGNORED,
- SIMULATION IS TRANSIENT.
+ AT LEAST ONE STRESS PERIOD IS TRANSIENT.
  CELL-BY-CELL FLOWS WILL BE RECORDED ON UNIT 44
   0 AUXILIARY VARIABLES FOR SPECIFIED-FLOW CELLS WILL
   BE DEFINED BY FHB FOR USE BY OTHER PACKAGES.
@@ -340,9 +340,9 @@
            ---                                      ---
              STORAGE =           0.0000               STORAGE =           0.0000
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
-     SPECIFIED FLOWS =     1777065.1300       SPECIFIED FLOWS =        5849.1733
+     SPECIFIED FLOWS =     1777065.1200       SPECIFIED FLOWS =        5849.1733
 
-            TOTAL IN =     1777065.1300              TOTAL IN =        5849.1733
+            TOTAL IN =     1777065.1200              TOTAL IN =        5849.1733
 
           OUT:                                     OUT:
           ----                                     ----
@@ -352,7 +352,7 @@
 
            TOTAL OUT =     1776195.2500             TOTAL OUT =        5846.9229
 
-            IN - OUT =         869.8750              IN - OUT =           2.2505
+            IN - OUT =         869.9375              IN - OUT =           2.2507
 
  PERCENT DISCREPANCY =           0.05     PERCENT DISCREPANCY =           0.04
 
@@ -454,7 +454,7 @@
 
            TOTAL OUT =     2895771.5000             TOTAL OUT =        5443.0063
 
-            IN - OUT =        1541.5000              IN - OUT =           3.2744
+            IN - OUT =        1541.3750              IN - OUT =           3.2744
 
  PERCENT DISCREPANCY =           0.05     PERCENT DISCREPANCY =           0.06
 
@@ -603,7 +603,7 @@
 
            TOTAL OUT =     5635561.0000             TOTAL OUT =       10050.3271
 
-            IN - OUT =        1853.0000              IN - OUT =         -12.3877
+            IN - OUT =        1853.0000              IN - OUT =         -12.3882
 
  PERCENT DISCREPANCY =           0.03     PERCENT DISCREPANCY =          -0.12
 

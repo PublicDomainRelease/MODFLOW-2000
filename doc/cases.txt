@@ -288,6 +288,35 @@ include "noise."
     CHD / CHD
     EVT / EVT
     ETS / ETS
+    
+19. Test case mnw1:
+
+  This test case is documented in Halford and Hanson (2002), modified 
+  to work with MODFLOW-2000.
+
+  Grid dimensions: 2 Layers, 21 Rows, 14 Columns
+  Stress periods: 1 steady, 4 transient
+  Optional processes: none
+  Mode: Forward
+  Flow package: BCF6
+  Stress packages: MNW, DRN, RCH, CHD
+  Solver: PCG2
+  Types of parameters defined / package: none
+  
+20. Test case example3:
+
+  This test case is documented in Appendix D of Jobson and Harbaugh
+  (1999).
+  
+  Grid dimensions: 1 Layer, 41 Rows, 21 Columns
+  Stress periods: 1 transient
+  Optional processes: none
+  Mode: Forward
+  Flow package: BCF6
+  Stress packages: WEL, DAF
+  Solver: PCG2
+  Types of parameters defined / package: none
+
 
 REFERENCES
 
@@ -310,6 +339,12 @@ computer program (RES1) to simulate leakage from reservoirs using the
 modular finite- difference ground-water flow model (MODFLOW): U.S.
 Geological Survey Open-File Report 96-364, 51 p.
 
+Halford, K.J. and Hanson, R.T., 2002, User guide for the Drawdown-Limited, 
+Multi-Node Well (MNW) Package for the U.S. Geological Survey's modular 
+three-dimensional finite-difference ground-water flow model, version 
+MODFLOW-96 and MODFLOW-2000: U.S. Geological Survey Open-File Report 02-293,
+33 p.
+
 Harbaugh, A.W., Banta, E.R., Hill, M.C., and McDonald, M.G., 2000,
 MODFLOW-2000, the U.S. Geological Survey modular ground-water model -- User
 guide to modularization concepts and the ground-water flow process:
@@ -320,6 +355,11 @@ MODFLOW-2000, the U.S. Geological Survey modular ground-water model -- User
 guide to the observation, sensitivity, and parameter-estimation processes 
 and three post-processing programs: U.S. Geological Survey Water-Resources 
 Investigations Report 00-184, 210 p.
+
+Jobson, H.E., and Harbaugh, A.W., 1999, Modifications to the Diffusion 
+Analogy Surface-Water Flow Model (DAFLOW) for coupling to the modular 
+finite-difference ground-water flow model (MODFLOW): USGS Open-File Report 
+99-217, 107 p.
 
 Leake, S.A., and Lilly, M.R., 1997, Documentation of a computer program
 (FHB1) for assignment of transient specified-flow and specified-head

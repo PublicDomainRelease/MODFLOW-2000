@@ -1,4 +1,4 @@
-C     Last change:  ERB  29 Jul 2002    9:42 am
+C     Last change:  ERB   3 Sep 2002    2:15 pm
 
 
       SUBROUTINE OBS1ADV2AL(IOUADV,NPTH,NTT2,IOUTT2,KTDIM,KTFLG,KTREV,
@@ -64,7 +64,7 @@ C%%%%%WRITE TRAVEL TIME INFO
      &                 KTREV, FSNK
       IF (KTREV.NE.-1 .AND. KTREV.NE.1) THEN
         WRITE (IOUT,500)
-        STOP
+        CALL USTOP(' ')
   500   FORMAT (
      &  ' KTREV NEEDS TO BE EQUAL TO -1 OR 1.  STOP EXECUTION ',
      &  '(OBS1ADV2AL)')
@@ -254,7 +254,7 @@ C     &                              (POFF(J,I),J=1,3)
           IF(NPNT(I).LE.0) THEN
             WRITE(IOUT,505)
             WRITE(IOUT,*) ' NPNT MUST BE LARGER THAN 0'
-            STOP
+            CALL USTOP(' ')
           ENDIF
           DO 70 IPNT = 1, NPNT(I)
             NTPNT = NTPNT + 1
@@ -388,7 +388,7 @@ c%%%%%read and write full weight matrix
         RETURN
       ENDIF
 c  110 WRITE (IOUT,505)
-      STOP
+      CALL USTOP(' ')
       END
 C
 C=======================================================================
@@ -1955,7 +1955,7 @@ C=======================================================================
 C
       SUBROUTINE SOBS1ADV2O(NHT,NTT2,HOBS,H,WTQ,IOUT,D,
      &                      IDIS,IDTT,JDRY,RSQ,NRUNS,AVET,NPOST,NNEGT,
-     &                      KTDIM,ND,MPR,IPR,IO,OBSNAM,N,NDMH,WTRL,NRES,
+     &                      KTDIM,ND,MPR,IPR,IO,OBSNAM,N,NDMH,WTRL,NRSO,
      &                      IUGDO,OUTNAM,IPLOT,IPLPTR,LCOBADV,ISSWR,
      &                      SSAD,ITMXP)
 C
@@ -1965,7 +1965,7 @@ C---ARGUMENTS:
       REAL HOBS, H, WTQ, D, RSQ, AVET, WTRL
       INTEGER NHT, NTT2, IOUT, IDIS, IDTT,
      &        JDRY, NRUNS, NPOST, NNEGT, KTDIM, ND, MPR, IPR, IO, 
-     &        N, NDMH, NRES
+     &        N, NDMH, NRSO
       INTEGER IUGDO(6), IPLOT(ND+IPR+MPR), IPLPTR(ND+IPR+MPR)
       CHARACTER*12 OBSNAM(ND)
       CHARACTER*200 OUTNAM
@@ -2017,10 +2017,10 @@ C
       NH1 = LCOBADV
       NH2 = LCOBADV + KTDIM*(NTT2-1)
       DO 20 N = NH1, NH2, KTDIM
-        IPLPTR(NRES+1) = N
-        IPLPTR(NRES+2) = N + 1
-        IF (KTDIM.EQ.3) IPLPTR(NRES+3) = N + 2
-        NRES = NRES + KTDIM
+        IPLPTR(NRSO+1) = N
+        IPLPTR(NRSO+2) = N + 1
+        IF (KTDIM.EQ.3) IPLPTR(NRSO+3) = N + 2
+        NRSO = NRSO + KTDIM
         NRESAD = NRESAD + KTDIM
         RES1 = HOBS(N) - H(N)
         RES2 = HOBS(N+1) - H(N+1)

@@ -472,8 +472,10 @@ C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       INCLUDE 'mf96to2k.inc'
+      INCLUDE 'openspec.inc'
       CHARACTER*80 LINE
-      CHARACTER*11 FMTARG
+      CHARACTER*20 FMTARG
+      CHARACTER*20 ACSARG
 C     ---------------------------------------------------------------
       NFIL=0
 C
@@ -497,6 +499,7 @@ C3------DECODE THE FILE TYPE AND UNIT NUMBER.
 C
 C4------CHECK FOR A VALID FILE TYPE.
       FMTARG='FORMATTED'
+      ACSARG='SEQUENTIAL'
 C
 C4A-----CHECK FOR "BAS" FILE TYPE.
       IF(LINE(ITYP1:ITYP2).EQ.'BAS') THEN
@@ -510,7 +513,8 @@ C4B-----CHECK FOR "BCF" FILE TYPE.
 C
 C4C-----CHECK FOR "UNFORMATTED" FILE TYPE.
       ELSE IF(LINE(ITYP1:ITYP2).EQ.'DATA(BINARY)') THEN
-         FMTARG='UNFORMATTED'
+         FMTARG=FORM
+         ACSARG=ACCESS
          IUOPEN(NFIL)=IU
 C
 C4D-----CHECK FOR "FORMATTED FILE TYPE.
@@ -525,7 +529,8 @@ C5------Get the file name
          CALL URWORD(LINE,LLOC,INAM1,INAM2,1,N,R,0,INUNIT)
       END IF
       FN(NFIL)=LINE(INAM1:INAM2)
-      FORM(NFIL)=FMTARG
+      FRM(NFIL)=FMTARG
+      ACS(NFIL)=ACSARG
 C
 C  Abort if the dataset is already MODFLOW-2K
       IF(LINE(ITYP1:ITYP2).EQ.'DIS' .OR.
@@ -579,7 +584,7 @@ C  Open the files
       DO 1200 I=1,NFIL
       IF(IUOPEN(I).NE.0) THEN
          IU=IREMAP(IUOPEN(I))
-         OPEN(UNIT=IU,FILE=FN(I),FORM=FORM(I),ACCESS='SEQUENTIAL')
+         OPEN(UNIT=IU,FILE=FN(I),FORM=FRM(I),ACCESS=ACS(I))
       END IF
 1200  CONTINUE
 C
@@ -1527,6 +1532,7 @@ C     ******************************************************************
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
+      INCLUDE 'openspec.inc'
       CHARACTER*24 ANAME
       DIMENSION IA(JJ,II)
       CHARACTER*20 FMTIN
@@ -1583,7 +1589,7 @@ C3------FOR FREE FORMAT CONTROL RECORD, READ REMAINING FIELDS.
             FMTIN=CNTRL(ISTART:ISTOP)
             IF(ICLOSE.NE.0) THEN
                IF(FMTIN.EQ.'(BINARY)') THEN
-                  OPEN(UNIT=LOCAT,FILE=FNAME,FORM='UNFORMATTED')
+                  OPEN(UNIT=LOCAT,FILE=FNAME,FORM=FORM,ACCESS=ACCESS)
                ELSE
                   OPEN(UNIT=LOCAT,FILE=FNAME)
                END IF
@@ -1764,6 +1770,7 @@ C     ******************************************************************
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
+      INCLUDE 'openspec.inc'
       CHARACTER*24 ANAME
       DIMENSION A(JJ,II)
       CHARACTER*20 FMTIN
@@ -1821,7 +1828,7 @@ C3------FOR FREE FORMAT CONTROL RECORD, READ REMAINING FIELDS.
             FMTIN=CNTRL(ISTART:ISTOP)
             IF(ICLOSE.NE.0) THEN
                IF(FMTIN.EQ.'(BINARY)') THEN
-                  OPEN(UNIT=LOCAT,FILE=FNAME,FORM='UNFORMATTED')
+                  OPEN(UNIT=LOCAT,FILE=FNAME,FORM=FORM,ACCESS=ACCESS)
                ELSE
                   OPEN(UNIT=LOCAT,FILE=FNAME)
                END IF

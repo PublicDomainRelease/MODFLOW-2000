@@ -1,6 +1,6 @@
 # MODULAR MODEL - TWO-LAYER EXAMPLE PROBLEM, TRANSIENT, TEST CASE TC1TR
 #
-FREE                                                Item 1: options
+FREE  SHOWPROGRESS                                  Item 1: options
 CONSTANT     1                                      Item 2: IBOUND, layer 1
 CONSTANT     1                                      Item 2: IBOUND, layer 2
 CONSTANT     1                                      Item 2: IBOUND, layer 3

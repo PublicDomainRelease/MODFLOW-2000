@@ -1,8 +1,8 @@
-C     Last change:  ERB  10 Jul 2002   12:27 pm
-      SUBROUTINE GWF1HFB6AL(INHFB,IOUT,ISUM,LCHFB,MXACTFB,NHFBNP,
+C     Last change:  ERB  22 Oct 2002    2:06 pm
+      SUBROUTINE GWF1HFB6ALP(INHFB,IOUT,ISUM,LCHFB,MXACTFB,NHFBNP,
      &                   NPHFB,MXHFB,IHFB,NOPRHB)
 C
-C-----VERSION 11JAN2000 GWF1HFB6AL
+C-----VERSION 11JAN2000 GWF1HFB6ALP
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR PARAMETERIZED HORIZONTAL FLOW BARRIER
 C     PACKAGE
@@ -37,7 +37,7 @@ C3------SET LCHFB EQUAL TO ADDRESS OF FIRST UNUSED SPACE IN RX.
       LCHFB = ISUM
 C-------READ OPTION.
       NOPRHB = 0
-      CALL URWORD(LINE,LLOC,ISTART,ISTOP,1,N,R,IOUT,IN)
+      CALL URWORD(LINE,LLOC,ISTART,ISTOP,1,N,R,IOUT,INHFB)
       IF(LINE(ISTART:ISTOP).EQ.'NOPRINT') THEN
         WRITE(IOUT,3)
     3   FORMAT(1X,
@@ -61,12 +61,12 @@ C6------RETURN
       RETURN
       END
 C=======================================================================
-      SUBROUTINE GWF1HFB6RP(BOTM,CR,CC,DELR,DELC,HFB,INHFB,MXACTFB,
-     &                      NBOTM,NCOL,NROW,NLAY,NODES,NHFBNP,NHFB,
-     &                      NPHFB,IOUT,IOUTG,ITERP,MXHFB,IHFB,LAYHDT,
-     &                      INAMLOC,NOPRHB)
+      SUBROUTINE GWF1HFB6RPPA(BOTM,CR,CC,DELR,DELC,HFB,INHFB,MXACTFB,
+     &                        NBOTM,NCOL,NROW,NLAY,NODES,NHFBNP,NHFB,
+     &                        NPHFB,IOUT,IOUTG,ITERP,MXHFB,IHFB,LAYHDT,
+     &                        INAMLOC,NOPRHB)
 C
-C-----VERSION 11JAN2000 GWF1HFB6RP
+C-----VERSION 11JAN2000 GWF1HFB6RPPA
 C     ******************************************************************
 C     READ AND INITIALIZE DATA FOR PARAMETERIZED HORIZONTAL FLOW BARRIER
 C     PACKAGE.  READ PARAMETER DEFINITIONS AND NON-PARAMETER BARRIERS
@@ -87,18 +87,18 @@ C     ------------------------------------------------------------------
   540 FORMAT(/,1X,1I6,' HFB BARRIERS')
   550 FORMAT(/,
      &' ERROR: SELECTED FLOW PACKAGE DOES NOT SUPPORT HFB PACKAGE',/,
-     &' -- STOP EXECUTION (GWF1HFB6RP)')
+     &' -- STOP EXECUTION (GWF1HFB6RPPA)')
 C
       IF (LAYHDT(1).LT.0) THEN
         WRITE(IOUT,550)
-        STOP
+        CALL USTOP(' ')
       ENDIF
 C
       ITERPU = ITERP
       IOUTU = IOUT
       IF (NOPRHB.EQ.1) THEN
         ITERPU = 99
-        IOUTU = -1
+        IOUTU = -IOUT
       ENDIF
 C
 C
@@ -151,8 +151,8 @@ C           READ AND ACTIVATE AN HFB PARAMETER (ITEM 6)
             NAUX=0
             CALL UPARLSTSUB(INHFB,'HFB ',IOUTU,'HFB ',HFB,7,MXHFB,6,
      &                      MXACTFB,NHFB,6,6,
-     &         'BARRIER  LAYER  IROW1  ICOL1  IROW2  ICOL2     FACTOR',
-     &            AUX,1,NAUX)
+     &'BARRIER  LAYER  IROW1  ICOL1      IROW2           ICOL2         H
+     &YDR. CHAR.',AUX,1,NAUX)
    50     CONTINUE
         ENDIF
       ENDIF
@@ -192,7 +192,8 @@ C1----CONDUCTANCES IF LAYER IS CONVERTIBLE
       DO 10 II=1,NHFB
         K = HFB(1,II)
 C       IF LAYHDT=0, THICKNESS AND CONDUCTANCE DO NOT VARY, AND
-C       MODIFICATION OF CONDUCTANCE DUE TO BARRIER WAS DONE IN SGWF1HFB6N
+C       MODIFICATION OF CONDUCTANCE DUE TO BARRIER WAS DONE IN
+C       SGWF1HFB6N
         IF (LAYHDT(K).GT.0) THEN
 C2--------CELL (J1,I1,K) IS THE ONE WHOSE HORIZONTAL BRANCH
 C3--------CONDUCTANCES ARE TO BE MODIFIED.
@@ -354,7 +355,7 @@ C
    10 CONTINUE
 C
 C15---HALT EXECUTION IF ERRORS ARE DETECTED.
-      IF (IERFLG.EQ.1) STOP
+      IF (IERFLG.EQ.1) CALL USTOP(' ')
 C
 C16---RETURN
       RETURN
@@ -402,22 +403,22 @@ C
    10 CONTINUE
 C
 C15---HALT EXECUTION IF ERRORS ARE DETECTED.
-      IF (IERFLG.EQ.1) STOP
+      IF (IERFLG.EQ.1) CALL USTOP(' ')
 C
 C16---RETURN
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SGWF1HFB6RL(NLIST,HFB,LSTBEG,LDIM,MXLIST,INPACK,
-     &                    IOUT,LABEL,NCOL,NROW,NLAY,ISCLOC1,
-     &                    ISCLOC2,ITERP)
+      SUBROUTINE SGWF1HFB6RL(NLIST,HFB,LSTBEG,LDIM,MXHFB,INPACK,
+     &                       IOUT,LABEL,NCOL,NROW,NLAY,ISCLOC1,
+     &                       ISCLOC2,ITERP)
 C
-C-----VERSION 11JAN2000 SGWF1HFB6RL
+C-----VERSION 09SEP2002 SGWF1HFB6RL
 C     ******************************************************************
 C     Read and print a list of parameter-controlled HFB barriers.
 C     ******************************************************************
       CHARACTER*(*) LABEL
-      DIMENSION HFB(LDIM,MXLIST)
+      DIMENSION HFB(LDIM,MXHFB)
       CHARACTER*200 LINE,FNAME
       CHARACTER*120 BUF
       CHARACTER*1 DASH(120)
@@ -509,15 +510,15 @@ C
 C  Check for illegal grid location
       IF(K.LT.1 .OR. K.GT.NLAY) THEN
          WRITE(IOUT,*) ' Layer number in list is outside of the grid'
-         STOP
+         CALL USTOP(' ')
       END IF
       IF(I1.LT.1 .OR. I1.GT.NROW .OR. I2.LT.1 .OR. I2.GT.NROW) THEN
          WRITE(IOUT,*) ' Row number in list is outside of the grid'
-         STOP
+         CALL USTOP(' ')
       END IF
       IF(J1.LT.1 .OR. J1.GT.NCOL .OR. J2.LT.1 .OR. J2.GT.NCOL) THEN
          WRITE(IOUT,*) ' Column number in list is outside of the grid'
-         STOP
+         CALL USTOP(' ')
       END IF
   250 CONTINUE
       IF(ICLOSE.NE.0) CLOSE(UNIT=IN)

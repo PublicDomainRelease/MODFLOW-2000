@@ -1,0 +1,16 @@
+# NAME file for example3 test case for the DAF Package
+#
+# NOTE: Forward slashes (/) in pathnames may need to be converted
+#       to back slashes (\) in some computing environments
+#
+LIST         8 example3.lst
+BAS6         7 ../data/example3.ba6
+DIS         10 ../data/example3.dis
+BCF6        11 ../data/example3.bc6
+WEL         12 ../data/example3.wel
+PCG         23 ../data/example3.pcg
+OC          22 ../data/example3.oc
+DAF         30 ../data/example3.inf
+DAFG        31 ../data/example3.ing
+DATA        32 example3.flw
+

@@ -1,0 +1,204 @@
+ Example 3                                                                      
+ 2 No. of Branches           3 *
+ 3 No. of Internal           1 * Junctions
+ 4 No. Time Steps           64 * Modeled
+ 5 Model Starts              0 time steps after midnight.
+ 6 Output Given Ever         1 Time Steps in "flow.out"
+ 7 0=Metric,1=Englis         1 *
+ 8 Time Step Size        0.250 Hours.
+ 9 Peak Discharge        1000. *
+Branch  1 has 13 xsects & routes 1.00 of flow at JNCT  2 To JNCT  1
+Grd R Mile  IOUT  Disch        A1        A2        AO      Slope       W1    W2
+  1 0.0000     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+  2 0.1340     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+  3 0.2680     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+  4 0.4020     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+  5 0.5360     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+  6 0.6700     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+  7 0.8040     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+  8 0.9370     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+  9  1.071     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+ 10  1.205     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+ 11  1.339     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+ 12  1.406     1 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+ 13  1.410     0
+Branch  2 has 13 xsects & routes 1.00 of flow at JNCT  3 To JNCT  1
+Grd R Mile  IOUT  Disch        A1        A2        AO      Slope       W1    W2
+  1 0.0000     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+  2 0.1340     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+  3 0.2680     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+  4 0.4020     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+  5 0.5360     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+  6 0.6700     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+  7 0.8040     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+  8 0.9370     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+  9  1.071     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+ 10  1.205     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+ 11  1.339     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+ 12  1.406     0 0.0000      3.79     0.660     0.000     0.848E-03   21.1 0.260
+ 13  1.410     0
+Branch  3 has 33 xsects & routes 1.00 of flow at JNCT  1 To JNCT  4
+Grd R Mile  IOUT  Disch        A1        A2        AO      Slope       W1    W2
+  1 0.0000     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+  2 0.4700E-01 0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+  3 0.1420     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+  4 0.2370     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+  5 0.3310     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+  6 0.4260     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+  7 0.5210     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+  8 0.6160     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+  9 0.7100     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 10 0.8050     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 11 0.9000     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 12 0.9940     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 13  1.089     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 14  1.184     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 15  1.278     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 16  1.373     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 17  1.468     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 18  1.563     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 19  1.657     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 20  1.752     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 21  1.847     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 22  1.941     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 23  2.036     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 24  2.131     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 25  2.225     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 26  2.320     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 27  2.415     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 28  2.509     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 29  2.604     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 30  2.699     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 31  2.794     0 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 32  2.888     1 0.0000      3.87     0.660     0.000     1.200E-03   26.6 0.260
+ 33  3.000     0
+for Time    1 NBC=  0 *
+for Time    2 NBC=  0 *
+for Time    3 NBC=  2 *
+ Branch     1 Grid  1 Q=    10.300     *
+ Branch     2 Grid  1 Q=    10.300     *
+for Time    4 NBC=  2 *
+ Branch     1 Grid  1 Q=    30.890     *
+ Branch     2 Grid  1 Q=    30.890     *
+for Time    5 NBC=  2 *
+ Branch     1 Grid  1 Q=    51.480     *
+ Branch     2 Grid  1 Q=    51.480     *
+for Time    6 NBC=  2 *
+ Branch     1 Grid  1 Q=    85.220     *
+ Branch     2 Grid  1 Q=    85.220     *
+for Time    7 NBC=  2 *
+ Branch     1 Grid  1 Q=    131.20     *
+ Branch     2 Grid  1 Q=    131.20     *
+for Time    8 NBC=  2 *
+ Branch     1 Grid  1 Q=    192.90     *
+ Branch     2 Grid  1 Q=    192.90     *
+for Time    9 NBC=  2 *
+ Branch     1 Grid  1 Q=    270.00     *
+ Branch     2 Grid  1 Q=    270.00     *
+for Time   10 NBC=  2 *
+ Branch     1 Grid  1 Q=    347.30     *
+ Branch     2 Grid  1 Q=    347.30     *
+for Time   11 NBC=  2 *
+ Branch     1 Grid  1 Q=    409.50     *
+ Branch     2 Grid  1 Q=    409.50     *
+for Time   12 NBC=  2 *
+ Branch     1 Grid  1 Q=    448.10     *
+ Branch     2 Grid  1 Q=    448.10     *
+for Time   13 NBC=  2 *
+ Branch     1 Grid  1 Q=    461.00     *
+ Branch     2 Grid  1 Q=    461.00     *
+for Time   14 NBC=  2 *
+ Branch     1 Grid  1 Q=    439.00     *
+ Branch     2 Grid  1 Q=    439.00     *
+for Time   15 NBC=  2 *
+ Branch     1 Grid  1 Q=    394.10     *
+ Branch     2 Grid  1 Q=    394.10     *
+for Time   16 NBC=  2 *
+ Branch     1 Grid  1 Q=    342.60     *
+ Branch     2 Grid  1 Q=    342.60     *
+for Time   17 NBC=  2 *
+ Branch     1 Grid  1 Q=    291.20     *
+ Branch     2 Grid  1 Q=    291.20     *
+for Time   18 NBC=  2 *
+ Branch     1 Grid  1 Q=    243.00     *
+ Branch     2 Grid  1 Q=    243.00     *
+for Time   19 NBC=  2 *
+ Branch     1 Grid  1 Q=    207.30     *
+ Branch     2 Grid  1 Q=    207.30     *
+for Time   20 NBC=  2 *
+ Branch     1 Grid  1 Q=    174.90     *
+ Branch     2 Grid  1 Q=    174.90     *
+for Time   21 NBC=  2 *
+ Branch     1 Grid  1 Q=    149.20     *
+ Branch     2 Grid  1 Q=    149.20     *
+for Time   22 NBC=  2 *
+ Branch     1 Grid  1 Q=    128.60     *
+ Branch     2 Grid  1 Q=    128.60     *
+for Time   23 NBC=  2 *
+ Branch     1 Grid  1 Q=    111.40     *
+ Branch     2 Grid  1 Q=    111.40     *
+for Time   24 NBC=  2 *
+ Branch     1 Grid  1 Q=    94.320     *
+ Branch     2 Grid  1 Q=    94.320     *
+for Time   25 NBC=  2 *
+ Branch     1 Grid  1 Q=    81.800     *
+ Branch     2 Grid  1 Q=    81.800     *
+for Time   26 NBC=  2 *
+ Branch     1 Grid  1 Q=    71.710     *
+ Branch     2 Grid  1 Q=    71.710     *
+for Time   27 NBC=  2 *
+ Branch     1 Grid  1 Q=    63.100     *
+ Branch     2 Grid  1 Q=    63.100     *
+for Time   28 NBC=  2 *
+ Branch     1 Grid  1 Q=    54.560     *
+ Branch     2 Grid  1 Q=    54.560     *
+for Time   29 NBC=  2 *
+ Branch     1 Grid  1 Q=    46.350     *
+ Branch     2 Grid  1 Q=    46.350     *
+for Time   30 NBC=  2 *
+ Branch     1 Grid  1 Q=    38.490     *
+ Branch     2 Grid  1 Q=    38.490     *
+for Time   31 NBC=  2 *
+ Branch     1 Grid  1 Q=    30.640     *
+ Branch     2 Grid  1 Q=    30.640     *
+for Time   32 NBC=  2 *
+ Branch     1 Grid  1 Q=    22.790     *
+ Branch     2 Grid  1 Q=    22.790     *
+for Time   33 NBC=  2 *
+ Branch     1 Grid  1 Q=    14.940     *
+ Branch     2 Grid  1 Q=    14.940     *
+for Time   34 NBC=  2 *
+ Branch     1 Grid  1 Q=    7.0870     *
+ Branch     2 Grid  1 Q=    7.0870     *
+for Time   35 NBC=  2 *
+ Branch     1 Grid  1 Q=        0.     *
+ Branch     2 Grid  1 Q=        0.     *
+for Time   36 NBC=  0 *
+for Time   37 NBC=  0 *
+for Time   38 NBC=  0 *
+for Time   39 NBC=  0 *
+for Time   40 NBC=  0 *
+for Time   41 NBC=  0 *
+for Time   42 NBC=  0 *
+for Time   43 NBC=  0 *
+for Time   44 NBC=  0 *
+for Time   45 NBC=  0 *
+for Time   46 NBC=  0 *
+for Time   47 NBC=  0 *
+for Time   48 NBC=  0 *
+for Time   49 NBC=  0 *
+for Time   50 NBC=  0 *
+for Time   51 NBC=  0 *
+for Time   52 NBC=  0 *
+for Time   53 NBC=  0 *
+for Time   54 NBC=  0 *
+for Time   55 NBC=  0 *
+for Time   56 NBC=  0 *
+for Time   57 NBC=  0 *
+for Time   58 NBC=  0 *
+for Time   59 NBC=  0 *
+for Time   60 NBC=  0 *
+for Time   61 NBC=  0 *
+for Time   62 NBC=  0 *
+for Time   63 NBC=  0 *
+for Time   64 NBC=  0 *

@@ -1,5 +1,5 @@
-C     Last change:  ERB  26 Jul 2002    1:51 pm
-      SUBROUTINE GWF1HUF1AL(ISUM,LCHK,LCVKA,LCSC1,
+C     Last change:  ERB  12 Sep 2002    4:32 pm
+      SUBROUTINE GWF1HUF1ALG(ISUM,LCHK,LCVKA,LCSC1,
      &  IN,ITRSS,NCOL,NROW,NLAY,IOUT,IHUFCB,LCWETD,
      &  HDRY,NPER,ISSFLG,LCHGUF,IREWND,
      &  NHUF,NPHUF,LCHUFTHK,LCHKCC,ISUMI,IOHUF,LAYHDT,LCHUFTMP)
@@ -27,7 +27,7 @@ C     ------------------------------------------------------------------
 C
 C1------IDENTIFY PACKAGE
       WRITE(IOUT,1) IN
-    1 FORMAT(1X,/1X,'HUF1 -- HYDROGEOLOGIC-UNIT FLOW PACKAGE, '
+    1 FORMAT(1X,/1X,'HUF1 -- HYDROGEOLOGIC-UNIT FLOW PACKAGE, ',
      1' VERSION 1.04 ERA, 05/14/2002',/,' INPUT READ FROM UNIT',I3,/)
 C
 C2------READ FIRST RECORD AND WRITE
@@ -84,7 +84,7 @@ C3------STOP THE SIMULATION IF THERE ARE MORE THAN 200 LAYERS.
          WRITE(IOUT,41)
    41    FORMAT(1X,/1X,'YOU HAVE SPECIFIED MORE THAN 200 MODEL LAYERS'/
      1 1X,'SPACE IS RESERVED FOR A MAXIMUM OF 200 LAYERS IN HUF ARRAYS')
-         STOP
+         CALL USTOP(' ')
       END IF
 C
 C4------READ LTHUF, LAYWT.
@@ -112,7 +112,7 @@ C4B-----TO SC2, HANI, and WETDRY.  PRINT INTERPRETED VALUES OF FLAGS.
             WRITE(IOUT,*)
      1          ' LAYWT is not 0 and LTHUF is 0 for layer:',K
             WRITE(IOUT,*) ' LAYWT must be 0 if LTHUF is 0'
-            STOP
+            CALL USTOP(' ')
           ELSE
             NWETD=NWETD+1
             LAYWT(K)=NWETD
@@ -169,7 +169,7 @@ C8------RETURN.
       RETURN
       END
 C=======================================================================
-      SUBROUTINE GWF1HUF1RQ(
+      SUBROUTINE GWF1HUF1RPGD(
      1 IN,NCOL,NROW,NLAY,IOUT,WETDRY,WETFCT,IWETIT,IHDWET,
      2 IHGUFLG,ITERP,NHUF,NPHUF,HUFTHK,ITRSS)
 C
@@ -244,7 +244,7 @@ C2H-----(LAYWT NOT 0).
      4 /1X,75('-'))
 C
 C-------READ HYDROGEOLOGIC-UNIT GEOMETRY
-      Call GWF1HUF1GEOMRP(IN,NCOL,NROW,IOUT,NHUF,HUFTHK)
+      Call SGWF1HUF1GEOMRP(IN,NCOL,NROW,IOUT,NHUF,HUFTHK)
 C
 C---Read HANI and VANI values for each named unit
       DO 100 NU=1,NHUF
@@ -279,7 +279,7 @@ C  Find the unit name in the list
         IF(IU.EQ.0) THEN
           WRITE(IOUT,41) TMPNAM
    41     FORMAT('UNIT ',A10,'NOT FOUND (STOP EXECUTION)')
-          STOP
+          CALL USTOP(' ')
         ENDIF
         CALL URWORD(LINE,LLOC,ISTART,ISTOP,3,I,HGUHANI(IU),IOUT,IN)
         CALL URWORD(LINE,LLOC,ISTART,ISTOP,3,I,HGUVANI(IU),IOUT,IN)
@@ -312,7 +312,7 @@ C-------READ NAMED PARAMETERS
       NPSY=0
       IF(NPHUF.GT.0) THEN
          DO 20 K=1,NPHUF
-         CALL GWF1HUF1PARRP(IN,IOUT,N,PTYP,ITERP,NHUF)
+         CALL SGWF1HUF1PARRP(IN,IOUT,N,PTYP,ITERP,NHUF)
          IF(PTYP.EQ.'HK') THEN
             CONTINUE
          ELSE IF(PTYP.EQ.'HANI') THEN
@@ -327,7 +327,7 @@ C-------READ NAMED PARAMETERS
             NPSY=1
          ELSE
             WRITE(IOUT,*) ' Invalid parameter type for HUF Package'
-            STOP
+            CALL USTOP(' ')
          END IF
 C  Make the parameter global
          IACTIVE(N)=-1
@@ -337,26 +337,26 @@ C  Make the parameter global
 C        IF(HGUVANI(K).EQ.0.AND.NPVANI.NE.0) THEN
 C          WRITE(IOUT,*) ' VANI parameters can only be used ',
 C     &      'if HGUVANI(HGU) is set to 1 in the HUF Package (STOP)'
-C          STOP
+C          CALL USTOP(' ')
 C        ENDIF
    40 CONTINUE
       IF(ITRSS.NE.0.AND.NPSS.EQ.0.AND.NPSY.EQ.0) THEN
         WRITE(IOUT,*) 'Simulation is transient and no storage ',
      &    'parameters are defined in the HUF Package (STOP)'
-        STOP
+        CALL USTOP(' ')
       ENDIF
       WRITE(IOUT,*) 'ITRSS',ITRSS
       IF(ITRSS.EQ.0.AND.(NPSS.NE.0.OR.NPSY.NE.0)) THEN
         WRITE(IOUT,*) 'Simulation is steady state and storage ',
      &    'parameters are defined in the HUF Package (STOP)'
-        STOP
+        CALL USTOP(' ')
       ENDIF
       IF(ITRSS.NE.0.AND.KLAYFLG.NE.0.AND.
      &       (NPSS.EQ.0.OR.NPSY.EQ.0)) THEN
         WRITE(IOUT,*) 'Simulation is transient and has convertible ',
      &    'layers and only one storage parameter is defined in the HUF',
      &    ' Package (STOP)'
-        STOP
+        CALL USTOP(' ')
       ENDIF
 C
 C---Read PRINTCODE
@@ -395,7 +395,7 @@ C  Find the unit name in the list
       IF(IU.EQ.0) THEN
         WRITE(IOUT,440) TMPNAM
   440   FORMAT('UNIT ',A10,'NOT FOUND (STOP EXECUTION)')
-        STOP
+        CALL USTOP(' ')
       ENDIF
       CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,ICODE,R,IOUT,IN)
 C---Reset flags
@@ -457,7 +457,7 @@ C4------RETURN
       END
 
 c======================================================================
-      SUBROUTINE GWF1HUF1GEOMRP(IN,NCOL,NROW,IOUT,NHUF,HUFTHK)
+      SUBROUTINE SGWF1HUF1GEOMRP(IN,NCOL,NROW,IOUT,NHUF,HUFTHK)
 C
 C     ******************************************************************
 C     Read and prepare HYDROGEOLOGIC-UNIT GEOMETRY.
@@ -494,7 +494,7 @@ C
       RETURN
       END
 c======================================================================
-      SUBROUTINE GWF1HUF1PARRP(IN,IOUT,NP,PTYP,ITERP,NHUF)
+      SUBROUTINE SGWF1HUF1PARRP(IN,IOUT,NP,PTYP,ITERP,NHUF)
 C
 C     ******************************************************************
 C     Read and store array parameter definition information for HUF package
@@ -533,7 +533,7 @@ C  predefined.
               IF(PARTYP(NP).NE.' ' .AND. IDEFPAR.EQ.0) THEN
 C  Illegal duplicate
                   WRITE(IOUT,*) ' Duplicate parameter name'
-                  STOP
+                  CALL USTOP(' ')
               END IF
 C  Parameter was predefined -- leave its value alone (i.e. ignore PV).
               GO TO 100
@@ -549,7 +549,7 @@ C  Put values in the list.
 C  Too many parameters
       WRITE(IOUT,11)
    11 FORMAT(1X,'The number of parameters has exceeded the maximum')
-      STOP
+      CALL USTOP(' ')
 C
 C  Parse the rest of the parameter definition.
   100 PARTYP(NP)=PTYP
@@ -569,7 +569,7 @@ C
            WRITE(IOUT,*) NP,NDHUF
            WRITE(IOUT,'(A)') PARNAM(NP)
            WRITE(IOUT,'(2I10)') IPLOC
-          STOP
+          CALL USTOP(' ')
       END IF
       WRITE(IOUT,121) PARNAM(NP),PARTYP(NP),NDHUF
   121 FORMAT(1X/,1X,'PARAMETER NAME:',A,'   TYPE:',A,' UNITS:',I4)
@@ -644,7 +644,7 @@ C  Find the multiplier array number
          IF(CTMP1.EQ.CTMP2) GO TO 45
    40    CONTINUE
          WRITE(IOUT,'(A)') ' Multiplier array has not been defined'
-         STOP
+         CALL USTOP(' ')
    45    IPCLST(2,I)=J
       END IF
 C
@@ -659,7 +659,7 @@ C  Find the zone array number
    47       FORMAT(
      1      1X,'There were no zone values specified in the cluster',/
      2      1X,'At least one zone must be specified')
-            STOP
+            CALL USTOP(' ')
          END IF
          WRITE(IOUT,48) (IPCLST(J,I),J=5,IPCLST(4,I))
    48    FORMAT(1X,'               ZONE VALUES:',10I5)
@@ -669,7 +669,7 @@ C  Find the zone array number
          IF(CTMP1.EQ.CTMP2) GO TO 55
    50    CONTINUE
          WRITE(IOUT,'(A)') ' Zone array has not been defined'
-         STOP
+         CALL USTOP(' ')
    55    IPCLST(3,I)=J
       END IF
   200 CONTINUE
@@ -910,7 +910,7 @@ C---Populate HUF array
             WRITE(IOUT,100)
   100       FORMAT(//,'Additive VANI parameters not allowed! ',
      &       'STOP EXECUTION(SGWF1HUF1POP)')
-            STOP
+            CALL USTOP(' ')
           ENDIF
           HUFARRAY(NU)=HUFARRAY(NU)+RMLT0*B(NP)
   300     CONTINUE
@@ -1434,7 +1434,7 @@ C3C-----HNEW=HDRY, SATURATED THICKNESS=0.0, AND IBOUND=0.
                WRITE(IOUT,152) K,I,J,KITER,KSTP,KPER
   152          FORMAT(1X,'LAYER=',I2,'   ROW=',I3,'   COLUMN=',I3,
      1    '   ITERATION=',I3,'   TIME STEP=',I3,'   STRESS PERIOD=',I3)
-               STOP
+               CALL USTOP(' ')
             END IF
             IBOUND(J,I,K)=0
          END IF

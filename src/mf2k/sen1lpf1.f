@@ -1,4 +1,4 @@
-C     Last change:  ERB  22 Apr 2002    9:53 am
+C     Last change:  ERB  14 Jan 2003    4:01 pm
       SUBROUTINE SEN1LPF1SV(IZON,KPER,NCOL,NLAY,NMLTAR,NPLIST,NROW,
      &                      NZONAR,RMLT,SV)
 C-----VERSION 19980916 ERB
@@ -50,7 +50,7 @@ C=======================================================================
      &                      NHFB,HANI)
 C     VERSION 19990402 ERB
 C     ******************************************************************
-C      CALCULATE MATRIX DERIVATIVES AND MULTIPLY BY HEADS AS NEEDED.  
+C      CALCULATE MATRIX DERIVATIVES AND MULTIPLY BY HEADS AS NEEDED.
 C      ADD RESULTING CONTRIBUTION TO RHS.
 C     ******************************************************************
 C        SPECIFICATIONS:
@@ -68,7 +68,7 @@ C     ------------------------------------------------------------------
       DOUBLE PRECISION H(NCOL*NROW*NLAY)
       DIMENSION RMLT(NCOL,NROW,NMLTAR),DELR(NCOL), DELC(NROW),
      &          RHS(NCOL,NROW,NLAY), IBOUND(NCOL,NROW,NLAY),
-     &          HOLD(NCOL*NROW*NLAY), 
+     &          HOLD(NCOL*NROW*NLAY),
      &          CV(NCOL,NROW,NLAY), IZON(NCOL,NROW,NZONAR),
      &          BOTM(NCOL,NROW,0:NBOTM),
      &          SV(NCOL,NROW,NLAY), HK(NCOL,NROW,NLAY),
@@ -97,6 +97,8 @@ C
         LT = LAYTYP(IL)
 C-----HORIZONTAL CONDUCTANCES
         IF (PID.EQ.'HK  ' .OR. PID.EQ.'HANI') THEN
+C         IF INTERPOLATION IS BY METHOD OTHER THAN HARMONIC MEAN, STOP
+C         WITH ERROR
           DO 70 I = 1, NROW
             DO 60 J = 1, NCOL
               IF (IBOUND(J,I,K).EQ.0) GOTO 60
@@ -123,7 +125,7 @@ C%ERA%HANI    IF (IL.GT.0 .AND. PID.NE.'HANI') THEN
      &            TH0 = HO - BOTM(J,I,LBOTM(K))
 C-------CR
               IF (J.NE.NCOL) THEN
-                IF (PID.NE.'HANI' .AND. 
+                IF (PID.NE.'HANI' .AND.
      &              IBOUND(J+1,I,K).NE.0) THEN
                   CALL SSEN1LPF1CH(CO,TH1,HP,I,J,K,'CR',IL,M,RMLT0,RMLT,
      &                        LZ1,IZON,SF,LT,HK,NCOL,NROW,
@@ -292,7 +294,7 @@ C     ------------------------------------------------------------------
       DOUBLE PRECISION HNEW(NCOL,NROW,NLAY), SNEW(NCOL,NROW,NLAY)
       DIMENSION HOLD(NCOL,NROW,NLAY), SOLD(NCOL,NROW,NLAY),
      &          DELR(NCOL), DELC(NROW), IBOUND(NCOL,NROW,NLAY),
-     &          RHS(NCOL,NROW,NLAY), BOTM(NCOL,NROW,0:NBOTM), 
+     &          RHS(NCOL,NROW,NLAY), BOTM(NCOL,NROW,0:NBOTM),
      &          CC(NCOL,NROW,NLAY), CR(NCOL,NROW,NLAY),
      &          SC1(NCOL,NROW,NLAY), SC2(NCOL,NROW,NLAY),
      &          HK(NCOL,NROW,NLAY), CV(NCOL,NROW,NLAY),
@@ -310,7 +312,7 @@ C-------TERMS FOR UNCONFINED AQUIFERS
           IF (LT.NE.0) THEN
 C%ERA%HANI
             CALL SSEN1LPF1NL(HNEW,SNEW,NCOL,NROW,NLAY,HK,VKA,DELR,DELC,
-     &                     IBOUND,RHS,BOTM,NBOTM,CR,CC,CV,K,LT,HANI)
+     &                     IBOUND,RHS,BOTM,NBOTM,CR,CC,CV,K,HANI)
             IF (K.GT.1) THEN
               DO 50 I = 1, NROW
                 DO 40 J = 1, NCOL
@@ -364,7 +366,7 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL BB, CO, DRC, SF, RMLT, SV, ZERO
       INTEGER I, IZ, J, KPER,
-     &        M, IZON, NCOL, NL, NLAY, 
+     &        M, IZON, NCOL, NL, NLAY,
      &        NROW, NZ
       DIMENSION SV(NCOL,NROW,NLAY), RMLT(NCOL,NROW,NMLTAR),
      &          IZON(NCOL,NROW,NZONAR)
@@ -415,20 +417,21 @@ C
       END
 C=======================================================================
       SUBROUTINE SSEN1LPF1NL(H,A,NC,NR,NL,HK,VKA,DELR,DELC,IBOUND,RHS,
-     &                       BOTM,NBOTM,CR,CC,CV,K,LT,HANI)
+     &                       BOTM,NBOTM,CR,CC,CV,K,HANI)
 C-----VERSION 1000 01FEB1992
 C     ******************************************************************
 C     ADD NONLINEAR TERMS FOR SENSITIVITY EQUATION CALCULATIONS
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL BO, BOTM, BP, CC, CO, CR, D1CC, D1CR, D2CC, D2CR, DELC, DELR,
-     &     HO, HP, RHS, HK, TH1, TH2, TOP1, TOP2, YX, ZERO, KV1
-      INTEGER I, IBOUND, IND, J, K, LT, NC, NC1, NL, NR, NR1,
+      REAL BOTM, CC, CO, CR, D1CC, D1CR, D2CC, D2CR, DELC, DELR,
+     &     RHS, HK, TOP1, TOP2, YX, ZERO, KV1
+      INTEGER I, IBOUND, IND, J, K, NC, NC1, NL, NR, NR1,
      &        NRC, KHANI
       DOUBLE PRECISION A(NC*NR*NL), AO, AP, H(NC*NR*NL)
+      DOUBLE PRECISION BO, BP, HO, HP, TH1, TH2
       DIMENSION CR(NC,NR,NL), CC(NC,NR,NL), CV(NC,NR,NL), HK(NC,NR,NL),
-     &          VKA(NC,NR,NL), DELR(NC), DELC(NR), RHS(NC,NR,NL), 
+     &          VKA(NC,NR,NL), DELR(NC), DELC(NR), RHS(NC,NR,NL),
      &          IBOUND(NC,NR,NL), BOTM(NC,NR,0:NBOTM), HANI(NC,NR,NL)
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
       COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
@@ -453,13 +456,9 @@ C
             IND = J + NC*(I-1) + NRC*(K-1)
             HO = H(IND)
             HP = H(IND+1)
-            TOP1 = ZERO
-            TOP2 = ZERO
-            IF (LT.NE.0) THEN
-              TOP1 = BOTM(J,I,LBOTM(K)-1)
-              TOP2 = BOTM(J+1,I,LBOTM(K)-1)
-              IF (TOP1.LT.HO .AND. TOP2.LT.HP) GOTO 10
-            ENDIF
+            TOP1 = BOTM(J,I,LBOTM(K)-1)
+            TOP2 = BOTM(J+1,I,LBOTM(K)-1)
+            IF (TOP1.LT.HO .AND. TOP2.LT.HP) GOTO 10
             AO = A(IND)
             AP = A(IND+1)
             BO = BOTM(J,I,LBOTM(K))
@@ -502,13 +501,9 @@ C
             IND = J + NC*(I-1) + NRC*(K-1)
             HO = H(IND)
             HP = H(IND+NC)
-            TOP1 = ZERO
-            TOP2 = ZERO
-            IF (LT.NE.0) THEN
-              TOP1 = BOTM(J,I,LBOTM(K)-1)
-              TOP2 = BOTM(J,I+1,LBOTM(K)-1)
-              IF (TOP1.LT.HO .AND. TOP2.LT.HP) GOTO 30
-            ENDIF
+            TOP1 = BOTM(J,I,LBOTM(K)-1)
+            TOP2 = BOTM(J,I+1,LBOTM(K)-1)
+            IF (TOP1.LT.HO .AND. TOP2.LT.HP) GOTO 30
             AO = A(IND)
             AP = A(IND+NC)
             BO = BOTM(J,I,LBOTM(K))
@@ -542,8 +537,7 @@ C
             IND = J + NC*(I-1) + NRC*(K-1)
             HO = H(IND)
             HP = H(IND+NRC)
-            TOP1 = ZERO
-            IF (LT.NE.0) TOP1 = BOTM(J,I,LBOTM(K)-1)
+            TOP1 = BOTM(J,I,LBOTM(K)-1)
             IF (TOP1.LT.HO) GOTO 50
             AO = A(IND)
             BO = BOTM(J,I,LBOTM(K))
@@ -578,14 +572,14 @@ C     RESPECT TO PARAMETER VALUES, FOR HARMONIC MEAN CONDUCTANCES
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL AN, BOT, CO, D0, D1, DC, DELC, DELR, DR, DT0, DT1, DU, DV, 
+      REAL AN, BOT, CO, D0, D1, DC, DELC, DELR, DR, DT0, DT1, DU, DV,
      &     FAC, SF, RMLT, RMLT0, RMLT1, HK, T0, T1, TH0, TH1,
      &     TOP, U, V, ZERO
       INTEGER I, IFLAG1, II, IJ, IL, IND, IZ, J, K, LT, LZ1,
      &        M, IZON, NCOL, NLAY, NROW, NZ, KHANI
       CHARACTER*2 CHAR
       DIMENSION RMLT(NCOL,NROW,NMLTAR), IZON(NCOL,NROW,NZONAR),
-     &          HK(NCOL,NROW,NLAY), DELC(NROW), DELR(NCOL), 
+     &          HK(NCOL,NROW,NLAY), DELC(NROW), DELR(NCOL),
      &          BOT(NCOL,NROW), TOP(NCOL,NROW), HANI(NCOL,NROW,NLAY)
       DOUBLE PRECISION DZERO, H(NCOL*NROW*NLAY), HP
       COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
@@ -658,7 +652,7 @@ C UOV IS U DIVIDED BY V (U OVER V).
       V = T0*D1 + T1*D0
       DU = T0*DT1 + T1*DT0
       DV = D1*DT0 + D0*DT1
-      CO=0.          
+      CO=0.
 C-----CHANGE VALUE TO MACHINE ZERO -- ASK STEVE
       IF(ABS(V).GT.1E-24) THEN
         C = FAC*U/V
@@ -679,13 +673,13 @@ C     RESPECT TO HORIZONTAL ANISOTROPY, FOR HARMONIC MEAN CONDUCTANCES
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL AN, BOT, CO, D0, D1, DC, DELC, DELR, DR, DT0, DT1, DU, DV, 
+      REAL AN, BOT, CO, D0, D1, DC, DELC, DELR, DR, DT0, DT1, DU, DV,
      &     FAC, SF, RMLT, RMLT0, RMLT1, HK, T0, T1, TH0, TH1,
      &     TOP, U, V, ZERO
       INTEGER I, IFLAG1, IL, IND, IZ, J, K, LT, LZ1,
      &        M, IZON, NCOL, NLAY, NROW, NZ, KHANI
       DIMENSION RMLT(NCOL,NROW,NMLTAR), IZON(NCOL,NROW,NZONAR),
-     &          HK(NCOL,NROW,NLAY), DELC(NROW), DELR(NCOL), 
+     &          HK(NCOL,NROW,NLAY), DELC(NROW), DELR(NCOL),
      &          BOT(NCOL,NROW), TOP(NCOL,NROW) ,HANI(NCOL,NROW,NLAY)
       DOUBLE PRECISION DZERO, H(NCOL*NROW*NLAY), HP
       COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
@@ -734,7 +728,7 @@ C UOV IS U DIVIDED BY V (U OVER V).
       V = T0*D1 + T1*D0
       DU = T0*DT1 + T1*DT0
       DV = D1*DT0 + D0*DT1
-      CO=0.          
+      CO=0.
 C-----CHANGE VALUE TO MACHINE ZERO -- ASK STEVE
       IF(ABS(V).GT.1E-24) THEN
         C = FAC*U/V
@@ -763,8 +757,8 @@ C     ------------------------------------------------------------------
      &        LZ1, M, IZON, NCOL, NLAY, NROW, NZ
       CHARACTER*4 PID
       DIMENSION RMLT(NCOL,NROW,NMLTAR), BOTM(NCOL,NROW,0:NBOTM),
-     &          SV(NCOL,NROW,NLAY), IZON(NCOL,NROW,NZONAR), 
-     &          HK(NCOL,NROW,NLAY), DELC(NROW), DELR(NCOL), 
+     &          SV(NCOL,NROW,NLAY), IZON(NCOL,NROW,NZONAR),
+     &          HK(NCOL,NROW,NLAY), DELC(NROW), DELR(NCOL),
      &          IBOUND(NCOL,NROW,NLAY),
      &          CV(NCOL,NROW,NLAY), VKA(NCOL,NROW,NLAY)
       INCLUDE 'param.inc'
@@ -787,7 +781,7 @@ C-----CALCULATE THICKNESSES OF LAYER K AND CONFINING BED BELOW LAYER K
 C
       IF (K.LT.NLAY) IBP = IBOUND(J,I,K+1)
       IF (K.GT.1) IBM = IBOUND(J,I,K-1)
-      IF (IBOUND(J,I,K).EQ.0 .OR. (PID.EQ.'VKCB'.AND.IBP.EQ.0) .OR. 
+      IF (IBOUND(J,I,K).EQ.0 .OR. (PID.EQ.'VKCB'.AND.IBP.EQ.0) .OR.
      &    (PID.NE.'VKCB'.AND.IBP.EQ.0.AND.IBM.EQ.0)) RETURN
       SM = 1.
       IF ((PID.EQ.'VKCB' .OR. PID.EQ.'HK  ' .OR. PID.EQ.'VK  ' .OR.
@@ -808,7 +802,7 @@ C
         ENDIF
         IF (SM.EQ.ZERO) RETURN
       ENDIF
-      IF (PID.EQ.'VKCB') 
+      IF (PID.EQ.'VKCB')
      &    CO = (CV(J,I,K)**2)*SM*DELZCB/((SV(J,I,K)**2)*DELR(J)*DELC(I))
       IF (PID.EQ.'HK  ' .OR. PID.EQ.'VK  ' .OR. PID.EQ.'VANI') THEN
         IF (PID.EQ.'HK  ') THEN

@@ -1,9 +1,9 @@
-C     Last change:  ERB  10 Jul 2002   12:28 pm
-      SUBROUTINE GWF1STR6AL(ISUM,ISUMI,LCSTRM,ICSTRM,MXSTRM,NSTREM,IN,
+C     Last change:  ERB  12 Sep 2002    4:49 pm
+      SUBROUTINE GWF1STR6ALP(ISUM,ISUMI,LCSTRM,ICSTRM,MXSTRM,NSTREM,IN,
      1              IOUT,ISTCB1,ISTCB2,NSS,NTRIB,NDIV,ICALC,CONST,
      2              LCTBAR,LCTRIB,LCIVAR,LCFGAR,NPSTR,ISTRPB)
 C
-C-----VERSION 15APRIL1998 GWF1STR6AL
+C-----VERSION 15APRIL1998 GWF1STR6ALP
 C-----VERSION 12MAR1999 -- modified to use character strings longer
 C-----than 4 characters and to change VBVL and VBNM DIMENSION to MSUM
 C     ******************************************************************
@@ -85,10 +85,10 @@ C
 C10-----RETURN.
       RETURN
       END
-      SUBROUTINE GWF1STR6RQ(IN,IOUT,NCOL,NROW,NLAY,NPSTR,STRM,ISTRM,
+      SUBROUTINE GWF1STR6RPPD(IN,IOUT,NCOL,NROW,NLAY,NPSTR,STRM,ISTRM,
      &         ISTRPB,MXSTRM,ITERP,INAMLOC)
 C
-C-----VERSION 20011108 GWF1STR6RQ
+C-----VERSION 20011108 GWF1STR6RPPD
 C     ******************************************************************
 C     READ STREAM PARAMETERS
 C     ******************************************************************
@@ -137,11 +137,11 @@ C
 C6------RETURN
       RETURN
       END
-      SUBROUTINE GWF1STR6RP(STRM,ISTRM,NSTREM,MXSTRM,IN,IOUT,ITRBAR,
+      SUBROUTINE GWF1STR6RPSS(STRM,ISTRM,NSTREM,MXSTRM,IN,IOUT,ITRBAR,
      1       NDIV,NSS,NTRIB,IDIVAR,ICALC,IPTFLG,NCOL,NROW,NLAY,NPSTR,
      2       ISTRPB)
 C
-C-----VERSION 15APRIL1998 GWF1STR6RP
+C-----VERSION 15APRIL1998 GWF1STR6RPSS
 C     ******************************************************************
 C     READ STREAM DATA:  INCLUDES SEGMENT AND REACH NUMBERS, CELL
 C         SEQUENCE OF SEGMENT AND REACH, FLOW INTO MODEL AT BOUNDARY,
@@ -179,7 +179,7 @@ C3A-----IF THERE ARE NEW NON-PARAMETER STREAM CELLS, READ THEM
                WRITE(IOUT,99) NSTREM,MXACTS
    99          FORMAT(1X,/1X,'THE NUMBER OF ACTIVE STREAM CELLS (',
      1              I6,') IS GREATER THAN MXACTS(',I6,')')
-               STOP
+               CALL USTOP(' ')
             END IF
             CALL SGWF1STR6R(NSTREM,MXSTRM,STRM,ISTRM,1,IN,IOUT,NCOL,
      1             NROW,NLAY,IRDFLG)
@@ -196,7 +196,7 @@ C1C-----IF THERE ARE ACTIVE STR PARAMETERS, READ THEM AND SUBSTITUTE
             NSTREM=NSTREM+NLST
             IF(NLST.GT.MXACTS) THEN
                WRITE(IOUT,99) NLST,MXACTS
-               STOP
+               CALL USTOP(' ')
             END IF
             DO 50 I=1,NLST
             II=NSTREM-NLST+I
@@ -696,15 +696,15 @@ C
 C  Check for illegal grid location
       IF(K.LT.1 .OR. K.GT.NLAY) THEN
          WRITE(IOUT,*) ' Layer number in list is outside of the grid'
-         STOP
+         CALL USTOP(' ')
       END IF
       IF(I.LT.1 .OR. I.GT.NROW) THEN
          WRITE(IOUT,*) ' Row number in list is outside of the grid'
-         STOP
+         CALL USTOP(' ')
       END IF
       IF(J.LT.1 .OR. J.GT.NCOL) THEN
          WRITE(IOUT,*) ' Column number in list is outside of the grid'
-         STOP
+         CALL USTOP(' ')
       END IF
   250 CONTINUE
 C

@@ -1,8 +1,8 @@
-C     Last change:  ERB  10 Jul 2002   12:25 pm
-      SUBROUTINE GWF1GHB6AL(ISUM,LCBNDS,MXBND,NBOUND,IN,IOUT,IGHBCB,
+C     Last change:  ERB  22 Oct 2002    2:06 pm
+      SUBROUTINE GWF1GHB6ALP(ISUM,LCBNDS,MXBND,NBOUND,IN,IOUT,IGHBCB,
      1     NGHBVL,IGHBAL,IFREFM,NPGHB,IGHBPB,NNPGHB,NOPRGB)
 C
-C-----VERSION 11JAN2000 GWF1GHB6AL
+C-----VERSION 11JAN2000 GWF1GHB6ALP
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR GHBS
 C     ******************************************************************
@@ -85,10 +85,10 @@ C
 C6------RETURN.
       RETURN
       END
-      SUBROUTINE GWF1GHB6RQ(IN,IOUT,NGHBVL,IGHBAL,NCOL,NROW,NLAY,NPGHB,
-     1            BNDS,IGHBPB,MXBND,IFREFM,ITERP,INAMLOC,NOPRGB)
+      SUBROUTINE GWF1GHB6RPPD(IN,IOUT,NGHBVL,IGHBAL,NCOL,NROW,NLAY,
+     1            NPGHB,BNDS,IGHBPB,MXBND,IFREFM,ITERP,INAMLOC,NOPRGB)
 C
-C-----VERSION 20011108 GWF1GHB6RQ
+C-----VERSION 20011108 GWF1GHB6RPPD
 C     ******************************************************************
 C     READ GHB PARAMETERS
 C     ******************************************************************
@@ -138,10 +138,10 @@ C
 C6------RETURN
       RETURN
       END
-      SUBROUTINE GWF1GHB6RP(BNDS,NBOUND,MXBND,IN,IOUT,NGHBVL,IGHBAL,
+      SUBROUTINE GWF1GHB6RPSS(BNDS,NBOUND,MXBND,IN,IOUT,NGHBVL,IGHBAL,
      1       IFREFM,NCOL,NROW,NLAY,NNPGHB,NPGHB,IGHBPB,NOPRGB)
 C
-C-----VERSION 11JAN2000 GWF1GHB6RP
+C-----VERSION 11JAN2000 GWF1GHB6RPSS
 C     ******************************************************************
 C     READ GHB HEAD, CONDUCTANCE AND BOTTOM ELEVATION
 C     ******************************************************************
@@ -176,7 +176,7 @@ C------CALCULATE SOME CONSTANTS
       IOUTU = IOUT
       IF (NOPRGB.EQ.1) THEN
         ITERPU = 99
-        IOUTU = -1
+        IOUTU = -IOUT
       ENDIF
 C
 C2------DETERMINE THE NUMBER OF NON-PARAMETER GHB'S.
@@ -195,7 +195,7 @@ C3------IF THERE ARE NEW NON-PARAMETER GHB'S, READ THEM.
             WRITE(IOUT,99) NNPGHB,MXACTB
    99       FORMAT(1X,/1X,'THE NUMBER OF ACTIVE GHB CELLS (',I6,
      1                     ') IS GREATER THAN MXACTB(',I6,')')
-            STOP
+            CALL USTOP(' ')
          END IF
          CALL ULSTRD(NNPGHB,BNDS,1,NGHBVL,MXBND,IGHBAL,IN,IOUT,
      1      'BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE',

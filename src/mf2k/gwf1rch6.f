@@ -1,8 +1,8 @@
-C     Last change:  ERB  10 Jul 2002    3:32 pm
-      SUBROUTINE GWF1RCH6AL(ISUM,ISUMI,LCIRCH,LCRECH,NRCHOP,NCOL,NROW,
+C     Last change:  ERB  12 Sep 2002    4:44 pm
+      SUBROUTINE GWF1RCH6ALP(ISUM,ISUMI,LCIRCH,LCRECH,NRCHOP,NCOL,NROW,
      1          IN,IOUT,IRCHCB,IFREFM,NPRCH,IRCHPF)
 C
-C-----VERSION 11JAN2000 GWF1RCH6AL
+C-----VERSION 11JAN2000 GWF1RCH6ALP
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR RECHARGE
 C     ******************************************************************
@@ -36,7 +36,7 @@ C3A-----OPTION IS ILLEGAL -- PRINT A MESSAGE AND ABORT SIMULATION
       WRITE(IOUT,8)NRCHOP
     8 FORMAT(1X,'ILLEGAL RECHARGE OPTION CODE (NRCHOP = ',I5,
      &       ') -- SIMULATION ABORTING')
-      STOP
+      CALL USTOP(' ')
 C
 C4------OPTION IS LEGAL -- PRINT OPTION CODE.
   200 IF(NRCHOP.EQ.1) WRITE(IOUT,201)
@@ -73,9 +73,9 @@ C
 C9------RETURN
       RETURN
       END
-      SUBROUTINE GWF1RCH6RQ(IN,IOUT,NPRCH,ITERP,INAMLOC)
+      SUBROUTINE GWF1RCH6RPPD(IN,IOUT,NPRCH,ITERP,INAMLOC)
 C
-C-----VERSION 20NOV2001 GWF1RCH6RQ
+C-----VERSION 20NOV2001 GWF1RCH6RPPD
 C     ******************************************************************
 C     READ RECHARGE PARAMETER DEFINITIONS
 C     ******************************************************************
@@ -95,7 +95,7 @@ C-------READ NAMED PARAMETERS
          IF(PTYP.NE.'RCH') THEN
             WRITE(IOUT,7)
     7       FORMAT(1X,'Parameter type must be RCH')
-            STOP
+            CALL USTOP(' ')
          END IF
    20    CONTINUE
       END IF
@@ -103,11 +103,11 @@ C
 C8------RETURN
    60 RETURN
       END
-      SUBROUTINE GWF1RCH6RP(NRCHOP,IRCH,RECH,DELR,DELC,NROW,NCOL,
+      SUBROUTINE GWF1RCH6RPSS(NRCHOP,IRCH,RECH,DELR,DELC,NROW,NCOL,
      &                  IN,IOUT,IFREFM,NPRCH,RMLT,IZON,
      &                  NMLTAR,NZONAR,IRCHPF)
 C
-C     VERSION 11JAN2000 GWF1RCH6RP
+C     VERSION 11JAN2000 GWF1RCH6RPSS
 C     ******************************************************************
 C     READ RECHARGE RATES
 C     ******************************************************************
@@ -159,8 +159,8 @@ C       INRECH is the number of parameters to use this stress period
           WRITE(IOUT,34)
    34     FORMAT(' ERROR: When parameters are defined for the RCH',
      &     ' Package, at least one parameter',/,' must be specified',
-     &     ' each stress period -- STOP EXECUTION (GWF1RCH6RP)')
-          STOP
+     &     ' each stress period -- STOP EXECUTION (GWF1RCH6RPLL)')
+          CALL USTOP(' ')
         END IF
         CALL UPARARRSUB2(RECH,NCOL,NROW,0,INRECH,IN,IOUT,'RCH',
      1          ANAME(2),'RCH',IRCHPF,RMLT,IZON,NMLTAR,NZONAR)

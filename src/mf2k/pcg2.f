@@ -1,13 +1,11 @@
-C     Last change:  ERB  10 Jul 2002    3:59 pm
+C  1-3-2003  Added code to apply damping only to external iterations
 C
-C       $Date: 1998/12/29 15:15:00 $
-C       $Revision: 2.4 $
+      SUBROUTINE PCG2ALG(ISUM,ISUMI,LCV,LCSS,LCP,LCCD,LCHCHG,LCLHCH,
+     &                   LCRCHG,LCLRCH,MXITER,ITER1,NCOL,NROW,NLAY,IN,
+     &                   IOUT,NPCOND,LCIT1,LCHCSV,IFREFM,IREWND,ISUMZ,
+     &                   LCHPCG)
 C
-      SUBROUTINE PCG2AL(ISUM,ISUMI,LCV,LCSS,LCP,LCCD,LCHCHG,LCLHCH,
-     &                  LCRCHG,LCLRCH,MXITER,ITER1,NCOL,NROW,NLAY,IN,
-     &                  IOUT,NPCOND,LCIT1,LCHCSV,IFREFM,IREWND,ISUMZ)
-C
-C-----VERSION 04FEB1999 PCG2AL
+C-----VERSION 24JAN2003 PCG2ALG
 C
 C     ******************************************************************
 C     ALLOCATE STORAGE IN THE X ARRAY FOR PCG ARRAYS
@@ -49,12 +47,14 @@ C-------ALLOCATE SPACE FOR THE PCG ARRAYS
       ISZOLD = ISUMZ
       NRC = NROW*NCOL
       ISIZ = NRC*NLAY
+      LCHPCG=ISUMZ
+      IF(MXITER.GT.1) ISUMZ=ISUMZ+ISIZ
       LCV = ISUMZ
       ISUMZ = ISUMZ + ISIZ
       LCSS = ISUMZ
       ISUMZ = ISUMZ + ISIZ
-      LCP = ISUM
-      ISUM = ISUM + ISIZ
+      LCP = ISUMZ
+      ISUMZ = ISUMZ + ISIZ
       LCCD = ISUM
       ISUM = ISUM + ISIZ
       LCHCSV = ISUM
@@ -86,10 +86,10 @@ C-------RETURN
       END
 C
 C
-      SUBROUTINE PCG2RP(MXITER,ITER1,HCLOSE,RCLOSE,NPCOND,NBPOL,RELAX,
-     &                  IPRPCG,IN,IOUT,MUTPCG,NITER,DAMP,IFREFM)
+      SUBROUTINE PCG2RPG(MXITER,ITER1,HCLOSE,RCLOSE,NPCOND,NBPOL,RELAX,
+     &                   IPRPCG,IN,IOUT,MUTPCG,NITER,DAMP,IFREFM)
 C
-C-----VERSION 29DEC1998 PCG2RP
+C-----VERSION 29DEC1998 PCG2RPG
 C     01SEPT1990 IPCGCD OMITTED; NITER ADDED
 C     01JUNE1995 DAMP ADDED
 C
@@ -153,7 +153,7 @@ C
      &                  LHCH,RCHG,LRCH,KITER,NITER,HCLOSE,RCLOSE,ICNVG,
      &                  KSTP,KPER,IPRPCG,MXITER,ITER1,NPCOND,NBPOL,NSTP,
      &                  NCOL,NROW,NLAY,NODES,RELAX,IOUT,MUTPCG,
-     &                  IT1,DAMP,RES,HCSV,IERR,IERRU)
+     &                  IT1,DAMP,RES,HCSV,IERR,IERRU,HPCG)
 C-----VERSION 29DEC1998 PCG2AP
 C     01JULY1990 COMMENT STATEMENTS ADDED AND MODIFIED
 C     01SEPT1990 IPCGCD OMITTED; STATEMENT 590 ADDED
@@ -178,8 +178,7 @@ C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL BIGH, BIGR, BPOLY, C0, C1, C2, CC, CD, CD1, CR, CV, DAMP, 
-     &     HCHG, HCLOSE, HCOF, P, RCHG, RCLOSE, RELAX, RHS,
-     &     T
+     &     HCHG, HCLOSE, HCOF, RCHG, RCLOSE, RELAX, RHS, T
       INTEGER I, IBOUND, IC, ICNVG, IH, II, IICNVG, IITER, IL, IOUT,
      &        IPRPCG, IR, IT1, ITER1, J, JH, JJ, JR, K, KH, KITER, 
      &        KK, KPER, KR, KSTP, LHCH, LRCH, MUTPCG, MXITER, N, NBPOL, 
@@ -188,30 +187,39 @@ C     ------------------------------------------------------------------
      &        NRL, NRN, NROW, NSTP
       DOUBLE PRECISION DZERO, DONE
       PARAMETER (DZERO=0.D0,DONE=1.D0)
-      DOUBLE PRECISION HNEW, HHCOF, RRHS, DEL
-      DOUBLE PRECISION Z, B, D, E, F, H, S, ALPHA, V, SS
+      DOUBLE PRECISION HNEW, HHCOF, RRHS, DEL, HPCG
+      DOUBLE PRECISION Z, B, D, E, F, H, S, ALPHA, V, SS, P
       DOUBLE PRECISION ZHNEW, BHNEW, DHNEW, FHNEW, HHNEW, SHNEW
       DOUBLE PRECISION SRNEW, SROLD, SSCR, SSCC, SSCV, VCC, VCR, VCV
       DOUBLE PRECISION CDCC, CDCR, CDCV
       DOUBLE PRECISION PN, VN, HCHGN, RCHGN, PAP
       DOUBLE PRECISION FCC, FCR, FCV, FV
+      DOUBLE PRECISION DDAMP, BIGGESTPOS, BIGGESTNEG
 C
       DIMENSION HNEW(NODES), IBOUND(NODES), CR(NODES), CC(NODES), 
      &          CV(NODES), HCOF(NODES), RHS(NODES), IT1(MXITER*ITER1), 
      &          V(NODES), SS(NODES), P(NODES), CD(NODES), 
      &          HCHG(MXITER*ITER1), LHCH(3,MXITER*ITER1),
      &          RCHG(MXITER*ITER1), LRCH(3,MXITER*ITER1),
-     &          RES(NODES), HCSV(NODES)
+     &          RES(NODES), HCSV(NODES), HPCG(NODES)
 C     ------------------------------------------------------------------
+      BIGH = 1.0
+      BIGGESTPOS = HUGE(BIGH)
+      BIGGESTNEG = -BIGGESTPOS
 C
-C      IF(NITER.EQ.0) THEN
-C        WRITE(IOUT,895)
-C        WRITE(IOUT,900) (I,CC(I),CR(I),CV(I),HCOF(I),
-C     1     RHS(I),HNEW(I),IBOUND(I),I=1,nodes)
-C      ENDIF
-C 895  FORMAT ('    I',5X,'CC',13X,'CR',13X,'CV',12X,'HCOF',12X,'RHS',
-C     &        12X,'HNEW',7X,'IBOUND')
-C 900  FORMAT (I5,6G15.8,I5)
+
+
+c      IF(NITER.EQ.0) THEN
+c        WRITE(IOUT,895)
+c        WRITE(IOUT,900) (I,CC(I),CR(I),CV(I),HCOF(I),
+c     1     RHS(I),HNEW(I),IBOUND(I),I=1,nodes)
+c      ENDIF
+c 895  FORMAT ('    I',5X,'CC',13X,'CR',13X,'CV',12X,'HCOF',12X,'RHS',
+c     &        12X,'HNEW',7X,'IBOUND')
+c 900  FORMAT (I5,6G15.8,I5)
+
+
+      DDAMP=DAMP
 C-------ASSIGN VARIABLE EQUAL TO THE NUMBER OF CELLS IN ONE LAYER
       NRC = NROW*NCOL
 C-------INITIALIZE VARIABLES USED TO CALCULATE ITERATION PARAMETERS
@@ -233,6 +241,12 @@ C------CLEAR PCG WORK ARRAYS.
         P(N) = 0.
         V(N) = 0.
    10 CONTINUE
+C------STORE PREVIOUS HEAD IF MXITER>1
+      IF(MXITER.GT.1) THEN
+         DO 15 N=1,NODES
+         HPCG(N)=HNEW(N)
+   15    CONTINUE
+      END IF
 C------FOR NPCOND=1, INITIALIZE CHOLESKY DIAGONAL
       IF (NPCOND.EQ.1) THEN
         DO 20 N = 1, NODES
@@ -698,17 +712,25 @@ C
 C-------HEAD
             HCHGN = ALPHA*P(N)
             IF (DABS(HCHGN).GT.ABS(BIGH)) THEN
-              BIGH = HCHGN
+              IF (HCHGN.LT.BIGGESTPOS .AND. HCHGN.GT.BIGGESTNEG) THEN
+                BIGH = HCHGN
+              ELSE
+                IF (HCHGN.GT.0.0) THEN
+                  BIGH = 0.9999*BIGGESTPOS
+                ELSE
+                  BIGH = 0.9999*BIGGESTNEG
+                ENDIF
+              ENDIF
               IH = I
               JH = J
               KH = K
               NH = N
             ENDIF
-            HNEW(N) = HNEW(N) + DAMP*HCHGN
+            HNEW(N) = HNEW(N) + HCHGN
 C
 C--------RESIDUAL (V IS THE PRODUCT OF MATRIX A AND VECTOR P)
             RCHGN = -ALPHA*V(N)
-            RES(N) = RES(N) + DAMP*RCHGN
+            RES(N) = RES(N) + RCHGN
             IF (ABS(RES(N)).GT.ABS(BIGR)) THEN
               BIGR = RES(N)
               IR = I
@@ -726,6 +748,8 @@ C-------CHECK THE CONVERGENCE CRITERION
         BIGH = BIGH/SQRT(-HCOF(NH))
         BIGR = BIGR*SQRT(-HCOF(NR))
       ENDIF
+      BIGH=BIGH*DAMP
+      BIGR=BIGR*DAMP
       IF (MXITER.EQ.1) THEN
         IF (ABS(BIGH).LE.HCLOSE .AND. ABS(BIGR).LE.RCLOSE) ICNVG = 1
       ELSE
@@ -756,6 +780,14 @@ C-------REACHED AND IITER IS LESS THAN ITER1
       ELSEIF (IICNVG.EQ.0 .AND. IITER.LT.ITER1) THEN
         GOTO 130
       ENDIF
+C
+C-------AT END OF EXTERNAL ITERATION, APPLY DAMP
+      IF(MXITER.GT.1) THEN
+         DO 320 N=1,NODES
+         IF(IBOUND(N).LE.0) GO TO 320
+         HNEW(N)= (DONE-DDAMP)*HPCG(N) + DDAMP*HNEW(N)
+  320    CONTINUE
+      END IF
 C
 C-------UNSCALE CR,CC,CV AND HNEW
       IF (NORM.EQ.1) THEN

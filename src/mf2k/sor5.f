@@ -1,8 +1,8 @@
-C     Last change:  ERB  10 Jul 2002    4:09 pm
-      SUBROUTINE SOR5AL(ISUM,ISUMI,LCA,LCRES,LCHDCG,LCLRCH,LCIEQP,
+C     Last change:  ERB  22 Aug 2002    4:35 pm
+      SUBROUTINE SOR5ALG(ISUM,ISUMI,LCA,LCRES,LCHDCG,LCLRCH,LCIEQP,
      1       MXITER,NCOL,NLAY,NSLICE,MBW,IN,IOUT,IFREFM,IREWND)
 C
-C-----VERSION 04FEB1998 SOR5AL
+C-----VERSION 04FEB1998 SOR5ALG
 C     ******************************************************************
 C     ALLOCATE STORAGE FOR SOR ARRAYS
 C     ******************************************************************
@@ -57,10 +57,10 @@ C
 C5------RETURN
       RETURN
       END
-      SUBROUTINE SOR5RP(MXITER,ACCL,HCLOSE,IN,IPRSOR,IOUT,IFREFM)
+      SUBROUTINE SOR5RPG(MXITER,ACCL,HCLOSE,IN,IPRSOR,IOUT,IFREFM)
 C
 C
-C-----VERSION 0817 21FEB1996 SOR5RP
+C-----VERSION 0817 21FEB1996 SOR5RPG
 C     ******************************************************************
 C     READ PARAMETERS FOR SOR
 C     ******************************************************************

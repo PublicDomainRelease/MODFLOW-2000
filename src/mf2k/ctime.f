@@ -8,7 +8,7 @@ C      DOUBLE PRECISION ACCUM
 C      INTEGER          IERROR, ITICKS, MCLOCK
 C      REAL             CPUTIM
 C swm: for g77,SUN f77, or MS Developer Studio, uncomment the line below
-C       REAL             TIME, ETIME, T(2)
+c       REAL             TIME, ETIME, T(2)
 C
       TIME = 0.0
 CMPQ  CALL TIMER(ITICKS)
@@ -33,7 +33,9 @@ CTARG TIME = MCLOCK () * 1E-3
 C
 C swm: compiler specific intrinsic timing function.
 C swm: for g77,SUN f77, or MS Developer Studio, uncomment the line below
-C       TIME=ETIME(T)
+c       TIME=ETIME(T)
+C swm: for Intel Fortran (Fortran 90) uncomment the line below
+c        CALL CPU_TIME(TIME)
 C 
       RETURN
       END

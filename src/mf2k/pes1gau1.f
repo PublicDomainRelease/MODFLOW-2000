@@ -1,11 +1,12 @@
-C     Last change:  ERB   8 Jul 2002    4:47 pm
+C     Last change:  ERB   3 Sep 2002    3:03 pm
 C=======================================================================
       SUBROUTINE PES1GAU1AP(X,ND,NPE,HOBS,WT,WP,C,SCLE,G,H,DD,DMAX,CSA,
      &                      TOL,IND,IFO,AMP,AP,DMX,IOUT,B1,ITERP,IPRINT,
      &                      LN,MPR,PRM,JMAX,NFIT,R,GD,U,NOPT,XD,S,
      &                      SOSR,NIPR,IPR,BUFF,WTP,NHT,WTQ,IOWTQ,NDMH,
      &                      IOSTAR,NPLIST,MPRAR,IPRAR,NDMHAR,BPRI,RMARM,
-     &                      IAP,DMXA,NPAR,AMPA,AMCA,AAP,ITMXP,RMAR)
+     &                      IAP,DMXA,NPAR,AMPA,AMCA,AAP,ITMXP,RMAR,IPNG,
+     &                      NPNG,NPNGAR)
 C     VERSION 20020708 ERB
 C     ******************************************************************
 C     REGRESSION BY THE MODIFIED GAUSS-NEWTON METHOD
@@ -16,9 +17,9 @@ C     ------------------------------------------------------------------
      &     BPRI, BUFF, CSA, DDC, DET, DMAX, DMX, DMX1, DMXN, DMXO, DMXP,
      &     DMXU, H, HOBS, PRM, SOSR, TMPA, TMPB, TOL, W, WP, WT,
      &     WTQ, X, XD
-      INTEGER I, IAP, IFO, IND, IOSTAR, IOUT, IOWTQ, IP, IP1, IPM,
+      INTEGER I, IAP, IFO, IND, IOSTAR, IOUT, IOWTQ, IP, IP1, IPM, IPNG,
      &        IPR, IPRINT, ITERP, J, JJN, JJP, JJU, JMAX, LN, LNN, MPR,
-     &        N, ND, NDMH, NFIT, NHT, NIPR, NOPT, NPE, NP1
+     &        N, ND, NDMH, NFIT, NHT, NIPR, NOPT, NPE, NP1, NPNG, NPNGAR
       DOUBLE PRECISION ABDMX, ABDMXN, ABDMXP, AP, APN, APO, APP, BDMX,
      &                 BDMXN, BDMXP, SPR
       DOUBLE PRECISION C(NPE,NPE), SCLE(NPE), DD(NPE), DTMPA,
@@ -29,7 +30,7 @@ C     ------------------------------------------------------------------
      &          BPRI(IPRAR), B1(NPLIST), G(NPE), LN(NPLIST),
      &          PRM(NPLIST+1,MPRAR), GD(NPE), XD(NPE,ND), NIPR(IPRAR),
      &          BUFF(MPRAR), NPAR(ITMXP), AMPA(ITMXP), AMCA(ITMXP),
-     &          AAP(ITMXP)
+     &          AAP(ITMXP), IPNG(NPNGAR)
       DIMENSION WTQ(NDMHAR,NDMHAR), WTP(IPRAR,IPRAR)
       INCLUDE 'param.inc'
       INCLUDE 'parallel.inc'
@@ -154,7 +155,7 @@ cc ERB 7-8-02          IF (IFO.EQ.0) WT(N) = -WT(N)
           G(IP) = DTMPA*TMPA + G(IP)
    40   CONTINUE
    50 CONTINUE
-      CALL SOBS1BAS6WF(NPE,NHT,NDMH,WTQ,X,C,G,HOBS,H,IFO,IOWTQ,NDMHAR,
+      CALL SOBS1BAS6WF(NPE,NHT,NDMH,WTQ,X,C,G,HOBS,H,IOWTQ,NDMHAR,
      &                 ND)
 C----------ACCOUNT FOR PRIOR INFORMATION
 C-------------ESTIMATES OF PARAMETER SUMS
@@ -365,7 +366,7 @@ C------------------LARGEST CHANGE
                 BDMXP = EXP(DD(IP))-1.0
               ELSE
                 WRITE(IOUT,550) DD(IP), PARNAM(IIPP)
-                STOP
+                CALL USTOP(' ')
               ENDIF
               ABDMXP = ABS(BDMXP)
             ENDIF
@@ -466,10 +467,13 @@ C---------UPDATE PARAMETERS AND CONVERT TO PHYSICAL VALUES
         DD(IP) = DDC
         IF (LN(IIPP).GT.0) B(IIPP) = EXP(B(IIPP))
   180 CONTINUE
+C
 C-------PRINT TO THE LISTING FILE
       WRITE (IOUT,510) ITERP
       WRITE (IOUT,515) AMP, TOL, BDMX, PARNAM(JCHG),CTYPE
       WRITE (IOUT,520) DMAX, DMAX1, OCF, AP, PARNAM(JMAX), DTYPE
+C-------CHECK FOR PARAMETER VALUES <= 0 THAT SHOULD BE > 0
+      CALL SPES1GAU1CN(B1,IOUT,IPNG,ITERP,LN,NPE,NPLIST,NPNG,NPNGAR)
       WRITE (IOUT,545)
       WRITE (IOUT,525) (PARNAM(IPPTR(IP)),IP=1,NPE)
       WRITE (IOUT,'(1X)')
@@ -601,8 +605,6 @@ C     ------------------------------------------------------------------
   590 FORMAT (/,1X,'*** PARAMETER ESTIMATION CONVERGED BY SATISFYING',
      &        ' THE SOSC CRITERION ***')
   600 FORMAT(' ERROR READING VALUE FOR PARAMETER ',A,' FROM UNIT ',I5,/
-     &       ' -- STOP EXECUTION (SPES1GAU1PR)')
-  610 FORMAT(' ERROR READING RSQH, RSQF, RSQ, RSQP FROM UNIT ',I5,/
      &       ' -- STOP EXECUTION (SPES1GAU1PR)')
   620 FORMAT(' ERROR READING DMX, NPAR, AMP FROM UNIT ',I5,/
      &       ' -- STOP EXECUTION (SPES1GAU1PR)')
@@ -1010,6 +1012,61 @@ C------ADDITIONS TO C AND G
    40     CONTINUE
    50   CONTINUE
    60 CONTINUE
+      RETURN
+      END
+C=======================================================================
+      SUBROUTINE SPES1GAU1CN(B1,IOUTG,IPNG,ITERP,LN,NPE,NPLIST,NPNG,
+     &                       NPNGAR)
+C-----VERSION 20030128 ERB
+C     ******************************************************************
+C     CHECK FOR PARAMETER VALUES <= 0 THAT SHOULD BE > 0.
+C     ******************************************************************
+C        SPECIFICATIONS:
+C     ------------------------------------------------------------------
+      REAL B1, BOLD
+      INTEGER I, IIP, IOUTG, IPNG, LN, NPE, NPNG, NPLIST
+      CHARACTER*4 PIDTMP
+      DIMENSION B1(NPLIST), IPNG(NPNGAR), LN(NPLIST)
+      INCLUDE 'param.inc'
+C     ------------------------------------------------------------------
+  500 FORMAT ('  PARAMETER "',A,
+     &        '" < 0 : NOT PHYSICALLY REASONABLE.',/,
+     &        '  ESTIMATED VALUE OF ',G13.6,' CHANGED TO ',G13.6,
+     &        ' (PES1GAU1CN)',/)
+  505 FORMAT ('  LN PARAMETER "',A,'" <= 0 : NOT ',
+     &        'PHYSICALLY OR MATHEMATICALLY REASONABLE.',/,
+     &        '  ESTIMATED VALUE OF ',G13.6,' CHANGED TO ',G13.6,
+     &        ' (PES1GAU1CN)',/)
+C
+cc      IF (ITERP.GT.1) THEN
+        DO 20 IIP = 1, NPE
+          IIPP = IPPTR(IIP)
+          PIDTMP = PARTYP(IIPP)
+          IF (B(IIPP).LE.B1(IIPP)/1.E6 .AND. LN(IIPP).LE.0 .AND.
+     &        (PIDTMP.EQ.'HK  ' .OR. PIDTMP.EQ.'SS  ' .OR.
+     &        PIDTMP.EQ.'SY  ' .OR. PIDTMP.EQ.'VK ' .OR.
+     &        PIDTMP.EQ.'VANI' .OR. PIDTMP.EQ.'GHB ' .OR.
+     &        PIDTMP.EQ.'RIV ' .OR. PIDTMP.EQ.'STR ' .OR.
+     &        PIDTMP.EQ.'DRN ' .OR. PIDTMP.EQ.'ANI ' .OR.
+     &        PIDTMP.EQ.'EVT ' .OR. PIDTMP.EQ.'VKCB' .OR.
+     &        PIDTMP.EQ.'DRT ' .OR. PIDTMP.EQ.'ETS ')) THEN
+            IF (NPNG.GT.0) THEN
+              DO 10 I = 1, NPNG
+                IF (IIPP.EQ.IPNG(I)) GOTO 20
+   10         CONTINUE
+            ENDIF
+            BOLD = B(IIPP)
+            B(IIPP) = B1(IIPP)/100.
+            WRITE (IOUTG,500) PARNAM(IIPP), BOLD, B(IIPP)
+          ENDIF
+          IF (B(IIPP).LT.1.E-14 .AND. LN(IIPP).GT.0) THEN
+            BOLD = B(IIPP)
+            B(IIPP) = 1.E-14
+            WRITE (IOUTG,505) PARNAM(IIPP), BOLD, B(IIPP)
+          ENDIF
+   20   CONTINUE
+cc      ENDIF
+C
       RETURN
       END
 

@@ -5,6 +5,7 @@ SOURCELOC =
 UTILITYLOC = 
 NEWMOD = 
 PROGRAM = mf2k
+INCDIR= .
 
 # Define the Fortran compile flags
 
@@ -22,10 +23,12 @@ USRLIB  =
 
 OBJECTS = \
 	mf2k.o \
+	amg1r6.o \
+	ctime.o \
+	daf1.o \
 	de45.o \
-	fhb1.o \
 	glo1bas6.o \
-	gage5.o \
+	gutsdaf.o \
 	gwf1bas6.o \
 	gwf1bcf6.o \
 	gwf1chd6.o \
@@ -33,17 +36,23 @@ OBJECTS = \
 	gwf1drt1.o \
 	gwf1ets1.o \
 	gwf1evt6.o \
+	gwf1fhb1.o \
+	gwf1gag5.o \
 	gwf1ghb6.o \
 	gwf1hfb6.o \
 	gwf1huf1.o \
 	gwf1ibs6.o \
+	gwf1lak3.o \
 	gwf1lpf1.o \
+	gwf1mnw1.o \
 	gwf1rch6.o \
+	gwf1res1.o \
 	gwf1riv6.o \
 	gwf1str6.o \
 	gwf1wel6.o \
 	hydmod.o \
-	lak3.o \
+	lmg1.o \
+	lmt6.o \
 	memchk.o \
 	obs1adv2.o \
 	obs1bas6.o \
@@ -56,7 +65,7 @@ OBJECTS = \
 	pcg2.o \
 	pes1bas6.o \
 	pes1gau1.o \
-	res1.o \
+	rtedaf.o \
 	sen1bas6.o \
 	sen1chd6.o \
 	sen1drn6.o \
@@ -73,11 +82,8 @@ OBJECTS = \
 	sen1wel6.o \
 	sip5.o \
 	sor5.o \
-	lmt6.o \
-	lmg1.o \
-	para-non.o \
-	amg1r5.o \
-	utl6.o 
+	utl6.o \
+	para-non.o
 
 install: mf2k
 
@@ -94,6 +100,17 @@ mf2k: $(OBJECTS)
 
 mf2k.o: mf2k.f
 	$(F77) $(F77FLAGS) -c mf2k.f
+
+
+# PARALLEL PROCESSING OPTION.  To use MPI, uncomment the following 2 lines
+# and replace "para-non.o" with "para-mpi.o" in definition of OBJECTS above.
+#para-mpi.o: parallel/para-mpi.f
+#	$(F77) $(F77FLAGS) -I$(INCDIR) -c parallel/para-mpi.f
+
+# SERIAL PROCESSING OPTION.  To use MPI, comment out the following 2 lines:
+para-non.o: serial/para-non.f
+	$(F77) $(F77FLAGS) -I$(INCDIR) -c serial/para-non.f
+
 
 # Pth_Object codes of Modtools
 

@@ -1,4 +1,4 @@
-C     Last change:  ERB  10 Jul 2002    1:58 pm
+C     Last change:  ERB  30 Sep 2002    2:18 pm
       SUBROUTINE UPARARRAL(IN,IOUT,LINE,NP)
 C
 C-----VERSION 15SEPT1998 UPARARRAL
@@ -75,7 +75,7 @@ C         predefined.
 C           Illegal duplicate
             WRITE(IOUT,110) CTMP1
   110       FORMAT(' Duplicate parameter name: ',A)
-            STOP
+            CALL USTOP(' ')
           END IF
 C         Parameter was predefined -- leave its value alone
 C         (i.e. ignore PV).
@@ -92,7 +92,7 @@ C         definition. Put values in the list.
 C     Too many parameters
       WRITE(IOUT,11)
    11 FORMAT(1X,'The number of parameters has exceeded the maximum')
-      STOP
+      CALL USTOP(' ')
 C
 C     Parse the rest of the parameter definition.
   100 PARTYP(NP)=PTYP
@@ -110,7 +110,7 @@ C         CHECK FOR MULTIPLE INSTANCES
    12         FORMAT(/,1X,'*** ERROR: NUMINST SPECIFIED LESS THAN 1',
      &            ' FOR PARAMETER "',A,'"',/,12X,'OF TYPE "',A,
      &            '" -- STOP EXECUTION (UPARARRRP)')
-              STOP
+              CALL USTOP(' ')
             ENDIF
           ENDIF
         ENDIF
@@ -130,7 +130,7 @@ C
           WRITE(IOUT,*) NP,NCLU
           WRITE(IOUT,'(A)') PARNAM(NP)
           WRITE(IOUT,'(4I10)') IPLOC
-          STOP
+          CALL USTOP(' ')
         END IF
         WRITE(IOUT,121) PARNAM(NP),PARTYP(NP),NCLU
   121   FORMAT(1X/,1X,'PARAMETER NAME:',A,'   TYPE:',A,'   CLUSTERS:',
@@ -150,7 +150,7 @@ C
   125       FORMAT(1X,'EXCEEDED THE MAXIMUM NUMBER OF INSTANCES:'/
      &       1X,I5,' instances have been specified'/
      &       1X,'The maximum number of instances is',I5)
-            STOP
+            CALL USTOP(' ')
           ENDIF
         ENDIF
       ELSE
@@ -213,7 +213,7 @@ C           Find the multiplier array number
                 IF(CTMP1.EQ.CTMP2) GO TO 45
    40         CONTINUE
               WRITE(IOUT,'(A)') ' Multiplier array has not been defined'
-              STOP
+              CALL USTOP(' ')
    45         IPCLST(2,I)=J
             END IF
 C
@@ -228,7 +228,7 @@ C           Find the zone array number
    47           FORMAT(1X,
      1          'There were no zone values specified in the cluster',/
      2          1X,'At least one zone must be specified')
-                STOP
+                CALL USTOP(' ')
               END IF
               WRITE(IOUT,48) (IPCLST(J,I),J=5,IPCLST(4,I))
    48         FORMAT(1X,'               ZONE VALUES:',10I5)
@@ -238,7 +238,7 @@ C           Find the zone array number
                 IF(CTMP1.EQ.CTMP2) GO TO 55
    50         CONTINUE
               WRITE(IOUT,'(A)') ' Zone array has not been defined'
-              STOP
+              CALL USTOP(' ')
    55         IPCLST(3,I)=J
             END IF
           ENDIF
@@ -322,7 +322,7 @@ C     Read each parameter name.
     5   FORMAT(' Parameter:  ',A)
         IF(LINE(ISTART:ISTOP).EQ.' ') THEN
           WRITE(IOUT,*) ' Blank parameter name in the ',PACK,' file.'
-          STOP
+          CALL USTOP(' ')
         END IF
 C
 C       Loop through each parameter looking for the specified name.
@@ -338,7 +338,7 @@ C         Stop looping if the end of the parameter list is found.
    15   WRITE(IOUT,16) PACK
    16   FORMAT(1X,'Error in ',A,' file:',/
      1      1X,'The above parameter must be defined prior to its use')
-        STOP
+        CALL USTOP(' ')
 C
    20   CONTINUE
 C
@@ -349,7 +349,7 @@ C         Print an error message if the parameter type does not match.
      1           1X,'Named parameter:',A,' was defined as type:',A,/
      2           1X,'However, this parameter is used in the ',A,
      3             ' file, so it should be type:',A)
-          STOP
+          CALL USTOP(' ')
         ENDIF
 C
         NUMINST=IPLOC(3,IP)
@@ -363,7 +363,7 @@ C       If parameter is time-varying, read instance name
             WRITE(IOUT,1000) PACK,PARNAM(IP)
  1000       FORMAT(/,1X,'Blank instance name in the ',A,
      &             ' file for parameter ',A)
-            STOP
+            CALL USTOP(' ')
           ENDIF
           WRITE(IOUT,1010) CTMP3
  1010     FORMAT(3X,'Instance:  ',A)
@@ -379,7 +379,7 @@ C       If parameter is time-varying, read instance name
           WRITE(IOUT,1020) PACK,CTMP3,PARNAM(IP)
  1020     FORMAT(/,1X,'The ',A,' file specifies undefined instance "',
      &           A,'" for parameter ',A)
-          STOP
+          CALL USTOP(' ')
    55     CONTINUE
         ENDIF
 C
@@ -388,7 +388,7 @@ C
  1030     FORMAT(/,1X,'*** ERROR: PARAMETER "',A,
      &        '" HAS ALREADY BEEN ACTIVATED THIS STRESS PERIOD',/,
      &        ' -- STOP EXECUTION (UPARARRSUB2)')
-          STOP
+          CALL USTOP(' ')
         ENDIF
 C
 C       Activate the parameter and substitute.
@@ -505,7 +505,7 @@ C     Check for multiple instances
    12     FORMAT(/,1X,'*** ERROR: NUMINST SPECIFIED LESS THAN 1',
      &        ' FOR PARAMETER "',A,'"',/,12X,'OF TYPE "',A,
      &        '" -- STOP EXECUTION (UPARLSTRP)')
-          STOP
+          CALL USTOP(' ')
         ENDIF
       ELSE
         NUMINST = 0
@@ -521,7 +521,7 @@ C         predefined in the SEN file.
 C           Illegal duplicate
             WRITE(IOUT,110) CTMP1
   110       FORMAT (' Duplicate parameter name: ',A)
-            STOP
+            CALL USTOP(' ')
           END IF
 C  Parameter was predefined -- leave its value alone (i.e. ignore PV).
           GO TO 100
@@ -536,7 +536,7 @@ C         Parameter was not found in the list, so it is a new definition.
 C  Too many parameters
       WRITE(IOUT,99)
   99  FORMAT(' Number of parameters exceeds MXPAR -- STOP EXECUTION')
-      STOP
+      CALL USTOP(' ')
  100  CONTINUE
 C
       IF(ITERP.EQ.1) THEN
@@ -574,27 +574,27 @@ C  Check for list too large
   134     FORMAT(1X,'EXCEEDED THE MAXIMUM NUMBER OF LIST ENTRIES:'/
      1          1X,I5,' list entries have been specified'/
      2          1X,'The maximum number of list entries is',I5)
-          STOP
+          CALL USTOP(' ')
         END IF
         IF((INAMLOC-1).GT.MXINST) THEN
           WRITE(IOUT,135)INAMLOC-1,MXINST
   135     FORMAT(1X,'EXCEEDED THE MAXIMUM NUMBER OF INSTANCES:'/
      1          1X,I5,' instances have been specified'/
      2          1X,'The maximum number of instances is',I5)
-          STOP
+          CALL USTOP(' ')
         END IF
 C
 C  Check for correct parameter type
         IF(PARTYP(NP).NE.PTYPX) THEN
           WRITE(IOUT,137) PTYPX,PACK
   137     FORMAT(1X,'Parameter type must be:',A,' in the ',A,' Package')
-          STOP
+          CALL USTOP(' ')
         END IF
 C
 C       Parameter definition must include at least one cell
         IF (NLST.LE.0) THEN
           WRITE(IOUT,140) PN
-          STOP
+          CALL USTOP(' ')
         ENDIF
   140   FORMAT(' ERROR:  DEFINITION FOR PARAMETER "',A,'"',
      &      ' INCLUDES NO CELLS',/,'   -- STOP EXECUTION (UPARLSTRP)')
@@ -640,7 +640,7 @@ C     READ INSTANCE NAME
           CALL UPCASE(CTMP2)
           IF (CTMP1.EQ.CTMP2) THEN
             WRITE(IOUT,1020)INAME(J)
-            STOP
+            CALL USTOP(' ')
           ENDIF
    10   CONTINUE
       ENDIF
@@ -675,7 +675,7 @@ C
     1 FORMAT(/,' Parameter:  ',A)
       IF(LINE(ISTART:ISTOP).EQ.' ') THEN
         WRITE(IOUT,*) ' Blank parameter name in the ',PACK,' file.'
-        STOP
+        CALL USTOP(' ')
       END IF
 C
       CTMP1=LINE(ISTART:ISTOP)
@@ -690,7 +690,7 @@ C
      1        1X,'Named parameter:',A,' was defined as type:',A,/
      2        1X,'However, this parameter is used in the ',A,
      3          ' file, so it should be type:',A)
-            STOP
+            CALL USTOP(' ')
           END IF
 C
 C         DESIGNATE CELLS CORRESPONDING TO CORRECT PARAMETER INSTANCE
@@ -706,7 +706,7 @@ C         DESIGNATE CELLS CORRESPONDING TO CORRECT PARAMETER INSTANCE
               WRITE(IOUT,1000)PACK,PARNAM(IP)
  1000         FORMAT(/,1X,'Blank instance name in the ',A,
      &               ' file for parameter ',A)
-              STOP
+              CALL USTOP(' ')
             ENDIF
             WRITE(IOUT,1010) CTMP3
  1010       FORMAT(3X,'Instance:  ',A)
@@ -722,7 +722,7 @@ C         DESIGNATE CELLS CORRESPONDING TO CORRECT PARAMETER INSTANCE
             WRITE(IOUT,1020) PACK,CTMP3,PARNAM(IP)
  1020       FORMAT(/,1X,'The ',A,' file specifies undefined instance "',
      &             A,'" for parameter ',A)
-            STOP
+            CALL USTOP(' ')
    55       CONTINUE
           ENDIF
 C
@@ -731,7 +731,7 @@ C
  1030       FORMAT(/,1X,'*** ERROR: PARAMETER "',A,
      &          '" HAS ALREADY BEEN ACTIVATED THIS STRESS PERIOD',/,
      &          ' -- STOP EXECUTION (UPARLSTSUB)')
-            STOP
+            CALL USTOP(' ')
           ENDIF
 C
           IACTIVE(IP)=NI
@@ -741,7 +741,7 @@ C
             WRITE(IOUT,83) NTOT,MXLST
    83       FORMAT(1X,/1X,'THE NUMBER OF ACTIVE LIST ENTRIES (',I6,
      1       ')',/1X,'IS GREATER THAN THE MAXIMUM ALLOWED (',I6,')')
-            STOP
+            CALL USTOP(' ')
           END IF
 C
 C  Write label for list values
@@ -770,7 +770,7 @@ C  Substitute values
 C
       WRITE(IOUT,*) ' The ',PACK,
      1   ' file specifies an undefined parameter:',LINE(ISTART:ISTOP)
-      STOP
+      CALL USTOP(' ')
 C
 C
       END
@@ -907,7 +907,7 @@ C
       WRITE(IOUT,500) LINE(ISTART:ISTOP)
       IF(LINE(ISTART:ISTOP).EQ.' ') THEN
         WRITE(IOUT,*) ' Blank parameter name in the ',PACK,' file.'
-        STOP
+        CALL USTOP(' ')
       END IF
 C
       CTMP1=LINE(ISTART:ISTOP)
@@ -918,7 +918,7 @@ C
         IF(CTMP1.EQ.CTMP2) THEN
           IF(PARTYP(IP).NE.PTYP) THEN
             WRITE(IOUT,510) PARNAM(IP),PARTYP(IP),PACK,PTYP
-            STOP
+            CALL USTOP(' ')
           END IF
 C
 C         DESIGNATE CELLS CORRESPONDING TO CORRECT PARAMETER INSTANCE
@@ -932,7 +932,7 @@ C         DESIGNATE CELLS CORRESPONDING TO CORRECT PARAMETER INSTANCE
             CTMP3=LINE(ISTART:ISTOP)
             IF(CTMP3.EQ.' ') THEN
               WRITE(IOUT,520)PACK,PARNAM(IP)
-              STOP
+              CALL USTOP(' ')
             ENDIF
             WRITE(IOUT,530) CTMP3
             CALL UPCASE(CTMP3)
@@ -945,13 +945,13 @@ C         DESIGNATE CELLS CORRESPONDING TO CORRECT PARAMETER INSTANCE
               ENDIF
    50       CONTINUE
             WRITE(IOUT,540) PACK,CTMP3,PARNAM(IP)
-            STOP
+            CALL USTOP(' ')
    60       CONTINUE
           ENDIF
 C
           IF (IACTIVE(IP).GT.0) THEN
             WRITE(IOUT,550) PARNAM(IP)
-            STOP
+            CALL USTOP(' ')
           ENDIF
 C
           IACTIVE(IP)=NI
@@ -966,7 +966,7 @@ C
 C
       WRITE(IOUT,*) ' The ',PACK,
      &   ' file specifies an undefined parameter:',LINE(ISTART:ISTOP)
-      STOP
+      CALL USTOP(' ')
 C
       END
       SUBROUTINE UPARARRCK(BUFF,IBOUND,IOUT,IZON,LAY,NCOL,NLAY,NROW,
@@ -993,7 +993,7 @@ C     ------------------------------------------------------------------
 C
       IF (PTYP.EQ.' ') THEN
         WRITE (IOUT,500)
-        STOP
+        CALL USTOP(' ')
       ENDIF
 C
 C-----INITIALIZE BUFF TO INDICATE DEFINITION BY PARAMETERS
@@ -1051,7 +1051,7 @@ C-----IF ANY UNCONTROLLED ACTIVE CELLS ARE FOUND, WRITE ERROR MESSAGE
 C     AND STOP
       IF (IERR.GT.0) THEN
         WRITE (IOUT,520)
-        STOP
+        CALL USTOP(' ')
       ENDIF
 C
       RETURN
@@ -1072,7 +1072,7 @@ C     ------------------------------------------------------------------
 C
       IF(PNAME.EQ.' ') THEN
          WRITE(IOUT,*) ' Blank parameter name in the ',PACK,' file.'
-         STOP
+         CALL USTOP(' ')
       END IF
 C
       CTMP1=PNAME
@@ -1087,7 +1087,7 @@ C
      1          1X,'Named parameter:',A,' was defined as type:',A,/
      2          1X,'However, this parameter is used in the ',A,
      3            ' file, so it should be type:',A)
-              STOP
+              CALL USTOP(' ')
            END IF
            IFOUND=IP
            RETURN
@@ -1096,7 +1096,7 @@ C
 C
       WRITE(IOUT,101) PACK
   101 FORMAT(1X,'Parameter for ',A,' Package has not been defined')
-      STOP
+      CALL USTOP(' ')
 C
       END
       INTEGER FUNCTION INDXPTR(IP,NPE)

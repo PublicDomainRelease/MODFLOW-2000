@@ -1,11 +1,11 @@
-C     Last change:  ERB  10 Jul 2002    9:39 am
+C     Last change:  ERB  15 Jan 2003    2:44 pm
 C  GAGE5 Gaging Stations
 C  1/99
 C
-C GAGE5AL ALLOCATE SPACE FOR GAGING STATIONS
+C GWF1GAG5ALP ALLOCATE SPACE FOR GAGING STATIONS
 C
 C     ******************************************************************
-      SUBROUTINE GAGE5AL(INGAGE,ISUMIR,LSGAGE,NUMGAGE,IOUT,IUNITSFR,
+      SUBROUTINE GWF1GAG5ALP(INGAGE,ISUMIR,LSGAGE,NUMGAGE,IOUT,IUNITSFR,
      *    IUNITLAK,LKACC7,LCSTAG,LSLAKE,ICSTRM,NSTRM,NLAKES)
 C
 C     ******************************************************************
@@ -46,11 +46,11 @@ C
       END
 C
 C
-C  GAGE5RP READ GAGING STATION INPUT FILE
+C  GWF1GAG5RPP READ GAGING STATION INPUT FILE
 C
 C     ******************************************************************
 C
-      SUBROUTINE GAGE5RP(IGGLST,NUMGAGE,IOUT,INGAGE)
+      SUBROUTINE GWF1GAG5RPP(IGGLST,NUMGAGE,IOUT,INGAGE)
 C
 C     ******************************************************************
 C
@@ -79,7 +79,7 @@ C           for stream:
          ELSE
             IF(IGGLST(1,IOB).EQ.0) THEN
                WRITE(IOUT,170)
-               STOP
+               CALL USTOP(' ')
             ELSE
 C              for lake:
                NLG=NLG+1
@@ -142,14 +142,14 @@ C
       END
 C
 C
-C GAGE5I GAGING STATIONS--WRITE HEADER LINES TO OUTPUT FILES
-C                       --DETERMINE & SAVE CROSS-REFERENCE INDEX
-C                       --RECORD INITIAL CONDITIONS FOR LAKE GAGES
+C GWF1GAG5I GAGING STATIONS--WRITE HEADER LINES TO OUTPUT FILES
+C                          --DETERMINE & SAVE CROSS-REFERENCE INDEX
+C                          --RECORD INITIAL CONDITIONS FOR LAKE GAGES
 C
 C     ******************************************************************
 C
-      SUBROUTINE GAGE5I(IGGLST,NUMGAGE,IOUT,IUNITGWT,STAGES,CLAKE,
-     *                  NLAKES,ISTRM,NSTRM,DUM,NSOL,VOL)
+      SUBROUTINE GWF1GAG5I(IGGLST,NUMGAGE,IOUT,IUNITGWT,STAGES,CLAKE,
+     *                     NLAKES,ISTRM,NSTRM,DUM,NSOL,VOL)
 C
 C     ******************************************************************
 C
@@ -248,7 +248,7 @@ C                Prepare array of header names for multiple constituents
                      END IF
                    ELSE
                      WRITE(IOUT,*) '***ERROR***  NSOL TOO BIG'
-                     STOP
+                     CALL USTOP(' ')
                    END IF
  1000            CONTINUE
 C                GET OUTTYPE
@@ -302,12 +302,13 @@ C
  305  FORMAT (1X,'"DATA:  Time',6X,'Stage(H)',4X,'Volume "')
  306  FORMAT (1X,'"DATA:  Time',6X,'Stage(H)',2X,'Volume',5X,'Precip.',
      1 5x,'Evap.',5x,'Runoff',4x,'GW-Inflw',3x,'GW-Outflw',2x,'SW-Inflw'
-     2 ,3x,'SW-Outflw',x,'Withdrawal',1x,'Lake-Inflx',x,'Total-Cond "')
+     2 ,3x,'SW-Outflw',1x,'Withdrawal',1x,'Lake-Inflx',1x,'Total-Cond "'
+     3)
  307  FORMAT (1X,'"DATA:  Time',6X,'Stage(H)',2X,'Volume',
      * 5x,'Del-H-TS',3x,'Del-V-TS',2x,'Del-H-Cum',2x,'Del-V-Cum "')
  308  FORMAT (1X,'"DATA:  Time',6X,'Stage(H)',2X,'Volume',5X,'Precip.',
      1 5x,'Evap.',5x,'Runoff',4x,'GW-Inflw',3x,'GW-Outflw',2x,'SW-Inflw'
-     2 ,3x,'SW-Outflw',x,'Withdrawal',1x,'Lake-Inflx',x,'Total-Cond ',
+     2 ,3x,'SW-Outflw',1x,'Withdrawal',1x,'Lake-Inflx',1x,'Total-Cond ',
      * 2x,'Del-H-TS',3x,'Del-V-TS',2x,'Del-H-Cum',2x,'Del-V-Cum "')
  310  FORMAT (1X,'"DATA:  Time',7X,'Stage',7X,'Width',8X,'Flow',
      *           '    Concentration"')
@@ -317,15 +318,17 @@ C
      *,I2,'A12, '' "'')')
  316  FORMAT ('( 1X,''"DATA:  Time'',6X,''Stage(H)'',2X,''Volume'',2X,'
      *,I2,'A12,5X,''Precip'',5x,''Evap.'',5x,''Runoff'',4x,''GW-Inflw'',
-     *3x,''GW-Outflw'',2x,''SW-Inflw'',3x,''SW-Outflw'',x,''Withdrawal''
-     *,x,''Lake-Inflx'',x,''Total-Cond "'')')
+     *3x,''GW-Outflw'',2x,''SW-Inflw'',3x,''SW-Outflw'',1x,''Withdrawal'
+     *',1x,''Lake-Inflx'',1x,''Total-Cond "'')')
  317  FORMAT ('( 1X,''"DATA:  Time'',6X,''Stage(H)'',2X,''Volume'',2X,'
      *,I2,'A12,4x,''Del-H-TS'',4x,''Del-V-TS'',0x,',I2,'A12,3x,
      *''Del-H-Cum'',3x,''Del-V-Cum'',0x,',I2,'A12,'' "'')')
  318  FORMAT ('( 1X,''"DATA:  Time'',6X,''Stage(H)'',2X,''Volume'',2X,'
      *,I2,'A12,5X,''Precip'',5x,''Evap.'',5x,''Runoff'',4x,''GW-Inflw'',
-     *3x,''GW-Outflw'',2x,''SW-Inflw'',3x,''SW-Outflw'',x,''Withdrawal''
-     *,x,''Lake-Inflx'',x,''Total-Cond'',3x,''Del-H-TS'',4x,''Del-V-TS''
+     *3x,''GW-Outflw'',2x,''SW-Inflw'',3x,''SW-Outflw'',1x,''Withdrawal'
+     *'
+     *,1x,''Lake-Inflx'',1x,''Total-Cond'',3x,''Del-H-TS'',4x,''Del-V-TS
+     *''
      *,0x,',I2,'A12,3x,
      *''Del-H-Cum'',3x,''Del-V-Cum'',0x,',I2,'A12,'' "'')')
  400  FORMAT (4X,1PE11.3,0PF11.3,1PE11.3)
@@ -336,10 +339,10 @@ C
  426  FORMAT ('(4X,1PE11.3,0PF11.3,1PE11.3,1X,',I3,'(E11.3,1X),
      *10E11.3)')
  427  FORMAT ('(4X,1PE11.3,0PF11.3,1PE11.3,1X,',I3,'(E11.3,1X),
-     *E11.3,X,E11.3,X,',I3,'(E11.3,1X),E11.3,X,E11.3,X,
+     *E11.3,1X,E11.3,1X,',I3,'(E11.3,1X),E11.3,1X,E11.3,1X,
      *',I3,'(E11.3,1X))')
  428  FORMAT ('(4X,1PE11.3,0PF11.3,1PE11.3,1X,',I3,'(E11.3,1X),10E11.3,
-     *E11.3,X,E11.3,X,',I3,'(E11.3,1X),E11.3,X,E11.3,X,
+     *E11.3,1X,E11.3,1X,',I3,'(E11.3,1X),E11.3,1X,E11.3,1X,
      *',I3,'(E11.3,1X))')
 C
 C  RELEASE MEMORY
@@ -348,12 +351,12 @@ C  RELEASE MEMORY
       END
 C
 C
-C GAGE5LO Lake GAGING STATIONS--RECORD DATA (Write output to separate files)
+C SGWF1GAG5LO Lake GAGING STATIONS--RECORD DATA (Write output to separate files)
 C
 C     ******************************************************************
 C
-      SUBROUTINE GAGE5LO(IGGLST,NUMGAGE,IUNITGWT,STGNEW,CLAKE,NLAKES,
-     *                  GAGETM,NSOL,VOL,
+      SUBROUTINE SGWF1GAG5LO(IGGLST,NUMGAGE,IUNITGWT,STGNEW,CLAKE,
+     *                  NLAKES,GAGETM,NSOL,VOL,
      *                  PRECIP,EVAP,RNF,
      *                  GWIN,GWOUT,SURFIN,SURFOT,
      *                  WTHDRW,FLXINL,SUMCNN,
@@ -460,10 +463,10 @@ C
  426  FORMAT ('(4X,1PE11.3,0PF11.3,1PE11.3,1X,',I3,'(E11.3,1X),
      *10E11.3)')
  427  FORMAT ('(4X,1PE11.3,0PF11.3,1PE11.3,1X,',I3,'(E11.3,1X),
-     *E11.3,X,E11.3,X,',I3,'(E11.3,1X),E11.3,X,E11.3,X,
+     *E11.3,1X,E11.3,1X,',I3,'(E11.3,1X),E11.3,1X,E11.3,1X,
      *',I3,'(E11.3,1X))')
  428  FORMAT ('(4X,1PE11.3,0PF11.3,1PE11.3,1X,',I3,'(E11.3,1X),10E11.3,
-     *E11.3,X,E11.3,X,',I3,'(E11.3,1X),E11.3,X,E11.3,X,
+     *E11.3,1X,E11.3,1X,',I3,'(E11.3,1X),E11.3,1X,E11.3,1X,
      *',I3,'(E11.3,1X))')
 C
 C  RELEASE MEMORY
@@ -472,11 +475,11 @@ C  RELEASE MEMORY
       END
 C
 C
-C GAGE5SO Stream GAGING STATIONS--RECORD DATA (Write output to separate files)
+C SGWF1GAG5SO Stream GAGING STATIONS--RECORD DATA (Write output to separate files)
 C
 C     ******************************************************************
 C
-      SUBROUTINE GAGE5SO(IGGLST,NUMGAGE,IUNITGWT,STRM,
+      SUBROUTINE SGWF1GAG5SO(IGGLST,NUMGAGE,IUNITGWT,STRM,
      *                  NSTRM,GAGETM,NSOL,COUT)
 C
 C     ******************************************************************

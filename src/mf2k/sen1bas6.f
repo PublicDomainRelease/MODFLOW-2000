@@ -1,4 +1,4 @@
-C     Last change:  ERB  26 Jul 2002    1:39 pm
+C     Last change:  ERB  15 Jan 2003   12:59 pm
 C=======================================================================
       SUBROUTINE SEN1BAS6DF(ISENALL,ISEN,IPRINTS,IUSEN,LCB1,LCLN,LCSV,
      &                     NPE,NPLIST,RCLOSE,IUHEAD,MXSEN,LCSNEW,IOUT,
@@ -23,12 +23,12 @@ C     SENSITIVITY PROCESS
       IPRINTS = 0
       IUHEAD =0
       MXSEN = 0
-      NPE = 0
-      NPLIST= 0
       RCLOSE = 0.0
 C
 C-----INITIALIZE POINTERS FOR ARRAYS THAT MAY BE REFERENCED BUT MAY NOT
 C     OTHERWISE GET ALLOCATED
+      NPE = 1
+      NPLIST= 1
       LCB1 = 1
       LCBSCA = 1
       LCLN = 1
@@ -88,7 +88,7 @@ C-------READ & PRINT ITEM 1 OF THE SEN INPUT FILE
         WRITE (IOUT,510)
   510   FORMAT(' ERROR: NPLIST MUST BE > 0 -- STOP EXECUTION',
      &         ' (SEN1BAS6AL)')
-        STOP
+        CALL USTOP(' ')
       ENDIF
 C
       WRITE (IOUT,560) ISENALL
@@ -137,7 +137,7 @@ C
      &' NPLIST = ',I4,' AND MXSEN = ',I4,', BUT MXSEN MUST BE',/,
      &' GREATER THAN OR EQUAL TO NPLIST WHEN ISENALL > 0',/,
      &' -- STOP EXECUTION (SEN1BAS6AL)')
-            STOP
+            CALL USTOP(' ')
           ENDIF
         ENDIF
       ENDIF
@@ -154,7 +154,7 @@ C
               WRITE (IOUT,740)
             ELSE
               WRITE (IOUT,750)
-              STOP
+              CALL USTOP(' ')
             ENDIF
           ELSE
             WRITE (IOUT,660)
@@ -168,7 +168,7 @@ C
      &        '   -- STOP EXECUTION (SEN1BAS6AL)')
 C
           IF (ISENSU.GT.0) WRITE (IOUT,760) ISENSU
-  760 FORMAT(1X,'BINARY SENSITIVITY ARRAYS WILL BE SAVED TO UNIT ',I4)
+  760 FORMAT(1X,'SENSITIVITY ARRAYS WILL BE SAVED TO UNIT ',I4)
           IF (ISENPU.GT.0) WRITE (IOUT,770) ISENPU, ISENFM
   770 FORMAT(1X,'SENSITIVITY ARRAYS WILL BE PRINTED TO UNIT ',I4,
      &       ' USING FORMAT CODE ',I3)
@@ -230,7 +230,7 @@ C-------OPEN FILES FOR SAVING SENSITIVITY ARRAYS
         ELSE
           IF (MAXS.GE.MINRSV) THEN
             WRITE(IOUT,860)MINRSV,MAXRSV,IUHEAD,MXSEN
-            STOP
+            CALL USTOP(' ')
           ENDIF
         ENDIF
   860 FORMAT(' ERROR: UNIT-NUMBER CONFLICT FOR SCRATCH FILES.',/,
@@ -251,7 +251,7 @@ C-------OPEN FILES FOR SAVING SENSITIVITY ARRAYS
   895   FORMAT(' ERROR IN OPENING SCRATCH FILE',I5,/,' MAKE SURE',I5,
      &  ' FORTRAN UNIT NUMBERS INCLUDING AND AFTER IUHEAD, WHICH',/,
      &  ' EQUALS',I3,', ARE UNSPECIFIED.  (SEN1BAS6AL)')
-        STOP
+        CALL USTOP(' ')
       ENDIF
 C
 C     WRITE MESSAGE SHOWING AMOUNT ALLOCATED FOR SEN PROCESS
@@ -414,16 +414,16 @@ C
 C
       IF (IERR.GT.0) THEN
         WRITE(IOUT,680)
-        STOP
+        CALL USTOP(' ')
       ENDIF
 C
       CLOSE(UNIT=IU)
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SEN1BAS6MS(JT,IOUT,LN,B1,IERR,NPER,HCLO,RCLO,HCLOSE,
-     &                     RCLOSE,IPAR,NPE,NPLIST,ISENS,NSTPA,PERLNA,
-     &                     TSMLTA,IUD4)
+      SUBROUTINE SEN1BAS6CM(JT,IOUT,LN,B1,IERR,NPER,HCLO,RCLO,HCLOSE,
+     &                      RCLOSE,IPAR,NPE,NPLIST,ISENS,NSTP,PERLEN,
+     &                      TSMULT,IUD4)
 C     VERSION 19990326 ERB
 C     ******************************************************************
 C     CHECK AND STORE DATA FOR SENSITIVITY CALCULATIONS AND
@@ -431,11 +431,11 @@ C     PARAMETER ESTIMATION, AND INITIALIZE SOME VARIABLES.
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL B1, BB, HCLO, PERLNA, RCLO, TSMLTA
+      REAL B1, BB, HCLO, PERLEN, RCLO, TSMULT
       INTEGER I, IERR, IOUT, IP, JT, LN
-      INTEGER ISENS(NPLIST), NSTPA(NPER)
-      DIMENSION B1(NPLIST), LN(NPLIST), PERLNA(NPER),
-     &          TSMLTA(NPER), HCLO(NPLIST), RCLO(NPLIST)
+      INTEGER ISENS(NPLIST), NSTP(NPER)
+      DIMENSION B1(NPLIST), LN(NPLIST), PERLEN(NPER),
+     &          TSMULT(NPER), HCLO(NPLIST), RCLO(NPLIST)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
   540 FORMAT (//,' EXECUTION TERMINATED DUE TO ERRORS IN',
@@ -468,7 +468,7 @@ C
 C------STOP IF THERE ARE ERRORS IN THE DATA SET
       IF (IERR.GT.0) THEN
         WRITE (IOUT,540)
-        STOP
+        CALL USTOP(' ')
       ENDIF
 C
 C-------CALCULATE CONVERGENCE CRITERIA FOR SENS.-EQ. SENSITIVITIES
@@ -521,40 +521,39 @@ C
       IF (JT.EQ.0) THEN
         IF (IPAR.EQ.1) THEN
           WRITE(IOUT,680)
-          STOP
+          CALL USTOP(' ')
         ELSE
           RETURN
         ENDIF
       ENDIF
 C
 C-----ENSURE THAT SIMULATION DOES NOT GO LONGER THAN NECESSARY
-      NSTPTOT = JT
       KSTPE = 0
       ONE=1.
       DO 140 I = 1, NPER
         PTIM = 0.0
-        DELT = PERLNA(I)/FLOAT(NSTPA(I))
-        IF(TSMLTA(I).NE.ONE) DELT=PERLNA(I)*(ONE-TSMLTA(I))/
-     &                           (ONE-TSMLTA(I)**NSTPA(I))
-        DO 130 J = 1, NSTPA(I)
+        DELT = PERLEN(I)/FLOAT(NSTP(I))
+        IF(TSMULT(I).NE.ONE) DELT=PERLEN(I)*(ONE-TSMULT(I))/
+     &                           (ONE-TSMULT(I)**NSTP(I))
+        DO 130 J = 1, NSTP(I)
           KSTPE = KSTPE + 1
           PTIM = PTIM + DELT
-          IF (KSTPE.EQ.NSTPTOT) THEN
+          IF (KSTPE.EQ.JT) THEN
             NPERNEW = I
             NSTPNEW = J
             GOTO 150
           ENDIF
-          DELT = DELT * TSMLTA(I)
+          DELT = DELT * TSMULT(I)
  130    CONTINUE
  140  CONTINUE
       WRITE(IOUT,690)
-      STOP
+      CALL USTOP(' ')
  150  CONTINUE
 C
-      IF (NPERNEW.NE.NPER .OR. NSTPNEW.NE.NSTPA(NPER)) THEN
+      IF (NPERNEW.NE.NPER .OR. NSTPNEW.NE.NSTP(NPER)) THEN
         NPER = NPERNEW
-        NSTPA(NPER) = NSTPNEW
-        PERLNA(NPER) = PTIM
+        NSTP(NPER) = NSTPNEW
+        PERLEN(NPER) = PTIM
         WRITE(IOUT,660)NPERNEW,NSTPNEW,PTIM
       ENDIF
 C
@@ -655,7 +654,7 @@ C     AND THAT THERE ARE NO DUPLICATE PARAMETER NAMES
         ENDIF
    90 CONTINUE
 C
-      IF (IERR.NE.0) STOP
+      IF (IERR.NE.0) CALL USTOP(' ')
       IDEFPAR=1
 C
 C     IF ISENSU>0, CHECK THAT FILE OUTPUT AND FILE TYPE ARE COMPATIBLE
@@ -665,12 +664,12 @@ C     IF ISENSU>0, CHECK THAT FILE OUTPUT AND FILE TYPE ARE COMPATIBLE
           IF (FMT.EQ.'FORMATTED') THEN    ! FILE OPENED FOR TEXT I/O
             IF (CHEDFM.EQ.' ') THEN       ! OUTPUT IS BINARY
               WRITE(IOUTG,120)
-              STOP
+              CALL USTOP(' ')
             ENDIF
           ELSE                            ! FILE OPENED FOR BINARY I/O
             IF (CHEDFM.NE.' ') THEN       ! OUTPUT IS TEXT
               WRITE(IOUTG,130)
-              STOP
+              CALL USTOP(' ')
             ENDIF
           ENDIF
         ELSE
@@ -681,7 +680,7 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SEN1BAS6CL(HCLO,RCLO,FAC,HCLOSES,IP,NPLIST,RCLOSES,
+      SUBROUTINE SEN1BAS6CC(HCLO,RCLO,FAC,HCLOSES,IP,NPLIST,RCLOSES,
      &                     IIPP,PIDTMP,NCOL,NROW,NLAY,IUHEAD,SNEW,SOLD,
      &                     XHS,LENXHS)
 C     VERSION 19990623 ERB
@@ -744,9 +743,9 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SEN1BAS6CK(HNEW,IBOUND,CR,CC,CV,HCOF,RHS,NCOL,NROW,
+      SUBROUTINE SEN1BAS6CS(HNEW,IBOUND,CR,CC,CV,HCOF,RHS,NCOL,NROW,
      &                      NLAY,IOUT,SEND,NPE,NTIMES,IP,ITS)
-C-----VERSION 22DEC1998 SEN1BAS6CK
+C-----VERSION 22DEC1998 SEN1BAS6CS
 C
 C     ******************************************************************
 C     ACCUMULATE ALL INFLOWS AND ALL OUTFLOWS TO ALL CELLS, AND COMPARE
@@ -888,7 +887,7 @@ C11-----RETURN
 C
       END
 C=======================================================================
-      SUBROUTINE SEN1BAS6OT(IHDDFL,IOUT,ISA,KSTP,BB,IIPP,PIDTMP,SNEW,
+      SUBROUTINE SEN1BAS6OT(IHDDFL,IOUT,ISA,KSTP,IIPP,PIDTMP,SNEW,
      &                      BUFF,IOFLG,IBOUND,KPER,DELT,PERTIM,TOTIM,
      &                      ITMUNI,NCOL,NROW,NLAY,ICNVG,ISENFM,ISENPU,
      &                      ISENSU,CHEDFM,IXSEC,LBHDSV,HNOFLO,IP,
@@ -963,21 +962,21 @@ C     ------------------------------------------------------------------
       DIMENSION BUFF(NCOL*NROW*NLAY), XHS(LENXHS)
 C     ------------------------------------------------------------------
       NODES = NCOL*NROW*NLAY
-      IUTM = IUHEAD - 1 + IP
-      IPTR = (IP-1)*NODES + 1
-C     ASSIGN BUFF = SNEW
-      DO 50 I = 1,NODES
-        BUFF(I) = SNEW(I)
-   50 CONTINUE
       IF (IUHEAD.GT.0) THEN
-C       SAVE BUFF IN A SCRATCH FILE
+C       SAVE SNEW IN AN UNFORMATTED SCRATCH FILE
+C       ASSIGN BUFF = SNEW
+        DO 50 I = 1,NODES
+          BUFF(I) = SNEW(I)
+   50   CONTINUE
+        IUTM = IUHEAD - 1 + IP
         WRITE(IUTM) (BUFF(I),I=1,NODES)
         REWIND (IUTM)
       ELSE
-C       SAVE BUFF IN MEMORY
-      DO 60 I = 1,NODES
-        XHS(IPTR-1+I) = BUFF(I)
-   60 CONTINUE
+C       SAVE SNEW IN MEMORY
+        IPTR = (IP-1)*NODES + 1
+        DO 60 I = 1,NODES
+          XHS(IPTR-1+I) = SNEW(I)
+   60   CONTINUE
       ENDIF
 C
       RETURN

@@ -1,4 +1,4 @@
-C     Last change:  ERB  16 Apr 2001    5:22 pm
+C     Last change:  ERB  12 Sep 2002    4:33 pm
 C   September, 2000 -- updated to work with MODFLOW-2000
 C   May, 2000 -- fixed error that caused incorrect critical head values
 C   to be written in an external file when the option to write an
@@ -10,10 +10,10 @@ C   IBQ>0, some of the subroutines performed subsidence calculations when
 C   IBQ<0.  Note that this was a problem only if negative IBQ values
 C   were specified.  That is, the code has always worked correctly for
 C   IBQ=0 and IBQ>0.
-      SUBROUTINE GWF1IBS6AL(ISUM,LCHC,LCSCE,LCSCV,LCSUB,
+      SUBROUTINE GWF1IBS6ALP(ISUM,LCHC,LCSCE,LCSCV,LCSUB,
      1                  NCOL,NROW,NLAY,IIBSCB,IIBSOC,IN,IOUT,IBSDIM)
 C
-C-----VERSION 07JUN1996 GWF1IBS6AL
+C-----VERSION 07JUN1996 GWF1IBS6ALP
 C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR INTERBED STORAGE PACKAGE
@@ -81,11 +81,11 @@ C
 C10-----RETURN.
       RETURN
       END
-      SUBROUTINE GWF1IBS6RP(DELR,DELC,HNEW,HC,SCE,SCV,SUB,NCOL,NROW,
+      SUBROUTINE GWF1IBS6RPP(DELR,DELC,HNEW,HC,SCE,SCV,SUB,NCOL,NROW,
      1                  NLAY,NODES,IIBSOC,ISUBFM,ICOMFM,IHCFM,
      2                  ISUBUN,ICOMUN,IHCUN,IN,IOUT,IBSDIM)
 C
-C-----VERSION 1117 02JUN1988 GWF1IBS6RP
+C-----VERSION 1117 02JUN1988 GWF1IBS6RPP
 C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
 C     ******************************************************************
 C     READ INTERBED STORAGE DATA
@@ -183,7 +183,7 @@ C1------STOP if steady state after 1st stress period.
         WRITE(IOUT,8)
     8   FORMAT(1X,'INTERBED STORAGE INAPPROPRIATE FOR A STEADY-STATE',
      1   /,1X,'STRESS PERIOD AFTER PERIOD 1 -- SIMULATION STOPPING.')
-        STOP
+        CALL USTOP(' ')
       END IF
 C
 C4------MAKE SURE THAT PRECONSOLIDATION HEAD VALUES

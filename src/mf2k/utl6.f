@@ -1,4 +1,4 @@
-C     Last change:  ERB  10 Jul 2002    2:14 pm
+C     Last change:  ERB  10 Jan 2003   10:59 am
 C=======================================================================
       SUBROUTINE UNOITER(RHS,HNEW,NODES,ISA)
 C-----VERSION 20010329 ERB
@@ -23,17 +23,17 @@ C
    20 RETURN
       END
 C=======================================================================
-      SUBROUTINE UNOCONV(BUF1,D,OBSNAM,H,HOBS,IOUT,IP,IPAR,IPR,KPER,
-     &                   KSTP,LN,MPR,ND,NDMH,NH,NIPR,PRM,R,RSQ,RSQF,
-     &                   RSQH,RSQP,WP,WTPS,WT,WTQ,WTQS,NPLIST,MPRAR,
+      SUBROUTINE UNOCONV(D,OBSNAM,H,HOBS,IOUT,IP,IPAR,IPR,KPER,
+     &                   KSTP,LN,MPR,ND,NDMH,NH,NIPR,PRM,R,RSQ,
+     &                   RSQP,WP,WTPS,WT,WTQ,WTQS,NPLIST,MPRAR,
      &                   IPRAR,OUTNAM,IPLOT,EQNAM,NAMES,IPLPTR,NDMHAR,
-     &                   NQTDR,NQTRV,NQTGB,NQTST,NQTCH,IOWTQDR,IOWTQRV,
-     &                   IOWTQGB,IOWTQST,LCOBBAS,LCOBDRN,LCOBRIV,
-     &                   LCOBGHB,LCOBSTR,LCOBCHD,LCOBADV,SSGF,SSDR,SSRV,
-     &                   SSGB,SSST,SSAD,SSCH,SSPI,SSTO,ITMXP,IPES,BPRI,
-     &                   ITERP,IERR,IERRU,NTT2,LCOBDRT,SSDT,NQTDT,
-     &                   IOWTQDT,NRES,NPOST,NNEGT,NRUNS,NQTSF,IOWTQSF,
-     &                   LCOBSFR,SSSF,KTDIM,NHT)
+     &                   NQTDR,NQTRV,NQTGB,NQTST,NQTCH,IOWTQCH,IOWTQDR,
+     &                   IOWTQRV,IOWTQGB,IOWTQST,LCOBBAS,LCOBDRN,
+     &                   LCOBRIV,LCOBGHB,LCOBSTR,LCOBCHD,LCOBADV,SSGF,
+     &                   SSDR,SSRV,SSGB,SSST,SSAD,SSCH,SSPI,SSTO,ITMXP,
+     &                   IPES,BPRI,ITERP,IERR,IERRU,NTT2,LCOBDRT,SSDT,
+     &                   NQTDT,IOWTQDT,NRSO,NPOST,NNEGT,NRUNS,NQTSF,
+     &                   IOWTQSF,LCOBSFR,SSSF,KTDIM,NHT)
 C-----VERSION 20010329 ERB
 C     ******************************************************************
 C     BECAUSE CONVERGENCE CRITERIA HAVE NOT BEEN MET,
@@ -44,14 +44,13 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       INTEGER IOUT, IP, IPAR, IPR, KPER, KSTP, LN, MPR, ND,
      &        NDMH, NH, NHT, NIPR
-      REAL BUF1, BPRI, D, H, HOBS, PRM, R, RSQ, RSQF, RSQH,
-     &     RSQP, WP, WT, WTQ, WTQS
+      REAL BPRI, D, H, HOBS, PRM, R, RSQ, RSQP, WP, WT, WTQ, WTQS
       INTEGER IPLOT(ND+IPR+MPR), IPLPTR(ND+IPR+MPR)
       CHARACTER*12 OBSNAM
       CHARACTER*10 EQNAM(MPRAR)
       CHARACTER*12 NAMES(ND+IPR+MPR)
       CHARACTER*200 OUTNAM
-      DIMENSION BUF1(1), D(1), OBSNAM(ND), H(ND), HOBS(ND),
+      DIMENSION D(1), OBSNAM(ND), H(ND), HOBS(ND),
      &          LN(NPLIST), NIPR(IPRAR), PRM(NPLIST+1,MPRAR), R(1),
      &          WP(MPRAR), WT(ND), SSGF(ITMXP+1), SSDR(ITMXP+1),
      &          SSRV(ITMXP+1), SSGB(ITMXP+1), SSST(ITMXP+1),
@@ -72,16 +71,16 @@ C
      &  'DEPENDENT VARIABLES CALCULATED AT TIME STEP',I5,/,4X,
      &  'ARE IN ERROR BECAUSE THE SOLVER DID NOT CONVERGE',
      &  ' (SEE BELOW)')
-        CALL OBS1BAS6OH(WP,IOUT,NH,H,HOBS,WT,OBSNAM,ND,MPR,PRM,RSQ,
-     &                 RSQP,2,LN,RSQH,IPR,NIPR,WTPS,BUF1,RSQF,D,R,WTQ,
-     &                 WTQS,NDMH,NTT2,KTDIM,NPLIST,MPRAR,IPRAR,OUTNAM,
-     &                 IPLOT,EQNAM,NAMES,IPLPTR,NDMHAR,NQTDR,NQTRV,
-     &                 NQTGB,NQTST,NQTCH,IOWTQDR,IOWTQRV,IOWTQGB,
-     &                 IOWTQST,LCOBBAS,LCOBDRN,LCOBRIV,LCOBGHB,LCOBSTR,
-     &                 LCOBCHD,LCOBADV,-1,SSGF,SSDR,SSRV,SSGB,SSST,SSAD,
-     &                 SSCH,SSPI,SSTO,ITMXP,IPES,BPRI,LCOBDRT,SSDT,
-     &                 NQTDT,IOWTQDT,NRES,NPOST,NNEGT,NRUNS,NQTSF,
-     &                 IOWTQSF,LCOBSFR,SSSF,NHT)
+        CALL SOBS1BAS6OH(WP,IOUT,NH,H,HOBS,WT,OBSNAM,ND,MPR,PRM,RSQ,
+     &                   RSQP,2,LN,IPR,NIPR,WTPS,D,R,WTQ,
+     &                   WTQS,NDMH,NTT2,KTDIM,NPLIST,MPRAR,IPRAR,OUTNAM,
+     &                   IPLOT,EQNAM,NAMES,IPLPTR,NDMHAR,NQTDR,NQTRV,
+     &                   NQTGB,NQTST,NQTCH,IOWTQCH,IOWTQDR,IOWTQRV,
+     &                   IOWTQGB,IOWTQST,LCOBBAS,LCOBDRN,LCOBRIV,
+     &                   LCOBGHB,LCOBSTR,LCOBCHD,LCOBADV,-1,SSGF,SSDR,
+     &                   SSRV,SSGB,SSST,SSAD,SSCH,SSPI,SSTO,ITMXP,IPES,
+     &                   BPRI,LCOBDRT,SSDT,NQTDT,IOWTQDT,NRSO,NPOST,
+     &                   NNEGT,NRUNS,NQTSF,IOWTQSF,LCOBSFR,SSSF,NHT)
       ENDIF
       IF (IP.EQ.0) THEN
         WRITE (IOUT,540) KSTP,KPER
@@ -683,7 +682,7 @@ C8------CONTROL RECORD ERROR.
 500   WRITE(IOUT,502) ANAME
 502   FORMAT(1X,/1X,'ERROR READING ARRAY CONTROL RECORD FOR ',A,':')
       WRITE(IOUT,'(1X,A)') CNTRL
-      STOP
+      CALL USTOP(' ')
       END
       SUBROUTINE U2DINT(IA,ANAME,II,JJ,K,IN,IOUT)
 C
@@ -913,7 +912,7 @@ C10-----CONTROL RECORD ERROR.
   602    FORMAT(1X,/1X,'ERROR READING ARRAY CONTROL RECORD FOR ',A,':')
       END IF
       WRITE(IOUT,'(1X,A)') CNTRL
-      STOP
+      CALL USTOP(' ')
       END
       SUBROUTINE U2DREL(A,ANAME,II,JJ,K,IN,IOUT)
 C
@@ -1074,7 +1073,7 @@ C8------CONTROL RECORD ERROR.
   502    FORMAT(1X,/1X,'ERROR READING ARRAY CONTROL RECORD FOR ',A,':')
       END IF
       WRITE(IOUT,'(1X,A)') CNTRL
-      STOP
+      CALL USTOP(' ')
       END
       SUBROUTINE URWORD(LINE,ICOL,ISTART,ISTOP,NCODE,N,R,IOUT,IN)
 C
@@ -1225,11 +1224,11 @@ C7C-----If output unit is 0; write a message to default output.
       END IF
 C
 C7D-----STOP after writing message.
-      STOP
+      CALL USTOP(' ')
       END
       SUBROUTINE UBDSV1(KSTP,KPER,TEXT,IBDCHN,BUFF,NCOL,NROW,NLAY,IOUT,
      1          DELT,PERTIM,TOTIM,IBOUND)
- 
+
 C-----VERSION 1002 18DEC1992 UBDSV1
 C     ******************************************************************
 C     RECORD CELL-BY-CELL FLOW TERMS FOR ONE COMPONENT OF FLOW AS A 3-D
@@ -1284,7 +1283,7 @@ C2------RETURN
       RETURN
       END
       SUBROUTINE UBDSVA(IBDCHN,NCOL,NROW,J,I,K,Q,IBOUND,NLAY)
- 
+
 C-----VERSION 0809 18DEC1992 UBDSVA
 C     ******************************************************************
 C     WRITE ONE VALUE OF CELL-BY-CELL FLOW USING A LIST STRUCTURE.
@@ -1377,7 +1376,7 @@ C2------RETURN
       END
       SUBROUTINE UBDSVB(IBDCHN,NCOL,NROW,J,I,K,Q,VAL,NVL,NAUX,LAUX,
      1                  IBOUND,NLAY)
- 
+
 C-----VERSION 05MAY2000 UBDSVB
 C     ******************************************************************
 C     WRITE ONE VALUE OF CELL-BY-CELL FLOW PLUS AUXILIARY DATA USING
@@ -1638,15 +1637,15 @@ C
 C  Check for illegal grid location
       IF(K.LT.1 .OR. K.GT.NLAY) THEN
          WRITE(IOUT,*) ' Layer number in list is outside of the grid'
-         STOP
+         CALL USTOP(' ')
       END IF
       IF(I.LT.1 .OR. I.GT.NROW) THEN
          WRITE(IOUT,*) ' Row number in list is outside of the grid'
-         STOP
+         CALL USTOP(' ')
       END IF
       IF(J.LT.1 .OR. J.GT.NCOL) THEN
          WRITE(IOUT,*) ' Column number in list is outside of the grid'
-         STOP
+         CALL USTOP(' ')
       END IF
   250 CONTINUE
       IF(ICLOSE.NE.0) CLOSE(UNIT=IN)
@@ -1756,7 +1755,7 @@ C
 C     DETERMINE IF WORDOUT IS LONG ENOUGH TO CONTAIN NON-BLANK LENGTH
 C     OF WORDIN
       LENGNB = NONB_LEN(WORDIN,LENGIN)
-      IF (LENGNB.GT.LENGOUT) STOP 'STRING-LENGTH ERROR IN UCASE'
+      IF (LENGNB.GT.LENGOUT) CALL USTOP('STRING-LENGTH ERROR IN UCASE')
 C
       WORDOUT = WORDIN
       IDIFF=ICHAR('a')-ICHAR('A')
@@ -1812,7 +1811,7 @@ C1------OF A LINE (NTOT), NUMBER OF LINES (NWRAP).
  200    FORMAT(' SPECIFIED FIELD WIDTH TOO SMALL FOR PARNAM',
      &         '--STOP EXECUTION (UCOLLBL)',/
      &         ' NDIG = ',I2,'   MINCOLSP = ',I2)
-        STOP
+        CALL USTOP(' ')
       ENDIF
       NTOT = NSPACE+LENPN+N*NDIG
       IND = (NDIG-LENPN-1)/2
@@ -1890,7 +1889,7 @@ C1------OF A LINE (NTOT), NUMBER OF LINES (NWRAP).
  200    FORMAT(' SPECIFIED FIELD WIDTH TOO SMALL FOR OBSNAM',
      &         '--STOP EXECUTION (UCOLLBLDAT)',/
      &         ' NDIG = ',I2,'   MINCOLSP = ',I2)
-        STOP
+        CALL USTOP(' ')
       ENDIF
       NTOT = NSPACE+LENPN+N*NDIG
       IND = (NDIG-LENPN-1)/2
@@ -1965,7 +1964,7 @@ C4------LOOP THROUGH THE ROWS PRINTING EACH ONE IN ITS ENTIRETY.
       DO 1000 I=1,NPE
 C
 C------------ FORMAT 11G10.3
-        IF (IP.EQ.1) THEN 
+        IF (IP.EQ.1) THEN
           WRITE(IOUT,11) PARNAM(IPPTR(I)),(BUF(J,I),J=1,NPE)
    11     FORMAT(1X,A,1X,1PG10.3,10(1X,G10.3):/(11X,11(1X,G10.3)))
 C
@@ -1990,7 +1989,7 @@ C------------ FORMAT 8G14.7
    51     FORMAT(1X,A,1X,1PG14.7,7(1X,G14.7):/(11X,8(1X,G14.7)))
 C
 C------------ FORMAT 6G10.3
-        ELSEIF (IP.EQ.6) THEN 
+        ELSEIF (IP.EQ.6) THEN
           WRITE(IOUT,61) PARNAM(IPPTR(I)),(BUF(J,I),J=1,NPE)
    61     FORMAT(1X,A,1X,1PG10.3,5(1X,G10.3):/(11X,6(1X,G10.3)))
 C
@@ -2054,7 +2053,7 @@ C4------LOOP THROUGH THE ROWS PRINTING EACH ONE IN ITS ENTIRETY.
       DO 1000 I=IR1,IR2
 C
 C------------ FORMAT 10G12.3
-        IF (IP.EQ.1) THEN 
+        IF (IP.EQ.1) THEN
           WRITE(IOUT,11) OBSNAM(I),(BUF(J,I),J=IC1,IC2)
    11     FORMAT(1X,A,1X,1PG12.3,9(1X,G12.3):/(11X,10(1X,G12.3)))
 C
@@ -2079,7 +2078,7 @@ C------------ FORMAT 8G14.7
    51     FORMAT(1X,A,1X,1PG14.7,7(1X,G14.7):/(11X,8(1X,G14.7)))
 C
 C------------ FORMAT 5G12.3
-        ELSEIF (IP.EQ.6) THEN 
+        ELSEIF (IP.EQ.6) THEN
           WRITE(IOUT,61) OBSNAM(I),(BUF(J,I),J=IC1,IC2)
    61     FORMAT(1X,A,1X,1PG12.3,4(1X,G12.3):/(11X,5(1X,G12.3)))
 C
@@ -2109,21 +2108,21 @@ C
 C5------RETURN
       RETURN
       END
-      SUBROUTINE UOBSTI(ID,IOUT,ISSA,ITRSS,NPER,NSTPA,IREFSP,NUMTS,
-     &                  PERLNA,TOFF1,TOFFSET,TOMULT,TSMLTA,ITR1ST)
+      SUBROUTINE UOBSTI(ID,IOUT,ISSA,ITRSS,NPER,NSTP,IREFSP,NUMTS,
+     &                  PERLEN,TOFF1,TOFFSET,TOMULT,TSMULT,ITR1ST)
 C-----VERSION 19990729 ERB
 C     ******************************************************************
 C     ASSIGN OBSERVATION TIME STEP (NUMTS) AND TOFF GIVEN REFERENCE
-C     STRESS PERIOD (IREFSP), OBSERVATION-TIME OFFSET (TOFFSET), AND 
+C     STRESS PERIOD (IREFSP), OBSERVATION-TIME OFFSET (TOFFSET), AND
 C     TIME-OFFSET MULTIPLIER (TOMULT)
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       CHARACTER*(*) ID
-      INTEGER IREFSP, ISSA, ITR1ST, NPER, NSTPA, NUMTS
-      REAL DELT, ENDTIME, PERLNA, TIME, TOFF1, TOFFMULT, TOFFSET,
-     &     TOMULT, TSMLTA
-      DIMENSION NSTPA(NPER), PERLNA(NPER), TSMLTA(NPER), ISSA(NPER)
+      INTEGER IREFSP, ISSA, ITR1ST, NPER, NSTP, NUMTS
+      REAL DELT, ENDTIME, PERLEN, TIME, TOFF1, TOFFMULT, TOFFSET,
+     &     TOMULT, TSMULT
+      DIMENSION NSTP(NPER), PERLEN(NPER), TSMULT(NPER), ISSA(NPER)
 C     ------------------------------------------------------------------
  500  FORMAT(/,' TIME SPECIFIED FOR OBSERVATION "',A,
      &'" IS AFTER END OF SIMULATION',/,' -- STOP EXECUTION (UOBSTI)')
@@ -2134,14 +2133,14 @@ C
 C-----ENSURE THAT SPECIFIED REFERENCE STRESS PERIOD IS VALID
       IF (IREFSP.LT.1 .OR. IREFSP.GT.NPER) THEN
         WRITE(IOUT,505) IREFSP
-        STOP
+        CALL USTOP(' ')
       ENDIF
 C
 C-----FIND NUMBER OF TIME STEPS PRECEDING REFERENCE STRESS PERIOD
       NUMTS = 0
       IF (IREFSP.GT.1) THEN
         DO 10 I = 1, IREFSP-1
-          NUMTS = NUMTS + NSTPA(I)
+          NUMTS = NUMTS + NSTP(I)
  10     CONTINUE
       ENDIF
 C
@@ -2158,15 +2157,15 @@ C     STEP. NUMTS IS THE NUMBER OF THE TIME STEP PRECEDING THE TIME STEP
 C     IN WHICH THE OBSERVATION TIME OCCURS.
 C
       DO 60 I = IREFSP, NPER
-        ENDTIME = TIME+PERLNA(I)
+        ENDTIME = TIME+PERLEN(I)
         IF (ENDTIME.GE.TOFFMULT) THEN
 C---------FIND TIME STEP PRECEDING OBSERVATION TIME
 C         CALCULATE LENGTH OF FIRST TIME STEP IN CURRENT STRESS PERIOD
-          DELT = PERLNA(I)/FLOAT(NSTPA(I))
-          IF (TSMLTA(I).NE.1.) DELT = PERLNA(I)*(1.-TSMLTA(I))/
-     &                                (1.-TSMLTA(I)**NSTPA(I))
+          DELT = PERLEN(I)/FLOAT(NSTP(I))
+          IF (TSMULT(I).NE.1.) DELT = PERLEN(I)*(1.-TSMULT(I))/
+     &                                (1.-TSMULT(I)**NSTP(I))
 C         LOOP THROUGH TIME STEPS
-          DO 40 J = 1, NSTPA(I)
+          DO 40 J = 1, NSTP(I)
             ENDTIME = TIME+DELT
             IF (ENDTIME.GE.TOFFMULT) THEN
               IF (ISSA(I).NE.0 .OR. ITRSS.EQ.0) THEN
@@ -2190,17 +2189,25 @@ C               TIME STEP.  ITR1ST=1 INDICATES IT CAN'T
               GOTO 80
             ENDIF
             TIME = TIME+DELT
-            DELT = DELT*TSMLTA(I)
+            DELT = DELT*TSMULT(I)
             NUMTS = NUMTS+1
  40       CONTINUE
         ELSE
-          NUMTS = NUMTS+NSTPA(I)
-          TIME = TIME+PERLNA(I)
+          NUMTS = NUMTS+NSTP(I)
+          TIME = TIME+PERLEN(I)
         ENDIF
  60   CONTINUE
 C
-      WRITE(IOUT,500) ID
-      STOP
+C     ALLOW FOR ROUND-OFF ERROR, SO THAT OBSERVATION TIMES SPECIFIED
+C     AT THE EXACT END OF THE SIMULATION ARE NOT FLAGGED AS ERRORS
+      TOLERANCE = 1.0E-6*PERLEN(NPER)
+      TDIFF = TOFFMULT-TIME
+      IF (TDIFF.LT.TOLERANCE) THEN
+        TOFF1 = 0.0
+      ELSE
+        WRITE(IOUT,500) ID
+        CALL USTOP(' ')
+      ENDIF
 C
  80   CONTINUE
       RETURN
@@ -2242,7 +2249,7 @@ C      WRITE(*,*) ' MATRIX INVERSE'
 C      DO 35 K=1,IA
 C      WRITE(*,*) (A(K,I),I=1,IA)
 C   35 CONTINUE
-C      STOP
+C      CALL USTOP(' ')
 C     CALCULATE LOG-DETERMINANT OF THE MATRIX
       DTLA = 0.
       DO 40 I = 1, IA
@@ -2485,7 +2492,7 @@ C     LOOP THROUGH RANGE PROVIDED TO FIND FIRST UNUSED UNIT NUMBER
             RETURN
           ENDIF
         ENDIF
- 5      CONTINUE  
+ 5      CONTINUE
 10    CONTINUE
 C
 C     IF THERE ARE NO UNUSED UNIT NUMBERS IN RANGE PROVIDED, RETURN
@@ -2616,4 +2623,21 @@ C5------END OF NAME FILE.
       CLOSE(UNIT=INUNIT)
       RETURN
 C
+      END
+C=======================================================================
+      SUBROUTINE USTOP(STOPMESS)
+C     ******************************************************************
+C     STOP PROGRAM, WITH OPTION TO PRINT MESSAGE BEFORE STOPPING
+C     ******************************************************************
+C        SPECIFICATIONS:
+C     ------------------------------------------------------------------
+      CHARACTER STOPMESS*(*)
+C     ------------------------------------------------------------------
+   10 FORMAT(1X,A)
+
+      IF (STOPMESS.NE.' ') THEN
+        WRITE(*,10) STOPMESS
+      ENDIF
+      STOP
+
       END

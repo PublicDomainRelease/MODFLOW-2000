@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.10 07/26/2002
+                             VERSION 1.11 04/10/2003
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -15,9 +15,9 @@
  PARAMETER   PARAMETER   PARAMETER    FOOT-
     NAME        TYPE       VALUE      NOTE
  ----------  ---------  ------------  -----
- ETS-Max        ETS      1.00000E-02    *
+ ETS-Max        ETS      9.99999E-03    *
  DRT-Cond       DRT       2.0000        *
- Recharge       RCH      1.00000E-03    *
+ Recharge       RCH      9.99999E-04    *
  HydCond        HK       5.00000E-02    *
  ------------------------------------------
  * INDICATES VALUE ADJUSTABLE BY PARAMETER-
@@ -113,7 +113,7 @@
     HYD. COND. ALONG ROWS is defined by the following parameters:
  HydCond   
 
-    HYD. COND. ALONG ROWS =  5.000001E-02 FOR LAYER   1
+    HYD. COND. ALONG ROWS =  4.999999E-02 FOR LAYER   1
 1
                             STRESS PERIOD NO.    1, LENGTH =   0.000000    
                             -----------------------------------------------
@@ -128,7 +128,7 @@
 
  RECH array defined by the following parameters:
  Parameter:  recharge
-                 RECHARGE =  9.999996E-04
+                 RECHARGE =  9.999993E-04
 
         ET SURFACE (ETSS) =   100.000    
 
@@ -136,7 +136,7 @@
 
  ETSR array defined by the following parameters:
  Parameter:  ETS-Max
-  EVAPOTRANS. RATE (ETSR) =  9.999997E-03
+  EVAPOTRANS. RATE (ETSR) =  9.999991E-03
 
   EXTINCTION DEPTH (ETSX) =   36.0000    
 
@@ -188,24 +188,24 @@
            IN:                                      IN:
            ---                                      ---
              STORAGE =           0.0000               STORAGE =           0.0000
-       CONSTANT HEAD =           0.0000         CONSTANT HEAD =         585.5527
-            RECHARGE =           0.0000              RECHARGE =         989.9996
+       CONSTANT HEAD =           0.0000         CONSTANT HEAD =         585.5522
+            RECHARGE =           0.0000              RECHARGE =         989.9993
          ET SEGMENTS =           0.0000           ET SEGMENTS =           0.0000
         DRAINS (DRT) =           0.0000          DRAINS (DRT) =          15.3032
 
-            TOTAL IN =           0.0000              TOTAL IN =        1590.8555
+            TOTAL IN =           0.0000              TOTAL IN =        1590.8547
 
           OUT:                                     OUT:
           ----                                     ----
              STORAGE =           0.0000               STORAGE =           0.0000
-       CONSTANT HEAD =           0.0000         CONSTANT HEAD =         372.6607
+       CONSTANT HEAD =           0.0000         CONSTANT HEAD =         372.6606
             RECHARGE =           0.0000              RECHARGE =           0.0000
-         ET SEGMENTS =           0.0000           ET SEGMENTS =        1179.9368
+         ET SEGMENTS =           0.0000           ET SEGMENTS =        1179.9366
         DRAINS (DRT) =           0.0000          DRAINS (DRT) =          38.2580
 
-           TOTAL OUT =           0.0000             TOTAL OUT =        1590.8556
+           TOTAL OUT =           0.0000             TOTAL OUT =        1590.8552
 
-            IN - OUT =           0.0000              IN - OUT =      -1.2207E-04
+            IN - OUT =           0.0000              IN - OUT =      -4.7112E-04
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -224,41 +224,41 @@
 
  DATA AT HEAD LOCATIONS
 
-       OBSERVATION      MEAS.       CALC.                            WEIGHTED
-  OBS#    NAME          HEAD        HEAD      RESIDUAL  WEIGHT**.5   RESIDUAL
+        OBSERVATION      MEAS.      CALC.                          WEIGHTED
+   OBS#    NAME          HEAD       HEAD     RESIDUAL  WEIGHT**.5  RESIDUAL
 
-     1 h-1-8             82.268      82.268    0.00        10.0        0.00    
-     2 h-2-3             69.134      69.134    0.00        10.0        0.00    
-     3 h-3-5             76.624      76.624   0.763E-05    10.0       0.763E-04
-     4 h-4-9             83.859      83.859    0.00        10.0        0.00    
-     5 h-5-6             78.478      78.478    0.00        10.0        0.00    
-     6 h-6-10            88.609      88.609    0.00        10.0        0.00    
-     7 h-7-2             62.689      62.689    0.00        10.0        0.00    
-     8 h-8-4             74.068      74.068    0.00        10.0        0.00    
-     9 h-9-10            88.723      88.723   0.763E-05    10.0       0.763E-04
-    10 h-10-7            80.778      80.778  -0.763E-05    10.0      -0.763E-04
-    11 h-11-5            76.848      76.848    0.00        10.0        0.00    
-    12 h-1-10            88.717      88.717  -0.763E-05    10.0      -0.763E-04
-    13 h-2-7             80.587      80.587  -0.763E-05    10.0      -0.763E-04
-    14 h-3-6             78.743      78.743    0.00        10.0        0.00    
-    15 h-4-4             73.664      73.664    0.00        10.0        0.00    
-    16 h-5-8             79.129      79.129    0.00        10.0        0.00    
-    17 h-6-3             69.763      69.763   0.763E-05    10.0       0.763E-04
-    18 h-7-8             82.034      82.034    0.00        10.0        0.00    
-    19 h-8-9             84.204      84.204   0.763E-05    10.0       0.763E-04
-    20 h-9-2             62.247      62.247    0.00        10.0        0.00    
-    21 h-10-3            69.318      69.318    0.00        10.0        0.00    
-    22 h-11-9            84.259      84.259    0.00        10.0        0.00    
+      1 h-1-8           82.3       82.3     -0.763E-05   10.0     -0.763E-04
+      2 h-2-3           69.1       69.1       0.00       10.0       0.00    
+      3 h-3-5           76.6       76.6      0.763E-05   10.0      0.763E-04
+      4 h-4-9           83.9       83.9       0.00       10.0       0.00    
+      5 h-5-6           78.5       78.5     -0.763E-05   10.0     -0.763E-04
+      6 h-6-10          88.6       88.6       0.00       10.0       0.00    
+      7 h-7-2           62.7       62.7     -0.381E-05   10.0     -0.381E-04
+      8 h-8-4           74.1       74.1       0.00       10.0       0.00    
+      9 h-9-10          88.7       88.7       0.00       10.0       0.00    
+     10 h-10-7          80.8       80.8     -0.763E-05   10.0     -0.763E-04
+     11 h-11-5          76.8       76.8       0.00       10.0       0.00    
+     12 h-1-10          88.7       88.7     -0.763E-05   10.0     -0.763E-04
+     13 h-2-7           80.6       80.6     -0.153E-04   10.0     -0.153E-03
+     14 h-3-6           78.7       78.7       0.00       10.0       0.00    
+     15 h-4-4           73.7       73.7       0.00       10.0       0.00    
+     16 h-5-8           79.1       79.1       0.00       10.0       0.00    
+     17 h-6-3           69.8       69.8      0.763E-05   10.0      0.763E-04
+     18 h-7-8           82.0       82.0       0.00       10.0       0.00    
+     19 h-8-9           84.2       84.2      0.763E-05   10.0      0.763E-04
+     20 h-9-2           62.2       62.2       0.00       10.0       0.00    
+     21 h-10-3          69.3       69.3       0.00       10.0       0.00    
+     22 h-11-9          84.3       84.3     -0.763E-05   10.0     -0.763E-04
 
  STATISTICS FOR HEAD RESIDUALS :
  MAXIMUM WEIGHTED RESIDUAL  : 0.763E-04 OBS#      3
- MINIMUM WEIGHTED RESIDUAL  :-0.763E-04 OBS#     10
- AVERAGE WEIGHTED RESIDUAL  : 0.347E-05
- # RESIDUALS >= 0. :     19
- # RESIDUALS < 0.  :      3
- NUMBER OF RUNS  :    2  IN   22 OBSERVATIONS
+ MINIMUM WEIGHTED RESIDUAL  :-0.153E-03 OBS#     13
+ AVERAGE WEIGHTED RESIDUAL  :-0.156E-04
+ # RESIDUALS >= 0. :     15
+ # RESIDUALS < 0.  :      7
+ NUMBER OF RUNS  :    1  IN   22 OBSERVATIONS
 
- SUM OF SQUARED WEIGHTED RESIDUALS (HEADS ONLY)  0.40745E-07
+ SUM OF SQUARED WEIGHTED RESIDUALS (HEADS ONLY)  0.71304E-07
 
  DATA FOR FLOWS REPRESENTED USING THE DRAIN RETURN PACKAGE
 
@@ -277,15 +277,15 @@
 
  SUM OF SQUARED WEIGHTED RESIDUALS (DRT FLOWS ONLY)  0.99420E-12
 
- SUM OF SQUARED WEIGHTED RESIDUALS (ALL DEPENDENT VARIABLES)  0.40746E-07
+ SUM OF SQUARED WEIGHTED RESIDUALS (ALL DEPENDENT VARIABLES)  0.71305E-07
 
  STATISTICS FOR ALL RESIDUALS :
- AVERAGE WEIGHTED RESIDUAL  : 0.336E-05
- # RESIDUALS >= 0. :     20
- # RESIDUALS < 0.  :      3
+ AVERAGE WEIGHTED RESIDUAL  :-0.149E-04
+ # RESIDUALS >= 0. :     16
+ # RESIDUALS < 0.  :      7
  NUMBER OF RUNS  :    2  IN   23 OBSERVATIONS
 
- INTERPRETING THE CALCULATED RUNS STATISTIC VALUE OF     -3.72    
+ INTERPRETING THE CALCULATED RUNS STATISTIC VALUE OF     -4.19    
  NOTE: THE FOLLOWING APPLIES ONLY IF 
         # RESIDUALS >= 0 . IS GREATER THAN 10 AND 
         # RESIDUALS < 0.   IS GREATER THAN 10
@@ -300,13 +300,13 @@
 
  ORDERED DEPENDENT-VARIABLE WEIGHTED RESIDUALS
  NUMBER OF RESIDUALS INCLUDED:        23
-    -0.763E-04 -0.763E-04 -0.763E-04   0.00       0.00       0.00       0.00    
+    -0.153E-03 -0.763E-04 -0.763E-04 -0.763E-04 -0.763E-04 -0.763E-04 -0.381E-04
       0.00       0.00       0.00       0.00       0.00       0.00       0.00    
-      0.00       0.00       0.00       0.00      0.997E-06  0.763E-04  0.763E-04
+      0.00       0.00       0.00       0.00       0.00      0.997E-06  0.763E-04
      0.763E-04  0.763E-04
 
  CORRELATION BETWEEN ORDERED WEIGHTED RESIDUALS AND NORMAL ORDER STATISTICS
- FOR OBSERVATIONS =    0.738    
+ FOR OBSERVATIONS =    0.843    
 
  --------------------------------------------------------------------------
  COMMENTS ON THE INTERPRETATION OF THE CORRELATION BETWEEN

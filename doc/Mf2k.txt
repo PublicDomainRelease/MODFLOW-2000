@@ -57,6 +57,18 @@ METHOD
 
 
 HISTORY
+
+     MODFLOW-2000 Version 1.11 2003/04/10 - Added the DAF Package to allow
+        coupling of MODFLOW with the Diffusion Analogy Surface-Water Flow 
+        Model, and the MNW Package to allow simulation of well completed in
+        intervals represented by multiple model cells.  New options for
+        showing progress of the simulation and controlling the calculation
+        of drawdowns have been added. Modifications to the PCG2 Package
+        affect the way DAMP works.  Please see release.txt for information
+        on using these new packages, new options, and DAMP.  This version
+        also includes a number of bug fixes and minor output changes, also
+        described in release.txt.
+
      MODFLOW-2000 Version 1.10 2002/07/26 - Fixes bugs encountered when 
         compiling the source code distributed with version 1.9 and a
         problem in a seldom-used part of the LMG Package.
@@ -323,6 +335,8 @@ PACKAGES
          ETS1 -- Evapotranspiration with a Segmented Function Package
          DRT1 -- Drains with Return Flow Package
          LMT6 -- Link to MT3DMS contaminant-transport model
+         MNW1 -- Multi-Node Well Package
+         DAF1 -- Diffusion Analogy Surface-Water Flow Package
 
 ADDITIONAL CAPABILITIES:
 
@@ -498,22 +512,21 @@ DOCUMENTATION
      Zheng, Chunmiao, Hill, M.C., and Hsieh, P.A., 2001, MODFLOW-2000,
      the U.S. Geological Survey modular ground-water model - User
      guide to the LMT6 package, the linkage with MT3DMS for multi-
-     species mass transport modeling, U.S. Geological Survey Open-File
+     species mass transport modeling: U.S. Geological Survey Open-File
      Report 01-82, 43 p.
 
+  The MNW Package is documented in:
+     Halford, K.J. and Hanson, R.T., 2002, User guide for the drawdown-
+     limited, multi-node well (MNW) package for the U.S. Geological
+     Survey's modular three-dimensional finite-difference ground-water
+     flow model, versions MODFLOW-96 and MODFLOW-2000: U.S. Geological
+     Survey Open-File Report 02-293, 33 p.
 
-TRAINING
-     Modeling of Ground-Water Flow Using Finite-Difference
-     Methods (GW2096TC), offered annually at the USGS National
-     Training Center.
-
-     Advanced Finite-Difference Modeling of Ground-Water Flow
-     (GW3099TC), offered annually at the USGS National Training
-     Center.
-
-     Calibration and Uncertainty of Models (GW3089TC), offered
-     annually at the USGS National Training Center.
-
+  The DAF Package is documented in:
+     Jobson, H.E. and Harbaugh, A.W., 1999, Modifications to the
+     diffusion analogy surface-water flow model (DAFLOW) for coupling
+     to the moddular finite-difference ground-water flow model (MODFLOW):
+     U.S. Geological Survey Open-File Report 99-217, 107 p.
 
 CONTACTS
      Operation:

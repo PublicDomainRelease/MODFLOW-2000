@@ -1,8 +1,8 @@
-C     Last change:  ERB  10 Jul 2002   12:25 pm
-      SUBROUTINE GWF1RIV6AL(ISUM,LCRIVR,MXRIVR,NRIVER,IN,IOUT,IRIVCB,
+C     Last change:  ERB  22 Oct 2002    2:07 pm
+      SUBROUTINE GWF1RIV6ALP(ISUM,LCRIVR,MXRIVR,NRIVER,IN,IOUT,IRIVCB,
      1        NRIVVL,IRIVAL,IFREFM,NPRIV,IRIVPB,NNPRIV,NOPRRV)
 C
-C-----VERSION 11JAN2000 GWF1RIV6AL
+C-----VERSION 11JAN2000 GWF1RIV6ALP
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR RIVERS
 C     ******************************************************************
@@ -84,10 +84,10 @@ C
 C6------RETURN.
       RETURN
       END
-      SUBROUTINE GWF1RIV6RQ(IN,IOUT,NRIVVL,IRIVAL,NCOL,NROW,NLAY,NPRIV,
-     &            RIVR,IRIVPB,MXRIVR,IFREFM,ITERP,INAMLOC,NOPRRV)
+      SUBROUTINE GWF1RIV6RPPD(IN,IOUT,NRIVVL,IRIVAL,NCOL,NROW,NLAY,
+     &            NPRIV,RIVR,IRIVPB,MXRIVR,IFREFM,ITERP,INAMLOC,NOPRRV)
 C
-C-----VERSION 20011105 GWF1RIV6RQ
+C-----VERSION 20011105 GWF1RIV6RPPD
 C     ******************************************************************
 C     READ RIVER PARAMETERS
 C     ******************************************************************
@@ -139,10 +139,10 @@ C
 C6------RETURN
       RETURN
       END
-      SUBROUTINE GWF1RIV6RP(RIVR,NRIVER,MXRIVR,IN,IOUT,NRIVVL,IRIVAL,
+      SUBROUTINE GWF1RIV6RPSS(RIVR,NRIVER,MXRIVR,IN,IOUT,NRIVVL,IRIVAL,
      1       IFREFM,NCOL,NROW,NLAY,NNPRIV,NPRIV,IRIVPB,NOPRRV)
 C
-C-----VERSION 11JAN2000 GWF1RIV6RP
+C-----VERSION 11JAN2000 GWF1RIV6RPSS
 C     ******************************************************************
 C     READ RIVER HEAD, CONDUCTANCE AND BOTTOM ELEVATION
 C     ******************************************************************
@@ -177,7 +177,7 @@ C------CALCULATE SOME CONSTANTS
       IOUTU = IOUT
       IF (NOPRRV.EQ.1) THEN
         ITERPU = 99
-        IOUTU = -1
+        IOUTU = -IOUT
       ENDIF
 C
 C2------DETERMINE THE NUMBER OF NON-PARAMETER REACHES.
@@ -196,7 +196,7 @@ C3------IF THERE ARE NEW NON-PARAMETER REACHES, READ THEM.
             WRITE(IOUT,99) NNPRIV,MXACTR
    99       FORMAT(1X,/1X,'THE NUMBER OF ACTIVE REACHES (',I6,
      1                     ') IS GREATER THAN MXACTR(',I6,')')
-            STOP
+            CALL USTOP(' ')
          END IF
          CALL ULSTRD(NNPRIV,RIVR,1,NRIVVL,MXRIVR,IRIVAL,IN,
      1          IOUT,'REACH NO.  LAYER   ROW   COL'//

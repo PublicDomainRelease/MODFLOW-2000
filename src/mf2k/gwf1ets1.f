@@ -1,7 +1,7 @@
-C     Last change:  ERB  10 Jul 2002    3:09 pm
-      SUBROUTINE GWF1ETS1AL(ISUM,ISUMI,LCIETS,LCETSR,LCETSX,LCETSS,NCOL,
-     &                      NROW,NETSOP,IN,IOUT,IETSCB,IFREFM,NPETS,
-     &                      IETSPF,NETSEG,LCPXDP,LCPETM,NSEGAR)
+C     Last change:  ERB  12 Sep 2002    4:26 pm
+      SUBROUTINE GWF1ETS1ALP(ISUM,ISUMI,LCIETS,LCETSR,LCETSX,LCETSS,
+     &                       NCOL,NROW,NETSOP,IN,IOUT,IETSCB,IFREFM,
+     &                       NPETS,IETSPF,NETSEG,LCPXDP,LCPETM,NSEGAR)
 C
 C-----VERSION 20000620 ERB
 C     ******************************************************************
@@ -20,7 +20,7 @@ C     ------------------------------------------------------------------
   520 FORMAT(' EVAPOTRANSPIRATION RATE FUNCTION IS LINEAR')
   530 FORMAT(
      &' ERROR: EVAPOTRANSPIRATION RATE FUNCTION MUST CONTAIN AT',/,
-     &' LEAST ONE SEGMENT -- STOP EXECUTION (GWF1ETS1AL)')
+     &' LEAST ONE SEGMENT -- STOP EXECUTION (GWF1ETS1ALP)')
   540 FORMAT(1X,'ILLEGAL ET OPTION CODE. SIMULATION ABORTING')
   550 FORMAT(1X,'OPTION 1 -- EVAPOTRANSPIRATION FROM TOP LAYER')
   560 FORMAT(1X,'OPTION 2 -- EVAPOTRANSPIRATION FROM ONE SPECIFIED',
@@ -54,7 +54,7 @@ C3------CHECK TO SEE THAT ET OPTION IS LEGAL.
 C
 C3A-----OPTION IS ILLEGAL -- PRINT A MESSAGE & ABORT SIMULATION.
       WRITE(IOUT,540)
-      STOP
+      CALL USTOP(' ')
 C
 C4------OPTION IS LEGAL -- PRINT THE OPTION CODE.
    10 CONTINUE
@@ -76,7 +76,7 @@ C     PRINT MESSAGE IDENTIFYING NUMBER OF SEGMENTS IN ET VS. HEAD CURVE
         NSEGAR = 1
       ELSE
         WRITE(IOUT,530)
-        STOP
+        CALL USTOP(' ')
       ENDIF
 C
 C6------ALLOCATE SPACE FOR THE ARRAYS ETSR, ETSX, ETSS, PXDP, AND PETM.
@@ -112,7 +112,7 @@ C9------RETURN.
       RETURN
       END
 C=======================================================================
-      SUBROUTINE GWF1ETS1RQ(IN,IOUT,NPETS,ITERP,INAMLOC)
+      SUBROUTINE GWF1ETS1RPPD(IN,IOUT,NPETS,ITERP,INAMLOC)
 C
 C-----VERSION 20011120 ERB
 C     ******************************************************************
@@ -135,7 +135,7 @@ C         UPARARRRP READS PARAMETER NAME AND DEFINITION (ITEMS 2 AND 3)
           IF(PTYP.NE.'ETS') THEN
             WRITE(IOUT,7)
     7       FORMAT(1X,'Parameter type must be ETS')
-            STOP
+            CALL USTOP(' ')
           ENDIF
    20   CONTINUE
       ENDIF
@@ -144,9 +144,10 @@ C8------RETURN
    60 RETURN
       END
 C=======================================================================
-      SUBROUTINE GWF1ETS1RP(NETSOP,IETS,ETSR,ETSX,ETSS,DELR,DELC,NCOL,
-     &                      NROW,IN,IOUT,IFREFM,NPETS,RMLT,IZON,NMLTAR,
-     &                      NZONAR,IETSPF,NETSEG,PXDP,PETM,NSEGAR)
+      SUBROUTINE GWF1ETS1RPSS(NETSOP,IETS,ETSR,ETSX,ETSS,DELR,DELC,NCOL,
+     &                        NROW,IN,IOUT,IFREFM,NPETS,RMLT,IZON,
+     &                        NMLTAR,NZONAR,IETSPF,NETSEG,PXDP,PETM,
+     &                        NSEGAR)
 C
 C     VERSION 20000620 ERB
 C     ******************************************************************
@@ -223,8 +224,8 @@ C    INETSR is the number of parameters to use this stress period
             WRITE(IOUT,35)
    35       FORMAT(' ERROR: When parameters are defined for the ETS',
      &      ' Package, at least one parameter',/,' must be specified',
-     &      ' each stress period -- STOP EXECUTION (GWF1ETS1RP)')
-            STOP
+     &      ' each stress period -- STOP EXECUTION (GWF1ETS1RPSS)')
+            CALL USTOP(' ')
           ENDIF
           CALL UPARARRSUB2(ETSR,NCOL,NROW,0,INETSR,IN,IOUT,'ETS',
      &                     ANAME(3),'ETS',IETSPF,RMLT,IZON,NMLTAR,

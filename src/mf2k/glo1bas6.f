@@ -1,9 +1,9 @@
-C     Last change:  ERB  10 Jul 2002    3:06 pm
+C     Last change:  ERB  29 Aug 2002    1:22 pm
       SUBROUTINE GLO1BAS6DF(INUNIT,IUNIT,CUNIT,IREWND,NIUNIT,IOUTG,IOUT,
      1                    VERSION,NCOL,NROW,NLAY,NPER,ITMUNI,ISUMGX,
      2                    MXPER,ISUMIG,ISUMGZ,INBAS,LENUNI,ISUMX,ISUMZ,
      3                    ISUMIX,LAYHDT,IUDIS,IFREFM,INAMLOC,IPRTIM,
-     4                    IBDT)
+     4                    IBDT,SHOWPROG)
 C
 C-----VERSION 24JAN2000 GLO1BAS6DF
 C     ******************************************************************
@@ -20,6 +20,7 @@ C     ------------------------------------------------------------------
       INTEGER LAYHDT(200), IUNIT(NIUNIT), IREWND(NIUNIT)
       CHARACTER*40 VERSION
       CHARACTER*200 LINE
+      LOGICAL SHOWPROG
 C     ------------------------------------------------------------------
 C
 C     Get current date and time, assign to IBDT, and write to screen
@@ -32,10 +33,11 @@ C  Open all files in name file
       CALL SGLO1BAS6OPEN(INUNIT,IOUTG,IOUT,IUNIT,CUNIT,IREWND,NIUNIT,
      &                 VERSION,INBAS)
 C
-C  Check for the FREE format option in the BAS file.
+C  Check for the FREE format and other options in the BAS file.
       CALL URDCOM(INBAS,0,LINE)
       IFREFM=0
       IPRTIM=0
+      SHOWPROG=.FALSE.
       LLOC=1
       WRITE(IOUTG,'(1X)')
     5 CALL URWORD(LINE,LLOC,ISTART,ISTOP,1,N,R,IOUT,INBAS)
@@ -46,6 +48,8 @@ C  Check for the FREE format option in the BAS file.
       ELSEIF(LINE(ISTART:ISTOP).EQ.'PRINTTIME') THEN
          IPRTIM=1
          WRITE(IOUTG,2) (IBDT(I),I=1,3),(IBDT(I),I=5,7)
+      ELSEIF(LINE(ISTART:ISTOP).EQ.'SHOWPROGRESS') THEN
+         SHOWPROG=.TRUE.
       END IF
       IF(LLOC.LT.200) GO TO 5
       REWIND(INBAS)
@@ -66,7 +70,7 @@ C------Check for existence of discretization file
       INDIS=IUNIT(IUDIS)
       IF(INDIS.LE.0) THEN
          WRITE(IOUTG,*) ' DIS file must be specified for MODFLOW to run'
-         STOP
+         CALL USTOP(' ')
       END IF
       WRITE(IOUTG,590) INDIS
   590 FORMAT(1X,/1X,'DISCRETIZATION INPUT DATA READ FROM UNIT ',I4)
@@ -93,7 +97,7 @@ C6------PRINT # OF LAYERS, ROWS, COLUMNS AND STRESS PERIODS.
          WRITE(IOUTG,620) MXPER
   620    FORMAT(1X,'THE MAXIMUM NUMBER OF STRESS PERIODS IS:',I5,/
      1      1X,'ABORTING BECAUSE THE MAXIMUM IS EXCEEDED')
-         STOP
+         CALL USTOP(' ')
       END IF
 C
 C7------SELECT AND PRINT A MESSAGE SHOWING TIME UNIT.
@@ -305,7 +309,7 @@ C1------TIME STEP MULTIPLIER, AND STEADY-STATE FLAG..
          WRITE(IOUT,62)
    62    FORMAT(' SSFLAG MUST BE EITHER "SS" OR "TR"',
      1      ' -- STOP EXECUTION (GLO1BAS6RP)')
-         STOP
+         CALL USTOP(' ')
       END IF
       WRITE (IOUT,63) N,PERLEN(N),NSTP(N),TSMULT(N),LINE(ISTART:ISTOP)
    63 FORMAT(1X,I8,1PG21.7,I7,0PF25.3,A11)
@@ -315,25 +319,25 @@ C1A-----STOP IF NSTP LE 0, PERLEN LE 0., OR TSMULT LE 0.
          WRITE(IOUT,160)
   160    FORMAT(1X,/1X,
      1  'THERE MUST BE AT LEAST ONE TIME STEP IN EVERY STRESS PERIOD')
-         STOP
+         CALL USTOP(' ')
       END IF
       ZERO=0.
       IF(PERLEN(N).EQ.ZERO .AND. ISSFLG(N).EQ.0) THEN
          WRITE(IOUT,165)
   165    FORMAT(1X,/1X,
      1  'PERLEN MUST NOT BE 0.0 FOR TRANSIENT STRESS PERIODS')
-         STOP
+         CALL USTOP(' ')
       END IF
       IF(TSMULT(N).LE.ZERO) THEN
          WRITE(IOUT,170)
   170    FORMAT(1X,/1X,'TSMULT MUST BE GREATER THAN 0.0')
-         STOP
+         CALL USTOP(' ')
       END IF
       IF(PERLEN(N).LT.ZERO) THEN
          WRITE(IOUT,175)
   175    FORMAT(1X,/1X,
      1  'PERLEN CANNOT BE LESS THAN 0.0 FOR ANY STRESS PERIOD')
-         STOP
+         CALL USTOP(' ')
       END IF
   200 CONTINUE
 C
@@ -390,7 +394,7 @@ C     PRINT NUMBER OF DEFINED PARAMETERS
       IF (IPSUM.GT.1) WRITE (IOUTG,505) IPSUM,MXPAR
       IF (IPSUM.GT.MXPAR) THEN
         WRITE(IOUTG,510) IPSUM
-        STOP
+        CALL USTOP(' ')
       ENDIF
 C
 C     CHECK THAT ALL PARAMETERS LISTED IN THE SEN FILE ARE DEFINED
@@ -405,7 +409,7 @@ C     CHECK THAT ALL PARAMETERS LISTED IN THE SEN FILE ARE DEFINED
       ENDIF
       IF (IERR.GT.0) THEN
         WRITE(IOUTG,530)
-        STOP
+        CALL USTOP(' ')
       ENDIF
 C
       RETURN
@@ -611,7 +615,7 @@ C4A-----FIRST ENTRY MUST BE FILE-TYPE "LIST" OR "GLOBAL"
          ELSE
             WRITE(*,*)
      1       ' FIRST ENTRY IN NAME FILE MUST BE "GLOBAL" OR "LIST".'
-            STOP
+            CALL USTOP(' ')
          END IF
 C
 C4A-----2ND FILE CAN BE "LIST" FILE TYPE.
@@ -651,7 +655,7 @@ C4E-----CHECK FOR MAJOR OPTIONS.
 20          CONTINUE
             WRITE(IOUTG,21) LINE(ITYP1:ITYP2)
 21          FORMAT(1X,'ILLEGAL FILE TYPE IN NAME FILE: ',A)
-            STOP
+            CALL USTOP(' ')
 30          CONTINUE
          ENDIF
       END IF
@@ -745,10 +749,10 @@ C7------END OF NAME FILE.  RETURN PROVIDED THAT LISTING FILE AND BAS
 C7------FILES HAVE BEEN OPENED.
 1000  IF(NFILE.EQ.0) THEN
          WRITE(*,*) ' NAME FILE IS EMPTY.'
-         STOP
+         CALL USTOP(' ')
       ELSE IF(INBAS.EQ.0) THEN
          WRITE(IOUTG,*) ' BAS PACKAGE FILE HAS NOT BEEN OPENED.'
-         STOP
+         CALL USTOP(' ')
       END IF
       INQUIRE(UNIT=INUNIT,OPENED=LOP)
       IF (LOP) CLOSE (UNIT=INUNIT)
@@ -765,7 +769,7 @@ C     FILE-OPENING ERROR
      &7X,'SPECIFIED FILE ACCESS: ',A,/
      &7X,'SPECIFIED FILE ACTION: ',A,/
      &2X,'-- STOP EXECUTION (SGLO1BAS6OPEN)')
-      STOP
+      CALL USTOP(' ')
 C
       END
 C=======================================================================
@@ -790,7 +794,7 @@ C------Read Number of Zone Arrays if Zone Option is active.
     1    FORMAT(1X,/1X,'ZONE OPTION, INPUT READ FROM UNIT ',I4)
          CALL URDCOM(INZONE,IOUT,LINE)
          LLOC=1
-         CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,NZN,R,IOUT,IN)
+         CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,NZN,R,IOUT,INZONE)
          WRITE(IOUT,2) NZN
     2    FORMAT(1X,I5,' ZONE ARRAYS')
          IF(NZN.LT.0) NZN=0
@@ -811,7 +815,7 @@ C------Read Number of Multiplier Arrays if Multiplier Option is active.
    11    FORMAT(1X,/1X,'MULTIPLIER OPTION, INPUT READ FROM UNIT ',I4)
          CALL URDCOM(INMULT,IOUT,LINE)
          LLOC=1
-         CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,NML,R,IOUT,IN)
+         CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,NML,R,IOUT,INMULT)
          WRITE(IOUT,12) NML
    12    FORMAT(1X,I3,' MULTIPLIER ARRAYS')
          IF(NML.LT.0) NML=0
@@ -916,7 +920,7 @@ C  Lookup the operand in the list of existing multipliers
              WRITE(IOUT,51) LINE(ISTART:ISTOP)
    51        FORMAT(1X,
      1        'ARRAY OPERAND HAS NOT BEEN PREVIOUSLY DEFINED:',A)
-             STOP
+             CALL USTOP(' ')
 C
 C  Apply the + operator
    60        IF(COP.EQ.'+' .OR. COP.EQ.' ') THEN
@@ -1023,7 +1027,7 @@ C           SEN PROCESS IS INACTIVE
   530       FORMAT(/' ERROR--WHEN PES PROCESS IS ACTIVE, BOTH SEN AND',
      &         ' OBS PROCESSES',/,
      &         ' MUST ALSO BE ACTIVE -- STOP EXECUTION (SGLO1BAS6IPAR)')
-            STOP
+            CALL USTOP(' ')
           ENDIF
           IF (ITMXP.GT.0) THEN
             WRITE(IOUT,540)
@@ -1052,7 +1056,7 @@ C       OBS PROCESS IS INACTIVE
         IF (IPES.GT.0) THEN
 C         PES PROCESS IS ACTIVE
           WRITE(IOUT,530)
-          STOP
+          CALL USTOP(' ')
         ELSEIF (ISEN.GT.0) THEN
 C         SEN PROCESS IS ACTIVE AND PES PROCESS IS INACTIVE
           IF (ISENALL.GE.0) THEN

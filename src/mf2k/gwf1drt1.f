@@ -1,7 +1,7 @@
-C     Last change:  ERB  10 Jul 2002   12:27 pm
-      SUBROUTINE GWF1DRT1AL(ISUM,LCDRTF,MXDRT,NDRTCL,IN,IOUT,IDRTCB,
-     &                      NDRTVL,IDRTAL,IFREFM,NPDRT,IDRTPB,NDRTNP,
-     &                      IDRTFL,NOPRDT)
+C     Last change:  ERB  22 Oct 2002    2:05 pm
+      SUBROUTINE GWF1DRT1ALP(ISUM,LCDRTF,MXDRT,NDRTCL,IN,IOUT,IDRTCB,
+     &                       NDRTVL,IDRTAL,IFREFM,NPDRT,IDRTPB,NDRTNP,
+     &                       IDRTFL,NOPRDT)
 C
 C-----VERSION 20000620 ERB
 C     ******************************************************************
@@ -105,9 +105,9 @@ C6------RETURN.
       RETURN
       END
 C=======================================================================
-      SUBROUTINE GWF1DRT1RQ(IN,IOUT,NDRTVL,IDRTAL,NCOL,NROW,NLAY,NPDRT,
-     &                      DRTF,IDRTPB,MXDRT,IFREFM,ITERP,IDRTFL,
-     &                      INAMLOC,NOPRDT)
+      SUBROUTINE GWF1DRT1RPPD(IN,IOUT,NDRTVL,IDRTAL,NCOL,NROW,NLAY,
+     &                        NPDRT,DRTF,IDRTPB,MXDRT,IFREFM,ITERP,
+     &                        IDRTFL,INAMLOC,NOPRDT)
 C
 C-----VERSION 20011108 ERB
 C     ******************************************************************
@@ -162,9 +162,9 @@ C6------RETURN
       RETURN
       END
 C=======================================================================
-      SUBROUTINE GWF1DRT1RP(DRTF,NDRTCL,MXDRT,IN,IOUT,NDRTVL,IDRTAL,
-     &                      IFREFM,NCOL,NROW,NLAY,NDRTNP,NPDRT,IDRTPB,
-     &                      IDRTFL,NRFLOW,NOPRDT)
+      SUBROUTINE GWF1DRT1RPSS(DRTF,NDRTCL,MXDRT,IN,IOUT,NDRTVL,IDRTAL,
+     &                        IFREFM,NCOL,NROW,NLAY,NDRTNP,NPDRT,IDRTPB,
+     &                        IDRTFL,NRFLOW,NOPRDT)
 C
 C-----VERSION 20000620 ERB
 C     ******************************************************************
@@ -202,7 +202,7 @@ C------CALCULATE SOME CONSTANTS
       IOUTU = IOUT
       IF (NOPRDT.EQ.1) THEN
         ITERPU = 99
-        IOUTU = -1
+        IOUTU = -IOUT
       ENDIF
 C
 C2------DETERMINE THE NUMBER OF NON-PARAMETER DRAIN-RETURN CELLS.
@@ -222,7 +222,7 @@ C3------IF THERE ARE NEW NON-PARAMETER DRAIN-RETURN CELLS, READ THEM.
           WRITE(IOUT,500) NDRTNP,MXADRT
   500     FORMAT(1X,/1X,'THE NUMBER OF ACTIVE DRT DRAINS (',I6,
      &           ') IS GREATER THAN MXADRT(',I6,')')
-          STOP
+          CALL USTOP(' ')
         ENDIF
         CALL SGWF1DRT1LR(NDRTNP,DRTF,1,NDRTVL,MXDRT,IDRTAL,IN,IOUT,
      &                   DRTAUX,5,NAUX,IFREFM,NCOL,NROW,NLAY,ITERPU,
@@ -636,7 +636,7 @@ C  Check for illegal grid location
           WRITE(IOUT,*) ' ERROR: Column number is outside of the grid'
           IERR = 1
         ENDIF
-        IF (IERR.NE.0) STOP
+        IF (IERR.NE.0) CALL USTOP(' ')
   100 CONTINUE
 C
 C     Check and write data related to return-flow recipient cells
@@ -687,7 +687,7 @@ C  If the proportion = 0 or KR = 0, set all indices and proportion to 0
             DRTF(8,II) = 0.0
             DRTF(9,II) = 0.0
           ENDIF
-          IF (IERR.NE.0) STOP
+          IF (IERR.NE.0) CALL USTOP(' ')
   110   CONTINUE
       ENDIF
 C
@@ -749,7 +749,7 @@ C
       WRITE(IOUT,500) LINE(ISTART:ISTOP)
       IF(LINE(ISTART:ISTOP).EQ.' ') THEN
         WRITE(IOUT,*) ' Blank parameter name in the ',PACK,' file.'
-        STOP
+        CALL USTOP(' ')
       END IF
 C
       CTMP1=LINE(ISTART:ISTOP)
@@ -760,7 +760,7 @@ C
         IF(CTMP1.EQ.CTMP2) THEN
           IF(PARTYP(IP).NE.PTYP) THEN
             WRITE(IOUT,510) PARNAM(IP),PARTYP(IP),PACK,PTYP
-            STOP
+            CALL USTOP(' ')
           ENDIF
 C
 C         DESIGNATE CELLS CORRESPONDING TO CORRECT PARAMETER INSTANCE
@@ -774,7 +774,7 @@ C         DESIGNATE CELLS CORRESPONDING TO CORRECT PARAMETER INSTANCE
             CTMP3=LINE(ISTART:ISTOP)
             IF(CTMP3.EQ.' ') THEN
               WRITE(IOUT,512)PACK,PARNAM(IP)
-              STOP
+              CALL USTOP(' ')
             ENDIF
             WRITE(IOUT,514) CTMP3
             CALL UPCASE(CTMP3)
@@ -787,13 +787,13 @@ C         DESIGNATE CELLS CORRESPONDING TO CORRECT PARAMETER INSTANCE
               ENDIF
    10       CONTINUE
             WRITE(IOUT,516) PACK,CTMP3,PARNAM(IP)
-            STOP
+            CALL USTOP(' ')
    15       CONTINUE
           ENDIF
 C
           IF (IACTIVE(IP).GT.0) THEN
             WRITE(IOUT,550) PARNAM(IP)
-            STOP
+            CALL USTOP(' ')
           ENDIF
 C
           IACTIVE(IP)=NI
@@ -801,7 +801,7 @@ C
           NDRTCL=NDRTCL+NLST
           IF(NDRTCL.GT.MXADRT) THEN
             WRITE(IOUT,520) NDRTCL,MXADRT
-            STOP
+            CALL USTOP(' ')
           ENDIF
 C
 C  Write label for list values
@@ -839,7 +839,7 @@ C  Substitute values
 C
       WRITE(IOUT,*) ' The ',PACK,
      &   ' file specifies an undefined parameter:',LINE(ISTART:ISTOP)
-      STOP
+      CALL USTOP(' ')
 C
   120 CONTINUE
 C

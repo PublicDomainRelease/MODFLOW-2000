@@ -1,8 +1,8 @@
-C     Last change:  ERB  10 Jul 2002    3:48 pm
-      SUBROUTINE DE45AL(ISUM,ISUMI,LCAU,LCAL,LCIUPP,LCIEQP,LCD4B,LCLRCH,
-     1           LCHDCG,MXUP,MXLOW,MXEQ,MXBW,INDE4,ITMX,ID4DIR,NCOL,
-     2           NROW,NLAY,IOUT,ID4DIM,IREWND)
-C-----VERSION 04FEB1999 DE45AL
+C     Last change:  ERB  22 Aug 2002    3:36 pm
+      SUBROUTINE DE45ALG(ISUM,ISUMI,LCAU,LCAL,LCIUPP,LCIEQP,LCD4B,
+     1           LCLRCH,LCHDCG,MXUP,MXLOW,MXEQ,MXBW,INDE4,ITMX,ID4DIR,
+     2           NCOL,NROW,NLAY,IOUT,ID4DIM,IREWND)
+C-----VERSION 04FEB1999 DE45ALG
 C     ******************************************************************
 C     ALLOCATE STORAGE IN X ARRAY FOR D4 ARRAYS
 C     ******************************************************************
@@ -104,9 +104,9 @@ C
 C6------RETURN.
       RETURN
       END
-      SUBROUTINE DE45RP(INDE4,MXITER,NITER,ITMX,ACCL,HCLOSE,
+      SUBROUTINE DE45RPG(INDE4,MXITER,NITER,ITMX,ACCL,HCLOSE,
      1            IFREQ,IPRD4,IOUT,MUTD4)
-C-----VERSION 31OCT1995 DE45RP
+C-----VERSION 31OCT1995 DE45RPG
 C     ******************************************************************
 C     READ DATA FOR DE4
 C     ******************************************************************
@@ -125,7 +125,7 @@ C1------READ IFREQ, MUTD4, ACCL, HCLOSE, AND IPRD4
       IF(IFREQ.LT.1 .OR. IFREQ.GT.3) THEN
          WRITE(IOUT,11) IFREQ
    11    FORMAT(1X,/1X,'INVALID VALUE FOR IFREQ PARAMETER:',I8)
-         STOP
+         CALL USTOP(' ')
       END IF
 C
 C2------CHECK TO SEE IF THERE IS ITERATION (ITMX>1).
@@ -532,7 +532,7 @@ C2------Ordering is done as described by Price, H.S. and Coats, K.H.,
 C2------1974,Direct methods in reservoir simulation: Soc. Petrol. Eng.
 C2------Jour., June 1974, p. 295-308.
       GO TO (100,200,300,400,500,600) ID4DIR
-      STOP
+      CALL USTOP(' ')
 C
 C3------DIRECTION 1 -- NCOL>or=NROW>or=NLAY
 C3A-----Order equations with odd plane numbers.

@@ -1,9 +1,9 @@
-C     Last change:  ERB  10 Jul 2002    3:31 pm
-      SUBROUTINE GWF1LPF1AL(ISUM,LCHK,LCVKA,LCSC1,LCSC2,LCHANI,
+C     Last change:  ERB  30 Sep 2002    1:40 pm
+      SUBROUTINE GWF1LPF1ALG(ISUM,LCHK,LCVKA,LCSC1,LCSC2,LCHANI,
      1  LCVKCB,IN,NCOL,NROW,NLAY,IOUT,ILPFCB,LCWETD,
      2  HDRY,NPLPF,NCNFBD,LCLAYF,IREWND,ISUMI,LAYHDT,ITRSS,LCSV,ISEN)
 C
-C-----VERSION 11JAN2000 GWF1LPF1AL
+C-----VERSION 11JAN2000 GWF1LPF1ALG
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR LAYER PROPERTY FLOW PACKAGE
 C     ******************************************************************
@@ -53,7 +53,7 @@ C3------STOP THE SIMULATION IF THERE ARE MORE THAN 200 LAYERS.
          WRITE(IOUT,41)
    41    FORMAT(1X,/1X,'YOU HAVE SPECIFIED MORE THAN 200 MODEL LAYERS'/
      1 1X,'SPACE IS RESERVED FOR A MAXIMUM OF 200 LAYERS IN LPF ARRAYS')
-         STOP
+         CALL USTOP(' ')
       END IF
 C
 C4------READ LAYTYP, LAYAVG, CHANI, LAYVKA, LAYWET.
@@ -108,7 +108,7 @@ C4B-----TO SC2, HANI, and WETDRY.  PRINT INTERPRETED VALUES OF FLAGS.
             WRITE(IOUT,*)
      1          ' LAYWET is not 0 and LAYTYP is 0 for layer:',K
             WRITE(IOUT,*) ' LAYWET must be 0 if LAYTYP is 0'
-            STOP
+            CALL USTOP(' ')
          ELSE
             NWETD=NWETD+1
             LAYWET(K)=NWETD
@@ -118,7 +118,7 @@ C4B-----TO SC2, HANI, and WETDRY.  PRINT INTERPRETED VALUES OF FLAGS.
          WRITE(IOUT,74) LAYAVG(K)
    74    FORMAT(1X,I8,
      1    ' IS AN INVALID LAYAVG VALUE -- MUST BE 0, 1, or 2')
-         STOP
+         CALL USTOP(' ')
       END IF
       LAYPRN(1)=TYPNAM(1)
       IF(LAYTYP(K).NE.0) LAYPRN(1)=TYPNAM(2)
@@ -173,11 +173,12 @@ C
 C8------RETURN.
       RETURN
       END
-      SUBROUTINE GWF1LPF1RQ(HK,VKA,
+      SUBROUTINE GWF1LPF1RPGD(HK,VKA,
      1 VKCB,HANI,SC1,SC2,IN,ITRSS,NCOL,NROW,NLAY,IOUT,WETDRY,NPLPF,
-     2 WETFCT,IWETIT,IHDWET,LAYFLG,BOTM,NBOTM,DELR,DELC,ITERP,INAMLOC)
+     2 WETFCT,IWETIT,IHDWET,LAYFLG,BOTM,NBOTM,DELR,DELC,ITERP,INAMLOC,
+     3 ISENS,ISEN,NPLIST)
 C
-C-----VERSION 11JAN2000 GWF1LPF1RQ
+C-----VERSION 11JAN2000 GWF1LPF1RPGD
 C     ******************************************************************
 C     READ DATA FOR LAYER PROPERTY FLOW PACKAGE
 C     ******************************************************************
@@ -187,12 +188,14 @@ C     ------------------------------------------------------------------
       INCLUDE 'param.inc'
       CHARACTER*24 ANAME(8)
       CHARACTER*4 PTYP
+      CHARACTER*11 AVGNAM(2)
 C
       DIMENSION HK(NCOL,NROW,NLAY),LAYFLG(6,NLAY),
      1    VKA(NCOL,NROW,NLAY),VKCB(NCOL,NROW,NLAY),
      2    HANI(NCOL,NROW,NLAY),SC1(NCOL,NROW,NLAY),
      3    SC2(NCOL,NROW,NLAY),WETDRY(NCOL,NROW,NLAY),
      4    BOTM(NCOL,NROW,0:NBOTM),DELR(NCOL),DELC(NROW)
+      DIMENSION ISENS(NPLIST)
 C
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
       COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
@@ -206,11 +209,12 @@ C
       DATA ANAME(6) /'        SPECIFIC STORAGE'/
       DATA ANAME(7) /'          SPECIFIC YIELD'/
       DATA ANAME(8) /'        WETDRY PARAMETER'/
+      DATA AVGNAM/'LOGARITHMIC','LOG-ARITH  '/
 C     ------------------------------------------------------------------
   500 FORMAT(/,
      &' ERROR: WHEN A HANI PARAMETER IS USED, CHANI FOR ALL LAYERS',/,
      &' MUST BE LESS THAN OR EQUAL TO 0.0 -- STOP EXECUTION',
-     &' (GWF1LPF1RQ)')
+     &' (GWF1LPF1RPGD)')
 C
       ZERO=0.
 C
@@ -255,11 +259,11 @@ C           ENSURE THAT ALL CHANI <= 0
             DO 17 I = 1, NLAY
               IF (CHANI(I).GT.0.0) THEN
                 WRITE(IOUT,500)
-                STOP
+                CALL USTOP(' ')
               ENDIF
    17       CONTINUE
             NPHANI=1
-         ELSE IF(PTYP.EQ.'VKCB') THEN 
+         ELSE IF(PTYP.EQ.'VKCB') THEN
             NPVKCB=1
          ELSE IF(PTYP.EQ.'VK') THEN
             NPVK=1
@@ -273,10 +277,35 @@ C           ENSURE THAT ALL CHANI <= 0
             NPSY=1
          ELSE
             WRITE(IOUT,*) ' Invalid parameter type for LPF Package'
-            STOP
+            CALL USTOP(' ')
          END IF
 C  Make the parameter active for all stress periods
          IACTIVE(N)=-1
+C
+C        SENSITIVITY FOR HK AND HANI PARAMETERS IS NOT SUPPORTED FOR
+C        AVERAGING METHOD OTHER THAN HARMONIC MEAN -- CHECK FOR CONFLICT
+         IF (ISEN.NE.0 .AND. (PTYP.EQ.'HK' .OR. PTYP.EQ.'HANI')) THEN
+           IF (ISENS(N).GT.0) THEN
+C            CYCLE THROUGH CLUSTERS INCLUDED IN THIS PARAMETER
+             DO 19 ICLUSTER=IPLOC(1,NP),IPLOC(2,NP)
+               LAYER=IPCLST(1,ICLUSTER)
+               LAVG=LAYAVG(LAYER)
+               IF (LAVG.NE.0) THEN
+                 WRITE(IOUT,18)PARNAM(N),LAYER,AVGNAM(LAVG)
+   18            FORMAT(/,1X,'*** ERROR: Sensitivity for parameter ',A,
+     &               ' cannot be calculated',/,1X,'because interblock ',
+     &               'transmissivity averaging method ',
+     &               'for layer ',I3,' is',/,1X,'specified as ',A,
+     &               '.  To calculate sensitivity for "HK" or "HANI" ',
+     &               /,1X,'type parameters, specify averaging ',
+     &               'method as HARMONIC MEAN.',/,1X,
+     &               '-- STOP EXECUTION (GWF1LPF1RPGD)')
+                 CALL USTOP(' ')
+               ENDIF
+   19        CONTINUE
+           END IF
+         END IF
+C
    20    CONTINUE
       END IF
 C
@@ -1088,7 +1117,7 @@ C
 C7B----ONE STORAGE CAPACITY.
   285 RHO=SC1(J,I,K)*TLED
       STRG=RHO*HOLD(J,I,K) - RHO*HSING
- 
+
 C
 C8-----STORE CELL-BY-CELL FLOW IN BUFFER AND ADD TO ACCUMULATORS.
   288 BUFF(J,I,K)=STRG
@@ -1427,7 +1456,7 @@ C3B-----CALCULATE SATURATED THICKNESS FOR A WET CELL.
      1      I4,',',I5,',',I5)
             WRITE(IOUT,36) TTOP,BBOT
    36       FORMAT(1X,'Top elevation, bottom elevation:',1P,2G13.5)
-            STOP
+            CALL USTOP(' ')
          END IF
          IF(LAYTYP(K).NE.0) THEN
             HHD=HNEW(J,I,K)
@@ -1452,7 +1481,7 @@ C3C-----HNEW=HDRY, SATURATED THICKNESS=0.0, AND IBOUND=0.
                WRITE(IOUT,152) K,I,J,KITER,KSTP,KPER
   152          FORMAT(1X,'LAYER=',I3,' ROW=',I5,' COLUMN=',I5,
      1    ' ITERATION=',I3,' TIME STEP=',I3,' STRESS PERIOD=',I4)
-               STOP
+               CALL USTOP(' ')
             END IF
             IBOUND(J,I,K)=0
          END IF
@@ -1968,7 +1997,7 @@ C7------CALCULATE INVERSE LEAKANCE FOR CONFINING BED.
      2                  I4,',',I5,',',I5)
             WRITE(IOUT,46) BOTM(J,I,LBOTM(K)),BOTM(J,I,LBOTM(K)+1)
    46       FORMAT(1X,'Top elevation, bottom elevation:',1P,2G13.5)
-                        STOP
+                        CALL USTOP(' ')
                      END IF
                      CBBOVK=B/VKCB(J,I,LAYCBD(K))
                      CV(J,I,K)=DELR(J)*DELC(I)/(BOVK1+CBBOVK+BOVK2)
@@ -2018,11 +2047,11 @@ C     LOOP THROUGH CLUSTERS FOR THIS PARAMETER
         IF (PTYP.EQ.'VK  ' .AND. LV.NE.0) THEN
           WRITE (IOUT,590) LAY,LV,LAY,PARNAM(NP),'VK'
           WRITE (IOUT,600)
-          STOP
+          CALL USTOP(' ')
         ELSEIF (PTYP.EQ.'VANI' .AND. LV.EQ.0) THEN
           WRITE (IOUT,590) LAY,LV,LAY,PARNAM(NP),'VANI'
           WRITE (IOUT,610)
-          STOP
+          CALL USTOP(' ')
         ENDIF
    10 CONTINUE
 C

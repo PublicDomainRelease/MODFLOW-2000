@@ -1,7 +1,12 @@
-C     Last change:  ERB  22 Aug 2000   10:31 am
+!     Last change:  K    25 Jul 2002   12:55 pm
 C@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 C
-C     AMG1R5                                        MAIN SUBROUTINE
+C     AMG1R6                                        MAIN SUBROUTINE
+C
+C     RELEASE 1.6, July 2002
+C 1.  changed : value of ntrim in pcol
+C 2.  dimensioning (1) changed to (*) in some subroutines to avoid subscript
+C     range checks in sparse solvers
 C
 C     RELEASE 1.5, OCTOBER 1990
 C
@@ -79,7 +84,7 @@ C     ENTRIES.
 C
 C@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 C
-      SUBROUTINE AMG1R5(A,IA,JA,U,F,IG,
+      SUBROUTINE AMG1R6(A,IA,JA,U,F,IG,
      +                  NDA,NDIA,NDJA,NDU,NDF,NDIG,NNU,MATRIX,
      +                  ISWTCH,IOUT,IPRINT,
      +                  LEVELX,IFIRST,NCYC,EPS,MADAPT,NRD,NSOLCO,NRU,
@@ -201,7 +206,7 @@ C         C
 C               ....
 C               ....
 C         C
-C               STOP
+C               CALL USTOP(' ')
 C               END
 C
 C-----------------------------------------------------------------------
@@ -1649,9 +1654,16 @@ C
         IWS = 0
       ENDIF
       ILO1 = ILO-1
+C     write(6,*) k,IMAX(K),IMIN(K)
       NPTS = IMAX(K)-IMIN(K)+1
       NPTS1 = NPTS+1
-      NTRLIM = 2*(IW(IHI+IWS+1)-IW(ILO+IWS))/NPTS
+C old value of ntrlim has been removed
+C     NTRLIM = 2*(IW(IHI+IWS+1)-IW(ILO+IWS))/NPTS  
+C new value of ntrlim : (modified by Krechel 22.07.02)
+      NTRLIM = 0
+      do i = ilo,ihi
+         NTRLIM = max(ntrlim,IW(i+IWS+1)-IW(i+IWS))
+      enddo
       NSCNMX = 0
       JVAL0 = IHI+NPTS1+1
       JVALX = JVAL0+2*NTRLIM+1
@@ -1663,12 +1675,13 @@ C
 C===> PUT INITIAL "MEASURE" FOR EACH POINT I INTO IFG(I).
 C
       DO 2 I=ILO,IHI
-        NSCN = IW(I+IWS+1)-IW(I+IWS)
-        IF (NSCN.LE.NTRLIM) THEN
-          IFG(I) = JVAL0+NSCN
-        ELSE
-          IFG(I) = JVALX
-        ENDIF
+C       NSCN = IW(I+IWS+1)-IW(I+IWS)
+C       IF (NSCN.LE.NTRLIM) THEN
+C         IFG(I) = JVAL0+NSCN
+C       ELSE
+C         IFG(I) = JVALX
+C       ENDIF
+        IFG(I) = JVAL0+IW(I+IWS+1)-IW(I+IWS)
     2 CONTINUE
 C
 C===> SET CIRCULARLY LINKED LISTS AND RESET-STACK TO EMPTY
@@ -2095,7 +2108,7 @@ C
       RETURN
 C
  9000 FORMAT (' INTERPOLATION OPERATOR NO.',I3,' COMPLETED. C-POINTS',
-     +        ' ADDED IN PWINT:',I4)
+     +        ' ADDED IN PWINT:',I7)
  9020 FORMAT (' *** ERROR IN PWINT: NDA TOO SMALL ***')
  9030 FORMAT (' *** ERROR IN PWINT: NDIA TOO SMALL ***')
  9040 FORMAT (' *** ERROR IN PWINT: NDIG TOO SMALL ***')
@@ -4026,10 +4039,10 @@ C    THE DOUBLE PRECISION DECLARATIONS IN PLACE OF THE REAL DECLARATIONS
 C    IN EACH SUBPROGRAM;  IN ADDITION, THE DATA VALUE OF THE INTEGER
 C    VARIABLE LRATIO MUST BE SET AS INDICATED IN SUBROUTINE NDRV
 C
-        INTEGER  R(1), C(1), IC(1),  IA(1), JA(1),  ISP(1), ESP,
+        INTEGER  R(*), C(*), IC(*),  IA(*), JA(*),  ISP(*), ESP,
      *     PATH, FLAG,  Q, IM, D, U, ROW, TMP,  UMAX
-C       REAL  A(1),  B(1),  Z(1),  RSP(1)
-        DOUBLE PRECISION  A(1),  B(1),  Z(1),  RSP(1)
+C       REAL  A(*),  B(*),  Z(*),  RSP(*)
+        DOUBLE PRECISION  A(*),  B(*),  Z(*),  RSP(*)
 C
 C  SET LRATIO EQUAL TO THE RATIO BETWEEN THE LENGTH OF FLOATING POINT
 C  AND INTEGER ARRAY DATA;  E. G., LRATIO = 1 FOR (REAL, INTEGER),
@@ -4293,8 +4306,8 @@ C  INTERNAL VARIABLES--
 C    JLPTR - POINTS TO THE LAST POSITION USED IN  JL.
 C    JUPTR - POINTS TO THE LAST POSITION USED IN  JU.
 C
-        INTEGER  R(1), IC(1),  IA(1), JA(1),  IL(1), JL(1),
-     *     IU(1), JU(1),  Q(1),  IM(1),  FLAG,  QM, VJ
+        INTEGER  R(*), IC(*),  IA(*), JA(*),  IL(*), JL(*),
+     *     IU(*), JU(*),  Q(*),  IM(*),  FLAG,  QM, VJ
 C
 C  ******  INITIALIZE POINTERS  ****************************************
         JLPTR = 0
@@ -4401,12 +4414,12 @@ C FIA     TMP   - HOLDS NEW RIGHT-HAND SIDE B' FOR SOLUTION OF THE
 C                   EQUATION  UX = B'.
 C                   SIZE = N.
 C
-        INTEGER  R(1), C(1), IC(1),  IA(1), JA(1),
-     *     IL(1), JL(1), LMAX,  IU(1), JU(1), UMAX,  FLAG
-C       REAL  A(1), Z(1), B(1),  L(1), D(1), U(1),
-C    *     ROW(1), TMP(1),  LI, SUM, DK
-        DOUBLE PRECISION  A(1), Z(1), B(1),  L(1), D(1), U(1),
-     *     ROW(1), TMP(1),  LI, SUM, DK
+        INTEGER  R(*), C(*), IC(*),  IA(*), JA(*),
+     *     IL(*), JL(*), LMAX,  IU(*), JU(*), UMAX,  FLAG
+C       REAL  A(*), Z(*), B(*),  L(*), D(*), U(*),
+C    *     ROW(*), TMP(*),  LI, SUM, DK
+        DOUBLE PRECISION  A(*), Z(*), B(*),  L(*), D(*), U(*),
+     *     ROW(*), TMP(*),  LI, SUM, DK
 C
 C  ******  CHECK STORAGE  **********************************************
         IF (IL(N+1)-1 .GT. LMAX)  GO TO 104
@@ -4508,9 +4521,9 @@ C FIA     TMP   - HOLDS NEW RIGHT-HAND SIDE B' FOR SOLUTION OF THE
 C                   EQUATION UX = B'.
 C                   SIZE = N.
 C
-        INTEGER  R(1), C(1),  IL(1), JL(1),  IU(1), JU(1)
-C       REAL  L(1), D(1), U(1),  Z(1), B(1),  TMP(1), SUM
-        DOUBLE PRECISION  L(1), D(1), U(1),  Z(1), B(1),  TMP(1), SUM
+        INTEGER  R(*), C(*),  IL(*), JL(*),  IU(*), JU(*)
+C       REAL  L(*), D(*), U(*),  Z(*), B(*),  TMP(*), SUM
+        DOUBLE PRECISION  L(*), D(*), U(*),  Z(*), B(*),  TMP(*), SUM
 C
 C  ******  SOLVE LDY = B  BY FORWARD SUBSTITUTION  *********************
         DO 2 K=1,N

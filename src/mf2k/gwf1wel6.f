@@ -1,8 +1,8 @@
-C     Last change:  ERB  10 Jul 2002   12:26 pm
-      SUBROUTINE GWF1WEL6AL(ISUM,LCWELL,MXWELL,NWELLS,IN,IOUT,IWELCB,
+C     Last change:  ERB  22 Oct 2002    2:07 pm
+      SUBROUTINE GWF1WEL6ALP(ISUM,LCWELL,MXWELL,NWELLS,IN,IOUT,IWELCB,
      1        NWELVL,IWELAL,IFREFM,NPWEL,IPWBEG,NNPWEL,NOPRWL)
 C
-C     VERSION 11JAN2000 GWF1WEL6AL
+C     VERSION 11JAN2000 GWF1WEL6ALP
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR WELL PACKAGE
 C     ******************************************************************
@@ -90,10 +90,10 @@ C
 C6------RETURN
       RETURN
       END
-      SUBROUTINE GWF1WEL6RQ(IN,IOUT,NWELVL,IWELAL,NCOL,NROW,NLAY,NPWEL,
-     1            WELL,IPWBEG,MXWELL,IFREFM,ITERP,INAMLOC,NOPRWL)
+      SUBROUTINE GWF1WEL6RPPD(IN,IOUT,NWELVL,IWELAL,NCOL,NROW,NLAY,
+     1            NPWEL,WELL,IPWBEG,MXWELL,IFREFM,ITERP,INAMLOC,NOPRWL)
 C
-C-----VERSION 20011107 GWF1WEL6RQ
+C-----VERSION 20011107 GWF1WEL6RPPD
 C     ******************************************************************
 C     READ WELL PARAMETERS
 C     ******************************************************************
@@ -145,11 +145,11 @@ C
 C6------RETURN
       RETURN
       END
-      SUBROUTINE GWF1WEL6RP(WELL,NWELLS,MXWELL,IN,IOUT,NWELVL,IWELAL,
-     &                      IFREFM,NCOL,NROW,NLAY,NNPWEL,NPWEL,IPWBEG,
-     &                      NOPRWL)
+      SUBROUTINE GWF1WEL6RPSS(WELL,NWELLS,MXWELL,IN,IOUT,NWELVL,IWELAL,
+     &                        IFREFM,NCOL,NROW,NLAY,NNPWEL,NPWEL,IPWBEG,
+     &                        NOPRWL)
 C
-C     VERSION 11JAN2000 GWF1WEL6RP
+C     VERSION 11JAN2000 GWF1WEL6RPSS
 C     ******************************************************************
 C     READ NEW WELL LOCATIONS AND STRESS RATES
 C     ******************************************************************
@@ -184,7 +184,7 @@ C------Calculate some constants.
       IOUTU = IOUT
       IF (NOPRWL.EQ.1) THEN
         ITERPU = 99
-        IOUTU = -1
+        IOUTU = -IOUT
       ENDIF
 C
 C1A-----IF ITMP LESS THAN ZERO REUSE NON-PARAMETER DATA. PRINT MESSAGE.
@@ -204,7 +204,7 @@ C1B-----IF THERE ARE NEW NON-PARAMETER WELLS, READ THEM.
             WRITE(IOUT,99) NNPWEL,MXACTW
    99       FORMAT(1X,/1X,'THE NUMBER OF ACTIVE WELLS (',I6,
      1                     ') IS GREATER THAN MXACTW(',I6,')')
-            STOP
+            CALL USTOP(' ')
          END IF
          CALL ULSTRD(NNPWEL,WELL,1,NWELVL,MXWELL,IWELAL,IN,IOUT,
      1            'WELL NO.  LAYER   ROW   COL   STRESS RATE',

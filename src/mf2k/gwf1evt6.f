@@ -1,8 +1,8 @@
-C     Last change:  ERB  10 Jul 2002    3:08 pm
-      SUBROUTINE GWF1EVT6AL(ISUM,ISUMI,LCIEVT,LCEVTR,LCEXDP,LCSURF,NCOL,
-     1                  NROW,NEVTOP,IN,IOUT,IEVTCB,IFREFM,NPEVT,IEVTPF)
+C     Last change:  ERB  12 Sep 2002    4:28 pm
+      SUBROUTINE GWF1EVT6ALP(ISUM,ISUMI,LCIEVT,LCEVTR,LCEXDP,LCSURF,
+     1            NCOL,NROW,NEVTOP,IN,IOUT,IEVTCB,IFREFM,NPEVT,IEVTPF)
 C
-C-----VERSION 14DEC2000 GWF1EVT6AL
+C-----VERSION 14DEC2000 GWF1EVT6ALP
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR EVAPOTRANSPIRATION
 C     ******************************************************************
@@ -36,7 +36,7 @@ C
 C3A-----OPTION IS ILLEGAL -- PRINT A MESSAGE & ABORT SIMULATION.
       WRITE(IOUT,8)
     8 FORMAT(1X,'ILLEGAL ET OPTION CODE. SIMULATION ABORTING')
-      STOP
+      CALL USTOP(' ')
 C
 C4------OPTION IS LEGAL -- PRINT THE OPTION CODE.
   200 IF(NEVTOP.EQ.1) WRITE(IOUT,201)
@@ -77,9 +77,9 @@ C
 C9------RETURN.
       RETURN
       END
-      SUBROUTINE GWF1EVT6RQ(IN,IOUT,NPEVT,ITERP,INAMLOC)
+      SUBROUTINE GWF1EVT6RPPD(IN,IOUT,NPEVT,ITERP,INAMLOC)
 C
-C-----VERSION 20NOV2001 GWF1EVT6RQ
+C-----VERSION 20NOV2001 GWF1EVT6RPPD
 C     ******************************************************************
 C     READ EVAPOTRANSPIRATION PARAMETER DEFINITIONS
 C     ******************************************************************
@@ -99,7 +99,7 @@ C-------READ NAMED PARAMETERS
          IF(PTYP.NE.'EVT') THEN
             WRITE(IOUT,7)
     7       FORMAT(1X,'Parameter type must be EVT')
-            STOP
+            CALL USTOP(' ')
          END IF
    20    CONTINUE
       END IF
@@ -107,10 +107,10 @@ C
 C8------RETURN
    60 RETURN
       END
-      SUBROUTINE GWF1EVT6RP(NEVTOP,IEVT,EVTR,EXDP,SURF,DELR,DELC,NCOL,
+      SUBROUTINE GWF1EVT6RPSS(NEVTOP,IEVT,EVTR,EXDP,SURF,DELR,DELC,NCOL,
      1     NROW,IN,IOUT,IFREFM,NPEVT,RMLT,IZON,NMLTAR,NZONAR,IEVTPF)
 C
-C     VERSION 11JAN2000 GWF1EVT6RP
+C     VERSION 11JAN2000 GWF1EVT6RPSS
 C     ******************************************************************
 C     READ EVAPOTRANSPIRATION DATA
 C     ******************************************************************
@@ -175,8 +175,8 @@ C    INEVTR is the number of parameters to use this stress period
            WRITE(IOUT,34)
    34      FORMAT(' ERROR: When parameters are defined for the EVT',
      &     ' Package, at least one parameter',/,' must be specified',
-     &     ' each stress period -- STOP EXECUTION (GWF1EVT6RP)')
-           STOP
+     &     ' each stress period -- STOP EXECUTION (GWF1EVT6RPSS)')
+           CALL USTOP(' ')
          END IF
          CALL UPARARRSUB2(EVTR,NCOL,NROW,0,INEVTR,IN,IOUT,'EVT',
      1        ANAME(3),'EVT',IEVTPF,RMLT,IZON,NMLTAR,NZONAR)

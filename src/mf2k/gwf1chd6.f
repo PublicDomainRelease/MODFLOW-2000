@@ -1,8 +1,8 @@
-C     Last change:  ERB  10 Jul 2002   12:27 pm
-      SUBROUTINE GWF1CHD6AL(ISUM,LCCHDS,NCHDS,MXCHD,IN,IOUT,
+C     Last change:  ERB  22 Oct 2002    2:03 pm
+      SUBROUTINE GWF1CHD6ALP(ISUM,LCCHDS,NCHDS,MXCHD,IN,IOUT,
      1      NCHDVL,IFREFM,NPCHD,IPCBEG,NNPCHD,NOPRCH)
 C
-C-----VERSION 11JAN2000 GWF1CHD6AL
+C-----VERSION 11JAN2000 GWF1CHD6ALP
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR TIME-VARIANT SPECIFIED-HEAD CELLS
 C     ******************************************************************
@@ -73,10 +73,10 @@ C
 C6------RETURN
       RETURN
       END
-      SUBROUTINE GWF1CHD6RQ(IN,IOUT,NCHDVL,NCOL,NROW,NLAY,NPCHD,CHDS,
+      SUBROUTINE GWF1CHD6RPPD(IN,IOUT,NCHDVL,NCOL,NROW,NLAY,NPCHD,CHDS,
      &      IPCBEG,MXCHD,IFREFM,ITERP,INAMLOC,NOPRCH)
 C
-C-----VERSION 20011108 GWF1CHD6RQ
+C-----VERSION 20011108 GWF1CHD6RPPD
 C     ******************************************************************
 C     READ NAMED PARAMETERS
 C     ******************************************************************
@@ -126,11 +126,11 @@ C
 C3------RETURN.
       RETURN
       END
-      SUBROUTINE GWF1CHD6RP(CHDS,NCHDS,MXCHD,IBOUND,NCOL,NROW,NLAY,IN,
+      SUBROUTINE GWF1CHD6RPSS(CHDS,NCHDS,MXCHD,IBOUND,NCOL,NROW,NLAY,IN,
      1          IOUT,NCHDVL,IFREFM,NNPCHD,NPCHD,IPCBEG,NOPRCH)
 C
 C
-C-----VERSION 11JAN2000 GWF1CHD6RP
+C-----VERSION 11JAN2000 GWF1CHD6RPSS
 C     ******************************************************************
 C     READ DATA FOR CHD
 C     ******************************************************************
@@ -164,7 +164,7 @@ C2------CALCULATE NUMBER OF AUXILIARY VALUES
       IOUTU = IOUT
       IF (NOPRCH.EQ.1) THEN
         ITERPU = 99
-        IOUTU = -1
+        IOUTU = -IOUT
       ENDIF
 C
 C2------TEST ITMP
@@ -184,7 +184,7 @@ C3------IF THERE ARE NEW NON-PARAMETER CHDS, READ THEM
             WRITE(IOUT,99) NNPCHD,MXACTC
    99       FORMAT(1X,/1X,'THE NUMBER OF ACTIVE CHD CELLS (',I6,
      1                     ') IS GREATER THAN MXACTC(',I6,')')
-            STOP
+            CALL USTOP(' ')
          END IF
          CALL ULSTRD(NNPCHD,CHDS,1,NCHDVL,MXCHD,0,IN,IOUT,
      1    'CHD NO.   LAYER   ROW   COL    START HEAD        END HEAD',
@@ -217,7 +217,7 @@ C5------SET IBOUND NEGATIVE AT SPECIFIED-HEAD CELLS.
          WRITE(IOUT,6) IL,IR,IC
     6    FORMAT(1X,'CELL (',I3,',',I5,',',I5,') IS NO FLOW (IBOUND=0)',/
      1      1X,'NO-FLOW CELLS CANNOT BE CONVERTED TO SPECIFIED HEAD')
-         STOP
+         CALL USTOP(' ')
       END IF
   250 CONTINUE
 C

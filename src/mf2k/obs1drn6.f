@@ -1,4 +1,4 @@
-C     Last change:  ERB  10 Jul 2002   12:24 pm
+C     Last change:  ERB  10 Jan 2003    9:28 am
       SUBROUTINE OBS1DRN6AL(IUDROB,NQ,NQC,NQT,IOUT,NQDR,NQTDR,IOBSUM,
      &                     LCOBDRN,ITMXP,LCSSDR,ISUM,IOBS)
 C     VERSION 20000125
@@ -53,7 +53,7 @@ C=======================================================================
       SUBROUTINE OBS1DRN6RP(NCOL,NROW,NPER,IUDROB,IOUT,OBSNAM,
      &                     NHT,JT,IBT,NQOB,NQCL,IQOB,
      &                     QCLS,IERR,HOBS,TOFF,WTQ,IOWTQ,IPRN,
-     &                     NDMH,NSTPA,PERLNA,TSMLTA,ISSA,ITRSS,NQAR,
+     &                     NDMH,NSTP,PERLEN,TSMULT,ISSA,ITRSS,NQAR,
      &                     NQCAR,NQTAR,IQ1,NQT1,NDD,IUDR,NQDR,NQTDR,NT,
      &                     NC,IPLOT,NAMES,ND,IPR,MPR,IOWTQDR)
 C     VERSION 20010921 ERB
@@ -62,17 +62,17 @@ C     READ, CHECK AND STORE FLOW-OBSERVATION DATA FOR DRAIN BOUNDARIES.
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL BLANK, EVFDR, HOBS, PERLNA, QCLS, TOFF, TOFFSET, TOMULTDR,
-     &     TSMLTA, WTQ
+      REAL BLANK, EVFDR, HOBS, PERLEN, QCLS, TOFF, TOFFSET, TOMULTDR,
+     &     TSMULT, WTQ
       INTEGER I, I4, IBT, IERR, IOUT, IOWTQ, IPRN, IQ, IQOB, IUDROB,
      &        IWT, J, JT, L, N, NC, NC1, NC2, NCOL, NDMH, NHT, NPER,
-     &        NQCL, NQOB, NROW, NSTPA, NT, NT1, NT2, IUDR, ISSA
+     &        NQCL, NQOB, NROW, NSTP, NT, NT1, NT2, IUDR, ISSA
       INTEGER IPLOT(ND+IPR+MPR)
       CHARACTER*12 OBSNAM(NDD), NAMES(ND+IPR+MPR)
       CHARACTER*20 FMTIN*20, ANAME*50
       DIMENSION IBT(2,NQAR), NQOB(NQAR), NQCL(NQAR), IQOB(NQTAR),
-     &          QCLS(5,NQCAR), HOBS(ND), TOFF(ND), NSTPA(NPER),
-     &          PERLNA(NPER), TSMLTA(NPER), ISSA(NPER)
+     &          QCLS(5,NQCAR), HOBS(ND), TOFF(ND), NSTP(NPER),
+     &          PERLEN(NPER), TSMULT(NPER), ISSA(NPER)
       DIMENSION WTQ(NDMH,NDMH)
       CHARACTER*10 STATYP(0:2)
       DATA (STATYP(I),I=0,2)/'VARIANCE','STD. DEV.','COEF. VAR.'/
@@ -147,7 +147,7 @@ C---------READ ITEM 4
             READ (IUDROB,*) OBSNAM(N), IREFSP, TOFFSET, HOBS(N), STAT,
      &                      IST, IPLOT(N)
             NAMES(N) = OBSNAM(N)
-            WRITE (IOUT,535) N,OBSNAM(N),IREFSP,TOFFSET,HOBS(N),
+            WRITE (IOUT,535) N,OBSNAM(N),IREFSP,TOFFSET,HOBS(N),0.0,
      &                       STATYP(IST),IPLOT(N)
           ELSE
             READ (IUDROB,*) OBSNAM(N), IREFSP, TOFFSET, HOBS(N),
@@ -167,8 +167,8 @@ C---------READ ITEM 4
               IERR = 1
             ENDIF
           ENDIF
-          CALL UOBSTI(OBSNAM(N),IOUT,ISSA,ITRSS,NPER,NSTPA,IREFSP,
-     &                IQOB(J),PERLNA,TOFF(N),TOFFSET,TOMULTDR,TSMLTA,1)
+          CALL UOBSTI(OBSNAM(N),IOUT,ISSA,ITRSS,NPER,NSTP,IREFSP,
+     &                IQOB(J),PERLEN,TOFF(N),TOFFSET,TOMULTDR,TSMULT,1)
 C----------ERROR CHECKING
           IF (IQOB(J).GE.JT) THEN
             JT = IQOB(J)
@@ -228,7 +228,7 @@ C       READ ITEM 7
 C
       IF (IERR.GT.0) THEN
         WRITE(IOUT,620)
-        STOP
+        CALL USTOP(' ')
       ENDIF
 C
       RETURN
@@ -245,7 +245,7 @@ C     PACKAGE
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL C, DRAI, FACT, H, HB, HH, HHNEW, QCLS, RBOT, TOFF, WTQ, ZERO
+      REAL C, DRAI, FACT, H, HB, HH, HHNEW, QCLS, TOFF, WTQ, ZERO
       INTEGER I, IBOUND, IBT, IBT1, IFLAG, II, IOUT, IQ, IQOB, IRBOT,
      &        ITS, J, JJ, JRBOT, K, KK, KRBOT, MXDRN, N, NB, NBN, NC,
      &        NC1, NC2, NCOL, NDMH, NDRAIN, NHT, NLAY, NQ, NQCL, NQOB,
@@ -321,11 +321,10 @@ C-------------ASSIGN VARIABLE VALUES
                   HHNEW = HNEW(J,I,K)
                   HB = DRAI(4,NB)
                   C = DRAI(5,NB)
-                  RBOT = HB
 C-------------CALCULATE FLOWS
                   HH = C*(HB-HHNEW)
-                  IF (HHNEW.LE.RBOT) THEN
-                    HH = C*(HB-RBOT)
+                  IF (HHNEW.LE.HB) THEN
+                    HH = 0.0
                     IF (JRBOT.EQ.0) WRITE (IOUT,500)
                     JRBOT = 1
                     IF (IRBOT.EQ.0) THEN
@@ -340,7 +339,7 @@ C-------------CALCULATE FLOWS
    10         CONTINUE
               IF (IFLAG.EQ.0) THEN
                 WRITE (IOUT,540) N, NHT + NT, OBSNAM(NHT+NT)
-                STOP
+                CALL USTOP(' ')
               ENDIF
 C-------------SUM VALUES FROM INDIVIDUAL CELLS.
 C----------------CALCULATE FACTOR FOR TEMPORAL INTERPOLATION
@@ -380,7 +379,7 @@ C     PACKAGE
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL C, DRAI, FACT, HB, HHNEW, QCLS, RBOT, TOFF, X, XX, ZERO
+      REAL C, DRAI, FACT, HB, HHNEW, QCLS, TOFF, X, XX, ZERO
       INTEGER I, IBOUND, IBT, IBT1, IFLAG, II, IOUT, IP, IQ, IQOB, ITS,
      &        J, JJ, K, KK, LN, MXDRN, N, NB, NBN, NC, NC1, NC2, NCOL,
      &        NDRAIN, NHT, NLAY, NPE, NQ, NQCL, NQOB, NROW, NT,
@@ -442,12 +441,11 @@ C-------------ASSIGN VARIABLE VALUES
                   HHNEW = HNEW(J,I,K)
                   HB = DRAI(4,NB)
                   C = DRAI(5,NB)
-                  RBOT = HB
 C-------------CALCULATE SENSITIVITIES
                   XX = ZERO
                   IF (HHNEW.LE.HB) GOTO 30
-                  IF (HHNEW.GT.RBOT) XX = -C*SNEW(J,I,K)
-                  IF (IIPP.EQ.IBT(2,IQ) .AND. HHNEW.GT.RBOT)
+                  IF (HHNEW.GT.HB) XX = -C*SNEW(J,I,K)
+                  IF (IIPP.EQ.IBT(2,IQ) .AND. HHNEW.GT.HB)
      &                XX = XX + QCLS(5,N)*(HB-HHNEW)
                   GOTO 20
                 ENDIF
@@ -509,7 +507,7 @@ C
 C=======================================================================
       SUBROUTINE SOBS1DRN6OH(IO,IOWTQDR,IOUT,NHT,NQTDR,HOBS,H,WTQ,
      &                       OBSNAM,IDIS,WTQS,D,AVET,NPOST,NNEGT,NRUNS,
-     &                       RSQ,ND,MPR,IPR,NDMH,WTRL,NRES,IUGDO,OUTNAM,
+     &                       RSQ,ND,MPR,IPR,NDMH,WTRL,NRSO,IUGDO,OUTNAM,
      &                       IPLOT,IPLPTR,LCOBDRN,ISSWR,SSDR,ITMXP)
 C     VERSION 19990423 ERB
 C     ******************************************************************
@@ -521,7 +519,7 @@ C     ------------------------------------------------------------------
      &     WTQS, WTR, WTRL
       INTEGER IDIS, IO, IOUT, IOWTQDR, IPR,
      &        J, MPR, N, ND, NDMH, NHT, NMAX, NMIN,
-     &        NNEG, NNEGT, NPOS, NPOST, NQ1, NQ2, NQTDR, NRES, NRUNS
+     &        NNEG, NNEGT, NPOS, NPOST, NQ1, NQ2, NQTDR, NRSO, NRUNS
       INTEGER IUGDO(6), IPLOT(ND+IPR+MPR), IPLPTR(ND+IPR+MPR)
       CHARACTER*12 OBSNAM(ND)
       CHARACTER*200 OUTNAM
@@ -571,14 +569,14 @@ C
       DO 20 N = LCOBDRN, LCOBDRN+NQTDR-1
         NQ1 = N - NHT
         IF (WTQ(NQ1,NQ1).LT.0.) THEN
-          WRITE (IOUT,515) N, OBSNAM(N), HOBS(N)
+          IF (IO.EQ.1) WRITE (IOUT,515) N, OBSNAM(N), HOBS(N)
           IDIS = IDIS + 1
           IDISDR = IDISDR + 1
           GOTO 20
         ENDIF
-        NRES = NRES + 1
+        NRSO = NRSO + 1
         NRESDR = NRESDR + 1
-        IPLPTR(NRES) = N
+        IPLPTR(NRSO) = N
         RES = HOBS(N) - H(N)
         IF (IOWTQDR.GT.0) THEN
           WTR = 0.0
@@ -607,7 +605,7 @@ C
             WRITE (IUGDO(3),540) SWH, WTR, IPLOT(N), OBSNAM(N)
             WRITE (IUGDO(4),550) RES, IPLOT(N), OBSNAM(N)
             WRITE (IUGDO(5),550) WTR, IPLOT(N), OBSNAM(N)
-            D(NRES) = WTR
+            D(NRSO) = WTR
           ENDIF
         ENDIF
         RSQ = RSQ + (WTR**2)

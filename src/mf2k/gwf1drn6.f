@@ -1,8 +1,8 @@
-C     Last change:  ERB  10 Jul 2002   12:26 pm
-      SUBROUTINE GWF1DRN6AL(ISUM,LCDRAI,MXDRN,NDRAIN,IN,IOUT,IDRNCB,
+C     Last change:  ERB  22 Oct 2002    2:04 pm
+      SUBROUTINE GWF1DRN6ALP(ISUM,LCDRAI,MXDRN,NDRAIN,IN,IOUT,IDRNCB,
      1        NDRNVL,IDRNAL,IFREFM,NPDRN,IDRNPB,NNPDRN,NOPRDR)
 C
-C-----VERSION 11JAN2000 GWF1DRN6AL
+C-----VERSION 11JAN2000 GWF1DRN6ALP
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR DRAINS
 C     ******************************************************************
@@ -84,10 +84,10 @@ C
 C6------RETURN.
       RETURN
       END
-      SUBROUTINE GWF1DRN6RQ(IN,IOUT,NDRNVL,IDRNAL,NCOL,NROW,NLAY,NPDRN,
-     1            DRAI,IDRNPB,MXDRN,IFREFM,ITERP,INAMLOC,NOPRDR)
+      SUBROUTINE GWF1DRN6RPPD(IN,IOUT,NDRNVL,IDRNAL,NCOL,NROW,NLAY,
+     1            NPDRN,DRAI,IDRNPB,MXDRN,IFREFM,ITERP,INAMLOC,NOPRDR)
 C
-C-----VERSION 20011108 GWF1DRN6RQ
+C-----VERSION 20011108 GWF1DRN6RPPD
 C     ******************************************************************
 C     READ DRAIN PARAMETERS
 C     ******************************************************************
@@ -137,10 +137,10 @@ C
 C6------RETURN
       RETURN
       END
-      SUBROUTINE GWF1DRN6RP(DRAI,NDRAIN,MXDRN,IN,IOUT,NDRNVL,IDRNAL,
+      SUBROUTINE GWF1DRN6RPSS(DRAI,NDRAIN,MXDRN,IN,IOUT,NDRNVL,IDRNAL,
      1       IFREFM,NCOL,NROW,NLAY,NNPDRN,NPDRN,IDRNPB,NOPRDR)
 C
-C-----VERSION 11JAN2000 GWF1DRN6RP
+C-----VERSION 11JAN2000 GWF1DRN6RPSS
 C     ******************************************************************
 C     READ DRAIN HEAD, CONDUCTANCE AND BOTTOM ELEVATION
 C     ******************************************************************
@@ -175,7 +175,7 @@ C------CALCULATE SOME CONSTANTS
       IOUTU = IOUT
       IF (NOPRDR.EQ.1) THEN
         ITERPU = 99
-        IOUTU = -1
+        IOUTU = -IOUT
       ENDIF
 C
 C2------DETERMINE THE NUMBER OF NON-PARAMETER DRAINS.
@@ -194,7 +194,7 @@ C3------IF THERE ARE NEW NON-PARAMETER DRAINS, READ THEM.
             WRITE(IOUT,99) NNPDRN,MXACTD
    99       FORMAT(1X,/1X,'THE NUMBER OF ACTIVE DRAINS (',I6,
      1                     ') IS GREATER THAN MXACTD(',I6,')')
-            STOP
+            CALL USTOP(' ')
          END IF
          CALL ULSTRD(NNPDRN,DRAI,1,NDRNVL,MXDRN,IDRNAL,IN,IOUT,
      1     'DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE',

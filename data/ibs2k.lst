@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.10 07/26/2002
+                             VERSION 1.11 04/10/2003
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -555,7 +555,7 @@
 
            TOTAL OUT =    20433138.0000             TOTAL OUT =       20000.0137
 
-            IN - OUT =          -6.0000              IN - OUT =      -2.9297E-02
+            IN - OUT =          -6.4375              IN - OUT =      -2.9117E-02
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -567,7 +567,7 @@
           TIME SUMMARY AT END OF TIME STEP  10 IN STRESS PERIOD    1
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
-   TIME STEP LENGTH 2.93083E+07 4.88471E+05  8141.2      339.22     0.92872    
+   TIME STEP LENGTH 2.93082E+07 4.88471E+05  8141.2      339.22     0.92872    
  STRESS PERIOD TIME 8.64000E+07 1.44000E+06  24000.      1000.0      2.7379    
          TOTAL TIME 8.64000E+07 1.44000E+06  24000.      1000.0      2.7379    
 1
@@ -828,7 +828,7 @@
 
            TOTAL OUT =    40433144.0000             TOTAL OUT =       20000.0039
 
-            IN - OUT =         -12.0000              IN - OUT =      -7.8125E-03
+            IN - OUT =         -12.2500              IN - OUT =      -7.7684E-03
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -840,7 +840,7 @@
           TIME SUMMARY AT END OF TIME STEP  10 IN STRESS PERIOD    2
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
-   TIME STEP LENGTH 2.93083E+07 4.88471E+05  8141.2      339.22     0.92872    
+   TIME STEP LENGTH 2.93082E+07 4.88471E+05  8141.2      339.22     0.92872    
  STRESS PERIOD TIME 8.64000E+07 1.44000E+06  24000.      1000.0      2.7379    
          TOTAL TIME 1.72800E+08 2.88000E+06  48000.      2000.0      5.4757    
 1
@@ -1101,7 +1101,7 @@
 
            TOTAL OUT =    60433144.0000             TOTAL OUT =       20000.0020
 
-            IN - OUT =         -16.0000              IN - OUT =      -1.9531E-03
+            IN - OUT =         -16.2500              IN - OUT =      -1.9500E-03
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -1113,7 +1113,7 @@
           TIME SUMMARY AT END OF TIME STEP  10 IN STRESS PERIOD    3
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
-   TIME STEP LENGTH 2.93083E+07 4.88471E+05  8141.2      339.22     0.92872    
+   TIME STEP LENGTH 2.93082E+07 4.88471E+05  8141.2      339.22     0.92872    
  STRESS PERIOD TIME 8.64000E+07 1.44000E+06  24000.      1000.0      2.7379    
          TOTAL TIME 2.59200E+08 4.32000E+06  72000.      3000.0      8.2136    
 1

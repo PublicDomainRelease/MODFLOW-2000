@@ -1,4 +1,4 @@
-C     Last change:  ERB  10 Jul 2002   12:23 pm
+C     Last change:  ERB   3 Sep 2002    2:21 pm
       SUBROUTINE OBS1STR6AL(IUSTOB,NQ,NQC,NQT,IOUT,NQST,NQTST,IOBSUM,
      &                     LCOBSTR,ITMXP,LCSSST,ISUM,IOBS)
 C     VERSION 20000125
@@ -52,7 +52,7 @@ C
 C=======================================================================
       SUBROUTINE OBS1STR6RP(NPER,IUSTOB,IOUT,OBSNAM,NHT,JT,IBT,NQOB,
      &                     NQCL,IQOB,QCLS,IERR,HOBS,TOFF,WTQ,IOWTQ,IPRN,
-     &                     NDMH,NSTPA,PERLNA,TSMLTA,ISSA,ITRSS,NQAR,
+     &                     NDMH,NSTP,PERLEN,TSMULT,ISSA,ITRSS,NQAR,
      &                     NQCAR,NQTAR,IQ1,NQT1,IUST,NQST,NQTST,NT,
      &                     NC,IPLOT,NAMES,ND,IPR,MPR,IOWTQST)
 C     VERSION 20010921 ERB
@@ -62,17 +62,17 @@ C     BOUNDARIES.
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL BLANK, EVFST, HOBS, PERLNA, QCLS, TOFF, TOFFSET, TOMULTST,
-     &     TSMLTA, WTQ
+      REAL BLANK, EVFST, HOBS, PERLEN, QCLS, TOFF, TOFFSET, TOMULTST,
+     &     TSMULT, WTQ
       INTEGER I, I4, IBT, IERR, IOUT, IOWTQ, IPRN, IQ, IQOB, IUSTOB,
      &        IWT, J, JT, L, N, NC, NC1, NC2, NDMH, NHT, NPER, NQCL,
-     &        NQOB, NSTPA, NT, NT1, NT2, ISSA
+     &        NQOB, NSTP, NT, NT1, NT2, ISSA
       INTEGER IPLOT(ND+IPR+MPR)
       CHARACTER*12 OBSNAM(ND), NAMES(ND+IPR+MPR)
       CHARACTER*20 FMTIN*20, ANAME*51
       DIMENSION IBT(2,NQAR), NQOB(NQAR), NQCL(NQAR), IQOB(NQTAR),
-     &          QCLS(5,NQCAR), HOBS(ND), TOFF(ND), NSTPA(NPER),
-     &          PERLNA(NPER), TSMLTA(NPER), ISSA(NPER)
+     &          QCLS(5,NQCAR), HOBS(ND), TOFF(ND), NSTP(NPER),
+     &          PERLEN(NPER), TSMULT(NPER), ISSA(NPER)
       DIMENSION WTQ(NDMH,NDMH)
       CHARACTER*10 STATYP(0:2)
       DATA (STATYP(I),I=0,2)/'VARIANCE','STD. DEV.','COEF. VAR.'/
@@ -176,8 +176,8 @@ C         READ ITEM 4
               IERR = 1
             ENDIF
           ENDIF
-          CALL UOBSTI(OBSNAM(N),IOUT,ISSA,ITRSS,NPER,NSTPA,IREFSP,
-     &                IQOB(J),PERLNA,TOFF(N),TOFFSET,TOMULTST,TSMLTA,1)
+          CALL UOBSTI(OBSNAM(N),IOUT,ISSA,ITRSS,NPER,NSTP,IREFSP,
+     &                IQOB(J),PERLEN,TOFF(N),TOFFSET,TOMULTST,TSMULT,1)
 C----------ERROR CHECKING
           IF (IQOB(J).GE.JT) THEN
             JT = IQOB(J)
@@ -232,7 +232,7 @@ C       READ ITEM 7
 C
       IF (IERR.GT.0) THEN
         WRITE(IOUT,620)
-        STOP
+        CALL USTOP(' ')
       ENDIF
 C
       RETURN
@@ -361,7 +361,7 @@ C-------------CALCULATE FLOWS
    10         CONTINUE
               IF (IFLAG.EQ.0) THEN
                 WRITE (IOUT,540) N, NHT + NT, OBSNAM(NHT+NT)
-                STOP
+                CALL USTOP(' ')
               ENDIF
 C-------------SUM VALUES FROM INDIVIDUAL CELLS.
 C----------------CALCULATE FACTOR FOR TEMPORAL INTERPOLATION
@@ -536,7 +536,7 @@ C
 C=======================================================================
       SUBROUTINE SOBS1STR6OH(IO,IOWTQST,IOUT,NHT,NQTST,HOBS,H,WTQ,
      &                       OBSNAM,IDIS,WTQS,D,AVET,NPOST,NNEGT,NRUNS,
-     &                       RSQ,ND,MPR,IPR,NDMH,WTRL,NRES,IUGDO,OUTNAM,
+     &                       RSQ,ND,MPR,IPR,NDMH,WTRL,NRSO,IUGDO,OUTNAM,
      &                       IPLOT,IPLPTR,LCOBSTR,ISSWR,SSST,ITMXP)
 C     VERSION 19990423 ERB
 C     ******************************************************************
@@ -549,7 +549,7 @@ C     ------------------------------------------------------------------
      &     WTQS, WTR, WTRL
       INTEGER IDIS, IO, IOUT, IOWTQST, IPR,
      &        J, MPR, N, ND, NDMH, NHT, NMAX, NMIN,
-     &        NNEG, NNEGT, NPOS, NPOST, NQ1, NQ2, NQTST, NRES, NRUNS
+     &        NNEG, NNEGT, NPOS, NPOST, NQ1, NQ2, NQTST, NRSO, NRUNS
       INTEGER IUGDO(6), IPLOT(ND+IPR+MPR), IPLPTR(ND+IPR+MPR)
       CHARACTER*12 OBSNAM(ND)
       CHARACTER*200 OUTNAM
@@ -600,14 +600,14 @@ C
       DO 20 N = LCOBSTR, LCOBSTR+NQTST-1
         NQ1 = N - NHT
         IF (WTQ(NQ1,NQ1).LT.0.) THEN
-          WRITE (IOUT,515) N, OBSNAM(N), HOBS(N)
+          IF (IO.EQ.1) WRITE (IOUT,515) N, OBSNAM(N), HOBS(N)
           IDIS = IDIS + 1
           IDISST = IDISST + 1
           GOTO 20
         ENDIF
-        NRES = NRES + 1
+        NRSO = NRSO + 1
         NRESST = NRESST + 1
-        IPLPTR(NRES) = N
+        IPLPTR(NRSO) = N
         RES = HOBS(N) - H(N)
         IF (IOWTQST.GT.0) THEN
           WTR = 0.0
@@ -636,7 +636,7 @@ C
             WRITE (IUGDO(3),540) SWH, WTR, IPLOT(N), OBSNAM(N)
             WRITE (IUGDO(4),550) RES, IPLOT(N), OBSNAM(N)
             WRITE (IUGDO(5),550) WTR, IPLOT(N), OBSNAM(N)
-            D(NRES) = WTR
+            D(NRSO) = WTR
           ENDIF
         ENDIF
         RSQ = RSQ + (WTR**2)
