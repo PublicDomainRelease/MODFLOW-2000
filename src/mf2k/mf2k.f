@@ -1,4 +1,4 @@
-! Time of File Save by ERB: 5/6/2004 4:13PM
+! Time of File Save by ERB: 7/16/2004 5:11PM
 C     ******************************************************************
 C     MAIN CODE FOR U.S. GEOLOGICAL SURVEY MODULAR MODEL -- MODFLOW
 C           BY MICHAEL G. MCDONALD AND ARLEN W. HARBAUGH
@@ -29,7 +29,7 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
 C-------ASSIGN VERSION NUMBER AND DATE
       CHARACTER*40 VERSION
-      PARAMETER (VERSION='1.14.00 07/01/2004')
+      PARAMETER (VERSION='1.15.00 08/06/2004')
 C
 C-----DECLARE ARRAY TYPES
       REAL GX, X, RX, XHS
@@ -103,7 +103,7 @@ C
      &           'gwt ', 'FHB ', 'RES ', 'STR ', 'IBS ', 'CHD ', 'HFB6',  ! 21
      &           'LAK ', 'LPF ', 'DIS ', 'SEN ', 'PES ', 'OBS ', 'HOB ',  ! 28
      &           'ADV2', 'COB ', 'ZONE', 'MULT', 'DROB', 'RVOB', 'GBOB',  ! 35
-     &           'STOB', 'HUF2', 'CHOB', 'ETS ', 'DRT ', 'DTOB', '    ',  ! 42
+     &           'STOB', 'HUF2', 'CHOB', 'ETS ', 'DRT ', 'DTOB', 'GMG ',  ! 42
      &           'HYD ', 'SFR ', 'sfob', 'GAGE', 'LVDA', '    ', 'LMT6',  ! 49
      &           'MNW1', 'DAF ', 'DAFG', 'KDEP', 'SUB ', '    ', '    ',  ! 56
      &           44*'    '/
@@ -320,6 +320,9 @@ C-----NO rewind AL and RP for Ground-Water Flow Process
      1    CALL LMG1ALG(ISUMZ,ISUMIX,LCA,LCIA,LCJA,LCU1,LCFRHS,
      2                 LCIG,ISIZ1,ISIZ2,ISIZ3,ISIZ4,ICG,NCOL,NROW,NLAY,
      3                 IUNIT(14),IOUTG,1)
+      IF(IUNIT(42).GT.0)
+     1    CALL GMG1ALG(NCOL,NROW,NLAY,MXITER,IITER,RCLOSE,HCLOSE,DAMP,
+     2                 IADAMP,IOUTGMG,IUNIT(42),IOUTG)
 C
 C-----ALLOCATE SPACE FOR SENSITIVITY CALCULATIONS
       IF (ISEN.GT.0)
@@ -924,7 +927,7 @@ C----------READ USING PACKAGE READ AND PREPARE MODULES.
      &                     RX(LCCRES),RX(LCBBRE),RX(LCHRSE),IG(LCIBOU),
      &                     GX(LCDELR),GX(LCDELC),NRES,NRESOP,NPTS,NCOL,
      &                     NROW,NLAY,PERLEN(KKPER),DELT,NSTP(KKPER),
-     &                     TSMULT(KKPER),IUNIT(17),IOUT)
+     &                     TSMULT(KKPER),IUNIT(17),IOUT,KKPER)
           IF (IUNIT(18).GT.0)
      &        CALL GWF1STR6RPSS(RX(LCSTRM_),IR(ICSTRM_),NSTREM,MXSTRM,
      &                    IUNIT(18),IOUT,IR(LCTBAR),NDIV,NSSSTR6,NTRIB,
@@ -1210,7 +1213,7 @@ CLAK
      4        RX(LCXSEC),IR(LCIVAR),RX(LCQSTG),CONST,MAXPTS,DLEAK,
      5        RX(LCOTFLW),RX(LCDVFLW),NLAKESAR,RX(ISTGLD),RX(ISTRIN),
      6        RX(ISTROT),RX(ISTGNW),THETA,RX(LKACC7),ISS,RX(IDSTRT),
-     &        RX(LCSFRQ),IUNIT(22),KKITER)
+     &        RX(LCSFRQ),IUNIT(22),KKITER,KKPER,KKSTP)
 CLAK
               IF (IUNIT(22).GT.0)
      *               CALL GWF1LAK3FM(LKNODE,MXLKND,IR(ICLAKE),
@@ -1303,6 +1306,11 @@ C7C2B---MAKE ONE CUT AT AN APPROXIMATE SOLUTION.
      &                        BCLOSE,DAMP,ICNVG,KKSTP,KKPER,MXITER,
      &                        MXCYC,NCOL,NROW,NLAY,NODES,HNOFLO,IOUT,
      &                        IOUTAMG,ICG,IADAMP,DUP,DLOW)
+              IF (IUNIT(42).GT.0)
+     &            CALL GMG1AP(GZ(LCHNEW),GX(LCRHS),GX(LCCR),GX(LCCC),
+     &                        GX(LCCV),GX(LCHCOF),HNOFLO,IG(LCIBOU),
+     &                        IITER,MXITER,RCLOSE,HCLOSE,KKITER,KKSTP,
+     &                        KKPER,ICNVG,DAMP,IADAMP,IOUTGMG,IOUT)
               IF (IERR.GT.0) THEN
 C               WRITE MESSAGE RELATED TO BEALE'S MEASURE, IF
 C               APPROPRIATE, THEN STOP EXECUTION.
@@ -1988,6 +1996,12 @@ C7C2B---MAKE ONE CUT AT AN APPROXIMATE SOLUTION.
      &                        BCLOSE,DAMP,ICNVG,KKSTP,KKPER,MXITER,
      &                        MXCYC,NCOL,NROW,NLAY,NODES,HNOFLO,IOUT,
      &                        10,ICG,IADAMP,DUP,DLOW)
+              IF (IUNIT(42).GT.0)
+     &            CALL GMG1AP(Z(LCSNEW),GX(LCRHS),GX(LCCR),GX(LCCC),
+     &                        GX(LCCV),GX(LCHCOF),HNOFLO,IG(LCIBOU),
+     &                        IITER,MXITER,RCLOSES,HCLOSES,KKITER,
+     &                        KKSTP,KKPER,ICNVG,DAMP,IADAMP,IOUTGMG,
+     &                        IOUT)
                 IF (IERR.GT.0) GOTO 85
 C
 C7C2C---IF CONVERGENCE CRITERION HAS BEEN MET STOP ITERATING.
@@ -2392,6 +2406,7 @@ C       DEALLOCATE STATEMENTS
         IF(IUNIT(50).GT.0) DEALLOCATE(MNWSITE)
 C       DEALLOCATE (DA) PROCEDURE
         IF(IUNIT(54).GT.0) CALL GWF1SUB1DA()
+        IF(IUNIT(42).GT.0) CALL MF2KGMG_FREE()
         GOTO 10
       ENDIF
 C

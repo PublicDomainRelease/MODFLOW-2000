@@ -1,5 +1,6 @@
+C Time of File Save by DEP  8/6/2004 1:30PM
 ! Time of File Save by ERB: 5/3/2004 9:36AM
-C     Revised DEP 30 April, 20 May, and 28 June 2004
+C     Revised DEP 30 April, 20 May, 28 June 2004, 5 August, 2004
 C     Revised DEP Feb. and 22 March 2004
 C     Last change DEP and LK 25 August 2003
 C     Last change:  ERB  17 June 2003
@@ -597,7 +598,7 @@ C
 C7------CHECK FOR ERRORS IN SEGMENT DATA.
       NSEG=1
       DO WHILE (NSEG.LE.NSS)
-        IF (NSEGCK(NSEG).LE.0) THEN
+        IF (NSEGCK(NSEG).LE.0.AND.KKPER.EQ.1) THEN
           WRITE (IOUT,8) NSEG
     8     FORMAT (/5X,'*** WARNING ***  INPUT DATA FOR SEGMENT',
      1       I6,' WERE NOT DEFINED')
@@ -922,7 +923,7 @@ C
      1                  NROW,NLAY,IOUT,NSS,SEG,ISEG,IOTSG,XSEC,IDIVAR,
      2                  QSTAGE,CONST,MAXPTS,DLEAK,SGOTFLW,DVRSFLW,
      3                  NLAKESAR,STGOLD,STRIN,STROUT,STGNEW,THETA,
-     4                  VOL,ISS,DSTROT,SFRQ,IUNITLAK,KKITER)
+     4                  VOL,ISS,DSTROT,SFRQ,IUNITLAK,KKITER,KKPER,KKSTP)
 C
 C     VERSION  4:CONNECTED TO LAK3 PACKAGE AND MODFLOW-GWT-- AUGUST 2003
 C
@@ -945,8 +946,9 @@ C
      9            WETPERMC,WETPERMD,WETPERM1,WETPERM2,WETPERMP,WETPERMX,
      *            WIDTH,WIDTHA,WIDTHB,WIDTHC,WIDTHD,WIDTH1,WIDTH2,
      *            WIDTHP,WIDTHX,BWDTH,CDPTH,FDPTH,AWDTH,F1,F2,
-     *            FP,FPOLD,ENPT1,ENPT2,FLWEN1,FLWEN2,FLWP,FLOBOTP,
-     *            FLOBOTX,FLWPETP,FLWX,FLWMPT2,FLWEST
+     *            FP,ENPT1,ENPT2,FLWEN1,FLWEN2,FLWP,FLOBOTP,
+     *            FLOBOTX,FLOBOTOLD,FLWPETP,FLWX,FLWMPT2,FLWEST,ERR,
+     *            FPOLD,DLHOLD,PRECIP,ETSTR
 
 C     ADD FOR SAVING Qs NEEDED BY SEN PROCESS WHEN SFR IS ACTIVE
 C       SFRQ(1,n) = FLOW (AT REACH MIDPOINT)
@@ -1081,17 +1083,17 @@ C13----FLOW FROM LAKE COMPUTED USING TABULATED VALUES.
                 ELSE IF(DLKSTR.GT.0.0.AND.ICALC.EQ.4) THEN
                   CALL GWF1SFR1TBF(FLOWIN,QSTAGE,DLKSTR,WIDTH,
      1                             ISEG(2,ISTSG),MAXPTS,NSS,NREACH,
-     2                             ISTSG,KKITER,IOUT)
+     2                             ISTSG,KKITER,IOUT,0)
                   STROUT(ISTSG)=FLOWIN
                   IF(ISS.NE.0) THEN
                     DLKSTR1=DLKSTR*1.001
                     DLKSTR2=DLKSTR*0.999
                     CALL GWF1SFR1TBF(FLWDLK1,QSTAGE,DLKSTR1,WDTHLK1,
      1                               ISEG(2,ISTSG),MAXPTS,NSS,NREACH,
-     2                               ISTSG,KKITER,IOUT)
+     2                               ISTSG,KKITER,IOUT,0)
                     CALL GWF1SFR1TBF(FLWDLK2,QSTAGE,DLKSTR2,WDTHLK2,
      1                               ISEG(2,ISTSG),MAXPTS,NSS,NREACH,
-     2                               ISTSG,KKITER,IOUT)
+     2                               ISTSG,KKITER,IOUT,0)
                     DSTROT(ISTSG)=(FLWDLK1-FLWDLK2)/(DLKSTR1-DLKSTR2)
                   END IF
                 ELSE IF (DLKSTR.LT.0.0.AND.ICALC.GT.0) THEN
@@ -1102,18 +1104,21 @@ C13----FLOW FROM LAKE COMPUTED USING TABULATED VALUES.
           END IF
 C
 C14-----CHECK IF UPSTREAM SEGMENT GETS DIVERTED AND DETERMINE
-C        SEGMENT NUMBER OF DIVERSION.
+C        SEGMENT NUMBER OF DIVERSION. CHANGES MADE BY CSTILLERY TO
+C        ALLOW FOR MULTIPLE DIVERSIONS AT END OF A STREAM SEGMENT.
           IF(ISTSG.GT.1) THEN
-            IDIVSEG=0
-            IUPSEG=0
-            IPRVSG = ISTRM(4,LL)
-            KSS=1
-              DO WHILE(IPRVSG.NE.IUPSEG.AND.KSS.LE.NSS)
+            IPRVSG = ISTRM(4,LL)                                !CSTILLERY
+            KSS=1                                               !CSTILLERY
+            DO WHILE(KSS.LE.NSS)                                !CSTILLERY
+              IDIVSEG=0
+              IUPSEG=0
+              DO WHILE(IPRVSG.NE.IUPSEG)                        !CSTILLERY
                 IUPSEG=IDIVAR(1,KSS)
                 IF(IUPSEG.EQ.IPRVSG) IDIVSEG=KSS
                 KSS=KSS+1
+                IF (KSS.GT.NSS) IPRVSG=IUPSEG                   !CSTILLERY
               END DO
-             IF(IDIVSEG.GT.0) THEN
+              IF(IDIVSEG.GT.0) THEN
 C
 C15-----DETERMINE DIVERSION AND SUBTRACT IT FROM
 C         FLOW AT END OF UPSTREAM SEGMENT.
@@ -1158,7 +1163,8 @@ C         EXCEEDS SPECIFIED FLOW (FLOOD CONTROL DIVERSION).
                          DVRSFLW(IDIVSEG)=0.0
                       END IF
                    END IF
-             END IF
+              END IF
+            END DO                                              !CSTILLERY
           END IF
 C
 C20-----SET FLOW INTO DIVERSION IF SEGMENT IS DIVERSION.
@@ -1166,7 +1172,7 @@ C20-----SET FLOW INTO DIVERSION IF SEGMENT IS DIVERSION.
              IF(IDIVAR(1,ISTSG).GT.0)FLOWIN=DVRSFLW(ISTSG)
           END IF
 C
-C21----SUM TRIBUTARY OUTFLOW AND USE AS INFLOW INTO DOWNSTREAM SEGMENT.
+C21-----SUM TRIBUTARY OUTFLOW AND USE AS INFLOW INTO DOWNSTREAM SEGMENT.
           IF(ISTSG.GT.1.AND.ISEG(3,ISTSG).EQ.7) THEN
             ITRIB=1
             FLOWIN=0.0
@@ -1192,16 +1198,16 @@ C22-----IF REACH >1, SET INFLOW EQUAL TO OUTFLOW FROM UPSTREAM REACH.
           FLOWIN=STRM(9,LL)
         END IF
 C
-C23----SEARCH FOR UPPER MOST ACTIVE CELL IN STREAM REACH.
+C23-----SEARCH FOR UPPER MOST ACTIVE CELL IN STREAM REACH.
         ILAY=IL
         DO WHILE(IBOUND(IC,IR,ILAY).EQ.0.AND.ILAY.LE.NLAY)
           ILAY=ILAY+1
         END DO
         IF (ILAY.LE.NLAY)IL=ILAY
         IF(ILAY.LE.NLAY.AND.IBOUND(IC,IR,IL).GT.0) THEN
-         IPRNDPTH=0
+          IPRNDPTH=0
 C
-C24----COMPUTE STREAM DEPTH IN REACH.
+C24-----COMPUTE STREAM DEPTH IN REACH.
           DEPTH=STRM(7,L)
           IF(DEPTH.LE.0.D0)DEPTH=0.D0
           STRTOP=STRM(3,L)
@@ -1213,16 +1219,23 @@ C24----COMPUTE STREAM DEPTH IN REACH.
           SBDTHK=STRM(8,L)
           HSTR=DEPTH+STRM(3,L)
           CSTR=STRM(16,L)
+          PRECIP=STRM(14,L)
+          ETSTR=STRM(13,L)
           STRLEAK=STRLEN*AVHC
           ITOT=0
+          DEPTHX=0.0D0
           DBLEAK=DLEAK
+          DEPS=0.999*DLEAK
+          DLH=DEPS
+          DLHOLD=1.0D6
 C
-C25----COMPUTE FLOW AT MIDPOINT OF REACH IGNORING STREAMBED LEAKAGE.
+C25-----COMPUTE FLOW AT MIDPOINT OF REACH IGNORING STREAMBED LEAKAGE.
 
 C erb -- Added 6/17/03
            if (icalc.eq.0) then
-             flwmpt=FLOWIN+0.5*(STRM(12,L)-STRM(13,L)+STRM(14,L))
+             flwmpt=FLOWIN+0.5*(STRM(12,L)-ETSTR+PRECIP)
              sfrq(4,l) = width
+             IF(FLWMPT.LE.0.0D0)FLWMPT=0.0D0
            endif
            if (icalc.eq.1) then
              sfrq(4,l) = width
@@ -1230,8 +1243,8 @@ C erb -- Added 6/17/03
           IF(ICALC.EQ.1) THEN
             ROUGH=SEG(16,ISTSG)
             QCNST=CONST*WIDTH*DSQRT(SLOPE)/ROUGH
-            FLOWC=FLOWIN+(STRM(12,L)-STRM(13,L)+STRM(14,L))
-            FLWMPT=FLOWIN+0.5*(STRM(12,L)-STRM(13,L)+STRM(14,L))
+            FLOWC=FLOWIN+(STRM(12,L)-ETSTR+PRECIP)
+            FLWMPT=FLOWIN+0.5*(STRM(12,L)-ETSTR+PRECIP)
             IF(FLWMPT.LE.0.0D0)FLWMPT=0.0D0
             IF(FLOWC.LE.0.0D0)FLOWC=0.0D0
             XNUM=FLWMPT*ROUGH
@@ -1243,22 +1256,24 @@ C erb -- Added 6/17/03
             FLWMPT=FLOWIN+0.5*STRM(12,L)
             FLOWC=FLOWIN+STRM(12,L)
             IF(FLOWC.LE.0.0D0)FLOWC=0.0D0
-C----ADDED DEP 5/20/2004
+C
+C26-----CALCULATE AN INITIAL ESTIMATE OF FLOW IN CHANNEL
             IF(FLWMPT.LE.0.0D0)THEN
                FLWMPT=0.0D0
                DEPTH=0.0D0
                WIDTH=0.0D0
                WETPERM=1.0D0
+            END IF
+            IF (FLWMPT.EQ.0.0D0.AND.H.GT.STRTOP) THEN
+              FLWEST=(STRLEN*AVHC/SBDTHK)*(ABS(STRTOP-H))
             ELSE
-              IF(FLWMPT.EQ.0.0D0.AND.H.GT.STRTOP) THEN
-                FLWEST=(STRLEN*AVHC/SBDTHK)*(ABS(STRTOP-H))
-              ELSE
-                FLWEST=FLWMPT
-              END IF
+              FLWEST=FLWMPT
+            END IF
+            IF(FLWEST.GE.0.0D0) THEN
               IF(ICALC.EQ.2) THEN
                 CALL GWF1SFR1DPTH(FLWEST,XSEC,SLOPE,CONST,ISTSG,
-     1                  NSS,SEG(16,ISTSG),SEG(17,ISTSG),WETPERM,
-     2                  DEPTH,ITSTR,WIDTH,IOUT,IPRNDPTH)
+     1                NREACH,NSS,SEG(16,ISTSG),SEG(17,ISTSG),
+     2                WETPERM,DEPTH,ITSTR,WIDTH,IOUT,IPRNDPTH)
               ELSE IF(ICALC.EQ.3) THEN
                 CDPTH=SEG(9,ISTSG)
                 FDPTH=SEG(10,ISTSG)
@@ -1269,57 +1284,69 @@ C----ADDED DEP 5/20/2004
                 WETPERM=WIDTH
               ELSE IF(ICALC.EQ.4) THEN
                 CALL GWF1SFR1TBD(FLWEST,QSTAGE,DEPTH,WIDTH,
-     1                   ISEG(2,ISTSG),MAXPTS,NSS,NREACH,ISTSG,KKITER,
-     2                   IOUT)
+     1                 ISEG(2,ISTSG),MAXPTS,NSS,NREACH,ISTSG,KKITER,
+     2                 IOUT)
                 WETPERM=WIDTH
               END IF
+            ELSE
+                DEPTH=0.0D0
+                WIDTH=1.0D0
+                WETPERM=1.0D0
             END IF
-              CSTR=(AVHC*WETPERM*STRLEN)/SBDTHK             
+            CSTR=(AVHC*WETPERM*STRLEN)/SBDTHK
           END IF
 C
-C26----ESTIMATE DEPTH USING BISECTION METHOD WHEN ICALC IS GREATER THAN 0.
-          H=HNEW(IC,IR,IL)
+C27-----ESTIMATE DEPTH USING BISECTION METHOD WHEN ICALC IS GREATER THAN 0.
           IFLG=1
-          IF(H.LT.SBOT.AND.ICALC.EQ.1)IFLG=0
+          IF(H.LE.STRTOP.AND.FLOWC.LE.0.0D0)IFLG=0
           IF(ICALC.GE.1.AND.IFLG.EQ.1) THEN
 C
-C27----ESTIMATE ENDPOINTS FOR BISECTION
+C28-----ESTIMATE INITIAL ENDPOINTS.
 C       ADDED DEP 5/20/2004
             ENPT1=0.0D0
             IF(DEPTH.GT.0.0D0)THEN
-              IF((STRTOP-H).GT.0.0) THEN
-                ENPT2=2.0*DEPTH
+              IF((STRTOP-H).GT.0.0D0) THEN
+                ENPT2=0.9*DEPTH
               ELSE
-                ENPT2=1.1*DEPTH-(STRTOP-H)
+                ENPT2=1.1*(DEPTH-(STRTOP-H))
               END IF
             ELSE
-              IF((STRTOP-H).GT.0.0) THEN
+              IF((STRTOP-H).GT.0.0D0) THEN
                 ENPT2=1.0
               ELSE
                 ENPT2=0.99*(H-STRTOP)
               END IF
             END IF
 C
-C28----ESTIMATE FLOW AT ENDPOINT 1 DEP 05/22/04.
+C29-----ESTIMATE FLOW AT ENDPOINT 1 DEP 05/22/04.
             IF(H.GT.STRTOP) THEN
               FLOBOT1=CSTR*(STRTOP-H)
               FLWEN1=FLWMPT-0.5*FLOBOT1
-            ELSE 
+            ELSE
+              FLOBOT1=0.0D0
               FLWEN1=FLWMPT
             END IF
 C
-C29----ESTIMATE DEPTH FOR ENDPOINTS WHEN ICALC IS 1.
+C30-----ESTIMATE DEPTH FOR ENDPOINTS WHEN ICALC IS 1.
             IF(ICALC.EQ.1) THEN
-              IF(H.GT.SBOT)THEN
-                FLOBOT2=(CSTR*(STRTOP+ENPT2-H))
+              IF(ENPT2.GT.0.0D0) THEN
+                IF(H.GT.SBOT)THEN
+                  FLOBOT2=(CSTR*(STRTOP+ENPT2-H))
+                ELSE
+                  FLOBOT2=(CSTR*(STRTOP+ENPT2-SBOT))
+                END IF
               ELSE
-                FLOBOT2=(CSTR*(STRTOP+ENPT2-SBOT))
+                IF(H.GT.STRTOP) THEN
+                  FLOBOT2=CSTR*(STRTOP-H)
+                ELSE
+                  FLOBOT2=0.0D0
+                END IF
               END IF
               IF(FLOBOT2.GT.FLOWC)FLOBOT2=FLOWC
               DEPTH2=((FLWMPT-0.5*FLOBOT2)/QCNST)**0.6
               DEPTH1=((FLWEN1-0.5*FLOBOT1)/QCNST)**0.6
 C
-C30----ESTIMATE DEPTH, WIDTH AND WETTED PERIMETER WHEN
+C31-----ESTIMATE DEPTH, WIDTH AND WETTED PERIMETER WHEN
 C         ICALC IS GREATER THAN OR EQUAL TO 2.
             ELSE IF(ICALC.GE.2) THEN
               IF(ICALC.EQ.2)THEN
@@ -1328,91 +1355,106 @@ C         ICALC IS GREATER THAN OR EQUAL TO 2.
      2                   FLWEN2,WIDTH2)
               ELSE IF(ICALC.EQ.3) THEN
                 FLWEN2=(ENPT2/CDPTH)**(1/FDPTH)
-                WIDTH2=AWDTH*(FLWEN2**BWDTH)
-                WETPERM2=WIDTH2
+                IF(FLWEN2.GT.0.0D0) THEN
+                  WIDTH2=AWDTH*(FLWEN2**BWDTH)
+                  WETPERM2=WIDTH2
+                ELSE
+                  WIDTH2=0.0D0
+                  WETPERM2=1.0D0
+                END IF
               ELSE IF(ICALC.EQ.4) THEN
-                CALL GWF1SFR1TBF(FLWEN2,QSTAGE,ENPT2,WIDTH2,
-     1               ISEG(2,ISTSG),MAXPTS,NSS,NREACH,ISTSG,KKITER,IOUT)
-                WETPERM2=WIDTH2
+                  CALL GWF1SFR1TBF(FLWEN2,QSTAGE,ENPT2,WIDTH2,
+     1               ISEG(2,ISTSG),MAXPTS,NSS,NREACH,ISTSG,KKITER,
+     2               IOUT,0)
+                  WETPERM2=WIDTH2
               END IF
 C
-C31----ESTIMATE LEAKAGE THROUGH STREAMBED WHEN ICALC GREATER THAN OR
-C         EQUAL TO 2.            
+C32-----ESTIMATE LEAKAGE THROUGH STREAMBED WHEN ICALC GREATER THAN OR
+C         EQUAL TO 2.
               IF(WIDTH2.GT.0.0D0)THEN
-                FLWPET2=(STRM(14,L)-STRM(13,L))*WIDTH2*STRLEN
-              ELSE
-                FLWPET2=(STRM(14,L)-STRM(13,L))*STRLEN
-                IF(FLWPET2.LE.0.0)FLWPET2=0.0
-              END IF
-              IF(H.GT.SBOT) THEN
-                FLOBOT2=((AVHC*WETPERM2*STRLEN/SBDTHK)*
-     1                      (STRTOP-H))
-              ELSE
-                FLOBOT2=((AVHC*WETPERM2*STRLEN/SBDTHK)*
+                FLWPET2=(PRECIP-ETSTR)*WIDTH2
+                IF(H.GT.SBOT) THEN
+                  FLOBOT2=((AVHC*WETPERM2*STRLEN/SBDTHK)*
+     1                      (STRTOP+ENPT2-H))
+                ELSE
+                  FLOBOT2=((AVHC*WETPERM2*STRLEN/SBDTHK)*
      1                     (STRTOP+ENPT2-SBOT))
+                END IF
+              ELSE
+                FLWPET2=(PRECIP-ETSTR)
+                IF(FLWPET2.LE.0.0)FLWPET2=0.0D0
+                IF(H.GT.STRTOP) THEN
+                  FLOBOT2=((AVHC*1.0D0*STRLEN/SBDTHK)*
+     1                      (STRTOP-H))
+                ELSE
+                  FLOBOT2=0.0D0
+                END IF
               END IF
               FLWMPT2=FLWMPT
               IF(FLOBOT2.GE.FLOWC+FLWPET2)THEN
                  FLOBOT2=FLOWC+FLWPET2
                  FLWMPT2=0.5*(FLOWC+FLWPET2)
               END IF
-              FLWEN2=FLWMPT2                                    
+              FLWEN2=FLWMPT2
+              IF(FLWEN1.LE.0.0D0) THEN
+                DEPTH1=0.0D0
+                WIDTH1=0.0D0
+                WETPERM=1.0D0
+              ELSE
                 IF(ICALC.EQ.2) THEN
-                  CALL GWF1SFR1DPTH(FLWEN1,XSEC,SLOPE,CONST,ISTSG,NSS,
-     1                  SEG(16,ISTSG),SEG(17,ISTSG),WETPERM1,DEPTH1,
-     2                  ITSTR,WIDTH1,IOUT,IPRNDPTH)
+                  CALL GWF1SFR1DPTH(FLWEN1,XSEC,SLOPE,CONST,ISTSG,
+     1                  NREACH,NSS,SEG(16,ISTSG),SEG(17,ISTSG),
+     2                  WETPERM1,DEPTH1,ITSTR,WIDTH1,IOUT,IPRNDPTH)
                 ELSE IF (ICALC.EQ.3) THEN
-                  DEPTH1=CDPTH*(FLWEN1**FDPTH)
-                  WIDTH1=AWDTH*(FLWEN1**BWDTH)
-                  WETPERM1=WIDTH1
+                    DEPTH1=CDPTH*(FLWEN1**FDPTH)
+                    WIDTH1=AWDTH*(FLWEN1**BWDTH)
+                    WETPERM1=WIDTH1
                 ELSE IF(ICALC.EQ.4) THEN
                   CALL GWF1SFR1TBD(FLWEN1,QSTAGE,DEPTH1,WIDTH1,
      1                  ISEG(2,ISTSG),MAXPTS,NSS,NREACH,ISTSG,KKITER,
      2                  IOUT)
-                END IF 
+                END IF
+              END IF
 C
-C32----IF FLOW AT ENDPOINT 2 IS LESS THAN OR EQAL TO ZERO, SET DEPTH2,
-C             WIDTH2, AND WETPERM2 TO ZERO.                 
-              IF(FLWEN2.LE.0.0) THEN
+C33-----IF FLOW AT ENDPOINT 2 IS LESS THAN OR EQUAL TO ZERO, SET DEPTH2,
+C             AND WIDTH2 TO ZERO, AND WETPERM2 TO ONE.
+              IF(FLWEN2.LE.0.0D0) THEN
                 DEPTH2=0.0D0
                 WIDTH2=0.0D0
                 WETPERM2=1.0D0
 C
-C33----OTHERWISE CALCULATE DEPTH2,WIDTH2,AND WETPERM2.
-                
-              ELSE 
-                IF(ICALC.EQ.2) THEN            
-                  CALL GWF1SFR1DPTH(FLWEN2,XSEC,SLOPE,CONST,ISTSG,NSS,
-     1                  SEG(16,ISTSG),SEG(17,ISTSG),WETPERM2,DEPTH2,
-     2                  ITSTR,WIDTH2,IOUT,IPRNDPTH)
-                ELSE IF (ICALC.EQ.3) THEN          
+C34-----OTHERWISE CALCULATE DEPTH2,WIDTH2,AND WETPERM2.
+              ELSE
+                IF(ICALC.EQ.2) THEN
+                  CALL GWF1SFR1DPTH(FLWEN2,XSEC,SLOPE,CONST,ISTSG,
+     1                  NREACH,NSS,SEG(16,ISTSG),SEG(17,ISTSG),
+     2                  WETPERM2,DEPTH2,ITSTR,WIDTH2,IOUT,IPRNDPTH)
+                ELSE IF (ICALC.EQ.3) THEN
                   DEPTH2=CDPTH*(FLWEN2**FDPTH)
                   WIDTH2=AWDTH*(FLWEN2**BWDTH)
                   WETPERM2=WIDTH2
-                ELSE IF(ICALC.EQ.4) THEN         
+                ELSE IF(ICALC.EQ.4) THEN
                   CALL GWF1SFR1TBD(FLWEN2,QSTAGE,DEPTH2,WIDTH2,
      1                  ISEG(2,ISTSG),MAXPTS,NSS,NREACH,ISTSG,KKITER,
      2                  IOUT)
-                END IF 
-              END IF 
+                END IF
+              END IF
             END IF
 C
-C34----DETERMINE ROOT FOR ENDPOINT 1 WHEN DEPTH IS GREATER THAN 0.
-  
+C35-----DETERMINE ROOT FOR ENDPOINT 1 WHEN DEPTH IS GREATER THAN 0.
             IF(DEPTH1.GT.0.0D0)THEN
               F1=ENPT1-DEPTH1
             ELSE
-              DEPTH1=0.0D0
+              ENPT1=0.0D0
               WIDTH1=0.0D0
               WETPERM1=1.0D0
               F1=ENPT1-0.0D0
 C
-C35----DETERMINE ROOT FOR ENDPOINT 2 WHEN DEPTH IS GREATER THAN 0.
-
+C36-----DETERMINE ROOT FOR ENDPOINT 2 WHEN DEPTH IS GREATER THAN 0.
             END IF
             IF(DEPTH2.GT.0.0D0) THEN
               F2=ENPT2-DEPTH2
-              IF(F2.LT.0.0)ENPT2=DEPTH2
+              IF(F2.LT.0.0D0)ENPT2=DEPTH2
             ELSE
               DEPTH2=0.0D0
               WIDTH2=0.0D0
@@ -1420,152 +1462,517 @@ C35----DETERMINE ROOT FOR ENDPOINT 2 WHEN DEPTH IS GREATER THAN 0.
               F2=ENPT2-0.0D0
             END IF
             FPOLD=0.0D0
-            IFLG=1
-              IBFLG=1               
+            IFLG=1             
 C
-C36----ITERATE THROUGH BISECTION METHOD TO FIND ESTIMATE OF STREAM DEPTH
+C37-----ITERATE THROUGH NEWTON METHOD TO FIND ESTIMATE OF STREAM DEPTH
 C        AND STREAMBED LEAKAGE WHEN ICALC IS GREATER THAN 0.
+            DEPTHP=(ENPT1+ENPT2)/2.0
+            DEPTHX=DEPTHP
+            IIC=0
+            IIC2=0
+            IIC3=0
+            FLOBOTOLD=0.0D0 ! ERB, guessing this belongs here, 8/6/04
             DO WHILE (IFLG.EQ.1)
               ITOT=ITOT+1
-                DEPTHP=(ENPT1+ENPT2)/2.
-                IF(ICALC.EQ.1)THEN
-                  IF(H.GT.SBOT) THEN
-                    FLOBOTP=(CSTR*(STRTOP+DEPTHP-H))
-                  ELSE
-                    FLOBOTP=(CSTR*(STRTOP+DEPTHP-SBOT))
-                  END IF
-                  IF(FLOBOTP.GE.FLOWC) FLOBOTP=FLOWC
-                    DEPTHX=((FLWMPT-0.5*FLOBOTP)/QCNST)**0.6 
-                ELSE IF(ICALC.GE.2) THEN
-                  IF (ICALC.EQ.2) THEN
-                    CALL GWF1SFR1FLW(DEPTHP,XSEC,CONST,ISTSG,NSS,
-     1                   SEG(16,ISTSG),SEG(17,ISTSG),SLOPE,WETPERMP,
-     2                   FLWP,WIDTHP)
-                  ELSE IF (ICALC.EQ.3) THEN
-                    FLWP=(DEPTHP/CDPTH)**(1/FDPTH)
-                    WIDTHP=AWDTH*(FLWP**BWDTH)
-                    WETPERMP=WIDTHP
-                  ELSE IF (ICALC.EQ.4) THEN
-                    CALL GWF1SFR1TBF(FLWP,QSTAGE,DEPTHP,WIDTHP,
-     1                         ISEG(2,ISTSG),MAXPTS,NSS,NREACH,
-     2                         ISTSG,KKITER,IOUT)
-                    WETPERMP=WIDTHP
-                  END IF
-                  IF(WIDTHP.GT.0.0D0)THEN
-                    FLWPETP=(STRM(14,L)-STRM(13,L))*WIDTHP*STRLEN
-                  ELSE
-                    FLWPETP=(STRM(14,L)-STRM(13,L))*STRLEN
-                    IF(FLWPETP.LE.0.0)FLWPETP=0.0
-                  END IF
-                  IF(H.GT.SBOT) THEN
-                    FLOBOTP=((AVHC*WETPERMP*STRLEN/SBDTHK)*
-     1                        (STRTOP+DEPTHP-H))
-                  ELSE
-                    FLOBOTP=((AVHC*WETPERMP*STRLEN/SBDTHK)*
-     1                        (STRTOP+DEPTHP-SBOT))
-                  ENDIF
-                  IF(FLOBOTP.GT.FLOWC+FLWPETP)FLOBOTP=FLOWC+FLWPETP
-                  FLWMPT=FLWMPT+0.5*FLWPETP
-                  FLWX=FLWMPT-0.5*FLOBOTP
-                  IF(FLWX.GT.0.0D0)THEN
-                    IF(ICALC.EQ.2) THEN
-                      CALL GWF1SFR1DPTH(FLWX,XSEC,SLOPE,CONST,ISTSG,
-     1                     NSS,SEG(16,ISTSG),SEG(17,ISTSG),WETPERMX,
-     2                     DEPTHX,ITSTR,WIDTHX,IOUT,IPRNDPTH)
-                    ELSE IF (ICALC.EQ.3) THEN
-                      DEPTHX=CDPTH*(FLWX**FDPTH)
-                      WIDTHX=AWDTH*(FLWX**BWDTH)
-                      WETPERMX=WIDTHX                 
-                    ELSE IF(ICALC.EQ.4) THEN
-                      CALL GWF1SFR1TBD(FLWX,QSTAGE,DEPTHX,WIDTHX,
-     1                  ISEG(2,ISTSG),MAXPTS,NSS,NREACH,ISTSG,KKITER,
-     2                  IOUT)
-                      WETPERMX=WIDTHX
-                    END IF
-                  ELSE
-                    DEPTHX=0.0D0
-                    WIDTHX=0.0D0
-                    WETPERMX=1.0D0
-                  END IF
-                END IF        
-                  FP=DEPTHP-DEPTHX
-                IF(F1.EQ.0.0D0) THEN
-                  DEPTHP=0.0D0
-                  WIDTHX=0.0D0
-                  WETPERX=0.0D0
-                  FLOBOTP=0.0D0
-                  FP=0.0D0
-                END IF
-                IF(DABS(FP).GT.DBLEAK) THEN
-                  DPTHOLD=DEPTHP
+              IBFLG=0
+              DEPTH1=DEPTHP
+              DEPTH2=DEPTH1+2.0*(DEPS)
 C
-C37----FP IS BETWEEN F1 AND F2
+C38-----CALCULATE FLOBOT1 AND FLOBOT2 FOR ICALC =1.
+                IF(ICALC.EQ.1)THEN
+                   FLWMDPT1=QCNST*(DEPTH1)**(5./3.)
+                   FLWMDPT2=QCNST*(DEPTH2)**(5./3.)
+                  IF(H.GT.SBOT) THEN
+                       FLOBOT1=CSTR*((DEPTH1+DLH+STRTOP)-H)
+                       FLOBOT2=CSTR*((DEPTH2+DLH+STRTOP)-H)
+                  ELSE
+                       FLOBOT1=CSTR*((DEPTH1+DLH+STRTOP)-SBOT)
+                       FLOBOT2=CSTR*((DEPTH2+DLH+STRTOP)-SBOT)
+                  END IF
+C
+C39-----IF FLOBOT1 LIMITED BY FLOW IN CHANNEL USE BISECTION.
+                  IF(FLOBOT1.GE.FLOWC) THEN
+                    ENPT2=DEPTHP
+                    DEPTHP=(ENPT1+ENPT2)/2.0
+                    IF(H.GT.SBOT)THEN
+                      FLOBOTP=CSTR*((DEPTHP+STRTOP)-H)
+                    ELSE
+                      FLOBOTP=CSTR*((DEPTHP+STRTOP)-SBOT)
+                    END IF
+                    IF(0.5*FLOBOTP.GT.FLWMPT)THEN
+                      FLOBOTP=FLOWC
+                    END IF
+                    DEPTHX=((FLWMPT-0.5*FLOBOTP)/QCNST)**0.6
+                    IBFLG=1
+                  ELSE
+                    FHSTR1=(FLWMPT-0.5*FLOBOT1)-(FLWMDPT1)
+                    FHSTR2=(FLWMPT-0.5*FLOBOT2)-(FLWMDPT2)
+                  END IF
+                ELSE IF(ICALC.GE.2) THEN
+C
+C40-----CALCULATE NEWTON VARIABLES FOR ICALC =2.
+                  IF (ICALC.EQ.2) THEN
+                    DEPTHA=DEPTH1-(DEPS*DEPTH1)
+                    IF(DEPTHA.LE.0.0D0)DEPTHA=DEPTH1
+                    DEPTHB=DEPTH1+(DEPS*DEPTH1)
+                    IF(DEPTHB.LE.0.0D0)DEPTHB=DEPS
+                    DEPTH2=DEPTH1+(2*DEPS)
+                    DEPTHC=DEPTH2-(DEPS*DEPTH2)
+                    IF(DEPTHC.LE.0.0D0)DEPTHC=DEPTH2
+                    DEPTHD=DEPTH2+(DEPS*DEPTH2)
+                    IF(DEPTHD.LE.0.0D0)DEPTHD=DEPS
+                    CALL GWF1SFR1FLW(DEPTHA,XSEC,CONST,ISTSG,NSS,
+     1                           SEG(16,ISTSG),SEG(17,ISTSG),SLOPE,
+     2                           WETPERMA,FLWMDPTA,WIDTHA)
+                    CALL GWF1SFR1FLW(DEPTHB,XSEC,CONST,ISTSG,NSS,
+     1                           SEG(16,ISTSG),SEG(17,ISTSG),SLOPE,
+     2                           WETPERMB,FLWMDPTB,WIDTHB)
+                    CALL GWF1SFR1FLW(DEPTHC,XSEC,CONST,ISTSG,NSS,
+     1                           SEG(16,ISTSG),SEG(17,ISTSG),SLOPE,
+     2                           WETPERMC,FLWMDPTC,WIDTHC)
+                    CALL GWF1SFR1FLW(DEPTHD,XSEC,CONST,ISTSG,NSS,
+     1                           SEG(16,ISTSG),SEG(17,ISTSG),SLOPE,
+     2                           WETPERMD,FLWMDPTD,WIDTHD)
+                    CALL GWF1SFR1FLW(DEPTH1,XSEC,CONST,ISTSG,NSS,
+     1                           SEG(16,ISTSG),SEG(17,ISTSG),SLOPE,
+     2                           WETPERM1,FLWMDPT1,WIDTH1)
+                    CALL GWF1SFR1FLW(DEPTH2,XSEC,CONST,ISTSG,NSS,
+     1                           SEG(16,ISTSG),SEG(17,ISTSG),SLOPE,
+     2                           WETPERM2,FLWMDPT2,WIDTH2)
+C
+C41-----CALCULATE NEWTON VARIABLES FOR ICALC=3.
+                  ELSE IF (ICALC.EQ.3) THEN
+                    FLWMDPT1=(DEPTH1/CDPTH)**(1/FDPTH)
+                    FLWMDPT2=(DEPTH2/CDPTH)**(1/FDPTH)
+                    IF(FLWMDPT1.GE.0.0D0) THEN
+                      WIDTH1=AWDTH*(FLWMDPT1**BWDTH)
+                      WETPERM1=WIDTH1
+                    ELSE
+                      WIDTH1=0.0D0
+                      WETPERM1=1.0D0
+                    END IF
+                    IF(FLWMPT2.GE.0.0D0) THEN
+                      WIDTH2=AWDTH*(FLWMDPT2**BWDTH)
+                      WETPERM2=WIDTH2
+                    ELSE
+                      WIDTH2=0.0D0
+                      WETPERM2=1.0D0
+                    END IF
+                    DEPTHA=DEPTH1-(DEPS*DEPTH1)
+                    IF(DEPTHA.LE.0.0D0)DEPTHA=DEPTH1
+                    DEPTHB=DEPTH1+(DEPS*DEPTH1)
+                    IF(DEPTHB.LE.0.0D0)DEPTHB=DEPS
+                    DEPTH2=DEPTH1+(2*DEPS)
+                    DEPTHC=DEPTH2-(DEPS*DEPTH2)
+                    IF(DEPTHC.LE.0.0D0)DEPTHC=DEPTH2
+                    DEPTHD=DEPTH2+(DEPS*DEPTH2)
+                    IF(DEPTHD.LE.0.0D0)DEPTHD=DEPS
+                    FLWMDPTA=(DEPTHA/CDPTH)**(1/FDPTH)
+                    FLWMDPTB=(DEPTHB/CDPTH)**(1/FDPTH)
+                    FLWMDPTC=(DEPTHC/CDPTH)**(1/FDPTH)
+                    FLWMDPTD=(DEPTHD/CDPTH)**(1/FDPTH)
+                    WIDTHA=AWDTH*(FLWMDPTA**BWDTH)
+                    WIDTHB=AWDTH*(FLWMDPTB**BWDTH)
+                    WIDTHC=AWDTH*(FLWMDPTC**BWDTH)
+                    WIDTHD=AWDTH*(FLWMDPTD**BWDTH)
+                    WETPERMA=WIDTHA
+                    WETPERMB=WIDTHB
+                    WETPERMC=WIDTHC
+                    WETPERMD=WIDTHD
+C
+C42-----CALCULATE NEWTON VARIABLES FOR ICALC =4.
+                  ELSE IF (ICALC.EQ.4) THEN
+                    DEPTHA=DEPTH1-(DEPS*DEPTH1)
+                    IF(DEPTHA.LE.0.0D0)DEPTHA=DEPTH1
+                    DEPTHB=DEPTH1+(DEPS*DEPTH1)
+                    IF(DEPTHB.LE.0.0D0)DEPTHB=DEPS
+                    DEPTHC=DEPTH2-(DEPS*DEPTH2)
+                    IF(DEPTHC.LE.0.0D0)DEPTHC=DEPTH2
+                    DEPTHD=DEPTH2+(DEPS*DEPTH2)
+                    IF(DEPTHD.LE.0.0D0)DEPTHD=DEPS
+                    CALL GWF1SFR1TBF(FLWMDPTA,QSTAGE,DEPTHA,WIDTHA,
+     1                             ISEG(2,ISTSG),MAXPTS,NSS,NREACH,
+     2                             ISTSG,KKITER,IOUT,0)
+                    CALL GWF1SFR1TBF(FLWMDPTB,QSTAGE,DEPTHB,WIDTHB,
+     1                             ISEG(2,ISTSG),MAXPTS,NSS,NREACH,
+     2                             ISTSG,KKITER,IOUT,0)
+                    CALL GWF1SFR1TBF(FLWMDPTC,QSTAGE,DEPTHC,WIDTHC,
+     1                             ISEG(2,ISTSG),MAXPTS,NSS,NREACH,
+     2                             ISTSG,KKITER,IOUT,0)
+                    CALL GWF1SFR1TBF(FLWMDPTD,QSTAGE,DEPTHD,WIDTHD,
+     1                             ISEG(2,ISTSG),MAXPTS,NSS,NREACH,
+     2                             ISTSG,KKITER,IOUT,0)
+                    CALL GWF1SFR1TBF(FLWMDPT1,QSTAGE,DEPTH1,WIDTH1,
+     1                             ISEG(2,ISTSG),MAXPTS,NSS,NREACH,
+     2                             ISTSG,KKITER,IOUT,0)
+                    CALL GWF1SFR1TBF(FLWMDPT2,QSTAGE,DEPTH2,WIDTH2,
+     1                             ISEG(2,ISTSG),MAXPTS,NSS,NREACH,
+     2                             ISTSG,KKITER,IOUT,0)
+                    WETPERMA=WIDTHA
+                    WETPERMB=WIDTHB
+                    WETPERMC=WIDTHC
+                    WETPERMD=WIDTHD
+                    WETPERM1=WIDTH1
+                    WETPERM2=WIDTH2
+                  END IF
+C
+C43-----CALCULATE DERIVATIVES FOR DEPTH DEPENDENT VARIABLES FOR ICALC>1.
+                  DLPP1=(PRECIP*(WIDTHA-WIDTHB))/(DEPTHA-DEPTHB)
+                  DLPP2=(PRECIP*(WIDTHC-WIDTHD))/(DEPTHC-DEPTHD)
+                  DLET1=(ETSTR*(WIDTHA-WIDTHB))/(DEPTHA-DEPTHB)
+                  DLET2=(ETSTR*(WIDTHC-WIDTHD))/(DEPTHC-DEPTHD)
+                  DLWP1=(WETPERMA-WETPERMB)/(DEPTHA-DEPTHB)
+                  DLWP2=(WETPERMC-WETPERMD)/(DEPTHC-DEPTHD)
+                  PP1=PRECIP*(WIDTH1+DLPP1*DLH)
+                  PP2=PRECIP*(WIDTH2+DLPP2*DLH)
+                  ET1=ETSTR*(WIDTH1+DLET1*DLH)
+                  ET2=ETSTR*(WIDTH2+DLET2*DLH)
+                  CSTR1=((WETPERM1+DLWP1*DLH)*STRLEAK)/SBDTHK
+                  CSTR2=((WETPERM2+DLWP2*DLH)*STRLEAK)/SBDTHK
+C
+C44-----CALCULATE FLOBOT1 AND FLOBOT2 WHEN ICALC>1.
+                  IF(H.LT.SBOT)THEN
+                     FLOBOT1=CSTR1*((DEPTH1+DLH+STRTOP)-SBOT)
+                     FLOBOT2=CSTR2*((DEPTH2+DLH+STRTOP)-SBOT)
+                  ELSE
+                     FLOBOT1=CSTR1*((DEPTH1+DLH+STRTOP)-H)
+                     FLOBOT2=CSTR2*((DEPTH2+DLH+STRTOP)-H)
+                  END IF
+C
+C45-----DETERMINE IF LEAKAGE LIMITED BY FLOW IN CHANNEL.
+                  IF(WIDTH1.GT.0.0D0)THEN
+                    FLWPET1=PRECIP*(WIDTH1+DLPP1*DLH)-
+     1              ETSTR*(WIDTH1+DLET1*DLH)
+                  ELSE
+                    FLWPET1=(PRECIP-ETSTR)
+                    IF(FLWPET1.LE.0.0)FLWPET1=0.0
+                  END IF
+C
+C46-----IF LEAKAGE LIMITED BY FLOW USE BISECTION.
+                  IF(FLOBOT1.GT.FLOWC+FLWPET1)THEN
+                    DEPTHP=(ENPT1+ENPT2)/2.0
+                    IBFLG=1
+                    IF(ICALC.EQ.2) THEN
+                      CALL GWF1SFR1FLW(DEPTHP,XSEC,CONST,ISTSG,NSS,
+     1                           SEG(16,ISTSG),SEG(17,ISTSG),SLOPE,
+     2                           WETPERMP,FLWX,WIDTHA)
+                    ELSE IF (ICALC.EQ.3) THEN
+                      FLWX=(DEPTHP/CDPTH)**(1/FDPTH)
+                      IF(FLWX.GT.0.0D0) THEN
+                        WIDTHP=AWDTH*(FLWX**BWDTH)
+                        WETPERMP=WIDTHP
+                      ELSE
+                        WIDTHP=0.0D0
+                        WETPERMP=1.0D0
+                      END IF
+                    ELSE IF(ICALC.EQ.4) THEN
+                      CALL GWF1SFR1TBF(FLWX,QSTAGE,DEPTHP,WIDTHP,
+     1                             ISEG(2,ISTSG),MAXPTS,NSS,NREACH,
+     2                             ISTSG,KKITER,IOUT,0)
+                        WETPERMP=WIDTHP
+                    END IF
+                    CSTR1=WETPERMP*STRLEAK/SBDTHK
+                    IF(H.GT.SBOT)THEN
+                      FLOBOTP=CSTR1*((DEPTHP+STRTOP)-H)
+                    ELSE
+                      FLOBOTP=CSTR1*((DEPTHP+STRTOP)-SBOT)
+                    END IF
+                    IF(FLOBOTP.GT.FLOWC+FLWPET1)THEN
+                      FLOBOTP=FLOWC+FLWPET1
+                    END IF
+                    FLWMPT=FLWMPT+0.5*FLWPET1
+                    FLWX=FLWMPT-0.5*FLOBOTP
+                    IF(FLWX.GT.0.0D0)THEN
+                      IF(ICALC.EQ.2) THEN
+                        CALL GWF1SFR1DPTH(FLWX,XSEC,SLOPE,CONST,ISTSG,
+     1                      NREACH,NSS,SEG(16,ISTSG),SEG(17,ISTSG),
+     2                      WETPERMP,DEPTHX,ITSTR,WIDTHP,IOUT,IPRNDPTH)
+                      ELSE IF (ICALC.EQ.3) THEN
+                          DEPTHX=CDPTH*(FLWX**FDPTH)
+                          WIDTHP=AWDTH*(FLWX**BWDTH)
+                          WETPERMX=WIDTHX
+                      ELSE IF(ICALC.EQ.4) THEN
+                        CALL GWF1SFR1TBD(FLWX,QSTAGE,DEPTHX,WIDTHX,
+     1                     ISEG(2,ISTSG),MAXPTS,NSS,NREACH,ISTSG,KKITER,
+     2                     IOUT)
+                        WETPERMX=WIDTHX
+                      END IF
+                    ELSE
+                      DEPTHX=0.0D0
+                      WIDTHX=0.0D0
+                      WETPERMX=1.0D0
+                    END IF
+C
+C47-----IF NOT FLOW LIMITED CALCULATE LEAKAGE FROM NEWTON METHOD.
+                  ELSE
+                    FHSTR1=(FLWMPT-0.5*(PP1-ET1+FLOBOT1))-(FLWMDPT1)
+                    FHSTR2=(FLWMPT-0.5*(PP2-ET2+FLOBOT2))-(FLWMDPT2)
+                  END IF
+                  IF(DEPTHP.EQ.0.0D0) THEN
+                    DEPTHX=DEPTHP
+                    FLOBOTP=0.0D0
+                    WIDTHX=0.0D0
+                    WETPERMX=1.0
+                    IFLG=0
+                  END IF
+                END IF
+                IF(IBFLG.EQ.0) THEN
+                  DLFH=(FHSTR1-FHSTR2)/(DEPTH1-DEPTH2)
+                  IF(DABS(DLFH).LE.DBLEAK)DLFH=0.0D0
+                  IF(DLFH.NE.0.0D0)THEN
+                    DLH=-FHSTR1/DLFH
+                  ELSE
+                    DLH=0.0D0
+                  END IF
+                  DEPTHP=DEPTH1+DLH
+                  IF(IFLG.GT.0) THEN
+                    IF((DEPTHP.GE.ENPT2).OR.(DEPTHP.LE.ENPT1)) THEN
+                      IF(DABS(DLH)>DABS(DLHOLD).OR.DEPTHP.LT.0.0D0)THEN
+                        DEPTHP=(ENPT1+ENPT2)/2.0
+                        IBFLG=1
+                      END IF
+                    END IF
+C
+C48----SET FLAGS TO DETERMINE IF NEWTON METHOD OSCILLATES OR IF
+C               CONVERGENCE IS SLOW.
+                    IF(FLOBOT1*FLOBOTOLD<0.0D0)THEN
+                      IIC2=IIC2+1
+                    ELSE
+                      IIC2=0
+                    END IF
+                    IF(FLOBOT1<0.0D0)THEN
+                      IIC3=IIC3+1
+                    ELSE
+                      IIC3=0
+                    END IF
+                    IF(DLH*DLHOLD<0.0D0.OR.
+     1                 DABS(DLH).GT.DABS(DLHOLD))THEN
+                      IIC=IIC+1
+                    END IF
+                    IIC4=0
+                    IF(IIC3.GT.7.AND.IIC.GT.12) IIC4=1
+C
+C49----IF NEWTON METHOD OSCILLATES OR IF CONVERGENCE IS SLOW,
+C                SWITCH TO BISECTION.
+                    IF(IIC2.GT.7.OR.IIC.GT.12.OR.IIC4.EQ.1) THEN
+                      IBFLG=1
+                      DEPTHP=(ENPT1+ENPT2)/2.0
+                    END IF
+C
+C50----COMPUTE FLOBOTP ON BASIS OF DEPTHP AND THEN ESTIMATE DEPTHX FROM
+C                FLOBOTP.
+                    IF(ICALC.EQ.1)THEN
+                      IF(H.GT.SBOT) THEN
+                        FLOBOTP=(CSTR*(STRTOP+DEPTHP-H))
+                      ELSE
+                        FLOBOTP=(CSTR*(STRTOP+DEPTHP-SBOT))
+                      END IF
+                      IF(FLOBOTP.GE.FLOWC) THEN
+                        FLOBOTP=FLOWC
+                        IF(ENPT1==ENPT2)
+     1                     DEPTHP=((FLWMPT-0.5*FLOBOTP)/QCNST)**0.6
+                      END IF
+                      DEPTHX=((FLWMPT-0.5*FLOBOTP)/QCNST)**0.6
+                    ELSE IF(ICALC.GE.2) THEN
+                      IF (ICALC.EQ.2) THEN
+                        CALL GWF1SFR1FLW(DEPTHP,XSEC,CONST,ISTSG,NSS,
+     1                     SEG(16,ISTSG),SEG(17,ISTSG),SLOPE,WETPERMP,
+     2                     FLWP,WIDTHP)
+                      ELSE IF (ICALC.EQ.3) THEN
+                        FLWP=(DEPTHP/CDPTH)**(1/FDPTH)
+                        IF(FLWP.GT.0.0D0) THEN
+                          WIDTHP=AWDTH*(FLWP**BWDTH)
+                          WETPERMP=WIDTHP
+                        ELSE
+                          WIDTHP=0.0D0
+                          WETPERMP=1.0D0
+                        END IF
+                      ELSE IF (ICALC.EQ.4) THEN
+                        CALL GWF1SFR1TBF(FLWP,QSTAGE,DEPTHP,WIDTHP,
+     1                         ISEG(2,ISTSG),MAXPTS,NSS,NREACH,
+     2                         ISTSG,KKITER,IOUT,0)
+                        WETPERMP=WIDTHP
+                      END IF
+                      IF(WIDTHP.GT.0.0D0)THEN
+                        FLWPETP=(PRECIP-ETSTR)*WIDTHP
+                      ELSE
+                        FLWPETP=(PRECIP-ETSTR)
+                        IF(FLWPETP.LE.0.0D0)FLWPETP=0.0D0
+                      END IF
+                      IF(H.GT.SBOT) THEN
+                        FLOBOTP=((AVHC*WETPERMP*STRLEN/SBDTHK)*
+     1                          (STRTOP+DEPTHP-H))
+                      ELSE
+                        FLOBOTP=((AVHC*WETPERMP*STRLEN/SBDTHK)*
+     1                          (STRTOP+DEPTHP-SBOT))
+                      ENDIF
+                      FLWMPT=FLWMPT+0.5*FLWPETP
+                      FLWX=FLWMPT-0.5*FLOBOTP
+C
+C51-----LEAKAGE LIMITED BY FLOW FOR ICALC GREATER OR EQUAL TO 2.
+C                 SWITCH TO BISECTION.
+                      IF(FLOBOTP.GT.FLOWC+FLWPETP)THEN
+                        DEPTHP=(ENPT1+ENPT2)/2.0
+                        IBFLG=1
+                        IF (ICALC.EQ.2) THEN
+                          CALL GWF1SFR1FLW(DEPTHP,XSEC,CONST,ISTSG,NSS,
+     1                     SEG(16,ISTSG),SEG(17,ISTSG),SLOPE,WETPERMP,
+     2                     FLWP,WIDTHP)
+                        ELSE IF (ICALC.EQ.3) THEN
+                          FLWP=(DEPTHP/CDPTH)**(1/FDPTH)
+                          IF(FLWP.GT.0.0D0) THEN
+                            WIDTHP=AWDTH*(FLWP**BWDTH)
+                            WETPERMP=WIDTHP
+                          ELSE
+                            WIDTHP=0.0D0
+                            WETPERMP=1.0D0
+                          END IF
+                        ELSE IF (ICALC.EQ.4) THEN
+                          CALL GWF1SFR1TBF(FLWP,QSTAGE,DEPTHP,WIDTHP,
+     1                         ISEG(2,ISTSG),MAXPTS,NSS,NREACH,
+     2                         ISTSG,KKITER,IOUT,0)
+                          WETPERMP=WIDTHP
+                        END IF
+                        IF(WIDTHP.GT.0.0D0)THEN
+                          FLWPETP=(PRECIP-ETSTR)*WIDTHP
+                        ELSE
+                          FLWPETP=(PRECIP-ETSTR)
+                          IF(FLWPETP.LE.0.0D0)FLWPETP=0.0D0
+                        END IF
+                        IF(H.GT.SBOT) THEN
+                          FLOBOTP=((AVHC*WETPERMP*STRLEN/SBDTHK)*
+     1                          (STRTOP+DEPTHP-H))
+                        ELSE
+                          FLOBOTP=((AVHC*WETPERMP*STRLEN/SBDTHK)*
+     1                          (STRTOP+DEPTHP-SBOT))
+                        ENDIF
+                        FLWMPT=FLWMPT+0.5*FLWPETP
+                        FLWX=FLWMPT-0.5*FLOBOTP
+                        IF(FLOBOTP.GE.FLOWC+FLWPETP)FLOBOTP=
+     1                     FLOWC+FLWPETP
+                      END IF
+C
+C53-----ESTIMATE DEPTHX WHEN ICALC IS GREATER THAN OR EQUAL TO 2.
+                      IF(FLWX.GT.0.0D0)THEN
+                        IF(ICALC.EQ.2) THEN
+                          CALL GWF1SFR1DPTH(FLWX,XSEC,SLOPE,CONST,
+     1                       ISTSG,NREACH,NSS,SEG(16,ISTSG),
+     2                       SEG(17,ISTSG),WETPERMX,DEPTHX,ITSTR,
+     3                       WIDTHX,IOUT,IPRNDPTH)
+                        ELSE IF (ICALC.EQ.3) THEN
+                            DEPTHX=CDPTH*(FLWX**FDPTH)
+                            WIDTHX=AWDTH*(FLWX**BWDTH)
+                            WETPERMX=WIDTHX
+                        ELSE IF (ICALC.EQ.4) THEN
+                          CALL GWF1SFR1TBD(FLWX,QSTAGE,DEPTHX,WIDTHX,
+     1                    ISEG(2,ISTSG),MAXPTS,NSS,NREACH,ISTSG,
+     2                    KKITER,IOUT)
+                          WETPERMX=WIDTHX
+                        END IF
+                      ELSE
+                        DEPTHX=0.0D0
+                        WIDTHX=0.0D0
+                        WETPERMX=1.0D0
+                      END IF
+                    END IF
+                  END IF
+                END IF
+C
+C54-----COMPUTE DIFFERENCE BETWEEN DEPTHP AND DEPTHX.
+                FP=DEPTHP-DEPTHX
+                IF(IBFLG==1)DLH=FP
+C
+C55-----CHANGE ENDPOINTS IF BISECTION HAS BEEN USED.
+                IF(IBFLG.EQ.1)THEN
                   IF(F1*FP.LT.0.0D0) THEN
 C
-C38----ROOT IS BETWEEN F1 AND FP
+C56-----ROOT IS BETWEEN F1 AND FP.
                     ENPT2=DEPTHP
                     F2=FP
-                  ELSE IF(F1*FP.GT.0.0D0) THEN
+                  ELSE
 C
-C39----ROOT IS BETWEEN FP AND F2
+C57-----ROOT IS BETWEEN FP AND F2.
                     ENPT1=DEPTHP
                     F1=FP
+C
+C58-----CALCULATE ERROR.
                   END IF
-                ELSE IF(DABS(FP).LE.DBLEAK) THEN
-                    IFLG=0
-                    DEPTH=DEPTHP
-                    WIDTH=WIDTHX
-                    WETPERM=WETPERMX
-                    FLOBOT=FLOBOTP                       
-                END IF
-                IF(DABS(FP-FPOLD).LE.DBLEAK) THEN
-                    IFLG=0
-                    DEPTH=DEPTHP
-                    WIDTH=WIDTHX
-                    WETPERM=WETPERMX
-                    FLOBOT=FLOBOTP  
+                  ERR=MIN(DABS(FP),DABS(ENPT2-ENPT1))
+                  ERR1=ERR
+                ELSE
+                  ERR=DLH
+                  ERR2=ERR
                 END IF
 C
-C40----PRINT WARNING THAT REACH FAILED TO CONVERGE AFTER 200 ITERATIONS.
+C59-----SET DEPTH TO DEPTHP AND FLOBOT TO FLOBOTP IS ERROR LESS
+C               THAN TOLERANCE.
+                IF(DABS(ERR).LT.DBLEAK) THEN
+                  DPTHOLD=DEPTHP
+                  IFLG=0
+                  DEPTH=DEPTHP
+                  FLOBOT=FLOBOTP
+                  IF(ICALC.GE.2)THEN
+                    WIDTH=WIDTHP
+                    WETPERM=WETPERMP
+                    FLOWC=FLOWIN+STRM(12,L)-ETSTR*
+     1                      WIDTH+PRECIP*WIDTH
+                    FLWMPT=FLOWIN +0.5*(STRM(12,L)+PRECIP*WIDTH-
+     1                       ETSTR*WIDTH-FLOBOT)
+                  END IF
+                END IF
+C
+C60-----PRINT WARNING THAT REACH FAILED TO CONVERGE AFTER 100 ITERATIONS.
+C             AND SET DEPTH TO DEPTHP AND FLOBOT TO FLOBOTP.
                 IF (ITOT.GE.100) THEN
                   IFLG=0
-                  WRITE(IOUT,12)ISTSG,NREACH,KKITER,FP,FPOLD
+                  WRITE(IOUT,12)ISTSG,NREACH,KKITER,ERR,ERROLD
    12             FORMAT (//5X,'*** WARNING *** SFR FAILED TO ',
      1                 'CONVERGE FOR SEGMENT ',I6,' REACH NO. ',I6,
      2                 ' MODFLOW ITERATION IS ',I6,' LAST ITERATION ',
      3                  G20.10,' PREVIOUS ITERATION ',G20.10)
                   DEPTH=DEPTHP
-                  WIDTH=WIDTHX
-                  WETPERM=WETPERMX
                   FLOBOT=FLOBOTP
+                  IF(ICALC.GE.2)THEN
+                    WIDTH=WIDTHP
+                    WETPERM=WETPERMP
+                    FLOWC=FLOWIN+STRM(12,L)-ETSTR*WIDTH+PRECIP*WIDTH
+                    FLWMPT=FLOWIN +0.5*(STRM(12,L)+PRECIP*WIDTH-
+     1                       ETSTR*WIDTH-FLOBOT)
+                  END IF
                 END IF
-              FPOLD=FP
-              IF(ICALC.GE.2)WIDTH=WIDTHX
+               ERROLD=ERR
+               DLHOLD=DLH
+               FLOBOTOLD=FLOBOT1
+               IF(IBFLG.EQ.1) FLOBOTOLD=FLOBOTP
+C
 CERB -- Need to check that assignment of SFRQ(4,L) belongs here
               SFRQ(4,L)=WIDTH
-            END DO
 C
-C41----DEFINE HSTR, CSTR, WIDTH, AND FLOWOT.
+C61-----END OF NEWTON LOOP.
+            END DO
+
+C
+C62-----DEFINE HSTR, CSTR, WIDTH, AND FLOWOT.
             HSTR=DEPTH+STRM(3,L)
             IF(ICALC.GE.2)CSTR=(AVHC*WETPERM*STRLEN)/SBDTHK
           END IF
 C
-C42-----IF MODEL CELL INACTIVE ROUTE FLOW WITHOUT ANY STREAM
+C63-----IF MODEL CELL INACTIVE ROUTE FLOW WITHOUT ANY STREAM
 C         LEAKAGE (FLOBOT IS ZERO).
         ELSE IF (ILAY.GT.NLAY.OR.IBOUND(IC,IR,IL).LE.0) THEN
           FLOBOT=0.0D0
             IF(ICALC.EQ.0.OR.ICALC.EQ.1)THEN
-               FLOWC=FLOWIN+STRM(12,L)-STRM(13,L)+STRM(14,L)
-               FLWMPT=FLOWIN+0.5*(STRM(12,L)-STRM(13,L)+STRM(14,L))
+               FLOWC=FLOWIN+STRM(12,L)-ETSTR+PRECIP
+               FLWMPT=FLOWIN+0.5*(STRM(12,L)-ETSTR+PRECIP)
             ELSE IF(ICALC.GE.2) THEN
-               FLOWC=FLOWIN+STRM(12,L)-STRM(13,L)*
-     1                      WIDTH+STRM(14,L)*WIDTH
-               FLWMPT=FLOWIN+0.5*(STRM(12,L)-STRM(13,L)*
-     1                      WIDTH+STRM(14,L)*WIDTH)
+               FLOWC=FLOWIN+STRM(12,L)-ETSTR*
+     1                      WIDTH+PRECIP*WIDTH
+               FLWMPT=FLOWIN+0.5*(STRM(12,L)-ETSTR*
+     1                      WIDTH+PRECIP*WIDTH)
                IF(ICALC.EQ.2) THEN
                     CALL GWF1SFR1DPTH(FLWMPT,XSEC,SLOPE,CONST,ISTSG,
-     1                   NSS,SEG(16,ISTSG),SEG(17,ISTSG),WETPERM,
-     2                   DEPTH,ITSTR,WIDTH,IOUT,IPRNDPTH)
+     1                   NREACH,NSS,SEG(16,ISTSG),SEG(17,ISTSG),
+     2                   WETPERM,DEPTH,ITSTR,WIDTH,IOUT,IPRNDPTH)
                     CSTR=WETPERM*STRLEAK/SBDTHK
                ELSE IF (ICALC.EQ.3) THEN
                     DEPTH=CDPTH*(FLWMPT**FDPTH)
@@ -1581,15 +1988,15 @@ C         LEAKAGE (FLOBOT IS ZERO).
           IF(FLOWC.LE.0.0D0) FLOWC=0.0D0
         END IF
 C
-C43----COMPUTE STREAM LEAKAGE IS STREAM DEPTH WAS NOT COMPUTED
-C          USING BISECTION METHOD.
+C64----COMPUTE STREAM LEAKAGE IF STREAM DEPTH WAS NOT COMPUTED
+C          USING EITHER BISECTION OR NEWTON METHOD.
           IF(ITOT.EQ.0) THEN
             IF(ICALC.LE.1) THEN
-              FLOWC=FLOWIN+STRM(12,L)-STRM(13,L)+
-     1              STRM(14,L)
+              FLOWC=FLOWIN+STRM(12,L)-ETSTR+
+     1              PRECIP
             ELSE IF(ICALC.GE.2) THEN
-              FLOWC=FLOWIN+STRM(12,L)-STRM(13,L)*WIDTH+
-     1             STRM(14,L)*WIDTH
+              FLOWC=FLOWIN+STRM(12,L)-ETSTR*WIDTH+
+     1             PRECIP*WIDTH
             END IF
             IF(H.LT.SBOT)THEN
               FLOBOT=CSTR*(HSTR-SBOT)
@@ -1608,54 +2015,71 @@ C          USING BISECTION METHOD.
             END IF
           END IF
 C
-C44----STREAMFLOW OUT EQUALS STREAMFLOW IN MINUS LEAKAGE.
+C65-----STREAMFLOW OUT EQUALS STREAMFLOW IN MINUS LEAKAGE.
           FLOWOT=FLOWC-FLOBOT
           IF(FLOWOT.LT.0.0D0) THEN
             FLOWOT=0.0D0
             FLOBOT=FLOWC
+            FLWMPT=FLOWC-0.5*FLOBOT
+            IF(ICALC.EQ.1)DEPTH=(FLWMPT/QCNST)**0.6
+            IF(ICALC.GE.2) THEN
+               IF(ICALC.EQ.2) THEN
+                    CALL GWF1SFR1DPTH(FLWMPT,XSEC,SLOPE,CONST,ISTSG,
+     1                   NREACH,NSS,SEG(16,ISTSG),SEG(17,ISTSG),
+     2                   WETPERM,DEPTH,ITSTR,WIDTH,IOUT,IPRNDPTH)
+                    CSTR=WETPERM*STRLEAK/SBDTHK
+               ELSE IF (ICALC.EQ.3) THEN
+                    DEPTH=CDPTH*(FLWMPT**FDPTH)
+                    WIDTH=AWDTH*(FLWMPT**BWDTH)
+                    CSTR=WIDTH*STRLEAK/SBDTHK
+               ELSE IF (ICALC.EQ.4) THEN
+                    CALL GWF1SFR1TBD(FLWMPT,QSTAGE,DEPTH,WIDTH,
+     1                                ISEG(2,ISTSG),MAXPTS,NSS,
+     2                               NREACH,ISTSG,KKITER,IOUT)
+                    CSTR=WIDTH*STRLEAK/SBDTHK
+               END IF
+            END IF  
           END IF
 C
-C46----STORE OUTFLOW FROM LAST REACH IN LAST SEGMENT IN STRIN
+C66-----STORE OUTFLOW FROM LAST REACH IN LAST SEGMENT IN STRIN
 C          LIST FOR LAKE PACKAGE.
           IF(IUNITLAK.GT.0) THEN
             IF((L.EQ.NSTRM).AND.(ISTSG.EQ.NSS)) STRIN(ISTSG)=FLOWOT
           END IF
 C
-C47----STORE STREAM INFLOW, OUTFLOW, LEAKAGE, STAGE, AND STREAMBED
+C67-----STORE STREAM INFLOW, OUTFLOW, LEAKAGE, STAGE, AND STREAMBED
 C          CONDUCTANCE FOR EACH REACH.
          STRM(9,L)=FLOWOT
          STRM(10,L)=FLOWIN
          STRM(11,L)=FLOBOT
          STRM(15,L)=HSTR
          STRM(16,L)=CSTR
-cc         STRM(7,L)=DEPTH  -- Changed 6/17/03 - ERB
          IF(ICALC.GE.1)STRM(7,L)=DEPTH
          IF(ICALC.GE.2)STRM(5,L)=WIDTH
 
 C
-C     STORE FLOWS NEEDED FOR SENSITIVITIES - ERB
+C68-----STORE FLOWS NEEDED FOR SENSITIVITIES - ERB
       SFRQ(1,L)=FLWMPT
       SFRQ(2,L)=FLOWC
       SFRQ(3,L)=FLOBOT
       SFRQ(5,L)=FLOWIN
-
 C
-C49----ADD TERMS TO RHS AND HCOF IF FLOBOT IS NOT ZERO.
+C69-----ADD TERMS TO RHS AND HCOF IF FLOBOT IS NOT ZERO.
          IF(DABS(FLOBOT).GT.0.0D0) THEN
 C
-C50-----IF HEAD > BOTTOM THEN ADD TERMS TO RHS AND HCOF.
+C70-----IF HEAD > BOTTOM THEN ADD TERMS TO RHS AND HCOF.
             IF(HNEW(IC,IR,IL).GT.SBOT) THEN
               IF(FLOBOT.LT.FLOWC) THEN
-C51-----HEAD-DEPENDENT SEEPAGE.
+C71-----HEAD-DEPENDENT SEEPAGE.
                  RHS(IC,IR,IL)=RHS(IC,IR,IL)-(CSTR*HSTR)
                  HCOF(IC,IR,IL)=HCOF(IC,IR,IL)-CSTR
               ELSE
-C52-----CONSTANT SEEPAGE LIMITED BY STREAMFLOW OR STREAMBED
+C72-----CONSTANT SEEPAGE LIMITED BY STREAMFLOW OR STREAMBED
 C         CONDUCTANCE IN REACH.
                 RHS(IC,IR,IL)=RHS(IC,IR,IL)-FLOBOT
               END IF
 C
-C53-----IF HEAD < BOTTOM THEN ADD TERM ONLY TO RHS.
+C73-----IF HEAD < BOTTOM THEN ADD TERM ONLY TO RHS.
             ELSE
                RHS(IC,IR,IL)=RHS(IC,IR,IL)-FLOBOT
             END IF
@@ -1663,7 +2087,7 @@ C53-----IF HEAD < BOTTOM THEN ADD TERM ONLY TO RHS.
       L=L+1
       END DO
 C
-C54-----RETURN.
+C74-----RETURN.
       RETURN
       END
 C
@@ -1688,12 +2112,12 @@ C     SPECIFICATIONS:
 C     -----------------------------------------------------------------
 C
       CHARACTER*16 VBNM(MSUM),TEXT,STRTXT
-      DOUBLE PRECISION HNEW,H,HSTR,SBOT,CSTR,RATIN,RATOUT,
+      DOUBLE PRECISION HNEW,H,HSTR,SBOT,CSTR,RATIN,RATOUT,FLWMPT,
      1                 FLOWIN,FLOBOT,FLOW,FLOWOT,DIF,SBDTHK,
      2                 UPFLW,TRBFLW,WIDTH,WETPERM,RUNOF,PRECIP,
      3                 ETSTR,DLKSTR,SLOPE,FLWLW,FLWHI,STGLW,
      4                 STGHI,DFLWLW,DFLWHI,DSTGLW,DSTGHI,DLGLAK,
-     5                 DLGSLP,DLGFLW,CDPTH,FDPTH,HDIFF,GRAD
+     5                 DLGSLP,DLGFLW,CDPTH,FDPTH,HDIFF,GRAD,DEPTH
       DIMENSION STRM(18,NSTRM),ISTRM(5,NSTRM),
      1          HNEW(NCOL,NROW,NLAY),IBOUND(NCOL,NROW,NLAY),
      2          BUFF(NCOL,NROW,NLAY),SEG(17,NSS),VBVL(4,MSUM),
@@ -1868,18 +2292,21 @@ C14----FLOW FROM LAKE COMPUTED USING TABULATED VALUES.
           END IF
 C
 C15-----CHECK IF UPSTREAM SEGMENT GETS DIVERTED AND DETERMINE
-C        SEGMENT NUMBER OF DIVERSION.
+C        SEGMENT NUMBER OF DIVERSION.CHANGES MADE BY CSTILLERY TO
+C        ALLOW FOR MULTIPLE DIVERSIONS AT END OF A STREAM SEGMENT.
           IF(ISTSG.GT.1) THEN
-            IDIVSEG=0
-            IPRVSG = ISTRM(4,LL)
-            IUPSEG = 0
-            KSS=1
-              DO WHILE(IPRVSG.NE.IUPSEG.AND.KSS.LE.NSS)
+            IPRVSG = ISTRM(4,LL)                                !CSTILLERY
+            KSS=1                                               !CSTILLERY
+            DO WHILE(KSS.LE.NSS)                                !CSTILLERY
+              IDIVSEG=0
+              IUPSEG = 0
+              DO WHILE(IPRVSG.NE.IUPSEG)                        !CSTILLERY
                 IUPSEG=IDIVAR(1,KSS)
                 IF(IUPSEG.EQ.IPRVSG) IDIVSEG=KSS
                 KSS=KSS+1
+                IF (KSS.GT.NSS) IPRVSG=IUPSEG                   !CSTILLERY
               END DO
-             IF(IDIVSEG.GT.0) THEN
+              IF(IDIVSEG.GT.0) THEN
 C
 C16-----DETERMINE DIVERSION AND SUBTRACT IT FROM
 C         FLOW AT END OF UPSTREAM SEGMENT.
@@ -1924,7 +2351,8 @@ C         EXCEEDS SPECIFIED FLOW (FLOOD CONTROL DIVERSION).
                          DVRSFLW(IDIVSEG)=0.0
                       END IF
                    END IF
-             END IF
+               END IF
+           END DO                                               !CSTILLERY
           END IF
 C
 C21-----SET FLOW INTO DIVERSION IF SEGMENT IS DIVERSION.
@@ -1969,6 +2397,9 @@ C25-----SEARCH FOR UPPER MOST ACTIVE CELL IN STREAM REACH.
            IF(ILAY.LE.NLAY.AND.IBOUND(IC,IR,IL).GT.0) THEN
 C
 C26----DETERMINE LEAKAGE THROUGH STREAMBED.
+      IF(L.EQ.6)THEN
+      LXX=L
+      END IF
                 DEPTH=STRM(7,L)
                 IF(ICALC.EQ.0) DEPTH=STRM(15,L)-STRM(3,L)
                 HSTR=STRM(15,L)
@@ -1992,7 +2423,7 @@ C28------COMPUTE LEAKAGE ACROSS STREAMBED.
 C
 C29-----STREAMFLOW OUT EQUALS STREAMFLOW IN MINUS LEAKAGE.
            ELSE IF (ILAY.GT.NLAY.OR.IBOUND(IC,IR,IL).LE.0) THEN
-             FLOBOT=0.0
+             FLOBOT=0.0D0
            END IF
 C
 C30----COMPUTE FLOW IN STREAM CHANNEL AND SET LEAKAGE EQUAL TO FLOW
@@ -2002,16 +2433,31 @@ C        IF LEAKAGE MORE THAN FLOW.
               PRECIP=STRM(14,L)
               ETSTR=STRM(13,L)
            ELSE IF(ICALC.GE.2.AND.ICALC.LE.4) THEN
+C
+C------NOTE, NO PRECIPITATION OR ET FROM CHANNEL WHEN WIDTH IS ZERO.
               RUNOF=STRM(12,L)
               PRECIP=STRM(14,L)*WIDTH
               ETSTR=STRM(13,L)*WIDTH
            END IF
            FLOW=FLOWIN+RUNOF+PRECIP-ETSTR
+           IF(FLOW.LE.0.0D0.AND.FLOBOT.GE.0.0D0) THEN
+             FLOW=0.0D0
+             IF(FLOWIN+RUNOF+PRECIP.GT.0.0D0)THEN
+               ETSTR=FLOWIN+RUNOF+PRECIP
+               FLOBOT=0.0D0
+             ELSE
+               ETSTR=0.0D0
+             END IF
+           ELSE IF(FLOW.LE.0.0D0.AND.FLOBOT.LT.0.0D0) THEN
+             IF(ETSTR.GE.-FLOBOT)ETSTR=-FLOBOT
+             FLOW=FLOWIN+RUNOF+PRECIP-ETSTR
+           END IF
            IF(FLOBOT.GE.FLOW) THEN
               FLOBOT=FLOW
            END IF
-
+         FLWMPT=FLOWIN+0.5*(RUNOF+PRECIP-ETSTR-FLOBOT)
          FLOWOT=FLOW-FLOBOT
+
 C
 C31-----STORE OUTFLOW FROM LAST REACH IN LAST SEGMENT IN STRIN
 C          LIST FOR LAKE PACKAGE.
@@ -2025,6 +2471,10 @@ C32-----STORE STREAM INFLOW, OUTFLOW, AND LEAKAGE FOR EACH REACH.
          STRM(11,L)=FLOBOT
          STRM(17,L)=HDIFF
          STRM(18,L)=GRAD
+C      WRITE(IOUT,799)L,DEPTH,FLWMPT,FLOWIN,FLOWOT,
+C     1        FLOBOT,ETSTR,PRECIP,RUNOF
+C  799    FORMAT(1X,'L,DEPTH,FLWMPT,FLOWIN,FLOWOT,'
+C     1          'FLOBOT,ETSTR,PRECIP,RUNOF',I5,8(1X,G18.8))
 C
 C33------PRINT STREAMFLOWS AND RATES FOR EACH REACH TO MAIN LIST
 C         IF REQUESTED (WHEN ISTCB1<0).
@@ -2109,9 +2559,9 @@ C43-----RETURN.
 C
 C------SUBROUTINE GWF1SFR1DPTH
 C
-      SUBROUTINE GWF1SFR1DPTH(FLOW,XSEC,SLOPE,CONST,ISTSG,NSS,ROUGHCH,
-     1                    ROUGHBNK,WETPERM,DEPTH,ITSTR,TOTWDTH,IOUT,
-     2                    IPRNDPTH)
+      SUBROUTINE GWF1SFR1DPTH(FLOW,XSEC,SLOPE,CONST,ISTSG,NREACH,NSS,
+     1                    ROUGHCH,ROUGHBNK,WETPERM,DEPTH,ITSTR,TOTWDTH,
+     2                    IOUT,IPRNDPTH)
 C     VERSION  4:CONNECTED TO LAK3 PACKAGE AND MODFLOW-GWT-- AUGUST 2003
 C
 C     ******************************************************************
@@ -2129,8 +2579,8 @@ C
       DIMENSION XSEC(16,NSS)
 C
 C1------INITIALIZE VARIABLES TO ZERO.
-      TOTWDTH=0.0
-      WETPERM=0.0
+      TOTWDTH=0.0D0
+      WETPERM=0.0D0
       IF(IPRNDPTH.EQ.1) THEN
       IXX=IPRNDPTH
       END IF
@@ -2145,27 +2595,27 @@ C3------FIND LOWEST POINT IN CHANNEL.
       END DO
 C
 C4------ESTIMATE INITIAL DEPTH ASSUMING WIDE RECTANGULAR CHANNEL
-      DEPTH1=0.0
+      DEPTH1=0.0D0
       XNUM=FLOW*ROUGHCH
       DNOM=CONST*(XSEC(6,ISTSG)-XSEC(3,ISTSG))*SQRT(SLOPE)
-      IF(DNOM.GT.0.0)DEPTH1=(XNUM/DNOM)**0.6
-      IF (DEPTH1.GT.0.) THEN
+      IF(DNOM.GT.0.0D0)DEPTH1=(XNUM/DNOM)**0.6
+      IF (DEPTH1.GT.0.0D0) THEN
         STAGE=DEPTH1+YMIN
-        FLOW1=0.0
+        FLOW1=0.0D0
         CALL GWF1SFR1FLW(STAGE,XSEC,CONST,ISTSG,NSS,ROUGHCH,ROUGHBNK,
      1               SLOPE,WETPERM,FLOW1,TOTWDTH)
         F1=FLOW-FLOW1
         DEPTH2=1.1*DEPTH1
         STAGE=DEPTH2+YMIN
-        FLOW2=0.0
+        FLOW2=0.0D0
         CALL GWF1SFR1FLW(STAGE,XSEC,CONST,ISTSG,NSS,ROUGHCH,ROUGHBNK,
      1               SLOPE,WETPERM,FLOW2,TOTWDTH)
         F2=FLOW-FLOW2
 C
 C5------ESTIMATE NEW DEPTH USING EITHER BISECTION OR SECANT METHOD FOR
 C                SOLVING ROOTS.
-        DEPTH3=0.0
-          IF((F1*F2).LT.0.0.AND.((DEPTH1.GT.2.*DEPTH2).OR.
+        DEPTH3=0.0D0
+          IF((F1*F2).LT.0.0D0.AND.((DEPTH1.GT.2.*DEPTH2).OR.
      1       (DEPTH2.GT.(2.*DEPTH1))))THEN
 C
 C6------USE BISECTION METHOD
@@ -2177,20 +2627,22 @@ C7------USE SECANT METHOD
           END IF
         ERR1=DABS(DEPTH3-DEPTH1)
         ERR2=DABS(DEPTH3-DEPTH2)
-        IF(ERR1.LT.0.000001.AND.ERR2.LT.0.0000001) THEN
+        IF(ERR1.LT.0.000001.AND.ERR2.LT.0.000001) THEN
           DEPTH3=(DEPTH1+DEPTH2)/2.0
 C
 C8------CONTINUE RECALCULATING DEPTH3 UNTIL ERROR LESS THAN 0.000001
 C         OR 100 ITERATIONS HAVE BEEN REACHED.
-         ELSE
+        ELSE
           IFLG=1
           ITSTR=1
           DO WHILE(IFLG.GT.0)
-            IF(F1*F2.LT.0.0.AND.(DEPTH1.GT.2.*DEPTH2.OR.
-     1         DEPTH2.GT.2*DEPTH1)) THEN
+            IF(F1*F2.LT.0.0D0.AND.(DEPTH1.GT.2.0*DEPTH2.OR.
+     1         DEPTH2.GT.2.0*DEPTH1)) THEN
                DEPTH3=(DEPTH1+DEPTH2)/2.0
-            ELSE IF(DABS(F2-F1).GT.0.0) THEN
+            ELSE IF(DABS(F2-F1).GT.0.0D0) THEN
                     DEPTH3=DEPTH2-(F2*(DEPTH2-DEPTH1)/(F2-F1))
+            ELSE IF(DABS(F2-F1).EQ.0.0D0) THEN
+               DEPTH3=(DEPTH1+DEPTH2)/2.0
             END IF
             ERR1=DABS(DEPTH3-DEPTH1)
             ERR2=DABS(DEPTH3-DEPTH2)
@@ -2202,10 +2654,10 @@ C         OR 100 ITERATIONS HAVE BEEN REACHED.
              CALL GWF1SFR1FLW(STAGE,XSEC,CONST,ISTSG,NSS,ROUGHCH,
      1                    ROUGHBNK,SLOPE,WETPERM,FLOW3,TOTWDTH)
              F3=FLOW-FLOW3
-               IF(F2*F3.LT.0.0)THEN
+               IF(F2*F3.LT.0.0D0)THEN
 C
 C9------ROOT IS BETWEEN DEPTH2 AND DEPTH3
-                  IF(F1*F2.LT.0.0) THEN
+                  IF(F1*F2.LT.0.0D0) THEN
 C
 C10-----ROOT IS BETWEEN DEPTH1 AND DEPTH2
                     DEPTH1=DEPTH3
@@ -2224,7 +2676,7 @@ C          REPLACE WITH FARTHER ROOT.
                ELSE
 C
 C12-----DEPTH2 AND DEPTH3 ARE ON THE SAME SIDE OF ROOT
-                  IF(F1*F2.LT.0.0)THEN
+                  IF(F1*F2.LT.0.0D0)THEN
 C
 C13-----ROOT IS BETWEEN DEPTH1 AND DEPTH2
                      DEPTH2=DEPTH3
@@ -2248,16 +2700,19 @@ C          REPLACE WITH NEAREST VALUE.
   704          FORMAT(1X/,'ITSTR,IFLG,FLOW,DEPTH1,DEPTH2,DEPTH3,F1,F2,'
      1                    ',F3 ',2I5,7(2X,D15.6))
              END IF
+C
+C15-----PRINT WARNING MESSAGE IF SECANT METHOD FAILED TO FIND A DEPTH.
              IF(ITSTR.GT.100)THEN
                 IFLG=0
-               WRITE(IOUT,703)ITSTR,DEPTH1,DEPTH2,DEPTH3,F1,F2,F3,
-     1                      ERR1,ERR2,ERR3
-  703          FORMAT(1X,I5,9(2X,D20.10))
-             END IF               
+               WRITE(IOUT,1)ISTSG,NREACH,DEPTH3,DEPTH1,DEPTH2
+    1          FORMAT(1X/,'SECANT METHOD FAILED TO FIND SOLUTION FOR ',
+     1               'STREAM SEGMENT ',I5,' REACH ',I5,'ESTIMATED ',
+     2               'DEPTH IS ',D15.6,'AND BOUNDS ARE ',2(2X,D15.6))
+             END IF
            END DO
          END IF
 C
-C15-----CALCULATE WETTED PERIMETER AND WIDTH FROM
+C16-----CALCULATE WETTED PERIMETER AND WIDTH FROM
 C        FINAL DEPTH.
       DEPTH=DEPTH3
       STAGE=DEPTH+YMIN
@@ -2265,9 +2720,9 @@ C        FINAL DEPTH.
       CALL GWF1SFR1FLW(STAGE,XSEC,CONST,ISTSG,NSS,ROUGHCH,ROUGHBNK,
      1             SLOPE,WETPERM,FLOW1,TOTWDTH)
       ELSE
-        DEPTH=0.0
-        WETPERM=0.0
-        TOTWDTH=0.0
+        DEPTH=0.0D0
+        WETPERM=0.0D0
+        TOTWDTH=0.0D0
         ITSTR=0
       END IF
 C
@@ -2465,13 +2920,7 @@ C4----FIND NEAREST VALUES OF FLOW, DEPTH, AND WIDTH IN TABLE.
           FLWLW=QSTAGE(IFLWLW,ISTSG)
         ELSE IF(FLOW.GT.FLWHI) THEN
 C
-C5----PRINT WARNING IF COMPUTED FLOW EXCEEDS HIGHEST FLOW IN TABLE.
-           WRITE(IOUT,11)KKITER,ISTSG,NREACH,FLOW,FLWHI
-   11      FORMAT(1X/,'FOR MODFLOW ITERATION',I5, ' FLOW IN SEGMENT',
-     1     I5,' REACH ',I5,' IS ',1PE10.3,' AND IS GREATER THAN ',
-     2     'HIGHEST FLOW LISTED IN RATING TABLE OF ',
-     3     1PE10.3,//1X,'ASSUMING SAME RELATION AS ',
-     4     'BETWEEN TWO HIGHEST FLOWS IN TABLE'//)
+C5----COMPUTED FLOW EXCEEDS HIGHEST FLOW IN TABLE.
           FLWLW=QSTAGE(NSTRPTS-1,ISTSG)
           STGLW=QSTAGE((2*NSTRPTS)-1,ISTSG)
           STGHI=QSTAGE(2*NSTRPTS,ISTSG)
@@ -2501,7 +2950,7 @@ C
 C------SUBROUTINE GWF1SFR1TBF
 C
       SUBROUTINE GWF1SFR1TBF(FLOW,QSTAGE,DEPTH,WIDTH,NSTRPTS,MAXPTS,
-     1                       NSS,NREACH,ISTSG,KKITER,IOUT)
+     1                       NSS,NREACH,ISTSG,KKITER,IOUT,ITB)
 C     VERSION  4:CONNECTED TO LAK3 PACKAGE AND MODFLOW-GWT-- AUGUST 2003
 C
 C     *******************************************************************
@@ -2550,12 +2999,12 @@ C4----FIND NEAREST VALUES OF FLOW, DEPTH, AND WIDTH IN TABLE.
           WTHLW=QSTAGE(IWTHLW,ISTSG)
           FLWLW=QSTAGE(IFLWLW,ISTSG)
           FLWHI=QSTAGE(IFLWHI,ISTSG)
-        ELSE IF(DEPTH.GT.STGHI) THEN
+        ELSE IF(DEPTH.GT.STGHI.AND.ITB.EQ.1) THEN
 C
 C5----PRINT WARNING IF COMPUTED DEPTH EXCEEDS HIGHEST DEPTH IN TABLE.
            WRITE(IOUT,1)KKITER,ISTSG,NREACH,DEPTH,STGHI
     1      FORMAT(1X/,'FOR MODFLOW ITERATION ',I5,' DEPTH IN SEGMENT ',
-     1     I5,' REACH ',I5,' IS ',1PE10.3,' AND IS GREATER THAN ',    
+     1     I5,' REACH ',I5,' IS ',1PE10.3,' AND IS GREATER THAN ',
      2     'HIGHEST DEPTH LISTED IN RATING TABLE OF ',
      3     1PE10.3,//1X,'ASSUMING SAME RELATION AS ',
      4     'BETWEEN TWO HIGHEST DEPTHS IN TABLE'//)

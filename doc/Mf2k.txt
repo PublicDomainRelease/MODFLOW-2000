@@ -58,6 +58,9 @@ METHOD
 
 HISTORY
 
+      MODFLOW-2000 version 1.15.00 2004/08/06 - Added the GMG Solver Package.
+        Modifications were made to the SFR Package.
+
       MODFLOW-2000 version 1.14.00 2004/07/01 - Added the SFR Package to 
         allow enhanced capabilities for simulation of streams.  The maximum
         number of layers is increased from 200 to 999.
@@ -361,6 +364,7 @@ PACKAGES
          DAF1 -- Diffusion Analogy Surface-Water Flow Package
          SUB1 -- Subsidence and Aquifer-System Compaction Package
          SFR1 -- Stream-Flow Routing Package
+         GMG1 -- Geometric MultiGrid Solver Package
 
 ADDITIONAL CAPABILITIES:
 
@@ -591,6 +595,13 @@ DOCUMENTATION
      flow routing (SFR1) package to simulate stream-aquifer interaction
      with MODFLOW-2000: U.S. Geological Survey Open-File Report
      2004-1042, 95 p.
+
+  The GMG Package is documented in:
+
+     Wilson, J.D. and Naff, R.L., 2004, The U.S. Geological Survey modular
+     ground-water model -- GMG linear equation solver package 
+     documentation:  U.S. Geological Survey Open-File Report 2004-1261, 
+     47 p.  <http://pubs.water.usgs.gov/ofr2004-1261/>
 
 
 CONTACTS

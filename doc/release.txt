@@ -12,6 +12,40 @@ these packages and processes, see mf2k.txt ("Summary of MODFLOW-2000").
 NOTE: Any use of trade, product or firm names is for descriptive purposes 
       only and does not imply endorsement by the U.S. Government.
 
+o Version 1.15.00 8/06/2004:
+
+A new solver is introduced with this release.  The Geometric Multi-Grid
+(GMG) Solver Package is documented in USGS Open-File Report 2004-1261 by
+Wilson and Naff.  
+
+Minor bugs in the RES and HUF Packages were fixed.
+
+This release also includes the following modifications to the SFR1 Package:
+
+The solution scheme in GWF1SFR1FM has been changed to a mixed
+bisection-newton method.  Convergence using this method to estimate stream
+depth at the midpoint is faster then using the bisection method alone.
+
+For the solution scheme to work correctly, the DLEAK term used to solve for
+stream depth at the midpoint should be equal to or less than the closure
+criteria used in MODFLOW, although some problems may solve when DLEAK is
+greater than the closure criteria.
+
+Some slight modifications were also made to GWF1SFR1BD to properly account
+for overland runoff, precipitation, and evapotranspiration for all ICALC
+values. Also, when there is no flow into the stream reach, as surface inflow
+(including runoff); as ground-water discharge to the stream; and
+evapotranspiration exceeds precipitation, then evapotranspiration is set to
+zero.
+
+One additional change was made by Suzanne Tillery of New Mexico State
+University.  She changed the program in GWF1SFR1FM and GWF1SFR1BD to allow
+for multiple diversions at the end of a stream segment. For multiple
+diversions from a single segment, each diversion must be a new segment and
+its flow is diverted from the end of the same segment in order of the
+segment numbering. This means that a diversion placed first in the data
+input has its flow subtracted first.
+
 o Version 1.14.00 7/01/2004:
 
 The new Stream-Flow Routing (SFR1) Package is introduced with this release.
@@ -137,7 +171,7 @@ Algorithms and Scientific Computing (SCAI), Sankt Augustin, Germany, at
 amg1r5@scai.fraunhofer.de.
 
 A new optional setting in the OBS Process input file is available.  If
-"ALLFILES" is specified following the OUTNAM value, and if the value
+"ALLFILES" is specified following the ISCALS value, and if the value
 specified for OUTNAM is not "NONE", up to three additional output files
 are generated with the filename base defined by OUTNAM.  The
 "underscore.txt" file in the doc directory describes the new files.

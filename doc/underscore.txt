@@ -26,16 +26,16 @@ stress period.
 
 --------------------------------------------------------------------------
 
-Version 1.12 also added support for a new optional setting in the
-OBS Process input file is available.  If "ALLFILES" is specified following
-the OUTNAM value, and if the value specified for OUTNAM is not "NONE", up to
+Version 1.12 also added support for a new optional setting in the OBS
+Process input file is available.  If "ALLFILES" is specified following the
+ISCALS value, and if the value specified for OUTNAM is not "NONE", up to
 three additional output files ("_wt", "_su", and "_mc") are generated with
 the filename base defined by OUTNAM:
 
 (1) OUTNAM._wt:
 
 When OUTNAM in the OBS input file is not "NONE", and "ALLFILES" is specified
-after OUTNAM, a new file is generated, identified by the extension "_wt".
+after ISCALS, a new file is generated, identified by the extension "_wt".
 This file contains observation weights, or the full weight matrix if any of
 the observation types is entered with a variance-covariance matrix (WTQ in
 the Observation Process input instructions of USGS Open-File Report 00-184).
@@ -111,7 +111,7 @@ COMPRESSEDMATRIX
 (2) OUTNAM._su:
 
 When the OBS and SEN Processes are active, OUTNAM in the OBS input file is
-not "NONE", and "ALLFILES" is specified after OUTNAM, a new file is
+not "NONE", and "ALLFILES" is specified after ISCALS, a new file is
 generated, identified by the extension "_su".  This file contains the
 sensitivity of the simulated equivalent of each observation to each
 parameter.  The first line of the file contains column names, where the
@@ -126,19 +126,10 @@ sensitivity for that observation relative to each parameter for which ISENS
 (3) OUTNAM._mc:
 
 When the PES Process is active, OUTNAM in the OBS input file is
-not "NONE", and "ALLFILES" is specified after OUTNAM, a new file is
+not "NONE", and "ALLFILES" is specified after ISCALS, a new file is
 generated, identified by the extension "_mc".  This file contains the matrix
 of parameter correlations.  The first line of this file lists the names of
 all parameters for which ISENS > 0 in the SEN input file.
-
---------------------------------------------------------------------------
-
-As of Modflow-2000 version 1.12, a fifth column has been added to the _os
-output file, which was originally described in table 5 on page 28 of USGS
-Open-File Report 00-184.  The fifth column lists the observation time, in
-model time units, from the beginning of the simulation.  For prior
-information, -1.0 is written.  All ADV observations are assumed to occur in
-the first stress period.
 
 --------------------------------------------------------------------------
 

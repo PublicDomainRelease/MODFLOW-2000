@@ -1,4 +1,4 @@
-! Time of File Save by ERB: 4/27/2004 1:41PM
+! Time of File Save by ERB: 5/5/2004 9:38AM
 C     Last change:  ERB  14 Jan 2003    3:53 pm
 C=======================================================================
       SUBROUTINE OBS1BAS6DF(IOBS,IOSTAR,IOWTQ,IOWTQDR,IOWTQGB,
@@ -1427,6 +1427,13 @@ C-------STREAMFLOW-ROUTING (STR) FLOW OBSERVATIONS
      &                                 NDMH,WTRL,NRSO,IUGDO,OUTTMP,
      &                                 IPLOT,IPLPTR,LCOBSTR,ISSWR,SSST,
      &                                 ITMXP,OTIME)
+C-------STREAMFLOW-ROUTING (SFR) FLOW OBSERVATIONS
+cc      IF (NQTSF.GT.0) CALL SOBS1SFR1OH(IO,IOWTQSF,IOUT,NHT,NQTSF,HOBS,H,
+cc     &                                 WTQ,OBSNAM,IDIS,WTQS,D,AVET,
+cc     &                                 NPOST,NNEGT,NRUNS,RSQ,ND,MPR,IPR,
+cc     &                                 NDMH,WTRL,NRSO,IUGDO,OUTTMP,
+cc     &                                 IPLOT,IPLPTR,LCOBSFR,ISSWR,SSSF,
+cc     &                                 ITMXP,OTIME)
 C-------CONSTANT-HEAD BOUNDARY FLOW OBSERVATIONS
       IF (NQTCH.GT.0) CALL SOBS1BAS6FOH(IO,IOWTQCH,IOUT,NHT,NQTCH,HOBS,
      &                                  H,WTQ,OBSNAM,IDIS,WTQS,D,AVET,
@@ -1791,7 +1798,7 @@ C-----CLOSE SENSITIVITY OUTPUT FILES
           IF (I.EQ.4 .AND. .NOT. OBSALL) CYCLE
           INQUIRE(UNIT=IUSNO(I),OPENED=LOP)
           IF (LOP) CLOSE(UNIT=IUSNO(I))
-  250    CONTINUE
+  250   CONTINUE
       ENDIF
 C
       RETURN
