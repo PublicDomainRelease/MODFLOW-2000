@@ -1,4 +1,4 @@
-C     Last change:  AWH  14 Dec 2000
+C     Last change:  ERB  21 Nov 2001    9:34 am
       SUBROUTINE GWF1EVT6AL(ISUM,ISUMI,LCIEVT,LCEVTR,LCEXDP,LCSURF,NCOL,
      1                  NROW,NEVTOP,IN,IOUT,IEVTCB,IFREFM,NPEVT,IEVTPF)
 C
@@ -77,12 +77,13 @@ C
 C9------RETURN.
       RETURN
       END
-      SUBROUTINE GWF1EVT6RQ(IN,IOUT,NPEVT,ITERP)
+      SUBROUTINE GWF1EVT6RQ(IN,IOUT,NPEVT,ITERP,INAMLOC)
 C
-C-----VERSION 11JAN2000 GWF1EVT6RQ
+C-----VERSION 20NOV2001 GWF1EVT6RQ
 C     ******************************************************************
 C     READ EVAPOTRANSPIRATION PARAMETER DEFINITIONS
 C     ******************************************************************
+C     Modified 11/20/2001 to support parameter instances - ERB
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
@@ -94,7 +95,7 @@ C-------READ NAMED PARAMETERS
     5 FORMAT(1X,//1X,I5,' Evapotranspiration parameters')
       IF(NPEVT.GT.0) THEN
          DO 20 K=1,NPEVT
-         CALL UPARARRRP(IN,IOUT,N,0,PTYP,ITERP)
+         CALL UPARARRRP(IN,IOUT,N,0,PTYP,ITERP,1,INAMLOC)
          IF(PTYP.NE.'EVT') THEN
             WRITE(IOUT,7)
     7       FORMAT(1X,'Parameter type must be EVT')

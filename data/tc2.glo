@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.5 08/16/2001
+                             VERSION 1.7 12/04/2001
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
@@ -9,68 +9,88 @@
                          UNIT  11
 
  OPENING tc2.lst
- FILE TYPE:LIST   UNIT  12
+ FILE TYPE:LIST   UNIT  12   STATUS:REPLACE
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING tc2.bin
- FILE TYPE:DATA(BINARY)   UNIT  13
+ FILE TYPE:DATA(BINARY)   UNIT  13   STATUS:UNKNOWN
+ FORMAT:UNFORMATTED            ACCESS:TRANSPARENT         
 #                                                                                                                                                                                                       
 # Obs-Sen-Pes process input files                                                                                                                                                                       
 
  OPENING ../data/tc2.obs
- FILE TYPE:OBS   UNIT  21
+ FILE TYPE:OBS   UNIT  21   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2.ohd
- FILE TYPE:HOB   UNIT  22
+ FILE TYPE:HOB   UNIT  22   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2.odr
- FILE TYPE:DROB   UNIT  23
+ FILE TYPE:DROB   UNIT  23   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2.ogb
- FILE TYPE:GBOB   UNIT  24
+ FILE TYPE:GBOB   UNIT  24   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2.sen
- FILE TYPE:SEN   UNIT  25
+ FILE TYPE:SEN   UNIT  25   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2.pes
- FILE TYPE:PES   UNIT  26
+ FILE TYPE:PES   UNIT  26   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 #adv             27   ../data/tc2.adv                                                                                                                                                                   
 #                                                                                                                                                                                                       
 # Global input files                                                                                                                                                                                    
 
  OPENING ../data/tc2.dis
- FILE TYPE:DIS   UNIT  31
+ FILE TYPE:DIS   UNIT  31   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2.zon
- FILE TYPE:ZONE   UNIT  32
+ FILE TYPE:ZONE   UNIT  32   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 #                                                                                                                                                                                                       
 # Flow process input files                                                                                                                                                                              
 
  OPENING ../data/tc2.bas
- FILE TYPE:BAS6   UNIT  41
+ FILE TYPE:BAS6   UNIT  41   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2.lpf
- FILE TYPE:LPF   UNIT  42
+ FILE TYPE:LPF   UNIT  42   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2.wel
- FILE TYPE:WEL   UNIT  43
+ FILE TYPE:WEL   UNIT  43   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2.drn
- FILE TYPE:DRN   UNIT  44
+ FILE TYPE:DRN   UNIT  44   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2.evt
- FILE TYPE:EVT   UNIT  45
+ FILE TYPE:EVT   UNIT  45   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2.ghb
- FILE TYPE:GHB   UNIT  46
+ FILE TYPE:GHB   UNIT  46   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2.rch
- FILE TYPE:RCH   UNIT  47
+ FILE TYPE:RCH   UNIT  47   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2.oc
- FILE TYPE:OC   UNIT  48
+ FILE TYPE:OC   UNIT  48   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2.pcg
- FILE TYPE:PCG   UNIT  49
+ FILE TYPE:PCG   UNIT  49   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
  THE FREE FORMAT OPTION HAS BEEN SELECTED
 
  DISCRETIZATION INPUT DATA READ FROM UNIT 31
@@ -1823,7 +1843,7 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     7
  DISTRIBUTED at the 5% significance level.  The probability that this   
  conclusion is wrong is less than 5%.
 
- IF the reported correlation IS LESS THAN the 5% critical value REJECT the,
+ IF the reported correlation IS LESS THAN the 5% critical value REJECT the
  hypothesis that the weighted residuals are INDEPENDENT AND NORMALLY
  DISTRIBUTED at the 5% significance level.
 

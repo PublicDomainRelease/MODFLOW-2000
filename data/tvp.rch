@@ -1,0 +1,29 @@
+PARAMETER  2                              Item 1: NPRCH
+  1  0                                    Item 2: NRCHOP IRCHBD
+RCH_ZONE_1  RCH  70.000  1  instances  3  Item 3: PARNAM PARTYP B NCLU NUMINST
+RZ-13                                     Item 4a: INSTNAM
+mlt_rch     zones_1  1  3                 Item 4b: Mltarr, Zonarr, Zone numbers
+RZ-134                                    Item 4a: INSTNAM
+mlt_rch     zones_1  1  3  4              Item 4b: Mltarr, Zonarr, Zone numbers
+RZ-134-1.5                                Item 4a: INSTNAM
+mlt_rch1.5  zones_1  1  3  4              Item 4b: Mltarr, Zonarr, Zone numbers
+RCH_ZONE_2  RCH  40.000  1  instances  3  Item 3: PARNAM PARTYP B NCLU NUMINST
+RZ-24                                     Item 4a: INSTNAM
+mlt_rch     zones_1  2  4                 Item 4b: Mltarr, Zonarr, Zone numbers
+RZ-2                                      Item 4a: INSTNAM
+mlt_rch     zones_1  2                    Item 4b: Mltarr, Zonarr, Zone numbers
+RZ-2-1.5                                  Item 4a: INSTNAM
+mlt_rch1.5  zones_1  2                    Item 4b: Mltarr, Zonarr, Zone numbers
+  2  0                                    Item 5: INRECH INIRICH for stress period 1
+RCH_ZONE_1  rz-13                         Item 7: Pname Iname
+RCH_ZONE_2  rz-24  20                     Item 7: Pname Iname print-code
+  2  0                                    Item 5: INRECH INIRICH for stress period 2
+RCH_ZONE_1  rz-134                        Item 7: Pname Iname
+RCH_ZONE_2  rz-2  20                      Item 7: Pname Iname print-code
+  2  0                                    Item 5: INRECH INIRICH for stress period 3
+RCH_ZONE_1  rz-134                        Item 7: Pname Iname
+RCH_ZONE_2  rz-2-1.5  20                  Item 7: Pname Iname print-code
+  2  0                                    Item 5: INRECH INIRICH for stress period 4
+RCH_ZONE_1  rz-134-1.5                    Item 7: Pname Iname
+RCH_ZONE_2  rz-2-1.5  20                  Item 7: Pname Iname print-code
+        -1         0                      Item 5: INRECH INIRICH for stress period 5

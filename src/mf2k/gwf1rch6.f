@@ -1,4 +1,4 @@
-C     Last change:  ERB  11 Apr 2000    4:20 pm
+C     Last change:  ERB  21 Nov 2001    9:29 am
       SUBROUTINE GWF1RCH6AL(ISUM,ISUMI,LCIRCH,LCRECH,NRCHOP,NCOL,NROW,
      1          IN,IOUT,IRCHCB,IFREFM,NPRCH,IRCHPF)
 C
@@ -73,12 +73,13 @@ C
 C9------RETURN
       RETURN
       END
-      SUBROUTINE GWF1RCH6RQ(IN,IOUT,NPRCH,ITERP)
+      SUBROUTINE GWF1RCH6RQ(IN,IOUT,NPRCH,ITERP,INAMLOC)
 C
-C-----VERSION 11JAN2000 GWF1RCH6RQ
+C-----VERSION 20NOV2001 GWF1RCH6RQ
 C     ******************************************************************
 C     READ RECHARGE PARAMETER DEFINITIONS
 C     ******************************************************************
+C     Modified 11/20/2001 to support parameter instances - ERB
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
@@ -90,7 +91,7 @@ C-------READ NAMED PARAMETERS
     5 FORMAT(1X,//1X,I5,' Recharge parameters')
       IF(NPRCH.GT.0) THEN
          DO 20 K=1,NPRCH
-         CALL UPARARRRP(IN,IOUT,N,0,PTYP,ITERP)
+         CALL UPARARRRP(IN,IOUT,N,0,PTYP,ITERP,1,INAMLOC)
          IF(PTYP.NE.'RCH') THEN
             WRITE(IOUT,7)
     7       FORMAT(1X,'Parameter type must be RCH')

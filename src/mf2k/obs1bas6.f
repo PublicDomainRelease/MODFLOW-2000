@@ -1,4 +1,4 @@
-C     Last change:  ERB  16 Aug 2001    1:26 pm
+C     Last change:  ERB   3 Dec 2001    1:41 pm
 C=======================================================================
       SUBROUTINE OBS1BAS6DF(IFLD,IOBS,IOSTAR,IOWTQ,IOWTQDR,IOWTQGB,
      &                      IOWTQRV,IOWTQST,IQ1,IUOBS,JT,LCCOFF,LCHFB,
@@ -10,7 +10,7 @@ C=======================================================================
      &                      NOBADV,NQ,NQC,NQT,NQT1,NQTDR,NQTGB,NQTRV,
      &                      NQTST,NQTCH,NT,NTT2,IOBSUM,LCX,LCBUF2,NDAR,
      &                      LCOBDRT,LCSSDT,NQTDT,IOWTQDT,LCSSSF,NQTSF,
-     &                      LCOBSFR,IOWTQSF)
+     &                      LCOBSFR,IOWTQSF,NHT)
 C     VERSION 20000124
 C     ******************************************************************
 C     INITIALIZE VARIABLES FOR OBSERVATION PROCESS
@@ -44,6 +44,7 @@ C     OBSERVATION PROCESS
       ND = 0
       NDMH = 0
       NH = 0
+      NHT = 0
       NQT1 = 1
       NT = 0
       NTT2 = 0
@@ -199,7 +200,7 @@ C=======================================================================
      &                      LCNQOB,LCNQCL,LCIQOB,LCQCLS,LCIPLO,LCIPLP,
      &                      IPR,MPR,IPRAR,LCBUF1,LCSSTO,ITMXP,LBUFF,
      &                      LCOBSE,ISOLDX,ISOLDZ,ISOLDI,MXSEN,LCBUF2,
-     &                      NDAR)
+     &                      NDAR,NHT)
 C     VERSION 19980806 ERB
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR OBSERVATIONS
@@ -208,7 +209,7 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       INTEGER IDRY, IOUT, IPAR, ISP, ISUM, ISUMZ, ISUMI, JDRY,
      &        LCH, LCHOBS, LCIPLO, LCTOFF, LCW1, LCW2, LCWT, LCWTQ,
-     &        LCWTQS, LCX, LCXD, ND, NDMH, NH, NPLIST
+     &        LCWTQS, LCX, LCXD, ND, NDMH, NH, NHT, NPLIST
 C     ------------------------------------------------------------------
 C
 C-----DEFINE NON-ZERO ARRAY DIMENSIONS
@@ -252,7 +253,7 @@ C----------ARRAYS USED FOR ALL DEPENDENT-VARIABLE DATA
       ISUMI = ISUMI + ND + IPR + MPR
       LCWT = ISUM
       ISUM = ISUM + ND
-      NDMH = ND - NH
+      NDMH = ND - NHT
       LCWTQ = ISUM
       ISUM = ISUM + NDMH*NDMH
       LCWTQS = ISUM
@@ -299,7 +300,7 @@ C------------FLOW-DATA ARRAYS
 C----------RESTORE ORIGINAL VALUES
       ND = ND - 1
       IF (ND.GT.0) NDAR=ND
-      NDMH = ND - NH
+      NDMH = ND - NHT
       IF (NDMH.GT.0) NDMHAR = NDMH
 C8------PRINT AMOUNT OF SPACE USED BY OBSERVATION PROCESS.
       ISP = ISUM - ISOLDX
@@ -321,24 +322,44 @@ C      RETURN
       RETURN
       END
 C=======================================================================
-      SUBROUTINE OBS1BAS6RP(NDMHAR,NQCAR,QCLS,WTQS)
-C     VERSION 19990726 ERB
+      SUBROUTINE OBS1BAS6RP(ND,NDAR,NDMH,NDMHAR,NQCAR,QCLS,RSQO,RSQOO,
+     &                      RSQP,WT,WTQ,WTQS)
+C     VERSION 20010924 ERB
 C     ******************************************************************
-C     INITIALIZE ARRAYS
+C     INITIALIZE VARIABLES AND ARRAYS USED FOR OBSERVATIONS
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       INTEGER NDMHAR
       REAL WTQS(NDMHAR,NDMHAR)
-      DIMENSION QCLS(5,NQCAR)
+      DIMENSION QCLS(5,NQCAR), WT(NDAR), WTQ(NDMHAR,NDMHAR)
 C     ------------------------------------------------------------------
 C
-      DO 20 I=1,NDMHAR
-        DO 10 J=1,NDMHAR
-          WTQS(I,J) = 0.0
-   10   CONTINUE
-   20 CONTINUE
+      RSQO = 0.0
+      RSQOO = 0.0
+      RSQP = 0.0
 C
+C-------INITIALIZE WT AND WTQ
+      DO 10 N = 1, ND
+        WT(N) = 1.0
+   10 CONTINUE
+      IF (NDMH.GT.0) THEN
+        DO 40 I = 1, NDMH
+          DO 30 J = 1, NDMH
+            WTQ(I,J) = 0.0
+   30     CONTINUE
+          WTQ(I,I) = 1.0
+   40   CONTINUE
+      ENDIF
+C
+C-----INITIALIZE WTQS
+      DO 60 I=1,NDMHAR
+        DO 50 J=1,NDMHAR
+          WTQS(I,J) = 0.0
+   50   CONTINUE
+   60 CONTINUE
+C
+C-----INITIALIZE QCLS(5,n)
       DO 110 I = 1, NQCAR
         DO 100 J = 1,5
           QCLS(5,I) = 0.0
@@ -449,66 +470,48 @@ C     PRINT
       RETURN
       END
 C=======================================================================
-      SUBROUTINE OBS1BAS6FM(H,ND,NH,NQT)
+      SUBROUTINE OBS1BAS6FM(H,ND)
 C     VERSION 20000120 ERB
 C     ******************************************************************
 C     INITIALIZE SIMULATED-EQUIVALENTS ARRAY
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      INTEGER NH, NQT, NT
+      INTEGER ND
       REAL H
       DIMENSION H(ND)
 C     ------------------------------------------------------------------
 C
-      IF (NH.GT.0) THEN
-        DO 10 I = 1, NH
-          H(I) = 0.0
-   10   CONTINUE
-      ENDIF
-C
-      IF (NQT.GT.0) THEN
-        DO 20 NT = 1, NQT
-          H(NH+NT) = 0.
-   20   CONTINUE
-      ENDIF
+      DO 10 I = 1, ND
+        H(I) = 0.0
+   10 CONTINUE
 C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE OBS1BAS6DR(ND,NH,NPE,NQ,NQT,X)
+      SUBROUTINE OBS1BAS6DR(ND,NPE,X)
 C     VERSION 19991220 ERB
 C     ******************************************************************
 C     INITIALIZE SENSITIVITY ARRAY
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      INTEGER NH, NPE, NQT
+      INTEGER ND, NPE
       REAL X
       DIMENSION X(NPE,ND)
 C     ------------------------------------------------------------------
 C
-      IF (NH.GT.0) THEN
-        DO 20 N = 1,NH
-          DO 10 IIP = 1, NPE
-            X(IIP,N) = 0.0
-   10     CONTINUE
-   20   CONTINUE
-      ENDIF
-C
-      IF (NQ.GT.0) THEN
-        DO 40 NT = 1, NQT
-          DO 30 IIP = 1, NPE
-            X(IIP,NH+NT) = 0.
-   30     CONTINUE
-   40   CONTINUE
-      ENDIF
+      DO 20 N = 1,ND
+        DO 10 IIP = 1, NPE
+          X(IIP,N) = 0.0
+   10   CONTINUE
+   20 CONTINUE
 C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE OBS1BAS6FD(IFLD,NDER,NH,KPER,KSTP,TOFF,NQ,NQOB,IQOB,
-     &                      NQT,NSTPA,NPER,NQAR,NQTAR,NHAR)
+      SUBROUTINE OBS1BAS6FD(IFLD,NDER,NH,TOFF,NQ,NQOB,IQOB,NQAR,NQTAR,
+     &                      NHAR,ND,ITS)
 C-----VERSION 1000 01FEB1992
 C     VERSION 19980707 ERB
 C     ******************************************************************
@@ -516,23 +519,13 @@ C     ARE THERE ANY OBSERVATIONS AT THIS TIME STEP?
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      INTEGER IFLD, IQ, IQOB, ITS, KPER, KSTP, N, NDER, NH, NPER, NQ,
-     &        NQOB, NQT, NSTPA, NT,  NT1, NT2, NTS
+      INTEGER IFLD, IQ, IQOB, ITS, N, NDER, NH, NQ, NQOB, NT, NT1, NT2,
+     &        NTS
       REAL TOFF
-      DIMENSION TOFF(NH+NQT), NDER(5,NHAR), NQOB(NQAR), IQOB(NQTAR),
-     &          NSTPA(NPER)
+      DIMENSION TOFF(ND), NDER(5,NHAR), NQOB(NQAR), IQOB(NQTAR)
 C     ------------------------------------------------------------------
 C
       IFLD = 0
-C
-C-------CALCULATE ELAPSED TIME STEP FROM START OF SIMULATION
-      ITS = 0
-      IF (KPER.GT.1) THEN
-        DO 5 I = 1, KPER-1
-          ITS = ITS+NSTPA(I)
- 5      CONTINUE
-      ENDIF
-      ITS = ITS+KSTP
 C
       DO 10 N = 1, NH
         NTS = NDER(4,N)
@@ -568,7 +561,7 @@ C=======================================================================
      &                      SSST,SSAD,SSCH,SSPI,SSTO,ITMXP,IOUTG,BUF2,
      &                      IPES,BPRI,BSCAL,RSQA,RSPA,LCOBDRT,SSDT,
      &                      NQTDT,IOWTQDT,NRES,NPOST,NNEGT,NRUNS,NQTSF,
-     &                      IOWTQSF,LCOBSFR,SSSF)
+     &                      IOWTQSF,LCOBSFR,SSSF,NHT)
 C
 C     VERSION 20000313 ERB
 C     ******************************************************************
@@ -581,7 +574,7 @@ C     ------------------------------------------------------------------
      &     WTQS, X
       INTEGER IOSTAR, KTDIM, NPLIST, NSTPA, NTT2
       INTEGER IFO, IO, IOUT, IOWTQ, IPAR, IPR, IPRINT, ISCALS, ITERP,
-     &        KPER, LASTX, LN, MPR, ND, NDMH, NH, NIPR, NPE, NPER
+     &        KPER, LASTX, LN, MPR, ND, NDMH, NH, NHT, NIPR, NPE, NPER
       INTEGER IPLOT(ND+IPR+MPR), IPLPTR(ND+IPR+MPR)
       CHARACTER*10 EQNAM(MPRAR)
       CHARACTER*12 OBSNAM(ND), NAMES(ND+IPR+MPR)
@@ -624,7 +617,7 @@ C-------SET FLAG WHICH CONTROLS PRINTING OF RESIDUALS
      &                  LCOBADV,ISSWR,SSGF,SSDR,SSRV,SSGB,SSST,SSAD,
      &                  SSCH,SSPI,SSTO,ITMXP,IPES,BPRI,LCOBDRT,SSDT,
      &                  NQTDT,IOWTQDT,NRES,NPOST,NNEGT,NRUNS,NQTSF,
-     &                  IOWTQSF,LCOBSFR,SSSF)
+     &                  IOWTQSF,LCOBSFR,SSSF,NHT)
         RSQA(ISSWR) = RSQ
         RSPA(ISSWR) = RSQP
         IF (IOSTAR.NE.1 .AND. MYID.EQ.MPROC) WRITE (*,555) RSQP
@@ -635,7 +628,7 @@ C       ONE-PERCENT SCALED SENSITIVITIES
 C         PRINT OBS-SEN TABLE(S) TO THE GLOBAL FILE
           IF (MYID.EQ.MPROC)
      &     CALL SOBS1BAS6ST(BUF1,IOUTG,IOWTQ,IPLOT,IPR,ISCALS,LN,MPR,ND,
-     &                      NDMH,NDMHAR,NH,NPE,NPLIST,OBSNAM,OUTNAM,WT,
+     &                      NDMH,NDMHAR,NHT,NPE,NPLIST,OBSNAM,OUTNAM,WT,
      &                      WTQ,WTQS,X,ITERP,BUF2,BSCAL)
         ENDIF
       ENDIF
@@ -670,7 +663,7 @@ C=======================================================================
      &                      LCOBADV,SSGF,SSDR,SSRV,SSGB,SSST,SSAD,SSCH,
      &                      SSPI,SSTO,ITMXP,BUF2,IPES,BPRI,BSCAL,
      &                      LCOBDRT,SSDT,NQTDT,IOWTQDT,NRES,NPOST,
-     &                      NNEGT,NRUNS,NQTSF,IOWTQSF,LCOBSFR,SSSF)
+     &                      NNEGT,NRUNS,NQTSF,IOWTQSF,LCOBSFR,SSSF,NHT)
 C
 C     VERSION 20000609 ERB
 C     ******************************************************************
@@ -683,7 +676,7 @@ C     ------------------------------------------------------------------
      &     SOSC, SOSR, TEMP, WP, WT, WTQ, WTQS, X
       INTEGER KTDIM, NPLIST, NTT2
       INTEGER IFO, IOUT, IOUTG, IOWTQ, IPAR, IPR, IPRINT, ISCALS, ITERP,
-     &        LN, MPR, ND, NDMH, NH, NIPR, NPE
+     &        LN, MPR, ND, NDMH, NH, NHT, NIPR, NPE
       INTEGER IPLOT(ND+IPR+MPR), IPLPTR(ND+IPR+MPR)
       CHARACTER*10 EQNAM(MPRAR)
       CHARACTER*12 OBSNAM(ND), NAMES(ND+IPR+MPR)
@@ -738,7 +731,7 @@ C-----TEST FOR REDUCTION IN SUM OF SQUARED, WEIGHTED RESIDUALS
      &                      SSGF,SSDR,SSRV,SSGB,SSST,SSAD,SSCH,SSPI,
      &                      SSTO,ITMXP,IPES,BPRI,LCOBDRT,SSDT,NQTDT,
      &                      IOWTQDT,NRES,NPOST,NNEGT,NRUNS,NQTSF,
-     &                      IOWTQSF,LCOBSFR,SSSF)
+     &                      IOWTQSF,LCOBSFR,SSSF,NHT)
           ENDIF
           IF (IFO.EQ.0 .AND. TEMP.LT.SOSR) THEN
             WRITE (IOUTG,550) SOSR*100.
@@ -753,7 +746,7 @@ C-----IF REQUESTED, PRINT UNSCALED OR SCALED OBSERVATION SENSITIVITIES
         IF (IFO.NE.0 .OR. IPRINT.NE.0 .OR. ITERP.EQ.1) THEN
           IF (MYID.EQ.MPROC)
      &        CALL SOBS1BAS6ST(BUF1,IOUTG,IOWTQ,IPLOT,IPR,ISCALS,LN,MPR,
-     &                         ND,NDMH,NDMHAR,NH,NPE,NPLIST,OBSNAM,
+     &                         ND,NDMH,NDMHAR,NHT,NPE,NPLIST,OBSNAM,
      &                         OUTNAM,WT,WTQ,WTQS,X,ITERP,BUF2,BSCAL)
         ENDIF
       ENDIF
@@ -782,7 +775,7 @@ C=======================================================================
      &                      LCOBADV,ISSWR,SSGF,SSDR,SSRV,SSGB,SSST,SSAD,
      &                      SSCH,SSPI,SSTO,ITMXP,IPES,BPRI,LCOBDRT,SSDT,
      &                      NQTDT,IOWTQDT,NRES,NPOST,NNEGT,NRUNS,NQTSF,
-     &                      IOWTQSF,LCOBSFR,SSSF)
+     &                      IOWTQSF,LCOBSFR,SSSF,NHT)
 C     VERSION 20010504 ERB
 C     ******************************************************************
 C     CALCULATE AND PRINT WEIGHTED RESIDUALS FOR DEPENDENT-VARIABLE
@@ -794,7 +787,7 @@ C     ------------------------------------------------------------------
       REAL AVET, BUF1, BPRI, D, H, HOBS, PRM, R, RSQ, RSQF, RSQH, RSQP,
      &     WP, WT, WTQ, WTQS, WTRL, ZERO
       INTEGER IDIS, IO, IOIN, IOUT, IPR, JDRY, KTDIM, LN, MPR, N, ND,
-     &        NDMH, NH, NIPR, NNEGT, NPOST, NRES, NRUNS, NTT2
+     &        NDMH, NH, NHT, NIPR, NNEGT, NPOST, NRES, NRUNS, NTT2
       INTEGER IUGDO(6), IPLOT(ND+IPR+MPR), IPLPTR(ND+IPR+MPR), LENGNAM
       CHARACTER*10 EQNAM(MPRAR)
       CHARACTER*12 OBSNAM(ND), NAMES(ND+IPR+MPR)
@@ -892,49 +885,49 @@ C-------------HEAD OBSERVATIONS
       RSQH = RSQ
 C-----HEAD-DEPENDENT FLOW OBSERVATIONS:
 C-------DRAIN FLOW OBSERVATIONS
-      IF (NQTDR.GT.0) CALL SOBS1DRN6OH(IO,IOWTQDR,IOUT,NH,NQTDR,HOBS,H,
+      IF (NQTDR.GT.0) CALL SOBS1DRN6OH(IO,IOWTQDR,IOUT,NHT,NQTDR,HOBS,H,
      &                                 WTQ,OBSNAM,IDIS,WTQS,D,AVET,
      &                                 NPOST,NNEGT,NRUNS,RSQ,ND,MPR,IPR,
      &                                 NDMH,WTRL,NRES,IUGDO,OUTTMP,
      &                                 IPLOT,IPLPTR,LCOBDRN,ISSWR,SSDR,
      &                                 ITMXP)
 C-------RIVER FLOW OBSERVATIONS
-      IF (NQTRV.GT.0) CALL SOBS1RIV6OH(IO,IOWTQRV,IOUT,NH,NQTRV,HOBS,H,
+      IF (NQTRV.GT.0) CALL SOBS1RIV6OH(IO,IOWTQRV,IOUT,NHT,NQTRV,HOBS,H,
      &                                 WTQ,OBSNAM,IDIS,WTQS,D,AVET,
      &                                 NPOST,NNEGT,NRUNS,RSQ,ND,MPR,IPR,
      &                                 NDMH,WTRL,NRES,IUGDO,OUTTMP,
      &                                 IPLOT,IPLPTR,LCOBRIV,ISSWR,SSRV,
      &                                 ITMXP)
 C-------GENERAL-HEAD BOUNDARY FLOW OBSERVATIONS
-      IF (NQTGB.GT.0) CALL SOBS1GHB6OH(IO,IOWTQGB,IOUT,NH,NQTGB,HOBS,H,
+      IF (NQTGB.GT.0) CALL SOBS1GHB6OH(IO,IOWTQGB,IOUT,NHT,NQTGB,HOBS,H,
      &                                 WTQ,OBSNAM,IDIS,WTQS,D,AVET,
      &                                 NPOST,NNEGT,NRUNS,RSQ,ND,MPR,IPR,
      &                                 NDMH,WTRL,NRES,IUGDO,OUTTMP,
      &                                 IPLOT,IPLPTR,LCOBGHB,ISSWR,SSGB,
      &                                 ITMXP)
 C-------STREAMFLOW-ROUTING FLOW OBSERVATIONS
-      IF (NQTST.GT.0) CALL SOBS1STR6OH(IO,IOWTQST,IOUT,NH,NQTST,HOBS,H,
+      IF (NQTST.GT.0) CALL SOBS1STR6OH(IO,IOWTQST,IOUT,NHT,NQTST,HOBS,H,
      &                                 WTQ,OBSNAM,IDIS,WTQS,D,AVET,
      &                                 NPOST,NNEGT,NRUNS,RSQ,ND,MPR,IPR,
      &                                 NDMH,WTRL,NRES,IUGDO,OUTTMP,
      &                                 IPLOT,IPLPTR,LCOBSTR,ISSWR,SSST,
      &                                 ITMXP)
 C-------CONSTANT-HEAD BOUNDARY FLOW OBSERVATIONS
-      IF (NQTCH.GT.0) CALL SOBS1BAS6FOH(IO,IOWTQGB,IOUT,NH,NQTCH,HOBS,H,
-     &                                  WTQ,OBSNAM,IDIS,WTQS,D,AVET,
+      IF (NQTCH.GT.0) CALL SOBS1BAS6FOH(IO,IOWTQGB,IOUT,NHT,NQTCH,HOBS,
+     &                                  H,WTQ,OBSNAM,IDIS,WTQS,D,AVET,
      &                                  NPOST,NNEGT,NRUNS,RSQ,ND,MPR,
      &                                  IPR,NDMH,WTRL,NRES,IUGDO,OUTTMP,
      &                                  IPLOT,IPLPTR,LCOBCHD,ISSWR,SSCH,
      &                                  ITMXP)
 C-------DRAIN-RETURN FLOW OBSERVATIONS
-      IF (NQTDT.GT.0) CALL SOBS1DRT1OH(IO,IOWTQDT,IOUT,NH,NQTDT,HOBS,H,
+      IF (NQTDT.GT.0) CALL SOBS1DRT1OH(IO,IOWTQDT,IOUT,NHT,NQTDT,HOBS,H,
      &                                 WTQ,OBSNAM,IDIS,WTQS,D,AVET,
      &                                 NPOST,NNEGT,NRUNS,RSQ,ND,MPR,IPR,
      &                                 NDMH,WTRL,NRES,IUGDO,OUTTMP,
      &                                 IPLOT,IPLPTR,LCOBDRT,ISSWR,SSDT,
      &                                 ITMXP)
-C%%%%%ADVECTIVE-TRANSPORT OBSERVATIONS
-      IF (NTT2.GT.0) CALL SOBS1ADV2O(NH,NTT2,HOBS,H,WTQ,IOUT,D,IDIS,
+C-------ADVECTIVE-TRANSPORT OBSERVATIONS
+      IF (NTT2.GT.0) CALL SOBS1ADV2O(NHT,NTT2,HOBS,H,WTQ,IOUT,D,IDIS,
      &                               IDTT,JDRY,RSQ,NRUNS,AVET,NPOST,
      &                               NNEGT,KTDIM,ND,MPR,IPR,IO,OBSNAM,N,
      &                               NDMH,WTRL,NRES,IUGDO,OUTTMP,IPLOT,
@@ -986,7 +979,7 @@ C
       END
 C=======================================================================
       SUBROUTINE OBS1BAS6NC(BUF1,BUF2,IOUTG,IOWTQ,IPLOT,IPR,ISCALS,
-     &                      ITERP,LN,MPR,ND,NDMH,NDMHAR,NH,NPE,NPLIST,
+     &                      ITERP,LN,MPR,ND,NDMH,NDMHAR,NHT,NPE,NPLIST,
      &                      OBSNAM,OUTNAM,WT,WTQ,WTQS,X,BSCAL)
 C     VERSION 20000313 ERB
 C     ******************************************************************
@@ -1004,7 +997,7 @@ C     ------------------------------------------------------------------
 C     ------------------------------------------------------------------
       IF (MYID.EQ.MPROC) THEN
         CALL SOBS1BAS6ST(BUF1,IOUTG,IOWTQ,IPLOT,IPR,ISCALS,LN,MPR,ND,
-     &                   NDMH,NDMHAR,NH,NPE,NPLIST,OBSNAM,OUTNAM,WT,
+     &                   NDMH,NDMHAR,NHT,NPE,NPLIST,OBSNAM,OUTNAM,WT,
      &                   WTQ,WTQS,X,ITERP,BUF2,BSCAL)
       ENDIF
 C
@@ -1091,8 +1084,8 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE OBS1BAS6RE(WP,IOUTG,IOUT,NH,H,HOBS,WT,NDMH,ND,IPAR,MPR,
-     &                      PRM,IPR,NIPR,WTPS,BUF1,LBUFF,WTQ,WTQS,
+      SUBROUTINE OBS1BAS6RE(WP,IOUTG,IOUT,NHT,H,HOBS,WT,NDMH,ND,IPAR,
+     &                      MPR,PRM,IPR,NIPR,WTPS,BUF1,LBUFF,WTQ,WTQS,
      &                      NPLIST,MPRAR,IPRAR,NDMHAR,NAMES,IOBSEQ,
      &                      BPRI,RSQP,NRES,NPOST,NNEGT,NRUNS)
 C-----VERSION 1001 01JUN1993
@@ -1106,7 +1099,7 @@ C     ------------------------------------------------------------------
      &     DIF, H, HOBS, PRM, RES, RMIN, RNORM, RNUM, STAT1, STAT2,
      &     TEMP, TEMP1, TMP, U, W, WP, WPSR, WT, WT2, WTQ, WTQS, WTR
       INTEGER I, I1, IIP, IMP, IOBSEQ, IOUT, IOUTG, IPAR, IPR, J, L, L1,
-     &        MPR, N, ND, NH, NIPR, NMIN, NN, NND, NQ2, NDMH
+     &        MPR, N, ND, NHT, NIPR, NMIN, NN, NND, NQ2, NDMH
       CHARACTER*12 NAMES(ND+IPR+MPR), NAML, NAMLU, NAMS, NAMSU, OBSMIN,
      &             PNAMU
       DIMENSION WP(MPRAR), H(ND+IPR+MPR),
@@ -1150,8 +1143,8 @@ C     BE LEFT AS IS
         IOBSEQ(I) = I
     5 CONTINUE
 C-------------HEADS
-      IF (NH.GT.0) THEN
-        DO 10 N = 1, NH
+      IF (NHT.GT.0) THEN
+        DO 10 N = 1, NHT
           W = WT(N)
           IF (W.GE.0.) THEN
             RES = HOBS(N) - H(N)
@@ -1168,19 +1161,19 @@ C-----HEAD-DEPENDENT FLOWS
       IF (NDMH.GT.0) THEN
 C SC-CHANGE 28.02.96: FOLLOWING LOOP CHANGED DUE TO FULL COV. ON FLOWS
         DO 20 N = 1, NDMH
-          BUF1(N) = H(NH+N)
+          BUF1(N) = H(NHT+N)
    20   CONTINUE
         DO 40 N = 1, NDMH
           IF (WTQ(N,N).GE.0.) THEN
             WTR = 0.0
             DO 30 J = 1, NDMH
-              NQ2 = NH + J
+              NQ2 = NHT + J
               WTR = WTR + WTQS(N,J)*(HOBS(NQ2)-BUF1(J))
    30       CONTINUE
             NND = NND + 1
             H(NND) = WTR
-            NAMES(NND) = NAMES(NH+N)
-            IOBSEQ(NND) = IOBSEQ(NH+N)
+            NAMES(NND) = NAMES(NHT+N)
+            IOBSEQ(NND) = IOBSEQ(NHT+N)
             AVET = AVET + WTR
           ENDIF
    40   CONTINUE
@@ -1379,8 +1372,8 @@ C
       END
 C=======================================================================
       SUBROUTINE SOBS1BAS6ST(BUF1,IOUT,IOWTQ,IPLOT,IPR,ISCALS,LN,MPR,ND,
-     &                      NDMH,NDMHAR,NH,NPE,NPLIST,OBSNAM,OUTNAM,WT,
-     &                      WTQ,WTQS,X,ITERP,BUF2,BSCAL)
+     &                       NDMH,NDMHAR,NHT,NPE,NPLIST,OBSNAM,OUTNAM,
+     &                       WT,WTQ,WTQS,X,ITERP,BUF2,BSCAL)
 C
 C     VERSION 20000313 ERB
 C     ******************************************************************
@@ -1389,7 +1382,7 @@ C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       INTEGER IOUT, IOWTQ, IPLOT, IPR, ISCALS, LN, MPR, ND, NDMH,
-     &        NH, NPE, NSECTS
+     &        NHT, NPE, NSECTS
       INTEGER IUSNO(3)
       REAL BUF1, BUF2, WT, WTQ, WTQS
       CHARACTER*4 SUF(3)
@@ -1437,7 +1430,7 @@ C
 C       FOR EACH FILE, FIND AN UNUSED FILE UNIT AND OPEN THE FILE
         DO 10 I=1,3
           FN = OUTNAM(1:LENGNAM)//SUF(I)
-          IU = IGETUNIT(1,1000)
+          IU = IGETUNIT(50,1000)
           IF (IU.GT.0) THEN
             OPEN(IU,FILE=FN,ERR=20)
             CLOSE(UNIT=IU,STATUS='DELETE')
@@ -1502,8 +1495,8 @@ C       PRINT DIMENSIONLESS SCALED SENSITIVITIES
           DO 70 IIP = IG1, IG2
             BUF1(IIP) = 0.
    70     CONTINUE
-          IF (NH.GT.0) THEN
-            DO 90 N = 1, NH
+          IF (NHT.GT.0) THEN
+            DO 90 N = 1, NHT
               DO 80 IIP = IG1, IG2
                 IF (WT(N).LT.0.) THEN
                   BUF2(IIP,N) = 0.
@@ -1530,8 +1523,8 @@ C                 PARAMETER IS LOG-TRANSFORMED
    90       CONTINUE
           ENDIF
           IF (NDMH.GT.0) THEN
-            DO 120 N = NH+1, ND
-              NQ1 = N - NH
+            DO 120 N = NHT+1, ND
+              NQ1 = N - NHT
               DO 110 IIP = IG1,IG2
                 IIPP = IPPTR(IIP)
                 IF (WTQ(NQ1,NQ1).LT.0.) THEN
@@ -1550,7 +1543,7 @@ C                 PARAMETER IS LOG-TRANSFORMED
                   TMP = 0.
                   DO 100 K = 1, NDMH
                     IF (WTQ(K,K).GT.0.) TMP = TMP + WTQS(NQ1,K)
-     &                                        *X(IIP,NH+K)
+     &                                        *X(IIP,NHT+K)
   100             CONTINUE
                   BUF2(IIP,N) = BB*TMP
                 ELSE
@@ -1600,8 +1593,8 @@ C       PRINT ONE-PERCENT SCALED SENSITIVITIES
           ENDIF
           IF (OUTNAM.NE.'NONE' .AND. IS.EQ.NSECTS) WRITE (IUSNO(3),590)
      &        (PARNAM(IPPTR(I)),I=1,NPE)
-          IF (NH.GT.0) THEN
-            DO 190 N = 1, NH
+          IF (NHT.GT.0) THEN
+            DO 190 N = 1, NHT
               DO 180 IIP = IG1, IG2
                 IF (WT(N).LT.0.) THEN
                   BUF2(IIP,N) = 0.
@@ -1627,8 +1620,8 @@ C                 PARAMETER IS LOG-TRANSFORMED
   190       CONTINUE
           ENDIF
           IF (NDMH.GT.0) THEN
-            DO 220 N = NH+1, ND
-              NQ1 = N - NH
+            DO 220 N = NHT+1, ND
+              NQ1 = N - NHT
               DO 210 IIP = IG1, IG2
                 IIPP = IPPTR(IIP)
                 IF (WTQ(NQ1,NQ1).LT.0.) THEN
@@ -1699,7 +1692,7 @@ C     ------------------------------------------------------------------
      & ,' the 5% significance level.  The probability that this   ',/
      & ,' conclusion is wrong is less than 5%.',
      & //,' IF the reported correlation IS LESS THAN the 5% critical'
-     &,' value REJECT the,',/,' hypothesis that the weighted residuals'
+     &,' value REJECT the',/,' hypothesis that the weighted residuals'
      & ,' are INDEPENDENT AND NORMALLY',/,' DISTRIBUTED at the 5%'
      &,' significance level.',//,' The'
      & ,' analysis can also be done using the 10% significance level.',/
@@ -1804,8 +1797,8 @@ C
       END
 C=======================================================================
       SUBROUTINE SOBS1BAS6CC(ND,WT,HOBS,H,R,R1,MPR,NPE,WP,B,PRM,BUFF,
-     &                       IPR,NIPR,WTPS,NH,WTQ,WTQS,IOWTQ,NDMH,NPLIST
-     &                       ,MPRAR,IPRAR,NDMHAR,BPRI)
+     &                       IPR,NIPR,WTPS,NHT,WTQ,WTQS,IOWTQ,NDMH,
+     &                       NPLIST,MPRAR,IPRAR,NDMHAR,BPRI)
 C     VERSION 20000201 ERB
 C     ******************************************************************
 C     CALCULATE CORRELATION COEFFICIENT
@@ -1816,7 +1809,7 @@ C     ------------------------------------------------------------------
       REAL B, BDIF1, BDIF2, BPRI, BUFF, H, HOBS, OBS, PRM, R, R1, WP,
      &      WPSR, WT, WTQ, WTQS
       INTEGER I, I1, II, IOWTQ, IPR, J, L, L1, MPR, N, ND, NDMH,
-     &        NH, NIPR, NPE
+     &        NHT, NIPR, NPE
       DIMENSION WT(ND), HOBS(ND), H(ND), B(NPLIST),
      &          PRM(NPLIST+1,MPRAR), WP(MPRAR), NIPR(IPRAR),
      &          BUFF(NPE,NPE+2), BPRI(IPRAR)
@@ -1830,8 +1823,8 @@ C     ------------------------------------------------------------------
       SUMD = 0.0
       SUM = 0.0
 C-------OBSERVATIONS WITH DIAGONAL WEIGHT MATRIX
-      IF(NH.GT.0) THEN
-        DO 10 N = 1, NH
+      IF(NHT.GT.0) THEN
+        DO 10 N = 1, NHT
           IF (WT(N).LT.0.0) THEN
             OBS = OBS - 1.0
             GOTO 10
@@ -1857,12 +1850,12 @@ C-------OBSERVATIONS WITH FULL WEIGHT MATRIX
             TEMP = 0.0
             TMP = 0.0
             DO 20 J = 1, NDMH
-              N = NH + J
+              N = NHT + J
               TMP = TMP + WTQS(I,J)*H(N)
               TEMP = TEMP + WTQS(I,J)*HOBS(N)
    20       CONTINUE
           ELSE
-            N = NH + I
+            N = NHT + I
             TMP = WTQS(I,I)*H(N)
             TEMP = WTQS(I,I)*HOBS(N)
           ENDIF
@@ -1935,8 +1928,8 @@ C-------PRIOR INFORMATION WITH A FULL WEIGHT MATRIX
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SOBS1BAS6WF(NPE,NH,NDMH,WTQ,X,C,G,HOBS,H,IFO,IOWTQ,
-     &                       NDMHAR)
+      SUBROUTINE SOBS1BAS6WF(NPE,NHT,NDMH,WTQ,X,C,G,HOBS,H,IFO,IOWTQ,
+     &                       NDMHAR,ND)
 C-----VERSION 1000 02FEB1996
 C     ******************************************************************
 C     ADD SENSITIVITY CONTRIBUTIONS FROM NON-HEAD DATA WITH FULL WEIGHT
@@ -1946,10 +1939,9 @@ C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL DTMPA, H, HOBS, TMPA, W, WTQ, X
-      INTEGER I, IFO, IOWTQ, IP, J, K, L, L1, N, N1, NH, NPE, NDMH
+      INTEGER I, IFO, IOWTQ, IP, J, K, L, L1, N, N1, NHT, NPE, NDMH
       DOUBLE PRECISION C(NPE,NPE), G(NPE), TMP
-      DIMENSION WTQ(NDMHAR,NDMHAR), X(NPE,NH+NDMHAR), HOBS(NH+NDMHAR),
-     &          H(NH+NDMHAR)
+      DIMENSION WTQ(NDMHAR,NDMHAR), X(NPE,ND), HOBS(ND), H(ND)
 C     ------------------------------------------------------------------
 C
       IF (IOWTQ.GT.0) THEN
@@ -1958,19 +1950,19 @@ C
             TMP = 0.0
             IF (WTQ(K,K).LT.0.0) THEN
               DO 10 L = 1, NDMH
-                TMP = TMP + 1.E-20*DBLE(X(J,NH+L))
+                TMP = TMP + 1.E-20*DBLE(X(J,NHT+L))
    10         CONTINUE
             ELSE
               DO 20 L = 1, NDMH
                 IF (WTQ(L,L).LT.0.0) THEN
-                  TMP = TMP + 1.E-20*DBLE(X(J,NH+L))
+                  TMP = TMP + 1.E-20*DBLE(X(J,NHT+L))
                 ELSE
-                  TMP = TMP + DBLE(WTQ(K,L))*DBLE(X(J,NH+L))
+                  TMP = TMP + DBLE(WTQ(K,L))*DBLE(X(J,NHT+L))
                 ENDIF
    20         CONTINUE
             ENDIF
             DO 30 I = J, NPE
-              C(I,J) = C(I,J) + DBLE(X(I,NH+K))*TMP
+              C(I,J) = C(I,J) + DBLE(X(I,NHT+K))*TMP
    30       CONTINUE
    40     CONTINUE
    50   CONTINUE
@@ -1979,12 +1971,12 @@ C
             TMP = 0.0
             IF (WTQ(K,K).LT.0.0) THEN
               DO 60 L = 1, NDMH
-                L1 = NH + L
+                L1 = NHT + L
                 TMP = TMP + 1.E-20*DBLE(HOBS(L1)-H(L1))
    60         CONTINUE
             ELSE
               DO 70 L = 1, NDMH
-                L1 = NH + L
+                L1 = NHT + L
                 IF (WTQ(L,L).LT.0.0) THEN
                   TMP = TMP + 1.E-20*DBLE(HOBS(L1)-H(L1))
                 ELSE
@@ -1992,13 +1984,13 @@ C
                 ENDIF
    70         CONTINUE
             ENDIF
-            G(I) = G(I) + DBLE(X(I,NH+K))*TMP
+            G(I) = G(I) + DBLE(X(I,NHT+K))*TMP
    80     CONTINUE
    90   CONTINUE
       ELSE
 C     IF WEIGHT MATRIX IS DIAGONAL
         DO 120 N = 1, NDMH
-          N1 = N + NH
+          N1 = N + NHT
           TMPA = HOBS(N1) - H(N1)
           W = WTQ(N,N)
           IF (W.LT.0) W = 1.E-20
@@ -2020,7 +2012,7 @@ C     IF WEIGHT MATRIX IS DIAGONAL
       END
 C=======================================================================
       SUBROUTINE SOBS1BAS6ML(RSQP,WT,NPE,ND,WP,MPR,IOUT,EV,IPR,DETWTP,
-     &                       NH,DTLWTQ,MPRAR)
+     &                       NHT,DTLWTQ,MPRAR)
 C-----VERSION 1000 01FEB1992
 C     ******************************************************************
 C     CALCULATE STATISTICS BASED ON THE MAXIMUM LIKELIHOOD OBJECTIVE
@@ -2030,7 +2022,7 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL AEV, AIC, BIC, DETWTP, DTLWTQ, EV, OF, PROD, PRODP, RND, RP,
      &     RSQP, WP, WT
-      INTEGER IOUT, IPR, MPR, N, ND, NH, NPE
+      INTEGER IOUT, IPR, MPR, N, ND, NHT, NPE
       DIMENSION WT(ND), WP(MPRAR)
 C     ------------------------------------------------------------------
   500 FORMAT (/,'  MAX LIKE OBJ FUNC = ',G11.5,/,
@@ -2042,7 +2034,7 @@ C
       RP = REAL(MPR+IPR)
 C-----DEPENDENT-VARIABLE PART OF WEIGHT MATRIX
       PROD = DTLWTQ
-      DO 10 N = 1, NH
+      DO 10 N = 1, NHT
         IF (WT(N).GT.0.) THEN
           PROD = PROD + LOG(WT(N))
         ELSE
@@ -2060,7 +2052,7 @@ C       UNCORRELATED PRIOR
 C       CORRELATED PRIOR
       IF (IPR.GT.0) PRODP = PRODP + DETWTP
 C-----LOG-LIKELIHOOD FUNCTION
-      OF = (RND+RP)*LOG(2.*3.14159265) + (RND+RP)*AEV - PROD - PRODP + 
+      OF = (RND+RP)*LOG(2.*3.14159265) + (RND+RP)*AEV - PROD - PRODP +
      &     (RSQP/EV)
 C-----AIC AND BIC
       AIC = OF + 2.0*REAL(NPE)
@@ -2071,12 +2063,12 @@ C-----AIC AND BIC
 C=======================================================================
       SUBROUTINE OBS1BAS6HAL(IUH,NH,MOBS,MAXM,ISUM,ISUMI,LCNDER,LCCOFF,
      &                       LCROFF,LCIOFF,LCJOFF,LCRINT,LCMLAY,LCPR,ND,
-     &                       IOUT,IOBSUM,LCOBBAS,ITMXP,LCSSGF,IOBS)
+     &                       IOUT,IOBSUM,LCOBBAS,ITMXP,LCSSGF,IOBS,NHT)
 C     VERSION 20000125
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR HEAD OBSERVATIONS
 C     ******************************************************************
-      INTEGER IOUT, ISUM, IUH, LCCOFF, LCIOFF, LCJOFF, LCMLAY, 
+      INTEGER IOUT, ISUM, IUH, LCCOFF, LCIOFF, LCJOFF, LCMLAY,
      &        LCNDER, LCPR, LCRINT, LCROFF, MAXM, MOBS, ND, NH
       CHARACTER*200 LINE
 C
@@ -2149,6 +2141,7 @@ C     POINTERS TO OBSERVATION ARRAYS
       IOBSUM = IOBSUM + NH
 C
       ND = ND + NH
+      NHT = NHT + NH
 C
       RETURN
       END
@@ -2171,11 +2164,11 @@ C     ------------------------------------------------------------------
      &        K, KK, M, MAXM, ML, ML1, MLAY, MLL, MM, MOBS, N, N1, NCOL,
      &        NDER, NH, NLAY, NPER, NROW, NSTPA, NT, NTC, ISSA
       INTEGER IPLOT(ND+IPR+MPR)
-      CHARACTER*12 OBSNAM(NH), NAMES(ND+MPR+IPR)
-      DIMENSION NDER(5,NHAR), IOFF(NHAR), JOFF(NHAR), HOBS(NH), WT(NH),
+      CHARACTER*12 OBSNAM(ND), NAMES(ND+MPR+IPR)
+      DIMENSION NDER(5,NHAR), IOFF(NHAR), JOFF(NHAR), HOBS(ND), WT(ND),
      &          DELR(NCOL), DELC(NROW), RINT(4,NHAR), COFF(NHAR),
      &          ROFF(NHAR), MLAY(MAXM,MOBSAR), PR(MAXM,MOBSAR),
-     &          TOFF(NH), NSTPA(NPER), PERLNA(NPER), TSMLTA(NPER),
+     &          TOFF(ND), NSTPA(NPER), PERLNA(NPER), TSMLTA(NPER),
      &          ISSA(NPER)
       CHARACTER*10 STATYP(0:2)
       DATA (STATYP(I),I=0,2)/'VARIANCE','STD. DEV.','COEF. VAR.'/
@@ -2251,7 +2244,7 @@ C----------READ FIRST TRANSIENT OBSERVATIONS AT ONE LOCATION
               NT = -NDER(4,N1)
               NTC = 1
 C-----------READ ITEM 6 (FIRST OCCURENCE)
-              READ (IUH,*) OBSNAM(N1), IREFSP, TOFFSET, HOBS(N1), 
+              READ (IUH,*) OBSNAM(N1), IREFSP, TOFFSET, HOBS(N1),
      &                       WT(N1), DUM, IWT, IPLOT(N1)
               NAMES(N1) = OBSNAM(N1)
               IF (IHPRINT.EQ.1)
@@ -2294,7 +2287,7 @@ C----------ASSIGN INFORMATION WHICH STAYS THE SAME
    60         CONTINUE
             ENDIF
 C----------READ INFORMATION UNIQUE TO THIS OBSERVATION (ITEM 6)
-            READ (IUH,*) OBSNAM(N), IREFSP, TOFFSET, HOBS(N), WT1, 
+            READ (IUH,*) OBSNAM(N), IREFSP, TOFFSET, HOBS(N), WT1,
      &                     WT2, IWT, IPLOT(N)
             NAMES(N) = OBSNAM(N)
             IF (ITT.EQ.1) WT(N) = WT1
@@ -2437,7 +2430,7 @@ C-------CONVERT HEAD OBSERVATION VARIANCES TO WEIGHTS.
 C=======================================================================
       SUBROUTINE OBS1BAS6HFM(NH,NDER,IOFF,JOFF,MLAY,IBOUND,RINT,OBSNAM,
      &                       COFF,ROFF,DELR,DELC,NCOL,NROW,NLAY,PR,H,WT,
-     &                       HNEW,IDRY,NPE,NQT,TOFF,MAXM,JDRY,IPAR,IOUT,
+     &                       HNEW,IDRY,NPE,TOFF,MAXM,JDRY,IPAR,IOUT,
      &                       ITS,NHAR,MOBSAR,ND,IPES,IYCFLG,STRT)
 C     VERSION 20010810 ERB
 C     ******************************************************************
@@ -2447,16 +2440,16 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL COFF, DELC, DELR, H, PR, PROP, RINT, ROFF, STRT, TOFF, WT,
      &     ZERO
-      INTEGER IBOUND, IDRY, II, IO, IOFF, IOUT, IPAR, ISSFLG, ITS, JDRY,
-     &        JJ, JO, JOFF, K, KK, KPER, M, MAXM, ML, MLAY, MLL, MM, N,
-     &        N1, NCOL, NDER, NH, NLAY, NPER, NQT, NROW
-      CHARACTER*12 OBSNAM(NH+NQT)
+      INTEGER IBOUND, IDRY, II, IO, IOFF, IOUT, IPAR, ITS, JDRY, JJ,
+     &        JO, JOFF, K, KK, M, MAXM, ML, MLAY, MLL, MM, N, N1, NCOL,
+     &        NDER, NH, NLAY, NROW
+      CHARACTER*12 OBSNAM(ND)
       DOUBLE PRECISION HNEW(NCOL,NROW,NLAY), V, V0
-      DIMENSION COFF(NHAR), DELC(NROW), DELR(NCOL), H(NH+NQT),
+      DIMENSION COFF(NHAR), DELC(NROW), DELR(NCOL), H(ND),
      &          IBOUND(NCOL,NROW,NLAY), IOFF(NHAR), JOFF(NHAR),
      &          MLAY(MAXM,MOBSAR), NDER(5,NHAR),
      &          PR(MAXM,MOBSAR), RINT(4,NHAR), ROFF(NHAR),
-     &          STRT(NCOL,NROW,NLAY), TOFF(NH), WT(NH+NQT)
+     &          STRT(NCOL,NROW,NLAY), TOFF(ND), WT(ND)
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
@@ -2576,7 +2569,7 @@ C-------UPDATE COUNTER FOR MULTILAYER WELLS
 C-------DRY WELL?
         IF (IPAR.GT.0 .AND. WT(N).LT.ZERO) GOTO 60
 C-------OBSERVATION AT THIS TIME STEP?
-        IF ((NDER(4,N).NE.ITS-1.OR.TOFF(N).LE.ZERO) .AND. 
+        IF ((NDER(4,N).NE.ITS-1.OR.TOFF(N).LE.ZERO) .AND.
      &      NDER(4,N).NE.ITS) GOTO 60
         II = NDER(2,N)
         JJ = NDER(3,N)
@@ -2620,8 +2613,8 @@ C---------HEADS OR DRAWDOWNS
       END
 C=======================================================================
       SUBROUTINE OBS1BAS6HDR(NH,NDER,IOFF,JOFF,MLAY,RINT,NCOL,NROW,NLAY,
-     &                       PR,WT,SNEW,X,IP,NPE,LN,NQT,TOFF,MAXM,IPAR,
-     &                       NPLIST,ITS,NHAR,MOBSAR)
+     &                       PR,WT,SNEW,X,IP,NPE,LN,TOFF,MAXM,IPAR,
+     &                       NPLIST,ITS,NHAR,MOBSAR,ND)
 C     VERSION 19981020 ERB
 C     FORMERLY WAS SSEN1U
 C     ******************************************************************
@@ -2632,12 +2625,12 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL PR, PROP, RINT, TOFF, WT, X, ZERO
       INTEGER II, IIPP, IO, IOFF, IP, IPAR, ITS, JJ, JO, JOFF, K, KK,
-     &        LN, M, MAXM, ML, MLAY, MM, N, N1, NCOL, NDER, NH, NLAY,
-     &        NPE, NQT, NROW
+     &        LN, LNIIPP, M, MAXM, ML, MLAY, MM, N, N1, NCOL, NDER, NH,
+     &        NLAY, NPE, NROW
       DOUBLE PRECISION SNEW(NCOL,NROW,NLAY), V
-      DIMENSION X(NPE,NH+NQT), WT(NH+NQT), RINT(4,NHAR), JOFF(NHAR),
-     &          IOFF(NHAR), MLAY(MAXM,MOBSAR), PR(MAXM,MOBSAR), 
-     &          NDER(5,NHAR), LN(NPLIST), TOFF(NH)
+      DIMENSION X(NPE,ND), WT(ND), RINT(4,NHAR), JOFF(NHAR),
+     &          IOFF(NHAR), MLAY(MAXM,MOBSAR), PR(MAXM,MOBSAR),
+     &          NDER(5,NHAR), LN(NPLIST), TOFF(ND)
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
@@ -2651,6 +2644,8 @@ C     ------------------------------------------------------------------
 C
 C
       ZERO = 0.0
+      IIPP = IPPTR(IP)
+      LNIIPP = LN(IIPP)
 C
 C-----INTERPOLATION
       ML = 0
@@ -2691,22 +2686,23 @@ C-------INDEX WHICH, IF NOT ZERO, IDENTIFIES THE HEAD USED TO
 C-------CALCULATE DRAWDOWN
    50   N1 = NDER(5,N)
 C---------SENSITIVITY-EQUATION SENSITIVITIES
-        IF (IP.GT.0) THEN
-          IIPP = IPPTR(IP)
-          IF (NDER(4,N).EQ.ITS) THEN
-            IF (LN(IIPP).GT.0) X(IP,N) = B(IIPP)*V
-            IF (LN(IIPP).LE.0) X(IP,N) = V
+        IF (NDER(4,N).EQ.ITS) THEN
+          IF (LNIIPP.GT.0) THEN
+            X(IP,N) = B(IIPP)*V
+          ELSE
+            X(IP,N) = V
           ENDIF
-          IF (NDER(4,N).EQ.ITS-1 .AND. TOFF(N).GT.ZERO) THEN
-            IF (LN(IIPP).GT.0) X(IP,N) = X(IP,N) + TOFF(N)
-     &                                 *((B(IIPP)*V)-X(IP,N))
-            IF (LN(IIPP).LE.0) X(IP,N) = X(IP,N) +
-     &                         TOFF(N)*(V-X(IP,N))
-          ENDIF
-          IF (N1.GT.0 .AND. ((NDER(4,N).EQ.ITS.AND.TOFF(N).EQ.ZERO).OR.
-     &        (NDER(4,N).EQ.ITS-1.AND.TOFF(N).GT.ZERO))) 
-     &        X(IP,N) = X(IP,N) - X(IP,N1)
         ENDIF
+        IF (NDER(4,N).EQ.ITS-1 .AND. TOFF(N).GT.ZERO) THEN
+          IF (LNIIPP.GT.0) THEN
+            X(IP,N) = X(IP,N) + TOFF(N)*((B(IIPP)*V)-X(IP,N))
+          ELSE
+            X(IP,N) = X(IP,N) + TOFF(N)*(V-X(IP,N))
+          ENDIF
+        ENDIF
+        IF (N1.GT.0 .AND. ((NDER(4,N).EQ.ITS.AND.TOFF(N).EQ.ZERO).OR.
+     &      (NDER(4,N).EQ.ITS-1.AND.TOFF(N).GT.ZERO)))
+     &      X(IP,N) = X(IP,N) - X(IP,N1)
    60 CONTINUE
       RETURN
       END
@@ -2751,10 +2747,10 @@ C     CALCULATE AND PRINT WEIGHTED RESIDUALS FOR HEAD OBSERVATIONS
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL AVE, AVET, D, H, HOBS, RES, RSQ, VMAX, 
+      REAL AVE, AVET, D, H, HOBS, RES, RSQ, VMAX,
      &     VMIN, W, WT, WT2, WTR, WTRL
-      INTEGER IO, IOUT, IPR, JDRY, MPR, 
-     &        N, ND, NH, NMAX, NMIN, NNEG, NNEGT, NPOS, NPOST, 
+      INTEGER IO, IOUT, IPR, JDRY, MPR,
+     &        N, ND, NH, NMAX, NMIN, NNEG, NNEGT, NPOS, NPOST,
      &        NRES, NRUNS
       INTEGER IUGDO(6), IPLOT(ND+IPR+MPR), IPLPTR(ND+IPR+MPR)
       CHARACTER*12 OBSNAM(ND)
@@ -2963,7 +2959,7 @@ C     ------------------------------------------------------------------
 C     ------------------------------------------------------------------
 C
       IF ((ABS(ROFF).LT..001.AND.ABS(COFF).LT..001) .OR.
-     &    (ABS(ROFF).LT..001.AND.IBJ.EQ.0) .OR. 
+     &    (ABS(ROFF).LT..001.AND.IBJ.EQ.0) .OR.
      &    (ABS(COFF).LT..001.AND.IBI.EQ.0) .OR. (IBI.EQ.0.AND.IBJ.EQ.0))
      &    THEN
         IOFF = 0
@@ -3083,12 +3079,13 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE OBS1BAS6FRP(NCOL,NROW,NPER,IUCHOB,IOUT,OBSNAM,NH,JT,
-     &                       NQT,IBT,NQOB,NQCL,IQOB,QCLS,IERR,HOBS,TOFF,
+      SUBROUTINE OBS1BAS6FRP(NCOL,NROW,NPER,IUCHOB,IOUT,OBSNAM,NHT,JT,
+     &                       IBT,NQOB,NQCL,IQOB,QCLS,IERR,HOBS,TOFF,
      &                       WTQ,IOWTQ,IPRN,NDMH,NSTPA,PERLNA,TSMLTA,
      &                       ISSA,ITRSS,NQAR,NQCAR,NQTAR,IQ1,NQT1,NDD,
      &                       NQCH,NQTCH,NT,NC,IPLOT,NAMES,ND,IPR,MPR,
      &                       IOWTQCH,NLAY)
+C     VERSION 20010921 ERB
 C     ******************************************************************
 C     READ, CHECK AND STORE FLOW-OBSERVATION DATA FOR CHD BOUNDARIES.
 C     ******************************************************************
@@ -3097,13 +3094,13 @@ C     ------------------------------------------------------------------
       REAL BLANK, EVFCH, HOBS, PERLNA, QCLS, TOFF, TOFFSET, TOMULTCH,
      &     TSMLTA, WTQ
       INTEGER I, I4, IBT, IERR, IOUT, IOWTQ, IPRN, IQ, IQOB, IUCHOB,
-     &        IWT, J, JT, L, N, NC, NC1, NC2, NCOL, NDMH, NH, NPER,
-     &        NQCL, NQOB, NQT, NROW, NSTPA, NT, NT1, NT2, ISSA
+     &        IWT, J, JT, L, N, NC, NC1, NC2, NCOL, NDMH, NHT, NPER,
+     &        NQCL, NQOB, NROW, NSTPA, NT, NT1, NT2, ISSA
       INTEGER IPLOT(ND+IPR+MPR)
       CHARACTER*12 OBSNAM(NDD), NAMES(ND+IPR+MPR)
       CHARACTER*20 FMTIN*20, ANAME*50
       DIMENSION IBT(2,NQAR), NQOB(NQAR), NQCL(NQAR), IQOB(NQTAR),
-     &          QCLS(5,NQCAR),  HOBS(NH+NQT), TOFF(NH+NQT), NSTPA(NPER),
+     &          QCLS(5,NQCAR),  HOBS(ND), TOFF(ND), NSTPA(NPER),
      &          PERLNA(NPER), TSMLTA(NPER), ISSA(NPER)
       DIMENSION WTQ(NDMH,NDMH)
       CHARACTER*10 STATYP(0:2)
@@ -3176,7 +3173,7 @@ C----------READ TIME STEPS, MEASURED FLOWS, AND WEIGHTS.
         NT1 = NT + 1
         NT2 = NT + NQOB(IQ)
         DO 30 J = NT1, NT2
-          N = NH + J
+          N = NHT + J
 C---------READ ITEM 4
           IF (IOWTQCH.GT.0) THEN
             READ (IUCHOB,*) OBSNAM(N), IREFSP, TOFFSET, HOBS(N), STAT,
@@ -3205,7 +3202,10 @@ C---------READ ITEM 4
           CALL UOBSTI(OBSNAM(N),IOUT,ISSA,ITRSS,NPER,NSTPA,IREFSP,
      &                IQOB(J),PERLNA,TOFF(N),TOFFSET,TOMULTCH,TSMLTA,1)
 C----------ERROR CHECKING
-          IF (IQOB(J).GT.JT) JT = IQOB(J)
+          IF (IQOB(J).GE.JT) THEN
+            JT = IQOB(J)
+            IF (TOFF(J).GT.0.) JT = JT+1
+          ENDIF
    30   CONTINUE
 C----------READ LAYER, ROW, COLUMN, AND FACTOR (ITEM 5)
         NC1 = NC + 1
@@ -3252,7 +3252,7 @@ C       READ ITEM 7
         IF (IPRN.GE.0) THEN
           WRITE (IOUT,615) ANAME
           CALL UARRSUBPRW(WTQ,NDMH,NDMH,NQT1,NQT2,NQT1,NQT2,IPRN,IOUT,
-     &                    OBSNAM(NH+1),NDMH)
+     &                    OBSNAM(NHT+1),NDMH)
         ENDIF
       ENDIF
       NQT1 = NQT2 + 1
@@ -3265,32 +3265,33 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE OBS1BAS6FFM(NQ,NQT,NQOB,NQCL,IQOB,QCLS,IBT,HNEW,NCOL,
-     &                       NROW,NLAY,IBOUND,NH,H,TOFF,ITS,NQAR,NQCAR,
-     &                       NQTAR,ICHFLG,CR,CC,CV,BOTM,NBOTM)
-C     VERSION 19981020 ERB
+      SUBROUTINE OBS1BAS6FFM(NQ,NQOB,NQCL,IQOB,QCLS,IBT,HNEW,NCOL,NROW,
+     &                       NLAY,IBOUND,NHT,H,TOFF,ITS,NQAR,NQCAR,
+     &                       NQTAR,ICHFLG,CR,CC,CV,BOTM,NBOTM,LAYHDT,ND,
+     &                       IOUT,KKPER)
+C     VERSION 20011114 ERB
 C     ******************************************************************
 C     CALCULATE SIMULATED EQUIVALENTS TO OBSERVED CONSTANT-HEAD FLOWS
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL FACT, H, QCLS, TOFF, ZERO
-      INTEGER I, IBOUND, IBT, IBT1, IQ,
-     &        IQOB, ITS, J, K, N,
-     &        NC, NC1, NC2, NCOL, NH, NLAY, NQ,
-     &        NQCL, NQOB, NQT, NROW, NT, NT1, NT2
+      INTEGER I, IBOUND, IBT, IBT1, IOUT, IQ, IQOB, ITS, J, K, LAYHDT,
+     &        N, NC, NC1, NC2, NCOL, NHT, NLAY, NQ, NQCL, NQOB, NROW,
+     &        NT, NT1, NT2
       DOUBLE PRECISION HNEW(NCOL,NROW,NLAY),RATE
-      DIMENSION IBOUND(NCOL,NROW,NLAY), IBT(2,NQAR),
-     &          NQOB(NQAR), NQCL(NQAR), IQOB(NQTAR), QCLS(5,NQCAR),
-     &          H(NH+NQT), TOFF(NH+NQT), CR(NCOL,NROW,NLAY),
-     &          CC(NCOL,NROW,NLAY), CV(NCOL,NROW,NLAY),
-     &          BOTM(NCOL,NROW,0:NBOTM)
+      DIMENSION IBOUND(NCOL,NROW,NLAY), IBT(2,NQAR), NQOB(NQAR),
+     &          NQCL(NQAR), IQOB(NQTAR), QCLS(5,NQCAR), H(ND), TOFF(ND),
+     &          CR(NCOL,NROW,NLAY), CC(NCOL,NROW,NLAY),
+     &          CV(NCOL,NROW,NLAY), BOTM(NCOL,NROW,0:NBOTM),
+     &          LAYHDT(NLAY)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
-  505 FORMAT (/,' OBS#',I5,', ID ',A4,', TIME STEP ',I5)
-  510 FORMAT ('    LAYER   ROW  COLUMN')
-  520 FORMAT (3I7)
-  525 FORMAT (' *',I5,I7)
+  500 FORMAT(/,
+     &' *** ERROR: CONSTANT-HEAD FLOW OBSERVATION SPECIFIED FOR CELL (',
+     &I3,',',I5,',',I5,'),',/,
+     &12X,'BUT THIS CELL IS NOT CONSTANT-HEAD IN STRESS PERIOD ',I4,/
+     &12X,'-- STOP EXECUTION (OBS1BAS6FFM)')
 C
 C-------INITIALIZE VARIABLES
       ZERO = 0.0
@@ -3303,8 +3304,8 @@ C-------LOOP THROUGH BOUNDARY FLOWS
         IF (IBT1.NE.5) GOTO 50
 C----------WAS THERE A MEASUREMENT AT THIS BOUNDARY THIS TIME STEP?
         DO 40 NT = NT1, NT2
-          IF (IQOB(NT).EQ.ITS .OR. 
-     &        (IQOB(NT).EQ.ITS-1.AND.TOFF(NH+NT).GT.ZERO)) THEN
+          IF (IQOB(NT).EQ.ITS .OR.
+     &        (IQOB(NT).EQ.ITS-1.AND.TOFF(NHT+NT).GT.ZERO)) THEN
 C----------LOOP THROUGH CELLS.
             NC1 = NC + 1
             NC2 = NC + NQCL(IQ)
@@ -3312,18 +3313,22 @@ C----------LOOP THROUGH CELLS.
               K = QCLS(1,N)
               I = QCLS(2,N)
               J = QCLS(3,N)
+              IF (IBOUND(J,I,K).GE.0) THEN
+                WRITE(IOUT,500) K,I,J,KKPER
+                STOP
+              ENDIF
 C-------------CALL SUBROUTINE TO CALCULATE CONSTANT-HEAD FLOW FOR CELL
               CALL SOBS1BAS6FFLW(J,I,K,ICHFLG,IBOUND,HNEW,CR,CC,CV,BOTM,
-     &                          NBOTM,NCOL,NROW,NLAY,RATE)
+     &                          NBOTM,NCOL,NROW,NLAY,RATE,LAYHDT)
 C-------------SUM VALUES FROM INDIVIDUAL CELLS.
 C----------------CALCULATE FACTOR FOR TEMPORAL INTERPOLATION
    20         FACT = 1.0
-              IF (TOFF(NH+NT).GT.ZERO) THEN
-                IF (IQOB(NT).EQ.ITS) FACT = 1. - TOFF(NH+NT)
-                IF (IQOB(NT).EQ.ITS-1) FACT = TOFF(NH+NT)
+              IF (TOFF(NHT+NT).GT.ZERO) THEN
+                IF (IQOB(NT).EQ.ITS) FACT = 1. - TOFF(NHT+NT)
+                IF (IQOB(NT).EQ.ITS-1) FACT = TOFF(NHT+NT)
               ENDIF
 C---------------FLOWS
-              H(NH+NT) = H(NH+NT) + RATE*FACT*QCLS(4,N)
+              H(NHT+NT) = H(NHT+NT) + RATE*FACT*QCLS(4,N)
    30       CONTINUE
           ENDIF
    40   CONTINUE
@@ -3336,11 +3341,12 @@ C
       END
 C=======================================================================
       SUBROUTINE OBS1BAS6FDR(NQ,NQOB,NQCL,IQOB,QCLS,IBT,HNEW,IP,SNEW,
-     &                       NCOL,NROW,NLAY,IBOUND,NH,NQT,X,TOFF,ITS,
+     &                       NCOL,NROW,NLAY,IBOUND,NHT,X,TOFF,ITS,
      &                       NQAR,NQCAR,NQTAR,ICHFLG,BOTM,NBOTM,PIDTMP,
      &                       LAYHDT,RMLT,NMLTAR,IZON,NZONAR,DELC,DELR,
      &                       HFB,NHFB,IUHFB,MXACTFB,SV,VKA,HK,HANI,CR,
-     &                       CC,CV,NPE)
+     &                       CC,CV,NPE,IERR,IERRU,IOUT,IULPF,LN,NPLIST,
+     &                       ND)
 C     ******************************************************************
 C     CALCULATE SENSITIVITIES FOR FLOW OBSERVATIONS FOR THE CONSTANT
 C     HEAD BOUNDARY PACKAGE
@@ -3348,21 +3354,21 @@ C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL FACT, QCLS, TOFF, X, ZERO
-      INTEGER I, IBOUND, IBT, IBT1, IP, IQ, IQOB, ITS, J, K, N, NC,
-     &        NC1, NC2, NCOL, NH, NLAY, NPE, NQ, NQCL, NQOB, NQT, NROW,
+      INTEGER I, IBOUND, IBT, IBT1, IP, IQ, IQOB, ITS, J, K, LN, N, NC,
+     &        NC1, NC2, NCOL, NHT, NLAY, NPE, NQ, NQCL, NQOB, NROW,
      &        NT, NT1, NT2
       DOUBLE PRECISION HNEW(NCOL,NROW,NLAY), SNEW(NCOL,NROW,NLAY),
      &        DRATE
-      DIMENSION IBOUND(NCOL,NROW,NLAY), X(NPE,NH+NQT), IBT(2,NQAR),
+      DIMENSION IBOUND(NCOL,NROW,NLAY), X(NPE,ND), IBT(2,NQAR),
      &          NQOB(NQAR), NQCL(NQAR), IQOB(NQTAR),
-     &          QCLS(5,NQCAR), TOFF(NH+NQT),
+     &          QCLS(5,NQCAR), TOFF(ND),
      &          CR(NCOL,NROW,NLAY), CC(NCOL,NROW,NLAY),
      &          CV(NCOL,NROW,NLAY), BOTM(NCOL,NROW,0:NBOTM),
      &          LAYHDT(NLAY),RMLT(NCOL,NROW,NMLTAR),
      &          DELR(NCOL),DELC(NROW),
      &          HFB(7,MXACTFB),SV(NCOL,NROW,NLAY),VKA(NCOL,NROW,NLAY),
      &          HK(NCOL,NROW,NLAY),HANI(NCOL,NROW,NLAY),
-     &          IZON(NCOL,NROW,NZONAR)
+     &          IZON(NCOL,NROW,NZONAR), LN(NPLIST)
       INCLUDE 'param.inc'
       CHARACTER*4 PIDTMP
 C     ------------------------------------------------------------------
@@ -3387,8 +3393,8 @@ C-------LOOP THROUGH BOUNDARY FLOWS
         IF (IBT1.NE.5) GOTO 50
 C----------WAS THERE A MEASUREMENT AT THIS BOUNDARY THIS TIME STEP?
         DO 40 NT = NT1, NT2
-          IF (IQOB(NT).EQ.ITS .OR. 
-     &        (IQOB(NT).EQ.ITS-1.AND.TOFF(NH+NT).GT.ZERO)) THEN
+          IF (IQOB(NT).EQ.ITS .OR.
+     &        (IQOB(NT).EQ.ITS-1.AND.TOFF(NHT+NT).GT.ZERO)) THEN
 C----------LOOP THROUGH CELLS.
             NC1 = NC + 1
             NC2 = NC + NQCL(IQ)
@@ -3402,16 +3408,18 @@ C----------------SENSITIVITIES FOR CELL
      &                            BOTM,NBOTM,NCOL,NROW,NLAY,DRATE,
      &                            PIDTMP,IIPP,LAYHDT,RMLT,NMLTAR,IZON,
      &                            NZONAR,DELC,DELR,HFB,NHFB,IUHFB,
-     &                            MXACTFB,SV,VKA,HK,HANI,SNEW)
+     &                            MXACTFB,SV,VKA,HK,HANI,SNEW,IERR,
+     &                            IERRU,IOUT,IULPF)
 C-------------SUM VALUES FROM INDIVIDUAL CELLS.
 C----------------CALCULATE FACTOR FOR TEMPORAL INTERPOLATION
    20         FACT = 1.0
-              IF (TOFF(NH+NT).GT.ZERO) THEN
-                IF (IQOB(NT).EQ.ITS) FACT = 1. - TOFF(NH+NT)
-                IF (IQOB(NT).EQ.ITS-1) FACT = TOFF(NH+NT)
+              IF (TOFF(NHT+NT).GT.ZERO) THEN
+                IF (IQOB(NT).EQ.ITS) FACT = 1. - TOFF(NHT+NT)
+                IF (IQOB(NT).EQ.ITS-1) FACT = TOFF(NHT+NT)
               ENDIF
 C---------------SENSITIVITY-EQUATION SENSITIVITIES
-              X(IP,NH+NT) = X(IP,NH+NT) + DRATE*FACT*QCLS(4,N)
+              IF (LN(IIPP).GT.0) DRATE = DRATE*B(IIPP)
+              X(IP,NHT+NT) = X(IP,NHT+NT) + DRATE*FACT*QCLS(4,N)
    30       CONTINUE
           ENDIF
    40   CONTINUE
@@ -3451,7 +3459,7 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SOBS1BAS6FOH(IO,IOWTQCH,IOUT,NH,NQTCH,HOBS,H,WTQ,
+      SUBROUTINE SOBS1BAS6FOH(IO,IOWTQCH,IOUT,NHT,NQTCH,HOBS,H,WTQ,
      &                        OBSNAM,IDIS,WTQS,D,AVET,NPOST,NNEGT,NRUNS,
      &                        RSQ,ND,MPR,IPR,NDMH,WTRL,NRES,IUGDO,
      &                        OUTNAM,IPLOT,IPLPTR,LCOBCHD,ISSWR,SSCH,
@@ -3463,10 +3471,10 @@ C     FLOW OBSERVATIONS
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL AVE, AVET, D, H, HOBS, RES, RSQ, SWH, VMAX, VMIN, WT2, WTQ, 
+      REAL AVE, AVET, D, H, HOBS, RES, RSQ, SWH, VMAX, VMIN, WT2, WTQ,
      &     WTQS, WTR, WTRL
       INTEGER IDIS, IO, IOUT, IOWTQCH, IPR,
-     &        J, MPR, N, ND, NDMH, NH, NMAX, NMIN,
+     &        J, MPR, N, ND, NDMH, NHT, NMAX, NMIN,
      &        NNEG, NNEGT, NPOS, NPOST, NQ1, NQ2, NQTCH, NRES, NRUNS
       INTEGER IUGDO(6), IPLOT(ND+IPR+MPR), IPLPTR(ND+IPR+MPR)
       CHARACTER*12 OBSNAM(ND)
@@ -3475,13 +3483,13 @@ C     ------------------------------------------------------------------
      &          WTQS(NDMH,NDMH), SSCH(ITMXP+1)
 C     ------------------------------------------------------------------
 C
-  500 FORMAT (/,' DATA FOR FLOWS REPRESENTED USING THE CONSTANT-HEAD',
-     &' BOUNDARY PACKAGE',//,
+  500 FORMAT (/,' DATA FOR FLOW OBSERVATIONS AT BOUNDARIES REPRESENTED',
+     &' AS CONSTANT-HEAD',//,
      &7X,'OBSERVATION      MEAS.      CALC.',14X,'WEIGHTED',/,
      &'  OBS#    NAME',10X,'FLOW',7X,'FLOW',4X,'RESIDUAL',3X,
      &        'RESIDUAL',/)
-  505 FORMAT (/,' DATA FOR FLOWS REPRESENTED USING THE CONSTANT-HEAD',
-     &' BOUNDARY PACKAGE',//,
+  505 FORMAT (/,' DATA FOR FLOW OBSERVATIONS AT BOUNDARIES REPRESENTED',
+     &' AS CONSTANT-HEAD',//,
      &7X,'OBSERVATION',6X,'MEAS.      CALC.',26X,'WEIGHTED',/,
      &2X,'OBS#    NAME',10X,'FLOW',7X,'FLOW',5X,'RESIDUAL',2X,
      &'WEIGHT**.5',2X,'RESIDUAL',/)
@@ -3518,7 +3526,7 @@ C
       VMIN = 1.E20
       AVE = 0.
       DO 20 N = LCOBCHD, LCOBCHD+NQTCH-1
-        NQ1 = N - NH
+        NQ1 = N - NHT
         IF (WTQ(NQ1,NQ1).LT.0.) THEN
           WRITE (IOUT,515) N, OBSNAM(N), HOBS(N)
           IDIS = IDIS + 1
@@ -3587,7 +3595,7 @@ C
         NNEGT = NNEGT + NNEG
         AVE = AVE/REAL(NQTCH-IDISGB)
         IF (IO.EQ.1) THEN
-          WRITE (IOUT,525) VMAX, NMAX, VMIN, NMIN, AVE, NPOS, NNEG, 
+          WRITE (IOUT,525) VMAX, NMAX, VMIN, NMIN, AVE, NPOS, NNEG,
      &                     NRUNSGB, NRESGB
           WRITE (IOUT,520) RSQGB
         ENDIF
@@ -3598,21 +3606,21 @@ C
 
 C=======================================================================
       SUBROUTINE SOBS1BAS6FFLW(J,I,K,ICHFLG,IBOUND,HNEW,CR,CC,CV,BOTM,
-     &                        NBOTM,NCOL,NROW,NLAY,RATE)
+     &                        NBOTM,NCOL,NROW,NLAY,RATE,LAYHDT)
+C     VERSION 20010924 ERB
 C     ******************************************************************
 C     CALCULATE CONSTANT-HEAD BOUNDARY FLOW FOR A GIVEN CELL
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
+      INTEGER LAYHDT
       DOUBLE PRECISION HNEW,HD,X1,X2,X3,X4,X5,X6,RATE
 C
       DIMENSION HNEW(NCOL,NROW,NLAY), IBOUND(NCOL,NROW,NLAY),
      1     CR(NCOL,NROW,NLAY), CC(NCOL,NROW,NLAY),
-     2     CV(NCOL,NROW,NLAY), BOTM(NCOL,NROW,0:NBOTM)
+     2     CV(NCOL,NROW,NLAY), BOTM(NCOL,NROW,0:NBOTM), LAYHDT(NLAY)
 C
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
-      COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
-     1               LAYWET(200)
 C     ------------------------------------------------------------------
 C
 C6------CLEAR VALUES FOR FLOW RATE THROUGH EACH FACE OF CELL.
@@ -3666,7 +3674,7 @@ C11-----CALCULATE FLOW THROUGH THE UPPER FACE.
       IF (IBOUND(J,I,K-1).EQ.0) GO TO 150
       IF(ICHFLG.EQ.0 .AND. IBOUND(J,I,K-1).LT.0) GO TO 150
       HD=HNEW(J,I,K)
-      IF(LAYTYP(K).EQ.0) GO TO 122
+      IF(LAYHDT(K).EQ.0) GO TO 122
       TMP=HD
       TOP=BOTM(J,I,LBOTM(K)-1)
       IF(TMP.LT.TOP) HD=TOP
@@ -3678,7 +3686,7 @@ C12-----CALCULATE FLOW THROUGH THE LOWER FACE.
       IF(IBOUND(J,I,K+1).EQ.0) GO TO 180
       IF(ICHFLG.EQ.0 .AND. IBOUND(J,I,K+1).LT.0) GO TO 180
       HD=HNEW(J,I,K+1)
-      IF(LAYTYP(K+1).EQ.0) GO TO 152
+      IF(LAYHDT(K+1).EQ.0) GO TO 152
       TMP=HD
       TOP=BOTM(J,I,LBOTM(K+1)-1)
       IF(TMP.LT.TOP) HD=TOP
@@ -3696,7 +3704,7 @@ C=======================================================================
      &                          NBOTM,NCOL,NROW,NLAY,DRATE,PIDTMP,IIPP,
      &                          LAYHDT,RMLT,NMLTAR,IZON,NZONAR,DELC,
      &                          DELR,HFB,NHFB,IUHFB,MXACTFB,SV,VKA,HK,
-     &                          HANI,SNEW)
+     &                          HANI,SNEW,IERR,IERRU,IOUT,IULPF)
 C     ******************************************************************
 C     CALCULATE CONSTANT-HEAD BOUNDARY FLOW SENSITIVITY FOR A GIVEN CELL
 C     ******************************************************************
@@ -3714,8 +3722,6 @@ C
      &     HK(NCOL,NROW,NLAY),HANI(NCOL,NROW,NLAY)
 C
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
-      COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
-     1               LAYWET(200)
 C     ------------------------------------------------------------------
 C
 C6------CLEAR VALUES FOR FLOW RATE THROUGH EACH FACE OF CELL.
@@ -3732,15 +3738,16 @@ C6------CLEAR VALUES FOR FLOW RATE THROUGH EACH FACE OF CELL.
       COF=ZERO
       COU=ZERO
       COD=ZERO
-      IF (PIDTMP.EQ.'HANI' .OR. PIDTMP.EQ.'HK  ' .OR. 
+      IF (PIDTMP.EQ.'HANI' .OR. PIDTMP.EQ.'HK  ' .OR.
      &    PIDTMP.EQ.'VK  ' .OR. PIDTMP.EQ.'VANI' .OR.
      &    PIDTMP.EQ.'VKCB' .OR. PIDTMP.EQ.'SS  ' .OR.
-     &    PIDTMP.EQ.'SY  ') 
-     &      CALL SOBS1BAS6FFLWCO(K,I,J,COL,COR,COB,COF,
-     &                   COU,COD,NCOL,NROW,NLAY,PIDTMP,IIPP,
-     &                   LAYHDT,IBOUND,RMLT,NMLTAR,IZON,NZONAR,
-     &                   BOTM,NBOTM,HNEW,DELC,DELR,HFB,NHFB,
-     &                   IUHFB,MXACTFB,CV,SV,VKA,HK,HANI)
+     &    PIDTMP.EQ.'SY  ')
+     &      CALL SOBS1BAS6FFLWCO(K,I,J,COL,COR,COB,COF,COU,COD,NCOL,
+     &                           NROW,NLAY,PIDTMP,IIPP,LAYHDT,IBOUND,
+     &                           RMLT,NMLTAR,IZON,NZONAR,BOTM,NBOTM,
+     &                           HNEW,DELC,DELR,HFB,NHFB,IUHFB,MXACTFB,
+     &                           CV,SV,VKA,HK,HANI,IERR,IERRU,IOUT,
+     &                           IULPF)
 C
 C7------CALCULATE FLOW THROUGH THE LEFT FACE.
 C7------COMMENTS A-C APPEAR ONLY IN THE SECTION HEADED BY COMMENT 7,
@@ -3784,9 +3791,9 @@ C11-----CALCULATE FLOW THROUGH THE UPPER FACE.
       IF (IBOUND(J,I,K-1).EQ.0) GO TO 150
       IF(ICHFLG.EQ.0 .AND. IBOUND(J,I,K-1).LT.0) GO TO 150
       HD=HNEW(J,I,K)
-      IF(LAYTYP(K).EQ.0) GO TO 122
+      DHD=SNEW(J,I,K)  ! moved from below goto 9/24/01 - erb
+      IF(LAYHDT(K).EQ.0) GO TO 122
       TMP=HD
-      DHD=SNEW(J,I,K)
       TOP=BOTM(J,I,LBOTM(K)-1)
       IF(TMP.LT.TOP) THEN
         HD=TOP
@@ -3800,7 +3807,7 @@ C12-----CALCULATE FLOW THROUGH THE LOWER FACE.
       IF(IBOUND(J,I,K+1).EQ.0) GO TO 180
       IF(ICHFLG.EQ.0 .AND. IBOUND(J,I,K+1).LT.0) GO TO 180
       HD=HNEW(J,I,K+1)
-      IF(LAYTYP(K+1).EQ.0) GO TO 152
+      IF(LAYHDT(K+1).EQ.0) GO TO 152
       TMP=HD
       DHD=SNEW(J,I,K+1)
       TOP=BOTM(J,I,LBOTM(K+1)-1)
@@ -3823,10 +3830,12 @@ C=======================================================================
      &                          NCOL,NROW,NLAY,PIDTMP,IIPP,LAYHDT,
      &                          IBOUND,RMLT,NMLTAR,IZON,NZONAR,BOTM,
      &                          NBOTM,HNEW,DELC,DELR,HFB,NHFB,IUHFB,
-     &                          MXACTFB,CV,SV,VKA,HK,HANI)
+     &                          MXACTFB,CV,SV,VKA,HK,HANI,IERR,IERRU,
+     &                          IOUT,IULPF)
 C     ******************************************************************
 C     CALCULATE CONDUCTANCE DERIVATIVES FOR CONSTANT-HEAD BOUNDARY FLOW
-C     SENSITIVITY FOR A GIVEN CELL
+C     SENSITIVITY FOR A GIVEN CELL -- (CURRENTLY SUPPORTED ONLY WHEN LPF
+C     IS ACTIVE)
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
@@ -3845,6 +3854,12 @@ C
      1               LAYWET(200)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
+  600 FORMAT(/,
+     &' SENSITIVITIES FOR FLOW OBSERVATIONS AT BOUNDARIES REPRESENTED',
+     &' AS CONSTANT-HEAD',/,
+     &' ARE SUPPORTED ONLY WHEN THE LPF PACKAGE IS USED',/,
+     &' -- STOP EXECUTION (SOBS1BAS6FFLWCO)')
+C
       ZERO=0.
       DO 10 I=1,6
         CO(I)=ZERO
@@ -3936,23 +3951,29 @@ C-------CC--------------------------------------------------------------
   120     CONTINUE
         ENDIF
 C-------CV--------------------------------------------------------------
-        IF (PIDTMP.EQ.'VK  '. OR. PIDTMP.EQ.'VANI' .OR. 
-     &     (PIDTMP.EQ.'HK  ' .AND. LAYVKA(K).NE.0) .OR.
-     &      PIDTMP.EQ.'VKCB') THEN
-          DO 130 KK = KPT-1, KPT+1
-            IF (KK.LT.1 .OR. KK.GT.NLAY) GOTO 130
-            IF(KK.NE.IPCLST(1,ICL)) GOTO 130
-            CALL SSEN1LPF1CV(COD,COU,IBP,IBM,PIDTMP,IL,SF,RMLT,M,
-     &                      NCOL,NROW,LZ1,CV,SV,NLAY,DELR,
-     &                      DELC,JPT,IPT,KK,HK,IZON,IBOUND,
-     &                      NMLTAR,NZONAR,ICL,BOTM,NBOTM,VKA,HNEW)
-            IF (KK.LT.KPT) CO(5) = CO(5) + COD
-            IF (KK.EQ.KPT) THEN
-              CO(5) = CO(5) + COU
-              CO(6) = CO(6) + COD
-            ENDIF
-            IF (KK.GT.KPT) CO(6) = CO(6) + COU
-  130     CONTINUE
+        IF (IULPF.NE.0) THEN
+          IF (PIDTMP.EQ.'VK  '. OR. PIDTMP.EQ.'VANI' .OR.
+     &       (PIDTMP.EQ.'HK  ' .AND. LAYVKA(K).NE.0) .OR.
+     &        PIDTMP.EQ.'VKCB') THEN
+            DO 130 KK = KPT-1, KPT+1
+              IF (KK.LT.1 .OR. KK.GT.NLAY) GOTO 130
+              IF(KK.NE.IPCLST(1,ICL)) GOTO 130
+              CALL SSEN1LPF1CV(COD,COU,IBP,IBM,PIDTMP,IL,SF,RMLT,M,
+     &                        NCOL,NROW,LZ1,CV,SV,NLAY,DELR,
+     &                        DELC,JPT,IPT,KK,HK,IZON,IBOUND,
+     &                        NMLTAR,NZONAR,ICL,BOTM,NBOTM,VKA,HNEW)
+              IF (KK.LT.KPT) CO(5) = CO(5) + COD
+              IF (KK.EQ.KPT) THEN
+                CO(5) = CO(5) + COU
+                CO(6) = CO(6) + COD
+              ENDIF
+              IF (KK.GT.KPT) CO(6) = CO(6) + COU
+  130       CONTINUE
+          ENDIF
+        ELSEIF (NLAY.GT.1) THEN
+          WRITE(IOUT,600)
+          WRITE(IERRU,600)
+          IERR = 1
         ENDIF
   140 CONTINUE
       COL=CO(1)
@@ -4024,17 +4045,17 @@ C        SPECIFICATIONS:
       INTEGER I, IP
       DIMENSION PNORM(2,54)
 C     ------------------------------------------------------------------
-      DATA (PNORM(1,I),I=1,54)/0.0, .15, .20, .25, .30, .35, .40, .45, 
-     &      .50, .55, .60, .65, .70, .75, .80, .85, .90, .95, 1.00, 
-     &      1.05, 1.10, 1.15, 1.20, 1.25, 1.30, 1.35, 1.40, 1.45, 1.50, 
+      DATA (PNORM(1,I),I=1,54)/0.0, .15, .20, .25, .30, .35, .40, .45,
+     &      .50, .55, .60, .65, .70, .75, .80, .85, .90, .95, 1.00,
+     &      1.05, 1.10, 1.15, 1.20, 1.25, 1.30, 1.35, 1.40, 1.45, 1.50,
      &      1.55, 1.60, 1.65, 1.70, 1.75, 1.80, 1.85, 1.90, 1.95, 2.0,
      &      2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.0, 3.5, 4.0,
      &      4.5, 5.0, 5.5/
-      DATA (PNORM(2,I),I=1,54)/.5, .5596, .5793, .5987, .6179, .6368, 
-     &      .6554, .6736, .6915, .7088, .7257, .7422, .7580, .7734, 
-     &      .7881, .8023, .8159, .8289, .8413, .8531, .8643, .8749, 
-     &      .8849, .8944, .90320, .91149, .91924, .92647, .93319, 
-     &      .93943, .94520, .95053, .95543, .95994, .96407, .96784, 
+      DATA (PNORM(2,I),I=1,54)/.5, .5596, .5793, .5987, .6179, .6368,
+     &      .6554, .6736, .6915, .7088, .7257, .7422, .7580, .7734,
+     &      .7881, .8023, .8159, .8289, .8413, .8531, .8643, .8749,
+     &      .8849, .8944, .90320, .91149, .91924, .92647, .93319,
+     &      .93943, .94520, .95053, .95543, .95994, .96407, .96784,
      &      .97128, .97441, .9772, .9821, .98610, .9893, .9918, .9938,
      &      .9953, .9965, .9974, .9981, .9987, .99976737,  .99996833,
      &      .99999660, .99999971, 1.0/

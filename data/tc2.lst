@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.5 08/16/2001
+                             VERSION 1.7 12/04/2001
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -591,7 +591,7 @@
 
 
  EVTR array defined by the following parameters:
-  Parameter:  ETMAX
+ Parameter:  ETMAX
 
 
             EVAPOTRANSPIRATION RATE
@@ -671,7 +671,7 @@
 
 
  RECH array defined by the following parameters:
-  Parameter:  RCHRAT
+ Parameter:  RCHRAT
 
 
                            RECHARGE
@@ -1124,7 +1124,7 @@
  DISTRIBUTED at the 5% significance level.  The probability that this   
  conclusion is wrong is less than 5%.
 
- IF the reported correlation IS LESS THAN the 5% critical value REJECT the,
+ IF the reported correlation IS LESS THAN the 5% critical value REJECT the
  hypothesis that the weighted residuals are INDEPENDENT AND NORMALLY
  DISTRIBUTED at the 5% significance level.
 

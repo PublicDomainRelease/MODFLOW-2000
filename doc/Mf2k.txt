@@ -57,6 +57,27 @@ METHOD
 
 
 HISTORY
+     MODFLOW-2000 Version 1.7 2001/12/04 - Added support for time-varying
+        parameters.  Time-varying parameters are useful when the user
+        desires to estimate one parameter but vary properties included in
+        the parameter definition from one stress period to another.
+        Please see files Time-varying-parameters.pdf and str6.pdf in the
+        doc directory for details.
+
+     MODFLOW-2000 Version 1.6 2001/10/19 - Fixed two problems.  The first
+        caused simulation time to be truncated, for runs that involve
+        calculation of sensitivities, to a simulation period one time step
+        too short when the last flow observation in a transient simulation
+        falls in a later time step than the final head observation.  The
+        second problem caused observation sensitivities for constant-head
+        flow observations to be incorrect for log-transformed parameters.
+
+        In addition, support for new options for the name file was added to
+        allow users to designate files of type DATA, DATA(BINARY), DATAGLO,
+        or DATAGLO(BINARY) as either input or output files.  Please see the
+        Release Notes in the file release.txt for a description of these
+        options.
+
      MODFLOW-2000 Version 1.5 2001/08/16 - Added the LMT Package to
         support generation of the link file required by the contaminant-
         transport program MT3DMS.
@@ -95,7 +116,7 @@ HISTORY
         discretization file.  A new package called the LPF Package
         has been added as an alternative to the BCF Package.
 
-        The MODFLOW-2000 documenation report (OFR 00-92) does not
+        The MODFLOW-2000 documentation report (OFR 00-92) does not
         include the STR Package; however, this code has been upgraded
         to use parameters and is included in this version of
         MODFLOW-2000.  Revised STR input instructions can be found
@@ -219,12 +240,13 @@ OUTPUT OPTIONS
 SYSTEM REQUIREMENTS
      MODFLOW-2000 is written in Fortran 77 with the following
      extensions:  use of variable names longer than 6 characters,
-     Fortran 90 statements for dynamic memory allocation, and a call
-     to SUBROUTINE GETCL to retrieve command-line arguments.
-     Generally, the program is easily installed on most computer
-     systems.  The code has been used on UNIX-based computers and
-     DOS-based 386 or greater computers having a math coprocessor
-     and 4 mb of memory.
+     Fortran 90 statements for dynamic memory allocation, a call
+     to SUBROUTINE GETCL to retrieve command-line arguments, and
+     two calls to DATE_AND_TIME, which is a Fortran 90 intrinsic
+     subroutine. Generally, the program is easily installed on
+     most computer systems.  The code has been used on UNIX-based
+     computers and DOS-based 386 or greater computers having a
+     math coprocessor and 4 mb of memory.
 
 
 PROCESSES
@@ -456,7 +478,7 @@ TRAINING
      (GW3099TC), offered annually at the USGS National Training
      Center.
 
-     Calibration and uncertainty of Ground-Water Models (GW3089TC),
+     Calibration and Uncertainty of Ground-Water Models (GW3089TC),
      offered annually at the USGS National Training Center.
 
 

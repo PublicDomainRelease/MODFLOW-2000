@@ -1,4 +1,4 @@
-C     Last change:  ERB  27 Mar 2001   11:14 am
+C     Last change:  ERB  19 Nov 2001    1:50 pm
       SUBROUTINE GWF1CHD6AL(ISUM,LCCHDS,NCHDS,MXCHD,IN,IOUT,
      1      NCHDVL,IFREFM,NPCHD,IPCBEG,NNPCHD)
 C
@@ -67,12 +67,13 @@ C6------RETURN
       RETURN
       END
       SUBROUTINE GWF1CHD6RQ(IN,IOUT,NCHDVL,NCOL,NROW,NLAY,NPCHD,CHDS,
-     1      IPCBEG,MXCHD,IFREFM,ITERP)
+     &      IPCBEG,MXCHD,IFREFM,ITERP,INAMLOC)
 C
-C-----VERSION 11JAN2000 GWF1CHD6RQ
+C-----VERSION 20011108 GWF1CHD6RQ
 C     ******************************************************************
 C     READ NAMED PARAMETERS
 C     ******************************************************************
+C     Modified 11/8/2001 to support parameter instances - ERB
 C
 C     SPECIFICATIONS:
 C     ------------------------------------------------------------------
@@ -82,21 +83,35 @@ C     ------------------------------------------------------------------
 C     ------------------------------------------------------------------
 C
 C1------READ NAMED PARAMETERS.
-      IF (ITERP.EQ.1) WRITE(IOUT,3) NPCHD
-    3 FORMAT(1X,//1X,I5,' TIME-VARIANT SPECIFIED-HEAD PARAMETERS')
+      IF (ITERP.EQ.1) WRITE(IOUT,1000) NPCHD
+ 1000 FORMAT(1X,//1X,I5,' TIME-VARIANT SPECIFIED-HEAD PARAMETERS')
       IF(NPCHD.GT.0) THEN
-C
-C2------
-         NAUX=NCHDVL-5
-         LSTSUM=IPCBEG
-         DO 5 K=1,NPCHD
-         LSTBEG=LSTSUM
-         CALL UPARLSTRP(LSTSUM,MXCHD,IN,IOUT,IP,'CHD','CHD',ITERP)
-         NLST=LSTSUM-LSTBEG
-         CALL ULSTRD(NLST,CHDS,LSTBEG,NCHDVL,MXCHD,0,IN,IOUT,
-     1     'CHD NO.   LAYER   ROW   COL   START FACTOR      END FACTOR',
-     2      CHDAUX,5,NAUX,IFREFM,NCOL,NROW,NLAY,4,5,ITERP)
-    5    CONTINUE
+        NAUX=NCHDVL-5
+        LSTSUM=IPCBEG
+        DO 20 K=1,NPCHD
+          LSTBEG=LSTSUM
+          CALL UPARLSTRP(LSTSUM,MXCHD,IN,IOUT,IP,'CHD','CHD',ITERP,
+     &                  NUMINST,INAMLOC)
+          NLST=LSTSUM-LSTBEG
+          IF (NUMINST.GT.1) NLST = NLST/NUMINST
+C         ASSIGN STARTING INDEX FOR READING INSTANCES
+          IF (NUMINST.EQ.0) THEN
+            IB=0
+          ELSE
+            IB=1
+          ENDIF
+C         READ LIST(S) OF CELLS, PRECEDED BY INSTANCE NAME IF NUMINST>0
+          LB=LSTBEG
+          DO 10 I=IB,NUMINST
+            IF (I.GT.0) THEN
+              CALL UINSRP(I,IN,IOUT,IP,ITERP)
+            ENDIF
+            CALL ULSTRD(NLST,CHDS,LB,NCHDVL,MXCHD,0,IN,IOUT,
+     &     'CHD NO.   LAYER   ROW   COL   START FACTOR      END FACTOR',
+     &      CHDAUX,5,NAUX,IFREFM,NCOL,NROW,NLAY,4,5,ITERP)
+            LB=LB+NLST
+   10     CONTINUE
+   20   CONTINUE
       END IF
 C
 C3------RETURN.

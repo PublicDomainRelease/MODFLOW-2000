@@ -1,4 +1,4 @@
-C     Last change:  ERB  22 May 2001   11:13 am
+C     Last change:  ERB  19 Nov 2001    1:53 pm
       SUBROUTINE GWF1STR6AL(ISUM,ISUMI,LCSTRM,ICSTRM,MXSTRM,NSTREM,IN,
      1              IOUT,ISTCB1,ISTCB2,NSS,NTRIB,NDIV,ICALC,CONST,
      2              LCTBAR,LCTRIB,LCIVAR,LCFGAR,NPSTR,ISTRPB)
@@ -86,12 +86,13 @@ C10-----RETURN.
       RETURN
       END
       SUBROUTINE GWF1STR6RQ(IN,IOUT,NCOL,NROW,NLAY,NPSTR,STRM,ISTRM,
-     1         ISTRPB,MXSTRM,ITERP)
+     &         ISTRPB,MXSTRM,ITERP,INAMLOC)
 C
-C-----VERSION 13APRIL1998 GWF1STR6RQ
+C-----VERSION 20011108 GWF1STR6RQ
 C     ******************************************************************
 C     READ STREAM PARAMETERS
 C     ******************************************************************
+C     Modified 11/8/2001 to support parameter instances - ERB
 C
 C     SPECIFICATIONS:
 C     ------------------------------------------------------------------
@@ -101,20 +102,36 @@ C
 C-------READ NAMED PARAMETERS.
       IF (ITERP.EQ.1) THEN
         IRDFLG = 0
-        WRITE(IOUT,3) NPSTR
-    3   FORMAT(1X,//1X,I5,' Stream parameters')
+        WRITE(IOUT,1000) NPSTR
+ 1000   FORMAT(1X,//1X,I5,' Stream parameters')
       ELSE
         IRDFLG = 1
       ENDIF
       IF(NPSTR.GT.0) THEN
         LSTSUM=ISTRPB
-        DO 5 K=1,NPSTR
+        DO 20 K=1,NPSTR
           LSTBEG=LSTSUM
-          CALL UPARLSTRP(LSTSUM,MXSTRM,IN,IOUT,IP,'STR','STR',ITERP)
+          CALL UPARLSTRP(LSTSUM,MXSTRM,IN,IOUT,IP,'STR','STR',ITERP,
+     &                   NUMINST,INAMLOC)
           NLST=LSTSUM-LSTBEG
-          CALL SGWF1STR6R(NLST,MXSTRM,STRM,ISTRM,LSTBEG,IN,
-     1          IOUT,NCOL,NROW,NLAY,IRDFLG)
-    5   CONTINUE
+          IF (NUMINST.GT.1) NLST = NLST/NUMINST
+C         ASSIGN STARTING INDEX FOR READING INSTANCES
+          IF (NUMINST.EQ.0) THEN
+            IB=0
+          ELSE
+            IB=1
+          ENDIF
+C         READ LIST(S) OF CELLS, PRECEDED BY INSTANCE NAME IF NUMINST>0
+          LB=LSTBEG
+          DO 10 I=IB,NUMINST
+            IF (I.GT.0) THEN
+              CALL UINSRP(I,IN,IOUT,IP,ITERP)
+            ENDIF
+            CALL SGWF1STR6R(NLST,MXSTRM,STRM,ISTRM,LB,IN,
+     &                      IOUT,NCOL,NROW,NLAY,IRDFLG)
+            LB=LB+NLST
+   10     CONTINUE
+   20   CONTINUE
       END IF
 C
 C6------RETURN

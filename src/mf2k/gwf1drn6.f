@@ -1,4 +1,4 @@
-C     Last change:  ERB  27 Mar 2001   11:52 am
+C     Last change:  ERB  19 Nov 2001    1:50 pm
       SUBROUTINE GWF1DRN6AL(ISUM,LCDRAI,MXDRN,NDRAIN,IN,IOUT,IDRNCB,
      1        NDRNVL,IDRNAL,IFREFM,NPDRN,IDRNPB,NNPDRN)
 C
@@ -79,12 +79,13 @@ C6------RETURN.
       RETURN
       END
       SUBROUTINE GWF1DRN6RQ(IN,IOUT,NDRNVL,IDRNAL,NCOL,NROW,NLAY,NPDRN,
-     1            DRAI,IDRNPB,MXDRN,IFREFM,ITERP)
+     1            DRAI,IDRNPB,MXDRN,IFREFM,ITERP,INAMLOC)
 C
-C-----VERSION 11JAN2000 GWF1DRN6RQ
+C-----VERSION 20011108 GWF1DRN6RQ
 C     ******************************************************************
 C     READ DRAIN PARAMETERS
 C     ******************************************************************
+C     Modified 11/8/2001 to support parameter instances - ERB
 C
 C     SPECIFICATIONS:
 C     ------------------------------------------------------------------
@@ -94,19 +95,35 @@ C     ------------------------------------------------------------------
 C     ------------------------------------------------------------------
 C
 C-------READ NAMED PARAMETERS.
-      IF (ITERP.EQ.1) WRITE(IOUT,3) NPDRN
-    3 FORMAT(1X,//1X,I5,' Drain parameters')
+      IF (ITERP.EQ.1) WRITE(IOUT,1000) NPDRN
+ 1000 FORMAT(1X,//1X,I5,' Drain parameters')
       IF(NPDRN.GT.0) THEN
-         NAUX=NDRNVL-5-IDRNAL
-         LSTSUM=IDRNPB
-         DO 5 K=1,NPDRN
-         LSTBEG=LSTSUM
-         CALL UPARLSTRP(LSTSUM,MXDRN,IN,IOUT,IP,'DRN','DRN',ITERP)
-         NLST=LSTSUM-LSTBEG
-         CALL ULSTRD(NLST,DRAI,LSTBEG,NDRNVL,MXDRN,IDRNAL,IN,IOUT,
-     1     'DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR',
-     2     DRNAUX,5,NAUX,IFREFM,NCOL,NROW,NLAY,5,5,ITERP)
-    5    CONTINUE
+        NAUX=NDRNVL-5-IDRNAL
+        LSTSUM=IDRNPB
+        DO 20 K=1,NPDRN
+          LSTBEG=LSTSUM
+          CALL UPARLSTRP(LSTSUM,MXDRN,IN,IOUT,IP,'DRN','DRN',ITERP,
+     &                   NUMINST,INAMLOC)
+          NLST=LSTSUM-LSTBEG
+          IF (NUMINST.GT.1) NLST = NLST/NUMINST
+C         ASSIGN STARTING INDEX FOR READING INSTANCES
+          IF (NUMINST.EQ.0) THEN
+            IB=0
+          ELSE
+            IB=1
+          ENDIF
+C         READ LIST(S) OF CELLS, PRECEDED BY INSTANCE NAME IF NUMINST>0
+          LB=LSTBEG
+          DO 10 I=IB,NUMINST
+            IF (I.GT.0) THEN
+              CALL UINSRP(I,IN,IOUT,IP,ITERP)
+            ENDIF
+            CALL ULSTRD(NLST,DRAI,LB,NDRNVL,MXDRN,IDRNAL,IN,IOUT,
+     &      'DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR',
+     &        DRNAUX,5,NAUX,IFREFM,NCOL,NROW,NLAY,5,5,ITERP)
+            LB=LB+NLST
+   10     CONTINUE
+   20   CONTINUE
       END IF
 C
 C6------RETURN

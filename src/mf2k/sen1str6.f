@@ -1,12 +1,14 @@
-C     Last change:  ERB   9 May 2001   12:06 pm
+C     Last change:  ERB   8 Nov 2001   11:23 am
       SUBROUTINE SEN1STR6FM(NSTREM,MXSTRM,STRM,HNEW,NCOL,NROW,NLAY,
      &                    IBOUND,RHS,ISTRM,IP)
-C-----VERSION 19990323 ERB
+C-----VERSION 20011108 ERB
 C     ******************************************************************
 C     FOR STREAMFLOW-ROUTING BOUNDARIES : CALCULATE MATRIX AND VECTOR
 C     DERIVATIVES, MULTIPLY BY HEADS, AND ADD COMPONENTS TO THE
 C     SENSITIVITY OR RHS.
 C     ******************************************************************
+C     Modified 11/8/2001 to support parameter instances - ERB
+C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL  FACTOR, RHS, STRM
@@ -18,12 +20,18 @@ C     ------------------------------------------------------------------
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
 C
-      IF (IACTIVE(IP).EQ.0) RETURN
+C     FIND INSTANCE NUMBER
+      NI = IACTIVE(IP)
+      IF (NI.EQ.0) RETURN
+C
+C     DETERMINE RANGE OF ELEMENTS CURRENTLY ACTIVE FOR THIS PARAMETER
       IPOS1 = IPLOC(1,IP)
       NPC = IPLOC(2,IP)-IPOS1+1
+      NUMINST = IPLOC(3,IP)
+      IF (NUMINST.GT.1) NPC = NPC/NUMINST
 C-------LOOP THROUGH PARAMETER CELLS
       DO 20 II = 1, NPC
-        ICP = IPOS1-1+II
+        ICP = IPOS1-1+II+(NI-1)*NPC
         DF = 0.0
         K = ISTRM(4,ICP)
         I = ISTRM(5,ICP)

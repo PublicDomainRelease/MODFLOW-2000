@@ -1,0 +1,25 @@
+# WELL input file
+PARAMETER 1 8                             Item 1: NPWEL MXPWEL
+         2         0                      Item 2: MXACTW IWELCB
+WELLS_TR  Q -1.1 2  instances  4          Item 3: PARNAM PARTYP B NLST NUMINST
+WELL-a                                    Item 4a: INSTNAM
+         1         9        10       1.0  Item 4b: Layer Row Column Qfact abc
+         2         9        10       1.0  
+WELL-b                                    Item 4a: INSTNAM
+         1         9        10       1.1  Item 4b: Layer Row Column Qfact abc
+         2         9        10       1.1
+WELL-c                                    Item 4a: INSTNAM
+         1         9        10       1.2  Item 4b: Layer Row Column Qfact abc
+         2         9        10       1.2
+WELL-d                                    Item 4a: INSTNAM
+         1         9        10       1.3  Item 4b: Layer Row Column Qfact abc
+         2         9        10       1.3
+         0         0                      Item 5: ITMP, NP for Stress Period 1
+         0         1                      Item 5: ITMP, NP for Stress Period 2
+WELLS_TR  Well-a                          Item 7: Pname
+         0         1                      Item 5: ITMP, NP    Note that parameter must be specified
+WELLS_TR  Well-b                          Item 7: Pname       each stress period, even though there
+         0         1                      Item 5: ITMP, NP    is no change.
+WELLS_TR  Well-c                          Item 7: Pname
+         0         1                      Item 5: ITMP, NP for Stress Period 5
+WELLS_TR  Well-d                          Item 7: Pname

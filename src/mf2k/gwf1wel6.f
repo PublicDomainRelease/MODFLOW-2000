@@ -1,4 +1,4 @@
-C     Last change:  ERB  28 Feb 2001    2:38 pm
+C     Last change:  ERB  20 Nov 2001    2:32 pm
       SUBROUTINE GWF1WEL6AL(ISUM,LCWELL,MXWELL,NWELLS,IN,IOUT,IWELCB,
      1        NWELVL,IWELAL,IFREFM,NPWEL,IPWBEG,NNPWEL)
 C
@@ -85,12 +85,13 @@ C6------RETURN
       RETURN
       END
       SUBROUTINE GWF1WEL6RQ(IN,IOUT,NWELVL,IWELAL,NCOL,NROW,NLAY,NPWEL,
-     1            WELL,IPWBEG,MXWELL,IFREFM,ITERP)
+     1            WELL,IPWBEG,MXWELL,IFREFM,ITERP,INAMLOC)
 C
-C-----VERSION 11JAN2000 GWF1WEL6RQ
+C-----VERSION 20011107 GWF1WEL6RQ
 C     ******************************************************************
-C     READ PARAMETERS
+C     READ WELL PARAMETERS
 C     ******************************************************************
+C     Modified 11/7/2001 to support parameter instances - ERB
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
@@ -105,16 +106,32 @@ C-------READ NAMED PARAMETERS
       IF(NPWEL.GT.0) THEN
         NAUX=NWELVL-4-IWELAL
         LSTSUM=IPWBEG
-        DO 5 K=1,NPWEL
+        DO 20 K=1,NPWEL
           LSTBEG=LSTSUM
 C---------READ AND STORE LIST PARAMETER DEFINITION INFORMATION
-          CALL UPARLSTRP(LSTSUM,MXWELL,IN,IOUT,IP,'WEL','Q',ITERP)
+          CALL UPARLSTRP(LSTSUM,MXWELL,IN,IOUT,IP,'WEL','Q',ITERP,
+     &                   NUMINST,INAMLOC)
           NLST=LSTSUM-LSTBEG
-C---------READ AND PRINT A LIST OF CELLS
-          CALL ULSTRD(NLST,WELL,LSTBEG,NWELVL,MXWELL,IWELAL,IN,
-     1      IOUT,'WELL NO.  LAYER   ROW   COL   STRESS FACTOR',
-     2      WELAUX,5,NAUX,IFREFM,NCOL,NROW,NLAY,4,4,ITERP)
-    5   CONTINUE
+          IF (NUMINST.GT.1) NLST = NLST/NUMINST
+C         ASSIGN STARTING INDEX FOR READING INSTANCES
+          IF (NUMINST.EQ.0) THEN
+            IB=0
+          ELSE
+            IB=1
+          ENDIF
+C         READ LIST(S) OF CELLS, PRECEDED BY INSTANCE NAME IF NUMINST>0
+          LB=LSTBEG
+          DO 10 I=IB,NUMINST
+            IF (I.GT.0) THEN
+              CALL UINSRP(I,IN,IOUT,IP,ITERP)
+            ENDIF
+C-----------READ AND PRINT A LIST OF CELLS
+            CALL ULSTRD(NLST,WELL,LB,NWELVL,MXWELL,IWELAL,IN,
+     &        IOUT,'WELL NO.  LAYER   ROW   COL   STRESS FACTOR',
+     &        WELAUX,5,NAUX,IFREFM,NCOL,NROW,NLAY,4,4,ITERP)
+            LB=LB+NLST
+   10     CONTINUE
+   20   CONTINUE
       END IF
 C
 C6------RETURN

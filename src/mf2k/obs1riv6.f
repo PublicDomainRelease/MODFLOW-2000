@@ -1,4 +1,4 @@
-C     Last change:  ERB  13 Jun 2001   10:50 am
+C     Last change:  ERB   7 Nov 2001   10:39 am
       SUBROUTINE OBS1RIV6AL(IURVOB,NQ,NQC,NQT,IOUT,NQRV,NQTRV,IOBSUM,
      &                     LCOBRIV,ITMXP,LCSSRV,ISUM,IOBS)
 C     VERSION 20000125
@@ -51,13 +51,13 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE OBS1RIV6RP(NCOL,NROW,NPER,IURVOB,IOUT,OBSNAM,NH,JT,
-     &                     NQT,IBT,NQOB,NQCL,IQOB,QCLS,IERR,HOBS,
-     &                     TOFF,WTQ,IOWTQ,IPRN,NDMH,NSTPA,PERLNA,TSMLTA,
-     &                     ISSA,ITRSS,NQAR,NQCAR,NQTAR,IQ1,NQT1,NDD,
-     &                     IURV,NQRV,NQTRV,NT,NC,IPLOT,NAMES,ND,IPR,MPR,
-     &                     IOWTQRV)
-C     VERSION 19981020 ERB
+      SUBROUTINE OBS1RIV6RP(NCOL,NROW,NPER,IURVOB,IOUT,OBSNAM,NHT,JT,
+     &                      IBT,NQOB,NQCL,IQOB,QCLS,IERR,HOBS,TOFF,
+     &                      WTQ,IOWTQ,IPRN,NDMH,NSTPA,PERLNA,TSMLTA,
+     &                      ISSA,ITRSS,NQAR,NQCAR,NQTAR,IQ1,NQT1,NDD,
+     &                      IURV,NQRV,NQTRV,NT,NC,IPLOT,NAMES,ND,IPR,
+     &                      MPR,IOWTQRV)
+C     VERSION 20010921 ERB
 C     ******************************************************************
 C     READ, CHECK AND STORE FLOW-OBSERVATION DATA FOR RIVER BOUNDARIES.
 C     ******************************************************************
@@ -66,15 +66,14 @@ C     ------------------------------------------------------------------
       REAL BLANK, EVFRV, HOBS, PERLNA, QCLS, TOFF, TOFFSET, TOMULTRV,
      &     TSMLTA, WTQ
       INTEGER I, I4, IBT, IERR, IOUT, IOWTQ, IPRN, IQ, IQOB, IURVOB,
-     &        IWT, J, JT, L, N, NC, NC1, NC2, NCOL, NDMH, NH, NPER,
-     &        NQCL, NQOB, NQT, NROW, NSTPA, NT, NT1, NT2, IURV, ISSA
+     &        IWT, J, JT, L, N, NC, NC1, NC2, NCOL, NDMH, NHT, NPER,
+     &        NQCL, NQOB, NROW, NSTPA, NT, NT1, NT2, IURV, ISSA
       INTEGER IPLOT(ND+IPR+MPR)
       CHARACTER*12 OBSNAM(NDD), NAMES(ND+IPR+MPR)
       CHARACTER*20 FMTIN*20, ANAME*43
-      DIMENSION IBT(2,NQAR), NQOB(NQAR),
-     &          NQCL(NQAR), IQOB(NQTAR), QCLS(5,NQCAR),
-     &          HOBS(NH+NQT), TOFF(NH+NQT), NSTPA(NPER), PERLNA(NPER),
-     &          TSMLTA(NPER), ISSA(NPER)
+      DIMENSION IBT(2,NQAR), NQOB(NQAR), NQCL(NQAR), IQOB(NQTAR),
+     &          QCLS(5,NQCAR),HOBS(ND), TOFF(ND), NSTPA(NPER),
+     &          PERLNA(NPER), TSMLTA(NPER), ISSA(NPER)
       DIMENSION WTQ(NDMH,NDMH)
       CHARACTER*10 STATYP(0:2)
       DATA (STATYP(I),I=0,2)/'VARIANCE','STD. DEV.','COEF. VAR.'/
@@ -146,7 +145,7 @@ C----------READ TIME STEPS, MEASURED FLOWS, AND WEIGHTS.
         NT1 = NT + 1
         NT2 = NT + NQOB(IQ)
         DO 30 J = NT1, NT2
-          N = NH + J
+          N = NHT + J
 C---------READ ITEM 4
           IF (IOWTQRV.GT.0) THEN
             READ (IURVOB,*) OBSNAM(N), IREFSP, TOFFSET, HOBS(N), STAT,
@@ -175,7 +174,10 @@ C---------READ ITEM 4
           CALL UOBSTI(OBSNAM(N),IOUT,ISSA,ITRSS,NPER,NSTPA,IREFSP,
      &                IQOB(J),PERLNA,TOFF(N),TOFFSET,TOMULTRV,TSMLTA,1)
 C----------ERROR CHECKING
-          IF (IQOB(J).GT.JT) JT = IQOB(J)
+          IF (IQOB(J).GE.JT) THEN
+            JT = IQOB(J)
+            IF (TOFF(J).GT.0.) JT = JT+1
+          ENDIF
           IF (IURV.EQ.0) THEN
             WRITE (IOUT,565)
             IERR = 1
@@ -223,7 +225,7 @@ C       READ ITEM 7
         IF (IPRN.GE.0) THEN
           WRITE (IOUT,615) ANAME
           CALL UARRSUBPRW(WTQ,NDMH,NDMH,NQT1,NQT2,NQT1,NQT2,IPRN,IOUT,
-     &                    OBSNAM(NH+1),NDMH)
+     &                    OBSNAM(NHT+1),NDMH)
         ENDIF
       ENDIF
       NQT1 = NQT2 + 1
@@ -236,10 +238,10 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE OBS1RIV6FM(NQ,NQT,NQOB,NQCL,IQOB,QCLS,IBT,MXRIVR,
-     &                     NRIVER,RIVR,HNEW,NCOL,NROW,NLAY,IOUT,IBOUND,
-     &                     NH,OBSNAM,H,TOFF,WTQ,NDMH,ITS,NQAR,NQCAR,
-     &                     NQTAR,NRIVVL)
+      SUBROUTINE OBS1RIV6FM(NQ,NQOB,NQCL,IQOB,QCLS,IBT,MXRIVR,NRIVER,
+     &                      RIVR,HNEW,NCOL,NROW,NLAY,IOUT,IBOUND,
+     &                      NHT,OBSNAM,H,TOFF,WTQ,NDMH,ITS,NQAR,NQCAR,
+     &                      NQTAR,NRIVVL,ND)
 C     VERSION 19981020 ERB
 C     ******************************************************************
 C     CALCULATE SIMULATED EQUIVALENTS TO OBSERVED FLOWS FOR THE RIVER
@@ -251,14 +253,14 @@ C     ------------------------------------------------------------------
      &     TOFF, WTQ, ZERO
       INTEGER I, IBOUND, IBT, IBT1, IFLAG, II, IOUT, IQ,
      &        IQOB, IRBOT, ITS, J, JJ, JRBOT, K, KK, KRBOT,
-     &        MXRIVR, N, NB, NBN, NC, NC1, NC2, NCOL, NDMH, NH,
-     &        NLAY, NQ, NQCL, NQOB, NQT, NRIVER, NROW, NT,
+     &        MXRIVR, N, NB, NBN, NC, NC1, NC2, NCOL, NDMH, NHT,
+     &        NLAY, NQ, NQCL, NQOB, NRIVER, NROW, NT,
      &        NT1, NT2
-      CHARACTER*12 OBSNAM(NH+NQT)
+      CHARACTER*12 OBSNAM(ND)
       DOUBLE PRECISION HNEW(NCOL,NROW,NLAY)
       DIMENSION RIVR(NRIVVL,MXRIVR), IBOUND(NCOL,NROW,NLAY),
      &          IBT(2,NQAR), NQOB(NQAR), NQCL(NQAR), IQOB(NQTAR),
-     &          QCLS(5,NQCAR), H(NH+NQT), TOFF(NH+NQT), WTQ(NDMH,NDMH)
+     &          QCLS(5,NQCAR), H(ND), TOFF(ND), WTQ(NDMH,NDMH)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
   500 FORMAT (/,
@@ -296,7 +298,7 @@ C-------LOOP THROUGH BOUNDARY FLOWS
 C----------WAS THERE A MEASUREMENT AT THIS BOUNDARY THIS TIME STEP?
         DO 40 NT = NT1, NT2
           IF (IQOB(NT).EQ.ITS .OR. 
-     &        (IQOB(NT).EQ.ITS-1.AND.TOFF(NH+NT).GT.ZERO)) THEN
+     &        (IQOB(NT).EQ.ITS-1.AND.TOFF(NHT+NT).GT.ZERO)) THEN
 C----------ASSIGN VARIABLES ACCORDING TO BOUNDARY TYPE
             IRBOT = 0
             KRBOT = 0
@@ -333,7 +335,7 @@ C-------------CALCULATE FLOWS
                     IF (JRBOT.EQ.0) WRITE (IOUT,500)
                     JRBOT = 1
                     IF (IRBOT.EQ.0) THEN
-                      WRITE (IOUT,505) NH + NT, OBSNAM(NH+NT), ITS
+                      WRITE (IOUT,505) NHT + NT, OBSNAM(NHT+NT), ITS
                       WRITE (IOUT,510)
                     ENDIF
                     IRBOT = IRBOT + 1
@@ -345,18 +347,18 @@ C-------------CALCULATE FLOWS
                 ENDIF
    10         CONTINUE
               IF (IFLAG.EQ.0) THEN
-                WRITE (IOUT,540) N, NH + NT, OBSNAM(NH+NT)
+                WRITE (IOUT,540) N, NHT + NT, OBSNAM(NHT+NT)
                 STOP
               ENDIF
 C-------------SUM VALUES FROM INDIVIDUAL CELLS.
 C----------------CALCULATE FACTOR FOR TEMPORAL INTERPOLATION
    20         FACT = 1.0
-              IF (TOFF(NH+NT).GT.ZERO) THEN
-                IF (IQOB(NT).EQ.ITS) FACT = 1. - TOFF(NH+NT)
-                IF (IQOB(NT).EQ.ITS-1) FACT = TOFF(NH+NT)
+              IF (TOFF(NHT+NT).GT.ZERO) THEN
+                IF (IQOB(NT).EQ.ITS) FACT = 1. - TOFF(NHT+NT)
+                IF (IQOB(NT).EQ.ITS-1) FACT = TOFF(NHT+NT)
               ENDIF
 C---------------FLOWS
-              H(NH+NT) = H(NH+NT) + HH*FACT*QCLS(4,N)
+              H(NHT+NT) = H(NHT+NT) + HH*FACT*QCLS(4,N)
    30       CONTINUE
 C-------PRINT NUMBER OF CELLS AT WHICH HEAD IS BELOW THE BOTTOM OF THE
 C-------RIVER BED; CHECK FOR DISCONNECTED OBSERVATIONS.
@@ -375,11 +377,11 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE OBS1RIV6DR(NQ,NQT,NQOB,NQCL,IQOB,QCLS,IBT,MXRIVR,
-     &                     NRIVER,RIVR,HNEW,IP,SNEW,NCOL,NROW,NLAY,
-     &                     IOUT,IBOUND,NH,X,OBSNAM,NPE,LN,TOFF,NPLIST,
-     &                     ITS,NQAR,NQCAR,NQTAR,NRIVVL,IERR,IERRU,
-     &                     NNPRIV,IRIVPB)
+      SUBROUTINE OBS1RIV6DR(NQ,NQOB,NQCL,IQOB,QCLS,IBT,MXRIVR,NRIVER,
+     &                      RIVR,HNEW,IP,SNEW,NCOL,NROW,NLAY,IOUT,
+     &                      IBOUND,NHT,X,OBSNAM,NPE,LN,TOFF,NPLIST,
+     &                      ITS,NQAR,NQCAR,NQTAR,NRIVVL,IERR,IERRU,
+     &                      ND)
 C     VERSION 20000517 ERB
 C     ******************************************************************
 C     CALCULATE SENSITIVITIES FOR FLOW OBSERVATIONS FOR THE RIVER
@@ -391,15 +393,15 @@ C     ------------------------------------------------------------------
      &     TOFF, X, XX, ZERO
       INTEGER I, IBOUND, IBT, IBT1, IFLAG, II, IOUT, IP, IQ,
      &        IQOB, ITS, J, JJ, K, KK,
-     &        LN, MXRIVR, N, NB, NBN, NC, NC1, NC2, NCOL, NH,
-     &        NLAY, NPE, NQ, NQCL, NQOB, NQT, NRIVER, NROW, NT,
+     &        LN, MXRIVR, N, NB, NBN, NC, NC1, NC2, NCOL, NHT,
+     &        NLAY, NPE, NQ, NQCL, NQOB, NRIVER, NROW, NT,
      &        NT1, NT2
       CHARACTER*4 PIDTMP
-      CHARACTER*12 OBSNAM(NH+NQT)
+      CHARACTER*12 OBSNAM(ND)
       DOUBLE PRECISION HNEW(NCOL,NROW,NLAY), SNEW(NCOL,NROW,NLAY)
       DIMENSION RIVR(NRIVVL,MXRIVR), IBOUND(NCOL,NROW,NLAY),
-     &          X(NPE,NH+NQT), IBT(2,NQAR), LN(NPLIST), NQOB(NQAR),
-     &          NQCL(NQAR), IQOB(NQTAR), QCLS(5,NQCAR), TOFF(NH+NQT)
+     &          X(NPE,ND), IBT(2,NQAR), LN(NPLIST), NQOB(NQAR),
+     &          NQCL(NQAR), IQOB(NQTAR), QCLS(5,NQCAR), TOFF(ND)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
   500 FORMAT (/,
@@ -432,7 +434,7 @@ C-------INITIALIZE VARIABLES
       PIDTMP = PARTYP(IIPP)
       IF (PIDTMP.EQ.'RIV ')
      &    CALL SOBS1RIV6QC(IBT,IIPP,NRIVVL,MXRIVR,NQ,NQCL,RIVR,QCLS,
-     &                     NQAR,NQCAR,NNPRIV,IRIVPB)
+     &                     NQAR,NQCAR)
 C-------LOOP THROUGH BOUNDARY FLOWS
       DO 60 IQ = 1, NQ
         IBT1 = IBT(1,IQ)
@@ -441,7 +443,7 @@ C-------LOOP THROUGH BOUNDARY FLOWS
 C----------WAS THERE A MEASUREMENT AT THIS BOUNDARY THIS TIME STEP?
         DO 40 NT = NT1, NT2
           IF (IQOB(NT).EQ.ITS .OR. 
-     &        (IQOB(NT).EQ.ITS-1.AND.TOFF(NH+NT).GT.ZERO)) THEN
+     &        (IQOB(NT).EQ.ITS-1.AND.TOFF(NHT+NT).GT.ZERO)) THEN
 C----------ASSIGN VARIABLES ACCORDING TO BOUNDARY TYPE
             NBN = NRIVER
 C----------LOOP THROUGH CELLS.
@@ -480,21 +482,21 @@ C-------------CALCULATE SENSITIVITIES
                 ENDIF
    10         CONTINUE
               IF (IFLAG.EQ.0) THEN
-                WRITE (IOUT,540) N, NH + NT, OBSNAM(NH+NT)
-                WRITE (IERRU,540) N, NH + NT, OBSNAM(NH+NT)
+                WRITE (IOUT,540) N, NHT + NT, OBSNAM(NHT+NT)
+                WRITE (IERRU,540) N, NHT + NT, OBSNAM(NHT+NT)
                 IERR = 1
                 RETURN
               ENDIF
 C-------------SUM VALUES FROM INDIVIDUAL CELLS.
 C----------------CALCULATE FACTOR FOR TEMPORAL INTERPOLATION
    20         FACT = 1.0
-              IF (TOFF(NH+NT).GT.ZERO) THEN
-                IF (IQOB(NT).EQ.ITS) FACT = 1. - TOFF(NH+NT)
-                IF (IQOB(NT).EQ.ITS-1) FACT = TOFF(NH+NT)
+              IF (TOFF(NHT+NT).GT.ZERO) THEN
+                IF (IQOB(NT).EQ.ITS) FACT = 1. - TOFF(NHT+NT)
+                IF (IQOB(NT).EQ.ITS-1) FACT = TOFF(NHT+NT)
               ENDIF
 C---------------SENSITIVITY-EQUATION SENSITIVITIES
               IF (LN(IIPP).GT.0) XX = XX*B(IIPP)
-              X(IP,NH+NT) = X(IP,NH+NT) + XX*FACT*QCLS(4,N)
+              X(IP,NHT+NT) = X(IP,NHT+NT) + XX*FACT*QCLS(4,N)
    30       CONTINUE
           ENDIF
    40   CONTINUE
@@ -534,10 +536,10 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SOBS1RIV6OH(IO,IOWTQRV,IOUT,NH,NQTRV,HOBS,H,WTQ,OBSNAM,
-     &                       IDIS,WTQS,D,AVET,NPOST,NNEGT,NRUNS,RSQ,ND,
-     &                       MPR,IPR,NDMH,WTRL,NRES,IUGDO,OUTNAM,IPLOT,
-     &                       IPLPTR,LCOBRIV,ISSWR,SSRV,ITMXP)
+      SUBROUTINE SOBS1RIV6OH(IO,IOWTQRV,IOUT,NHT,NQTRV,HOBS,H,WTQ,
+     &                       OBSNAM,IDIS,WTQS,D,AVET,NPOST,NNEGT,NRUNS,
+     &                       RSQ,ND,MPR,IPR,NDMH,WTRL,NRES,IUGDO,OUTNAM,
+     &                       IPLOT,IPLPTR,LCOBRIV,ISSWR,SSRV,ITMXP)
 C     VERSION 19990423 ERB
 C     ******************************************************************
 C     CALCULATE AND PRINT WEIGHTED RESIDUALS FOR RIVER FLOW OBSERVATIONS
@@ -547,7 +549,7 @@ C     ------------------------------------------------------------------
       REAL AVE, AVET, D, H, HOBS, RES, RSQ, SWH, VMAX, VMIN, WT2, WTQ, 
      &     WTQS, WTR, WTRL
       INTEGER IDIS, IO, IOUT, IOWTQRV, IPR,
-     &        J, MPR, N, ND, NDMH, NH, NMAX, NMIN,
+     &        J, MPR, N, ND, NDMH, NHT, NMAX, NMIN,
      &        NNEG, NNEGT, NPOS, NPOST, NQ1, NQ2, NQTRV, NRES, NRUNS
       INTEGER IUGDO(6), IPLOT(ND+IPR+MPR), IPLPTR(ND+IPR+MPR)
       CHARACTER*12 OBSNAM(ND)
@@ -596,7 +598,7 @@ C
       VMIN = 1.E20
       AVE = 0.
       DO 20 N = LCOBRIV, LCOBRIV+NQTRV-1
-        NQ1 = N - NH
+        NQ1 = N - NHT
         IF (WTQ(NQ1,NQ1).LT.0.) THEN
           WRITE (IOUT,515) N, OBSNAM(N), HOBS(N)
           IDIS = IDIS + 1
@@ -674,98 +676,61 @@ C
       END
 C=======================================================================
       SUBROUTINE SOBS1RIV6QC(IBT,IIPP,NRIVVL,MXRIVR,NQ,NQCL,RIVR,QCLS,
-     &                       NQAR,NQCAR,NNPRIV,IRIVPB)
-C     VERSION 20000517 ERB
+     &                       NQAR,NQCAR)
+C     VERSION 20011106 ERB
 C     ******************************************************************
 C     POPULATE QCLS ARRAY ELEMENT 5 FOR RIV FLOW-OBSERVATION CELLS ON
 C     ONE RIV-PARAMETER-CONTROLLED HEAD-DEPENDENT BOUNDARY IF IT IS
 C     ACTIVE THIS STRESS PERIOD
 C     ******************************************************************
+C     Modified 11/6/2001 to support parameter instances - ERB
+C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       DIMENSION IBT(2,NQAR), NQCL(NQAR), RIVR(NRIVVL,MXRIVR),
      &          QCLS(5,NQCAR)
-      CHARACTER*4 PTYP
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
-      PTYP = 'RIV '
       MCOLFAC = 5
       NC = 0
-C-------LOOP THROUGH CELL GROUPS
+C     DEFINE NUMBER OF INSTANCES (NUMINST), NUMBER OF LIST ENTRIES PER
+C     INSTANCE (NLST), AND, FOR THE ACTIVE INSTANCE, INSTANCE NUMBER
+C     (NI) AND FIRST AND LAST POSITIONS IN PACKAGE ARRAY (IPL1 and IPL2)
+      NI = IACTIVE(IIPP)
+      NUMINST = IPLOC(3,IIPP)
+      NLST = IPLOC(2,IIPP)-IPLOC(1,IIPP)+1
+      IF (NUMINST.GT.1) NLST = NLST/NUMINST
+      IPL1 = IPLOC(1,IIPP)+(NI-1)*NLST
+      IPL2 = IPL1+NLST-1
+C-------LOOP THROUGH ALL CELL GROUPS
       DO 120 IQ=1,NQ
+C       IF THIS CELL GROUP INCLUDES A CELL ON BOUNDARY CONTROLLED BY
+C       PARAMETER OF INTEREST, IFLAG WILL BE SET = 1
         IFLAG = 0
 C---------DETERMINE STARTING AND ENDING CELLS IN THIS CELL GROUP
         NC1 = NC + 1
         NC2 = NC + NQCL(IQ)
-        IF (IACTIVE(IIPP).EQ.1) THEN
+        IF (NI.GT.0) THEN
 C---------IF PID FOR THIS PARAMETER MATCHES BOUNDARY TYPE SPECIFIED
 C         FOR THIS CELL GROUP
           IF (IBT(1,IQ).EQ.1) THEN
-C           RESET POINTERS
-            NB = 0
-            NBOP = IRIVPB - 1
-            NBP = IPLOC(1,IIPP) - 1
-            IP1 = 1
 C-----------LOOP THROUGH CELLS IN THIS GROUP
             DO 100 JJ = NC1,NC2
               KO = QCLS(1,JJ)
               IO = QCLS(2,JJ)
               JO = QCLS(3,JJ)
 C
-C             SKIP OVER CELLS IN OBSERVATION CELL GROUP ASSOCIATED WITH
-C             NON-PARAMETER CELLS IN THE SAME LAYER, ROW AND COLUMN
-              IF(NNPRIV.GT.0) THEN
-                DO 20 MNB = 1, NNPRIV
-                  NB = NB + 1
-                  IF (NB.GT.NNPRIV) GOTO 30
-                  KNP = RIVR(1,NB)
-                  INP = RIVR(2,NB)
-                  JNP = RIVR(3,NB)
-                  IF (KO.EQ.KNP .AND. IO.EQ.INP .AND. JO.EQ.JNP)
-     &                GOTO 100
-   20           CONTINUE
-   30           CONTINUE
-              ENDIF
-C
-C             SKIP OVER CELLS IN OBSERVATION CELL GROUP ASSOCIATED WITH
-C             ACTIVE RIVER PARAMETERS PRECEDING PARAMETER OF INTEREST IN
-C             PARAMETER SECTION OF ARRAY WHERE LAYER, ROW, AND COLUMN
-C             MATCH
-              IF (IIPP.GT.1 .AND. NBP.EQ.IPLOC(1,IIPP)-1) THEN
-                KIP1 = IP1
-                DO 60 KIP = KIP1, IIPP-1
-                  IP1 = KIP
-                  IF (PARTYP(KIP).EQ.PTYP) THEN
-                    IF (IACTIVE(KIP).GT.0) THEN
-                      DO 40 II = IPLOC(1,KIP),IPLOC(2,KIP)
-                        NBOP = NBOP + 1
-                        IF (NBOP.GT.IPLOC(2,KIP)) GOTO 50
-                        KOP = RIVR(1,NBOP)
-                        IOP = RIVR(2,NBOP)
-                        JOP = RIVR(3,NBOP)
-                        IF (KO.EQ.KOP .AND. IO.EQ.IOP .AND. JO.EQ.JOP)
-     &                      GOTO 100
-   40                 CONTINUE
-   50                 CONTINUE
-                    ENDIF
-                    NBOP = IPLOC(2,KIP)
-                  ENDIF
-   60           CONTINUE
-              ENDIF
-C
-C-------------LOOP THROUGH PARAMETER CELLS IN PACKAGE DATA FILE
-              DO 80 II = IPLOC(1,IIPP),IPLOC(2,IIPP)
-                NBP = NBP + 1
-                IF (NBP.GT.IPLOC(2,IIPP)) GOTO 90
-                K = RIVR(1,NBP)
-                I = RIVR(2,NBP)
-                J = RIVR(3,NBP)
+C-------------LOOP THROUGH PARAMETER (INSTANCE) CELLS IN PACKAGE ARRAY
+              DO 80 II = IPL1,IPL2
+                K = RIVR(1,II)
+                I = RIVR(2,II)
+                J = RIVR(3,II)
 C---------------IF OBSERVATION CELL IS ON THE PARAMETER-CONTROLLED
 C               BOUNDARY, PUT PARAMETER FACTOR IN QCLS(5)
                 IF (KO.EQ.K .AND. IO.EQ.I .AND. JO.EQ.J) THEN
                   IBT(2,IQ) = IIPP
                   IFLAG = 1
-                  QCLS(5,JJ) = RIVR(MCOLFAC,NBP)
+                  QCLS(5,JJ) = RIVR(MCOLFAC,II)
                   GOTO 100
                 ENDIF
    80         CONTINUE

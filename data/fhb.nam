@@ -1,9 +1,10 @@
 LIST  7 fhb.lst
 BAS6  8 ..\data\fhb.ba6
+DIS  10 ..\data\fhb.dis
 BCF6 11 ..\data\fhb.bc6
 SIP  19 ..\data\fhb.sip
 OC   22 ..\data\fhb.oc
 fhb  31 ..\data\fhb.fhb
-DATA(BINARY)  41 fhb.hds
-DATA(BINARY)  44 fhb.cbc
-DIS  10 ..\data\fhb.dis
+DATA(BINARY)  41 fhb.hds replace
+DATA(BINARY)  44 fhb.cbc replace
+

@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.5 08/16/2001
+                             VERSION 1.7 12/04/2001
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -9,22 +9,29 @@
                          UNIT   7
 
  OPENING ..\data\str.ba6
- FILE TYPE:BAS6   UNIT   8
+ FILE TYPE:BAS6   UNIT   8   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ..\data\str.sip
- FILE TYPE:SIP   UNIT  13
+ FILE TYPE:SIP   UNIT  13   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ..\data\str.oc
- FILE TYPE:OC   UNIT  14
+ FILE TYPE:OC   UNIT  14   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ..\data\str.str
- FILE TYPE:STR   UNIT  15
+ FILE TYPE:STR   UNIT  15   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ..\data\str.bc6
- FILE TYPE:BCF6   UNIT   9
+ FILE TYPE:BCF6   UNIT   9   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ..\data\str.dis
- FILE TYPE:DIS   UNIT  10
+ FILE TYPE:DIS   UNIT  10   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
 
  DISCRETIZATION INPUT DATA READ FROM UNIT 10
     1 LAYERS         6 ROWS         6 COLUMNS

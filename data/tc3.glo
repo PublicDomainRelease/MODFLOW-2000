@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.5 08/16/2001
+                             VERSION 1.7 12/04/2001
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
@@ -9,64 +9,83 @@
                          UNIT  11
 
  OPENING tc3.lst
- FILE TYPE:LIST   UNIT  12
+ FILE TYPE:LIST   UNIT  12   STATUS:REPLACE
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 #                                                                                                                                                                                                       
 # Obs-Sen-Pes process input files                                                                                                                                                                       
 
  OPENING ../data/tc3.obs
- FILE TYPE:OBS   UNIT  21
+ FILE TYPE:OBS   UNIT  21   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc3.hob
- FILE TYPE:HOB   UNIT  22
+ FILE TYPE:HOB   UNIT  22   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc3.sen
- FILE TYPE:SEN   UNIT  23
+ FILE TYPE:SEN   UNIT  23   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc3.pes
- FILE TYPE:PES   UNIT  24
+ FILE TYPE:PES   UNIT  24   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 #                                                                                                                                                                                                       
 # Global input files                                                                                                                                                                                    
 
  OPENING ../data/tc3.dis
- FILE TYPE:DIS   UNIT  31
+ FILE TYPE:DIS   UNIT  31   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc3.mlt
- FILE TYPE:MULT   UNIT  32
+ FILE TYPE:MULT   UNIT  32   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc3.zon
- FILE TYPE:ZONE   UNIT  33
+ FILE TYPE:ZONE   UNIT  33   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 #                                                                                                                                                                                                       
 # Flow process input files                                                                                                                                                                              
 
  OPENING ../data/tc3.bas
- FILE TYPE:BAS6   UNIT  41
+ FILE TYPE:BAS6   UNIT  41   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc3.lpf
- FILE TYPE:LPF   UNIT  42
+ FILE TYPE:LPF   UNIT  42   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc3.wel
- FILE TYPE:WEL   UNIT  43
+ FILE TYPE:WEL   UNIT  43   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc3.pcg
- FILE TYPE:PCG   UNIT  44
+ FILE TYPE:PCG   UNIT  44   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc3.bnd
- FILE TYPE:DATA   UNIT  45
+ FILE TYPE:DATA   UNIT  45   STATUS:UNKNOWN
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc3.oc
- FILE TYPE:OC   UNIT  46
+ FILE TYPE:OC   UNIT  46   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc3.shd
- FILE TYPE:DATA   UNIT  47
+ FILE TYPE:DATA   UNIT  47   STATUS:UNKNOWN
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc3.riv
- FILE TYPE:RIV   UNIT  48
+ FILE TYPE:RIV   UNIT  48   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc3.chd
- FILE TYPE:CHD   UNIT  49
+ FILE TYPE:CHD   UNIT  49   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc3.rch
- FILE TYPE:RCH   UNIT  50
+ FILE TYPE:RCH   UNIT  50   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
  THE FREE FORMAT OPTION HAS BEEN SELECTED
 
  DISCRETIZATION INPUT DATA READ FROM UNIT 31
@@ -1356,7 +1375,7 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     5
  DISTRIBUTED at the 5% significance level.  The probability that this   
  conclusion is wrong is less than 5%.
 
- IF the reported correlation IS LESS THAN the 5% critical value REJECT the,
+ IF the reported correlation IS LESS THAN the 5% critical value REJECT the
  hypothesis that the weighted residuals are INDEPENDENT AND NORMALLY
  DISTRIBUTED at the 5% significance level.
 

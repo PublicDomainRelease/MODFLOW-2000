@@ -1,9 +1,9 @@
-C     Last change:  ERB  20 Jun 2001   11:23 am
+C     Last change:  ERB  24 Oct 2001   12:27 pm
 C=======================================================================
       SUBROUTINE PES1GAU1AP(X,ND,NPE,HOBS,WT,WP,C,SCLE,G,H,DD,DMAX,CSA,
      &                      TOL,IND,IFO,AMP,AP,DMX,IOUT,B1,ITERP,IPRINT,
      &                      LN,MPR,PRM,JMAX,NFIT,R,GD,U,NOPT,XD,S,
-     &                      SOSR,NIPR,IPR,BUFF,WTP,NH,WTQ,IOWTQ,NDMH,
+     &                      SOSR,NIPR,IPR,BUFF,WTP,NHT,WTQ,IOWTQ,NDMH,
      &                      IOSTAR,NPLIST,MPRAR,IPRAR,NDMHAR,BPRI,RMARM,
      &                      IAP,DMXA,NPAR,AMPA,AMCA,AAP,ITMXP,RMAR)
 C     VERSION 20000424 ERB
@@ -18,15 +18,15 @@ C     ------------------------------------------------------------------
      &     WTQ, X, XD
       INTEGER I, IAP, IFO, IND, IOSTAR, IOUT, IOWTQ, IP, IP1, IPM,
      &        IPR, IPRINT, ITERP, J, JJN, JJP, JJU, JMAX, LN, LNN, MPR,
-     &        N, ND, NDMH, NFIT, NH, NIPR, NOPT, NPE, NP1
+     &        N, ND, NDMH, NFIT, NHT, NIPR, NOPT, NPE, NP1
       DOUBLE PRECISION ABDMX, ABDMXN, ABDMXP, AP, APN, APO, APP, BDMX,
      &                 BDMXN, BDMXP, SPR
       DOUBLE PRECISION C(NPE,NPE), SCLE(NPE), DD(NPE), DTMPA,
      &                 R(NPE*NPE/2+NPE),  S(NPE),
      &                 U(NPE), G, GD, DMXA(ITMXP)
       CHARACTER*1 CTYPE, DTYPE
-      DIMENSION X(NPE,NH+NDMHAR), HOBS(NH+NDMHAR), WT(ND),
-     &          WP(MPRAR), H(NH+NDMHAR), BPRI(IPRAR),
+      DIMENSION X(NPE,ND), HOBS(ND), WT(ND),
+     &          WP(MPRAR), H(ND), BPRI(IPRAR),
      &          B1(NPLIST), G(NPE), LN(NPLIST), PRM(NPLIST+1,MPRAR),
      &          GD(NPE), XD(NPE,ND), NIPR(IPRAR), BUFF(MPRAR),
      &          NPAR(ITMXP), AMPA(ITMXP), AMCA(ITMXP),
@@ -73,11 +73,11 @@ C     ------------------------------------------------------------------
      &' CALCULATION OF EXPONENTIAL -- STOP EXECUTION (PES1GAU1AP)')
 C
 CC PRINT VARIABLE AND ARRAY VALUES FOR DEBUGGING
-C      WRITE(IOUT,775)ND,NPE,DMAX,CSA,TOL,IFO,NH,NDMH,AP,DMX,JMAX,NFIT,
+C      WRITE(IOUT,775)ND,NPE,DMAX,CSA,TOL,IFO,NHT,NDMH,AP,DMX,JMAX,NFIT,
 C     &               NOPT,SOSR,IOWTQ,IPR,MPR,IOSTAR,NPLIST
 C  775 FORMAT('AT TOP OF PES1GAU1AP, ND NPE DMAX CSA TOL =',/,
 C     &2I5,3G16.8,/,
-C     &' IFO NH NDMH AP DMX JMAX NFIT =',/,
+C     &' IFO NHT NDMH AP DMX JMAX NFIT =',/,
 C     &3I5,2G16.8,2I5,/
 C     &'and NOPT SOSR IOWTQ IPR MPR IOSTAR NPLIST =',/,
 C     &I5,G16.8,5I5)
@@ -140,7 +140,7 @@ C----------INITIALIZE C AND CONVERT LN PARAMETERS
    20 CONTINUE
 C----------CALCULATE SENSITIVITY CONTRIBUTIONS TO C AND G.
 C----------CALCULATE SUM OF SQUARED RESIDUALS.
-      DO 50 N = 1, NH
+      DO 50 N = 1, NHT
         TMPA = HOBS(N) - H(N)
         W = WT(N)
         IF (W.LT.0.) THEN
@@ -155,7 +155,8 @@ C----------CALCULATE SUM OF SQUARED RESIDUALS.
           G(IP) = DTMPA*TMPA + G(IP)
    40   CONTINUE
    50 CONTINUE
-      CALL SOBS1BAS6WF(NPE,NH,NDMH,WTQ,X,C,G,HOBS,H,IFO,IOWTQ,NDMHAR)
+      CALL SOBS1BAS6WF(NPE,NHT,NDMH,WTQ,X,C,G,HOBS,H,IFO,IOWTQ,NDMHAR,
+     &                 ND)
 C----------ACCOUNT FOR PRIOR INFORMATION
 C-------------ESTIMATES OF PARAMETER SUMS
       IF (MPR.GT.0) THEN
@@ -182,7 +183,7 @@ C-------------CORRELATED PRIOR
 C-------QUASI-NEWTON ADDITION TO COEFFICIENT MATRIX
       IF ((NFIT.GT.0.OR.SOSR.GT.0.) .AND. NOPT.EQ.1 .AND. IFO.EQ.0)
      &    CALL SPES1GAU1QN(C,DD,G,NPE,R,GD,U,ITERP,X,ND,HOBS,H,WT,S,
-     &                     NFIT,XD,SOSR,NH,NDMH,WTQ,IOWTQ)
+     &                     NFIT,XD,SOSR,NHT,NDMH,WTQ,IOWTQ)
 C-------FOR ONE PARAMETER CASE
       IF (NPE.LT.2) THEN
 C-------CALCULATE STEP LENGTH FOR SINGLE-PARAMETER CASE
@@ -723,7 +724,7 @@ C
       END
 C=======================================================================
       SUBROUTINE SPES1GAU1QN(C,DD,G,NPE,R,GD,U,ITERP,X,ND,HOBS,H,WT,S,
-     &                       NFIT,XD,SOSR,NH,NDMH,WTQ,IOWTQ)
+     &                       NFIT,XD,SOSR,NHT,NDMH,WTQ,IOWTQ)
 C-----VERSION 1001 01JAN1998
 C     ******************************************************************
 C     COMPUTE QUASI-NEWTON COMPONENT OF C MATRIX AND ADD TO C
@@ -733,7 +734,7 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL H, HOBS, SOSR, WT, WTQ, X, XD
       INTEGER I, IIP, IOWTQ, IPP, ITERP, J, JM1, JP1, K, K1, L, L1, M, 
-     &        N, N1, ND, NDMH, NFIT, NH, NPE
+     &        N, N1, ND, NDMH, NFIT, NHT, NPE
       DOUBLE PRECISION C(NPE,NPE), DD(NPE), SUM, TMPA, DS, DGD, DU, CF,
      &                 QD, TMP, T, R(NPE*NPE/2+NPE), DPGD, DPU, U(NPE),
      &                 S(NPE), G, GD, DPGI, W1
@@ -765,8 +766,8 @@ C------FOR SUBSEQUENT ITERATIONS, CALCULATE MATRIX R
         S(IIP) = 0.0
    50 CONTINUE
 C---------CONTRIBUTION FROM OBSERVATIONS WITH DIAGONAL WEIGHTING
-      IF (NH.GT.0) THEN
-        DO 70 N = 1, NH
+      IF (NHT.GT.0) THEN
+        DO 70 N = 1, NHT
           IF (WT(N).LT.0.0) GOTO 70
           W1 = (HOBS(N)-H(N))*WT(N)
           DO 60 IIP = 1, NPE
@@ -782,11 +783,11 @@ C---------CONTRIBUTION FROM OBSERVATIONS WITH FULL WEIGHT MATRIX
               TMP = 0.0
               DO 80 L = 1, NDMH
                 IF (WTQ(L,L).GT.0.0) THEN
-                  L1 = NH + L
+                  L1 = NHT + L
                   TMP = TMP + DBLE(WTQ(K,L))*DBLE(HOBS(L1)-H(L1))
                 ENDIF
    80         CONTINUE
-              K1 = NH + K
+              K1 = NHT + K
               DO 90 I = 1, NPE
                 S(I) = S(I) + DBLE(XD(I,K1)-X(I,K1))*TMP
    90         CONTINUE
@@ -795,7 +796,7 @@ C---------CONTRIBUTION FROM OBSERVATIONS WITH FULL WEIGHT MATRIX
         ELSE
           DO 120 N = 1, NDMH
             IF (WTQ(N,N).GT.0.0) THEN
-              N1 = NH + N
+              N1 = NHT + N
               W1 = (HOBS(N1)-H(N1))*WTQ(N,N)
               DO 110 IIP = 1, NPE
                 S(IIP) = S(IIP) + W1*(XD(IIP,N1)-X(IIP,N1))

@@ -1,4 +1,4 @@
-C     Last change:  ERB  25 May 2001    3:27 pm
+C     Last change:  ERB  25 Sep 2001    4:19 pm
 C=======================================================================
       SUBROUTINE SEN1BAS6DF(ISENALL,ISEN,IPRINTS,IUSEN,LCB1,LCLN,LCSV,
      &                     NPE,NPLIST,RCLOSE,IUHEAD,MXSEN,LCSNEW,IOUT,
@@ -267,19 +267,18 @@ C9------RETURN
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SEN1BAS6RP(BL,BU,FAC,ISENS,IOUT,IU,LN,ND,NDMH,
-     &                     NPE,NPLIST,WT,WTQ,DETWTP,RSQO,RSQOO,
-     &                     RSQP,ISENALL,NDMHAR,BSCAL,MXSEN,NDAR)
-C     VERSION 20000313 ERB
+      SUBROUTINE SEN1BAS6RP(BL,BU,FAC,ISENS,IOUT,IU,LN,NPE,NPLIST,
+     &                      DETWTP,ISENALL,BSCAL,MXSEN)
+C     VERSION 20010924 ERB
 C     ******************************************************************
 C     READ LIST OF PARAMETER INFORMATION
 C     ******************************************************************
 C     SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      INTEGER IERR, ISENS, LN, NDMH, NPLIST
-      REAL BL, BU, FAC, WT, WTQ
+      INTEGER IERR, ISENS, LN, NPLIST
+      REAL BL, BU, FAC
       DIMENSION BL(NPLIST), BU(NPLIST), ISENS(NPLIST), LN(NPLIST),
-     &          WT(NDAR), WTQ(NDMHAR,NDMHAR), BSCAL(NPLIST)
+     &          BSCAL(NPLIST)
       CHARACTER*10 PNI, PNJ
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
@@ -335,26 +334,6 @@ C-----INITIALIZE VARIABLES
       FAC = 1.0
       IERR = 0
       DETWTP = 0.0
-      RSQO = 0.0
-      RSQOO = 0.0
-      RSQP = 0.0
-C
-      IF (ISENALL.GE.0) THEN
-C-------INITIALIZE WT AND WTQ
-        IF (ND.GT.0) THEN
-          DO 20 N = 1, ND
-            WT(N) = 1.0
-   20     CONTINUE
-        ENDIF
-        IF (NDMH.GT.0) THEN
-          DO 40 I = 1, NDMH
-            DO 30 J = 1, NDMH
-              WTQ(I,J) = 0.0
-   30       CONTINUE
-            WTQ(I,I) = 1.0
-   40     CONTINUE
-        ENDIF
-      ENDIF
       NPE = 0
 C-----READ ITEM 3:  LIST OF PARAMETER INFORMATION
       IF (NPLIST.GT.0) THEN
@@ -549,10 +528,10 @@ C
 C-----ENSURE THAT SIMULATION DOES NOT GO LONGER THAN NECESSARY
       NSTPTOT = JT
       KSTPE = 0
+      ONE=1.
       DO 140 I = 1, NPER
         PTIM = 0.0
         DELT = PERLNA(I)/FLOAT(NSTPA(I))
-        ONE=1.
         IF(TSMLTA(I).NE.ONE) DELT=PERLNA(I)*(ONE-TSMLTA(I))/
      &                           (ONE-TSMLTA(I)**NSTPA(I))
         DO 130 J = 1, NSTPA(I)
@@ -626,15 +605,33 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SEN1BAS6CP(IOUTG,NPLIST)
-C     VERSION 19990622 ERB
+      SUBROUTINE SEN1BAS6CP(IOUTG,NPLIST,ISENSU,CHEDFM)
+C     VERSION 20010827 ERB
 C     ******************************************************************
-C     CHECK THAT PARAMETER DEFINITIONS ARE COMPLETE
+C     CHECK THAT PARAMETER DEFINITIONS ARE COMPLETE.  CHECK FOR FILE
+C     OUTPUT/TYPE INCOMPATIBILITY
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       CHARACTER*10 PNI, PNIP
+      CHARACTER*11 FMT
+      CHARACTER*20 CHEDFM
+      LOGICAL LOP
       INCLUDE 'param.inc'
+C     ------------------------------------------------------------------
+  100 FORMAT(' DUPLICATE PARAMETER NAME: ',A10,/,
+     &               ' -- STOP EXECUTION (SEN1BAS6CP)')
+  110 FORMAT(' PARAMETER "',A10,'" HAS NOT BEEN DEFINED',/,
+     &           ' -- STOP EXECUTION (SEN1BAS6CP)')
+  120 FORMAT(/,
+     &' *** ERROR: BINARY OUTPUT SPECIFIED FOR A FORMATTED FILE.',/,
+     &'  CHECK ISENSU, CHEDFM, AND FILE TYPE -- STOP EXECUTION',
+     &' (SEN1BAS6CP)')
+  130 FORMAT(/,' *** ERROR: TEXT OUTPUT SPECIFIED FOR A BINARY FILE.',/,
+     &'  CHECK ISENSU, CHEDFM, AND FILE TYPE -- STOP EXECUTION',
+     &' (SEN1BAS6CP)')
+  140 FORMAT(/,' *** WARNING: ISENSU>0, BUT UNIT ISENSU NOT OPENED IN',
+     &' THE NAME FILE ***',/)
 C
 C-----CHECK THAT ALL PARAMETERS IN SEN FILE HAVE BEEN DEFINED
 C     AND THAT THERE ARE NO DUPLICATE PARAMETER NAMES
@@ -646,22 +643,38 @@ C     AND THAT THERE ARE NO DUPLICATE PARAMETER NAMES
             CALL UCASE(PARNAM(I),PNI,1)
             IF (PNIP.EQ.PNI) THEN
               IERR = 1
-              WRITE(IOUTG,10) PARNAM(IP)
-   10         FORMAT(' DUPLICATE PARAMETER NAME: ',A10,/,
-     &               ' --STOP EXECUTION (SEN1BAS6CP)')
+              WRITE(IOUTG,100) PARNAM(IP)
             ENDIF
    30     CONTINUE
         ENDIF
         IF (PARTYP(IP).EQ.' ') THEN
           IERR = 1
-          WRITE(IOUTG,50) PARNAM(IP)
-   50     FORMAT(' PARAMETER "',A10,'" HAS NOT BEEN DEFINED',/,
-     &           ' --STOP EXECUTION (SEN1BAS6CP)')
+          WRITE(IOUTG,110) PARNAM(IP)
         ENDIF
    90 CONTINUE
 C
       IF (IERR.NE.0) STOP
       IDEFPAR=1
+C
+C     IF ISENSU>0, CHECK THAT FILE OUTPUT AND FILE TYPE ARE COMPATIBLE
+      IF (ISENSU.GT.0) THEN
+        INQUIRE(UNIT=ISENSU,OPENED=LOP,FORM=FMT)
+        IF (LOP) THEN
+          IF (FMT.EQ.'FORMATTED') THEN    ! FILE OPENED FOR TEXT I/O
+            IF (CHEDFM.EQ.' ') THEN       ! OUTPUT IS BINARY
+              WRITE(IOUTG,120)
+              STOP
+            ENDIF
+          ELSE                            ! FILE OPENED FOR BINARY I/O
+            IF (CHEDFM.NE.' ') THEN       ! OUTPUT IS TEXT
+              WRITE(IOUTG,130)
+              STOP
+            ENDIF
+          ENDIF
+        ELSE
+          WRITE(IOUTG,140)
+        ENDIF
+      ENDIF
 C
       RETURN
       END

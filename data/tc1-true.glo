@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.5 08/16/2001
+                             VERSION 1.7 12/04/2001
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
@@ -9,63 +9,81 @@
                          UNIT  11
 
  OPENING tc1-true.lst
- FILE TYPE:LIST   UNIT  12
+ FILE TYPE:LIST   UNIT  12   STATUS:REPLACE
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 #                                                                                                                                                                                                       
 # Obs-Sen-Pes process input files                                                                                                                                                                       
 
  OPENING ../data/tc1-true.obs
- FILE TYPE:OBS   UNIT  21
+ FILE TYPE:OBS   UNIT  21   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.hob
- FILE TYPE:HOB   UNIT  22
+ FILE TYPE:HOB   UNIT  22   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.orv
- FILE TYPE:RVOB   UNIT  23
+ FILE TYPE:RVOB   UNIT  23   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.sen
- FILE TYPE:SEN   UNIT  24
+ FILE TYPE:SEN   UNIT  24   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.pes
- FILE TYPE:PES   UNIT  25
+ FILE TYPE:PES   UNIT  25   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 #                                                                                                                                                                                                       
 # Global input files                                                                                                                                                                                    
 
  OPENING ../data/tc1-true.dis
- FILE TYPE:DIS   UNIT  31
+ FILE TYPE:DIS   UNIT  31   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.zon
- FILE TYPE:ZONE   UNIT  32
+ FILE TYPE:ZONE   UNIT  32   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.mlt
- FILE TYPE:MULT   UNIT  33
+ FILE TYPE:MULT   UNIT  33   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 #data            34  ../data/tc1-true.rca                                                                                                                                                               
 #                                                                                                                                                                                                       
 # Flow process input files                                                                                                                                                                              
 
  OPENING ../data/tc1-true.bas
- FILE TYPE:BAS6   UNIT  41
+ FILE TYPE:BAS6   UNIT  41   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.lpf
- FILE TYPE:LPF   UNIT  42
+ FILE TYPE:LPF   UNIT  42   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.wel
- FILE TYPE:WEL   UNIT  43
+ FILE TYPE:WEL   UNIT  43   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 #de4             44  ../data/tc1-true.de4                                                                                                                                                               
 
  OPENING ../data/tc1-true.pcg
- FILE TYPE:PCG   UNIT  45
+ FILE TYPE:PCG   UNIT  45   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.oc
- FILE TYPE:OC   UNIT  46
+ FILE TYPE:OC   UNIT  46   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.ghb
- FILE TYPE:GHB   UNIT  47
+ FILE TYPE:GHB   UNIT  47   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.riv
- FILE TYPE:RIV   UNIT  48
+ FILE TYPE:RIV   UNIT  48   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.rch
- FILE TYPE:RCH   UNIT  49
+ FILE TYPE:RCH   UNIT  49   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
  THE FREE FORMAT OPTION HAS BEEN SELECTED
 
  DISCRETIZATION INPUT DATA READ FROM UNIT 31
@@ -1258,7 +1276,7 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     6
  DISTRIBUTED at the 5% significance level.  The probability that this   
  conclusion is wrong is less than 5%.
 
- IF the reported correlation IS LESS THAN the 5% critical value REJECT the,
+ IF the reported correlation IS LESS THAN the 5% critical value REJECT the
  hypothesis that the weighted residuals are INDEPENDENT AND NORMALLY
  DISTRIBUTED at the 5% significance level.
 

@@ -1,4 +1,4 @@
-C     Last change:  ERB  11 Jun 2001   10:24 am
+C     Last change:  ERB  21 Sep 2001    4:33 pm
 C
 C       $Date: 1998/12/29 15:15:00 $
 C       $Revision: 2.4 $
@@ -557,9 +557,9 @@ C--------CHANGED 500 FORMAT AND WRITE STATEMENT AND ADDED DEL 01MAY1993
                   ENDIF
                   GOTO 150
                 ENDIF
-  500           FORMAT (
+  500           FORMAT (/,
      &        ' MATRIX IS SEVERELY NON-DIAGONALLY DOMINANT.  CHECK',
-     &        ' INPUT FILES.  STOP EXECUTION')
+     &        ' INPUT FILES.',/,' -- STOP EXECUTION (PCG2AP)')
               ENDIF
 C
   160       CONTINUE

@@ -1,4 +1,4 @@
-C     Last change:  ERB  16 Aug 2001   11:43 am
+C     Last change:  ERB   5 Dec 2001    9:19 am
 C     ******************************************************************
 C     MAIN CODE FOR U.S. GEOLOGICAL SURVEY MODULAR MODEL -- MODFLOW
 C           BY MICHAEL G. MCDONALD AND ARLEN W. HARBAUGH
@@ -29,7 +29,7 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
 C-------ASSIGN VERSION NUMBER AND DATE
       CHARACTER*40 VERSION
-      PARAMETER (VERSION='1.5 08/16/2001')
+      PARAMETER (VERSION='1.7 12/04/2001')
 C
 C-----DECLARE ARRAY TYPES
       REAL GX, X, RX, XHS
@@ -90,7 +90,7 @@ C
 C
       LOGICAL EXISTS, BEFIRST
       INTEGER NPEVT, NPGHB, NPDRN, NPHFB, NPRIV, NPSTR, NPWEL, NPRCH
-      INTEGER IUBE(2)
+      INTEGER IUBE(2), IBDT(8)
       CHARACTER*4 CUNIT(NIUNIT)
       CHARACTER*10 PARNEG(MXPAR)
       DATA CUNIT/'BCF6', 'WEL ', 'DRN ', 'RIV ', 'EVT ', '    ', 'GHB ',
@@ -99,7 +99,7 @@ C
      &           'LAK ', 'LPF ', 'DIS ', 'SEN ', 'PES ', 'OBS ', 'HOB ',
      &           'ADV2', 'COB ', 'ZONE', 'MULT', 'DROB', 'RVOB', 'GBOB',
      &           'STOB', 'HUF ', 'CHOB', 'ETS ', 'DRT ', 'DTOB', '    ',
-     &           'HYD ', '    ', '    ', 'GAGE', '    ', '    ', 'LMT6',
+     &           'HYD ', '    ', 'SFOB', 'GAGE', '    ', '    ', 'LMT6',
      &           '    ', 50*'    '/
 C     ------------------------------------------------------------------
       CALL PLL1IN
@@ -195,7 +195,7 @@ C  DEFINE (DF) PROCEDURE
       CALL GLO1BAS6DF(INUNIT,IUNIT,CUNIT,IREWND,NIUNIT,IOUTG,IOUT,
      &                VERSION,NCOL,NROW,NLAY,NPER,ITMUNI,ISUMGX,
      &                MXPER,ISUMIG,ISUMGZ,INBAS,LENUNI,ISUMX,ISUMZ,
-     &                ISUMIX,LAYHDT,24,IFREFM)
+     &                ISUMIX,LAYHDT,24,IFREFM,INAMLOC,IPRTIM,IBDT)
       CALL OBS1BAS6DF(IFLD,IOBS,IOSTAR,IOWTQ,IOWTQDR,IOWTQGB,
      &                IOWTQRV,IOWTQST,IQ1,IUNIT(27),JT,LCCOFF,LCHFB,
      &                LCIPLO,LCIPLP,LCIQOB,LCNDER,LCNQOB,LCOBADV,
@@ -205,7 +205,7 @@ C  DEFINE (DF) PROCEDURE
      &                NDMH,NDMHAR,NH,NOBADV,NQ,NQC,NQT,NQT1,NQTDR,
      &                NQTGB,NQTRV,NQTST,NQTCH,NT,NTT2,IOBSUM,LCX,
      &                LCBUF2,NDAR,LCOBDRT,LCSSDT,NQTDT,IOWTQDT,LCSSSF,
-     &                NQTSF,LCOBSFR,IOWTQSF)
+     &                NQTSF,LCOBSFR,IOWTQSF,NHT)
       CALL SEN1BAS6DF(ISENALL,ISEN,IPRINTS,IUNIT(25),LCB1,LCLN,LCSV,NPE,
      &                NPLIST,RCLOSE,IUHEAD,MXSEN,LCSNEW,IOUTG,LCBSCA)
       CALL PES1BAS6DF(IBEFLG,IFO,IOUB,IPES,IPR,IPRAR,IPRINT,ITERPF,
@@ -291,7 +291,7 @@ C-----ALLOCATE SPACE FOR PARAMETER-ESTIMATION PROCESS
      &                    LCPRNT,LCPARE,ITMXP,LCSSPI,LCSSTO,DMAX,TOL,
      &                    SOSC,IOSTAR,NFIT,SOSR,IPRC,IPRINT,LPRINT,CSA,
      &                    FCONV,LASTX,ISEN,IPES,IPAR,IBEFLG,IYCFLG,
-     &                    LCDMXA,LCNPAR,LCBPRI,AMP,RMARM,IAP,LCAAP,
+     &                    LCDMXA,LCNPAR,LCBPRI,RMARM,IAP,LCAAP,
      &                    LCAMCA,LCRSQA,LCRSPA,LCAMPA,RMAR)
 C-----READ INPUT RELATED TO ALL OBSERVATIONS AND OPEN
 C     PARAMETER-VALUE FILE ON IOUB
@@ -303,7 +303,7 @@ C-----ALLOCATE SPACE FOR HEAD OBSERVATIONS
      &    CALL OBS1BAS6HAL(IUNIT(28),NH,MOBS,MAXM,ISUMX,ISUMIX,LCNDER,
      &                     LCCOFF,LCROFF,LCIOFF,LCJOFF,LCRINT,LCMLAY,
      &                     LCPR,ND,IOUTG,IOBSUM,LCOBBAS,ITMXP,LCSSGF,
-     &                     IOBS)
+     &                     IOBS,NHT)
 C-----ALLOCATE SPACE FOR FLOW OBSERVATIONS
       IF (IUNIT(33).GT.0)
      &    CALL OBS1DRN6AL(IUNIT(33),NQ,NQC,NQT,IOUTG,NQDR,NQTDR,IOBSUM,
@@ -344,7 +344,7 @@ C     OBSERVATIONS AND PRIOR INFORMATION. ALSO INITIALIZE SOME ARRAYS
      &                    MOBSAR,LCIBT,LCNQOB,LCNQCL,LCIQOB,LCQCLS,
      &                    LCIPLO,LCIPLP,IPR,MPR,IPRAR,LCBUF1,LCSSTO,
      &                    ITMXP,LBUFF,LCOBSE,ISOLDX,ISOLDZ,ISOLDI,MXSEN,
-     &                    LCBUF2,NDAR)
+     &                    LCBUF2,NDAR,NHT)
 C
 C------DYNAMICALLY ALLOCATE X, Z, IX, XHS, NIPRNAM, EQNAM, NAMES, AND
 C      OBSNAM ARRAYS FOR OBS, SEN, AND PES PROCESSES; SOLVERS; AND
@@ -377,9 +377,8 @@ C------IF THE ARRAYS ARE NOT BIG ENOUGH THEN STOP.
 C
       IF (ISEN.GT.0 .OR. ISENALL.LT.0 .OR. IBEFLG.EQ.2)
      &    CALL SEN1BAS6RP(X(LCBL),X(LCBU),FAC,IX(LCISEN),IOUTG,
-     &                    IUNIT(25),IX(LCLN),ND,NDMH,NPE,NPLIST,
-     &                    X(LCWT),X(LCWTQ),DETWTP,RSQO,RSQOO,RSQP,
-     &                    ISENALL,NDMHAR,X(LCBSCA),MXSEN,NDAR)
+     &                    IUNIT(25),IX(LCLN),NPE,NPLIST,DETWTP,ISENALL,
+     &                    X(LCBSCA),MXSEN)
       IF (IPES.GT.0 .OR. IBEFLG.EQ.2)
      &    CALL PES1BAS6RP(IUNIT(26),IOUTG,NPE,X(LCWP),IX(LCLN),DMAX,
      &                    Z(LCDD),FCONV,EV,MPR,X(LCPRM),IX(LCISEN),
@@ -390,7 +389,9 @@ C
      &                    X(LCBPRI),IERR,IYCFLG,IX(LCNPAR),ITMXP,IBEFLG)
 C
 C-----INITIALIZE ARRAYS USED FOR OBSERVATION PROCESS
-      IF (IOBS.GT.0) CALL OBS1BAS6RP(NDMHAR,NQCAR,X(LCQCLS),X(LCWTQS))
+      IF (IOBS.GT.0) CALL OBS1BAS6RP(ND,NDAR,NDMH,NDMHAR,NQCAR,
+     &                               X(LCQCLS),RSQO,RSQOO,RSQP,X(LCWT),
+     &                               X(LCWTQ),X(LCWTQS))
 C
 C-----READ AND PREPARE INFORMATION FOR OBSERVATIONS
 C
@@ -405,8 +406,8 @@ C-----READ HEAD OBSERVATION DATA
      &                    IX(LCIPLO),NAMES,ND,IPR,MPR)
 C-----READ HEAD-DEPENDENT-BOUNDARY FLOW-OBSERVATION DATA
       IF (IUNIT(33).GT.0)
-     &    CALL OBS1DRN6RP(NCOL,NROW,NPER,IUNIT(33),IOUTG,OBSNAM,NH,JT,
-     &                    NQT,IX(LCIBT),IX(LCNQOB),IX(LCNQCL),
+     &    CALL OBS1DRN6RP(NCOL,NROW,NPER,IUNIT(33),IOUTG,OBSNAM,NHT,JT,
+     &                    IX(LCIBT),IX(LCNQOB),IX(LCNQCL),
      &                    IX(LCIQOB),X(LCQCLS),IERR,X(LCHOBS),X(LCTOFF),
      &                    X(LCWTQ),IOWTQ,IPRN,NDMH,NSTP,PERLEN,
      &                    TSMULT,ISSFLG,ITRSS,NQAR,NQCAR,
@@ -414,7 +415,7 @@ C-----READ HEAD-DEPENDENT-BOUNDARY FLOW-OBSERVATION DATA
      &                    NC,IX(LCIPLO),NAMES,ND,IPR,MPR,IOWTQDR)
       IF (IUNIT(34).GT.0)
      &    CALL OBS1RIV6RP(NCOL,NROW,NPER,IUNIT(34),IOUTG,OBSNAM,
-     &                    NH,JT,NQT,IX(LCIBT),IX(LCNQOB),
+     &                    NH,JT,IX(LCIBT),IX(LCNQOB),
      &                    IX(LCNQCL),IX(LCIQOB),X(LCQCLS),IERR,
      &                    X(LCHOBS),X(LCTOFF),X(LCWTQ),IOWTQ,IPRN,
      &                    NDMH,NSTP,PERLEN,TSMULT,
@@ -423,7 +424,7 @@ C-----READ HEAD-DEPENDENT-BOUNDARY FLOW-OBSERVATION DATA
      &                    NAMES,ND,IPR,MPR,IOWTQRV)
       IF (IUNIT(35).GT.0)
      &    CALL OBS1GHB6RP(NCOL,NROW,NPER,IUNIT(35),IOUTG,OBSNAM,
-     &                    NH,JT,NQT,IX(LCIBT),IX(LCNQOB),
+     &                    NHT,JT,IX(LCIBT),IX(LCNQOB),
      &                    IX(LCNQCL),IX(LCIQOB),X(LCQCLS),IERR,
      &                    X(LCHOBS),X(LCTOFF),X(LCWTQ),IOWTQ,IPRN,
      &                    NDMH,NSTP,PERLEN,TSMULT,
@@ -431,7 +432,7 @@ C-----READ HEAD-DEPENDENT-BOUNDARY FLOW-OBSERVATION DATA
      &                    NDD,IUNIT(7),NQGB,NQTGB,NT,NC,IX(LCIPLO),
      &                    NAMES,ND,IPR,MPR,IOWTQGB)
       IF (IUNIT(36).GT.0)
-     &    CALL OBS1STR6RP(NPER,IUNIT(36),IOUTG,OBSNAM,NH,JT,NQT,
+     &    CALL OBS1STR6RP(NPER,IUNIT(36),IOUTG,OBSNAM,NHT,JT,
      &                    IX(LCIBT),IX(LCNQOB),IX(LCNQCL),IX(LCIQOB),
      &                    X(LCQCLS),IERR,X(LCHOBS),X(LCTOFF),X(LCWTQ),
      &                    IOWTQ,IPRN,NDMH,NSTP,PERLEN,TSMULT,ISSFLG,
@@ -440,15 +441,15 @@ C-----READ HEAD-DEPENDENT-BOUNDARY FLOW-OBSERVATION DATA
      &                    MPR,IOWTQST)
       IF (IUNIT(38).GT.0)
      &    CALL OBS1BAS6FRP(NCOL,NROW,NPER,IUNIT(38),IOUTG,OBSNAM,
-     &                     NH,JT,NQT,IX(LCIBT),IX(LCNQOB),
+     &                     NHT,JT,IX(LCIBT),IX(LCNQOB),
      &                     IX(LCNQCL),IX(LCIQOB),X(LCQCLS),IERR,
      &                     X(LCHOBS),X(LCTOFF),X(LCWTQ),IOWTQ,IPRN,
      &                     NDMH,NSTP,PERLEN,TSMULT,ISSFLG,ITRSS,NQAR,
      &                     NQCAR,NQTAR,IQ1,NQT1,NDD,NQCH,NQTCH,NT,NC,
      &                     IX(LCIPLO),NAMES,ND,IPR,MPR,IOWTQCH,NLAY)
       IF (IUNIT(41).GT.0)
-     &    CALL OBS1DRT1RP(NCOL,NROW,NPER,IUNIT(41),IOUTG,OBSNAM,NH,JT,
-     &                    NQT,IX(LCIBT),IX(LCNQOB),IX(LCNQCL),
+     &    CALL OBS1DRT1RP(NCOL,NROW,NPER,IUNIT(41),IOUTG,OBSNAM,NHT,JT,
+     &                    IX(LCIBT),IX(LCNQOB),IX(LCNQCL),
      &                    IX(LCIQOB),X(LCQCLS),IERR,X(LCHOBS),X(LCTOFF),
      &                    X(LCWTQ),IOWTQ,IPRN,NDMH,NSTP,PERLEN,
      &                    TSMULT,ISSFLG,ITRSS,NQAR,NQCAR,
@@ -457,12 +458,12 @@ C-----READ HEAD-DEPENDENT-BOUNDARY FLOW-OBSERVATION DATA
 C
 C-----READ ADVECTIVE-TRANSPORT DATA
       IF (IUNIT(29).GT.0)
-     &    CALL OBS1ADV2RP(IOUTG,NROW,NCOL,NLAY,
-     &                    X(LCPRST),NPTH,IX(LCNPNT),NTT2,NH,NQT,OBSNAM,
-     &                    IX(LCICLS),X(LCPOFF),X(LCTT2),X(LCHOBS),
-     &                    GX(LCDELR),GX(LCDELC),X(LCWTQ),ND,KTDIM,
-     &                    IUNIT(29),NDMH,IOWTQ,GX(LCBOTM),
-     &                    NBOTM,IX(LCIPLO),NAMES,IPR,MPR,JT)
+     &    CALL OBS1ADV2RP(IOUTG,NROW,NCOL,NLAY,X(LCPRST),NPTH,
+     &                    IX(LCNPNT),NTT2,NHT,NQT,OBSNAM,IX(LCICLS),
+     &                    X(LCPOFF),X(LCTT2),X(LCHOBS),GX(LCDELR),
+     &                    GX(LCDELC),X(LCWTQ),ND,KTDIM,IUNIT(29),NDMH,
+     &                    IOWTQ,GX(LCBOTM),NBOTM,IX(LCIPLO),NAMES,IPR,
+     &                    MPR,JT)
 C-----CHECK OBSERVATION DATA AGAINST ALLOCATED STORAGE
       IF (IOBS.GT.0) CALL OBS1BAS6CK(NC,NQC,NT,NQT,IOUTG)
 C-----CHECK FOR ERRORS, CALCULATE THE WEIGHT MATRIX AND ITS SQUARE-ROOT
@@ -497,7 +498,7 @@ C-----READ AND PREPARE FOR PACKAGES WITH NO REWIND
      2                    X(LCSC2),IUNIT(23),ITRSS,NCOL,NROW,NLAY,
      3                    IOUTG,X(LCWETD),NPLPF,WETFCT,IWETIT,IHDWET,
      4                    IX(LCLAYF),GX(LCBOTM),NBOTM,GX(LCDELR),
-     5                    GX(LCDELC),1)
+     5                    GX(LCDELC),1,INAMLOC)
       IF(IUNIT(37).GT.0)
      1    CALL GWF1HUF1RQ(IUNIT(37),NCOL,NROW,NLAY,IOUTG,X(LCWETD),
      2                    WETFCT,IWETIT,IHDWET,IX(LCHGUF),1,NHUF,NPHUF,
@@ -534,10 +535,9 @@ C---------REWIND INPUT FILES
         ENDIF
 C
 C-------INITIALIZE H AND X ARRAYS
-        IF (IOBS.GT.0) CALL OBS1BAS6FM(X(LCH),ND,NH,NQT)
-        IF (ISEN.GT.0 .AND. ITERPF.EQ.0)
-     &      CALL OBS1BAS6DR(ND,NH,NPE,NQ,NQT,X(LCX))
-C4------ALLOCATE SPACE IN "X" ARRAY.
+        IF (IOBS.GT.0) CALL OBS1BAS6FM(X(LCH),ND)
+        IF (ISEN.GT.0 .AND. ITERPF.EQ.0) CALL OBS1BAS6DR(ND,NPE,X(LCX))
+C4------ALLOCATE SPACE IN RX AND IR ARRAYS.
         CALL GWF1BAS6AL(HEADNG,NPER,TOTIM,NCOL,NROW,NLAY,NODES,INBAS,
      1                  IOUT,IXSEC,ICHFLG,IFREFM,ISUMRX,ISUMIR,LCIOFL,
      2                  ISTRT,IAPART)
@@ -672,19 +672,23 @@ C---------FLOW-SIMULATION OPTIONS
         IF(IUNIT(2).GT.0)
      1      CALL GWF1WEL6RQ(IUNIT(2),IOUTG,NWELVL,IWELAL,NCOL,NROW,NLAY,
      2                      NPWEL,RX(LCWELL),IPWBEG,MXWELL,IFREFM,
-     3                      ITERPK)
+     3                      ITERPK,INAMLOC)
         IF(IUNIT(3).GT.0)
      1      CALL GWF1DRN6RQ(IUNIT(3),IOUTG,NDRNVL,IDRNAL,NCOL,NROW,NLAY,
-     2                      NPDRN,RX(LCDRAI),IDRNPB,MXDRN,IFREFM,ITERPK)
+     2                      NPDRN,RX(LCDRAI),IDRNPB,MXDRN,IFREFM,ITERPK,
+     &                      INAMLOC)
         IF(IUNIT(4).GT.0)
      1      CALL GWF1RIV6RQ(IUNIT(4),IOUTG,NRIVVL,IRIVAL,NCOL,NROW,NLAY,
      2                      NPRIV,RX(LCRIVR),IRIVPB,MXRIVR,IFREFM,
-     3                      ITERPK)
-        IF(IUNIT(5).GT.0) CALL GWF1EVT6RQ(IUNIT(5),IOUTG,NPEVT,ITERPK)
+     3                      ITERPK,INAMLOC)
+        IF(IUNIT(5).GT.0)
+     &      CALL GWF1EVT6RQ(IUNIT(5),IOUTG,NPEVT,ITERPK,INAMLOC)
         IF(IUNIT(7).GT.0)
      1      CALL GWF1GHB6RQ(IUNIT(7),IOUTG,NGHBVL,IGHBAL,NCOL,NROW,NLAY,
-     2                      NPGHB,RX(LCBNDS),IGHBPB,MXBND,IFREFM,ITERPK)
-        IF(IUNIT(8).GT.0) CALL GWF1RCH6RQ(IUNIT(8),IOUTG,NPRCH,ITERPK)
+     2                      NPGHB,RX(LCBNDS),IGHBPB,MXBND,IFREFM,ITERPK,
+     &                      INAMLOC)
+        IF(IUNIT(8).GT.0)
+     &      CALL GWF1RCH6RQ(IUNIT(8),IOUTG,NPRCH,ITERPK,INAMLOC)
         IF(IUNIT(16).GT.0)
      &      CALL FHB1RP(IG(LCIBOU),NROW,NCOL,NLAY,IR(LCFLLC),RX(LCBDTM),
      &                  NBDTIM,RX(LCFLRT),NFLW,NHED,IR(LCHDLC),
@@ -692,7 +696,8 @@ C---------FLOW-SIMULATION OPTIONS
      &                  IFHBD5,NHEDDIM,NFLWDIM)
         IF(IUNIT(18).GT.0)
      1      CALL GWF1STR6RQ(IUNIT(18),IOUTG,NCOL,NROW,NLAY,NPSTR,
-     2                  RX(LCSTRM_),IR(ICSTRM_),ISTRPB,MXSTRM,ITERPK)
+     2                  RX(LCSTRM_),IR(ICSTRM_),ISTRPB,MXSTRM,ITERPK,
+     &                  INAMLOC)
         IF(IUNIT(19).GT.0)
      1      CALL GWF1IBS6RP(GX(LCDELR),GX(LCDELC),GZ(LCHNEW),RX(LCHC),
      2                  RX(LCSCE),RX(LCSCV),RX(LCSUB),NCOL,NROW,
@@ -700,18 +705,21 @@ C---------FLOW-SIMULATION OPTIONS
      4                  ISUBUN,ICOMUN,IHCUN,IUNIT(19),IOUT,IBSDIM)
         IF(IUNIT(20).GT.0)
      1      CALL GWF1CHD6RQ(IUNIT(20),IOUTG,NCHDVL,NCOL,NROW,NLAY,NPCHD,
-     2                      RX(LCCHDS),IPCBEG,MXCHD,IFREFM,ITERPK)
+     2                      RX(LCCHDS),IPCBEG,MXCHD,IFREFM,ITERPK,
+     &                      INAMLOC)
 C
         IF (IUNIT(21).GT.0)
      &      CALL GWF1HFB6RP(GX(LCBOTM),GX(LCCR),GX(LCCC),GX(LCDELR),
      &                      GX(LCDELC),RX(LCHFB),IUNIT(21),MXACTFB,
      &                      NBOTM,NCOL,NROW,NLAY,NODES,NHFBNP,NHFB,
-     &                      NPHFB,IOUT,IOUTG,ITERPK,MXHFB,IHFB,LAYHDT)
-        IF(IUNIT(39).GT.0) CALL GWF1ETS1RQ(IUNIT(39),IOUTG,NPETS,ITERPK)
+     &                      NPHFB,IOUT,IOUTG,ITERPK,MXHFB,IHFB,LAYHDT,
+     &                      INAMLOC)
+        IF(IUNIT(39).GT.0)
+     &      CALL GWF1ETS1RQ(IUNIT(39),IOUTG,NPETS,ITERPK,INAMLOC)
         IF(IUNIT(40).GT.0)
      &      CALL GWF1DRT1RQ(IUNIT(40),IOUTG,NDRTVL,IDRTAL,NCOL,NROW,
      &                      NLAY,NPDRT,RX(LCDRTF),IDRTPB,MXDRT,IFREFM,
-     &                      ITERPK,IDRTFL)
+     &                      ITERPK,IDRTFL,INAMLOC)
 clak
 C  REVISED IF STATEMENT
 C       IF(IUNIT(46).GT.0.AND.(IUNIT(44).GT.0.OR.IUNIT(22).GT.0))
@@ -721,7 +729,7 @@ C
 C-------CHECK THAT PARAMETER DEFINITIONS ARE COMPLETE
         IF (ITERPK.EQ.1) CALL GLO1BAS6CK(IOUTG,NPLIST)
         IF ((ISEN.GT.0 .OR. IBEFLG.EQ.2) .AND. ITERPK.EQ.1)
-     &      CALL SEN1BAS6CP(IOUTG,NPLIST)
+     &      CALL SEN1BAS6CP(IOUTG,NPLIST,ISENSU,CHEDFM)
         IF (IPES.GT.0)
      &      CALL PES1BAS6CK(X(LCBL),X(LCBU),IX(LCISEN),IOUB,IOUTG,
      &                      IX(LCIPNG),IX(LCLN),NPNG,NPLIST,NPNGAR,
@@ -1072,7 +1080,12 @@ C7C2B---MAKE ONE CUT AT AN APPROXIMATE SOLUTION.
      &                        BCLOSE,DAMP,ICNVG,KKSTP,KKPER,MXITER,
      &                        MXCYC,NCOL,NROW,NLAY,NODES,HNOFLO,IOUT,
      &                        IOUTAMG,ICG,IADAMP,DUP,DLOW)
-              IF (IERR.GT.0) CALL PLL1SD(IERR,IERRU,IOUT,IOUTG)
+              IF (IERR.GT.0) THEN
+C               WRITE MESSAGE RELATED TO BEALE'S MEASURE, IF
+C               APPROPRIATE, THEN STOP EXECUTION.
+                IF (IBEFLG.EQ.2) CALL PES1BAS6ER(IOUT,ITERPK,NPLIST)
+                CALL PLL1SD(IERR,IERRU,IOUT,IOUTG)
+              ENDIF
 C
 C7C2C---IF CONVERGENCE CRITERION HAS BEEN MET STOP ITERATING.
               IF (ICNVG.EQ.1) GOTO 33
@@ -1104,9 +1117,18 @@ C         AS NOTED ABOVE
      &                     X(LCSSTO),ITMXP,IPES,X(LCBPRI),ITERP,IERR,
      &                     IERRU,NTT2,LCOBDRT,X(LCSSDT),NQTDT,IOWTQDT,
      &                     NRES,NPOST,NNEGT,NRUNS,NQTSF,IOWTQSF,LCOBSFR,
-     &                     X(LCSSSF),KTDIM)
-              IF (IPAR.NE.1 .AND. IBEFLG.NE.2)
-     &            CALL PLL1SD(IERR,IERRU,IOUT,IOUTG)
+     &                     X(LCSSSF),KTDIM,NHT)
+              IF (IPAR.EQ.1 .OR. IBEFLG.EQ.2) THEN
+C               CONTINUE EXECUTION, BUT WRITE MESSAGE(S) REGARDING
+C               NONCONVERGENCE
+                CALL PES1BAS6NC(GX(LCCC),GX(LCCR),GX(LCCV),GX(LCHCOF),
+     &                          GZ(LCHNEW),IBEFLG,IG(LCIBOU),IOUTG,
+     &                          ITERPK,KKPER,KKSTP,NCOL,NLAY,NROW,
+     &                          GX(LCRHS))
+              ELSE
+C               STOP EXECUTION
+                CALL PLL1SD(IERR,IERRU,IOUT,IOUTG)
+              ENDIF
             ENDIF
 C
    33       CONTINUE
@@ -1335,10 +1357,12 @@ CLMT
             INCLUDE 'lmt6.inc'
 CLMT
 C------SET FLAG WHICH INDICATES WHETHER THERE IS AN OBS. THIS TIME STEP
-            IF (IPAR.EQ.0)
-     &          CALL OBS1BAS6FD(IFLD,IX(LCNDER),NH,KKPER,KKSTP,
-     &                          X(LCTOFF),NQ,IX(LCNQOB),IX(LCIQOB),NQT,
-     &                          NSTP,NPER,NQAR,NQTAR,NHAR)
+            IF (IPAR.EQ.0) THEN
+              CALL OBS1BAS6FD(IFLD,IX(LCNDER),NH,X(LCTOFF),NQ,
+     &                        IX(LCNQOB),IX(LCIQOB),NQAR,NQTAR,NHAR,
+     &                        ND,ITS)
+C          FD ROUTINES FOR OTHER OBSERVATION PACKAGES GO HERE (ADV, MNW)
+            ENDIF
             IF (IPRINTS.EQ.1) IFLD = 1
 C
 C7C5---PRINT AND/OR SAVE HEAD AND DRAWDOWN MATRICES.
@@ -1383,62 +1407,63 @@ C-------INTERPOLATE, SAVE AND PRINT DATA FOR OBSERVATIONS.
      &                             OBSNAM,X(LCCOFF),X(LCROFF),
      &                             GX(LCDELR),GX(LCDELC),NCOL,NROW,NLAY,
      &                             X(LCPR),X(LCH),X(LCWT),GZ(LCHNEW),
-     &                             IDRY,NPE,NQT,X(LCTOFF),MAXM,JDRY,
+     &                             IDRY,NPE,X(LCTOFF),MAXM,JDRY,
      &                             IPAR,IOUT,ITS,NHAR,MOBSAR,ND,IPES,
      &                             IYCFLG,GX(LCSTRT))
               IF (NQ.GT.0) THEN
                 IF (IUNIT(3).NE.0)
-     &              CALL OBS1DRN6FM(NQ,NQT,IX(LCNQOB),IX(LCNQCL),
+     &              CALL OBS1DRN6FM(NQ,IX(LCNQOB),IX(LCNQCL),
      &                              IX(LCIQOB),X(LCQCLS),IX(LCIBT),
      &                              GZ(LCHNEW),NCOL,NROW,NLAY,IOUT,
-     &                              IG(LCIBOU),NH,OBSNAM,X(LCH),
+     &                              IG(LCIBOU),NHT,OBSNAM,X(LCH),
      &                              X(LCTOFF),MXDRN,NDRAIN,RX(LCDRAI),
      &                              X(LCWTQ),NDMH,ITS,NQAR,NQCAR,NQTAR,
-     &                              NDRNVL)
+     &                              NDRNVL,ND)
                 IF (IUNIT(4).NE.0)
-     &              CALL OBS1RIV6FM(NQ,NQT,IX(LCNQOB),IX(LCNQCL),
+     &              CALL OBS1RIV6FM(NQ,IX(LCNQOB),IX(LCNQCL),
      &                              IX(LCIQOB),X(LCQCLS),IX(LCIBT),
      &                              MXRIVR,NRIVER,RX(LCRIVR),GZ(LCHNEW),
      &                              NCOL,NROW,NLAY,IOUT,IG(LCIBOU),NH,
      &                              OBSNAM,X(LCH),X(LCTOFF),X(LCWTQ),
-     &                              NDMH,ITS,NQAR,NQCAR,NQTAR,NRIVVL)
+     &                              NDMH,ITS,NQAR,NQCAR,NQTAR,NRIVVL,ND)
                 IF (IUNIT(7).NE.0)
-     &              CALL OBS1GHB6FM(NQ,NQT,IX(LCNQOB),IX(LCNQCL),
+     &              CALL OBS1GHB6FM(NQ,IX(LCNQOB),IX(LCNQCL),
      &                              IX(LCIQOB),X(LCQCLS),IX(LCIBT),
      &                              MXBND,NBOUND,RX(LCBNDS),GZ(LCHNEW),
-     &                              NCOL,NROW,NLAY,IOUT,IG(LCIBOU),NH,
+     &                              NCOL,NROW,NLAY,IOUT,IG(LCIBOU),NHT,
      &                              OBSNAM,X(LCH),X(LCTOFF),ITS,NQAR,
-     &                              NQCAR,NQTAR,NGHBVL)
+     &                              NQCAR,NQTAR,NGHBVL,ND)
                 IF (IUNIT(18).NE.0)
-     &              CALL OBS1STR6FM(NQ,NQT,IX(LCNQOB),IX(LCNQCL),
+     &              CALL OBS1STR6FM(NQ,IX(LCNQOB),IX(LCNQCL),
      &                              IX(LCIQOB),X(LCQCLS),IX(LCIBT),
      &                              GZ(LCHNEW),NCOL,NROW,NLAY,IOUT,
-     &                              IG(LCIBOU),NH,OBSNAM,X(LCH),
+     &                              IG(LCIBOU),NHT,OBSNAM,X(LCH),
      &                              X(LCTOFF),MXSTRM,NSTREM,RX(LCSTRM_),
      &                              IR(ICSTRM_),X(LCWTQ),NDMH,ITS,NQAR,
-     &                              NQCAR,NQTAR)
+     &                              NQCAR,NQTAR,ND)
                 IF (IUNIT(38).NE.0)
-     &              CALL OBS1BAS6FFM(NQ,NQT,IX(LCNQOB),IX(LCNQCL),
+     &              CALL OBS1BAS6FFM(NQ,IX(LCNQOB),IX(LCNQCL),
      &                               IX(LCIQOB),X(LCQCLS),IX(LCIBT),
      &                               GZ(LCHNEW),NCOL,NROW,NLAY,
-     &                               IG(LCIBOU),NH,X(LCH),
+     &                               IG(LCIBOU),NHT,X(LCH),
      &                               X(LCTOFF),ITS,NQAR,NQCAR,NQTAR,
-     &                               ICHFLG,GX(LCCR),GX(LCCC),
-     &                               GX(LCCV),GX(LCBOTM),NBOTM)
+     &                               ICHFLG,GX(LCCR),GX(LCCC),GX(LCCV),
+     &                               GX(LCBOTM),NBOTM,LAYHDT,ND,IOUT,
+     &                               KKPER)
                 IF (IUNIT(40).NE.0)
-     &              CALL OBS1DRT1FM(NQ,NQT,IX(LCNQOB),IX(LCNQCL),
+     &              CALL OBS1DRT1FM(NQ,IX(LCNQOB),IX(LCNQCL),
      &                              IX(LCIQOB),X(LCQCLS),IX(LCIBT),
      &                              GZ(LCHNEW),NCOL,NROW,NLAY,IOUT,
-     &                              IG(LCIBOU),NH,OBSNAM,X(LCH),
+     &                              IG(LCIBOU),NHT,OBSNAM,X(LCH),
      &                              X(LCTOFF),MXDRT,NDRTCL,RX(LCDRTF),
      &                              X(LCWTQ),NDMH,ITS,NQAR,NQCAR,NQTAR,
-     &                              NDRTVL)
+     &                              NDRTVL,ND)
               ENDIF
               IF (IUNIT(29).NE.0 .AND. ISSFLG(KKPER).EQ.1)
      &            CALL OBS1ADV2P(NROW,NCOL,NLAY,GX(LCDELC),GX(LCDELR),
      &                           IOUT,GX(LCCR),GX(LCCC),GX(LCCV),
      &                           GZ(LCHNEW),IG(LCIBOU),OBSNAM,X(LCPOFF),
-     &                           NH,NQT,NTT2,NPTH,IX(LCNPNT),KTDIM,
+     &                           NHT,NQT,NTT2,NPTH,IX(LCNPNT),KTDIM,
      &                           KTFLG,KTREV,ADVSTP,
      &                           IX(LCICLS),X(LCPRST),0,GX(LCRMLT),
      &                           X(LCHK),IG(LCIZON),X(LCH),
@@ -1448,6 +1473,7 @@ C-------INTERPOLATE, SAVE AND PRINT DATA FOR OBSERVATIONS.
      &                           IR(ICSTRM_),RX(LCSTRM_),MXRIVR,NRIVER,
      &                           RX(LCRIVR),MXDRN,NDRAIN,RX(LCDRAI),
      &                           X(LCSV),NMLTAR,NZONAR,GX(LCBOTM),NBOTM,
+     &                           RX(LCWELL),NWELVL,MXWELL,NWELLS,
      &                           Z(LCSNEW),X(LCVKA),
      &                           IUNIT(21),RX(LCHFB),MXACTFB,NHFB,
      &                           X(LCHANI),NGHBVL,NRIVVL,NDRNVL,LAYHDT,
@@ -1471,7 +1497,7 @@ C-------INTERPOLATE, SAVE AND PRINT DATA FOR OBSERVATIONS.
      &                        X(LCBPRI),X(LCBSCA),X(LCRSQA),X(LCRSPA),
      &                        LCOBDRT,X(LCSSDT),NQTDT,IOWTQDT,NRES,
      &                        NPOST,NNEGT,NRUNS,NQTSF,IOWTQSF,LCOBSFR,
-     &                        X(LCSSSF))
+     &                        X(LCSSSF),NHT)
             ENDIF
 C-----------SKIP OVER SENSITIVITY LOOP?
             IF (IPAR.NE.-3) THEN
@@ -1690,7 +1716,7 @@ C         AS NOTED ABOVE
      &                     X(LCSSTO),ITMXP,IPES,X(LCBPRI),ITERP,IERR,
      &                     IERRU,NTT2,LCOBDRT,X(LCSSDT),NQTDT,IOWTQDT,
      &                     NRES,NPOST,NNEGT,NRUNS,NQTSF,IOWTQSF,LCOBSFR,
-     &                     X(LCSSSF),KTDIM)
+     &                     X(LCSSSF),KTDIM,NHT)
               IF (IPAR.NE.1 .AND. IBEFLG.NE.2) THEN
                 IERR = 1
                 GOTO 85
@@ -1726,51 +1752,51 @@ C-------INTERPOLATE, SAVE AND PRINT SENSITIVITIES FOR OBSERVATIONS.
      &                               IX(LCJOFF),IX(LCMLAY),X(LCRINT),
      &                               NCOL,NROW,NLAY,X(LCPR),X(LCWT),
      &                               Z(LCSNEW),X(LCX),IP,NPE,IX(LCLN),
-     &                               NQT,X(LCTOFF),MAXM,IPAR,NPLIST,ITS,
-     &                               NHAR,MOBSAR)
+     &                               X(LCTOFF),MAXM,IPAR,NPLIST,ITS,
+     &                               NHAR,MOBSAR,ND)
                 IF (NQ.GT.0) THEN
                   CALL OBS1BAS6IQ(X(LCQCLS),NQCAR)
                   IF (IUNIT(3).NE.0)
-     &                CALL OBS1DRN6DR(NQ,NQT,IX(LCNQOB),IX(LCNQCL),
+     &                CALL OBS1DRN6DR(NQ,IX(LCNQOB),IX(LCNQCL),
      &                                IX(LCIQOB),X(LCQCLS),IX(LCIBT),
      &                                GZ(LCHNEW),IP,Z(LCSNEW),NCOL,NROW,
-     &                                NLAY,IOUTG,IG(LCIBOU),NH,X(LCX),
+     &                                NLAY,IOUTG,IG(LCIBOU),NHT,X(LCX),
      &                                OBSNAM,NPE,IX(LCLN),X(LCTOFF),
      &                                MXDRN,NDRAIN,RX(LCDRAI),NPLIST,
      &                                ITS,NQAR,NQCAR,NQTAR,NDRNVL,IERR,
-     &                                IERRU,NNPDRN,IDRNPB)
+     &                                IERRU,ND)
                   IF (IUNIT(4).NE.0)
-     &                CALL OBS1RIV6DR(NQ,NQT,IX(LCNQOB),IX(LCNQCL),
+     &                CALL OBS1RIV6DR(NQ,IX(LCNQOB),IX(LCNQCL),
      &                                IX(LCIQOB),X(LCQCLS),IX(LCIBT),
      &                                MXRIVR,NRIVER,RX(LCRIVR),
      &                                GZ(LCHNEW),IP,Z(LCSNEW),NCOL,NROW,
      &                                NLAY,IOUTG,IG(LCIBOU),NH,X(LCX),
      &                                OBSNAM,NPE,IX(LCLN),X(LCTOFF),
      &                                NPLIST,ITS,NQAR,NQCAR,NQTAR,
-     &                                NRIVVL,IERR,IERRU,NNPRIV,IRIVPB)
+     &                                NRIVVL,IERR,IERRU,ND)
                   IF (IUNIT(7).NE.0)
-     &                CALL OBS1GHB6DR(NQ,NQT,IX(LCNQOB),IX(LCNQCL),
+     &                CALL OBS1GHB6DR(NQ,IX(LCNQOB),IX(LCNQCL),
      &                                IX(LCIQOB),X(LCQCLS),IX(LCIBT),
      &                                MXBND,NBOUND,RX(LCBNDS),
      &                                GZ(LCHNEW),IP,Z(LCSNEW),NCOL,NROW,
-     &                                NLAY,IOUTG,IG(LCIBOU),NH,X(LCX),
+     &                                NLAY,IOUTG,IG(LCIBOU),NHT,X(LCX),
      &                                OBSNAM,NPE,IX(LCLN),X(LCTOFF),
      &                                NPLIST,ITS,NQAR,NQCAR,NQTAR,
-     &                                NGHBVL,IERR,IERRU,NNPGHB,IGHBPB)
+     &                                NGHBVL,IERR,IERRU,ND)
                   IF (IUNIT(18).NE.0)
-     &                CALL OBS1STR6DR(NQ,NQT,IX(LCNQOB),IX(LCNQCL),
+     &                CALL OBS1STR6DR(NQ,IX(LCNQOB),IX(LCNQCL),
      &                                IX(LCIQOB),X(LCQCLS),IX(LCIBT),
      &                                GZ(LCHNEW),IP,Z(LCSNEW),NCOL,NROW,
-     &                                NLAY,IOUTG,IG(LCIBOU),NH,X(LCX),
+     &                                NLAY,IOUTG,IG(LCIBOU),NHT,X(LCX),
      &                                OBSNAM,NPE,IX(LCLN),X(LCTOFF),
      &                                MXSTRM,NSTREM,RX(LCSTRM_),
      &                                IR(ICSTRM_),NPLIST,ITS,NQAR,NQCAR,
-     &                                NQTAR,IERR,IERRU,ISTRPB)
+     &                                NQTAR,IERR,IERRU,ND)
                   IF (IUNIT(38).NE.0)
      &                CALL OBS1BAS6FDR(NQ,IX(LCNQOB),IX(LCNQCL),
      &                                 IX(LCIQOB),X(LCQCLS),IX(LCIBT),
      &                                 GZ(LCHNEW),IP,Z(LCSNEW),NCOL,
-     &                                 NROW,NLAY,IG(LCIBOU),NH,NQT,
+     &                                 NROW,NLAY,IG(LCIBOU),NHT,
      &                                 X(LCX),X(LCTOFF),ITS,NQAR,NQCAR,
      &                                 NQTAR,ICHFLG,GX(LCBOTM),NBOTM,
      &                                 PIDTMP,LAYHDT,GX(LCRMLT),NMLTAR,
@@ -1778,23 +1804,25 @@ C-------INTERPOLATE, SAVE AND PRINT SENSITIVITIES FOR OBSERVATIONS.
      &                                 GX(LCDELR),RX(LCHFB),NHFB,
      &                                 IUNIT(21),MXACTFB,X(LCSV),
      &                                 X(LCVKA),X(LCHK),X(LCHANI),
-     &                                 GX(LCCR),GX(LCCC),GX(LCCV),NPE)
+     &                                 GX(LCCR),GX(LCCC),GX(LCCV),NPE,
+     &                                 IERR,IERRU,IOUTG,IUNIT(23),
+     &                                 IX(LCLN),NPLIST,ND)
                   IF (IUNIT(40).NE.0)
-     &                CALL OBS1DRT1DR(NQ,NQT,IX(LCNQOB),IX(LCNQCL),
+     &                CALL OBS1DRT1DR(NQ,IX(LCNQOB),IX(LCNQCL),
      &                                IX(LCIQOB),X(LCQCLS),IX(LCIBT),
      &                                GZ(LCHNEW),IP,Z(LCSNEW),NCOL,NROW,
-     &                                NLAY,IOUTG,IG(LCIBOU),NH,X(LCX),
+     &                                NLAY,IOUTG,IG(LCIBOU),NHT,X(LCX),
      &                                OBSNAM,NPE,IX(LCLN),X(LCTOFF),
      &                                MXDRT,NDRTCL,RX(LCDRTF),NPLIST,
      &                                ITS,NQAR,NQCAR,NQTAR,NDRTVL,IERR,
-     &                                IERRU,NDRTNP,IDRTPB)
+     &                                IERRU,ND)
                   IF (IERR.GT.0) GOTO 85
                 ENDIF
                 IF (IUNIT(29).NE.0 .AND. ISSFLG(KKPER).EQ.1)
      &            CALL OBS1ADV2P(NROW,NCOL,NLAY,GX(LCDELC),GX(LCDELR),
      &                           IOUT,GX(LCCR),GX(LCCC),GX(LCCV),
      &                           GZ(LCHNEW),IG(LCIBOU),OBSNAM,X(LCPOFF),
-     &                           NH,NQT,NTT2,NPTH,IX(LCNPNT),KTDIM,
+     &                           NHT,NQT,NTT2,NPTH,IX(LCNPNT),KTDIM,
      &                           KTFLG,KTREV,ADVSTP,
      &                           IX(LCICLS),X(LCPRST),IP,GX(LCRMLT),
      &                           X(LCHK),IG(LCIZON),X(LCH),
@@ -1804,6 +1832,7 @@ C-------INTERPOLATE, SAVE AND PRINT SENSITIVITIES FOR OBSERVATIONS.
      &                           IR(ICSTRM_),RX(LCSTRM_),MXRIVR,NRIVER,
      &                           RX(LCRIVR),MXDRN,NDRAIN,RX(LCDRAI),
      &                           X(LCSV),NMLTAR,NZONAR,GX(LCBOTM),NBOTM,
+     &                           RX(LCWELL),NWELVL,MXWELL,NWELLS,
      &                           Z(LCSNEW),X(LCVKA),
      &                           IUNIT(21),RX(LCHFB),MXACTFB,NHFB,
      &                           X(LCHANI),NGHBVL,NRIVVL,NDRNVL,LAYHDT,
@@ -1858,7 +1887,8 @@ C       PRINT DATA FOR OBSERVED HEADS AND FLOWS.
      &                      X(LCSSCH),X(LCSSPI),X(LCSSTO),ITMXP,
      &                      X(LCBUF2),IPES,X(LCBPRI),X(LCBSCA),LCOBDRT,
      &                      X(LCSSDT),NQTDT,IOWTQDT,NRES,NPOST,
-     &                      NNEGT,NRUNS,NQTSF,IOWTQSF,LCOBSFR,X(LCSSSF))
+     &                      NNEGT,NRUNS,NQTSF,IOWTQSF,LCOBSFR,X(LCSSSF),
+     &                      NHT)
 C       PARALLEL CONVERGENCE TEST
         CALL PLL1CV(IFO)
 C-------IF CONVERGENCE ACHIEVED BY SUM OF SQUARES CRITERIA (SOSC)
@@ -1877,7 +1907,7 @@ C---------EXECUTE ONE GAUSS-NEWTON ITERATION
      &                        X(LCB1),ITERP,IPRINT,IX(LCLN),MPR,
      &                        X(LCPRM),JMAX,NFIT,Z(LCR),Z(LCGD),
      &                        Z(LCU),NOPT,X(LCXD),Z(LCS),SOSR,
-     &                        IX(LCNIPR),IPR,GX(LCBUFF),X(LCWTP),NH,
+     &                        IX(LCNIPR),IPR,GX(LCBUFF),X(LCWTP),NHT,
      &                        X(LCWTQ),IOWTQ,NDMH,IOSTAR,NPLIST,MPRAR,
      &                        IPRAR,NDMHAR,X(LCBPRI),RMARM,IAP,
      &                        Z(LCDMXA),IX(LCNPAR),X(LCAMPA),X(LCAMCA),
@@ -1905,7 +1935,7 @@ C           DOES NOT CONVERGE
      &                            X(LCSSTO),ITMXP,IPES,X(LCBPRI),
      &                            LCOBDRT,X(LCSSDT),NQTDT,IOWTQDT,
      &                            NRES,NPOST,NNEGT,NRUNS,NQTSF,IOWTQSF,
-     &                            LCOBSFR,X(LCSSSF))
+     &                            LCOBSFR,X(LCSSSF),NHT)
             ENDIF
           ENDIF
           CALL PLL1BR()
@@ -1923,9 +1953,9 @@ C     OBSERVATION-SENSITIVITY TABLE(S)
             IF (ND.GT.0 .AND. ITERP.EQ.ITMXP .AND. IFO.EQ.0)
      &          CALL OBS1BAS6NC(X(LCBUF1),X(LCBUF2),IOUTG,IOWTQ,
      &                          IX(LCIPLO),IPR,ISCALS,ITERP,IX(LCLN),
-     &                          MPR,ND,NDMH,NDMHAR,NH,NPE,NPLIST,OBSNAM,
-     &                          OUTNAM,X(LCWT),X(LCWTQ),X(LCWTQS),
-     &                          X(LCX),X(LCBSCA))
+     &                          MPR,ND,NDMH,NDMHAR,NHT,NPE,NPLIST,
+     &                          OBSNAM,OUTNAM,X(LCWT),X(LCWTQ),
+     &                          X(LCWTQS),X(LCX),X(LCBSCA))
 C
 C-----------PRINT FINAL PARAMETER-ESTIMATION OUTPUT
 C
@@ -1962,7 +1992,7 @@ C           WRITE PARAMETER-ESTIMATION OUTPUT TO GLOBAL FILE
      &                      X(LCB1),X(LCWP),ITERPF,IX(LCLN),MPR,
      &                      X(LCPRM),LPRINT,IDRY,EV,RSQP,VAR,IPR,
      &                      IX(LCNIPR),X(LCWTPS),DETWTP,X(LCBL),X(LCBU),
-     &                      Z(LCEIGL),Z(LCEIGV),Z(LCEIGW),NH,X(LCWTQ),
+     &                      Z(LCEIGL),Z(LCEIGV),Z(LCEIGW),NHT,X(LCWTQ),
      &                      X(LCWTQS),DTLWTQ,IOWTQ,NDMH,NPLIST,MPRAR,
      &                      IPRAR,IOUB,IX(LCISEN),IBEALE,ITERP,ITMXP,
      &                      NDMHAR,X(LCPRNT),OUTNAM,X(LCPARE),X(LCSSPI),
@@ -1976,7 +2006,7 @@ C
 C-------GENERATE INPUT FILE(S) FOR RESAN-2000, BEALE-2000 AND YCINT-2000
         IF (MYID.EQ.MPROC) THEN
           IF (IYCFLG.LT.1 .AND. IPES.GT.0)
-     &        CALL PES1BAS6RS(NPE,ND,NDMH,VAR,Z(LCC),X(LCWT),NH,
+     &        CALL PES1BAS6RS(NPE,ND,NDMH,VAR,Z(LCC),X(LCWT),NHT,
      &                        X(LCWTQS),X(LCX),MPR,X(LCPRM),X(LCWP),
      &                        NPLIST,MPRAR,NDMHAR,OUTNAM,X(LCWTPS),
      &                        IPR,IPRAR,IX(LCNIPR),RSQP,IDRY)
@@ -1985,14 +2015,14 @@ C-------GENERATE INPUT FILE(S) FOR RESAN-2000, BEALE-2000 AND YCINT-2000
      &        CALL PES1BAS6BE(NPE,ND,MPR,VAR,X(LCH),X(LCWT),X(LCX),
      &                        X(LCWP),IX(LCLN),X(LCPRM),X(LCHOBS),
      &                        Z(LCC),IBEALE,ITERPK,IOUT,OBSNAM,
-     &                        GX(LCBUFF),NH,NDMH,X(LCWTQ),NPLIST,MPRAR,
+     &                        GX(LCBUFF),NHT,NDMH,X(LCWTQ),NPLIST,MPRAR,
      &                        IBEFLG,OUTNAM,IUBE,BEFIRST,FSTAT,IERR,
      &                        IERRU,NDMHAR,X(LCWTP),IPR,IPRAR,X(LCBPRI),
      &                        IX(LCNIPR))
           IF (IERR.GT.0) GOTO 103
           IF (IYCFLG.GT.-1)
      &        CALL PES1BAS6YC(NPE,ND,MPR,X(LCH),X(LCWT),X(LCX),Z(LCC),
-     &                        IOUT,OBSNAM,NH,NDMH,X(LCWTQ),OUTNAM,
+     &                        IOUT,OBSNAM,NHT,NDMH,X(LCWTQ),OUTNAM,
      &                        IYCFLG,IPR,IX(LCIPLO),IERR,IERRU,NDMHAR)
           IF (IERR.GT.0) GOTO 103
         ENDIF
@@ -2010,7 +2040,7 @@ C-------RESIDUAL ANALYSIS
 C        OBS1BAS6RE CHANGES H AND MAY CHANGE HOBS
       IF (MYID.EQ.MPROC) THEN
         IF (ND.GT.0)
-     &      CALL OBS1BAS6RE(X(LCWP),IOUTG,IOUT,NH,X(LCH),X(LCHOBS),
+     &      CALL OBS1BAS6RE(X(LCWP),IOUTG,IOUT,NHT,X(LCH),X(LCHOBS),
      &                      X(LCWT),NDMH,ND,IPAR,MPR,X(LCPRM),IPR,
      &                      IX(LCNIPR),X(LCWTPS),X(LCBUF1),LBUFF,
      &                      X(LCWTQ),X(LCWTQS),NPLIST,MPRAR,IPRAR,
@@ -2024,6 +2054,7 @@ C       PRINT FINAL PARAMETER-ESTIMATION OUTPUT
 C
   110 CONTINUE
 C8------END OF SIMULATION
+      CALL GLO1BAS6ET(IBDT,IOUTG,IPRTIM)
       CALL CLOSEFILES(INUNIT,FNAME)
       IF (IBATCH.GT.0) THEN
 C       TO USE STATIC MEMORY ALLOCATION, COMMENT OUT THE FOLLOWING

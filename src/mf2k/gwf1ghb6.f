@@ -1,4 +1,4 @@
-C     Last change:  ERB  27 Mar 2001   11:51 am
+C     Last change:  ERB  19 Nov 2001    1:52 pm
       SUBROUTINE GWF1GHB6AL(ISUM,LCBNDS,MXBND,NBOUND,IN,IOUT,IGHBCB,
      1     NGHBVL,IGHBAL,IFREFM,NPGHB,IGHBPB,NNPGHB)
 C
@@ -79,12 +79,13 @@ C6------RETURN.
       RETURN
       END
       SUBROUTINE GWF1GHB6RQ(IN,IOUT,NGHBVL,IGHBAL,NCOL,NROW,NLAY,NPGHB,
-     1            BNDS,IGHBPB,MXBND,IFREFM,ITERP)
+     1            BNDS,IGHBPB,MXBND,IFREFM,ITERP,INAMLOC)
 C
-C-----VERSION 11JAN2000 GWF1GHB6RQ
+C-----VERSION 20011108 GWF1GHB6RQ
 C     ******************************************************************
 C     READ GHB PARAMETERS
 C     ******************************************************************
+C     Modified 11/8/2001 to support parameter instances - ERB
 C
 C     SPECIFICATIONS:
 C     ------------------------------------------------------------------
@@ -94,19 +95,35 @@ C     ------------------------------------------------------------------
 C     ------------------------------------------------------------------
 C
 C-------READ NAMED PARAMETERS.
-      IF (ITERP.EQ.1) WRITE(IOUT,3) NPGHB
-    3 FORMAT(1X,//1X,I5,' GHB parameters')
+      IF (ITERP.EQ.1) WRITE(IOUT,1000) NPGHB
+ 1000 FORMAT(1X,//1X,I5,' GHB parameters')
       IF(NPGHB.GT.0) THEN
-         NAUX=NGHBVL-5-IGHBAL
-         LSTSUM=IGHBPB
-         DO 5 K=1,NPGHB
-         LSTBEG=LSTSUM
-         CALL UPARLSTRP(LSTSUM,MXBND,IN,IOUT,IP,'GHB','GHB',ITERP)
-         NLST=LSTSUM-LSTBEG
-         CALL ULSTRD(NLST,BNDS,LSTBEG,NGHBVL,MXBND,IGHBAL,IN,IOUT,
-     1      'BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR',
-     2      GHBAUX,5,NAUX,IFREFM,NCOL,NROW,NLAY,5,5,ITERP)
-    5    CONTINUE
+        NAUX=NGHBVL-5-IGHBAL
+        LSTSUM=IGHBPB
+        DO 20 K=1,NPGHB
+          LSTBEG=LSTSUM
+          CALL UPARLSTRP(LSTSUM,MXBND,IN,IOUT,IP,'GHB','GHB',ITERP,
+     &                  NUMINST,INAMLOC)
+          NLST=LSTSUM-LSTBEG
+          IF (NUMINST.GT.1) NLST = NLST/NUMINST
+C         ASSIGN STARTING INDEX FOR READING INSTANCES
+          IF (NUMINST.EQ.0) THEN
+            IB=0
+          ELSE
+            IB=1
+          ENDIF
+C         READ LIST(S) OF CELLS, PRECEDED BY INSTANCE NAME IF NUMINST>0
+          LB=LSTBEG
+          DO 10 I=IB,NUMINST
+            IF (I.GT.0) THEN
+              CALL UINSRP(I,IN,IOUT,IP,ITERP)
+            ENDIF
+            CALL ULSTRD(NLST,BNDS,LB,NGHBVL,MXBND,IGHBAL,IN,IOUT,
+     &      'BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR',
+     &      GHBAUX,5,NAUX,IFREFM,NCOL,NROW,NLAY,5,5,ITERP)
+            LB=LB+NLST
+   10     CONTINUE
+   20   CONTINUE
       END IF
 C
 C6------RETURN

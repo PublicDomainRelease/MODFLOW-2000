@@ -1,4 +1,4 @@
-C     Last change:  ERB  13 Jun 2001   11:47 am
+C     Last change:  ERB   8 Nov 2001   10:27 am
       SUBROUTINE OBS1GHB6AL(IUGBOB,NQ,NQC,NQT,IOUT,NQGB,NQTGB,IOBSUM,
      &                     LCOBGHB,ITMXP,LCSSGB,ISUM,IOBS)
 C     VERSION 20000125
@@ -53,12 +53,12 @@ C
       END
 C=======================================================================
       SUBROUTINE OBS1GHB6RP(NCOL,NROW,NPER,IUGBOB,IOUT,OBSNAM,
-     &                     NH,JT,NQT,IBT,NQOB,NQCL,IQOB,
-     &                     QCLS,IERR,HOBS,TOFF,WTQ,IOWTQ,IPRN,
-     &                     NDMH,NSTPA,PERLNA,TSMLTA,ISSA,ITRSS,NQAR,
-     &                     NQCAR,NQTAR,IQ1,NQT1,NDD,IUGB,NQGB,NQTGB,NT,
-     &                     NC,IPLOT,NAMES,ND,IPR,MPR,IOWTQGB)
-C     VERSION 19980930 ERB
+     &                      NHT,JT,IBT,NQOB,NQCL,IQOB,
+     &                      QCLS,IERR,HOBS,TOFF,WTQ,IOWTQ,IPRN,
+     &                      NDMH,NSTPA,PERLNA,TSMLTA,ISSA,ITRSS,NQAR,
+     &                      NQCAR,NQTAR,IQ1,NQT1,NDD,IUGB,NQGB,NQTGB,NT,
+     &                      NC,IPLOT,NAMES,ND,IPR,MPR,IOWTQGB)
+C     VERSION 20010921 ERB
 C     ******************************************************************
 C     READ, CHECK AND STORE FLOW-OBSERVATION DATA FOR DRAIN BOUNDARIES.
 C     ******************************************************************
@@ -67,13 +67,13 @@ C     ------------------------------------------------------------------
       REAL BLANK, EVFGB, HOBS, PERLNA, QCLS, TOFF, TOFFSET, TOMULTGB,
      &     TSMLTA, WTQ
       INTEGER I, I4, IBT, IERR, IOUT, IOWTQ, IPRN, IQ, IQOB, IUGBOB,
-     &        IWT, J, JT, L, N, NC, NC1, NC2, NCOL, NDMH, NH, NPER,
-     &        NQCL, NQOB, NQT, NROW, NSTPA, NT, NT1, NT2, IUGB, ISSA
+     &        IWT, J, JT, L, N, NC, NC1, NC2, NCOL, NDMH, NHT, NPER,
+     &        NQCL, NQOB, NROW, NSTPA, NT, NT1, NT2, IUGB, ISSA
       INTEGER IPLOT(ND+IPR+MPR)
       CHARACTER*12 OBSNAM(NDD), NAMES(ND+IPR+MPR)
       CHARACTER*20 FMTIN*20, ANAME*50
       DIMENSION IBT(2,NQAR), NQOB(NQAR), NQCL(NQAR), IQOB(NQTAR),
-     &          QCLS(5,NQCAR),  HOBS(NH+NQT), TOFF(NH+NQT), NSTPA(NPER),
+     &          QCLS(5,NQCAR),  HOBS(ND), TOFF(ND), NSTPA(NPER),
      &          PERLNA(NPER), TSMLTA(NPER), ISSA(NPER)
       DIMENSION WTQ(NDMH,NDMH)
       CHARACTER*10 STATYP(0:2)
@@ -146,7 +146,7 @@ C----------READ TIME STEPS, MEASURED FLOWS, AND WEIGHTS.
         NT1 = NT + 1
         NT2 = NT + NQOB(IQ)
         DO 30 J = NT1, NT2
-          N = NH + J
+          N = NHT + J
 C---------READ ITEM 4
           IF (IOWTQGB.GT.0) THEN
             READ (IUGBOB,*) OBSNAM(N), IREFSP, TOFFSET, HOBS(N), STAT,
@@ -175,7 +175,10 @@ C---------READ ITEM 4
           CALL UOBSTI(OBSNAM(N),IOUT,ISSA,ITRSS,NPER,NSTPA,IREFSP,
      &                IQOB(J),PERLNA,TOFF(N),TOFFSET,TOMULTGB,TSMLTA,1)
 C----------ERROR CHECKING
-          IF (IQOB(J).GT.JT) JT = IQOB(J)
+          IF (IQOB(J).GE.JT) THEN
+            JT = IQOB(J)
+            IF (TOFF(J).GT.0.) JT = JT+1
+          ENDIF
           IF (IUGB.EQ.0) THEN
             WRITE (IOUT,565)
             IERR = 1
@@ -223,7 +226,7 @@ C       READ ITEM 7
         IF (IPRN.GE.0) THEN
           WRITE (IOUT,615) ANAME
           CALL UARRSUBPRW(WTQ,NDMH,NDMH,NQT1,NQT2,NQT1,NQT2,IPRN,IOUT,
-     &                    OBSNAM(NH+1),NDMH)
+     &                    OBSNAM(NHT+1),NDMH)
         ENDIF
       ENDIF
       NQT1 = NQT2 + 1
@@ -236,9 +239,10 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE OBS1GHB6FM(NQ,NQT,NQOB,NQCL,IQOB,QCLS,IBT,MXBND,NBOUND,
-     &                     BNDS,HNEW,NCOL,NROW,NLAY,IOUT,IBOUND,NH,
-     &                     OBSNAM,H,TOFF,ITS,NQAR,NQCAR,NQTAR,NGHBVL)
+      SUBROUTINE OBS1GHB6FM(NQ,NQOB,NQCL,IQOB,QCLS,IBT,MXBND,NBOUND,
+     &                      BNDS,HNEW,NCOL,NROW,NLAY,IOUT,IBOUND,NHT,
+     &                      OBSNAM,H,TOFF,ITS,NQAR,NQCAR,NQTAR,NGHBVL,
+     &                      ND)
 C     VERSION 19981020 ERB
 C     ******************************************************************
 C     CALCULATE SIMULATED EQUIVALENTS TO OBSERVED FLOWS FOR THE GENERAL 
@@ -249,12 +253,12 @@ C     ------------------------------------------------------------------
       REAL BNDS, C, FACT, H, HB, HH, HHNEW, QCLS, TOFF, ZERO
       INTEGER I, IBOUND, IBT, IBT1, IFLAG, II, IOUT, IQ, IQOB, ITS, J,
      &        JJ, K, KK, MXBND, N, NB, NBN, NBOUND, NC, NC1, NC2, NCOL,
-     &        NH, NLAY, NQ, NQCL, NQOB, NQT, NROW, NT, NT1, NT2
-      CHARACTER*12 OBSNAM(NH+NQT)
+     &        NHT, NLAY, NQ, NQCL, NQOB, NROW, NT, NT1, NT2
+      CHARACTER*12 OBSNAM(ND)
       DOUBLE PRECISION HNEW(NCOL,NROW,NLAY)
       DIMENSION BNDS(NGHBVL,MXBND), IBOUND(NCOL,NROW,NLAY), IBT(2,NQAR),
      &          NQOB(NQAR), NQCL(NQAR), IQOB(NQTAR), QCLS(5,NQCAR),
-     &          H(NH+NQT), TOFF(NH+NQT)
+     &          H(ND), TOFF(ND)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
   505 FORMAT (/,' OBS#',I5,', ID ',A4,', TIME STEP ',I5)
@@ -278,7 +282,7 @@ C-------LOOP THROUGH BOUNDARY FLOWS
 C----------WAS THERE A MEASUREMENT AT THIS BOUNDARY THIS TIME STEP?
         DO 40 NT = NT1, NT2
           IF (IQOB(NT).EQ.ITS .OR. 
-     &        (IQOB(NT).EQ.ITS-1.AND.TOFF(NH+NT).GT.ZERO)) THEN
+     &        (IQOB(NT).EQ.ITS-1.AND.TOFF(NHT+NT).GT.ZERO)) THEN
 C----------ASSIGN VARIABLES ACCORDING TO BOUNDARY TYPE
             NBN = NBOUND
 C----------LOOP THROUGH CELLS.
@@ -311,18 +315,18 @@ C-------------CALCULATE FLOWS
                 ENDIF
    10         CONTINUE
               IF (IFLAG.EQ.0) THEN
-                WRITE (IOUT,540) N, NH + NT, OBSNAM(NH+NT)
+                WRITE (IOUT,540) N, NHT + NT, OBSNAM(NHT+NT)
                 STOP
               ENDIF
 C-------------SUM VALUES FROM INDIVIDUAL CELLS.
 C----------------CALCULATE FACTOR FOR TEMPORAL INTERPOLATION
    20         FACT = 1.0
-              IF (TOFF(NH+NT).GT.ZERO) THEN
-                IF (IQOB(NT).EQ.ITS) FACT = 1. - TOFF(NH+NT)
-                IF (IQOB(NT).EQ.ITS-1) FACT = TOFF(NH+NT)
+              IF (TOFF(NHT+NT).GT.ZERO) THEN
+                IF (IQOB(NT).EQ.ITS) FACT = 1. - TOFF(NHT+NT)
+                IF (IQOB(NT).EQ.ITS-1) FACT = TOFF(NHT+NT)
               ENDIF
 C---------------FLOWS
-              H(NH+NT) = H(NH+NT) + HH*FACT*QCLS(4,N)
+              H(NHT+NT) = H(NHT+NT) + HH*FACT*QCLS(4,N)
    30       CONTINUE
           ENDIF
    40   CONTINUE
@@ -334,11 +338,10 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE OBS1GHB6DR(NQ,NQT,NQOB,NQCL,IQOB,QCLS,IBT,MXBND,
-     &                     NBOUND,BNDS,HNEW,IP,SNEW,NCOL,NROW,NLAY,
-     &                     IOUT,IBOUND,NH,X,OBSNAM,NPE,LN,TOFF,NPLIST,
-     &                     ITS,NQAR,NQCAR,NQTAR,NGHBVL,IERR,IERRU,
-     &                     NNPGHB,IGHBPB)
+      SUBROUTINE OBS1GHB6DR(NQ,NQOB,NQCL,IQOB,QCLS,IBT,MXBND,NBOUND,
+     &                      BNDS,HNEW,IP,SNEW,NCOL,NROW,NLAY,IOUT,
+     &                      IBOUND,NHT,X,OBSNAM,NPE,LN,TOFF,NPLIST,
+     &                      ITS,NQAR,NQCAR,NQTAR,NGHBVL,IERR,IERRU,ND)
 C-----VERSION 1001 15OCT1992
 C     VERSION 19980915 ERB
 C     ******************************************************************
@@ -350,14 +353,14 @@ C     ------------------------------------------------------------------
       REAL BNDS, C, FACT, HB, HHNEW, QCLS, TOFF, X, XX, ZERO
       INTEGER I, IBOUND, IBT, IBT1, IFLAG, II, IOUT, IP, IQ, IQOB, ITS,
      &        J, JJ, K, KK, LN, MXBND, N, NB, NBN, NBOUND, NC, NC1, NC2,
-     &        NCOL, NH, NLAY, NPE, NQ, NQCL, NQOB, NQT, NROW, NT, NT1,
+     &        NCOL, NHT, NLAY, NPE, NQ, NQCL, NQOB, NROW, NT, NT1,
      &        NT2
       CHARACTER*4 PIDTMP
-      CHARACTER*12 OBSNAM(NH+NQT)
+      CHARACTER*12 OBSNAM(ND)
       DOUBLE PRECISION HNEW(NCOL,NROW,NLAY), SNEW(NCOL,NROW,NLAY)
       DIMENSION BNDS(NGHBVL,MXBND), IBOUND(NCOL,NROW,NLAY),
-     &          X(NPE,NH+NQT), IBT(2,NQAR), LN(NPLIST), NQOB(NQAR),
-     &          NQCL(NQAR), IQOB(NQTAR), QCLS(5,NQCAR), TOFF(NH+NQT)
+     &          X(NPE,ND), IBT(2,NQAR), LN(NPLIST), NQOB(NQAR),
+     &          NQCL(NQAR), IQOB(NQTAR), QCLS(5,NQCAR), TOFF(ND)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
   505 FORMAT (/,' OBS#',I5,', ID ',A4,', TIME STEP ',I5)
@@ -377,7 +380,7 @@ C-------INITIALIZE VARIABLES
       PIDTMP = PARTYP(IIPP)
       IF (PIDTMP.EQ.'GHB ')
      &    CALL SOBS1GHB6QC(IBT,IIPP,NGHBVL,MXBND,NQ,NQCL,BNDS,QCLS,
-     &                     NQAR,NQCAR,NNPGHB,IGHBPB)
+     &                     NQAR,NQCAR)
 C-------LOOP THROUGH BOUNDARY FLOWS
       DO 60 IQ = 1, NQ
         IBT1 = IBT(1,IQ)
@@ -386,7 +389,7 @@ C-------LOOP THROUGH BOUNDARY FLOWS
 C----------WAS THERE A MEASUREMENT AT THIS BOUNDARY THIS TIME STEP?
         DO 40 NT = NT1, NT2
           IF (IQOB(NT).EQ.ITS .OR. 
-     &        (IQOB(NT).EQ.ITS-1.AND.TOFF(NH+NT).GT.ZERO)) THEN
+     &        (IQOB(NT).EQ.ITS-1.AND.TOFF(NHT+NT).GT.ZERO)) THEN
 C----------ASSIGN VARIABLES ACCORDING TO BOUNDARY TYPE
             NBN = NBOUND
 C----------LOOP THROUGH CELLS.
@@ -421,21 +424,21 @@ C-------------CALCULATE SENSITIVITIES
                 ENDIF
    10         CONTINUE
               IF (IFLAG.EQ.0) THEN
-                WRITE (IOUT,540) N, NH + NT, OBSNAM(NH+NT)
-                WRITE (IERRU,540) N, NH + NT, OBSNAM(NH+NT)
+                WRITE (IOUT,540) N, NHT + NT, OBSNAM(NHT+NT)
+                WRITE (IERRU,540) N, NHT + NT, OBSNAM(NHT+NT)
                 IERR = 1
                 RETURN
               ENDIF
 C-------------SUM VALUES FROM INDIVIDUAL CELLS.
 C----------------CALCULATE FACTOR FOR TEMPORAL INTERPOLATION
    20         FACT = 1.0
-              IF (TOFF(NH+NT).GT.ZERO) THEN
-                IF (IQOB(NT).EQ.ITS) FACT = 1. - TOFF(NH+NT)
-                IF (IQOB(NT).EQ.ITS-1) FACT = TOFF(NH+NT)
+              IF (TOFF(NHT+NT).GT.ZERO) THEN
+                IF (IQOB(NT).EQ.ITS) FACT = 1. - TOFF(NHT+NT)
+                IF (IQOB(NT).EQ.ITS-1) FACT = TOFF(NHT+NT)
               ENDIF
 C---------------SENSITIVITY-EQUATION SENSITIVITIES
               IF (LN(IIPP).GT.0) XX = XX*B(IIPP)
-              X(IP,NH+NT) = X(IP,NH+NT) + XX*FACT*QCLS(4,N)
+              X(IP,NHT+NT) = X(IP,NHT+NT) + XX*FACT*QCLS(4,N)
    30       CONTINUE
           ENDIF
    40   CONTINUE
@@ -476,10 +479,10 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SOBS1GHB6OH(IO,IOWTQGB,IOUT,NH,NQTGB,HOBS,H,WTQ,OBSNAM,
-     &                       IDIS,WTQS,D,AVET,NPOST,NNEGT,NRUNS,RSQ,ND,
-     &                       MPR,IPR,NDMH,WTRL,NRES,IUGDO,OUTNAM,IPLOT,
-     &                       IPLPTR,LCOBGHB,ISSWR,SSGB,ITMXP)
+      SUBROUTINE SOBS1GHB6OH(IO,IOWTQGB,IOUT,NHT,NQTGB,HOBS,H,WTQ,
+     &                       OBSNAM,IDIS,WTQS,D,AVET,NPOST,NNEGT,NRUNS,
+     &                       RSQ,ND,MPR,IPR,NDMH,WTRL,NRES,IUGDO,OUTNAM,
+     &                       IPLOT,IPLPTR,LCOBGHB,ISSWR,SSGB,ITMXP)
 C     VERSION 19990423 ERB
 C     ******************************************************************
 C     CALCULATE AND PRINT WEIGHTED RESIDUALS FOR GENERAL-HEAD BOUNDARY
@@ -490,7 +493,7 @@ C     ------------------------------------------------------------------
       REAL AVE, AVET, D, H, HOBS, RES, RSQ, SWH, VMAX, VMIN, WT2, WTQ, 
      &     WTQS, WTR, WTRL
       INTEGER IDIS, IO, IOUT, IOWTQGB, IPR,
-     &        J, MPR, N, ND, NDMH, NH, NMAX, NMIN,
+     &        J, MPR, N, ND, NDMH, NHT, NMAX, NMIN,
      &        NNEG, NNEGT, NPOS, NPOST, NQ1, NQ2, NQTGB, NRES, NRUNS
       INTEGER IUGDO(6), IPLOT(ND+IPR+MPR), IPLPTR(ND+IPR+MPR)
       CHARACTER*12 OBSNAM(ND)
@@ -542,7 +545,7 @@ C
       VMIN = 1.E20
       AVE = 0.
       DO 20 N = LCOBGHB, LCOBGHB+NQTGB-1
-        NQ1 = N - NH
+        NQ1 = N - NHT
         IF (WTQ(NQ1,NQ1).LT.0.) THEN
           WRITE (IOUT,515) N, OBSNAM(N), HOBS(N)
           IDIS = IDIS + 1
@@ -620,98 +623,59 @@ C
       END
 C=======================================================================
       SUBROUTINE SOBS1GHB6QC(IBT,IIPP,NGHBVL,MXBND,NQ,NQCL,BNDS,QCLS,
-     &                       NQAR,NQCAR,NNPGHB,IGHBPB)
-C     VERSION 20000517 ERB
+     &                       NQAR,NQCAR)
+C     VERSION 20011108 ERB
 C     ******************************************************************
 C     POPULATE QCLS ARRAY ELEMENT 5 FOR GHB FLOW-OBSERVATION CELLS ON
 C     ONE GHB-PARAMETER-CONTROLLED HEAD-DEPENDENT BOUNDARY IF IT IS
 C     ACTIVE THIS STRESS PERIOD
 C     ******************************************************************
+C     Modified 11/8/2001 to support parameter instances - ERB
+C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       DIMENSION IBT(2,NQAR), NQCL(NQAR), BNDS(NGHBVL,MXBND),
      &          QCLS(5,NQCAR)
-      CHARACTER*4 PTYP
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
-      PTYP = 'GHB '
       MCOLFAC = 5
       NC = 0
-C-------LOOP THROUGH CELL GROUPS
+C     DEFINE NUMBER OF INSTANCES (NUMINST), NUMBER OF LIST ENTRIES PER
+C     INSTANCE (NLST), AND, FOR THE ACTIVE INSTANCE, INSTANCE NUMBER
+C     (NI) AND FIRST AND LAST POSITIONS IN PACKAGE ARRAY (IPL1 and IPL2)
+      NI = IACTIVE(IIPP)
+      NUMINST = IPLOC(3,IIPP)
+      NLST = IPLOC(2,IIPP)-IPLOC(1,IIPP)+1
+      IF (NUMINST.GT.1) NLST = NLST/NUMINST
+      IPL1 = IPLOC(1,IIPP)+(NI-1)*NLST
+      IPL2 = IPL1+NLST-1
+C-------LOOP THROUGH ALL CELL GROUPS
       DO 120 IQ=1,NQ
         IFLAG = 0
 C---------DETERMINE STARTING AND ENDING CELLS IN THIS CELL GROUP
         NC1 = NC + 1
         NC2 = NC + NQCL(IQ)
-        IF (IACTIVE(IIPP).EQ.1) THEN
+        IF (NI.GT.0) THEN
 C---------IF PID FOR THIS PARAMETER MATCHES BOUNDARY TYPE SPECIFIED
 C         FOR THIS CELL GROUP
           IF (IBT(1,IQ).EQ.2) THEN
-C           RESET POINTERS
-            NB = 0
-            NBOP = IGHBPB - 1
-            NBP = IPLOC(1,IIPP) - 1
-            IP1 = 1
 C-----------LOOP THROUGH CELLS IN THIS GROUP
             DO 100 JJ = NC1,NC2
               KO = QCLS(1,JJ)
               IO = QCLS(2,JJ)
               JO = QCLS(3,JJ)
 C
-C             SKIP OVER CELLS IN OBSERVATION CELL GROUP ASSOCIATED WITH
-C             NON-PARAMETER CELLS IN THE SAME LAYER, ROW AND COLUMN
-              IF(NNPGHB.GT.0) THEN
-                DO 20 MNB = 1, NNPGHB
-                  NB = NB + 1
-                  IF (NB.GT.NNPGHB) GOTO 30
-                  KNP = BNDS(1,NB)
-                  INP = BNDS(2,NB)
-                  JNP = BNDS(3,NB)
-                  IF (KO.EQ.KNP .AND. IO.EQ.INP .AND. JO.EQ.JNP)
-     &                GOTO 100
-   20           CONTINUE
-   30           CONTINUE
-              ENDIF
-C
-C             SKIP OVER CELLS IN OBSERVATION CELL GROUP ASSOCIATED WITH
-C             ACTIVE GHB PARAMETERS PRECEDING PARAMETER OF INTEREST IN
-C             PARAMETER SECTION OF ARRAY WHERE LAYER, ROW, AND COLUMN
-C             MATCH
-              IF (IIPP.GT.1 .AND. NBP.EQ.IPLOC(1,IIPP)-1) THEN
-                KIP1 = IP1
-                DO 60 KIP = KIP1, IIPP-1
-                  IP1 = KIP
-                  IF (PARTYP(KIP).EQ.PTYP) THEN
-                    IF (IACTIVE(KIP).GT.0) THEN
-                      DO 40 II = IPLOC(1,KIP),IPLOC(2,KIP)
-                        NBOP = NBOP + 1
-                        IF (NBOP.GT.IPLOC(2,KIP)) GOTO 50
-                        KOP = BNDS(1,NBOP)
-                        IOP = BNDS(2,NBOP)
-                        JOP = BNDS(3,NBOP)
-                        IF (KO.EQ.KOP .AND. IO.EQ.IOP .AND. JO.EQ.JOP)
-     &                      GOTO 100
-   40                 CONTINUE
-   50                 CONTINUE
-                    ENDIF
-                    NBOP = IPLOC(2,KIP)
-                  ENDIF
-   60           CONTINUE
-              ENDIF
-C
-C-------------LOOP THROUGH PARAMETER CELLS IN PACKAGE DATA FILE
-              DO 80 II = IPLOC(1,IIPP),IPLOC(2,IIPP)
-                NBP = NBP + 1
-                IF (NBP.GT.IPLOC(2,IIPP)) GOTO 90
-                K = BNDS(1,NBP)
-                I = BNDS(2,NBP)
-                J = BNDS(3,NBP)
+C-------------LOOP THROUGH PARAMETER (INSTANCE) CELLS IN PACKAGE ARRAY
+              DO 80 II = IPL1,IPL2
+                K = BNDS(1,II)
+                I = BNDS(2,II)
+                J = BNDS(3,II)
 C---------------IF OBSERVATION CELL IS ON THE PARAMETER-CONTROLLED
 C               BOUNDARY, PUT PARAMETER FACTOR IN QCLS(5)
                 IF (KO.EQ.K .AND. IO.EQ.I .AND. JO.EQ.J) THEN
                   IBT(2,IQ) = IIPP
                   IFLAG = 1
-                  QCLS(5,JJ) = BNDS(MCOLFAC,NBP)
+                  QCLS(5,JJ) = BNDS(MCOLFAC,II)
                   GOTO 100
                 ENDIF
    80         CONTINUE

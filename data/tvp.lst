@@ -1,0 +1,2916 @@
+                                  MODFLOW-2000
+      U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
+                             VERSION 1.7 12/04/2001
+
+
+ This model run combines GLOBAL and LIST output into this single file.
+
+ GLOBAL LISTING FILE: tvp.lst
+                         UNIT  12
+#                                                                                                                                                                                                       
+# Global input files                                                                                                                                                                                    
+
+ OPENING ../data/tvp.dis
+ FILE TYPE:DIS   UNIT  41   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/tvp.zon
+ FILE TYPE:ZONE   UNIT  42   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/tvp.mlt
+ FILE TYPE:MULT   UNIT  43   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+#                                                                                                                                                                                                       
+# Flow process input files                                                                                                                                                                              
+
+ OPENING ../data/tvp.bas
+ FILE TYPE:BAS6   UNIT  51   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/tvp.lpf
+ FILE TYPE:LPF   UNIT  52   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/tvp.wel
+ FILE TYPE:WEL   UNIT  53   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/tvp.pcg
+ FILE TYPE:PCG   UNIT  54   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/tvp.oc
+ FILE TYPE:OC   UNIT  55   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/tvp.ghb
+ FILE TYPE:GHB   UNIT  56   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/tvp.riv
+ FILE TYPE:RIV   UNIT  57   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/tvp.rch
+ FILE TYPE:RCH   UNIT  58   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/tvp.drt
+ FILE TYPE:DRT   UNIT  59   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/tvp.drn
+ FILE TYPE:DRN   UNIT  61   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/tvp.str
+ FILE TYPE:STR   UNIT  62   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/tvp.chd
+ FILE TYPE:CHD   UNIT  63   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/tvp.evt
+ FILE TYPE:EVT   UNIT  64   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/tvp.ets
+ FILE TYPE:ETS   UNIT  65   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ THE FREE FORMAT OPTION HAS BEEN SELECTED
+
+ DISCRETIZATION INPUT DATA READ FROM UNIT 41
+ # DIS file for test case tc1
+ #
+    2 LAYERS        18 ROWS        18 COLUMNS
+   5 STRESS PERIOD(S) IN SIMULATION
+ MODEL TIME UNIT IS SECONDS
+ MODEL LENGTH UNIT IS METERS
+ THE GROUND-WATER TRANSPORT PROCESS IS INACTIVE
+
+ THE OBSERVATION PROCESS IS INACTIVE
+ THE SENSITIVITY PROCESS IS INACTIVE
+ THE PARAMETER-ESTIMATION PROCESS IS INACTIVE
+
+ MODE: FORWARD
+
+
+ ZONE OPTION, INPUT READ FROM UNIT 42
+     1 ZONE ARRAYS
+
+ MULTIPLIER OPTION, INPUT READ FROM UNIT 43
+   5 MULTIPLIER ARRAYS
+  Confining bed flag for each layer:
+   1   0
+
+       7812  ELEMENTS OF GX ARRAY USED OUT OF       7812
+        648  ELEMENTS OF GZ ARRAY USED OUT OF        648
+        972  ELEMENTS OF IG ARRAY USED OUT OF        972
+
+                     DELR =   1000.00    
+
+                     DELC =   1000.00    
+
+ TOP ELEVATION OF LAYER 1 =   150.000    
+
+   MODEL LAYER BOTTOM EL. =   100.000     FOR LAYER   1
+
+ BOT. EL. OF QUASI-3D BED =   90.0000     FOR LAYER   1
+
+   MODEL LAYER BOTTOM EL. =   40.0000     FOR LAYER   2
+
+
+ STRESS PERIOD     LENGTH       TIME STEPS     MULTIPLIER FOR DELT    SS FLAG
+ ----------------------------------------------------------------------------
+        1         1.000000          1                    1.000         SS
+        2         86400.00          3                    1.000         TR
+        3         259200.0          3                    1.000         TR
+        4         518400.0          3                    1.000         TR
+        5        2.5920010E+07      9                    1.200         TR
+
+ COMBINED STEADY-STATE AND TRANSIENT SIMULATION
+
+
+
+
+
+
+            MULT. ARRAY: MULTARR_3 
+ READING ON UNIT  43 WITH FORMAT: (18F3.0)            
+
+          1      2      3      4      5      6      7      8      9     10
+         11     12     13     14     15     16     17     18
+ .........................................................................
+   1     1.0    1.0    2.0    2.0    3.0    3.0    4.0    4.0    5.0    5.0
+         6.0    6.0    7.0    7.0    8.0    8.0    9.0    9.0
+   2     1.0    1.0    2.0    2.0    3.0    3.0    4.0    4.0    5.0    5.0
+         6.0    6.0    7.0    7.0    8.0    8.0    9.0    9.0
+   3     1.0    1.0    2.0    2.0    3.0    3.0    4.0    4.0    5.0    5.0
+         6.0    6.0    7.0    7.0    8.0    8.0    9.0    9.0
+   4     1.0    1.0    2.0    2.0    3.0    3.0    4.0    4.0    5.0    5.0
+         6.0    6.0    7.0    7.0    8.0    8.0    9.0    9.0
+   5     1.0    1.0    2.0    2.0    3.0    3.0    4.0    4.0    5.0    5.0
+         6.0    6.0    7.0    7.0    8.0    8.0    9.0    9.0
+   6     1.0    1.0    2.0    2.0    3.0    3.0    4.0    4.0    5.0    5.0
+         6.0    6.0    7.0    7.0    8.0    8.0    9.0    9.0
+   7     1.0    1.0    2.0    2.0    3.0    3.0    4.0    4.0    5.0    5.0
+         6.0    6.0    7.0    7.0    8.0    8.0    9.0    9.0
+   8     1.0    1.0    2.0    2.0    3.0    3.0    4.0    4.0    5.0    5.0
+         6.0    6.0    7.0    7.0    8.0    8.0    9.0    9.0
+   9     1.0    1.0    2.0    2.0    3.0    3.0    4.0    4.0    5.0    5.0
+         6.0    6.0    7.0    7.0    8.0    8.0    9.0    9.0
+  10     1.0    1.0    2.0    2.0    3.0    3.0    4.0    4.0    5.0    5.0
+         6.0    6.0    7.0    7.0    8.0    8.0    9.0    9.0
+  11     1.0    1.0    2.0    2.0    3.0    3.0    4.0    4.0    5.0    5.0
+         6.0    6.0    7.0    7.0    8.0    8.0    9.0    9.0
+  12     1.0    1.0    2.0    2.0    3.0    3.0    4.0    4.0    5.0    5.0
+         6.0    6.0    7.0    7.0    8.0    8.0    9.0    9.0
+  13     1.0    1.0    2.0    2.0    3.0    3.0    4.0    4.0    5.0    5.0
+         6.0    6.0    7.0    7.0    8.0    8.0    9.0    9.0
+  14     1.0    1.0    2.0    2.0    3.0    3.0    4.0    4.0    5.0    5.0
+         6.0    6.0    7.0    7.0    8.0    8.0    9.0    9.0
+  15     1.0    1.0    2.0    2.0    3.0    3.0    4.0    4.0    5.0    5.0
+         6.0    6.0    7.0    7.0    8.0    8.0    9.0    9.0
+  16     1.0    1.0    2.0    2.0    3.0    3.0    4.0    4.0    5.0    5.0
+         6.0    6.0    7.0    7.0    8.0    8.0    9.0    9.0
+  17     1.0    1.0    2.0    2.0    3.0    3.0    4.0    4.0    5.0    5.0
+         6.0    6.0    7.0    7.0    8.0    8.0    9.0    9.0
+  18     1.0    1.0    2.0    2.0    3.0    3.0    4.0    4.0    5.0    5.0
+         6.0    6.0    7.0    7.0    8.0    8.0    9.0    9.0
+
+  MULT. ARRAY: mlt_rch    =  3.170979E-10
+
+  MULT. ARRAY: FIFTIETH   =  2.000000E-02
+
+  MULT. ARRAY: One-p-five =   1.50000    
+
+ Calculated multiplier array: mlt_rch1.5
+                           ARRAY mlt_rch
+                         * ARRAY one-p-five
+
+  MULT. ARRAY: mlt_rch1.5 =  4.756469E-10
+
+
+
+             ZONE ARRAY: ZONES_1   
+ READING ON UNIT  42 WITH FORMAT: (18I2)              
+
+        1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
+ ............................................................................
+   1    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
+   2    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
+   3    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
+   4    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
+   5    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
+   6    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
+   7    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
+   8    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
+   9    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
+  10    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
+  11    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
+  12    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
+  13    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
+  14    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
+  15    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
+  16    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
+  17    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
+  18    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
+
+ LPF1 -- LAYER PROPERTY FLOW PACKAGE, VERSION 1, 1/11/2000
+         INPUT READ FROM UNIT 52
+ # LPF input file for test case tc1
+ #
+ CONSTANT-HEAD CELL-BY-CELL FLOWS WILL BE PRINTED WHEN ICLPFL IS NOT 0
+ HEAD AT CELLS THAT CONVERT TO DRY=  -999.00    
+     7 Named Parameters     
+
+   LAYER FLAGS:
+ LAYER       LAYTYP        LAYAVG         CHANI        LAYVKA        LAYWET
+ ---------------------------------------------------------------------------
+    1             0             0     1.000E+00             1             0
+    2             0             0     1.000E+00             1             0
+
+   INTERPRETATION OF LAYER FLAGS:
+                        INTERBLOCK     HORIZONTAL    DATA IN
+         LAYER TYPE   TRANSMISSIVITY   ANISOTROPY   ARRAY VKA   WETTABILITY
+ LAYER      (LAYTYP)      (LAYAVG)       (CHANI)      (LAYVKA)      (LAYWET)
+ ---------------------------------------------------------------------------
+    1      CONFINED      HARMONIC     1.000E+00    ANISOTROPY  NON-WETTABLE
+    2      CONFINED      HARMONIC     1.000E+00    ANISOTROPY  NON-WETTABLE
+
+       2268 ELEMENTS IN X ARRAY ARE USED BY LPF
+         12 ELEMENTS IN IX ARRAY ARE USED BY LPF
+
+ PCG2 -- CONJUGATE GRADIENT SOLUTION PACKAGE, VERSION 2.4, 12/29/98
+ MAXIMUM OF     50 CALLS OF SOLUTION ROUTINE
+ MAXIMUM OF      5 INTERNAL ITERATIONS PER CALL TO SOLUTION ROUTINE
+ MATRIX PRECONDITIONING TYPE :    1
+       2444 ELEMENTS IN X ARRAY ARE USED BY PCG
+       1750 ELEMENTS IN IX ARRAY ARE USED BY PCG
+       1296 ELEMENTS IN Z ARRAY ARE USED BY PCG
+
+       4712  ELEMENTS OF X ARRAY USED OUT OF       4712
+       1296  ELEMENTS OF Z ARRAY USED OUT OF       1296
+       1762  ELEMENTS OF IX ARRAY USED OUT OF       1762
+          0  ELEMENTS OF XHS ARRAY USED OUT OF          1
+
+
+
+                                    SOLUTION BY THE CONJUGATE-GRADIENT METHOD
+                                   -------------------------------------------
+                    MAXIMUM NUMBER OF CALLS TO PCG ROUTINE =       50
+                        MAXIMUM ITERATIONS PER CALL TO PCG =        5
+                               MATRIX PRECONDITIONING TYPE =        1
+        RELAXATION FACTOR (ONLY USED WITH PRECOND. TYPE 1) =    0.10000E+01
+ PARAMETER OF POLYNOMIAL PRECOND. = 2 (2) OR IS CALCULATED :        2
+                         HEAD CHANGE CRITERION FOR CLOSURE =    0.10000E-04
+                     RESIDUAL CHANGE CRITERION FOR CLOSURE =    0.10000E-04
+            PCG HEAD AND RESIDUAL CHANGE PRINTOUT INTERVAL =      999
+     PRINTING FROM SOLVER IS LIMITED(1) OR SUPPRESSED (>1) =        1
+                                         DAMPING PARAMETER =    0.10000E+01
+
+ WETTING CAPABILITY IS NOT ACTIVE IN ANY LAYER
+
+ PARAMETERS DEFINED IN THE LPF PACKAGE
+
+ PARAMETER NAME:SS_1         TYPE:SS     CLUSTERS:   1
+ Parameter value from package file is:   1.00000E-03
+                LAYER:  1    MULTIPLIER ARRAY: FIFTIETH    ZONE ARRAY: ALL
+
+ PARAMETER NAME:HK_1         TYPE:HK     CLUSTERS:   1
+ Parameter value from package file is:   3.30000E-04
+                LAYER:  1    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
+
+ PARAMETER NAME:VERT_ANI_1   TYPE:VANI   CLUSTERS:   1
+ Parameter value from package file is:    1.0000    
+                LAYER:  1    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
+
+ PARAMETER NAME:VERT_K_CB    TYPE:VKCB   CLUSTERS:   1
+ Parameter value from package file is:   1.30000E-07
+                LAYER:  1    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
+
+ PARAMETER NAME:SS_2         TYPE:SS     CLUSTERS:   1
+ Parameter value from package file is:   2.30000E-04
+                LAYER:  2    MULTIPLIER ARRAY: FIFTIETH    ZONE ARRAY: ALL
+
+ PARAMETER NAME:HK_2         TYPE:HK     CLUSTERS:   1
+ Parameter value from package file is:   4.30000E-05
+                LAYER:  2    MULTIPLIER ARRAY: MULTARR_3    ZONE ARRAY: ALL
+
+ PARAMETER NAME:VERT_ANI_2   TYPE:VANI   CLUSTERS:   1
+ Parameter value from package file is:    1.0000    
+                LAYER:  2    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
+
+    HYD. COND. ALONG ROWS FOR LAYER   1 WILL BE DEFINED BY PARAMETERS
+ (PRINT FLAG=  21)
+
+  HORIZ. TO VERTICAL ANI. FOR LAYER   1 WILL BE DEFINED BY PARAMETERS
+ (PRINT FLAG=  21)
+
+         SPECIFIC STORAGE FOR LAYER   1 WILL BE DEFINED BY PARAMETERS
+ (PRINT FLAG=  21)
+
+ QUASI3D VERT. HYD. COND. FOR LAYER   1 WILL BE DEFINED BY PARAMETERS
+ (PRINT FLAG=  21)
+
+    HYD. COND. ALONG ROWS FOR LAYER   2 WILL BE DEFINED BY PARAMETERS
+ (PRINT FLAG=  21)
+
+  HORIZ. TO VERTICAL ANI. FOR LAYER   2 WILL BE DEFINED BY PARAMETERS
+ (PRINT FLAG=  21)
+
+         SPECIFIC STORAGE FOR LAYER   2 WILL BE DEFINED BY PARAMETERS
+ (PRINT FLAG=  21)
+ 
+ # MODULAR MODEL - TWO-LAYER EXAMPLE PROBLEM, TEST CASE TC1                      
+ #                                                                               
+ THE FREE FORMAT OPTION HAS BEEN SELECTED
+    2 LAYERS        18 ROWS        18 COLUMNS
+   5 STRESS PERIOD(S) IN SIMULATION
+
+ BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 51
+         10 ELEMENTS IN IR ARRAY ARE USED BY BAS
+
+ WEL6 -- WELL PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 53
+ # WELL input file
+     1 Named Parameters         8 List entries
+ MAXIMUM OF    2 ACTIVE WELLS AT ONE TIME
+         40 ELEMENTS IN RX ARRAY ARE USED BY WEL
+
+ DRN6 -- DRAIN PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 61
+ # DRN input file
+     1 Named Parameters        27 List entries
+ MAXIMUM OF    9 ACTIVE DRAINs AT ONE TIME
+        180 ELEMENTS IN RX ARRAY ARE USED BY DRN
+
+ RIV6 -- RIVER PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 57
+ # RIV file for test case tc1
+ #
+     1 Named Parameters        27 List entries
+ MAXIMUM OF    9 ACTIVE RIVER REACHES AT ONE TIME
+        216 ELEMENTS IN RX ARRAY ARE USED BY RIV
+
+ EVT6 -- EVAPOTRANSPIRATION PACKAGE, VERSION 6, 12/14/2000
+         INPUT READ FROM UNIT 64
+ # EVT input file
+     1 Named Parameters     
+ OPTION 1 -- EVAPOTRANSPIRATION FROM TOP LAYER
+        972 ELEMENTS IN RX ARRAY ARE USED BY EVT
+        324 ELEMENTS IN IR ARRAY ARE USED BY EVT
+
+ GHB6 -- GHB PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 56
+     1 Named Parameters        45 List entries
+ MAXIMUM OF   18 ACTIVE GHB CELLS AT ONE TIME
+        315 ELEMENTS IN RX ARRAY ARE USED BY GHB
+
+ RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 58
+     2 Named Parameters     
+ OPTION 1 -- RECHARGE TO TOP LAYER
+        324 ELEMENTS IN RX ARRAY ARE USED BY RCH
+        324 ELEMENTS IN IR ARRAY ARE USED BY RCH
+
+ STRM -- STREAM PACKAGE, VERSION 6, 6/98 INPUT READ FROM UNIT 62
+ # STR input file
+     2 Named Parameters        27 List entries
+ MAXIMUM OF   11 ACTIVE STREAM NODES AT ONE TIME
+ NUMBER OF STREAM SEGMENTS IS     3
+ NUMBER OF STREAM TRIBUTARIES IS     2
+      421 ELEMENTS IN RX ARRAY ARE USED FOR STREAMS
+      202 ELEMENTS IN IR ARRAY ARE USED FOR STREAMS
+
+ CHD6 -- TIME-VARIANT SPECIFIED-HEAD PACKAGE, VERSION 6, 1/11/2000
+ INPUT READ FROM UNIT 63
+ # CHD input file -- 2 nodes representing a mine being dewatered
+     1 Named Parameters         8 List entries
+ MAXIMUM OF    2 TIME-VARIANT SPECIFIED-HEAD CELLS AT ONE TIME
+         50 ELEMENTS IN RX ARRAY ARE USED BY CHD
+
+ ETS1 -- EVAPOTRANSPIRATION SEGMENTS PACKAGE, VERSION 1, 5/2/2000
+         INPUT READ FROM UNIT 65
+ # ETS input file
+ OPTION 1 -- EVAPOTRANSPIRATION FROM TOP LAYER
+     1 Named Parameters     
+     2 SEGMENTS DEFINE EVAPOTRANSPIRATION RATE FUNCTION
+       1620 ELEMENTS IN RX ARRAY ARE USED BY ETS
+        324 ELEMENTS IN IR ARRAY ARE USED BY ETS
+
+ DRT1 -- DRAIN RETURN PACKAGE, VERSION 1, 5/2/2000
+ INPUT READ FROM UNIT 59
+ # DRT input file
+ MAXIMUM OF    1 ACTIVE DRAINS WITH RETURN FLOW AT ONE TIME
+     1 Named Parameters         5 List entries
+ RETURN FLOW OPTION IS SELECTED
+         54 ELEMENTS IN RX ARRAY ARE USED BY DRT
+
+       4192  ELEMENTS OF RX ARRAY USED OUT OF       4192
+       1184  ELEMENTS OF IR ARRAY USED OUT OF       1184
+1
+ # MODULAR MODEL - TWO-LAYER EXAMPLE PROBLEM, TEST CASE TC1                      
+ #                                                                               
+
+           BOUNDARY ARRAY =              1 FOR LAYER   1
+
+           BOUNDARY ARRAY =              1 FOR LAYER   2
+
+ AQUIFER HEAD WILL BE SET TO  0.0000     AT ALL NO-FLOW NODES (IBOUND=0).
+
+             INITIAL HEAD =   200.000     FOR LAYER   1
+
+             INITIAL HEAD =   200.000     FOR LAYER   2
+
+ OUTPUT CONTROL IS SPECIFIED ONLY AT TIME STEPS FOR WHICH OUTPUT IS DESIRED
+ HEAD PRINT FORMAT CODE IS  14    DRAWDOWN PRINT FORMAT CODE IS   0
+ HEADS WILL BE SAVED ON UNIT   0    DRAWDOWNS WILL BE SAVED ON UNIT   0
+
+    HYD. COND. ALONG ROWS is defined by the following parameters:
+ HK_1      
+
+    HYD. COND. ALONG ROWS =  3.300000E-04 FOR LAYER   1
+
+  HORIZ. TO VERTICAL ANI. is defined by the following parameters:
+ VERT_ANI_1
+
+  HORIZ. TO VERTICAL ANI. =   1.00000     FOR LAYER   1
+
+         SPECIFIC STORAGE is defined by the following parameters:
+ SS_1      
+
+         SPECIFIC STORAGE =  2.000000E-05 FOR LAYER   1
+
+ QUASI3D VERT. HYD. COND. is defined by the following parameters:
+ VERT_K_CB 
+
+ QUASI3D VERT. HYD. COND. =  1.300000E-07 FOR LAYER   1
+
+    HYD. COND. ALONG ROWS is defined by the following parameters:
+ HK_2      
+
+
+              HYD. COND. ALONG ROWS FOR LAYER   2
+
+          1         2         3         4         5         6         7
+          8         9        10        11        12        13        14
+         15        16        17        18
+ ......................................................................
+   1   4.30E-05  4.30E-05  8.60E-05  8.60E-05  1.29E-04  1.29E-04  1.72E-04
+       1.72E-04  2.15E-04  2.15E-04  2.58E-04  2.58E-04  3.01E-04  3.01E-04
+       3.44E-04  3.44E-04  3.87E-04  3.87E-04
+   2   4.30E-05  4.30E-05  8.60E-05  8.60E-05  1.29E-04  1.29E-04  1.72E-04
+       1.72E-04  2.15E-04  2.15E-04  2.58E-04  2.58E-04  3.01E-04  3.01E-04
+       3.44E-04  3.44E-04  3.87E-04  3.87E-04
+   3   4.30E-05  4.30E-05  8.60E-05  8.60E-05  1.29E-04  1.29E-04  1.72E-04
+       1.72E-04  2.15E-04  2.15E-04  2.58E-04  2.58E-04  3.01E-04  3.01E-04
+       3.44E-04  3.44E-04  3.87E-04  3.87E-04
+   4   4.30E-05  4.30E-05  8.60E-05  8.60E-05  1.29E-04  1.29E-04  1.72E-04
+       1.72E-04  2.15E-04  2.15E-04  2.58E-04  2.58E-04  3.01E-04  3.01E-04
+       3.44E-04  3.44E-04  3.87E-04  3.87E-04
+   5   4.30E-05  4.30E-05  8.60E-05  8.60E-05  1.29E-04  1.29E-04  1.72E-04
+       1.72E-04  2.15E-04  2.15E-04  2.58E-04  2.58E-04  3.01E-04  3.01E-04
+       3.44E-04  3.44E-04  3.87E-04  3.87E-04
+   6   4.30E-05  4.30E-05  8.60E-05  8.60E-05  1.29E-04  1.29E-04  1.72E-04
+       1.72E-04  2.15E-04  2.15E-04  2.58E-04  2.58E-04  3.01E-04  3.01E-04
+       3.44E-04  3.44E-04  3.87E-04  3.87E-04
+   7   4.30E-05  4.30E-05  8.60E-05  8.60E-05  1.29E-04  1.29E-04  1.72E-04
+       1.72E-04  2.15E-04  2.15E-04  2.58E-04  2.58E-04  3.01E-04  3.01E-04
+       3.44E-04  3.44E-04  3.87E-04  3.87E-04
+   8   4.30E-05  4.30E-05  8.60E-05  8.60E-05  1.29E-04  1.29E-04  1.72E-04
+       1.72E-04  2.15E-04  2.15E-04  2.58E-04  2.58E-04  3.01E-04  3.01E-04
+       3.44E-04  3.44E-04  3.87E-04  3.87E-04
+   9   4.30E-05  4.30E-05  8.60E-05  8.60E-05  1.29E-04  1.29E-04  1.72E-04
+       1.72E-04  2.15E-04  2.15E-04  2.58E-04  2.58E-04  3.01E-04  3.01E-04
+       3.44E-04  3.44E-04  3.87E-04  3.87E-04
+  10   4.30E-05  4.30E-05  8.60E-05  8.60E-05  1.29E-04  1.29E-04  1.72E-04
+       1.72E-04  2.15E-04  2.15E-04  2.58E-04  2.58E-04  3.01E-04  3.01E-04
+       3.44E-04  3.44E-04  3.87E-04  3.87E-04
+  11   4.30E-05  4.30E-05  8.60E-05  8.60E-05  1.29E-04  1.29E-04  1.72E-04
+       1.72E-04  2.15E-04  2.15E-04  2.58E-04  2.58E-04  3.01E-04  3.01E-04
+       3.44E-04  3.44E-04  3.87E-04  3.87E-04
+  12   4.30E-05  4.30E-05  8.60E-05  8.60E-05  1.29E-04  1.29E-04  1.72E-04
+       1.72E-04  2.15E-04  2.15E-04  2.58E-04  2.58E-04  3.01E-04  3.01E-04
+       3.44E-04  3.44E-04  3.87E-04  3.87E-04
+  13   4.30E-05  4.30E-05  8.60E-05  8.60E-05  1.29E-04  1.29E-04  1.72E-04
+       1.72E-04  2.15E-04  2.15E-04  2.58E-04  2.58E-04  3.01E-04  3.01E-04
+       3.44E-04  3.44E-04  3.87E-04  3.87E-04
+  14   4.30E-05  4.30E-05  8.60E-05  8.60E-05  1.29E-04  1.29E-04  1.72E-04
+       1.72E-04  2.15E-04  2.15E-04  2.58E-04  2.58E-04  3.01E-04  3.01E-04
+       3.44E-04  3.44E-04  3.87E-04  3.87E-04
+  15   4.30E-05  4.30E-05  8.60E-05  8.60E-05  1.29E-04  1.29E-04  1.72E-04
+       1.72E-04  2.15E-04  2.15E-04  2.58E-04  2.58E-04  3.01E-04  3.01E-04
+       3.44E-04  3.44E-04  3.87E-04  3.87E-04
+  16   4.30E-05  4.30E-05  8.60E-05  8.60E-05  1.29E-04  1.29E-04  1.72E-04
+       1.72E-04  2.15E-04  2.15E-04  2.58E-04  2.58E-04  3.01E-04  3.01E-04
+       3.44E-04  3.44E-04  3.87E-04  3.87E-04
+  17   4.30E-05  4.30E-05  8.60E-05  8.60E-05  1.29E-04  1.29E-04  1.72E-04
+       1.72E-04  2.15E-04  2.15E-04  2.58E-04  2.58E-04  3.01E-04  3.01E-04
+       3.44E-04  3.44E-04  3.87E-04  3.87E-04
+  18   4.30E-05  4.30E-05  8.60E-05  8.60E-05  1.29E-04  1.29E-04  1.72E-04
+       1.72E-04  2.15E-04  2.15E-04  2.58E-04  2.58E-04  3.01E-04  3.01E-04
+       3.44E-04  3.44E-04  3.87E-04  3.87E-04
+
+  HORIZ. TO VERTICAL ANI. is defined by the following parameters:
+ VERT_ANI_2
+
+  HORIZ. TO VERTICAL ANI. =   1.00000     FOR LAYER   2
+
+         SPECIFIC STORAGE is defined by the following parameters:
+ SS_2      
+
+         SPECIFIC STORAGE =  4.600000E-06 FOR LAYER   2
+
+
+     1 Well parameters
+
+ PARAMETER NAME:WELLS_TR     TYPE:Q   
+ Parameter value from package file is:   -1.1000    
+   NUMBER OF ENTRIES:      2
+   NUMBER OF INSTANCES:    4
+
+   INSTANCE:  WELL-a    
+
+ WELL NO.  LAYER   ROW   COL   STRESS FACTOR   
+ ----------------------------------------------
+      1      1      9     10       1.000    
+      2      2      9     10       1.000    
+
+   INSTANCE:  WELL-b    
+
+ WELL NO.  LAYER   ROW   COL   STRESS FACTOR   
+ ----------------------------------------------
+      1      1      9     10       1.100    
+      2      2      9     10       1.100    
+
+   INSTANCE:  WELL-c    
+
+ WELL NO.  LAYER   ROW   COL   STRESS FACTOR   
+ ----------------------------------------------
+      1      1      9     10       1.200    
+      2      2      9     10       1.200    
+
+   INSTANCE:  WELL-d    
+
+ WELL NO.  LAYER   ROW   COL   STRESS FACTOR   
+ ----------------------------------------------
+      1      1      9     10       1.300    
+      2      2      9     10       1.300    
+
+
+     1 Drain parameters
+
+ PARAMETER NAME:DRN-K        TYPE:DRN 
+ Parameter value from package file is:    1.0000    
+   NUMBER OF ENTRIES:      9
+   NUMBER OF INSTANCES:    3
+
+   INSTANCE:  Drn-a     
+
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
+ ------------------------------------------------------------
+      1      1     10      1       109.0           1.200    
+      2      1     11      1       110.0           1.200    
+      3      1     12      1       111.0           1.200    
+      4      1     13      1       112.0           1.200    
+      5      1     14      1       113.0           1.200    
+      6      1     15      1       114.0           1.200    
+      7      1     16      1       115.0           1.200    
+      8      1     17      1       116.0           1.200    
+      9      1     18      1       117.0           1.200    
+
+   INSTANCE:  Drn-b     
+
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
+ ------------------------------------------------------------
+      1      1     10      1       111.0           1.400    
+      2      1     11      1       112.0           1.400    
+      3      1     12      1       113.0           1.400    
+      4      1     13      1       114.0           1.400    
+      5      1     14      1       115.0           1.400    
+      6      1     15      1       116.0           1.400    
+      7      1     16      1       117.0           1.400    
+      8      1     17      1       118.0           1.400    
+      9      1     18      1       119.0           1.400    
+
+   INSTANCE:  Drn-c     
+
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
+ ------------------------------------------------------------
+      1      1     10      1       110.0           1.800    
+      2      1     11      1       111.0           1.800    
+      3      1     12      1       112.0           1.800    
+      4      1     13      1       113.0           1.800    
+      5      1     14      1       114.0           1.800    
+      6      1     15      1       115.0           1.800    
+      7      1     16      1       116.0           1.800    
+      8      1     17      1       117.0           1.800    
+      9      1     18      1       118.0           1.800    
+
+
+     1 River parameters
+
+ PARAMETER NAME:RIVERS       TYPE:RIV 
+ Parameter value from package file is:   1.20000E-03
+   NUMBER OF ENTRIES:      9
+   NUMBER OF INSTANCES:    3
+
+   INSTANCE:  Orig-rivs 
+
+ REACH NO.  LAYER   ROW   COL     STAGE    STRESS FACTOR     BOTTOM EL.   
+ -------------------------------------------------------------------------
+      1      1      1      1       100.0           1000.           90.00    
+      2      1      2      1       101.0           1000.           90.00    
+      3      1      3      1       102.0           1000.           90.00    
+      4      1      4      1       103.0           1000.           90.00    
+      5      1      5      1       104.0           1000.           90.00    
+      6      1      6      1       105.0           1000.           90.00    
+      7      1      7      1       106.0           1000.           90.00    
+      8      1      8      1       107.0           1000.           90.00    
+      9      1      9      1       108.0           1000.           90.00    
+
+   INSTANCE:  Rivs-a    
+
+ REACH NO.  LAYER   ROW   COL     STAGE    STRESS FACTOR     BOTTOM EL.   
+ -------------------------------------------------------------------------
+      1      1      1      1       102.0           1010.           90.00    
+      2      1      2      1       103.0           1010.           90.00    
+      3      1      3      1       104.0           1010.           90.00    
+      4      1      4      1       105.0           1010.           90.00    
+      5      1      5      1       106.0           1011.           90.00    
+      6      1      6      1       107.0           1010.           90.00    
+      7      1      7      1       108.0           1010.           90.00    
+      8      1      8      1       109.0           1010.           90.00    
+      9      1      9      1       110.0           1010.           90.00    
+
+   INSTANCE:  Rivs-b    
+
+ REACH NO.  LAYER   ROW   COL     STAGE    STRESS FACTOR     BOTTOM EL.   
+ -------------------------------------------------------------------------
+      1      1      1      1       101.0           1020.           90.00    
+      2      1      2      1       102.0           1020.           90.00    
+      3      1      3      1       103.0           1020.           90.00    
+      4      1      4      1       104.0           1020.           90.00    
+      5      1      5      1       105.0           1020.           90.00    
+      6      1      6      1       106.0           1020.           90.00    
+      7      1      7      1       107.0           1020.           90.00    
+      8      1      8      1       108.0           1020.           90.00    
+      9      1      9      1       109.0           1020.           90.00    
+
+
+     1 Evapotranspiration parameters
+
+ PARAMETER NAME:EVT-Rate     TYPE:EVT    CLUSTERS:   1
+ Parameter value from package file is:    10.000    
+   NUMBER OF INSTANCES:    2
+
+   INSTANCE:  Low-EVT   
+                MULTIPLIER ARRAY: mlt_rch    ZONE ARRAY: zones_1
+                ZONE VALUES:    1    2
+
+   INSTANCE:  High-EVT  
+                MULTIPLIER ARRAY: mlt_rch1.5    ZONE ARRAY: zones_1
+                ZONE VALUES:    1    2
+
+
+     1 GHB parameters
+
+ PARAMETER NAME:GHB-cond     TYPE:GHB 
+ Parameter value from package file is:    1.0000    
+   NUMBER OF ENTRIES:      9
+   NUMBER OF INSTANCES:    5
+
+   INSTANCE:  GHB-SP1   
+
+ BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR   
+ ----------------------------------------------------------
+      1      1      1     18       350.0          0.1000E-06
+      2      1      2     18       350.0          0.1000E-06
+      3      1      3     18       350.0          0.1000E-06
+      4      1      4     18       350.0          0.1000E-06
+      5      1      5     18       350.0          0.1000E-06
+      6      1      6     18       350.0          0.1000E-06
+      7      1      7     18       350.0          0.1000E-06
+      8      1      8     18       350.0          0.1000E-06
+      9      1      9     18       350.0          0.1000E-06
+
+   INSTANCE:  GHB-SP2   
+
+ BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR   
+ ----------------------------------------------------------
+      1      1      1     18       350.0          0.2000E-06
+      2      1      2     18       350.0          0.2000E-06
+      3      1      3     18       350.0          0.2000E-06
+      4      1      4     18       350.0          0.2000E-06
+      5      1      5     18       350.0          0.2000E-06
+      6      1      6     18       350.0          0.2000E-06
+      7      1      7     18       350.0          0.2000E-06
+      8      1      8     18       350.0          0.2000E-06
+      9      1      9     18       350.0          0.2000E-06
+
+   INSTANCE:  GHB-SP3   
+
+ BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR   
+ ----------------------------------------------------------
+      1      1      1     18       350.0          0.4000E-06
+      2      1      2     18       350.0          0.4000E-06
+      3      1      3     18       350.0          0.4000E-06
+      4      1      4     18       350.0          0.4000E-06
+      5      1      5     18       350.0          0.4000E-06
+      6      1      6     18       350.0          0.4000E-06
+      7      1      7     18       350.0          0.4000E-06
+      8      1      8     18       350.0          0.4000E-06
+      9      1      9     18       350.0          0.4000E-06
+
+   INSTANCE:  GHB-SP4   
+
+ BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR   
+ ----------------------------------------------------------
+      1      1      1     18       350.0          0.8000E-06
+      2      1      2     18       350.0          0.8000E-06
+      3      1      3     18       350.0          0.8000E-06
+      4      1      4     18       350.0          0.8000E-06
+      5      1      5     18       350.0          0.8000E-06
+      6      1      6     18       350.0          0.8000E-06
+      7      1      7     18       350.0          0.8000E-06
+      8      1      8     18       350.0          0.8000E-06
+      9      1      9     18       350.0          0.8000E-06
+
+   INSTANCE:  GHB-SP5   
+
+ BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR   
+ ----------------------------------------------------------
+      1      1      1     18       350.0          0.1600E-05
+      2      1      2     18       350.0          0.1600E-05
+      3      1      3     18       350.0          0.1600E-05
+      4      1      4     18       350.0          0.1600E-05
+      5      1      5     18       350.0          0.1600E-05
+      6      1      6     18       350.0          0.1600E-05
+      7      1      7     18       350.0          0.1600E-05
+      8      1      8     18       350.0          0.1600E-05
+      9      1      9     18       350.0          0.1600E-05
+
+
+     2 Recharge parameters
+
+ PARAMETER NAME:RCH_ZONE_1   TYPE:RCH    CLUSTERS:   1
+ Parameter value from package file is:    70.000    
+   NUMBER OF INSTANCES:    3
+
+   INSTANCE:  RZ-13     
+                MULTIPLIER ARRAY: mlt_rch    ZONE ARRAY: zones_1
+                ZONE VALUES:    1    3
+
+   INSTANCE:  RZ-134    
+                MULTIPLIER ARRAY: mlt_rch    ZONE ARRAY: zones_1
+                ZONE VALUES:    1    3    4
+
+   INSTANCE:  RZ-134-1.5
+                MULTIPLIER ARRAY: mlt_rch1.5    ZONE ARRAY: zones_1
+                ZONE VALUES:    1    3    4
+
+ PARAMETER NAME:RCH_ZONE_2   TYPE:RCH    CLUSTERS:   1
+ Parameter value from package file is:    40.000    
+   NUMBER OF INSTANCES:    3
+
+   INSTANCE:  RZ-24     
+                MULTIPLIER ARRAY: mlt_rch    ZONE ARRAY: zones_1
+                ZONE VALUES:    2    4
+
+   INSTANCE:  RZ-2      
+                MULTIPLIER ARRAY: mlt_rch    ZONE ARRAY: zones_1
+                ZONE VALUES:    2
+
+   INSTANCE:  RZ-2-1.5  
+                MULTIPLIER ARRAY: mlt_rch1.5    ZONE ARRAY: zones_1
+                ZONE VALUES:    2
+
+
+     2 Stream parameters
+
+ PARAMETER NAME:STR-K-12     TYPE:STR 
+ Parameter value from package file is:   1.00000E-04
+   NUMBER OF ENTRIES:      8
+   NUMBER OF INSTANCES:    3
+
+   INSTANCE:  STR12-a   
+
+    LAYER   ROW    COL    SEGMENT   REACH   STREAMFLOW      STREAM    STREAMBED     STREAMBED BOT  STREAMBED TOP
+                           NUMBER   NUMBER                   STAGE   CONDUCTANCE      ELEVATION      ELEVATION
+   --------------------------------------------------------------------------------------------------------------
+       1      3      9        1        1         30.00       151.0      1000.            148.0        150.0    
+       1      3      8        1        2         0.000       149.0      1000.            146.0        148.0    
+       1      3      7        1        3         0.000       147.0      1000.            144.0        146.0    
+       1      3      6        1        4         0.000       146.0      1000.            143.0        145.0    
+       1      7      7        2        1         20.00       150.0      1000.            147.0        149.0    
+       1      6      7        2        2         0.000       148.0      1000.            145.0        147.0    
+       1      5      6        2        3         0.000       147.0      1000.            144.0        146.0    
+       1      4      5        2        4         0.000       146.0      1000.            143.0        145.0    
+
+   INSTANCE:  STR12-b   
+
+    LAYER   ROW    COL    SEGMENT   REACH   STREAMFLOW      STREAM    STREAMBED     STREAMBED BOT  STREAMBED TOP
+                           NUMBER   NUMBER                   STAGE   CONDUCTANCE      ELEVATION      ELEVATION
+   --------------------------------------------------------------------------------------------------------------
+       1      3      9        1        1         100.0       157.0      1000.            148.0        150.0    
+       1      3      8        1        2         0.000       154.0      1000.            146.0        148.0    
+       1      3      7        1        3         0.000       150.0      1000.            144.0        146.0    
+       1      3      6        1        4         0.000       147.0      1000.            143.0        145.0    
+       1      7      7        2        1         80.00       152.0      1000.            147.0        149.0    
+       1      6      7        2        2         0.000       150.0      1000.            145.0        147.0    
+       1      5      6        2        3         0.000       149.0      1000.            144.0        146.0    
+       1      4      5        2        4         0.000       147.0      1000.            143.0        145.0    
+
+   INSTANCE:  STR12-c   
+
+    LAYER   ROW    COL    SEGMENT   REACH   STREAMFLOW      STREAM    STREAMBED     STREAMBED BOT  STREAMBED TOP
+                           NUMBER   NUMBER                   STAGE   CONDUCTANCE      ELEVATION      ELEVATION
+   --------------------------------------------------------------------------------------------------------------
+       1      3      9        1        1         50.00       155.0      1000.            148.0        150.0    
+       1      3      8        1        2         0.000       152.0      1000.            146.0        148.0    
+       1      3      7        1        3         0.000       148.0      1000.            144.0        146.0    
+       1      3      6        1        4         0.000       146.0      1000.            143.0        145.0    
+       1      7      7        2        1         40.00       151.0      1000.            147.0        149.0    
+       1      6      7        2        2         0.000       149.0      1000.            145.0        147.0    
+       1      5      6        2        3         0.000       148.0      1000.            144.0        146.0    
+       1      4      5        2        4         0.000       146.5      1000.            143.0        145.0    
+
+ PARAMETER NAME:STR-K-3      TYPE:STR 
+ Parameter value from package file is:   1.00000E-04
+   NUMBER OF ENTRIES:      3
+
+    LAYER   ROW    COL    SEGMENT   REACH   STREAMFLOW      STREAM    STREAMBED     STREAMBED BOT  STREAMBED TOP
+                           NUMBER   NUMBER                   STAGE   CONDUCTANCE      ELEVATION      ELEVATION
+   --------------------------------------------------------------------------------------------------------------
+       1      3      5        3        1        -1.000       139.0      1000.            136.0        138.0    
+       1      2      4        3        2         0.000       138.0      1000.            135.0        137.0    
+       1      1      3        3        3         0.000       137.0      1000.            134.0        136.0    
+
+
+     1 TIME-VARIANT SPECIFIED-HEAD PARAMETERS
+
+ PARAMETER NAME:CHD-mine     TYPE:CHD 
+ Parameter value from package file is:    1.0000    
+   NUMBER OF ENTRIES:      2
+   NUMBER OF INSTANCES:    4
+
+   INSTANCE:  CHD-a     
+
+ CHD NO.   LAYER   ROW   COL   START FACTOR      END FACTOR   
+ -------------------------------------------------------------
+      1      1     12     18       164.0           161.0    
+      2      1     13     18       164.0           161.0    
+
+   INSTANCE:  CHD-b     
+
+ CHD NO.   LAYER   ROW   COL   START FACTOR      END FACTOR   
+ -------------------------------------------------------------
+      1      1     12     18       161.0           159.0    
+      2      1     13     18       161.0           159.0    
+
+   INSTANCE:  CHD-c     
+
+ CHD NO.   LAYER   ROW   COL   START FACTOR      END FACTOR   
+ -------------------------------------------------------------
+      1      1     12     18       159.0           157.0    
+      2      1     13     18       159.0           157.0    
+
+   INSTANCE:  CHD-d     
+
+ CHD NO.   LAYER   ROW   COL   START FACTOR      END FACTOR   
+ -------------------------------------------------------------
+      1      1     12     18       157.0           155.0    
+      2      1     13     18       157.0           155.0    
+
+
+     1 Evapotranspiration segments parameters
+
+ PARAMETER NAME:ETS-Rate     TYPE:ETS    CLUSTERS:   1
+ Parameter value from package file is:    10.000    
+   NUMBER OF INSTANCES:    2
+
+   INSTANCE:  Low-ETS   
+                MULTIPLIER ARRAY: mlt_rch    ZONE ARRAY: zones_1
+                ZONE VALUES:    3    4
+
+   INSTANCE:  High-ETS  
+                MULTIPLIER ARRAY: mlt_rch1.5    ZONE ARRAY: zones_1
+                ZONE VALUES:    3    4
+
+
+     1 Drain-return parameters
+
+ PARAMETER NAME:DRT-cond     TYPE:DRT 
+ Parameter value from package file is:   1.00000E-05
+   NUMBER OF ENTRIES:      1
+   NUMBER OF INSTANCES:    5
+
+   INSTANCE:  DRT-SP1   
+
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
+ ------------------------------------------------------------
+      1      2     16     16       140.0           101.0    
+
+           ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
+ DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
+      1      2     16     16      1     16     16  1.000000
+
+   INSTANCE:  DRT-SP2   
+
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
+ ------------------------------------------------------------
+      1      2     16     16       140.0           102.0    
+
+           ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
+ DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
+      1      2     16     16      1     16     16  0.800000
+
+   INSTANCE:  DRT-SP3   
+
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
+ ------------------------------------------------------------
+      1      2     16     16       140.0           103.0    
+
+           ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
+ DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
+      1      2     16     16      1     16     16  0.600000
+
+   INSTANCE:  DRT-SP4   
+
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
+ ------------------------------------------------------------
+      1      2     16     16       140.0           104.0    
+
+           ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
+ DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
+      1      2     16     16      1     16     16  0.400000
+
+   INSTANCE:  DRT-SP5   
+
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
+ ------------------------------------------------------------
+      1      2     16     16       140.0           105.0    
+
+           ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
+ DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
+      1      2     16     16      1     16     16  0.200000
+
+  19 PARAMETERS HAVE BEEN DEFINED IN ALL PACKAGES.
+ (SPACE IS ALLOCATED FOR  500 PARAMETERS.)
+1
+                            STRESS PERIOD NO.   1, LENGTH =   1.000000    
+                            ----------------------------------------------
+
+                              NUMBER OF TIME STEPS =     1
+
+                               MULTIPLIER FOR DELT =     1.000
+
+                            INITIAL TIME STEP SIZE =   1.000000    
+
+     0 WELLS
+
+ Parameter:  DRN-K
+   Instance:  Drn-a     
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE   
+ ----------------------------------------------------------
+      1      1     10      1       109.0           1.200    
+      2      1     11      1       110.0           1.200    
+      3      1     12      1       111.0           1.200    
+      4      1     13      1       112.0           1.200    
+      5      1     14      1       113.0           1.200    
+      6      1     15      1       114.0           1.200    
+      7      1     16      1       115.0           1.200    
+      8      1     17      1       116.0           1.200    
+      9      1     18      1       117.0           1.200    
+
+     9 DRAINS
+
+ Parameter:  RIVERS
+   Instance:  Orig-rivs 
+ REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
+ -------------------------------------------------------------------------
+      1      1      1      1       100.0           1.200           90.00    
+      2      1      2      1       101.0           1.200           90.00    
+      3      1      3      1       102.0           1.200           90.00    
+      4      1      4      1       103.0           1.200           90.00    
+      5      1      5      1       104.0           1.200           90.00    
+      6      1      6      1       105.0           1.200           90.00    
+      7      1      7      1       106.0           1.200           90.00    
+      8      1      8      1       107.0           1.200           90.00    
+      9      1      9      1       108.0           1.200           90.00    
+
+     9 RIVER REACHES
+
+
+
+                         ET SURFACE
+ READING ON UNIT  64 WITH FORMAT: (FREE)              
+
+         1     2     3     4     5     6     7     8     9    10    11    12    13    14    15    16    17    18
+ ...............................................................................................................
+   1   110.  117.  125.  132.  140.  145.  150.  155.  160.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+   2   110.  117.  125.  132.  140.  145.  150.  155.  160.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+   3   110.  117.  125.  132.  140.  145.  150.  155.  160.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+   4   110.  117.  125.  132.  140.  145.  150.  155.  160.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+   5   110.  117.  125.  132.  140.  145.  150.  155.  160.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+   6   110.  117.  125.  132.  140.  145.  150.  155.  160.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+   7   110.  117.  125.  132.  140.  145.  150.  155.  160.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+   8   110.  117.  125.  132.  140.  145.  150.  155.  160.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+   9   110.  117.  125.  132.  140.  145.  150.  155.  160.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+  10   110.  117.  125.  132.  140.  145.  150.  155.  160.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+  11   110.  117.  125.  132.  140.  145.  150.  155.  160.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+  12   110.  117.  125.  132.  140.  145.  150.  155.  160.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+  13   110.  117.  125.  132.  140.  145.  150.  155.  160.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+  14   110.  117.  125.  132.  140.  145.  150.  155.  160.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+  15   110.  117.  125.  132.  140.  145.  150.  155.  160.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+  16   110.  117.  125.  132.  140.  145.  150.  155.  160.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+  17   110.  117.  125.  132.  140.  145.  150.  155.  160.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+  18   110.  117.  125.  132.  140.  145.  150.  155.  160.    0.    0.    0.    0.    0.    0.    0.    0.    0.
+
+
+
+ EVTR array defined by the following parameters:
+ Parameter:  EVT-Rate
+   Instance:  Low-EVT   
+
+
+            EVAPOTRANSPIRATION RATE
+
+            1           2           3           4           5           6           7           8           9          10
+           11          12          13          14          15          16          17          18
+ ........................................................................................................................
+   1   3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+   2   3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+   3   3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+   4   3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+   5   3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+   6   3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+   7   3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+   8   3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+   9   3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+  10   3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+  11   3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+  12   3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+  13   3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+  14   3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+  15   3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+  16   3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+  17   3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+  18   3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+
+         EXTINCTION DEPTH =   12.0000    
+
+ BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE   
+ ----------------------------------------------------------
+      1      2      1     18       350.0          0.1000E-06
+      2      2      2     18       350.0          0.1000E-06
+      3      2      3     18       350.0          0.1000E-06
+      4      2      4     18       350.0          0.1000E-06
+      5      2      5     18       350.0          0.1000E-06
+      6      2      6     18       350.0          0.1000E-06
+      7      2      7     18       350.0          0.1000E-06
+      8      2      8     18       350.0          0.1000E-06
+      9      2      9     18       350.0          0.1000E-06
+
+ Parameter:  GHB-Cond
+   Instance:  GHB-sp1   
+ BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE   
+ ----------------------------------------------------------
+     10      1      1     18       350.0          0.1000E-06
+     11      1      2     18       350.0          0.1000E-06
+     12      1      3     18       350.0          0.1000E-06
+     13      1      4     18       350.0          0.1000E-06
+     14      1      5     18       350.0          0.1000E-06
+     15      1      6     18       350.0          0.1000E-06
+     16      1      7     18       350.0          0.1000E-06
+     17      1      8     18       350.0          0.1000E-06
+     18      1      9     18       350.0          0.1000E-06
+
+    18 GHB CELLS
+
+
+
+ RECH array defined by the following parameters:
+ Parameter:  RCH_ZONE_1
+   Instance:  rz-13     
+ Parameter:  RCH_ZONE_2
+   Instance:  rz-24     
+
+
+                           RECHARGE
+
+            1           2           3           4           5           6
+            7           8           9          10          11          12
+           13          14          15          16          17          18
+ ........................................................................
+   1   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  1.2684E-08  1.2684E-08  1.2684E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+   2   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  1.2684E-08  1.2684E-08  1.2684E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+   3   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  1.2684E-08  1.2684E-08  1.2684E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+   4   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  1.2684E-08  1.2684E-08  1.2684E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+   5   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  1.2684E-08  1.2684E-08  1.2684E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+   6   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  1.2684E-08  1.2684E-08  1.2684E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+   7   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  1.2684E-08  1.2684E-08  1.2684E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+   8   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  1.2684E-08  1.2684E-08  1.2684E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+   9   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  1.2684E-08  1.2684E-08  1.2684E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+  10   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  1.2684E-08  1.2684E-08  1.2684E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+  11   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  1.2684E-08  1.2684E-08  1.2684E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+  12   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  1.2684E-08  1.2684E-08  1.2684E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+  13   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  1.2684E-08  1.2684E-08  1.2684E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+  14   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  1.2684E-08  1.2684E-08  1.2684E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+  15   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  1.2684E-08  1.2684E-08  1.2684E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+  16   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  1.2684E-08  1.2684E-08  1.2684E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+  17   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  1.2684E-08  1.2684E-08  1.2684E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+  18   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  1.2684E-08  1.2684E-08  1.2684E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+ Parameter:  STR-K-12
+   Instance:  STR12-A   
+
+    LAYER   ROW    COL    SEGMENT   REACH   STREAMFLOW      STREAM    STREAMBED     STREAMBED BOT  STREAMBED TOP
+                           NUMBER   NUMBER                   STAGE   CONDUCTANCE      ELEVATION      ELEVATION
+   --------------------------------------------------------------------------------------------------------------
+       1      3      9        1        1         30.00       151.0     0.1000            148.0        150.0    
+       1      3      8        1        2         0.000       149.0     0.1000            146.0        148.0    
+       1      3      7        1        3         0.000       147.0     0.1000            144.0        146.0    
+       1      3      6        1        4         0.000       146.0     0.1000            143.0        145.0    
+       1      7      7        2        1         20.00       150.0     0.1000            147.0        149.0    
+       1      6      7        2        2         0.000       148.0     0.1000            145.0        147.0    
+       1      5      6        2        3         0.000       147.0     0.1000            144.0        146.0    
+       1      4      5        2        4         0.000       146.0     0.1000            143.0        145.0    
+ Parameter:  STR-K-3
+       1      3      5        3        1        -1.000       139.0     0.1000            136.0        138.0    
+       1      2      4        3        2         0.000       138.0     0.1000            135.0        137.0    
+       1      1      3        3        3         0.000       137.0     0.1000            134.0        136.0    
+
+    11 STREAM REACHES
+
+                              MAXIMUM NUMBER OF TRIBUTARY STREAMS IS     2
+
+                     STREAM SEGMENT               TRIBUTARY STREAM SEGMENT NUMBERS
+                        1                        0    0
+                        2                        0    0
+                        3                        1    2
+
+
+     0 TIME-VARIANT SPECIFIED-HEAD CELLS
+
+
+
+                  ET SURFACE (ETSS)
+ READING ON UNIT  65 WITH FORMAT: (FREE)              
+
+         1     2     3     4     5     6     7     8     9    10    11    12    13    14    15    16    17    18
+ ...............................................................................................................
+   1     0.    0.    0.    0.    0.    0.    0.    0.    0.  162.  163.  164.  165.  166.  167.  168.  169.  170.
+   2     0.    0.    0.    0.    0.    0.    0.    0.    0.  162.  163.  164.  165.  166.  167.  168.  169.  170.
+   3     0.    0.    0.    0.    0.    0.    0.    0.    0.  162.  163.  164.  165.  166.  167.  168.  169.  170.
+   4     0.    0.    0.    0.    0.    0.    0.    0.    0.  162.  163.  164.  165.  166.  167.  168.  169.  170.
+   5     0.    0.    0.    0.    0.    0.    0.    0.    0.  162.  163.  164.  165.  166.  167.  168.  169.  170.
+   6     0.    0.    0.    0.    0.    0.    0.    0.    0.  162.  163.  164.  165.  166.  167.  168.  169.  170.
+   7     0.    0.    0.    0.    0.    0.    0.    0.    0.  162.  163.  164.  165.  166.  167.  168.  169.  170.
+   8     0.    0.    0.    0.    0.    0.    0.    0.    0.  162.  163.  164.  165.  166.  167.  168.  169.  170.
+   9     0.    0.    0.    0.    0.    0.    0.    0.    0.  162.  163.  164.  165.  166.  167.  168.  169.  170.
+  10     0.    0.    0.    0.    0.    0.    0.    0.    0.  162.  163.  164.  165.  166.  167.  168.  169.  170.
+  11     0.    0.    0.    0.    0.    0.    0.    0.    0.  162.  163.  164.  165.  166.  167.  168.  169.  170.
+  12     0.    0.    0.    0.    0.    0.    0.    0.    0.  162.  163.  164.  165.  166.  167.  168.  169.  170.
+  13     0.    0.    0.    0.    0.    0.    0.    0.    0.  162.  163.  164.  165.  166.  167.  168.  169.  170.
+  14     0.    0.    0.    0.    0.    0.    0.    0.    0.  162.  163.  164.  165.  166.  167.  168.  169.  170.
+  15     0.    0.    0.    0.    0.    0.    0.    0.    0.  162.  163.  164.  165.  166.  167.  168.  169.  170.
+  16     0.    0.    0.    0.    0.    0.    0.    0.    0.  162.  163.  164.  165.  166.  167.  168.  169.  170.
+  17     0.    0.    0.    0.    0.    0.    0.    0.    0.  162.  163.  164.  165.  166.  167.  168.  169.  170.
+  18     0.    0.    0.    0.    0.    0.    0.    0.    0.  162.  163.  164.  165.  166.  167.  168.  169.  170.
+
+
+
+ ETSR array defined by the following parameters:
+ Parameter:  ETS-Rate
+   Instance:  Low-ETS   
+
+
+            EVAPOTRANS. RATE (ETSR)
+
+            1           2           3           4           5           6           7           8           9          10
+           11          12          13          14          15          16          17          18
+ ........................................................................................................................
+   1    0.000       0.000       0.000       0.000       0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+       3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+   2    0.000       0.000       0.000       0.000       0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+       3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+   3    0.000       0.000       0.000       0.000       0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+       3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+   4    0.000       0.000       0.000       0.000       0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+       3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+   5    0.000       0.000       0.000       0.000       0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+       3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+   6    0.000       0.000       0.000       0.000       0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+       3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+   7    0.000       0.000       0.000       0.000       0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+       3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+   8    0.000       0.000       0.000       0.000       0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+       3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+   9    0.000       0.000       0.000       0.000       0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+       3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+  10    0.000       0.000       0.000       0.000       0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+       3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+  11    0.000       0.000       0.000       0.000       0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+       3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+  12    0.000       0.000       0.000       0.000       0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+       3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+  13    0.000       0.000       0.000       0.000       0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+       3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+  14    0.000       0.000       0.000       0.000       0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+       3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+  15    0.000       0.000       0.000       0.000       0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+       3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+  16    0.000       0.000       0.000       0.000       0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+       3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+  17    0.000       0.000       0.000       0.000       0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+       3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+  18    0.000       0.000       0.000       0.000       0.000       0.000      3.1710E-09  3.1710E-09  3.1710E-09  3.1710E-09
+       3.1710E-09  3.1710E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+
+  EXTINCTION DEPTH (ETSX) =   12.0000    
+
+ PXDP AND PETM ARRAYS FOR INTERSECTION    1 OF HEAD/ET RELATION:
+
+ EXTINCT. DEP. PROPORTION =  0.500000    
+
+       ET RATE PROPORTION =  0.100000    
+
+ Parameter:  DRT-Cond
+   Instance:  Drt-SP1   
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE     
+ ------------------------------------------------------------
+      1      2     16     16       140.0          0.1010E-02
+
+           ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
+ DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
+      1      2     16     16      1     16     16  1.000000
+
+     1 DRAIN-RETURN CELLS
+ 
+ SOLVING FOR HEAD 
+
+
+     7 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD  1
+    31 TOTAL ITERATIONS
+
+ OUTPUT CONTROL FOR STRESS PERIOD  1   TIME STEP  1
+    PRINT HEAD FOR ALL LAYERS
+    SAVE BUDGET
+    PRINT BUDGET
+
+            LAYER      ROW     COLUMN     STREAM    REACH      FLOW INTO    FLOW INTO      FLOW OUT OF
+                                           NUMBER   NUMBER    STREAM REACH    AQUIFER      STREAM REACH
+
+
+               1         3         9         1         1         30.0         -.236             30.2    
+               1         3         8         1         2         30.2         -.147             30.4    
+               1         3         7         1         3         30.4         -.105             30.5    
+               1         3         6         1         4         30.5         0.824E-02         30.5    
+               1         7         7         2         1         20.0         -.998E-01         20.1    
+               1         6         7         2         2         20.1         -.146             20.2    
+               1         5         6         2         3         20.2         -.263E-02         20.2    
+               1         4         5         2         4         20.2         0.183             20.1    
+               1         3         5         3         1         50.5         -.135             50.7    
+               1         2         4         3         2         50.7         0.628E-01         50.6    
+               1         1         3         3         3         50.6         0.294             50.3    
+1
+              HEAD IN LAYER  1 AT END OF TIME STEP  1 IN STRESS PERIOD  1
+  -----------------------------------------------------------------------
+
+          1      2      3      4      5      6      7      8      9     10
+         11     12     13     14     15     16     17     18
+ .........................................................................
+   1   100.3  117.4  134.1  138.4  142.8  147.0  150.7  154.1  157.6  161.1
+       164.4  167.3  169.7  171.6  173.1  174.2  174.9  175.3
+   2   101.2  116.3  129.1  137.4  142.0  146.5  149.9  153.1  156.5  160.7
+       164.3  167.3  169.8  171.7  173.2  174.3  175.0  175.3
+   3   102.2  115.8  127.2  135.5  140.3  145.9  148.1  150.5  153.4  160.2
+       164.4  167.5  170.0  171.9  173.4  174.4  175.1  175.5
+   4   103.2  116.0  126.8  135.8  144.2  147.0  150.2  153.5  157.2  161.4
+       165.0  167.9  170.3  172.2  173.6  174.6  175.3  175.7
+   5   104.2  116.4  126.9  135.5  142.5  147.0  150.7  155.0  159.0  162.5
+       165.7  168.5  170.7  172.5  173.9  174.9  175.6  175.9
+   6   105.2  117.0  127.2  135.5  142.2  146.9  149.5  155.7  160.1  163.5
+       166.5  169.1  171.2  173.0  174.3  175.3  175.9  176.2
+   7   106.2  117.8  127.8  136.0  142.7  147.8  151.0  156.9  161.2  164.5
+       167.3  169.8  171.8  173.4  174.7  175.6  176.2  176.5
+   8   107.2  118.7  128.6  136.8  143.7  149.2  153.8  158.5  162.4  165.4
+       168.1  170.4  172.3  173.9  175.1  176.0  176.6  176.9
+   9   108.2  119.6  129.4  137.7  144.7  150.5  155.5  159.8  163.5  166.3
+       168.9  171.1  172.9  174.4  175.6  176.4  177.0  177.2
+  10   109.2  120.5  130.4  138.6  145.7  151.6  156.7  160.9  164.4  167.2
+       169.6  171.7  173.4  174.9  176.0  176.8  177.3  177.6
+  11   110.2  121.5  131.3  139.6  146.6  152.6  157.7  161.8  165.3  167.9
+       170.2  172.3  173.9  175.3  176.4  177.2  177.7  177.9
+  12   111.2  122.4  132.2  140.4  147.5  153.5  158.5  162.6  166.0  168.5
+       170.8  172.8  174.4  175.7  176.8  177.5  178.0  178.2
+  13   112.2  123.4  133.0  141.2  148.3  154.2  159.2  163.3  166.6  169.1
+       171.3  173.2  174.8  176.1  177.1  177.8  178.3  178.5
+  14   113.2  124.2  133.8  142.0  148.9  154.8  159.8  163.8  167.1  169.6
+       171.7  173.6  175.1  176.4  177.4  178.1  178.6  178.8
+  15   114.2  125.1  134.5  142.6  149.5  155.3  160.2  164.3  167.5  169.9
+       172.1  173.9  175.4  176.7  177.7  178.4  178.8  179.0
+  16   115.2  125.9  135.2  143.1  150.0  155.7  160.6  164.6  167.8  170.2
+       172.3  174.1  175.6  176.9  177.9  179.0  179.0  179.2
+  17   116.2  126.6  135.7  143.5  150.3  156.0  160.8  164.8  168.0  170.4
+       172.5  174.3  175.8  177.0  178.0  178.7  179.1  179.3
+  18   117.2  127.1  136.0  143.7  150.4  156.2  161.0  164.9  168.1  170.5
+       172.6  174.4  175.8  177.0  178.0  178.7  179.1  179.3
+1
+              HEAD IN LAYER  2 AT END OF TIME STEP  1 IN STRESS PERIOD  1
+  -----------------------------------------------------------------------
+
+          1      2      3      4      5      6      7      8      9     10
+         11     12     13     14     15     16     17     18
+ .........................................................................
+   1   102.9  117.9  132.0  137.9  142.7  146.8  150.5  154.0  157.5  161.0
+       164.2  167.1  169.4  171.3  172.8  173.9  174.5  174.9
+   2   103.5  116.9  129.2  136.9  142.1  146.4  150.0  153.4  156.9  160.7
+       164.2  167.1  169.5  171.4  172.9  173.9  174.6  174.9
+   3   104.3  116.4  127.7  135.6  141.4  146.0  149.3  152.5  156.2  160.6
+       164.4  167.3  169.7  171.6  173.0  174.1  174.8  175.1
+   4   105.1  116.5  127.3  135.7  142.6  146.7  150.3  153.8  157.6  161.4
+       164.9  167.7  170.0  171.9  173.3  174.3  175.0  175.3
+   5   106.0  116.9  127.4  135.5  142.3  146.9  150.9  155.0  158.9  162.4
+       165.6  168.3  170.5  172.2  173.6  174.6  175.2  175.5
+   6   107.0  117.5  127.7  135.6  142.3  147.1  151.0  155.8  159.9  163.4
+       166.4  168.9  171.0  172.7  174.0  174.9  175.5  175.8
+   7   107.9  118.3  128.3  136.1  142.8  147.9  152.1  156.9  161.0  164.3
+       167.1  169.5  171.5  173.1  174.4  175.3  175.9  176.1
+   8   108.9  119.2  129.0  136.9  143.7  149.2  153.9  158.3  162.1  165.2
+       167.9  170.2  172.1  173.6  174.8  175.7  176.2  176.5
+   9   109.9  120.1  129.9  137.8  144.8  150.4  155.3  159.6  163.2  166.1
+       168.7  170.8  172.6  174.1  175.2  176.1  176.6  176.8
+  10   110.9  121.0  130.8  138.8  145.8  151.5  156.5  160.6  164.1  167.0
+       169.4  171.4  173.2  174.6  175.7  176.4  177.0  177.2
+  11   111.9  122.0  131.7  139.7  146.7  152.5  157.4  161.5  164.9  167.7
+       170.0  172.0  173.7  175.0  176.1  176.8  177.3  177.5
+  12   112.9  122.9  132.6  140.6  147.5  153.3  158.3  162.3  165.6  168.3
+       170.6  172.5  174.1  175.4  176.4  177.2  177.6  177.9
+  13   113.9  123.8  133.5  141.4  148.3  154.1  159.0  163.0  166.2  168.9
+       171.1  173.0  174.5  175.8  176.8  177.5  177.9  178.1
+  14   114.8  124.7  134.3  142.1  149.0  154.7  159.5  163.5  166.7  169.3
+       171.5  173.3  174.9  176.1  177.0  177.7  178.2  178.4
+  15   115.8  125.6  135.0  142.7  149.5  155.2  160.0  163.9  167.1  169.7
+       171.8  173.6  175.1  176.3  177.2  177.9  178.3  178.6
+  16   116.8  126.3  135.6  143.2  150.0  155.6  160.4  164.3  167.5  170.0
+       172.1  173.9  175.3  176.5  177.4  177.7  178.5  178.7
+  17   117.7  127.0  136.1  143.6  150.3  155.9  160.6  164.5  167.7  170.1
+       172.3  174.0  175.5  176.6  177.5  178.1  178.6  178.9
+  18   118.5  127.5  136.4  143.8  150.5  156.0  160.8  164.6  167.8  170.2
+       172.3  174.1  175.6  176.7  177.6  178.3  178.7  178.9
+1
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  1
+  -----------------------------------------------------------------------------
+
+     CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
+     ------------------                 ------------------------
+
+           IN:                                      IN:
+           ---                                      ---
+             STORAGE =           0.0000               STORAGE =           0.0000
+       CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
+               WELLS =           0.0000                 WELLS =           0.0000
+              DRAINS =           0.0000                DRAINS =           0.0000
+       RIVER LEAKAGE =           0.0000         RIVER LEAKAGE =           0.0000
+                  ET =           0.0000                    ET =           0.0000
+     HEAD DEP BOUNDS =       3.1346E-04       HEAD DEP BOUNDS =       3.1346E-04
+            RECHARGE =           5.6507              RECHARGE =           5.6507
+      STREAM LEAKAGE =           0.5488        STREAM LEAKAGE =           0.5488
+         ET SEGMENTS =           0.0000           ET SEGMENTS =           0.0000
+        DRAINS (DRT) =       3.8032E-02          DRAINS (DRT) =       3.8032E-02
+
+            TOTAL IN =           6.2378              TOTAL IN =           6.2378
+
+          OUT:                                     OUT:
+          ----                                     ----
+             STORAGE =           0.0000               STORAGE =           0.0000
+       CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
+               WELLS =           0.0000                 WELLS =           0.0000
+              DRAINS =           1.9591                DRAINS =           1.9591
+       RIVER LEAKAGE =           2.3584         RIVER LEAKAGE =           2.3584
+                  ET =           0.6700                    ET =           0.6700
+     HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
+            RECHARGE =           0.0000              RECHARGE =           0.0000
+      STREAM LEAKAGE =           0.8720        STREAM LEAKAGE =           0.8720
+         ET SEGMENTS =           0.3402           ET SEGMENTS =           0.3402
+        DRAINS (DRT) =       3.8032E-02          DRAINS (DRT) =       3.8032E-02
+
+           TOTAL OUT =           6.2378             TOTAL OUT =           6.2378
+
+            IN - OUT =       4.0054E-05              IN - OUT =       4.0054E-05
+
+ PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
+
+
+
+
+
+
+          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  1
+                    SECONDS     MINUTES      HOURS       DAYS        YEARS
+                    -----------------------------------------------------------
+   TIME STEP LENGTH  1.0000     1.66667E-02 2.77778E-04 1.15741E-05 3.16881E-08
+ STRESS PERIOD TIME  1.0000     1.66667E-02 2.77778E-04 1.15741E-05 3.16881E-08
+         TOTAL TIME  1.0000     1.66667E-02 2.77778E-04 1.15741E-05 3.16881E-08
+1
+1
+                            STRESS PERIOD NO.   2, LENGTH =   86400.00    
+                            ----------------------------------------------
+
+                              NUMBER OF TIME STEPS =     3
+
+                               MULTIPLIER FOR DELT =     1.000
+
+                            INITIAL TIME STEP SIZE =   28800.00    
+
+ Parameter:  WELLS_TR
+   Instance:  Well-a    
+ WELL NO.  LAYER   ROW   COL   STRESS RATE   
+ --------------------------------------------
+      1      1      9     10      -1.100    
+      2      2      9     10      -1.100    
+
+     2 WELLS
+
+ Parameter:  DRN-K
+   Instance:  Drn-b     
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE   
+ ----------------------------------------------------------
+      1      1     10      1       111.0           1.400    
+      2      1     11      1       112.0           1.400    
+      3      1     12      1       113.0           1.400    
+      4      1     13      1       114.0           1.400    
+      5      1     14      1       115.0           1.400    
+      6      1     15      1       116.0           1.400    
+      7      1     16      1       117.0           1.400    
+      8      1     17      1       118.0           1.400    
+      9      1     18      1       119.0           1.400    
+
+     9 DRAINS
+
+ Parameter:  RIVERS
+   Instance:  Rivs-a    
+ REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
+ -------------------------------------------------------------------------
+      1      1      1      1       102.0           1.212           90.00    
+      2      1      2      1       103.0           1.212           90.00    
+      3      1      3      1       104.0           1.212           90.00    
+      4      1      4      1       105.0           1.212           90.00    
+      5      1      5      1       106.0           1.213           90.00    
+      6      1      6      1       107.0           1.212           90.00    
+      7      1      7      1       108.0           1.212           90.00    
+      8      1      8      1       109.0           1.212           90.00    
+      9      1      9      1       110.0           1.212           90.00    
+
+     9 RIVER REACHES
+
+ REUSING SURF FROM LAST STRESS PERIOD
+
+ REUSING EVTR FROM LAST STRESS PERIOD
+
+ REUSING EXDP FROM LAST STRESS PERIOD
+
+ REUSING NON-PARAMETER GHB CELLS FROM LAST STRESS PERIOD
+
+ Parameter:  GHB-Cond
+   Instance:  GHB-sp2   
+ BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE   
+ ----------------------------------------------------------
+     10      1      1     18       350.0          0.2000E-06
+     11      1      2     18       350.0          0.2000E-06
+     12      1      3     18       350.0          0.2000E-06
+     13      1      4     18       350.0          0.2000E-06
+     14      1      5     18       350.0          0.2000E-06
+     15      1      6     18       350.0          0.2000E-06
+     16      1      7     18       350.0          0.2000E-06
+     17      1      8     18       350.0          0.2000E-06
+     18      1      9     18       350.0          0.2000E-06
+
+    18 GHB CELLS
+
+
+
+ RECH array defined by the following parameters:
+ Parameter:  RCH_ZONE_1
+   Instance:  rz-134    
+ Parameter:  RCH_ZONE_2
+   Instance:  rz-2      
+
+
+                           RECHARGE
+
+            1           2           3           4           5           6
+            7           8           9          10          11          12
+           13          14          15          16          17          18
+ ........................................................................
+   1   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+   2   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+   3   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+   4   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+   5   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+   6   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+   7   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+   8   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+   9   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+  10   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+  11   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+  12   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+  13   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+  14   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+  15   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+  16   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+  17   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+  18   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08  1.2684E-08
+ Parameter:  STR-K-12
+   Instance:  STR12-b   
+
+    LAYER   ROW    COL    SEGMENT   REACH   STREAMFLOW      STREAM    STREAMBED     STREAMBED BOT  STREAMBED TOP
+                           NUMBER   NUMBER                   STAGE   CONDUCTANCE      ELEVATION      ELEVATION
+   --------------------------------------------------------------------------------------------------------------
+       1      3      9        1        1         100.0       157.0     0.1000            148.0        150.0    
+       1      3      8        1        2         0.000       154.0     0.1000            146.0        148.0    
+       1      3      7        1        3         0.000       150.0     0.1000            144.0        146.0    
+       1      3      6        1        4         0.000       147.0     0.1000            143.0        145.0    
+       1      7      7        2        1         80.00       152.0     0.1000            147.0        149.0    
+       1      6      7        2        2         0.000       150.0     0.1000            145.0        147.0    
+       1      5      6        2        3         0.000       149.0     0.1000            144.0        146.0    
+       1      4      5        2        4         0.000       147.0     0.1000            143.0        145.0    
+ Parameter:  STR-K-3
+       1      3      5        3        1        -1.000       139.0     0.1000            136.0        138.0    
+       1      2      4        3        2         0.000       138.0     0.1000            135.0        137.0    
+       1      1      3        3        3         0.000       137.0     0.1000            134.0        136.0    
+
+    11 STREAM REACHES
+
+                              MAXIMUM NUMBER OF TRIBUTARY STREAMS IS     2
+
+                     STREAM SEGMENT               TRIBUTARY STREAM SEGMENT NUMBERS
+                        1                        0    0
+                        2                        0    0
+                        3                        1    2
+
+ Parameter:  CHD-mine
+   Instance:  CHD-a     
+ CHD NO.   LAYER   ROW   COL    START HEAD        END HEAD   
+ ------------------------------------------------------------
+      1      1     12     18       164.0           161.0    
+      2      1     13     18       164.0           161.0    
+
+
+     2 TIME-VARIANT SPECIFIED-HEAD CELLS
+
+ REUSING ETSS FROM LAST STRESS PERIOD
+
+ REUSING ETSR FROM LAST STRESS PERIOD
+
+ REUSING ETSX FROM LAST STRESS PERIOD
+
+ REUSING PXDP AND PETM FROM LAST STRESS PERIOD
+
+ Parameter:  DRT-Cond
+   Instance:  Drt-SP2   
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE     
+ ------------------------------------------------------------
+      1      2     16     16       140.0          0.1020E-02
+
+           ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
+ DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
+      1      2     16     16      1     16     16  0.800000
+
+     1 DRAIN-RETURN CELLS
+ 
+ SOLVING FOR HEAD 
+
+
+     3 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD  2
+    11 TOTAL ITERATIONS
+
+ NO OUTPUT CONTROL FOR STRESS PERIOD  2   TIME STEP  1
+ 
+ SOLVING FOR HEAD 
+     3 CALLS TO PCG ROUTINE FOR TIME STEP   2 IN STRESS PERIOD  2
+    10 TOTAL ITERATIONS
+
+ NO OUTPUT CONTROL FOR STRESS PERIOD  2   TIME STEP  2
+ 
+ SOLVING FOR HEAD 
+     3 CALLS TO PCG ROUTINE FOR TIME STEP   3 IN STRESS PERIOD  2
+    10 TOTAL ITERATIONS
+
+ OUTPUT CONTROL FOR STRESS PERIOD  2   TIME STEP  3
+    PRINT HEAD FOR ALL LAYERS
+    SAVE BUDGET
+    PRINT BUDGET
+
+    CONSTANT HEAD   PERIOD  2   STEP  3
+ LAYER  1   ROW  12   COL  18   RATE  -0.466833    
+ LAYER  1   ROW  13   COL  18   RATE  -0.486528    
+
+            LAYER      ROW     COLUMN     STREAM    REACH      FLOW INTO    FLOW INTO      FLOW OUT OF
+                                           NUMBER   NUMBER    STREAM REACH    AQUIFER      STREAM REACH
+
+
+               1         3         9         1         1         100.         -.631E-01         100.    
+               1         3         8         1         2         100.         -.296E-01         100.    
+               1         3         7         1         3         100.         -.488E-01         100.    
+               1         3         6         1         4         100.         0.810E-02         100.    
+               1         7         7         2         1         80.0         -.253E-01         80.0    
+               1         6         7         2         2         80.0         -.947E-01         80.1    
+               1         5         6         2         3         80.1         0.469E-01         80.1    
+               1         4         5         2         4         80.1         0.203             79.9    
+               1         3         5         3         1         180.         -.158             180.    
+               1         2         4         3         2         180.         0.536E-01         180.    
+               1         1         3         3         3         180.         0.280             180.    
+1
+              HEAD IN LAYER  1 AT END OF TIME STEP  3 IN STRESS PERIOD  2
+  -----------------------------------------------------------------------
+
+          1      2      3      4      5      6      7      8      9     10
+         11     12     13     14     15     16     17     18
+ .........................................................................
+   1   102.3  118.3  134.2  138.5  143.0  147.4  151.3  155.0  158.5  162.0
+       165.1  167.8  169.9  171.7  173.2  174.2  174.9  175.3
+   2   103.2  117.2  129.4  137.5  142.3  147.1  151.0  154.7  158.3  161.9
+       165.1  167.9  170.0  171.8  173.2  174.3  175.0  175.3
+   3   104.2  116.8  127.6  135.7  140.6  146.9  150.5  154.3  157.6  161.9
+       165.3  168.1  170.2  172.0  173.4  174.4  175.1  175.5
+   4   105.2  116.9  127.3  136.2  145.0  148.1  151.5  155.2  158.8  162.4
+       165.7  168.4  170.5  172.2  173.6  174.6  175.3  175.6
+   5   106.2  117.4  127.3  135.8  143.2  148.5  151.8  155.8  159.5  162.9
+       166.1  168.8  170.8  172.5  173.9  174.9  175.6  175.9
+   6   107.2  118.0  127.6  135.8  142.7  147.8  150.9  156.0  159.8  163.0
+       166.3  169.0  171.1  172.9  174.2  175.2  175.8  176.1
+   7   108.2  118.8  128.2  136.3  143.0  148.3  152.3  156.5  159.5  161.9
+       165.7  169.1  171.4  173.2  174.6  175.5  176.1  176.3
+   8   109.2  119.6  129.0  137.0  143.8  149.3  153.5  156.7  157.9  157.3
+       163.9  168.7  171.6  173.5  174.9  175.7  176.2  176.5
+   9   110.2  120.5  129.8  137.8  144.7  150.3  154.6  156.9  155.0  141.9
+       160.8  168.4  171.9  173.9  175.2  175.9  176.2  176.2
+  10   111.1  121.5  130.7  138.8  145.7  151.4  155.9  158.9  159.8  159.0
+       165.3  169.9  172.6  174.4  175.4  175.9  175.7  175.1
+  11   112.1  122.4  131.7  139.7  146.6  152.4  157.2  160.8  163.3  165.2
+       168.6  171.5  173.4  174.8  175.6  175.5  174.2  171.5
+  12   113.1  123.4  132.6  140.6  147.5  153.4  158.2  162.2  165.3  167.9
+       170.4  172.6  174.1  175.3  175.7  175.0  171.6  161.0
+  13   114.1  124.3  133.4  141.4  148.3  154.2  159.1  163.1  166.4  169.1
+       171.4  173.3  174.7  175.7  176.1  175.3  171.8  161.0
+  14   115.1  125.2  134.2  142.1  149.0  154.8  159.7  163.8  167.1  169.8
+       172.1  173.9  175.1  176.1  176.7  176.5  175.1  172.3
+  15   116.1  126.0  134.9  142.7  149.6  155.4  160.3  164.3  167.6  170.3
+       172.5  174.3  175.5  176.5  177.2  177.5  177.2  176.5
+  16   117.1  126.8  135.6  143.3  150.0  155.8  160.6  164.7  168.0  170.6
+       172.8  174.5  175.7  176.8  177.6  178.4  178.3  178.2
+  17   118.1  127.5  136.1  143.7  150.3  156.0  160.9  164.9  168.2  170.8
+       173.0  174.7  175.9  177.0  177.8  178.4  178.7  178.8
+  18   119.1  128.0  136.4  143.9  150.5  156.2  161.0  165.0  168.3  170.9
+       173.1  174.8  176.0  177.1  177.9  178.5  178.9  179.1
+1
+              HEAD IN LAYER  2 AT END OF TIME STEP  3 IN STRESS PERIOD  2
+  -----------------------------------------------------------------------
+
+          1      2      3      4      5      6      7      8      9     10
+         11     12     13     14     15     16     17     18
+ .........................................................................
+   1   104.6  118.7  132.2  138.1  142.9  147.2  151.2  154.9  158.4  161.8
+       164.9  167.5  169.7  171.4  172.9  173.9  174.6  174.9
+   2   105.2  117.7  129.6  137.0  142.4  147.0  151.0  154.7  158.3  161.8
+       164.9  167.6  169.8  171.5  172.9  174.0  174.6  174.9
+   3   106.0  117.3  128.1  135.9  141.8  146.9  150.9  154.6  158.2  161.8
+       165.1  167.7  169.9  171.7  173.1  174.1  174.7  175.1
+   4   106.9  117.4  127.8  136.1  143.3  147.7  151.5  155.2  158.8  162.2
+       165.4  168.0  170.2  171.9  173.3  174.3  174.9  175.2
+   5   107.8  117.8  127.8  135.9  142.9  147.9  151.8  155.6  159.2  162.5
+       165.6  168.3  170.5  172.2  173.6  174.5  175.2  175.5
+   6   108.7  118.4  128.1  136.0  142.7  147.8  151.8  155.8  159.3  162.4
+       165.5  168.4  170.7  172.5  173.8  174.8  175.4  175.7
+   7   109.7  119.2  128.6  136.4  143.1  148.2  152.4  156.0  158.5  160.6
+       164.6  168.2  170.8  172.8  174.1  175.0  175.6  175.8
+   8   110.6  120.0  129.4  137.1  143.8  149.1  153.2  155.7  156.0  154.4
+       162.0  167.5  170.9  173.0  174.4  175.2  175.7  175.9
+   9   111.6  120.9  130.3  138.0  144.7  150.1  154.0  155.5  151.9  133.2
+       158.0  166.9  171.1  173.3  174.6  175.3  175.6  175.6
+  10   112.6  121.9  131.2  138.9  145.7  151.2  155.4  157.8  157.9  156.0
+       163.4  168.7  171.9  173.7  174.8  175.2  175.0  174.7
+  11   113.6  122.8  132.1  139.8  146.7  152.3  156.8  160.1  162.2  163.9
+       167.4  170.5  172.8  174.2  174.9  174.9  174.0  172.8
+  12   114.6  123.8  133.0  140.7  147.5  153.2  157.9  161.7  164.6  167.0
+       169.6  171.9  173.6  174.7  175.1  174.6  172.8  170.1
+  13   115.6  124.7  133.8  141.5  148.3  154.0  158.8  162.7  165.9  168.6
+       170.9  172.8  174.2  175.2  175.5  174.9  173.1  170.3
+  14   116.5  125.6  134.6  142.2  149.0  154.7  159.5  163.5  166.7  169.4
+       171.6  173.4  174.7  175.6  176.0  175.8  174.8  173.6
+  15   117.5  126.4  135.3  142.9  149.6  155.2  160.0  164.0  167.3  169.9
+       172.1  173.8  175.1  176.0  176.6  176.6  176.4  176.0
+  16   118.5  127.2  136.0  143.4  150.0  155.6  160.4  164.3  167.6  170.2
+       172.4  174.1  175.4  176.4  177.0  177.0  177.4  177.4
+  17   119.4  127.9  136.4  143.8  150.4  155.9  160.7  164.6  167.8  170.4
+       172.6  174.3  175.6  176.6  177.3  177.7  178.1  178.2
+  18   120.2  128.3  136.7  144.0  150.5  156.1  160.8  164.7  167.9  170.5
+       172.7  174.4  175.7  176.7  177.5  178.0  178.3  178.5
+1
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  3 IN STRESS PERIOD  2
+  -----------------------------------------------------------------------------
+
+     CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
+     ------------------                 ------------------------
+
+           IN:                                      IN:
+           ---                                      ---
+             STORAGE =      242177.5160               STORAGE =           2.6422
+       CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
+               WELLS =           0.0000                 WELLS =           0.0000
+              DRAINS =           0.0000                DRAINS =           0.0000
+       RIVER LEAKAGE =           0.0000         RIVER LEAKAGE =           0.0000
+                  ET =           0.0000                    ET =           0.0000
+     HEAD DEP BOUNDS =          40.6399       HEAD DEP BOUNDS =       4.7060E-04
+            RECHARGE =      530416.5630              RECHARGE =           6.1390
+      STREAM LEAKAGE =       58633.7852        STREAM LEAKAGE =           0.5912
+         ET SEGMENTS =           0.0000           ET SEGMENTS =           0.0000
+        DRAINS (DRT) =        2624.7478          DRAINS (DRT) =       3.0158E-02
+
+            TOTAL IN =      833893.2500              TOTAL IN =           9.4030
+
+          OUT:                                     OUT:
+          ----                                     ----
+             STORAGE =      143726.0940               STORAGE =           0.8429
+       CONSTANT HEAD =       86011.7344         CONSTANT HEAD =           0.9534
+               WELLS =      190080.0000                 WELLS =           2.2000
+              DRAINS =      131059.3830                DRAINS =           1.7771
+       RIVER LEAKAGE =      164729.2970         RIVER LEAKAGE =           2.1685
+                  ET =       57821.6836                    ET =           0.6694
+     HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
+            RECHARGE =           0.0000              RECHARGE =           0.0000
+      STREAM LEAKAGE =       28105.6992        STREAM LEAKAGE =           0.4195
+         ET SEGMENTS =       29078.5645           ET SEGMENTS =           0.3344
+        DRAINS (DRT) =        3280.9253          DRAINS (DRT) =       3.7697E-02
+
+           TOTAL OUT =      833893.3750             TOTAL OUT =           9.4030
+
+            IN - OUT =          -0.1250              IN - OUT =       1.0490E-05
+
+ PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
+
+
+
+
+
+
+          TIME SUMMARY AT END OF TIME STEP  3 IN STRESS PERIOD  2
+                    SECONDS     MINUTES      HOURS       DAYS        YEARS
+                    -----------------------------------------------------------
+   TIME STEP LENGTH  28800.      480.00      8.0000     0.33333     9.12617E-04
+ STRESS PERIOD TIME  86400.      1440.0      24.000      1.0000     2.73785E-03
+         TOTAL TIME  86401.      1440.0      24.000      1.0000     2.73788E-03
+1
+1
+                            STRESS PERIOD NO.   3, LENGTH =   259200.0    
+                            ----------------------------------------------
+
+                              NUMBER OF TIME STEPS =     3
+
+                               MULTIPLIER FOR DELT =     1.000
+
+                            INITIAL TIME STEP SIZE =   86400.00    
+
+ Parameter:  WELLS_TR
+   Instance:  Well-b    
+ WELL NO.  LAYER   ROW   COL   STRESS RATE   
+ --------------------------------------------
+      1      1      9     10      -1.210    
+      2      2      9     10      -1.210    
+
+     2 WELLS
+
+ Parameter:  DRN-K
+   Instance:  Drn-b     
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE   
+ ----------------------------------------------------------
+      1      1     10      1       111.0           1.400    
+      2      1     11      1       112.0           1.400    
+      3      1     12      1       113.0           1.400    
+      4      1     13      1       114.0           1.400    
+      5      1     14      1       115.0           1.400    
+      6      1     15      1       116.0           1.400    
+      7      1     16      1       117.0           1.400    
+      8      1     17      1       118.0           1.400    
+      9      1     18      1       119.0           1.400    
+
+     9 DRAINS
+
+ Parameter:  RIVERS
+   Instance:  Rivs-a    
+ REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
+ -------------------------------------------------------------------------
+      1      1      1      1       102.0           1.212           90.00    
+      2      1      2      1       103.0           1.212           90.00    
+      3      1      3      1       104.0           1.212           90.00    
+      4      1      4      1       105.0           1.212           90.00    
+      5      1      5      1       106.0           1.213           90.00    
+      6      1      6      1       107.0           1.212           90.00    
+      7      1      7      1       108.0           1.212           90.00    
+      8      1      8      1       109.0           1.212           90.00    
+      9      1      9      1       110.0           1.212           90.00    
+
+     9 RIVER REACHES
+
+ REUSING SURF FROM LAST STRESS PERIOD
+
+
+
+ EVTR array defined by the following parameters:
+ Parameter:  EVT-Rate
+   Instance:  High-EVT  
+
+
+            EVAPOTRANSPIRATION RATE
+
+            1           2           3           4           5           6           7           8           9          10
+           11          12          13          14          15          16          17          18
+ ........................................................................................................................
+   1   4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+   2   4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+   3   4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+   4   4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+   5   4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+   6   4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+   7   4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+   8   4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+   9   4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+  10   4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+  11   4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+  12   4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+  13   4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+  14   4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+  15   4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+  16   4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+  17   4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+  18   4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000    
+        0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+
+ REUSING EXDP FROM LAST STRESS PERIOD
+
+ REUSING NON-PARAMETER GHB CELLS FROM LAST STRESS PERIOD
+
+ Parameter:  GHB-Cond
+   Instance:  GHB-sp3   
+ BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE   
+ ----------------------------------------------------------
+     10      1      1     18       350.0          0.4000E-06
+     11      1      2     18       350.0          0.4000E-06
+     12      1      3     18       350.0          0.4000E-06
+     13      1      4     18       350.0          0.4000E-06
+     14      1      5     18       350.0          0.4000E-06
+     15      1      6     18       350.0          0.4000E-06
+     16      1      7     18       350.0          0.4000E-06
+     17      1      8     18       350.0          0.4000E-06
+     18      1      9     18       350.0          0.4000E-06
+
+    18 GHB CELLS
+
+
+
+ RECH array defined by the following parameters:
+ Parameter:  RCH_ZONE_1
+   Instance:  rz-134    
+ Parameter:  RCH_ZONE_2
+   Instance:  rz-2-1.5  
+
+
+                           RECHARGE
+
+            1           2           3           4           5           6
+            7           8           9          10          11          12
+           13          14          15          16          17          18
+ ........................................................................
+   1   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+   2   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+   3   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+   4   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+   5   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+   6   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+   7   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+   8   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+   9   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+  10   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+  11   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+  12   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+  13   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+  14   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+  15   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+  16   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+  17   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+  18   2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08  2.2197E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+ Parameter:  STR-K-12
+   Instance:  STR12-b   
+
+    LAYER   ROW    COL    SEGMENT   REACH   STREAMFLOW      STREAM    STREAMBED     STREAMBED BOT  STREAMBED TOP
+                           NUMBER   NUMBER                   STAGE   CONDUCTANCE      ELEVATION      ELEVATION
+   --------------------------------------------------------------------------------------------------------------
+       1      3      9        1        1         100.0       157.0     0.1000            148.0        150.0    
+       1      3      8        1        2         0.000       154.0     0.1000            146.0        148.0    
+       1      3      7        1        3         0.000       150.0     0.1000            144.0        146.0    
+       1      3      6        1        4         0.000       147.0     0.1000            143.0        145.0    
+       1      7      7        2        1         80.00       152.0     0.1000            147.0        149.0    
+       1      6      7        2        2         0.000       150.0     0.1000            145.0        147.0    
+       1      5      6        2        3         0.000       149.0     0.1000            144.0        146.0    
+       1      4      5        2        4         0.000       147.0     0.1000            143.0        145.0    
+ Parameter:  STR-K-3
+       1      3      5        3        1        -1.000       139.0     0.1000            136.0        138.0    
+       1      2      4        3        2         0.000       138.0     0.1000            135.0        137.0    
+       1      1      3        3        3         0.000       137.0     0.1000            134.0        136.0    
+
+    11 STREAM REACHES
+
+                              MAXIMUM NUMBER OF TRIBUTARY STREAMS IS     2
+
+                     STREAM SEGMENT               TRIBUTARY STREAM SEGMENT NUMBERS
+                        1                        0    0
+                        2                        0    0
+                        3                        1    2
+
+ Parameter:  CHD-mine
+   Instance:  CHD-b     
+ CHD NO.   LAYER   ROW   COL    START HEAD        END HEAD   
+ ------------------------------------------------------------
+      1      1     12     18       161.0           159.0    
+      2      1     13     18       161.0           159.0    
+
+
+     2 TIME-VARIANT SPECIFIED-HEAD CELLS
+
+ REUSING ETSS FROM LAST STRESS PERIOD
+
+ REUSING ETSR FROM LAST STRESS PERIOD
+
+ REUSING ETSX FROM LAST STRESS PERIOD
+
+ REUSING PXDP AND PETM FROM LAST STRESS PERIOD
+
+ Parameter:  DRT-Cond
+   Instance:  Drt-SP3   
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE     
+ ------------------------------------------------------------
+      1      2     16     16       140.0          0.1030E-02
+
+           ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
+ DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
+      1      2     16     16      1     16     16  0.600000
+
+     1 DRAIN-RETURN CELLS
+ 
+ SOLVING FOR HEAD 
+
+
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD  3
+    13 TOTAL ITERATIONS
+
+ NO OUTPUT CONTROL FOR STRESS PERIOD  3   TIME STEP  1
+ 
+ SOLVING FOR HEAD 
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   2 IN STRESS PERIOD  3
+    13 TOTAL ITERATIONS
+
+ NO OUTPUT CONTROL FOR STRESS PERIOD  3   TIME STEP  2
+ 
+ SOLVING FOR HEAD 
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   3 IN STRESS PERIOD  3
+    12 TOTAL ITERATIONS
+
+ OUTPUT CONTROL FOR STRESS PERIOD  3   TIME STEP  3
+    SAVE BUDGET
+
+    CONSTANT HEAD   PERIOD  3   STEP  3
+ LAYER  1   ROW  12   COL  18   RATE  -0.402885    
+ LAYER  1   ROW  13   COL  18   RATE  -0.425674    
+
+            LAYER      ROW     COLUMN     STREAM    REACH      FLOW INTO    FLOW INTO      FLOW OUT OF
+                                           NUMBER   NUMBER    STREAM REACH    AQUIFER      STREAM REACH
+
+
+               1         3         9         1         1         100.         -.940E-01         100.    
+               1         3         8         1         2         100.         -.556E-01         100.    
+               1         3         7         1         3         100.         -.710E-01         100.    
+               1         3         6         1         4         100.         -.653E-02         100.    
+               1         7         7         2         1         80.0         0.484E-01         80.0    
+               1         6         7         2         2         80.0         -.703E-01         80.0    
+               1         5         6         2         3         80.0         0.405E-01         80.0    
+               1         4         5         2         4         80.0         0.191             79.8    
+               1         3         5         3         1         180.         -.168             180.    
+               1         2         4         3         2         180.         0.420E-01         180.    
+               1         1         3         3         3         180.         0.271             180.    
+1
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  3 IN STRESS PERIOD  3
+  -----------------------------------------------------------------------------
+
+     CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
+     ------------------                 ------------------------
+
+           IN:                                      IN:
+           ---                                      ---
+             STORAGE =      756898.4380               STORAGE =           1.8091
+       CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
+               WELLS =           0.0000                 WELLS =           0.0000
+              DRAINS =           0.0000                DRAINS =           0.0000
+       RIVER LEAKAGE =           0.0000         RIVER LEAKAGE =           0.0000
+                  ET =           0.0000                    ET =           0.0000
+     HEAD DEP BOUNDS =         244.0204       HEAD DEP BOUNDS =       7.8520E-04
+            RECHARGE =     2295896.0000              RECHARGE =           6.8113
+      STREAM LEAKAGE =      207885.5000        STREAM LEAKAGE =           0.5938
+         ET SEGMENTS =           0.0000           ET SEGMENTS =           0.0000
+        DRAINS (DRT) =        8353.0859          DRAINS (DRT) =       2.1755E-02
+
+            TOTAL IN =     3269277.0000              TOTAL IN =           9.2367
+
+          OUT:                                     OUT:
+          ----                                     ----
+             STORAGE =      215432.8910               STORAGE =           0.1216
+       CONSTANT HEAD =      305845.8750         CONSTANT HEAD =           0.8286
+               WELLS =      817344.0000                 WELLS =           2.4200
+              DRAINS =      601183.9380                DRAINS =           1.8209
+       RIVER LEAKAGE =      738623.8130         RIVER LEAKAGE =           2.2235
+                  ET =      318127.3750                    ET =           1.0043
+     HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
+            RECHARGE =           0.0000              RECHARGE =           0.0000
+      STREAM LEAKAGE =      147411.5470        STREAM LEAKAGE =           0.4653
+         ET SEGMENTS =      112511.9770           ET SEGMENTS =           0.3165
+        DRAINS (DRT) =       12828.1543          DRAINS (DRT) =       3.6259E-02
+
+           TOTAL OUT =     3269309.7500             TOTAL OUT =           9.2368
+
+            IN - OUT =         -32.7500              IN - OUT =      -1.2302E-04
+
+ PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
+
+
+
+
+
+
+          TIME SUMMARY AT END OF TIME STEP  3 IN STRESS PERIOD  3
+                    SECONDS     MINUTES      HOURS       DAYS        YEARS
+                    -----------------------------------------------------------
+   TIME STEP LENGTH  86400.      1440.0      24.000      1.0000     2.73785E-03
+ STRESS PERIOD TIME 2.59200E+05  4320.0      72.000      3.0000     8.21355E-03
+         TOTAL TIME 3.45601E+05  5760.0      96.000      4.0000     1.09514E-02
+1
+1
+                            STRESS PERIOD NO.   4, LENGTH =   518400.0    
+                            ----------------------------------------------
+
+                              NUMBER OF TIME STEPS =     3
+
+                               MULTIPLIER FOR DELT =     1.000
+
+                            INITIAL TIME STEP SIZE =   172800.0    
+
+ Parameter:  WELLS_TR
+   Instance:  Well-c    
+ WELL NO.  LAYER   ROW   COL   STRESS RATE   
+ --------------------------------------------
+      1      1      9     10      -1.320    
+      2      2      9     10      -1.320    
+
+     2 WELLS
+
+ Parameter:  DRN-K
+   Instance:  Drn-b     
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE   
+ ----------------------------------------------------------
+      1      1     10      1       111.0           1.400    
+      2      1     11      1       112.0           1.400    
+      3      1     12      1       113.0           1.400    
+      4      1     13      1       114.0           1.400    
+      5      1     14      1       115.0           1.400    
+      6      1     15      1       116.0           1.400    
+      7      1     16      1       117.0           1.400    
+      8      1     17      1       118.0           1.400    
+      9      1     18      1       119.0           1.400    
+
+     9 DRAINS
+
+ Parameter:  RIVERS
+   Instance:  Rivs-b    
+ REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
+ -------------------------------------------------------------------------
+      1      1      1      1       101.0           1.224           90.00    
+      2      1      2      1       102.0           1.224           90.00    
+      3      1      3      1       103.0           1.224           90.00    
+      4      1      4      1       104.0           1.224           90.00    
+      5      1      5      1       105.0           1.224           90.00    
+      6      1      6      1       106.0           1.224           90.00    
+      7      1      7      1       107.0           1.224           90.00    
+      8      1      8      1       108.0           1.224           90.00    
+      9      1      9      1       109.0           1.224           90.00    
+
+     9 RIVER REACHES
+
+ REUSING SURF FROM LAST STRESS PERIOD
+
+ REUSING EVTR FROM LAST STRESS PERIOD
+
+ REUSING EXDP FROM LAST STRESS PERIOD
+
+ REUSING NON-PARAMETER GHB CELLS FROM LAST STRESS PERIOD
+
+ Parameter:  GHB-Cond
+   Instance:  GHB-sp4   
+ BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE   
+ ----------------------------------------------------------
+     10      1      1     18       350.0          0.8000E-06
+     11      1      2     18       350.0          0.8000E-06
+     12      1      3     18       350.0          0.8000E-06
+     13      1      4     18       350.0          0.8000E-06
+     14      1      5     18       350.0          0.8000E-06
+     15      1      6     18       350.0          0.8000E-06
+     16      1      7     18       350.0          0.8000E-06
+     17      1      8     18       350.0          0.8000E-06
+     18      1      9     18       350.0          0.8000E-06
+
+    18 GHB CELLS
+
+
+
+ RECH array defined by the following parameters:
+ Parameter:  RCH_ZONE_1
+   Instance:  rz-134-1.5
+ Parameter:  RCH_ZONE_2
+   Instance:  rz-2-1.5  
+
+
+                           RECHARGE
+
+            1           2           3           4           5           6
+            7           8           9          10          11          12
+           13          14          15          16          17          18
+ ........................................................................
+   1   3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+   2   3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+   3   3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+   4   3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+   5   3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+   6   3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+   7   3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+   8   3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+   9   3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+  10   3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+  11   3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+  12   3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+  13   3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+  14   3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+  15   3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+  16   3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+  17   3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+  18   3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08  3.3295E-08
+       1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08  1.9026E-08
+ Parameter:  STR-K-12
+   Instance:  STR12-c   
+
+    LAYER   ROW    COL    SEGMENT   REACH   STREAMFLOW      STREAM    STREAMBED     STREAMBED BOT  STREAMBED TOP
+                           NUMBER   NUMBER                   STAGE   CONDUCTANCE      ELEVATION      ELEVATION
+   --------------------------------------------------------------------------------------------------------------
+       1      3      9        1        1         50.00       155.0     0.1000            148.0        150.0    
+       1      3      8        1        2         0.000       152.0     0.1000            146.0        148.0    
+       1      3      7        1        3         0.000       148.0     0.1000            144.0        146.0    
+       1      3      6        1        4         0.000       146.0     0.1000            143.0        145.0    
+       1      7      7        2        1         40.00       151.0     0.1000            147.0        149.0    
+       1      6      7        2        2         0.000       149.0     0.1000            145.0        147.0    
+       1      5      6        2        3         0.000       148.0     0.1000            144.0        146.0    
+       1      4      5        2        4         0.000       146.5     0.1000            143.0        145.0    
+ Parameter:  STR-K-3
+       1      3      5        3        1        -1.000       139.0     0.1000            136.0        138.0    
+       1      2      4        3        2         0.000       138.0     0.1000            135.0        137.0    
+       1      1      3        3        3         0.000       137.0     0.1000            134.0        136.0    
+
+    11 STREAM REACHES
+
+                              MAXIMUM NUMBER OF TRIBUTARY STREAMS IS     2
+
+                     STREAM SEGMENT               TRIBUTARY STREAM SEGMENT NUMBERS
+                        1                        0    0
+                        2                        0    0
+                        3                        1    2
+
+ Parameter:  CHD-mine
+   Instance:  CHD-c     
+ CHD NO.   LAYER   ROW   COL    START HEAD        END HEAD   
+ ------------------------------------------------------------
+      1      1     12     18       159.0           157.0    
+      2      1     13     18       159.0           157.0    
+
+
+     2 TIME-VARIANT SPECIFIED-HEAD CELLS
+
+ REUSING ETSS FROM LAST STRESS PERIOD
+
+
+
+ ETSR array defined by the following parameters:
+ Parameter:  ETS-Rate
+   Instance:  High-ETS  
+
+
+            EVAPOTRANS. RATE (ETSR)
+
+            1           2           3           4           5           6           7           8           9          10
+           11          12          13          14          15          16          17          18
+ ........................................................................................................................
+   1    0.000       0.000       0.000       0.000       0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+       4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+   2    0.000       0.000       0.000       0.000       0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+       4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+   3    0.000       0.000       0.000       0.000       0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+       4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+   4    0.000       0.000       0.000       0.000       0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+       4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+   5    0.000       0.000       0.000       0.000       0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+       4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+   6    0.000       0.000       0.000       0.000       0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+       4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+   7    0.000       0.000       0.000       0.000       0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+       4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+   8    0.000       0.000       0.000       0.000       0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+       4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+   9    0.000       0.000       0.000       0.000       0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+       4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+  10    0.000       0.000       0.000       0.000       0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+       4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+  11    0.000       0.000       0.000       0.000       0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+       4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+  12    0.000       0.000       0.000       0.000       0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+       4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+  13    0.000       0.000       0.000       0.000       0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+       4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+  14    0.000       0.000       0.000       0.000       0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+       4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+  15    0.000       0.000       0.000       0.000       0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+       4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+  16    0.000       0.000       0.000       0.000       0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+       4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+  17    0.000       0.000       0.000       0.000       0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+       4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+  18    0.000       0.000       0.000       0.000       0.000       0.000      4.7565E-09  4.7565E-09  4.7565E-09  4.7565E-09
+       4.7565E-09  4.7565E-09   0.000       0.000       0.000       0.000       0.000       0.000    
+
+ REUSING ETSX FROM LAST STRESS PERIOD
+
+ REUSING PXDP AND PETM FROM LAST STRESS PERIOD
+
+ Parameter:  DRT-Cond
+   Instance:  Drt-SP4   
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE     
+ ------------------------------------------------------------
+      1      2     16     16       140.0          0.1040E-02
+
+           ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
+ DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
+      1      2     16     16      1     16     16  0.400000
+
+     1 DRAIN-RETURN CELLS
+ 
+ SOLVING FOR HEAD 
+
+
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD  4
+    13 TOTAL ITERATIONS
+
+ NO OUTPUT CONTROL FOR STRESS PERIOD  4   TIME STEP  1
+ 
+ SOLVING FOR HEAD 
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   2 IN STRESS PERIOD  4
+    13 TOTAL ITERATIONS
+
+ NO OUTPUT CONTROL FOR STRESS PERIOD  4   TIME STEP  2
+ 
+ SOLVING FOR HEAD 
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   3 IN STRESS PERIOD  4
+    13 TOTAL ITERATIONS
+
+ OUTPUT CONTROL FOR STRESS PERIOD  4   TIME STEP  3
+    SAVE BUDGET
+
+    CONSTANT HEAD   PERIOD  4   STEP  3
+ LAYER  1   ROW  12   COL  18   RATE  -0.363587    
+ LAYER  1   ROW  13   COL  18   RATE  -0.391565    
+
+            LAYER      ROW     COLUMN     STREAM    REACH      FLOW INTO    FLOW INTO      FLOW OUT OF
+                                           NUMBER   NUMBER    STREAM REACH    AQUIFER      STREAM REACH
+
+
+               1         3         9         1         1         50.0         -.167             50.2    
+               1         3         8         1         2         50.2         -.114             50.3    
+               1         3         7         1         3         50.3         -.137             50.4    
+               1         3         6         1         4         50.4         -.443E-01         50.5    
+               1         7         7         2         1         40.0         0.453E-01         40.0    
+               1         6         7         2         2         40.0         -.860E-01         40.0    
+               1         5         6         2         3         40.0         0.565E-03         40.0    
+               1         4         5         2         4         40.0         0.157             39.9    
+               1         3         5         3         1         90.3         -.179             90.5    
+               1         2         4         3         2         90.5         0.116E-01         90.5    
+               1         1         3         3         3         90.5         0.251             90.3    
+1
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  3 IN STRESS PERIOD  4
+  -----------------------------------------------------------------------------
+
+     CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
+     ------------------                 ------------------------
+
+           IN:                                      IN:
+           ---                                      ---
+             STORAGE =     1213610.1300               STORAGE =           0.6958
+       CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
+               WELLS =           0.0000                 WELLS =           0.0000
+              DRAINS =           0.0000                DRAINS =           0.0000
+       RIVER LEAKAGE =           0.0000         RIVER LEAKAGE =           0.0000
+                  ET =           0.0000                    ET =           0.0000
+     HEAD DEP BOUNDS =         979.9882       HEAD DEP BOUNDS =       1.4234E-03
+            RECHARGE =     7069595.0000              RECHARGE =           9.2085
+      STREAM LEAKAGE =      446555.2190        STREAM LEAKAGE =           0.4652
+         ET SEGMENTS =           0.0000           ET SEGMENTS =           0.0000
+        DRAINS (DRT) =       15561.7471          DRAINS (DRT) =       1.3589E-02
+
+            TOTAL IN =     8746302.0000              TOTAL IN =          10.3845
+
+          OUT:                                     OUT:
+          ----                                     ----
+             STORAGE =      378293.8440               STORAGE =           0.1438
+       CONSTANT HEAD =      705187.0630         CONSTANT HEAD =           0.7552
+               WELLS =     2185920.0000                 WELLS =           2.6400
+              DRAINS =     1665462.5000                DRAINS =           2.0922
+       RIVER LEAKAGE =     2059319.7500         RIVER LEAKAGE =           2.5374
+                  ET =      836979.6250                    ET =           1.0009
+     HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
+            RECHARGE =           0.0000              RECHARGE =           0.0000
+      STREAM LEAKAGE =      533459.8750        STREAM LEAKAGE =           0.7275
+         ET SEGMENTS =      350871.8130           ET SEGMENTS =           0.4537
+        DRAINS (DRT) =       30849.8066          DRAINS (DRT) =       3.3971E-02
+
+           TOTAL OUT =     8746344.0000             TOTAL OUT =          10.3846
+
+            IN - OUT =         -42.0000              IN - OUT =      -9.5367E-06
+
+ PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
+
+
+
+
+
+
+          TIME SUMMARY AT END OF TIME STEP  3 IN STRESS PERIOD  4
+                    SECONDS     MINUTES      HOURS       DAYS        YEARS
+                    -----------------------------------------------------------
+   TIME STEP LENGTH 1.72800E+05  2880.0      48.000      2.0000     5.47570E-03
+ STRESS PERIOD TIME 5.18400E+05  8640.0      144.00      6.0000     1.64271E-02
+         TOTAL TIME 8.64001E+05  14400.      240.00      10.000     2.73785E-02
+1
+1
+                            STRESS PERIOD NO.   5, LENGTH =  0.2592001E+08
+                            ----------------------------------------------
+
+                              NUMBER OF TIME STEPS =     9
+
+                               MULTIPLIER FOR DELT =     1.200
+
+                            INITIAL TIME STEP SIZE =   1246220.    
+
+ Parameter:  WELLS_TR
+   Instance:  Well-d    
+ WELL NO.  LAYER   ROW   COL   STRESS RATE   
+ --------------------------------------------
+      1      1      9     10      -1.430    
+      2      2      9     10      -1.430    
+
+     2 WELLS
+
+ Parameter:  DRN-K
+   Instance:  Drn-c     
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE   
+ ----------------------------------------------------------
+      1      1     10      1       110.0           1.800    
+      2      1     11      1       111.0           1.800    
+      3      1     12      1       112.0           1.800    
+      4      1     13      1       113.0           1.800    
+      5      1     14      1       114.0           1.800    
+      6      1     15      1       115.0           1.800    
+      7      1     16      1       116.0           1.800    
+      8      1     17      1       117.0           1.800    
+      9      1     18      1       118.0           1.800    
+
+     9 DRAINS
+
+ Parameter:  RIVERS
+   Instance:  Rivs-b    
+ REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
+ -------------------------------------------------------------------------
+      1      1      1      1       101.0           1.224           90.00    
+      2      1      2      1       102.0           1.224           90.00    
+      3      1      3      1       103.0           1.224           90.00    
+      4      1      4      1       104.0           1.224           90.00    
+      5      1      5      1       105.0           1.224           90.00    
+      6      1      6      1       106.0           1.224           90.00    
+      7      1      7      1       107.0           1.224           90.00    
+      8      1      8      1       108.0           1.224           90.00    
+      9      1      9      1       109.0           1.224           90.00    
+
+     9 RIVER REACHES
+
+ REUSING SURF FROM LAST STRESS PERIOD
+
+ REUSING EVTR FROM LAST STRESS PERIOD
+
+ REUSING EXDP FROM LAST STRESS PERIOD
+
+ REUSING NON-PARAMETER GHB CELLS FROM LAST STRESS PERIOD
+
+ Parameter:  GHB-Cond
+   Instance:  GHB-sp5   
+ BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE   
+ ----------------------------------------------------------
+     10      1      1     18       350.0          0.1600E-05
+     11      1      2     18       350.0          0.1600E-05
+     12      1      3     18       350.0          0.1600E-05
+     13      1      4     18       350.0          0.1600E-05
+     14      1      5     18       350.0          0.1600E-05
+     15      1      6     18       350.0          0.1600E-05
+     16      1      7     18       350.0          0.1600E-05
+     17      1      8     18       350.0          0.1600E-05
+     18      1      9     18       350.0          0.1600E-05
+
+    18 GHB CELLS
+
+ REUSING RECH FROM LAST STRESS PERIOD
+ Parameter:  STR-K-12
+   Instance:  STR12-c   
+
+    LAYER   ROW    COL    SEGMENT   REACH   STREAMFLOW      STREAM    STREAMBED     STREAMBED BOT  STREAMBED TOP
+                           NUMBER   NUMBER                   STAGE   CONDUCTANCE      ELEVATION      ELEVATION
+   --------------------------------------------------------------------------------------------------------------
+       1      3      9        1        1         50.00       155.0     0.1000            148.0        150.0    
+       1      3      8        1        2         0.000       152.0     0.1000            146.0        148.0    
+       1      3      7        1        3         0.000       148.0     0.1000            144.0        146.0    
+       1      3      6        1        4         0.000       146.0     0.1000            143.0        145.0    
+       1      7      7        2        1         40.00       151.0     0.1000            147.0        149.0    
+       1      6      7        2        2         0.000       149.0     0.1000            145.0        147.0    
+       1      5      6        2        3         0.000       148.0     0.1000            144.0        146.0    
+       1      4      5        2        4         0.000       146.5     0.1000            143.0        145.0    
+ Parameter:  STR-K-3
+       1      3      5        3        1        -1.000       139.0     0.1000            136.0        138.0    
+       1      2      4        3        2         0.000       138.0     0.1000            135.0        137.0    
+       1      1      3        3        3         0.000       137.0     0.1000            134.0        136.0    
+
+    11 STREAM REACHES
+
+                              MAXIMUM NUMBER OF TRIBUTARY STREAMS IS     2
+
+                     STREAM SEGMENT               TRIBUTARY STREAM SEGMENT NUMBERS
+                        1                        0    0
+                        2                        0    0
+                        3                        1    2
+
+ Parameter:  CHD-mine
+   Instance:  CHD-d     
+ CHD NO.   LAYER   ROW   COL    START HEAD        END HEAD   
+ ------------------------------------------------------------
+      1      1     12     18       157.0           155.0    
+      2      1     13     18       157.0           155.0    
+
+
+     2 TIME-VARIANT SPECIFIED-HEAD CELLS
+
+ REUSING ETSS FROM LAST STRESS PERIOD
+
+ REUSING ETSR FROM LAST STRESS PERIOD
+
+ REUSING ETSX FROM LAST STRESS PERIOD
+
+ REUSING PXDP AND PETM FROM LAST STRESS PERIOD
+
+ Parameter:  DRT-Cond
+   Instance:  Drt-SP5   
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE     
+ ------------------------------------------------------------
+      1      2     16     16       140.0          0.1050E-02
+
+           ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
+ DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
+      1      2     16     16      1     16     16  0.200000
+
+     1 DRAIN-RETURN CELLS
+ 
+ SOLVING FOR HEAD 
+
+
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD  5
+    16 TOTAL ITERATIONS
+
+ NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  1
+ 
+ SOLVING FOR HEAD 
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   2 IN STRESS PERIOD  5
+    16 TOTAL ITERATIONS
+
+ NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  2
+ 
+ SOLVING FOR HEAD 
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   3 IN STRESS PERIOD  5
+    16 TOTAL ITERATIONS
+
+ NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  3
+ 
+ SOLVING FOR HEAD 
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   4 IN STRESS PERIOD  5
+    16 TOTAL ITERATIONS
+
+ NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  4
+ 
+ SOLVING FOR HEAD 
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   5 IN STRESS PERIOD  5
+    15 TOTAL ITERATIONS
+
+ NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  5
+ 
+ SOLVING FOR HEAD 
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   6 IN STRESS PERIOD  5
+    15 TOTAL ITERATIONS
+
+ NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  6
+ 
+ SOLVING FOR HEAD 
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   7 IN STRESS PERIOD  5
+    15 TOTAL ITERATIONS
+
+ NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  7
+ 
+ SOLVING FOR HEAD 
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   8 IN STRESS PERIOD  5
+    15 TOTAL ITERATIONS
+
+ OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  8
+    SAVE BUDGET
+
+    CONSTANT HEAD   PERIOD  5   STEP  8
+ LAYER  1   ROW  12   COL  18   RATE  -0.219617    
+ LAYER  1   ROW  13   COL  18   RATE  -0.250400    
+
+            LAYER      ROW     COLUMN     STREAM    REACH      FLOW INTO    FLOW INTO      FLOW OUT OF
+                                           NUMBER   NUMBER    STREAM REACH    AQUIFER      STREAM REACH
+
+
+               1         3         9         1         1         50.0         -.878E-01         50.1    
+               1         3         8         1         2         50.1         -.743E-01         50.2    
+               1         3         7         1         3         50.2         -.115             50.3    
+               1         3         6         1         4         50.3         -.326E-01         50.3    
+               1         7         7         2         1         40.0         0.135             39.9    
+               1         6         7         2         2         39.9         -.274E-01         39.9    
+               1         5         6         2         3         39.9         0.290E-01         39.9    
+               1         4         5         2         4         39.9         0.168             39.7    
+               1         3         5         3         1         90.0         -.173             90.2    
+               1         2         4         3         2         90.2         0.162E-01         90.2    
+               1         1         3         3         3         90.2         0.253             89.9    
+ 
+ SOLVING FOR HEAD 
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   9 IN STRESS PERIOD  5
+    16 TOTAL ITERATIONS
+
+ OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  9
+    PRINT HEAD FOR ALL LAYERS
+    SAVE BUDGET
+    PRINT BUDGET
+
+    CONSTANT HEAD   PERIOD  5   STEP  9
+ LAYER  1   ROW  12   COL  18   RATE  -0.224326    
+ LAYER  1   ROW  13   COL  18   RATE  -0.254726    
+
+            LAYER      ROW     COLUMN     STREAM    REACH      FLOW INTO    FLOW INTO      FLOW OUT OF
+                                           NUMBER   NUMBER    STREAM REACH    AQUIFER      STREAM REACH
+
+
+               1         3         9         1         1         50.0         -.865E-01         50.1    
+               1         3         8         1         2         50.1         -.736E-01         50.2    
+               1         3         7         1         3         50.2         -.114             50.3    
+               1         3         6         1         4         50.3         -.324E-01         50.3    
+               1         7         7         2         1         40.0         0.136             39.9    
+               1         6         7         2         2         39.9         -.266E-01         39.9    
+               1         5         6         2         3         39.9         0.294E-01         39.9    
+               1         4         5         2         4         39.9         0.168             39.7    
+               1         3         5         3         1         90.0         -.173             90.2    
+               1         2         4         3         2         90.2         0.163E-01         90.2    
+               1         1         3         3         3         90.2         0.253             89.9    
+1
+              HEAD IN LAYER  1 AT END OF TIME STEP  9 IN STRESS PERIOD  5
+  -----------------------------------------------------------------------
+
+          1      2      3      4      5      6      7      8      9     10
+         11     12     13     14     15     16     17     18
+ .........................................................................
+   1   101.3  118.5  134.5  139.3  144.1  148.6  152.4  155.9  159.0  161.7
+       163.9  165.5  166.5  167.4  168.1  168.7  169.1  169.4
+   2   102.3  117.5  130.0  137.8  143.0  147.7  151.5  154.9  158.0  161.1
+       163.4  165.1  166.1  167.0  167.9  168.5  168.9  169.2
+   3   103.2  117.2  128.5  136.4  140.7  146.3  149.1  152.7  155.9  159.9
+       162.4  164.2  165.3  166.4  167.3  168.0  168.5  168.8
+   4   104.2  117.4  128.3  136.9  144.8  147.7  150.5  153.3  155.9  158.7
+       161.1  162.9  164.2  165.5  166.5  167.4  167.9  168.2
+   5   105.2  117.8  128.3  136.6  143.2  147.7  150.3  152.5  154.5  156.7
+       159.0  161.1  162.7  164.3  165.6  166.5  167.1  167.5
+   6   106.2  118.4  128.4  136.3  142.4  146.7  149.3  150.7  151.7  153.2
+       155.8  158.7  160.9  162.8  164.4  165.6  166.3  166.6
+   7   107.2  119.0  128.7  136.2  142.0  146.1  149.6  148.4  147.3  147.4
+       151.2  155.5  158.8  161.4  163.3  164.6  165.4  165.7
+   8   108.2  119.7  129.1  136.3  141.6  145.0  146.4  144.8  141.0  136.8
+       144.9  152.1  156.8  160.1  162.3  163.7  164.4  164.8
+   9   109.2  120.5  129.6  136.7  141.7  144.7  145.3  142.6  134.6  113.8
+       138.6  150.0  155.8  159.4  161.6  162.9  163.5  163.7
+  10   110.1  121.3  130.4  137.4  142.4  145.5  146.4  145.1  141.4  137.2
+       145.2  152.2  156.6  159.6  161.4  162.3  162.5  162.3
+  11   111.1  122.3  131.4  138.4  143.6  147.0  148.7  149.0  148.3  148.3
+       151.8  155.7  158.4  160.5  161.6  161.9  161.3  160.0
+  12   112.1  123.3  132.4  139.6  145.0  148.9  151.4  152.7  153.6  154.7
+       156.8  159.0  160.5  161.7  162.2  161.9  160.0  155.0
+  13   113.1  124.4  133.6  140.9  146.6  150.8  153.8  155.9  157.5  158.9
+       160.5  161.8  162.6  163.1  163.2  162.5  160.5  155.0
+  14   114.1  125.4  134.7  142.1  148.0  152.5  155.9  158.5  160.4  161.9
+       163.2  164.1  164.4  164.6  164.5  163.9  162.8  161.2
+  15   115.1  126.4  135.7  143.2  149.3  154.0  157.7  160.4  162.5  164.1
+       165.2  165.9  165.9  165.9  165.7  165.3  164.7  164.2
+  16   116.1  127.3  136.6  144.1  150.3  155.1  158.9  161.9  164.0  165.6
+       166.7  167.2  167.1  167.0  166.8  166.5  166.2  165.9
+  17   117.1  128.1  137.3  144.8  150.9  155.9  159.8  162.8  165.0  166.6
+       167.6  168.1  167.9  167.7  167.5  167.3  167.1  167.0
+  18   118.1  128.6  137.6  145.1  151.3  156.3  160.2  163.2  165.5  167.1
+       168.1  168.5  168.3  168.1  167.9  167.7  167.6  167.5
+1
+              HEAD IN LAYER  2 AT END OF TIME STEP  9 IN STRESS PERIOD  5
+  -----------------------------------------------------------------------
+
+          1      2      3      4      5      6      7      8      9     10
+         11     12     13     14     15     16     17     18
+ .........................................................................
+   1   103.9  118.9  132.7  138.8  143.9  148.2  152.0  155.4  158.3  161.0
+       163.1  164.7  165.9  166.8  167.6  168.2  168.6  168.8
+   2   104.5  118.1  130.2  137.6  143.0  147.5  151.3  154.6  157.6  160.4
+       162.6  164.3  165.5  166.5  167.3  167.9  168.4  168.6
+   3   105.3  117.7  128.9  136.5  142.0  146.7  150.1  153.4  156.4  159.3
+       161.6  163.4  164.8  165.9  166.8  167.5  167.9  168.2
+   4   106.2  117.9  128.7  136.7  143.3  147.1  150.2  152.9  155.5  158.0
+       160.2  162.1  163.7  165.0  166.0  166.8  167.3  167.6
+   5   107.1  118.3  128.6  136.5  142.8  146.9  149.7  151.9  153.8  155.8
+       158.1  160.3  162.2  163.8  165.0  166.0  166.6  166.9
+   6   108.0  118.8  128.8  136.2  142.2  146.2  148.7  150.0  150.9  152.3
+       154.9  157.8  160.3  162.3  163.9  165.0  165.7  166.0
+   7   108.9  119.4  129.0  136.1  141.7  145.4  147.6  147.2  146.2  146.2
+       150.2  154.6  158.2  160.9  162.8  164.1  164.8  165.2
+   8   109.9  120.1  129.3  136.2  141.3  144.4  145.4  143.7  139.4  134.4
+       143.6  151.2  156.3  159.6  161.8  163.1  163.9  164.2
+   9   110.9  120.8  129.9  136.5  141.4  144.1  144.5  141.2  131.9  104.6
+       136.5  149.0  155.3  158.9  161.1  162.4  163.0  163.2
+  10   111.8  121.7  130.7  137.2  142.1  144.9  145.7  144.0  139.8  134.8
+       143.9  151.3  156.1  159.1  160.9  161.9  162.1  162.1
+  11   112.8  122.6  131.6  138.3  143.3  146.5  148.1  148.1  147.2  147.1
+       150.7  154.8  157.9  160.0  161.2  161.6  161.3  160.8
+  12   113.8  123.7  132.7  139.5  144.8  148.4  150.8  152.0  152.7  153.8
+       155.8  158.1  160.0  161.2  161.8  161.6  160.8  159.5
+  13   114.8  124.7  133.8  140.8  146.3  150.4  153.3  155.2  156.7  158.1
+       159.6  161.0  162.0  162.6  162.8  162.3  161.3  159.8
+  14   115.8  125.8  135.0  142.0  147.8  152.1  155.4  157.8  159.6  161.1
+       162.3  163.2  163.8  164.0  164.0  163.5  162.8  162.0
+  15   116.8  126.8  136.0  143.1  149.0  153.6  157.1  159.8  161.8  163.3
+       164.3  165.0  165.3  165.3  165.1  164.7  164.3  164.0
+  16   117.8  127.7  136.9  144.0  150.0  154.7  158.4  161.2  163.3  164.8
+       165.8  166.3  166.5  166.4  166.1  165.6  165.5  165.4
+  17   118.7  128.4  137.5  144.7  150.7  155.5  159.3  162.1  164.3  165.8
+       166.8  167.2  167.3  167.2  166.9  166.6  166.5  166.4
+  18   119.5  128.9  137.9  145.1  151.1  155.9  159.7  162.6  164.8  166.3
+       167.2  167.7  167.7  167.6  167.3  167.1  167.0  166.9
+1
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  9 IN STRESS PERIOD  5
+  -----------------------------------------------------------------------------
+
+     CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
+     ------------------                 ------------------------
+
+           IN:                                      IN:
+           ---                                      ---
+             STORAGE =     2938159.2500               STORAGE =       7.3732E-03
+       CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
+               WELLS =           0.0000                 WELLS =           0.0000
+              DRAINS =           0.0000                DRAINS =           0.0000
+       RIVER LEAKAGE =           0.0000         RIVER LEAKAGE =           0.0000
+                  ET =           0.0000                    ET =           0.0000
+     HEAD DEP BOUNDS =       73219.5391       HEAD DEP BOUNDS =       2.7992E-03
+            RECHARGE =   245754704.0000              RECHARGE =           9.2085
+      STREAM LEAKAGE =    15779370.0000        STREAM LEAKAGE =           0.6034
+         ET SEGMENTS =           0.0000           ET SEGMENTS =           0.0000
+        DRAINS (DRT) =      159382.4380          DRAINS (DRT) =       5.3657E-03
+
+            TOTAL IN =   264704832.0000              TOTAL IN =           9.8275
+
+          OUT:                                     OUT:
+          ----                                     ----
+             STORAGE =      378297.1250               STORAGE =           0.0000
+       CONSTANT HEAD =    13125355.0000         CONSTANT HEAD =           0.4791
+               WELLS =    76317176.0000                 WELLS =           2.8600
+              DRAINS =    55940836.0000                DRAINS =           2.0781
+       RIVER LEAKAGE =    66453832.0000         RIVER LEAKAGE =           2.4804
+                  ET =    26777394.0000                    ET =           1.0007
+     HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
+            RECHARGE =           0.0000              RECHARGE =           0.0000
+      STREAM LEAKAGE =    14185053.0000        STREAM LEAKAGE =           0.5060
+         ET SEGMENTS =    10777385.0000           ET SEGMENTS =           0.3965
+        DRAINS (DRT) =      749953.3130          DRAINS (DRT) =       2.6828E-02
+
+           TOTAL OUT =   264705280.0000             TOTAL OUT =           9.8276
+
+            IN - OUT =        -448.0000              IN - OUT =      -1.1253E-04
+
+ PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
+
+
+
+
+
+
+          TIME SUMMARY AT END OF TIME STEP  9 IN STRESS PERIOD  5
+                    SECONDS     MINUTES      HOURS       DAYS        YEARS
+                    -----------------------------------------------------------
+   TIME STEP LENGTH 5.35852E+06  89309.      1488.5      62.020     0.16980    
+ STRESS PERIOD TIME 2.59200E+07 4.32000E+05  7200.0      300.00     0.82136    
+         TOTAL TIME 2.67840E+07 4.46400E+05  7440.0      310.00     0.84873    
+1

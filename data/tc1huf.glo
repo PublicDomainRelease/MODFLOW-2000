@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.5 08/16/2001
+                             VERSION 1.7 12/04/2001
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
@@ -9,61 +9,80 @@
                          UNIT   3
 
  OPENING tc1huf.lst
- FILE TYPE:LIST   UNIT   4
+ FILE TYPE:LIST   UNIT   4   STATUS:REPLACE
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 # Observation-Process Files                                                                                                                                                                             
 
  OPENING ../data/tc1huf.obs
- FILE TYPE:OBS   UNIT  40
+ FILE TYPE:OBS   UNIT  40   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1huf.hob
- FILE TYPE:HOB   UNIT  41
+ FILE TYPE:HOB   UNIT  41   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1huf.ogb
- FILE TYPE:GBOB   UNIT  42
+ FILE TYPE:GBOB   UNIT  42   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 # Sensitivity and Parameter-Estimation Process Files                                                                                                                                                    
 
  OPENING ../data/tc1huf.sen
- FILE TYPE:SEN   UNIT  39
+ FILE TYPE:SEN   UNIT  39   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1huf.pes
- FILE TYPE:PES   UNIT  43
+ FILE TYPE:PES   UNIT  43   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 #Flow-Process files                                                                                                                                                                                     
 
  OPENING ../data/tc1huf.bas
- FILE TYPE:BAS6   UNIT  55
+ FILE TYPE:BAS6   UNIT  55   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1huf.huf
- FILE TYPE:HUF   UNIT   7
+ FILE TYPE:HUF   UNIT   7   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1huf.wel
- FILE TYPE:WEL   UNIT   8
+ FILE TYPE:WEL   UNIT   8   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1huf.pcg
- FILE TYPE:PCG   UNIT   9
+ FILE TYPE:PCG   UNIT   9   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1huf.dis
- FILE TYPE:DIS   UNIT  10
+ FILE TYPE:DIS   UNIT  10   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1huf.oc
- FILE TYPE:OC   UNIT  11
+ FILE TYPE:OC   UNIT  11   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1huf.ghb
- FILE TYPE:GHB   UNIT  12
+ FILE TYPE:GHB   UNIT  12   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1huf.riv
- FILE TYPE:RIV   UNIT  13
+ FILE TYPE:RIV   UNIT  13   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1huf.sh
- FILE TYPE:DATA   UNIT  14
+ FILE TYPE:DATA   UNIT  14   STATUS:UNKNOWN
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1huf.rch
- FILE TYPE:RCH   UNIT  31
+ FILE TYPE:RCH   UNIT  31   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1huf.mlt
- FILE TYPE:MULT   UNIT  32
+ FILE TYPE:MULT   UNIT  32   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1huf.zon
- FILE TYPE:ZONE   UNIT  33
+ FILE TYPE:ZONE   UNIT  33   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
  THE FREE FORMAT OPTION HAS BEEN SELECTED
 
  DISCRETIZATION INPUT DATA READ FROM UNIT 10
@@ -1710,7 +1729,7 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION    20
  DISTRIBUTED at the 5% significance level.  The probability that this   
  conclusion is wrong is less than 5%.
 
- IF the reported correlation IS LESS THAN the 5% critical value REJECT the,
+ IF the reported correlation IS LESS THAN the 5% critical value REJECT the
  hypothesis that the weighted residuals are INDEPENDENT AND NORMALLY
  DISTRIBUTED at the 5% significance level.
 

@@ -1,4 +1,4 @@
-C     Last change:  ERB  13 Jul 2001   10:10 am
+C     Last change:  ERB  24 Oct 2001   12:03 pm
 C=======================================================================
       SUBROUTINE UNOITER(RHS,HNEW,NODES,ISA)
 C-----VERSION 20010329 ERB
@@ -33,7 +33,7 @@ C=======================================================================
      &                   SSGB,SSST,SSAD,SSCH,SSPI,SSTO,ITMXP,IPES,BPRI,
      &                   ITERP,IERR,IERRU,NTT2,LCOBDRT,SSDT,NQTDT,
      &                   IOWTQDT,NRES,NPOST,NNEGT,NRUNS,NQTSF,IOWTQSF,
-     &                   LCOBSFR,SSSF,KTDIM)
+     &                   LCOBSFR,SSSF,KTDIM,NHT)
 C-----VERSION 20010329 ERB
 C     ******************************************************************
 C     BECAUSE CONVERGENCE CRITERIA HAVE NOT BEEN MET,
@@ -43,7 +43,7 @@ C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       INTEGER IOUT, IP, IPAR, IPR, KPER, KSTP, LN, MPR, ND,
-     &        NDMH, NH, NIPR
+     &        NDMH, NH, NHT, NIPR
       REAL BUF1, BPRI, D, H, HOBS, PRM, R, RSQ, RSQF, RSQH,
      &     RSQP, WP, WT, WTQ, WTQS
       INTEGER IPLOT(ND+IPR+MPR), IPLPTR(ND+IPR+MPR)
@@ -81,15 +81,16 @@ C
      &                 LCOBCHD,LCOBADV,-1,SSGF,SSDR,SSRV,SSGB,SSST,SSAD,
      &                 SSCH,SSPI,SSTO,ITMXP,IPES,BPRI,LCOBDRT,SSDT,
      &                 NQTDT,IOWTQDT,NRES,NPOST,NNEGT,NRUNS,NQTSF,
-     &                 IOWTQSF,LCOBSFR,SSSF)
+     &                 IOWTQSF,LCOBSFR,SSSF,NHT)
       ENDIF
       IF (IP.EQ.0) THEN
         WRITE (IOUT,540) KSTP,KPER
         WRITE (IERRU,540) KSTP,KPER
         IF (IERR.EQ.0) IERR = -1
       ENDIF
-  540 FORMAT (//,' ***** SOLUTION FOR HEADS DID NOT CONVERGE   *****',/,
-     &     ' ***** FOR TIME STEP ',I3,' IN STRESS PERIOD',I3,' *****')
+  540 FORMAT (//,
+     &' *****  SOLUTION DID NOT CONVERGE FOR HEADS  *****',/,
+     &' ***** FOR TIME STEP ',I3,' IN STRESS PERIOD',I3,' *****')
       IF (IP.GT.0) THEN
         WRITE (IOUT,545) PARNAM(IPPTR(IP)),PARTYP(IPPTR(IP)),
      &                              KSTP,KPER,ITERP
@@ -99,7 +100,7 @@ C
       ENDIF
   545 FORMAT (//,1X,16('*'),'     WARNING     ',16('*'),/,
      &1X,'*',47X,'*'/,
-     &' *  SOLUTION FOR SENSITIVITIES DID NOT CONVERGE  *',/,
+     &' *  SOLUTION DID NOT CONVERGE FOR SENSITIVITIES  *',/,
      &1X,'*    FOR PARAMETER "',A10,'" OF TYPE "',A4,'"  *',/,
      &1X,'*    FOR TIME STEP ',I3,' IN STRESS PERIOD',I3,'      *',/,
      &1X,'*    OF PARAMETER-ESTIMATION ITERATION ',I3,6X,'*',/,
@@ -2037,7 +2038,7 @@ C2------MAKE SURE THE FORMAT CODE (IPRC) IS VALID
       IP=IPRC
       IF(IP.LT.1 .OR. IP.GT.10) IP=1
 C
-C3------LABEL COLUMNS WITH PARAMETER NAMES.
+C3------LABEL COLUMNS WITH DATA-IDENTIFIER NAMES.
       IF(IP.EQ.1) CALL UCOLLBLDAT(IC1,IC2,0,10,13,IOUT,OBSNAM,NDD)
       IF(IP.EQ.2) CALL UCOLLBLDAT(IC1,IC2,0,10,13,IOUT,OBSNAM,NDD)
       IF(IP.EQ.3) CALL UCOLLBLDAT(IC1,IC2,0,9,13,IOUT,OBSNAM,NDD)

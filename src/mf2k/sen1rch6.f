@@ -1,11 +1,12 @@
-C     Last change:  ERB  11 Apr 2000    4:49 pm
+C     Last change:  ERB  21 Nov 2001    9:52 am
       SUBROUTINE SEN1RCH6FM(NCOL,NROW,NLAY,DELR,DELC,RMLT,NRCHOP,IRCH,
-     &                    IBOUND,RHS,IZON,NMLTAR,NZONAR,IP)
-C-----VERSION 1000 01FEB1992
-C     VERSION 19980730 ERB
+     &                      IBOUND,RHS,IZON,NMLTAR,NZONAR,IP)
+C     VERSION 20011121 ERB
 C     ******************************************************************
 C     CALCULATE FORCING FUNCTION DERIVATIVE FOR RCH.  ADD TO RHS
 C     ******************************************************************
+C     Modified 11/21/2001 to support parameter instances - ERB
+C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL DELC, DELR, RHS, SM, RMLT, ZERO
@@ -18,10 +19,18 @@ C     ------------------------------------------------------------------
      &          IZON(NCOL,NROW,NZONAR)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
-      IF (IACTIVE(IP).EQ.0) RETURN 
+      NI = IACTIVE(IP)
+      IF (NI.EQ.0) RETURN
       ZERO = 0.0
       ICL1 = IPLOC(1,IP)
       ICL2 = IPLOC(2,IP)
+      NUMINST = IPLOC(3,IP)
+      IF (NUMINST.GT.1) THEN
+C       SELECT CORRECT INSTANCE
+        NCLU = (ICL2-ICL1+1)/NUMINST
+        ICL1 = ICL1+(NI-1)*NCLU
+        ICL2 = ICL1+NCLU-1
+      ENDIF
 C-------LOOP THROUGH CLUSTERS
       DO 70 K = ICL1,ICL2
         M = IPCLST(2,K)

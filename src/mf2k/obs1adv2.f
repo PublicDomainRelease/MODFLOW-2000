@@ -1,4 +1,4 @@
-C     Last change:  ERB   9 Jul 2001    3:33 pm
+C     Last change:  ERB  24 Oct 2001   11:08 am
 
 
       SUBROUTINE OBS1ADV2AL(IOUADV,NPTH,NTT2,IOUTT2,KTDIM,KTFLG,KTREV,
@@ -29,7 +29,7 @@ C----------------------------------------------------------------------
 C     IDENTIFY PROCESS
       WRITE(IOUT,490) IOUADV
   490 FORMAT(/,' ADV2 -- OBSERVATION PROCESS (ADVECTIVE TRANSPORT',
-     &    ' OBSERVATIONS)',/,' VERSION 2.1, 02/12/2001',/,
+     &    ' OBSERVATIONS)',/,' VERSION 2.2, 09/21/2001',/,
      &    ' INPUT READ FROM UNIT ',I3)
 C
 C  Turn off observation package if OBS is not active
@@ -145,15 +145,15 @@ C-------ASSIGN LPF/HUF DUMMY VALUES
 C
 C=======================================================================
 C
-      SUBROUTINE OBS1ADV2RP(IOUT,NROW,NCOL,NLAY,PRST,NPTH,NPNT,
-     &                  NTT2,NH,NQT,OBSNAM,ICLS,POFF,TT2,HOBS,DELR,DELC,
-     &                  WTQ,ND,KTDIM,IOUADV,NDMH,IOWTQ,BOTM,
-     &                  NBOTM,IPLOT,NAMES,IPR,MPR,JT)
+      SUBROUTINE OBS1ADV2RP(IOUT,NROW,NCOL,NLAY,PRST,NPTH,NPNT,NTT2,NHT,
+     &                      NQT,OBSNAM,ICLS,POFF,TT2,HOBS,DELR,DELC,WTQ,
+     &                      ND,KTDIM,IOUADV,NDMH,IOWTQ,BOTM,NBOTM,IPLOT,
+     &                      NAMES,IPR,MPR,JT)
 C
 C        SPECIFICATIONS:
 C----------------------------------------------------------------------
 C---ARGUMENTS:
-      INTEGER IOUT, NROW, NCOL, NLAY, NPTH, NPNT, NTT2, NH, NQT, 
+      INTEGER IOUT, NROW, NCOL, NLAY, NPTH, NPNT, NTT2, NHT, NQT, 
      &        ICLS, ND, KTDIM, IOUADV, NDMH, IOWTQ, NBOTM
       INTEGER IPLOT(ND+IPR+MPR)
       REAL PRST, POFF, TT2, HOBS, DELR, DELC, WTQ
@@ -222,7 +222,7 @@ C     WRITE 2D, PSUEDO-3D, OR 3D TRACKING
         IF (KTDIM.EQ.3 .AND. NLAY.GT.1) WRITE (IOUT,520)
 C----------------------------------------------------------------------
 C     START READING OBSERVATIONS
-        I2 = NH + NQT + 1
+        I2 = NHT + NQT + 1
         NTPNT = 0
         DO 80 I = 1, NPTH
 C---------Read ADV ITEM 2
@@ -244,9 +244,14 @@ C---------Read ADV ITEM 2
 C          READ (IOUADV,525,ERR=110) NPNT(I), (ICLS(J,I),J=1,3), 
 C     &                              (POFF(J,I),J=1,3)
           WRITE (IOUT,530) I, (ICLS(J,I),J=1,3), (POFF(J,I),J=1,3)
+          IF(NPNT(I).LE.0) THEN
+            WRITE(IOUT,505)
+            WRITE(IOUT,*) ' NPNT MUST BE LARGER THAN 0'
+            STOP
+          ENDIF
           DO 70 IPNT = 1, NPNT(I)
             NTPNT = NTPNT + 1
-            I11 = I2 - NH
+            I11 = I2 - NHT
             I12 = I11 + 1
             I13 = I11 + 2
 C---------Read ADV ITEM 3
@@ -330,12 +335,12 @@ c     &                         WTQ(I13,I13), IZWT
    80   CONTINUE
 C     PRINT SUMMARY INFORMATION
         WRITE(IOUT,550)
-        I2 = NH + NQT + 1
+        I2 = NHT + NQT + 1
         NTPNT = 0
         DO 100 I = 1, NPTH
           DO 90 IPNT = 1, NPNT(I)
             NTPNT = NTPNT + 1
-            I11 = I2 - NH
+            I11 = I2 - NHT
             I12 = I11 + 1
             I13 = I11 + 2
             WRITE (IOUT,560) I2, OBSNAM(I2),'X', TT2(NTPNT),
@@ -353,10 +358,12 @@ c%%%%%read and write full weight matrix
         IF (IOWTQAD.GT.0) THEN
           IOWTQ = 1
           READ (IOUADV,*) FMTIN, IPRN
-          DO 120 I = NQT+1, NQT+NTT2
-            READ (IOUADV,FMTIN) (BLANK,J=NQT+1,I-1),
-     &                          (WTQ(I,J),J=I,NQT+NTT2)
-            DO 110 J = I, NQT+NTT2
+          NTTOB1 = NQT + 1
+          NTTOB2 = NQT + NTT2*KTDIM
+          DO 120 I = NTTOB1, NTTOB2
+            READ (IOUADV,FMTIN) (BLANK,J=NTTOB1,I-1),
+     &                          (WTQ(I,J),J=I,NTTOB2)
+            DO 110 J = I, NTTOB2
               IF (I.EQ.J) THEN
                 IF (WTQ(I,J).LT.0.0) WTQ(I,J) = -WTQ(I,J)
               ELSE
@@ -366,8 +373,8 @@ c%%%%%read and write full weight matrix
   120     CONTINUE
           IF (IPRN.GE.0) THEN
             WRITE (IOUT,555) ANAME(2)
-            CALL UARRSUBPRW(WTQ,NDMH,NDMH,NQT+1,NQT+NTT2,NQT+1,NQT+NTT2,
-     &                      IPRN,IOUT,OBSNAM(NH+1),NDMH)
+            CALL UARRSUBPRW(WTQ,NDMH,NDMH,NTTOB1,NTTOB2,NTTOB1,NTTOB2,
+     &                      IPRN,IOUT,OBSNAM(NHT+1),NDMH)
           ENDIF
         ENDIF
   555   FORMAT (//,6X,A24,/,6X,75('-'))
@@ -380,15 +387,15 @@ C
 C=======================================================================
 C
       SUBROUTINE OBS1ADV2P(NROW,NCOL,NLAY,DELC,DELR,IOUT,CR,CC,CV,HNEW,
-     &                 IBOUND,OBSNAM,POFF,NH,NQT,NTT2,NPTH,NPNT,KTDIM,
+     &                 IBOUND,OBSNAM,POFF,NHT,NQT,NTT2,NPTH,NPNT,KTDIM,
      &                 KTFLG,KTREV,ADVSTP,ICLS,PRST,IP,RMLT,HK,IZON,H,
      &                 X,NPE,ND,TT2,IPRINT,ITERP,IOUTT2,MXBND,NBOUND,
      &                 BNDS,NRCHOP,IRCH,RECH,MXSTRM,NSTREM,ISTRM,STRM,
      &                 MXRIVR,NRIVER,RIVR,MXDRN,NDRAIN,DRAI,SV,
-     &                 NMLTAR,NZONAR,BOTM,NBOTM,
-     &                 SNEW,VKA,IUHFB,HFB,MXACTFB,NHFB,HANI,NGHBVL,
-     &                 NRIVVL,NDRNVL,LAYHDT,LN,NPLIST,ISCALS,FSNK,
-     &                 WTQ,NDMH,BSCAL,HKCC,HUFTHK,NHUF,IULPF,IUHUF)
+     &                 NMLTAR,NZONAR,BOTM,NBOTM,WELL,NWELVL,MXWELL,
+     &                 NWELLS,SNEW,VKA,IUHFB,HFB,MXACTFB,NHFB,HANI,
+     &                 NGHBVL,NRIVVL,NDRNVL,LAYHDT,LN,NPLIST,ISCALS,
+     &                 FSNK,WTQ,NDMH,BSCAL,HKCC,HUFTHK,NHUF,IULPF,IUHUF)
 C     VERSION 1000 07OCT1993
 C             1001 11JAN1994
 C%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -407,8 +414,8 @@ C---ARGUMENTS:
       REAL DELC, DELR, CR, CC, CV, POFF, ADVSTP, PRST, RMLT, 
      &     HK, HKCC,H, X, TT2, BNDS, RECH, STRM, RIVR,
      &     DRAI, SV, BOTM, VKA, HANI, HUFTHK
-      INTEGER NROW, NCOL, NLAY, IOUT, IBOUND, NH, NQT, NTT2, NPTH, 
-     &        KTDIM, KTFLG, KTREV, ICLS, IP, 
+      INTEGER NROW, NCOL, NLAY, IOUT, IBOUND, NHT, NQT, NTT2, NPTH, 
+     &        KTDIM, KTFLG, KTREV, ICLS, IP,
      &        IZON, NPE, ND, IPRINT, ITERP, IOUTT2,
      &        MXBND, NBOUND, NRCHOP, IRCH, MXSTRM, NSTREM, ISTRM,
      &        MXRIVR, NRIVER, MXDRN, NDRAIN, NBOTM,
@@ -426,7 +433,7 @@ C---ARGUMENTS:
      &          RIVR(NRIVVL,MXRIVR), DRAI(NDRNVL,MXDRN), LAYHDT(NLAY),
      &          SV(NCOL,NROW,NLAY), BOTM(NCOL,NROW,0:NBOTM),
      &          VKA(NCOL,NROW,NLAY), HFB(MXACTFB), HANI(NCOL,NROW,NLAY),
-     &          WTQ(NDMH,NDMH),BSCAL(NPLIST),
+     &          WTQ(NDMH,NDMH),BSCAL(NPLIST), WELL(NWELVL,MXWELL),
      &          HUFTHK(NCOL,NROW,NHUF,2), HKCC(NCOL,NROW,NLAY)
 C---LOCAL:
       REAL AX, AY, AZ, DAX, DAY, DAZ, DDX, DDY, DDZ, DL, DT, 
@@ -437,7 +444,7 @@ C---LOCAL:
       INTEGER I, IEXIT, IND, IPT, IPTH, J, JPT, KPT, KPTH, 
      &        NEWI, NEWJ, NEWK, NPART, NTPNT, OLDK
 C---COMMON:
-      INCLUDE 'param.inc'
+      INCLUDE 'PARAM.INC'
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
 C----------------------------------------------------------------------
       EXTERNAL U2DREL, ULAPRW
@@ -477,7 +484,7 @@ C-----------------------------------------------------------------------
 C-----INITIALIZE PARTICLE TIME STEPS
       IF (KTFLG.EQ.1) ADVSTP = 1.E+20
 C-----INITIALIZE POINTERS
-      IND = NH + NQT + 1
+      IND = NHT + NQT + 1
       NTPNT = 0
 C-----PRINT HEADER TO INDENTIFY ROUTINE AND OPTIONS SELECTED
       IF (IPRINT.EQ.0 .AND. ITERP.LT.2) WRITE (IOUT,500)
@@ -583,9 +590,9 @@ C           PARAMETER IS LOG-TRANSFORMED
         ENDIF
         CALL SOBS1ADV2WR(1,IP,IPRINT,ITERP,PSTP,IOUT,KPT,IPT,JPT,XP,YP,
      &               ZP,TP,DXP,DYP,DZP,BB,IOUTT2,IND,VXP,VYP,VZP,VP,
-     &               KTDIM,OBSNAM(IND),KTFLG,ISCALS,LNIIPP,WTQ(IND-NH,
-     &               IND-NH))
- 
+     &               KTDIM,OBSNAM(IND),KTFLG,ISCALS,LNIIPP,WTQ(IND-NHT,
+     &               IND-NHT))
+
 C%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 C
 C------START ITERATIONS TO MOVE PARTICLE THROUGH GRID
@@ -610,7 +617,8 @@ C           SENSITIVITIES IF IP.GT.0)
      &                NDRAIN,DRAI,SV,KTDIM,NMLTAR,
      &                NZONAR,BOTM,NBOTM,SNEW,VKA,IUHFB,HFB,MXACTFB,
      &                NHFB,HANI,NGHBVL,NRIVVL,NDRNVL,LAYHDT,FSNK,
-     &                HKCC,HUFTHK,NHUF,IULPF,IUHUF)
+     &                HKCC,HUFTHK,NHUF,IULPF,IUHUF,WELL,NWELVL,MXWELL,
+     &                NWELLS)
           IF (IEXIT.GT.0) GOTO 100
 C
 C     CALL SOBS1ADV2S TO MOVE THE PARTICLE AND CALCULATE SENSITIVITIES
@@ -646,7 +654,7 @@ C               PARAMETER IS LOG-TRANSFORMED
             CALL SOBS1ADV2WR(IEXIT,IP,IPRINT,ITERP,PSTP,IOUT,KPT,IPT,
      &                 JPT,XP,YP,ZP,TP,DXP,DYP,DZP,BB,IOUTT2,IND,VXP,
      &                 VYP,VZP,VP,KTDIM,OBSNAM(IND),KTFLG,ISCALS,LNIIPP,
-     &                 WTQ(IND-NH,IND-NH))
+     &                 WTQ(IND-NHT,IND-NHT))
             IEXIT=IEXITOLD
           ENDIF
 C
@@ -662,7 +670,7 @@ C     OTHERWISE CHECK TO SEE IF THE PARTICLE IS GOING INTO A CONFINING LAYER
      &                    H,DZP,X,LN,IIPP,NCOL,NROW,IND,
      &                    OBSNAM(IND),IPRINT,ITERP,IOUT,XP,YP,DXP,DYP,
      &                    IOUTT2,KTDIM,ISCALS,NPE,ND,NPLIST,BOTM,NBOTM,
-     &                    DTP,LNIIPP,WTQ(IND-NH,IND-NH),BSCAL,DTC)
+     &                    DTP,LNIIPP,WTQ(IND-NHT,IND-NHT),BSCAL,DTC)
           ENDIF
 C     END OF CONFINING LAYER CALCULATIONS
 C
@@ -713,7 +721,7 @@ C                 PARAMETER IS LOG-TRANSFORMED
               CALL SOBS1ADV2WR(IEXIT,IP,IPRINT,ITERP,PSTP,IOUT,KPT,IPT,
      &                     JPT,XP,YP,ZP,TP,DXP,DYP,DZP,BB,IOUTT2,IND,
      &                     VXP,VYP,VZP,VP,KTDIM,OBSNAM(IND),KTFLG,
-     &                     ISCALS,LNIIPP,WTQ(IND-NH,IND-NH))
+     &                     ISCALS,LNIIPP,WTQ(IND-NHT,IND-NHT))
               IND = IND + KTDIM
               IF (KPTH.LT.NPNT(NPART)) NTPNT = NTPNT + 1
    80       CONTINUE
@@ -730,6 +738,7 @@ C     CONTINUE ITERATIONS IF ROUTINE HAS NOT TERMINATED
       IF (IPRINT.EQ.0 .AND. ITERP.LT.2) WRITE (IOUT,540)
       RETURN
       END
+C
 C=======================================================================
       SUBROUTINE OBS1ADV2PR(ITERSS,ITMXP,IUSS,SSAD)
 C
@@ -771,7 +780,7 @@ C
      &                  SV,KTDIM,NMLTAR,NZONAR,BOTM,NBOTM,SNEW,
      &                  VKA,IUHFB,HFB,MXACTFB,NHFB,HANI,NGHBVL,
      &                  NRIVVL,NDRNVL,LAYHDT,FSNK,HKCC,HUFTHK,NHUF,
-     &                  IULPF,IUHUF)
+     &                  IULPF,IUHUF,WELL,NWELVL,MXWELL,NWELLS)
 C     VERSION 1000 22OCT1993
 C%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 C     SUBROUTINE TO COMPUTE VELOCITY OF A PARTICLE WITHIN CELL IPT,JPT,K
@@ -798,7 +807,7 @@ C---ARGUMENTS:
      &          CC(NCOL,NROW,NLAY), CR(NCOL,NROW,NLAY), 
      &          RMLT(NCOL,NROW,NMLTAR),
      &          HK(NCOL,NROW,NLAY), IZON(NCOL,NROW,NZONAR),
-     &          LAYHDT(NLAY), CO(6),
+     &          LAYHDT(NLAY), CO(6),WELL(NWELVL,MXWELL),
      &          CV(NCOL,NROW,NLAY), BNDS(NGHBVL,MXBND), IRCH(NCOL,NROW),
      &          RECH(NCOL,NROW), ISTRM(5,MXSTRM), STRM(11,MXSTRM),
      &          RIVR(NRIVVL,MXRIVR), DRAI(NDRNVL,MXDRN),
@@ -820,7 +829,7 @@ C---COMMON:
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
       COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
      1               LAYWET(200)
-      INCLUDE 'param.inc'
+      INCLUDE 'PARAM.INC'
 C----------------------------------------------------------------------
       EXTERNAL SOBS1ADV2LPF, SOBS1ADV2HUF
       INTRINSIC IABS
@@ -1084,7 +1093,7 @@ C     ...FOR GHB
         DO 10 BND = 1, NBOUND
           IF (BNDS(1,BND).EQ.KPT .AND. BNDS(2,BND).EQ.IPT .AND. 
      &        BNDS(3,BND).EQ.JPT) THEN
-            QS=QS+BNDS(5,BND)*(H0-BNDS(4,BND))
+            QS=QS-BNDS(5,BND)*(H0-BNDS(4,BND))
 C
 C           TOP FACE
             IF (KPT.EQ.1) THEN
@@ -1135,7 +1144,7 @@ C
 C           IF HEAD<RBOT THEN V=C(RBOT-HRIV)/N/DC/DR
             IF (H0.LE.RIVR(6,BND)) THEN
               VZT = VZT + RIVR(5,BND)*(RIVR(6,BND)-RIVR(4,BND))/PDRDC
-              QS=QS+RIVR(5,BND)*(RIVR(6,BND)-RIVR(4,BND))
+              QS=QS + RIVR(5,BND)*(RIVR(6,BND)-RIVR(4,BND))
               IF (IP.GT.0 .AND. PIDTMP.EQ.'RIV ') THEN
                 DCND = RIVR(5,BND)/B(IIPP)
                 DVZT = DVZT + DCND*(RIVR(6,BND)-RIVR(4,BND))/PDRDC
@@ -1144,7 +1153,7 @@ C
 C           ELSE V=C(HEAD-HRIV)/N/DR/DC
             ELSE
               VZT = VZT + RIVR(5,BND)*(H0-RIVR(4,BND))/PDRDC
-              QS=QS+RIVR(5,BND)*(H0-RIVR(4,BND))
+              QS = QS - RIVR(5,BND)*(H0-RIVR(4,BND))
               IF (IP.GT.0) THEN
                 DCND = 0.0
                 IF (PIDTMP.EQ.'RIV ') DCND = RIVR(5,BND)/B(IIPP)
@@ -1162,7 +1171,7 @@ C     ...FOR DRAIN PACKAGE
 C           COMPUTE ONLY IF HEAD > DRAIN ELEVATION
             IF (H0.GT.DRAI(4,BND)) THEN
               VZT = VZT + DRAI(5,BND)*(H0-DRAI(4,BND))/PDRDC
-              QS=QS-DRAI(5,BND)*(H0-DRAI(4,BND))
+              QS = QS - DRAI(5,BND)*(H0-DRAI(4,BND))
               IF (IP.GT.0) THEN
                 DCND = 0.0
                 IF (PIDTMP.EQ.'DRN ') DCND = DRAI(5,BND)/B(IIPP)
@@ -1175,6 +1184,15 @@ C           COMPUTE ONLY IF HEAD > DRAIN ELEVATION
       ENDIF
 C
 C     WEAK SINK CALCULATIONS
+C
+C     ...FOR WELL PACKAGE
+      DO 50 L=1,NWELLS
+        IR=WELL(2,L)
+        IC=WELL(3,L)
+        IL=WELL(1,L)
+        Q=WELL(4,L)
+        IF(JPT.EQ.IC .AND. IPT.EQ.IR .AND. KPT.EQ.IL) QS = QS + Q
+   50 CONTINUE      
       IF(QS.LT.0.0) THEN
         F=-QS/QI
         IF(FSNK.LT.0.0.OR.(FSNK.GT.0.0.AND.F.GT.FSNK)) THEN
@@ -1291,7 +1309,7 @@ C      DOUBLE PRECISION
 C---COMMON:
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
       COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
-      INCLUDE 'param.inc'
+      INCLUDE 'PARAM.INC'
 C----------------------------------------------------------------------
       EXTERNAL SSEN1HUF1CH, SSEN1HUF1CV, SSEN1HFB6MD
       INTRINSIC IABS
@@ -1492,7 +1510,7 @@ C---COMMON:
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
       COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
      1               LAYWET(200)
-      INCLUDE 'param.inc'
+      INCLUDE 'PARAM.INC'
 C----------------------------------------------------------------------
       EXTERNAL SSEN1LPF1CH, SSEN1LPF1CV, SSEN1HFB6MD
       INTRINSIC IABS
@@ -1684,72 +1702,10 @@ C
       IF (VZP.NE.0.0) DVZ = ABS(VZB-VZT)/ABS(VZP)
 C
 C------DETERMINE X, Y AND Z TRANSIT TIMES TO EDGES OF CELL
-C---X TRANSIT TIME------------------------------------------------------
-      DTX = 0.0
-      IF (VXL.GT.0.0 .AND. VXR.LT.0.0) NXFLG = 1
-      IF (ABS(VXP).LT.VSTAG) NXFLG = 1
-      IF (NXFLG.NE.1) THEN
-C------LEFT TO RIGHT
-        IF (VXP.GT.0.0) THEN
-          IF (DVX.LT.1.E-5 .OR. VXR.EQ.0.0) THEN
-            DTX = (DR-XPC)/VXP
-          ELSE
-            DTX = LOG(VXR/VXP)/AX
-          ENDIF
-        ENDIF
-C------RIGHT TO LEFT
-        IF (VXP.LT.0.0) THEN
-          IF (DVX.LT.1.E-5 .OR. VXL.EQ.0.0) THEN
-            DTX = -XPC/VXP
-          ELSE
-            DTX = LOG(VXL/VXP)/AX
-          ENDIF
-        ENDIF
-      ENDIF
-C---Y TRANSIT TIME------------------------------------------------------
-      DTY = 0.0
-      IF (VYT.GT.0.0 .AND. VYB.LT.0.0) NYFLG = 1
-      IF (ABS(VYP).LT.VSTAG) NYFLG = 1
-      IF (NYFLG.NE.1) THEN
-C------TOP TO BOTTOM
-        IF (VYP.GT.0.0) THEN
-          IF (DVY.LT.1.E-5 .OR. VYB.EQ.0.0) THEN
-            DTY = (DC-YPC)/VYP
-          ELSE
-            DTY = LOG(VYB/VYP)/AY
-          ENDIF
-        ENDIF
-C------BOTTOM TO TOP
-        IF (VYP.LT.0.0) THEN
-          IF (DVY.LT.1.E-5 .OR. VYT.EQ.0.0) THEN
-            DTY = -YPC/VYP
-          ELSE
-            DTY = LOG(VYT/VYP)/AY
-          ENDIF
-        ENDIF
-      ENDIF
-C---Z TRANSIT TIME------------------------------------------------------
-      DTZ = 0.0
-      IF (VZT.LT.0.0 .AND. VZB.GT.0.0) NZFLG = 1
-      IF (ABS(VZP).LT.VSTAG) NZFLG = 1
-      IF (NZFLG.NE.1) THEN
-C------TOP TO BOTTOM
-        IF (VZP.LT.0.0) THEN
-          IF (DVZ.LT.1.E-5 .OR. VZB.EQ.0.0) THEN
-            DTZ = -ZPC/VZP
-          ELSE
-            DTZ = LOG(VZB/VZP)/AZ
-          ENDIF
-        ENDIF
-C------BOTTOM TO TOP
-        IF (VZP.GT.0.0) THEN
-          IF (DVZ.LT.1.E-5 .OR. VZT.EQ.0.0) THEN
-            DTZ = (DL-ZPC)/VZP
-          ELSE
-            DTZ = LOG(VZT/VZP)/AZ
-          ENDIF
-        ENDIF
-      ENDIF
+      CALL SOBS1ADV2DT(VXL,VXR,VXP,AX,DVX,DR,XPC,DTX,NXFLG)
+      CALL SOBS1ADV2DT(VYT,VYB,VYP,AY,DVY,DC,YPC,DTY,NYFLG)
+      CALL SOBS1ADV2DT(VZB,VZT,VZP,AZ,DVZ,DL,ZPC,DTZ,NZFLG)
+C
 C-----IF PARTICLE STAGNANT IN CELL THEN PRINT WARNING AND EXIT
       IF (NXFLG.EQ.1 .AND. NYFLG.EQ.1 .AND. NZFLG.EQ.1) THEN
         IEXIT = 2
@@ -1789,19 +1745,10 @@ C     PUT IN X-DIRECTION, AND...
               DX = DR - XPC
               XPC = 0.0
             ENDIF
-C           ...DISPLACE Y AND...
-            IF (DVY.LT.1.E-5) THEN
-              DY = VYP*DT
-            ELSE
-              DY = ((VYP*EXP(AY*DT)-VYT)/AY) - YPC
-            ENDIF
+C           ...DISPLACE Y AND Z
+            CALL SOBS1ADV2PD(VYT,VYP,AY,DVY,YPC,DT,DY)
+            CALL SOBS1ADV2PD(VZB,VZP,AZ,DVZ,ZPC,DT,DZ)
             YPC = YPC + DY
-C           ...DISPLACE Z
-            IF (DVZ.LT.1.E-5) THEN
-              DZ = VZP*DT
-            ELSE
-              DZ = ((VZP*EXP(AZ*DT)-VZB)/AZ) - ZPC
-            ENDIF
             ZPC = ZPC + DZ
 C          ENDIF
 C
@@ -1823,25 +1770,17 @@ C        IF (DTY.LT.DTX .AND. DTY.LT.DTZ) THEN
               DY = DC - YPC
               YPC = 0.0
             ENDIF
-C           ...DISPLACE X AND...
-            IF (DVX.LT.1.E-5) THEN
-              DX = VXP*DT
-            ELSE
-              DX = ((VXP*EXP(AX*DT)-VXL)/AX) - XPC
-            ENDIF
+C           ...DISPLACE X AND Z
+            CALL SOBS1ADV2PD(VXL,VXP,AX,DVX,XPC,DT,DX)
+            CALL SOBS1ADV2PD(VZB,VZP,AZ,DVZ,ZPC,DT,DZ)
             XPC = XPC + DX
-C           ...DISPLACE Z
-            IF (DVZ.LT.1.E-5) THEN
-              DZ = VZP*DT
-            ELSE
-              DZ = ((VZP*EXP(AZ*DT)-VZB)/AZ) - ZPC
-            ENDIF
             ZPC = ZPC + DZ
           ENDIF
 C
 C     CHECK TO SEE IF NEW POSITION IS OUTSIDE GRID BEFORE CORRECTING Z POSITION
           IF(NEWI.GT.0 .AND. NEWI.LE.NROW .AND.
-     &       NEWJ.GT.0 .AND. NEWJ.LE.NCOL) THEN
+     &       NEWJ.GT.0 .AND. NEWJ.LE.NCOL .AND.
+     &       NEWK.GT.0 .AND. NEWK.LE.NLAY) THEN
             IF (IBOUND(NEWJ,NEWI,NEWK).EQ.0) IEXIT = 4
           ELSE
             IEXIT=4
@@ -1880,19 +1819,10 @@ C        IF (DTZ.LT.DTX .AND. DTZ.LT.DTY) THEN
             DZ = DL - ZPC
             ZPC = 0.0
           ENDIF
-C           ...DISPLACE X AND...
-          IF (DVX.LT.1.E-5) THEN
-            DX = VXP*DT
-          ELSE
-            DX = ((VXP*EXP(AX*DT)-VXL)/AX) - XPC
-          ENDIF
+C         ...THEN DISPLACE X AND Y
+          CALL SOBS1ADV2PD(VXL,VXP,AX,DVX,XPC,DT,DX)
+          CALL SOBS1ADV2PD(VYT,VYP,AY,DVY,YPC,DT,DY)
           XPC = XPC + DX
-C           ...DISPLACE Y
-          IF (DVY.LT.1.E-5) THEN
-            DY = VYP*DT
-          ELSE
-            DY = ((VYP*EXP(AY*DT)-VYT)/AY) - YPC
-          ENDIF
           YPC = YPC + DY
         ENDIF
         IF (KTFLG.GT.1) PSTP = PSTP + DT
@@ -1919,24 +1849,10 @@ C        FIRST DETERMINE DT
           DT = DPSTP
           PSTP = 0.0
         ENDIF
-C           ...THEN DISPLACE X
-        IF (DVX.LT.1.E-5) THEN
-          DX = VXP*DT
-        ELSE
-          DX = ((VXP*EXP(AX*DT)-VXL)/AX) - XPC
-        ENDIF
-C           ...AND DISPLACE Y
-        IF (DVY.LT.1.E-5) THEN
-          DY = VYP*DT
-        ELSE
-          DY = ((VYP*EXP(AY*DT)-VYT)/AY) - YPC
-        ENDIF
-C           ...AND DISPLACE Z
-        IF (DVZ.LT.1.E-5) THEN
-          DZ = VZP*DT
-        ELSE
-          DZ = ((VZP*EXP(AZ*DT)-VZB)/AZ) - ZPC
-        ENDIF
+C           ...THEN DISPLACE
+        CALL SOBS1ADV2PD(VXL,VXP,AX,DVX,XPC,DT,DX)
+        CALL SOBS1ADV2PD(VYT,VYP,AY,DVY,YPC,DT,DY)
+        CALL SOBS1ADV2PD(VZB,VZP,AZ,DVZ,ZPC,DT,DZ)
         XPC = XPC + DX
         YPC = YPC + DY
         ZPC = ZPC + DZ
@@ -1945,34 +1861,14 @@ C
 C
 C-----NOW DETERMINE X, Y, AND Z SENSITIVITIES
       IF (IP.GT.0) THEN
-        IF (DVX.LT.1.E-5) THEN
-          DDX = DVXP*DT
-        ELSE
-          EX = EXP(AX*DT)
-          DDX = ((DAX*DT*VXP*EX)-DVXL+DVXP*EX)/AX
-          DDX = DDX - (DAX*(VXP*EX-VXL)/AX/AX)
-          DDX = DDX - DXP
-        ENDIF
-        IF (DVY.LT.1.E-5) THEN
-          DDY = DVYP*DT
-        ELSE
-          EY = EXP(AY*DT)
-          DDY = ((DAY*DT*VYP*EY)-DVYT+DVYP*EY)/AY
-          DDY = DDY - (DAY*(VYP*EY-VYT)/AY/AY)
-          DDY = DDY - DYP
-        ENDIF
-        IF (DVZ.LT.1.E-5) THEN
-          DDZ = DVZP*DT
-        ELSE
-          EZ = EXP(AZ*DT)
-          DDZ = ((DAZ*DT*VZP*EZ)-DVZB+DVZP*EZ)/AZ
-          DDZ = DDZ - (DAZ*(VZP*EZ-VZB)/AZ/AZ)
-          DDZ = DDZ - DZP
-        ENDIF
+        CALL SOBS1ADV2DD(DVX,VXL,DVXL,VXP,DVXP,AX,DAX,DXP,DT,DDX)
+        CALL SOBS1ADV2DD(DVY,VYT,DVYT,VYP,DVYP,AY,DAY,DYP,DT,DDY)
+        CALL SOBS1ADV2DD(DVZ,VZB,DVZB,VZP,DVZP,AZ,DAZ,DZP,DT,DDZ)
       ENDIF
 C     CHECK TO SEE IF NEW POSITION IS OUTSIDE GRID
       IF(NEWI.GT.0 .AND. NEWI.LE.NROW .AND.
-     &   NEWJ.GT.0 .AND. NEWJ.LE.NCOL) THEN
+     &   NEWJ.GT.0 .AND. NEWJ.LE.NCOL .AND.
+     &   NEWK.GT.0 .AND. NEWK.LE.NLAY) THEN
         IF (IBOUND(NEWJ,NEWI,NEWK).EQ.0) IEXIT = 4
       ELSE
         IEXIT=4
@@ -1982,7 +1878,76 @@ C     CHECK TO SEE IF NEW POSITION IS OUTSIDE GRID
 C
 C=======================================================================
 C
-      SUBROUTINE SOBS1ADV2O(NH,NTT2,HOBS,H,WTQ,IOUT,D,
+      SUBROUTINE SOBS1ADV2DD(DV,V1,DV1,VP,DVP,A,DA,DP,DT,DD)
+C
+C%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+C     SUBROUTINE TO COMPUTE PARTICLE DISPLACEMENT SENSITIVITY
+C%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+C
+        IF (DV.LT.1.E-5) THEN
+          DD = DVP*DT
+        ELSE
+          E = EXP(A*DT)
+          DD = ((DA*DT*VP*E)-DV1+DVP*E)/A
+          DD = DD - (DA*(VP*E-V1)/A/A)
+          DD = DD - DP
+        ENDIF
+      RETURN
+      END
+C
+C=======================================================================
+C
+      SUBROUTINE SOBS1ADV2PD(V1,VP,A,DV,PC,DT,DD)
+C
+C%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+C     SUBROUTINE TO COMPUTE PARTICLE DISPLACEMENT
+C%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+C
+      IF (DV.LT.1.E-5) THEN
+        DD = VP*DT
+      ELSE
+        DD = ((VP*EXP(A*DT)-V1)/A) - PC
+      ENDIF
+      RETURN
+      END
+C
+C=======================================================================
+C
+      SUBROUTINE SOBS1ADV2DT(V1,V2,VP,A,DV,DR,PC,DT,NFLG)
+C
+C%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+C     SUBROUTINE TO COMPUTE TRAVEL TIME OVER A GIVEN DISTANCE
+C%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+C
+      VSTAG=1.0E-6
+      DT = 0.0
+      NFLG = 0
+      IF (V1.GT.0.0 .AND. V2.LT.0.0) NFLG = 1
+      IF (ABS(VP).LT.VSTAG) NFLG = 1
+      IF (NFLG.NE.1) THEN
+C------1 TO 2
+        IF (VP.GT.0.0) THEN
+          IF (DV.LT.1.E-5 .OR. V2.EQ.0.0) THEN
+            DT = (DR-PC)/VP
+          ELSE
+            DT = LOG(V2/VP)/A
+          ENDIF
+        ENDIF
+C------2 TO 1
+        IF (VP.LT.0.0) THEN
+          IF (DV.LT.1.E-5 .OR. V1.EQ.0.0) THEN
+            DT = -PC/VP
+          ELSE
+            DT = LOG(V1/VP)/A
+          ENDIF
+        ENDIF
+      ENDIF
+      RETURN
+      END
+C
+C=======================================================================
+C
+      SUBROUTINE SOBS1ADV2O(NHT,NTT2,HOBS,H,WTQ,IOUT,D,
      &                      IDIS,IDTT,JDRY,RSQ,NRUNS,AVET,NPOST,NNEGT,
      &                      KTDIM,ND,MPR,IPR,IO,OBSNAM,N,NDMH,WTRL,NRES,
      &                      IUGDO,OUTNAM,IPLOT,IPLPTR,LCOBADV,ISSWR,
@@ -1992,8 +1957,8 @@ C     SPECIFICATIONS:
 C-----------------------------------------------------------------------
 C---ARGUMENTS:
       REAL HOBS, H, WTQ, D, RSQ, AVET, WTRL
-      INTEGER NH, NTT2, IOUT, IDIS, IDTT,
-     &        JDRY, NRUNS, NPOST, NNEGT, KTDIM, ND, MPR, IPR, IO, 
+      INTEGER NHT, NTT2, IOUT, IDIS, IDTT,
+     &        JDRY, NRUNS, NPOST, NNEGT, KTDIM, ND, MPR, IPR, IO,
      &        N, NDMH, NRES
       INTEGER IUGDO(6), IPLOT(ND+IPR+MPR), IPLPTR(ND+IPR+MPR)
       CHARACTER*12 OBSNAM(ND)
@@ -2054,9 +2019,9 @@ C
         RES1 = HOBS(N) - H(N)
         RES2 = HOBS(N+1) - H(N+1)
         IF (KTDIM.EQ.3) RES3 = HOBS(N+2) - H(N+2)
-        W1 = WTQ(N-NH,N-NH)
-        W2 = WTQ(N-NH+1,N-NH+1)
-        IF (KTDIM.EQ.3) W3 = WTQ(N-NH+2,N-NH+2)
+        W1 = WTQ(N-NHT,N-NHT)
+        W2 = WTQ(N-NHT+1,N-NHT+1)
+        IF (KTDIM.EQ.3) W3 = WTQ(N-NHT+2,N-NHT+2)
         WT12 = SQRT(W1)
         WT22 = SQRT(W2)
         IF (KTDIM.EQ.3) WT33 = SQRT(W3)
@@ -2258,7 +2223,7 @@ C----------------------------------------------------------------------
       INTEGER OLDK,KPT,NEWK,IPT,NEWI,JPT,NEWJ,IND
       REAL H,XP,DX,YP,DY,ZP,DZ,TP,DT,DP,VP,DTP
       DIMENSION H(ND),X(NPE,ND),LN(NPLIST)
-      INCLUDE 'param.inc'
+      INCLUDE 'PARAM.INC'
 C----------------------------------------------------------------------
       XP = XP + DX
       YP = YP + DY
@@ -2310,7 +2275,7 @@ C---ARGUMENTS:
       DIMENSION PRST(NCOL,NROW,NBOTM),LN(NPLIST),X(NPE,ND),
      &  BOTM(NCOL,NROW,0:NBOTM),BSCAL(NPLIST), H(ND)
 C---COMMON:
-      INCLUDE 'param.inc'
+      INCLUDE 'PARAM.INC'
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
 C     ------------------------------------------------------------------
 C

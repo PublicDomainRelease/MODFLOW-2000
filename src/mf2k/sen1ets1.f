@@ -1,11 +1,13 @@
-C     Last change:  ERB  23 Jun 2000   11:40 am
+C     Last change:  ERB  21 Nov 2001    9:58 am
       SUBROUTINE SEN1ETS1FM(NCOL,NROW,NLAY,DELR,DELC,RMLT,NETSOP,IETS,
      &                      IBOUND,RHS,ETSS,ETSX,HNEW,IZON,NMLTAR,
      &                      NZONAR,IP,NETSEG,PXDP,PETM,NSEGAR)
-C-----VERSION 20000328 ERB
+C-----VERSION 20011121 ERB
 C     ******************************************************************
 C     CALCULATE FORCING FUNCTION DERIVATIVE FOR ETS AND ADD TO RHS.
 C     ******************************************************************
+C     Modified 11/21/2001 to support parameter instances - ERB
+C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL DDD, DELC, DELR, ETSX, H, RHS, S, SM, RMLT, ETSS, XXX, ZERO
@@ -19,10 +21,18 @@ C     ------------------------------------------------------------------
      &          PXDP(NCOL,NROW,NSEGAR), PETM(NCOL,NROW,NSEGAR)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
-      IF (IACTIVE(IP).EQ.0) RETURN
+      NI = IACTIVE(IP)
+      IF (NI.EQ.0) RETURN
       ZERO = 0.0
       ICL1 = IPLOC(1,IP)
       ICL2 = IPLOC(2,IP)
+      NUMINST = IPLOC(3,IP)
+      IF (NUMINST.GT.1) THEN
+C       SELECT CORRECT INSTANCE
+        NCLU = (ICL2-ICL1+1)/NUMINST
+        ICL1 = ICL1+(NI-1)*NCLU
+        ICL2 = ICL1+NCLU-1
+      ENDIF
 C-----LOOP THROUGH CLUSTERS
       DO 70 K = ICL1, ICL2
         M = IPCLST(2,K)

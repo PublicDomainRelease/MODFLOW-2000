@@ -1,4 +1,4 @@
-C     Last change:  ERB   6 Nov 2000    3:47 pm
+C     Last change:  ERB   4 Dec 2001    2:24 pm
       SUBROUTINE GWF1DRT1AL(ISUM,LCDRTF,MXDRT,NDRTCL,IN,IOUT,IDRTCB,
      &                      NDRTVL,IDRTAL,IFREFM,NPDRT,IDRTPB,NDRTNP,
      &                      IDRTFL)
@@ -100,12 +100,14 @@ C6------RETURN.
       END
 C=======================================================================
       SUBROUTINE GWF1DRT1RQ(IN,IOUT,NDRTVL,IDRTAL,NCOL,NROW,NLAY,NPDRT,
-     &                      DRTF,IDRTPB,MXDRT,IFREFM,ITERP,IDRTFL)
+     &                      DRTF,IDRTPB,MXDRT,IFREFM,ITERP,IDRTFL,
+     &                      INAMLOC)
 C
-C-----VERSION 20000620 ERB
+C-----VERSION 20011108 ERB
 C     ******************************************************************
 C     READ DRAIN-RETURN PARAMETERS
 C     ******************************************************************
+C     Modified 11/8/2001 to support parameter instances - ERB
 C
 C     SPECIFICATIONS:
 C     ------------------------------------------------------------------
@@ -120,16 +122,32 @@ C-------READ NAMED PARAMETERS.
       IF (NPDRT.GT.0) THEN
         NAUX=NDRTVL-5-IDRTAL-IDRTFL
         LSTSUM=IDRTPB
-        DO 10 K=1,NPDRT
+        DO 20 K=1,NPDRT
           LSTBEG=LSTSUM
 C         READ ITEM 2
-          CALL UPARLSTRP(LSTSUM,MXDRT,IN,IOUT,IP,'DRT','DRT',ITERP)
+          CALL UPARLSTRP(LSTSUM,MXDRT,IN,IOUT,IP,'DRT','DRT',ITERP,
+     &                   NUMINST,INAMLOC)
           NLST=LSTSUM-LSTBEG
+          IF (NUMINST.GT.1) NLST = NLST/NUMINST
+C         ASSIGN STARTING INDEX FOR READING INSTANCES
+          IF (NUMINST.EQ.0) THEN
+            IB=0
+          ELSE
+            IB=1
+          ENDIF
+C         READ LIST(S) OF CELLS, PRECEDED BY INSTANCE NAME IF NUMINST>0
+          LB=LSTBEG
+          DO 10 I=IB,NUMINST
+            IF (I.GT.0) THEN
+              CALL UINSRP(I,IN,IOUT,IP,ITERP)
+            ENDIF
 C         READ ITEM 3
-          CALL SGWF1DRT1LR(NLST,DRTF,LSTBEG,NDRTVL,MXDRT,IDRTAL,IN,IOUT,
-     &                     DRTAUX,5,NAUX,IFREFM,NCOL,NROW,NLAY,ITERP,
-     &                     IDRTFL)
-   10   CONTINUE
+            CALL SGWF1DRT1LR(NLST,DRTF,LB,NDRTVL,MXDRT,IDRTAL,IN,IOUT,
+     &                       DRTAUX,5,NAUX,IFREFM,NCOL,NROW,NLAY,ITERP,
+     &                       IDRTFL)
+            LB = LB+NLST
+   10     CONTINUE
+   20   CONTINUE
       ENDIF
 C
 C6------RETURN
@@ -666,11 +684,12 @@ C=======================================================================
       SUBROUTINE SGWF1DRT1LS(IN,IOUT,DRTF,NDRTVL,MXDRT,NREAD,MXADRT,
      &                       NDRTCL,DRTAUX,NCAUX,NAUX,IDRTFL)
 C
-C-----VERSION 20000620 ERB
+C-----VERSION 20011108 ERB
 C     ******************************************************************
-C     Read a list parameter name and look it up in the list of
-C     parameters.
+C     Read a list parameter name, look it up in the list of parameters,
+C     and substitute values into active part of package array.
 C     ******************************************************************
+C     Modified 11/8/2001 to support parameter instances - ERB
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
@@ -680,8 +699,26 @@ C     ------------------------------------------------------------------
       CHARACTER*57 LABEL1, LABEL2, LABEL3
       CHARACTER*16 DRTAUX(NCAUX)
       CHARACTER*200 LINE
-      CHARACTER*10 CTMP1, CTMP2
+      CHARACTER*10 CTMP1, CTMP2, CTMP3, CTMP4
 C     ------------------------------------------------------------------
+  500 FORMAT(/,' Parameter:  ',A)
+  510 FORMAT(1X,'Parameter type conflict:',/
+     &       1X,'Named parameter:',A,' was defined as type:',A,/
+     &       1X,'However, this parameter is used in the ',A,
+     &       ' file, so it should be type:',A)
+  512 FORMAT(/,1X,'Blank instance name in the ',A,
+     &       ' file for parameter ',A)
+  514 FORMAT(3X,'Instance:  ',A)
+  516 FORMAT(/,1X,'The ',A,' file specifies undefined instance "',
+     &       A,'" for parameter ',A)
+  520 FORMAT(1X,/1X,'THE NUMBER OF ACTIVE LIST ENTRIES (',I4,
+     &       ')',/1X,'IS GREATER THAN THE MAXIMUM ALLOWED (',I4,')')
+  530 FORMAT(1X,I6,I7,I7,I7,14G16.4)
+  550 FORMAT(/,1X,'*** ERROR: PARAMETER "',A,
+     &'" HAS ALREADY BEEN ACTIVATED THIS STRESS PERIOD',/,
+     &' -- STOP EXECUTION (SGWF1DRT1LS)')
+  600 FORMAT(1X,I6,3I7,3I7,2X,F8.6)
+C
       PACK = 'DRT'
       PTYP = 'DRT'
       IPVL1 = 5
@@ -694,7 +731,6 @@ C
       LLOC=1
       CALL URWORD(LINE,LLOC,ISTART,ISTOP,0,IDUM,RDUM,IOUT,IN)
       WRITE(IOUT,500) LINE(ISTART:ISTOP)
-  500 FORMAT(/,' Parameter:  ',A)
       IF(LINE(ISTART:ISTOP).EQ.' ') THEN
         WRITE(IOUT,*) ' Blank parameter name in the ',PACK,' file.'
         STOP
@@ -708,19 +744,47 @@ C
         IF(CTMP1.EQ.CTMP2) THEN
           IF(PARTYP(IP).NE.PTYP) THEN
             WRITE(IOUT,510) PARNAM(IP),PARTYP(IP),PACK,PTYP
-  510       FORMAT(1X,'Parameter type conflict:',/
-     &        1X,'Named parameter:',A,' was defined as type:',A,/
-     &        1X,'However, this parameter is used in the ',A,
-     &          ' file, so it should be type:',A)
             STOP
           ENDIF
+C
+C         DESIGNATE CELLS CORRESPONDING TO CORRECT PARAMETER INSTANCE
           NLST=IPLOC(2,IP)-IPLOC(1,IP)+1
-          IACTIVE(IP)=1
+          NUMINST=IPLOC(3,IP)
+          ILOC=IPLOC(4,IP)
+          NI=1
+          IF(NUMINST.GT.0) THEN
+            NLST=NLST/NUMINST
+            CALL URWORD(LINE,LLOC,ISTART,ISTOP,0,IDUM,RDUM,IOUT,IN)
+            CTMP3=LINE(ISTART:ISTOP)
+            IF(CTMP3.EQ.' ') THEN
+              WRITE(IOUT,512)PACK,PARNAM(IP)
+              STOP
+            ENDIF
+            WRITE(IOUT,514) CTMP3
+            CALL UPCASE(CTMP3)
+            DO 10 KI=1,NUMINST
+              CTMP4=INAME(ILOC+KI-1)
+              CALL UPCASE(CTMP4)
+              IF(CTMP3.EQ.CTMP4) THEN
+                NI=KI
+                GOTO 15
+              ENDIF
+   10       CONTINUE
+            WRITE(IOUT,516) PACK,CTMP3,PARNAM(IP)
+            STOP
+   15       CONTINUE
+          ENDIF
+C
+          IF (IACTIVE(IP).GT.0) THEN
+            WRITE(IOUT,550) PARNAM(IP)
+            STOP
+          ENDIF
+C
+          IACTIVE(IP)=NI
+C
           NDRTCL=NDRTCL+NLST
           IF(NDRTCL.GT.MXADRT) THEN
             WRITE(IOUT,520) NDRTCL,MXADRT
-  520       FORMAT(1X,/1X,'THE NUMBER OF ACTIVE LIST ENTRIES (',I4,
-     &       ')',/1X,'IS GREATER THAN THE MAXIMUM ALLOWED (',I4,')')
             STOP
           ENDIF
 C
@@ -730,7 +794,7 @@ C
 C  Substitute values
           DO 60 I=1,NLST
             II=NDRTCL-NLST+I
-            III=I-1+IPLOC(1,IP)
+            III=I-1+IPLOC(1,IP)+(NI-1)*NLST
             DO 20 J=1,NREAD
               DRTF(J,II)=DRTF(J,III)
    20       CONTINUE
@@ -742,7 +806,6 @@ C  Substitute values
             IC=DRTF(3,II)
             IF (IDRTFL.EQ.0) THEN
               WRITE(IOUT,530) II,IL,IR,IC,(DRTF(JJ,II),JJ=4,NREAD)
-  530         FORMAT(1X,I6,I7,I7,I7,14G16.4)
             ELSE
               IF (NREAD.GE.10) THEN
                 WRITE(IOUT,530) II,IL,IR,IC,(DRTF(JJ,II),JJ=4,5),
@@ -776,7 +839,6 @@ C     WRITE DATA RELATED TO RETURN-FLOW RECIPIENT CELLS
           JR = DRTF(8,II)
           RFP = DRTF(9,II)
           WRITE(IOUT,600) NN,K,I,J,KR,IR,JR,RFP
-  600     FORMAT(1X,I6,3I7,3I7,2X,F8.6)
   140   CONTINUE
       ENDIF
 C

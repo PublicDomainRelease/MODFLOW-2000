@@ -1,4 +1,4 @@
-C     Last change:  ERB  29 Mar 2001    4:43 pm
+C     Last change:  ERB   5 Nov 2001   10:35 am
       SUBROUTINE GWF1HFB6AL(INHFB,IOUT,ISUM,LCHFB,MXACTFB,NHFBNP,
      &                   NPHFB,MXHFB,IHFB)
 C
@@ -54,7 +54,7 @@ C6------RETURN
 C=======================================================================
       SUBROUTINE GWF1HFB6RP(BOTM,CR,CC,DELR,DELC,HFB,INHFB,MXACTFB,
      &                  NBOTM,NCOL,NROW,NLAY,NODES,NHFBNP,NHFB,NPHFB,
-     &                  IOUT,IOUTG,ITERP,MXHFB,IHFB,LAYHDT)
+     &                  IOUT,IOUTG,ITERP,MXHFB,IHFB,LAYHDT,INAMLOC)
 C
 C-----VERSION 11JAN2000 GWF1HFB6RP
 C     ******************************************************************
@@ -91,7 +91,7 @@ C     READ PARAMETER DEFINITIONS (ITEMS 2 AND 3)
         DO 20 K = 1,NPHFB
           LSTBEG = LSTSUM
           CALL UPARLSTRP(LSTSUM,MXHFB,INHFB,IOUTG,IP,'HFB ','HFB ',
-     &                   ITERP)
+     &                   ITERP,NUMINST,INAMLOC)
           NLST=LSTSUM-LSTBEG
           CALL SGWF1HFB6RL(NLST,HFB,LSTBEG,7,MXHFB,INHFB,IOUTG,
      &         'BARRIER  LAYER  IROW1  ICOL1  IROW2  ICOL2     FACTOR',

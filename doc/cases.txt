@@ -260,6 +260,35 @@ include "noise."
   Solver: SIP
   Types of parameters defined / package: none
 
+18. Test case tvp:
+
+  This test case is not documented in print.  It demonstrates the use of 
+  time-varying parameters in the WEL, GHB, RIV, DRT, DRN, STR, CHD, RCH, 
+  EVT, and ETS Packages.
+  
+  Grid dimensions: 2 Layers, 18 Rows, 18 Columns
+  Stress periods: 1 steady, 4 transient
+  Optional processes: none
+  Mode: Forward
+  Flow package: LPF
+  Stress packages: WEL, GHB, RIV, RCH, DRT, DRN, STR, CHD, EVT, ETS
+  Solver: PCG2
+  Types of parameters defined / package:
+    SS / LPF
+    HK / LPF
+    VANI / LPF
+    VKCB / LPF
+    Q / WEL
+    RIV / RIV
+    RCH / RCH
+    GHB / GHB
+    DRT / DRT
+    DRN / DRN
+    STR / STR
+    CHD / CHD
+    EVT / EVT
+    ETS / ETS
+
 REFERENCES
 
 Anderman, E.R., and Hill, M.C., 2000, MODFLOW-2000, the U.S. Geological

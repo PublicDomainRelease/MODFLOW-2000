@@ -1,4 +1,4 @@
-C     Last change:  ERB  27 Mar 2001   11:47 am
+C     Last change:  ERB  19 Nov 2001    1:49 pm
       SUBROUTINE GWF1RIV6AL(ISUM,LCRIVR,MXRIVR,NRIVER,IN,IOUT,IRIVCB,
      1        NRIVVL,IRIVAL,IFREFM,NPRIV,IRIVPB,NNPRIV)
 C
@@ -79,12 +79,13 @@ C6------RETURN.
       RETURN
       END
       SUBROUTINE GWF1RIV6RQ(IN,IOUT,NRIVVL,IRIVAL,NCOL,NROW,NLAY,NPRIV,
-     1            RIVR,IRIVPB,MXRIVR,IFREFM,ITERP)
+     &            RIVR,IRIVPB,MXRIVR,IFREFM,ITERP,INAMLOC)
 C
-C-----VERSION 11JAN2000 GWF1RIV6RQ
+C-----VERSION 20011105 GWF1RIV6RQ
 C     ******************************************************************
 C     READ RIVER PARAMETERS
 C     ******************************************************************
+C     Modified 11/5/2001 to support parameter instances - ERB
 C
 C     SPECIFICATIONS:
 C     ------------------------------------------------------------------
@@ -94,20 +95,38 @@ C     ------------------------------------------------------------------
 C     ------------------------------------------------------------------
 C
 C-------READ NAMED PARAMETERS.
-      IF(ITERP.EQ.1) WRITE(IOUT,3) NPRIV
-    3 FORMAT(1X,//1X,I5,' River parameters')
+      IF(ITERP.EQ.1) WRITE(IOUT,1000) NPRIV
+ 1000 FORMAT(1X,//1X,I5,' River parameters')
       IF(NPRIV.GT.0) THEN
-         NAUX=NRIVVL-6-IRIVAL
-         LSTSUM=IRIVPB
-         DO 5 K=1,NPRIV
-         LSTBEG=LSTSUM
-         CALL UPARLSTRP(LSTSUM,MXRIVR,IN,IOUT,IP,'RIV','RIV',ITERP)
-         NLST=LSTSUM-LSTBEG
-         CALL ULSTRD(NLST,RIVR,LSTBEG,NRIVVL,MXRIVR,IRIVAL,IN,
-     1          IOUT,'REACH NO.  LAYER   ROW   COL'//
-     2          '     STAGE    STRESS FACTOR     BOTTOM EL.',
-     3          RIVAUX,5,NAUX,IFREFM,NCOL,NROW,NLAY,5,5,ITERP)
-    5    CONTINUE
+        NAUX=NRIVVL-6-IRIVAL
+        LSTSUM=IRIVPB
+        DO 20 K=1,NPRIV
+          LSTBEG=LSTSUM
+          CALL UPARLSTRP(LSTSUM,MXRIVR,IN,IOUT,IP,'RIV','RIV',ITERP,
+     &                   NUMINST,INAMLOC)
+          NLST=LSTSUM-LSTBEG
+
+          IF (NUMINST.GT.1) NLST = NLST/NUMINST
+C         ASSIGN STARTING INDEX FOR READING INSTANCES
+          IF (NUMINST.EQ.0) THEN
+            IB=0
+          ELSE
+            IB=1
+          ENDIF
+C         READ LIST(S) OF CELLS, PRECEDED BY INSTANCE NAME IF NUMINST>0
+          LB=LSTBEG
+          DO 10 I=IB,NUMINST
+            IF (I.GT.0) THEN
+              CALL UINSRP(I,IN,IOUT,IP,ITERP)
+            ENDIF
+
+            CALL ULSTRD(NLST,RIVR,LB,NRIVVL,MXRIVR,IRIVAL,IN,
+     &            IOUT,'REACH NO.  LAYER   ROW   COL'//
+     &            '     STAGE    STRESS FACTOR     BOTTOM EL.',
+     &            RIVAUX,5,NAUX,IFREFM,NCOL,NROW,NLAY,5,5,ITERP)
+            LB=LB+NLST
+   10     CONTINUE
+   20   CONTINUE
       END IF
 C
 C6------RETURN

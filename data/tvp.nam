@@ -1,0 +1,28 @@
+# NAME file for test case tvp
+#
+# NOTE: Forward slashes (/) in pathnames may need to be converted
+#       to back slashes (\) in some computing environments
+#
+# Output files
+list            12  tvp.lst
+#
+# Global input files
+dis             41  ../data/tvp.dis
+zone            42  ../data/tvp.zon
+mult            43  ../data/tvp.mlt
+#
+# Flow process input files
+bas6            51  ../data/tvp.bas
+lpf             52  ../data/tvp.lpf
+wel             53  ../data/tvp.wel
+pcg             54  ../data/tvp.pcg
+oc              55  ../data/tvp.oc
+ghb             56  ../data/tvp.ghb
+riv             57  ../data/tvp.riv
+rch             58  ../data/tvp.rch
+drt             59  ../data/tvp.drt
+drn             61  ../data/tvp.drn
+str             62  ../data/tvp.str
+chd             63  ../data/tvp.chd
+evt             64  ../data/tvp.evt
+ets             65  ../data/tvp.ets

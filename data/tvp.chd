@@ -1,0 +1,25 @@
+# CHD input file -- 2 nodes representing a mine being dewatered
+parameter  1   8                    Item 1: NPCHD MXL
+  2                                 Item 2: MXACTC
+CHD-mine  CHD  1.0  2  instances 4  Item 3: PARNAM PARTYP PARVAL NLST NUMINST
+CHD-a                               Item 4a: INSTNAM
+  1  12  18  164.0  161.0           Item 4b: Lay Row Col Shdfact Ehdfact
+  1  13  18  164.0  161.0           Item 4b: Lay Row Col Shdfact Ehdfact
+CHD-b                               Item 4a: INSTNAM
+  1  12  18  161.0  159.0           Item 4b: Lay Row Col Shdfact Ehdfact
+  1  13  18  161.0  159.0           Item 4b: Lay Row Col Shdfact Ehdfact
+CHD-c                               Item 4a: INSTNAM
+  1  12  18  159.0  157.0           Item 4b: Lay Row Col Shdfact Ehdfact
+  1  13  18  159.0  157.0           Item 4b: Lay Row Col Shdfact Ehdfact
+CHD-d                               Item 4a: INSTNAM
+  1  12  18  157.0  155.0           Item 4b: Lay Row Col Shdfact Ehdfact
+  1  13  18  157.0  155.0           Item 4b: Lay Row Col Shdfact Ehdfact
+  0   0                             Item 5: ITMP NP, stress period 1  
+  0   1                             Item 5: ITMP NP, stress period 2
+CHD-mine CHD-a                      Item 7: Pname Iname
+  0   1                             Item 5: ITMP NP, stress period 3
+CHD-mine CHD-b                      Item 7: Pname Iname
+  0   1                             Item 5: ITMP NP, stress period 4
+CHD-mine CHD-c                      Item 7: Pname Iname
+  0   1                             Item 5: ITMP NP, stress period 5
+CHD-mine CHD-d                      Item 7: Pname Iname

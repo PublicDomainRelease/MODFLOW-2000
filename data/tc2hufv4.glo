@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.5 08/16/2001
+                             VERSION 1.7 12/04/2001
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
@@ -9,56 +9,74 @@
                          UNIT   1
 
  OPENING tc2hufv4.lst
- FILE TYPE:LIST   UNIT   2
+ FILE TYPE:LIST   UNIT   2   STATUS:REPLACE
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2hufv4.huf
- FILE TYPE:HUF   UNIT  11
+ FILE TYPE:HUF   UNIT  11   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING tc2hufv4.hds
- FILE TYPE:DATA   UNIT  90
+ FILE TYPE:DATA   UNIT  90   STATUS:UNKNOWN
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 #Common files                                                                                                                                                                                           
 
  OPENING ../data/tc2hufv4.bas
- FILE TYPE:BAS6   UNIT   8
+ FILE TYPE:BAS6   UNIT   8   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2hufv4.dis
- FILE TYPE:DIS   UNIT   9
+ FILE TYPE:DIS   UNIT   9   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2hufv4.wel
- FILE TYPE:WEL   UNIT  12
+ FILE TYPE:WEL   UNIT  12   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2hufv4.drn
- FILE TYPE:DRN   UNIT  13
+ FILE TYPE:DRN   UNIT  13   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2hufv4.evt
- FILE TYPE:EVT   UNIT  15
+ FILE TYPE:EVT   UNIT  15   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2hufv4.ghb
- FILE TYPE:GHB   UNIT  17
+ FILE TYPE:GHB   UNIT  17   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2hufv4.rch
- FILE TYPE:RCH   UNIT  18
+ FILE TYPE:RCH   UNIT  18   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2hufv4.oc
- FILE TYPE:OC   UNIT  22
+ FILE TYPE:OC   UNIT  22   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2hufv4.pcg
- FILE TYPE:PCG   UNIT  23
+ FILE TYPE:PCG   UNIT  23   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2hufv4.obs
- FILE TYPE:OBS   UNIT  37
+ FILE TYPE:OBS   UNIT  37   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2hufv4.zon
- FILE TYPE:ZONE   UNIT  39
+ FILE TYPE:ZONE   UNIT  39   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2hufv4.hob
- FILE TYPE:HOB   UNIT  40
+ FILE TYPE:HOB   UNIT  40   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2hufv4.odr
- FILE TYPE:DROB   UNIT  41
+ FILE TYPE:DROB   UNIT  41   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2hufv4.ogb
- FILE TYPE:GBOB   UNIT  42
+ FILE TYPE:GBOB   UNIT  42   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
  THE FREE FORMAT OPTION HAS BEEN SELECTED
 
  DISCRETIZATION INPUT DATA READ FROM UNIT  9
@@ -1057,7 +1075,7 @@ HGU5           0     0     0     0     0
  DISTRIBUTED at the 5% significance level.  The probability that this   
  conclusion is wrong is less than 5%.
 
- IF the reported correlation IS LESS THAN the 5% critical value REJECT the,
+ IF the reported correlation IS LESS THAN the 5% critical value REJECT the
  hypothesis that the weighted residuals are INDEPENDENT AND NORMALLY
  DISTRIBUTED at the 5% significance level.
 

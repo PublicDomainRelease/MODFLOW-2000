@@ -1,4 +1,4 @@
-C     Last change:  ERB   6 Nov 2000    2:44 pm
+C     Last change:  ERB  21 Nov 2001    9:33 am
       SUBROUTINE GWF1ETS1AL(ISUM,ISUMI,LCIETS,LCETSR,LCETSX,LCETSS,NCOL,
      &                      NROW,NETSOP,IN,IOUT,IETSCB,IFREFM,NPETS,
      &                      IETSPF,NETSEG,LCPXDP,LCPETM,NSEGAR)
@@ -112,12 +112,13 @@ C9------RETURN.
       RETURN
       END
 C=======================================================================
-      SUBROUTINE GWF1ETS1RQ(IN,IOUT,NPETS,ITERP)
+      SUBROUTINE GWF1ETS1RQ(IN,IOUT,NPETS,ITERP,INAMLOC)
 C
-C-----VERSION 20000620 ERB
+C-----VERSION 20011120 ERB
 C     ******************************************************************
 C     READ EVAPOTRANSPIRATION SEGMENTS PARAMETER DEFINITIONS
 C     ******************************************************************
+C     Modified 11/21/2001 to support parameter instances - ERB
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
@@ -130,7 +131,7 @@ C-------READ NAMED PARAMETERS
       IF (NPETS.GT.0) THEN
         DO 20 K=1,NPETS
 C         UPARARRRP READS PARAMETER NAME AND DEFINITION (ITEMS 2 AND 3)
-          CALL UPARARRRP(IN,IOUT,N,0,PTYP,ITERP)
+          CALL UPARARRRP(IN,IOUT,N,0,PTYP,ITERP,1,INAMLOC)
           IF(PTYP.NE.'ETS') THEN
             WRITE(IOUT,7)
     7       FORMAT(1X,'Parameter type must be ETS')

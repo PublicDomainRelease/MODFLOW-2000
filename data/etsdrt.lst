@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.5 08/16/2001
+                             VERSION 1.7 12/04/2001
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -127,7 +127,7 @@
 
 
  RECH array defined by the following parameters:
-  Parameter:  recharge
+ Parameter:  recharge
                  RECHARGE =  9.999996E-04
 
         ET SURFACE (ETSS) =   100.000    
@@ -135,7 +135,7 @@
 
 
  ETSR array defined by the following parameters:
-  Parameter:  ETS-Max
+ Parameter:  ETS-Max
   EVAPOTRANS. RATE (ETSR) =  9.999997E-03
 
   EXTINCTION DEPTH (ETSX) =   36.0000    

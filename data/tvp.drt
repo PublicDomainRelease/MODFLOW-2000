@@ -1,0 +1,24 @@
+# DRT input file
+  1  0  1  5  Returnflow               Item 1: MXADRT IDRTCB NPDRT MXL option
+DRT-cond  DRT  1.0e-5  1 instances  5  Item 2: PARNAM PARTYP PARVAL NLST NUMINST
+DRT-SP1                                Item 3a: INSTNAM
+  2 16 16  140.0  101.0  1 16 16 1.0   Item 3b: Lay Row Col Elev Condfact LayR RowR ColR Rfprop
+DRT-SP2                                Item 3a: INSTNAM
+  2 16 16  140.0  102.0  1 16 16 0.8   Item 3b: Lay Row Col Elev Condfact LayR RowR ColR Rfprop
+DRT-SP3                                Item 3a: INSTNAM
+  2 16 16  140.0  103.0  1 16 16 0.6   Item 3b: Lay Row Col Elev Condfact LayR RowR ColR Rfprop
+DRT-SP4                                Item 3a: INSTNAM
+  2 16 16  140.0  104.0  1 16 16 0.4   Item 3b: Lay Row Col Elev Condfact LayR RowR ColR Rfprop
+DRT-SP5                                Item 3a: INSTNAM
+  2 16 16  140.0  105.0  1 16 16 0.2   Item 3b: Lay Row Col Elev Condfact LayR RowR ColR Rfprop
+  0  1                                 Item 4: ITMP NP, SP 1
+DRT-Cond  Drt-SP1                      Item 6: Pname Iname
+  0  1                                 Item 4: ITMP NP, SP 2
+DRT-Cond  Drt-SP2                      Item 6: Pname Iname
+  0  1                                 Item 4: ITMP NP, SP 3
+DRT-Cond  Drt-SP3                      Item 6: Pname Iname
+  0  1                                 Item 4: ITMP NP, SP 4
+DRT-Cond  Drt-SP4                      Item 6: Pname Iname
+  0  1                                 Item 4: ITMP NP, SP 5
+DRT-Cond  Drt-SP5                      Item 6: Pname Iname
+

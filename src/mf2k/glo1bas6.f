@@ -1,8 +1,9 @@
-C     Last change:  ERB   9 Jul 2001    9:32 am
+C     Last change:  ERB  30 Nov 2001    4:27 pm
       SUBROUTINE GLO1BAS6DF(INUNIT,IUNIT,CUNIT,IREWND,NIUNIT,IOUTG,IOUT,
      1                    VERSION,NCOL,NROW,NLAY,NPER,ITMUNI,ISUMGX,
      2                    MXPER,ISUMIG,ISUMGZ,INBAS,LENUNI,ISUMX,ISUMZ,
-     3                    ISUMIX,LAYHDT,IUDIS,IFREFM)
+     3                    ISUMIX,LAYHDT,IUDIS,IFREFM,INAMLOC,IPRTIM,
+     4                    IBDT)
 C
 C-----VERSION 24JAN2000 GLO1BAS6DF
 C     ******************************************************************
@@ -12,11 +13,20 @@ C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       INCLUDE 'param.inc'
+      INCLUDE 'parallel.inc'
       CHARACTER*4 CUNIT(NIUNIT)
+      CHARACTER*10 CHDATE, CHTIME, CHZONE
+      INTEGER IBDT(8)
       INTEGER LAYHDT(200), IUNIT(NIUNIT), IREWND(NIUNIT)
       CHARACTER*40 VERSION
       CHARACTER*200 LINE
 C     ------------------------------------------------------------------
+C
+C     Get current date and time, assign to IBDT, and write to screen
+      CALL DATE_AND_TIME(CHDATE,CHTIME,CHZONE,IBDT)
+      IF (MYID.EQ.MPROC) WRITE(*,2) (IBDT(I),I=1,3),(IBDT(I),I=5,7)
+    2 FORMAT(1X,'Run start date and time (yyyy/mm/dd hh:mm:ss): ',
+     &I4,'/',I2.2,'/',I2.2,1X,I2,':',I2.2,':',I2.2,/)
 C
 C  Open all files in name file
       CALL SGLO1BAS6OPEN(INUNIT,IOUTG,IOUT,IUNIT,CUNIT,IREWND,NIUNIT,
@@ -25,12 +35,17 @@ C
 C  Check for the FREE format option in the BAS file.
       CALL URDCOM(INBAS,0,LINE)
       IFREFM=0
+      IPRTIM=0
       LLOC=1
+      WRITE(IOUTG,'(1X)')
     5 CALL URWORD(LINE,LLOC,ISTART,ISTOP,1,N,R,IOUT,INBAS)
       IF(LINE(ISTART:ISTOP).EQ.'FREE') THEN
          IFREFM=1
          WRITE(IOUTG,6)
     6    FORMAT (1X,'THE FREE FORMAT OPTION HAS BEEN SELECTED')
+      ELSEIF(LINE(ISTART:ISTOP).EQ.'PRINTTIME') THEN
+         IPRTIM=1
+         WRITE(IOUTG,2) (IBDT(I),I=1,3),(IBDT(I),I=5,7)
       END IF
       IF(LLOC.LT.200) GO TO 5
       REWIND(INBAS)
@@ -127,6 +142,9 @@ C     INITIALIZE POINTERS USED IN ALLOCATING SPACE IN MAIN-UNIT ARRAYS
       ISUMZ=1
       ISUMIX=1
 C
+C     INITIALIZE OTHER POINTERS AND COUNTERS
+      INAMLOC=1
+C
 C     INITIALIZE HEAD-DEPENDENT THICKNESS INDICATOR TO CODE
 C     INDICATING LAYER IS UNDEFINED
       DO 100 I=1,NLAY
@@ -138,9 +156,9 @@ C
 C=======================================================================
       SUBROUTINE GLO1BAS6AL(INDIS,NCNFBD,NBOTM,NCOL,NROW,NLAY,LCBOTM,
      1          LCDELR,LCDELC,ISUM,IOUT,LCHNEW,LCIBOU,LCCR,LCCC,LCCV,
-     2          LCRHS,LCHCOF,LCHOLD,LCBUFF,LCSTRT,ISUMZ,ISUMI,
-     3          ISEN,IOBS,IPES,ISENALL,ITMXP,IPAR,INZONE,INMULT,
-     4          NMLTAR,NZONAR,NML,NZN,LCRMLT,LCIZON,IGWT)
+     2          LCRHS,LCHCOF,LCHOLD,LCBUFF,LCSTRT,ISUMZ,ISUMI,ISEN,
+     3          IOBS,IPES,ISENALL,ITMXP,IPAR,INZONE,INMULT,NMLTAR,
+     4          NZONAR,NML,NZN,LCRMLT,LCIZON,IGWT)
 C
 C-----VERSION 05JAN1999 GLO1BAS6AL
 C     ******************************************************************
@@ -393,6 +411,119 @@ C
       RETURN
       END
 C=======================================================================
+      SUBROUTINE GLO1BAS6ET(IBDT,IOUTG,IPRTIM)
+C
+C-----VERSION 20011126
+C     ******************************************************************
+C     Get end time and calculate elapsed time
+C     ******************************************************************
+C
+C        SPECIFICATIONS:
+C     ------------------------------------------------------------------
+      INCLUDE 'parallel.inc'
+      CHARACTER*10 CHDATE, CHTIME, CHZONE
+      INTEGER IBDT(8), IEDT(8), IDPM(12)
+      DATA IDPM/31,28,31,30,31,30,31,31,30,31,30,31/ ! Days per month
+      DATA NSPD/86400/  ! Seconds per day
+C     ------------------------------------------------------------------
+ 1000 FORMAT(1X,'Run end date and time (yyyy/mm/dd hh:mm:ss): ',
+     &I4,'/',I2.2,'/',I2.2,1X,I2,':',I2.2,':',I2.2)
+ 1010 FORMAT(1X,'Elapsed run time: ',I3,' Days, ',I2,' Hours, ',I2,
+     &' Minutes, ',I2,' Seconds',/)
+ 1020 FORMAT(1X,'Elapsed run time: ',I2,' Hours, ',I2,
+     &' Minutes, ',I2,' Seconds',/)
+ 1030 FORMAT(1X,'Elapsed run time: ',I2,' Minutes, ',
+     &I2,'.',I3.3,' Seconds',/)
+ 1040 FORMAT(1X,'Elapsed run time: ',I2,'.',I3.3,' Seconds',/)
+C
+C     Get current date and time, assign to IEDT, and write to screen
+      CALL DATE_AND_TIME(CHDATE,CHTIME,CHZONE,IEDT)
+      IF (MYID.EQ.MPROC) WRITE(*,1000) (IEDT(I),I=1,3),(IEDT(I),I=5,7)
+C
+C     Calculate elapsed time in days and seconds
+      NDAYS=0
+      LEAP=0
+      IF (MOD(IEDT(1),4).EQ.0) LEAP = 1
+      IBD = IBDT(3)            ! BEGIN DAY
+      IED = IEDT(3)            ! END DAY
+C     FIND DAYS
+      IF (IBDT(2).NE.IEDT(2)) THEN
+C       MONTHS DIFFER
+        MB = IBDT(2)             ! BEGIN MONTH
+        ME = IEDT(2)             ! END MONTH
+        NM = ME-MB+1             ! NUMBER OF MONTHS TO LOOK AT
+        IF (MB.GT.ME) NM = NM+12
+        MC=MB-1
+        DO 10 M=1,NM
+          MC=MC+1                ! MC IS CURRENT MONTH
+          IF (MC.EQ.13) MC = 1
+          IF (MC.EQ.MB) THEN
+            NDAYS = NDAYS+IDPM(MC)-IBD
+            IF (MC.EQ.2) NDAYS = NDAYS + LEAP
+          ELSEIF (MC.EQ.ME) THEN
+            NDAYS = NDAYS+IED
+          ELSE
+            NDAYS = NDAYS+IDPM(MC)
+            IF (MC.EQ.2) NDAYS = NDAYS + LEAP
+          ENDIF
+   10   CONTINUE
+      ELSEIF (IBD.LT.IED) THEN
+C       START AND END IN SAME MONTH, ONLY ACCOUNT FOR DAYS
+        NDAYS = IED-IBD
+      ENDIF
+      ELSEC=NDAYS*NSPD
+C
+C     ADD OR SUBTRACT SECONDS
+      ELSEC = ELSEC+(IEDT(5)-IBDT(5))*3600.0
+      ELSEC = ELSEC+(IEDT(6)-IBDT(6))*60.0
+      ELSEC = ELSEC+(IEDT(7)-IBDT(7))
+      ELSEC = ELSEC+(IEDT(8)-IBDT(8))*0.001
+C
+C     CONVERT SECONDS TO DAYS, HOURS, MINUTES, AND SECONDS
+      NDAYS = ELSEC/NSPD
+      RSECS = MOD(ELSEC,86400.0)
+      NHOURS = RSECS/3600.0
+      RSECS = MOD(RSECS,3600.0)
+      NMINS = RSECS/60.0
+      RSECS = MOD(RSECS,60.0)
+      NSECS = RSECS
+      RSECS = MOD(RSECS,1.0)
+      MSECS = NINT(RSECS*1000.0)
+      NRSECS = NSECS
+      IF (RSECS.GE.0.5) NRSECS=NRSECS+1
+C
+C     Write elapsed time to screen
+      IF (MYID.EQ.MPROC) THEN
+        IF (NDAYS.GT.0) THEN
+          WRITE(*,1010) NDAYS,NHOURS,NMINS,NRSECS
+        ELSEIF (NHOURS.GT.0) THEN
+          WRITE(*,1020) NHOURS,NMINS,NRSECS
+        ELSEIF (NMINS.GT.0) THEN
+          WRITE(*,1030) NMINS,NSECS,MSECS
+        ELSE
+          WRITE(*,1040) NSECS,MSECS
+        ENDIF
+      ENDIF
+C
+C     Write times to global file if requested
+      IF (IPRTIM.GT.0) THEN
+        WRITE(IOUTG,'(1X)')
+        WRITE(IOUTG,1000) (IEDT(I),I=1,3),(IEDT(I),I=5,7)
+        IF (NDAYS.GT.0) THEN
+          WRITE(IOUTG,1010) NDAYS,NHOURS,NMINS,NRSECS
+        ELSEIF (NHOURS.GT.0) THEN
+          WRITE(IOUTG,1020) NHOURS,NMINS,NRSECS
+        ELSEIF (NMINS.GT.0) THEN
+          WRITE(IOUTG,1030) NMINS,NSECS,MSECS
+        ELSE
+          WRITE(IOUTG,1040) NSECS,MSECS
+        ENDIF
+      ENDIF
+C
+      RETURN
+      END
+C=======================================================================
+
       SUBROUTINE SGLO1BAS6OPEN(INUNIT,IOUTG,IOUT,IUNIT,CUNIT,
      1              IREWND,NIUNIT,VERSION,INBAS)
 C
@@ -411,7 +542,7 @@ C     ------------------------------------------------------------------
       CHARACTER*20 FILACT, FMTARG, ACCARG
       CHARACTER*40 VERSION, SPACES
       CHARACTER*200 LINE, FNAME
-      LOGICAL LEX, LOP, MASTER
+      LOGICAL LOP, MASTER
       INCLUDE 'parallel.inc'
       INCLUDE 'openspec.inc'
       DATA (DIGIT(I),I=0,9)/'0','1','2','3','4','5','6','7','8','9'/
@@ -471,10 +602,12 @@ C4A-----FIRST ENTRY MUST BE FILE-TYPE "LIST" OR "GLOBAL"
          IF(LINE(ITYP1:ITYP2).EQ.'GLOBAL') THEN
             IOUTG=IU
             IF(IFIRST.EQ.1) KLIST=KLIST+1
+            FILSTAT='REPLACE'
          ELSE IF(LINE(ITYP1:ITYP2).EQ.'LIST') THEN
             IOUTG=IU
             IOUT=IU
             IF(IFIRST.EQ.1) KLIST=KLIST+1
+            FILSTAT='REPLACE'
          ELSE
             WRITE(*,*)
      1       ' FIRST ENTRY IN NAME FILE MUST BE "GLOBAL" OR "LIST".'
@@ -485,6 +618,7 @@ C4A-----2ND FILE CAN BE "LIST" FILE TYPE.
       ELSE IF(LINE(ITYP1:ITYP2).EQ.'LIST') THEN
          IOUT=IU
          IF(IFIRST.EQ.1) KLIST=KLIST+1
+         FILSTAT='REPLACE'
 C
 C4B-----CHECK FOR "BAS" FILE TYPE.
       ELSE IF(LINE(ITYP1:ITYP2).EQ.'BAS6') THEN
@@ -541,31 +675,39 @@ C5------THE LISTING FILE.  THEN OPEN THE FILE.
       FNAME(1:IFLEN)=LINE(INAM1:INAM2)
       INQUIRE(UNIT=IU,OPENED=LOP)
       IF (LOP) CLOSE (UNIT=IU)
+C-----IF FILE STATUS IS AMBIGUOUS (FILE TYPES THAT START WITH "DATA"),
+C     CHECK FOR "REPLACE" OR "OLD" OPTION
+      IF (FILSTAT.EQ.'UNKNOWN') THEN
+        CALL URWORD(LINE,LLOC,IOPT1,IOPT2,1,N,R,IOUT,INUNIT)
+        IF (LINE(IOPT1:IOPT2).EQ.'REPLACE' .OR.
+     &      LINE(IOPT1:IOPT2).EQ.'OLD')
+     &      FILSTAT = LINE(IOPT1:IOPT2)
+      ENDIF
       IF (FILACT.EQ.' ') FILACT=ACTION(2)
       IF(.NOT.MASTER) THEN
         IF(LINE(ITYP1:ITYP2).EQ.'GLOBAL') THEN
           IFLEN=12
           FNAME(1:IFLEN)='mf2kglob.p'//PSUF
-        ENDIF
-        IF(LINE(ITYP1:ITYP2).EQ.'LIST') THEN
+        ELSEIF(LINE(ITYP1:ITYP2).EQ.'LIST') THEN
           IFLEN=12
           FNAME(1:IFLEN)='mf2klist.p'//PSUF
-        ENDIF
-        IF(LINE(ITYP1:ITYP2).EQ.'DATA(BINARY)' .OR.
+        ELSEIF(LINE(ITYP1:ITYP2).EQ.'DATA(BINARY)' .OR.
      1       LINE(ITYP1:ITYP2).EQ.'DATAGLO(BINARY)' .OR.
      1       LINE(ITYP1:ITYP2).EQ.'DATA' .OR.
      1       LINE(ITYP1:ITYP2).EQ.'DATAGLO') THEN
-          INQUIRE(FILE=LINE(INAM1:INAM2),EXIST=LEX)
-          IF(.NOT.LEX) THEN
-            IFLEN=INAM2-INAM2+5
+          IF (FILSTAT.EQ.'REPLACE') THEN
+            IFLEN=INAM2-INAM1+5
             FNAME(1:IFLEN)=LINE(INAM1:INAM2)//'.p'//PSUF
           ENDIF
         ENDIF
       ENDIF
+C
       IF(NFILE.NE.0) WRITE(IOUTG,50) FNAME(1:IFLEN),
-     1     LINE(ITYP1:ITYP2),IU
+     1     LINE(ITYP1:ITYP2),IU,FILSTAT,FMTARG,ACCARG
 50    FORMAT(1X,/1X,'OPENING ',A,/
-     1  1X,'FILE TYPE:',A,'   UNIT',I4)
+     &  1X,'FILE TYPE:',A,'   UNIT',I4,3X,'STATUS:',A,/
+     &  1X,'FORMAT:',A,3X,'ACCESS:',A)
+C
       OPEN(UNIT=IU,FILE=FNAME(1:IFLEN),FORM=FMTARG,
      1      ACCESS=ACCARG,STATUS=FILSTAT,ACTION=FILACT)
 C
@@ -950,3 +1092,4 @@ C
 
       RETURN
       END
+

@@ -1,3 +1,5 @@
+This file was updated on 9/21/2001 for WTQ modification.
+
 The ADV Package, which provides the capability to specify
 advective-transport observations, has been modifed for use in
 MODFLOW-2000.  This package was documented in
@@ -45,5 +47,14 @@ report are:
 
   A new data-file record, consisting of one line containing one variable,
   is read after data set 5A.  The variable is IOWTQAD and is read in free
-  format. If IOWTQAD is greater than zero, data sets 6 and 6A are read as
-  originally documented.
+  format. If IOWTQAD is greater than zero, data sets 6 and 6A are read in
+  a slightly different way than documented.  WTQ is an array containing 
+  the variance-covariance matrix on advective-transport observations [L2].
+  The array is square with dimensions equal to the total number of advective-
+  transport observations (for example, NLOC times two if the tracking is two 
+  dimensional or three if the tracking is three dimensional) and for each 
+  observation location is entered in the order X, Y,and Z, if applicable.
+  For elements WTQ(I,J), if I<>J, WTQ(I,J) is the covariance between 
+  observations I and J; if I = J, WTQ(I,J) is the variance of observation I.
+  Note that the variance-covariance matrix is symmetric, but the entire matrix
+  (upper and lower parts) must be entered.

@@ -1,4 +1,4 @@
-C     Last change:  ERB  25 Jul 2001   11:50 am
+C     Last change:  ERB  24 Oct 2001    1:13 pm
 C=======================================================================
       SUBROUTINE PES1BAS6DF(IBEFLG,IFO,IOUB,IPES,IPR,IPRAR,IPRINT,
      &                      ITERPF,ITERPK,ITMXP,IUPES,IYCFLG,JMAX,LASTX,
@@ -81,7 +81,7 @@ C=======================================================================
      &                     ITMXP,LCSSPI,LCSSTO,DMAX,TOL,SOSC,IOSTAR,
      &                     NFIT,SOSR,IPRC,IPRINT,LPRINT,CSA,FCONV,LASTX,
      &                     ISEN,IPES,IPAR,IBEFLG,IYCFLG,LCDMXA,LCNPAR,
-     &                     LCBPRI,AMP,RMARM,IAP,LCAAP,LCAMCA,LCRSQA,
+     &                     LCBPRI,RMARM,IAP,LCAAP,LCAMCA,LCRSQA,
      &                     LCRSPA,LCAMPA,RMAR)
 C     VERSION 19990722 ERB
 C     ******************************************************************
@@ -787,6 +787,196 @@ C
       RETURN
       END
 C=======================================================================
+      SUBROUTINE PES1BAS6ER(IOUT,ITERPK,NPLIST)
+C     VERSION 20010921 ERB
+C     ******************************************************************
+C     SOLVER AP ROUTINE HAS SET THE ERROR FLAG WHILE TRYING TO SOLVE
+C     FLOW EQUATION FOR A SET OF PARAMETERS GENERATED TO DETERMINE
+C     BEALE'S MEASURE.  WRITE APPROPRIATE MESSAGE.
+C     ******************************************************************
+C        SPECIFICATIONS:
+C     ------------------------------------------------------------------
+      INTEGER IOUT, ITERPK, NPLIST
+      INCLUDE 'param.inc'
+C     ------------------------------------------------------------------
+  100 FORMAT(/,1X,'ERROR RESULTS FROM BEALE''S PARAMETER SET NUMBER ',
+     &I3,', WITH VALUES:')
+  110 FORMAT(3X,A,' = ',G12.5,24X,A,' = ',G12.5)
+  120 FORMAT(/,1X,
+     &'THIS SET OF PARAMETER VALUES PRODUCES A PROBLEM THAT THE',
+     &' SELECTED SOLVER',/,1X,
+     &'PACKAGE CANNOT SOLVE. IF HYDRAULIC-CONDUCTIVITY OR CONDUCTANCE',
+     &' PARAMETERS ARE',/,1X,
+     &'NEGATIVE, LOG-TRANSFORM THESE PARAMETERS, RERUN THE REGRESSION,',
+     &' AND CALCULATE',/,1X,
+     &'BEALE''S MEASURE AGAIN. OTHERWISE, CONSIDER USING A DIFFERENT',
+     &' SOLVER. IF THAT',/,1X,
+     &'IS NOT SUCCESSFUL, IT WILL NOT BE POSSIBLE TO OBTAIN A VALUE',
+     &' FOR BEALE''S',/,1X,
+     &'MEASURE AND THE MODEL NEEDS TO BE RATED AS VERY NONLINEAR.')
+C
+      WRITE(IOUT,100) ITERPK
+      WRITE(IOUT,110) (PARNAM(I),B(I),I=1,NPLIST)
+      WRITE(IOUT,120)
+C
+      RETURN
+      END
+C=======================================================================
+      SUBROUTINE PES1BAS6NC(CC,CR,CV,HCOF,HNEW,IBEFLG,IBOUND,IOUTG,
+     &                      ITERPK,KPER,KSTP,NCOL,NLAY,NROW,RHS)
+C     VERSION 20010921 ERB
+C     ******************************************************************
+C     SOLUTION HAS FAILED TO CONVERGE.  WRITE APPROPRIATE MESSAGE,
+C     CALCULATE AND WRITE PERCENT DISCREPANCY.
+C     ******************************************************************
+C        SPECIFICATIONS:
+C     ------------------------------------------------------------------
+      INTEGER IOUTG
+      DOUBLE PRECISION HNEW,DZERO,Q,C,SN,SP
+      DIMENSION HNEW(NCOL,NROW,NLAY), IBOUND(NCOL,NROW,NLAY),
+     &          CR(NCOL,NROW,NLAY), CC(NCOL,NROW,NLAY),
+     &          CV(NCOL,NROW,NLAY), HCOF(NCOL,NROW,NLAY),
+     &          RHS(NCOL,NROW,NLAY)
+C     ------------------------------------------------------------------
+  500 FORMAT(/,1X,
+     &'*** WARNING: FOR BEALE''S PARAMETER SET NUMBER ',I4,
+     &', SOLUTION DID NOT CONVERGE')
+  510 FORMAT(/,1X,
+     &'*** WARNING: FOR PARAMETER SET NUMBER ',I4,
+     &', SOLUTION DID NOT CONVERGE')
+  520 FORMAT(1X,
+     &'IN SOLVING FOR HEADS IN TIME STEP ',I4,
+     &' OF STRESS PERIOD ',I4)
+  530 FORMAT(1X,'SUM OF POSITIVE RATES=',1PE12.5,
+     &        '    SUM OF NEGATIVE RATES=',1PE12.5)
+  540   FORMAT(1X,'              PERCENT DISCREPANCY=',F8.2)
+C
+C     WRITE MESSAGE DEPENDING ON EXECUTION MODE
+      IF (IBEFLG.EQ.2) THEN
+        WRITE(IOUTG,500)ITERPK
+      ELSE
+        WRITE(IOUTG,510)ITERPK
+      ENDIF
+      WRITE(IOUTG,520) KSTP,KPER
+C
+C     CALCULATE AND PERCENT DISCREPANCY
+C-------ASSIGN VALUES TO FIELDS THAT ARE CONSTANT DURING AN ITERATION
+      DZERO=0.
+      SP=DZERO
+      SN=DZERO
+C
+C-------STEP THROUGH CELLS CALCULATING FLOWS
+      DO 150 K=1,NLAY
+      DO 150 I=1,NROW
+      DO 150 J=1,NCOL
+C
+      IF(IBOUND(J,I,K).LE.0)GO TO 150
+C
+C1----NEIGHBOR IS 1 ROW BACK
+      IF(I.NE.1) THEN
+      IF(IBOUND(J,I-1,K).LT.0) THEN
+         C=CC(J,I-1,K)
+         Q=C*(HNEW(J,I-1,K)-HNEW(J,I,K))
+         IF(Q.GT.DZERO) THEN
+            SP=SP+Q
+         ELSE
+            SN=SN-Q
+         END IF
+      END IF
+      END IF
+C
+C2----NEIGHBOR IS 1 ROW AHEAD
+      IF(I.NE.NROW) THEN
+      IF(IBOUND(J,I+1,K).LT.0) THEN
+         C=CC(J,I,K)
+         Q=C*(HNEW(J,I+1,K)-HNEW(J,I,K))
+         IF(Q.GT.DZERO) THEN
+            SP=SP+Q
+         ELSE
+            SN=SN-Q
+         END IF
+      END IF
+      END IF
+C
+C3----NEIGHBOR IS 1 COLUMN BACK
+      IF(J.NE.1) THEN
+      IF(IBOUND(J-1,I,K).LT.0) THEN
+         C=CR(J-1,I,K)
+         Q=C*(HNEW(J-1,I,K)-HNEW(J,I,K))
+         IF(Q.GT.DZERO) THEN
+            SP=SP+Q
+         ELSE
+            SN=SN-Q
+         END IF
+      END IF
+      END IF
+C
+C4----NEIGHBOR IS 1 COLUMN AHEAD
+      IF(J.NE.NCOL) THEN
+      IF(IBOUND(J+1,I,K).LT.0) THEN
+         C=CR(J,I,K)
+         Q=C*(HNEW(J+1,I,K)-HNEW(J,I,K))
+         IF(Q.GT.DZERO) THEN
+            SP=SP+Q
+         ELSE
+            SN=SN-Q
+         END IF
+      END IF
+      END IF
+C
+C5----NEIGHBOR IS 1 LAYER BEHIND
+      IF(K.NE.1) THEN
+      IF(IBOUND(J,I,K-1).LT.0) THEN
+         C=CV(J,I,K-1)
+         Q=C*(HNEW(J,I,K-1)-HNEW(J,I,K))
+         IF(Q.GT.DZERO) THEN
+            SP=SP+Q
+         ELSE
+            SN=SN-Q
+         END IF
+      END IF
+      END IF
+C
+C6----NEIGHBOR IS 1 LAYER AHEAD
+      IF(K.NE.NLAY) THEN
+      IF(IBOUND(J,I,K+1).LT.0) THEN
+         C=CV(J,I,K)
+         Q=C*(HNEW(J,I,K+1)-HNEW(J,I,K))
+         IF(Q.GT.DZERO) THEN
+            SP=SP+Q
+         ELSE
+            SN=SN-Q
+         END IF
+      END IF
+      END IF
+C
+      Q=-RHS(J,I,K)
+      IF(Q.GT.DZERO) THEN
+         SP=SP+Q
+      ELSE
+         SN=SN-Q
+      END IF
+      Q=HCOF(J,I,K)
+      Q=Q*HNEW(J,I,K)
+      IF(Q.GT.DZERO) THEN
+         SP=SP+Q
+      ELSE
+         SN=SN-Q
+      END IF
+C
+  150 CONTINUE
+C
+      WRITE(IOUTG,530) SP,SN
+      E=SP-SN
+      A=(SP+SN)/2.
+      IF (A.NE.0.0) THEN
+        PE=100.*E/A
+        WRITE(IOUTG,540) PE
+      ENDIF
+C
+      RETURN
+      END
+C=======================================================================
       SUBROUTINE PES1BAS6WB(BL,BU,ISENS,IOUB,ITERP,ITS,LN,NPLIST,BSCAL,
      &                      IOSTAR,NPE,PAREST,ITMXP,ITERPF,ITERPK)
 C     VERSION 19981019 ERB
@@ -864,7 +1054,7 @@ C=======================================================================
       SUBROUTINE PES1BAS6OT(C,WT,NPE,RSQ,IOUT,BUFF,ND,IPRC,IFO,IND,SCLE,
      &                      HOBS,H,B1,WP,ITERPF,LN,MPR,PRM,LPRINT,IDRY,
      &                      EV,RSQP,VAR,IPR,NIPR,WTPS,DETWTP,BL,BU,EIGL,
-     &                      EIGV,EIGW,NH,WTQ,WTQS,DTLWTQ,IOWTQ,NDMH,
+     &                      EIGV,EIGW,NHT,WTQ,WTQS,DTLWTQ,IOWTQ,NDMH,
      &                      NPLIST,MPRAR,IPRAR,IOUB,ISENS,IBEALE,ITERP,
      &                      ITMXP,NDMHAR,PRNT,OUTNAM,PAREST,SSPI,SSTO,
      &                      NPAR,DMXA,BPRI,BSCAL,IPRINT,AAP,AMCA,RSQA,
@@ -878,7 +1068,7 @@ C     ------------------------------------------------------------------
       REAL B1, BL, BPRI, BU, BUFF, DETWTP, DTLWTQ, DTMPA, EV, H, HOBS,
      &     PRM, R, R1, RSQ, RSQP, WP, WT, WTQ, WTQS
       INTEGER I, IDRY, ISENS, IFO, IND, IOUT, IOWTQ, IP, IPR, IPRC,
-     &        ITERPF, LN, LPRINT, MPR, ND, NDMH, NH, NIPR, NPE
+     &        ITERPF, LN, LPRINT, MPR, ND, NDMH, NHT, NIPR, NPE
       CHARACTER*45 ANAME1
       CHARACTER*200 OUTNAM
       DOUBLE PRECISION C(NPE,NPE), SCLE(NPE), EIGL(NPE),
@@ -984,12 +1174,12 @@ C-------PRINT PARAMETER STATISTICS
      &                   NPLIST,PRNT,OUTNAM)
 C-------CALCULATE CORRELATION COEFFICIENT
         CALL SOBS1BAS6CC(ND,WT,HOBS,H,R,R1,MPR,NPE,WP,B,PRM,BUFF,IPR,
-     &                   NIPR,WTPS,NH,WTQ,WTQS,IOWTQ,NDMH,NPLIST,MPRAR,
+     &                   NIPR,WTPS,NHT,WTQ,WTQS,IOWTQ,NDMH,NPLIST,MPRAR,
      &                   IPRAR,NDMHAR,BPRI)
 C-------PRINT FINAL RSQ'S, ERROR VARIANCE, CORRELATION, ITERATIONS
         WRITE (IOUT,505) RSQ, RSQP, VAR, VAR**.5, R, R1, ITERPF
 C-------CALC AND PRINT STATISTICS BASED ON MAX LIKELIHOOD OBJ FUNCTION
-        CALL SOBS1BAS6ML(RSQP,WT,NPE,ND,WP,MPR,IOUT,EV,IPR,DETWTP,NH,
+        CALL SOBS1BAS6ML(RSQP,WT,NPE,ND,WP,MPR,IOUT,EV,IPR,DETWTP,NHT,
      &                   DTLWTQ,MPRAR)
       ENDIF
 C
@@ -999,7 +1189,7 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE PES1BAS6RS(NPE,ND,NDMH,VAR,C,WT,NH,WTQS,X,MPR,PRM,WP,
+      SUBROUTINE PES1BAS6RS(NPE,ND,NDMH,VAR,C,WT,NHT,WTQS,X,MPR,PRM,WP,
      &                      NPLIST,MPRAR,NDMHAR,OUTNAM,WTPS,IPR,IPRAR,
      &                      NIPR,RSQP,IDRY)
 C
@@ -1010,7 +1200,7 @@ C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL PRM, WP, WT, WTQS, X
-      INTEGER IOUR, MPR, ND, NDMH, NH, NPE, NIPR
+      INTEGER IOUR, MPR, ND, NDMH, NHT, NPE, NIPR
       CHARACTER*200 OUTNAM
       CHARACTER*84 FN
       LOGICAL LOP
@@ -1049,11 +1239,11 @@ C     OPEN INPUT FILE FOR RESIDUAL ANALYSIS PROGRAM
 C
 C-----WRITE DATA ONLY FOR OBSERVATIONS WITH WT >= 0
       NNEG = 0
-      DO 40 I = 1, NH
+      DO 40 I = 1, NHT
         IF (WT(I).LT.0.0) NNEG = NNEG + 1
    40 CONTINUE
       NDPOS = ND - NNEG
-      NHPOS = NH - NNEG
+      NHPOS = NHT - NNEG
 C
 C-------WRITE INPUT FOR RESIDUAL ANALYSIS PROGRAM
       N10059=10059
@@ -1073,7 +1263,7 @@ C          OBSERVATIONS WITH DIAGONAL WEIGHT MATRIX
         DO 80 I = 1, 16
    70     CONTINUE
           KH = KH + 1
-          IF (KH.LE.NH) THEN
+          IF (KH.LE.NHT) THEN
             IF (WT(KH).GT.0.0) THEN
               SQRWT(I) = SQRT(WT(KH))
               KC = KC + 1
@@ -1119,7 +1309,7 @@ C
       END
 C=======================================================================
       SUBROUTINE PES1BAS6BE(NPE,ND,MPR,VAR,H,WT,X,WP,LN,PRM,HOBS,C,
-     &                     IBEALE,ITERPK,IOUT,OBSNAM,BUFF,NH,NDMH,WTQ,
+     &                     IBEALE,ITERPK,IOUT,OBSNAM,BUFF,NHT,NDMH,WTQ,
      &                     NPLIST,MPRAR,IBEFLG,OUTNAM,IUBE,BEFIRST,
      &                     FSTAT,IERR,IERRU,NDMHAR,WTP,IPR,IPRAR,BPRI,
      &                     NIPR)
@@ -1132,7 +1322,7 @@ C     SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL BUFF, H, HOBS, PRM, SB, TEMP, WP, WT, WTQ, X
       INTEGER I, IBEALE, IMP, IOUT, IP, IS, ITERPK, IUBE(2),
-     &        J, LN, MPR, N, ND, NH, NPE, NDMH
+     &        J, LN, MPR, N, ND, NHT, NPE, NDMH
       DOUBLE PRECISION C(NPE,NPE), VAR
       DIMENSION H(ND), WT(ND), X(NPE,ND), WP(MPRAR), LN(NPLIST),
      &          HOBS(ND), PRM(NPLIST+1,MPRAR), BUFF(NPE),
@@ -1216,7 +1406,7 @@ C       WRITE ITEMS 4-7 OF _b1 FILE
         WRITE (IUBE(1),550) (OBSNAM(N),N=1,ND)
         WRITE (IUBE(1),520) (H(N),N=1,ND)
         WRITE (IUBE(1),520) (HOBS(N),N=1,ND)
-        IF (NH.GT.0) WRITE (IUBE(1),500) (WT(N),N=1,NH)
+        IF (NHT.GT.0) WRITE (IUBE(1),500) (WT(N),N=1,NHT)
         IF (NDMH.GT.0) THEN
           DO 30 I = 1, NDMH
 C           WRITE ITEM 8 OF _b1 FILE
@@ -1284,8 +1474,9 @@ C       IBEFLG MUST EQUAL 2
       RETURN
       END
 C=======================================================================
-      SUBROUTINE PES1BAS6YC(NPE,ND,MPR,H,WT,X,C,IOUT,OBSNAM,NH,NDMH,WTQ,
-     &                     OUTNAM,IYCFLG,IPR,IPLOT,IERR,IERRU,NDMHAR)
+      SUBROUTINE PES1BAS6YC(NPE,ND,MPR,H,WT,X,C,IOUT,OBSNAM,NHT,NDMH,
+     &                      WTQ,OUTNAM,IYCFLG,IPR,IPLOT,IERR,IERRU,
+     &                      NDMHAR)
 C-----VERSION 1001 05APR1993
 C     VERSION 19990812 ERB
 C     ******************************************************************
@@ -1294,7 +1485,7 @@ C     ******************************************************************
 C     SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL H, WT, WTQ, X
-      INTEGER I, IOUT, IP, IPLOT, J, MPR, N, ND, NH, NPE, NDMH
+      INTEGER I, IOUT, IP, IPLOT, J, MPR, N, ND, NHT, NPE, NDMH
       DOUBLE PRECISION C(NPE,NPE)
       DIMENSION IPLOT(ND), H(ND), WT(ND), X(NPE,ND), WTQ(NDMHAR,NDMHAR)
       CHARACTER*4 SUF(0:2)
@@ -1307,7 +1498,7 @@ C     ------------------------------------------------------------------
 C     ------------------------------------------------------------------
 C
   500 FORMAT (8G15.8)
-  510 FORMAT (4I10,2X,'Item 1: NVAR NOBS NH IFSTAT')
+  510 FORMAT (4I10,2X,'Item 1: NVAR NOBS NHT IFSTAT')
   520 FORMAT (6G13.6)
   525 FORMAT (8I10)
   530 FORMAT (20A4)
@@ -1352,13 +1543,13 @@ C
 c-----WRITE OUTPUT TO ._y0, ._y1, OR ._y2
       IF (IYCFLG.GT.0) THEN
         IFSTAT = 0
-        IF (IYCFLG.EQ.1) WRITE (IOUY,510) NPE, ND, NH, IFSTAT
+        IF (IYCFLG.EQ.1) WRITE (IOUY,510) NPE, ND, NHT, IFSTAT
         WRITE (IOUY,550) (OBSNAM(N),N=1,ND)
         WRITE (IOUY,540) (IPLOT(N),N=1,ND)
         WRITE (IOUY,520) (H(N),N=1,ND)
 C SC-CHANGE 28.02.96: LOOP CHANGED DUE TO FULL COV. ON HEAD DEPENDENT FLOWS
 C        WRITE(IOUY,510)(WT(N),N=1,ND)
-        IF (NH.GT.0) WRITE (IOUY,500) (WT(N),N=1,NH)
+        IF (NHT.GT.0) WRITE (IOUY,500) (WT(N),N=1,NHT)
         IF (NDMH.GT.0) THEN
           WRITE (IOUY,500) (WTQ(I,I),I=1,NDMH)
         ENDIF
@@ -1392,7 +1583,7 @@ C
      &' **** IN LAST PARAMETER ITERATION, THE SOLVER DID NOT CONVERGE',
      &' FOR HEADS AND(OR)',/,
      &6X,'SENSITIVITIES.  RESULTS MAY BE UNRELIABLE.',/,
-     &'      SEARCH ABOVE FOR: SOLUTION DID NOT CONVERGE')
+     &'      SEARCH ABOVE FOR: "SOLUTION DID NOT CONVERGE"')
  630  FORMAT (/,1X,'PARAMETER ESTIMATION DID NOT CONVERGE IN THE ',
      &        'ALLOTTED NUMBER OF ITERATIONS')
  640  FORMAT (/,1X,'*** PARAMETER ESTIMATION CONVERGED BY SATISFYING',

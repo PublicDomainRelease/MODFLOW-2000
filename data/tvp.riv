@@ -1,0 +1,45 @@
+# RIV file for test case tc1
+#
+PARAMETER     1   27                      Item 1: NPRIV MXL
+    9    0                                Item 2: MXACTR IRIVCB
+RIVERS     RIV   1.2E-3   9 INSTANCES 3   Item 3: PARNAM PARTYP Parval NLST NUMINST
+Orig-rivs                                 Item 4a: INSTNAM
+    1    1    1   100.0    1000.0   90.0  Item 4b: Layer Row Column Stage Condfact Rbot
+    1    2    1   101.0    1000.0   90.0
+    1    3    1   102.0    1000.0   90.0
+    1    4    1   103.0    1000.0   90.0
+    1    5    1   104.0    1000.0   90.0
+    1    6    1   105.0    1000.0   90.0
+    1    7    1   106.0    1000.0   90.0
+    1    8    1   107.0    1000.0   90.0
+    1    9    1   108.0    1000.0   90.0
+Rivs-a                                    Item 4a: INSTNAM
+    1    1    1   102.0    1010.0   90.0  Item 4b: Layer Row Column Stage Condfact Rbot
+    1    2    1   103.0    1010.0   90.0
+    1    3    1   104.0    1010.0   90.0
+    1    4    1   105.0    1010.0   90.0
+    1    5    1   106.0    1011.0   90.0
+    1    6    1   107.0    1010.0   90.0
+    1    7    1   108.0    1010.0   90.0
+    1    8    1   109.0    1010.0   90.0
+    1    9    1   110.0    1010.0   90.0
+Rivs-b                                    Item 4a: INSTNAM
+    1    1    1   101.0    1020.0   90.0  Item 4b: Layer Row Column Stage Condfact Rbot
+    1    2    1   102.0    1020.0   90.0
+    1    3    1   103.0    1020.0   90.0
+    1    4    1   104.0    1020.0   90.0
+    1    5    1   105.0    1020.0   90.0
+    1    6    1   106.0    1020.0   90.0
+    1    7    1   107.0    1020.0   90.0
+    1    8    1   108.0    1020.0   90.0
+    1    9    1   109.0    1020.0   90.0
+    0    1                                Item 5: ITMP NP for stress period 1
+RIVERS   Orig-rivs                        Item 6: Pname Iname
+    0    1                                Item 5: ITMP NP for stress period 2
+RIVERS   Rivs-a                           Item 6: Pname Iname
+    0    1                                Item 5: ITMP NP for stress period 3
+RIVERS   Rivs-a                           Item 6: Pname Iname
+    0    1                                Item 5: ITMP NP for stress period 4
+RIVERS   Rivs-b                           Item 6: Pname Iname
+    0    1                                Item 5: ITMP NP for stress period 5
+RIVERS   Rivs-b                           Item 6: Pname Iname

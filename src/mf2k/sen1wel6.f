@@ -1,10 +1,12 @@
-C     Last change:  ERB  11 Apr 2000    4:50 pm
+C     Last change:  ERB   7 Nov 2001    4:52 pm
       SUBROUTINE SEN1WEL6FM(NWELLS,MXWELL,WELL,NCOL,NROW,NLAY,IBOUND,
      &                     RHS,IP,NWELVL)
 C-----VERSION 19980730 ERB
 C     ******************************************************************
 C     CALCULATE CONTRIBUTION TO SENSITIVITY OF ONE CELL-LIST PARAMETER
 C     ******************************************************************
+C     Modified 11/7/2001 to support parameter instances - ERB
+C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL WELL, FACTOR, RHS
@@ -16,12 +18,18 @@ C     ------------------------------------------------------------------
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
 C
-      IF (IACTIVE(IP).EQ.0) RETURN
+C     FIND INSTANCE NUMBER
+      NI = IACTIVE(IP)
+      IF (NI.EQ.0) RETURN
+C
+C     DETERMINE RANGE OF ELEMENTS CURRENTLY ACTIVE FOR THIS PARAMETER
       IPOS1 = IPLOC(1,IP)
       NPC = IPLOC(2,IP)-IPOS1+1
+      NUMINST = IPLOC(3,IP)
+      IF (NUMINST.GT.1) NPC = NPC/NUMINST
 C-----LOOP THROUGH CELLS CONTROLLED BY THIS PARAMETER
       DO 20 II = 1, NPC
-        ICP = IPOS1-1+II
+        ICP = IPOS1-1+II+(NI-1)*NPC
         K = WELL(1,ICP)
         I = WELL(2,ICP)
         J = WELL(3,ICP)

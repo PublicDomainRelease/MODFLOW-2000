@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.5 08/16/2001
+                             VERSION 1.7 12/04/2001
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -9,31 +9,41 @@
                          UNIT   1
 
  OPENING ..\data\l1b2k.ba6
- FILE TYPE:BAS6   UNIT   7
+ FILE TYPE:BAS6   UNIT   7   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ..\data\l1b2k.bc6
- FILE TYPE:BCF6   UNIT  10
+ FILE TYPE:BCF6   UNIT  10   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ..\data\l1b2k.evt
- FILE TYPE:EVT   UNIT  11
+ FILE TYPE:EVT   UNIT  11   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ..\data\l1b2k.rch
- FILE TYPE:RCH   UNIT  12
+ FILE TYPE:RCH   UNIT  12   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ..\data\l1b2k.sip
- FILE TYPE:SIP   UNIT  13
+ FILE TYPE:SIP   UNIT  13   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ..\data\l1b2k.oc
- FILE TYPE:OC   UNIT  17
+ FILE TYPE:OC   UNIT  17   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ..\data\l1b2k.lak
- FILE TYPE:LAK   UNIT  16
+ FILE TYPE:LAK   UNIT  16   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ..\data\l1b2k.dis
- FILE TYPE:DIS   UNIT  14
+ FILE TYPE:DIS   UNIT  14   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ..\data\l1b2k.fhb
- FILE TYPE:FHB   UNIT  21
+ FILE TYPE:FHB   UNIT  21   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
 
  DISCRETIZATION INPUT DATA READ FROM UNIT 14
     5 LAYERS        17 ROWS        17 COLUMNS
