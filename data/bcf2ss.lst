@@ -1,49 +1,49 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.8 05/01/2002
+                             VERSION 1.10 07/26/2002
 
 
  This model run combines GLOBAL and LIST output into this single file.
 
  GLOBAL LISTING FILE: bcf2ss.lst
-                         UNIT   7
+                         UNIT    7
 
  OPENING ../data/bcf2ss.ba6
- FILE TYPE:BAS6   UNIT   8   STATUS:OLD    
+ FILE TYPE:BAS6   UNIT    8   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/bcf2ss.bc6
- FILE TYPE:BCF6   UNIT  11   STATUS:OLD    
+ FILE TYPE:BCF6   UNIT   11   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/bcf2ss.wel
- FILE TYPE:WEL   UNIT  12   STATUS:OLD    
+ FILE TYPE:WEL   UNIT   12   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/bcf2ss.riv
- FILE TYPE:RIV   UNIT  14   STATUS:OLD    
+ FILE TYPE:RIV   UNIT   14   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/bcf2ss.rch
- FILE TYPE:RCH   UNIT  18   STATUS:OLD    
+ FILE TYPE:RCH   UNIT   18   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/bcf2ss.pcg
- FILE TYPE:PCG   UNIT  19   STATUS:OLD    
+ FILE TYPE:PCG   UNIT   19   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/bcf2ss.oc
- FILE TYPE:OC   UNIT  20   STATUS:OLD    
+ FILE TYPE:OC   UNIT   20   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/bcf2ss.dis
- FILE TYPE:DIS   UNIT  10   STATUS:OLD    
+ FILE TYPE:DIS   UNIT   10   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
 
- DISCRETIZATION INPUT DATA READ FROM UNIT 10
+ DISCRETIZATION INPUT DATA READ FROM UNIT   10
     2 LAYERS        10 ROWS        15 COLUMNS
-   2 STRESS PERIOD(S) IN SIMULATION
+    2 STRESS PERIOD(S) IN SIMULATION
  MODEL TIME UNIT IS DAYS
  MODEL LENGTH UNIT IS UNDEFINED
  THE GROUND-WATER TRANSPORT PROCESS IS INACTIVE
@@ -115,9 +115,9 @@
  #Valley aquifer with 2 sand layers separated by silt.  Stress period 1 is natur 
  # conditions.  Stress period 2 adds wells.                                      
     2 LAYERS        10 ROWS        15 COLUMNS
-   2 STRESS PERIOD(S) IN SIMULATION
+    2 STRESS PERIOD(S) IN SIMULATION
 
- BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT  8
+ BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT    8
          10 ELEMENTS IN IR ARRAY ARE USED BY BAS
 
  BCF6 -- BLOCK-CENTERED FLOW PACKAGE, VERSION 6, 1/11/2000
@@ -134,22 +134,22 @@
          2            0          0 -- HARMONIC    
         602 ELEMENTS IN RX ARRAY ARE USED BY BCF
 
- WEL6 -- WELL PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 12
+ WEL6 -- WELL PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   12
  No named parameters
- MAXIMUM OF    2 ACTIVE WELLS AT ONE TIME
- CELL-BY-CELL FLOWS WILL BE SAVED ON UNIT 30
+ MAXIMUM OF      2 ACTIVE WELLS AT ONE TIME
+ CELL-BY-CELL FLOWS WILL BE SAVED ON UNIT   30
           8 ELEMENTS IN RX ARRAY ARE USED BY WEL
 
- RIV6 -- RIVER PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 14
+ RIV6 -- RIVER PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   14
  No named parameters
- MAXIMUM OF   10 ACTIVE RIVER REACHES AT ONE TIME
- CELL-BY-CELL FLOWS WILL BE SAVED ON UNIT 30
+ MAXIMUM OF     10 ACTIVE RIVER REACHES AT ONE TIME
+ CELL-BY-CELL FLOWS WILL BE SAVED ON UNIT   30
          60 ELEMENTS IN RX ARRAY ARE USED BY RIV
 
- RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 18
+ RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   18
  No named parameters
  OPTION 3 -- RECHARGE TO HIGHEST ACTIVE NODE IN EACH VERTICAL COLUMN
- CELL-BY-CELL FLOWS WILL BE SAVED ON UNIT 30
+ CELL-BY-CELL FLOWS WILL BE SAVED ON UNIT   30
         150 ELEMENTS IN RX ARRAY ARE USED BY RCH
         150 ELEMENTS IN IR ARRAY ARE USED BY RCH
 
@@ -171,7 +171,7 @@
 
  OUTPUT CONTROL IS SPECIFIED EVERY TIME STEP
  HEAD PRINT FORMAT CODE IS  -4    DRAWDOWN PRINT FORMAT CODE IS  -4
- HEADS WILL BE SAVED ON UNIT  50    DRAWDOWNS WILL BE SAVED ON UNIT  50
+ HEADS WILL BE SAVED ON UNIT   50    DRAWDOWNS WILL BE SAVED ON UNIT   50
 
  COLUMN TO ROW ANISOTROPY =   1.00000    
 
@@ -182,7 +182,7 @@
 
 
                    WETDRY PARAMETER FOR LAYER   1
- READING ON UNIT  11 WITH FORMAT: (10F13.0)           
+ READING ON UNIT   11 WITH FORMAT: (10F13.0)           
 
          1     2     3     4     5     6     7     8     9    10    11    12    13    14    15
  .............................................................................................
@@ -208,8 +208,8 @@
 
      0 Recharge parameters
 1
-                            STRESS PERIOD NO.   1, LENGTH =   1.000000    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    1, LENGTH =   1.000000    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     1
 
@@ -217,7 +217,7 @@
 
                             INITIAL TIME STEP SIZE =   1.000000    
 
-     0 WELLS
+      0 WELLS
 
  REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
  -------------------------------------------------------------------------
@@ -232,7 +232,7 @@
       9      2      9     15       0.000          0.1000E+05      -5.000    
      10      2     10     15       0.000          0.1000E+05      -5.000    
 
-    10 RIVER REACHES
+     10 RIVER REACHES
 
                  RECHARGE =  4.000000E-03
  
@@ -267,7 +267,7 @@
     WET( 10,  9)   WET( 10, 10)   WET( 10, 11)   WET( 10, 12)   WET( 10, 13)   
 
 
-     8 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD  1
+     8 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD    1
     91 TOTAL ITERATIONS
 
  HEAD/DRAWDOWN PRINTOUT FLAG = 1     TOTAL BUDGET PRINTOUT FLAG = 1
@@ -279,8 +279,8 @@
  ----------------------------------
      1         0       0       0
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
            1       2       3       4       5       6       7       8       9      10      11      12      13      14      15
  ...........................................................................................................................
@@ -295,8 +295,8 @@
    9   138.94  138.23  136.79  134.61  131.65  127.87  123.19  117.53  110.78  102.77   93.33   82.39   71.06  999.99  999.99
   10   138.94  138.23  136.79  134.61  131.65  127.87  123.19  117.53  110.78  102.77   93.33   82.39   71.06  999.99  999.99
 1
-              HEAD IN LAYER  2 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   2 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
            1       2       3       4       5       6       7       8       9      10      11      12      13      14      15
  ...........................................................................................................................
@@ -311,8 +311,8 @@
    9   137.46  136.72  135.24  132.97  129.89  125.92  120.98  114.93  107.58   98.63   87.60   73.72   55.50   29.50    1.50
   10   137.46  136.72  135.24  132.97  129.89  125.92  120.98  114.93  107.58   98.63   87.60   73.72   55.50   29.50    1.50
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD   1
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -346,7 +346,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  1
+          TIME SUMMARY AT END OF TIME STEP   1 IN STRESS PERIOD    1
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH  86400.      1440.0      24.000      1.0000     2.73785E-03
@@ -354,8 +354,8 @@
          TOTAL TIME  86400.      1440.0      24.000      1.0000     2.73785E-03
 1
 1
-                            STRESS PERIOD NO.   2, LENGTH =   1.000000    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    2, LENGTH =   1.000000    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     1
 
@@ -368,11 +368,11 @@
       1      2      3      4     -0.3500E+05
       2      2      8      4     -0.3500E+05
 
-     2 WELLS
+      2 WELLS
 
  REUSING NON-PARAMETER RIVER REACHES FROM LAST STRESS PERIOD
 
-    10 RIVER REACHES
+     10 RIVER REACHES
 
  REUSING RECH FROM LAST STRESS PERIOD
  
@@ -432,7 +432,7 @@
     WET(  2,  4)   WET(  4,  4)   WET(  7,  4)   WET(  9,  4)   
 
 
-    12 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD  2
+    12 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD    2
    110 TOTAL ITERATIONS
 
  HEAD/DRAWDOWN PRINTOUT FLAG = 1     TOTAL BUDGET PRINTOUT FLAG = 1
@@ -444,8 +444,8 @@
  ----------------------------------
      1         0       0       0
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP  1 IN STRESS PERIOD  2
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP   1 IN STRESS PERIOD    2
+  ---------------------------------------------------------------------------
 
            1       2       3       4       5       6       7       8       9      10      11      12      13      14      15
  ...........................................................................................................................
@@ -460,8 +460,8 @@
    9    60.01   58.51   55.51   51.96   55.51   58.53   60.06   60.17   59.18  777.77  777.77  777.77  777.77  999.99  999.99
   10    60.36   59.22   57.34   56.09   57.33   59.20   60.31   60.26   59.22  777.77  777.77  777.77  777.77  999.99  999.99
 1
-              HEAD IN LAYER  2 AT END OF TIME STEP  1 IN STRESS PERIOD  2
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   2 AT END OF TIME STEP   1 IN STRESS PERIOD    2
+  ---------------------------------------------------------------------------
 
            1       2       3       4       5       6       7       8       9      10      11      12      13      14      15
  ...........................................................................................................................
@@ -476,8 +476,8 @@
    9    56.53   54.71   51.06   46.65   51.06   54.72   56.55   56.58   54.79   50.80   44.80   36.80   26.80   14.80    0.80
   10    56.94   55.65   53.51   51.92   53.51   55.63   56.86   56.69   54.83   50.81   44.80   36.80   26.80   14.80    0.80
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  2
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD   2
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -511,7 +511,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  2
+          TIME SUMMARY AT END OF TIME STEP   1 IN STRESS PERIOD    2
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH  86400.      1440.0      24.000      1.0000     2.73785E-03

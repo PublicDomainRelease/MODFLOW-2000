@@ -95,7 +95,7 @@ C     ******************************************************************
 C     ASSIGN PARAMETERS TO MPI PROCESSES
 C     ******************************************************************
 C
-cc      INCLUDE 'mpif.h'
+cc      INCLUDE 'mpif.h'    
       INCLUDE 'parallel.inc'
       INTEGER NPE
       INTEGER NPDO, NPSET, IPFIRST
@@ -120,7 +120,7 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE PLL1MX(X,IL,JL)
+      SUBROUTINE PLL1MX(X,XND,IL,JL)
 C     ******************************************************************
 C     MERGE X, A REPLICATED ARRAY, USING BLOCKING SENDS AND RECEIVES.
 C     ******************************************************************
@@ -129,7 +129,7 @@ C
       INCLUDE 'parallel.inc'
       INCLUDE 'dlimport.inc'
 C
-      DIMENSION X(IL,JL), ISTATUS(MPI_STATUS_SIZE)
+      DIMENSION X(IL,JL), XND(JL), ISTATUS(MPI_STATUS_SIZE)
       COMMON /ILOCAL/ ILPASS
 C
       ILPASS=ILPASS+1
@@ -142,7 +142,10 @@ C
           DO I=1,IL
             IF(IPDO(I).EQ.MYID) THEN
               ITAG=I+1000*ILPASS
-              CALL MPI_Send(X(I,1:JL),JL,MPI_REAL,MPROC,ITAG,
+              DO J=1,JL
+                XND(J) = X(I,J)
+              ENDDO
+              CALL MPI_Send(XND,JL,MPI_REAL,MPROC,ITAG,
      &                      MPI_COMM_WORLD,IERRPLL)
             ENDIF
           ENDDO
@@ -151,8 +154,11 @@ C       RECEIVE ALL REMOTE ROWS
           DO I=1,IL
             IF(IPDO(I).NE.MYID) THEN
               ITAG=I+1000*ILPASS
-              CALL MPI_Recv(X(I,1:JL),JL,MPI_REAL,IPDO(I),ITAG,
+              CALL MPI_Recv(XND,JL,MPI_REAL,IPDO(I),ITAG,
      &                      MPI_COMM_WORLD,ISTATUS,IERRPLL)
+              DO J=1,JL
+                X(I,J) = XND(J)
+              ENDDO
             ENDIF
           ENDDO
         ENDIF

@@ -12,6 +12,72 @@ these packages and processes, see mf2k.txt ("Summary of MODFLOW-2000").
 NOTE: Any use of trade, product or firm names is for descriptive purposes 
       only and does not imply endorsement by the U.S. Government.
 
+o Version 1.10 07/26/2002:
+
+     This version incorporates fixes to bugs that showed up when compiling
+the source code distributed with version 1.9.  It also fixes a bug related
+to a seldom-used part of the LMG Package involving a random-number
+generating algorithm.
+
+o Version 1.9 07/15/2002:
+
+     In this version, the LAK package was modified to add compatibility 
+with the LPF and HUF packages, and MODPATH.  Output of lake information to 
+the listing file is clarified, and cumulative lake budget reports are added.
+The default value of MXLKND (the maximum allowable number of lake/aquifer 
+cell interfaces) is reduced.
+
+     In the GAGE package, options are added for additional output for lake 
+gages.  The changes to the input are described in the file 
+\doc\gage_input.pdf.  The options are invoked in the gage input by 
+specifying a negative value of UNIT.  If a negative UNIT is specified, an 
+additional parameter is read from Data Set 2 (after UNIT) called OUTTYPE.  
+OUTTYPE is a code for the format of expanded listing desired in output file:
+
+ 0  Use standard default listing of time, stage, volume, and concentration.
+ 1  Default values plus time-step fluxes for lake and total lake conductance.
+ 2  Default values plus changes in stage, volume, and concentration for lake.
+ 3  All of the above.
+
+     In the HUF Package, a problem in the calculation of horizontal-
+conductance sensitivities was fixed.  The current version of HUF is 
+"1.04, ERA 5/14/2002."
+
+     Some problems related to omission of observations (from the sum of
+squared, weighted residuals objective function and other statistics and the
+underscore ("_") output files) were corrected.  Now, these rules apply:
+
+     1.  For a given set of parameter values, the statistics have the same
+values and "_" files include the same observations, regardless of whether
+the Sensitivity Process is active or inactive, whether a particular
+parameter is one for which sensitivities are being calculated, whether the
+Parameter-Estimation Process is active or inactive, the value of MAX-ITER,
+which parameter-estimation iteration is being performed, or whether or not
+parameter estimation converged.
+
+     2.  When a simulated-equivalent head cannot be calculated, for example,
+when the observation cell is dry or one or more cells needed for a
+multilayer head observation is dry, that observation is flagged as omitted
+in the DATA AT HEAD LOCATIONS table, is not listed in the "_" files, and
+does not contribute to the statistics.
+
+     3.  Regarding flow observations where the heads in all the cells
+included in an observation are below the bottom of the river or stream bed
+or below the drain elevation: These cases now conform to item 1 above.  Flow
+observations of this type are never be omitted from either the statistics or
+the "_" files.
+
+     4.  Regarding flow observations where all the cells included in an
+observation are inactive: Flow observations like this are flagged as omitted
+in the "DATA FOR FLOWS..." tables and omitted from statistics and the "_"
+files.
+
+     The following bug was fixed: When the DE45 was used and IFREQ was
+specified as 3, external iterations were not being performed in solving the
+sensitivity equation.  In the current version, external iterations are
+performed in solving both the ground-water flow equation and the sensitivity
+equation when ITMX > 1 and IFREQ = 3.
+
 o Version 1.8 05/01/2002:
 
      This version adds support for an option that can be used to suppress

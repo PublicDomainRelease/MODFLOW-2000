@@ -1,5 +1,5 @@
-C     Version 1.03
-C     Last change:  ERA  19 Feb 2002
+C     Version 1.04
+C     Last change:  ERB  10 Jul 2002    9:04 am
       SUBROUTINE SEN1HUF1FM(H,NCOL,NROW,NLAY,PID,HK,HKCC,DELR,
      &                     DELC,IBOUND,RHS,CV,BOTM,NBOTM,HUFTHK,
      &                     NHUF,IP,IZON,NZONAR,RMLT,NMLTAR,IUHFBP,
@@ -84,7 +84,7 @@ C-------CR
      &                          HK,HKCC,NCOL,NROW,NLAY,DELC,DELR,H,
      &                          BOTM(1,1,LBOTM(K)),BOTM(1,1,LBOTM(K)-1),
      &                          NZ,NM,ICL,IZON,NZONAR,RMLT,NMLTAR,C,
-     &                          TH0L,TH1L)
+     &                          TH0L,TH1L,HUFTHK,NHUF,NU)
                   IF (IUHFBP.GT.0 .AND. CO.NE.0.)
      &                CALL SSEN1HFB6MD(C,'CR',CO,DELC,DELR,HFBP,I,J,K,
      &                                 MXACTFB,NCOL,NHFB,NROW,
@@ -110,7 +110,7 @@ C-------CC
      &                          HK,HKCC,NCOL,NROW,NLAY,DELC,DELR,H,
      &                          BOTM(1,1,LBOTM(K)),BOTM(1,1,LBOTM(K)-1),
      &                          NZ,NM,ICL,IZON,NZONAR,RMLT,NMLTAR,C,
-     &                          TH0L,TH1L)
+     &                          TH0L,TH1L,HUFTHK,NHUF,NU)
                 ELSEIF(PID.EQ.'HANI') THEN
                   CALL SSEN1HUF1CHN(CO,TH0,TH1R,HP,I,J,K,RMLT0,
      &                          HK,HKCC,NCOL,NROW,NLAY,DELC,DELR,H,
@@ -277,7 +277,6 @@ C     ------------------------------------------------------------------
      &          RMLT(NCOL,NROW,NMLTAR)
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
       COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
-C      INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
 C
 C-------TERMS FOR UNCONFINED AQUIFERS
@@ -341,7 +340,6 @@ C=======================================================================
       SUBROUTINE SSEN1HUF1NL(HN,SN,NC,NR,NL,HK,HKCC,DELR,DELC,IBOUND,
      &  RHS,BOTM,NBOTM,CR,CC,CV,K,LT,NHUF,HUFTHK,RMLT,IZON,NMLTAR,
      &  NZONAR)
-C-----VERSION 1000 01FEB1992
 C     ******************************************************************
 C     ADD NONLINEAR TERMS FOR SENSITIVITY EQUATION CALCULATIONS
 C     ******************************************************************
@@ -661,13 +659,13 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
 C      DOUBLE PRECISION HNEW
       COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
-      INCLUDE 'param.inc'
 C
 C
       TOPL=TOP
       BOTU=TOPU-THKU
       IF(TOPU.LE.BOT.OR.BOTU.GE.TOPL) THEN
-        THCK=0
+cc        THCK=0
+        THCK=0.0    ! changed 5/29/02 - erb
       ELSE
         TOP1=TOPU
         BOT1=BOTU
@@ -683,7 +681,8 @@ C4------RETURN
 C=======================================================================
       SUBROUTINE SSEN1HUF1CH(CO,TH0,TH1,HP,I,J,K,CHAR,RMLT0,
      &                  HK,HKCC,NCOL,NROW,NLAY,DELC,DELR,H,BOT,TOP,NZ,
-     &                  NM,ICL,IZON,NZONAR,RMLT,NMLTAR,C,TH0L,TH1L)
+     &                  NM,ICL,IZON,NZONAR,RMLT,NMLTAR,C,TH0L,TH1L,
+     &                  HUFTHK,NHUF,NU)
 C     ******************************************************************
 C     CALCULATE THE DERIVATIVE OF THE HORIZONTAL CONDUCTANCES WITH
 C     RESPECT TO PARAMETER VALUES, FOR HARMONIC MEAN CONDUCTANCES
@@ -696,7 +695,8 @@ C     ------------------------------------------------------------------
       CHARACTER*2 CHAR
       DIMENSION HK(NCOL,NROW,NLAY), DELC(NROW), DELR(NCOL), 
      & BOT(NCOL,NROW), TOP(NCOL,NROW),HKCC(NCOL,NROW,NLAY),
-     & RMLT(NCOL,NROW,NMLTAR),IZON(NCOL,NROW,NZONAR)
+     & RMLT(NCOL,NROW,NMLTAR),IZON(NCOL,NROW,NZONAR),HUFTMP(200),
+     & HUFTHK(NCOL,NROW,NHUF,2)
       DOUBLE PRECISION H(NCOL*NROW*NLAY), HP, H0
       COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
       INCLUDE 'param.inc'
@@ -709,6 +709,8 @@ C     ------------------------------------------------------------------
       DC = DELC(I)
       II = 0
       IJ = 0
+      AN0 = 1.0
+      AN1 = 1.0
       IND = J + NCOL*(I-1) + NROW*NCOL*(K-1)
       IF (CHAR.EQ.'CR') IJ = 1
       IF (CHAR.EQ.'CC') II = 1
@@ -742,6 +744,22 @@ C     ------------------------------------------------------------------
         D1 = DELC(I+1)
         HK0=HKCC(J,I,K)
         HK1=HKCC(J+IJ,I+II,K)
+        HUFTMP(NU) = 0.0
+        CALL SGWF1HUF1POP(HUFTMP,'HANI',NCOL,NROW,NHUF,I,J,HUFTHK,
+     &                    IZON,NZONAR,RMLT,NMLTAR,NU,IOUT)
+        IF(HGUHANI(NU).GT.0..AND.HUFTMP(NU).EQ.0.) THEN
+          AN0 = HGUHANI(NU)
+        ELSE
+          AN0 = HUFTMP(NU)
+        ENDIF
+        HUFTMP(NU) = 0.0
+        CALL SGWF1HUF1POP(HUFTMP,'HANI',NCOL,NROW,NHUF,I+II,J+IJ,HUFTHK,
+     &                    IZON,NZONAR,RMLT,NMLTAR,NU,IOUT)
+        IF(HGUHANI(NU).GT.0..AND.HUFTMP(NU).EQ.0.) THEN
+          AN1 = HGUHANI(NU)
+        ELSE
+          AN1 = HUFTMP(NU)
+        ENDIF
       ENDIF
       H0=H(IND)
       TOP0L=TOP(J,I)
@@ -752,8 +770,8 @@ C     ------------------------------------------------------------------
       IF(LTHUF(K).NE.0.AND.HP.LT.TOP1L) TH1L=HP-BOT(J+IJ,I+II)
       T0 = HK0*TH0L
       T1 = HK1*TH1L
-      DT0 = RMLT0*TH0
-      DT1 = RMLT1*TH1
+      DT0 = RMLT0*AN0*TH0
+      DT1 = RMLT1*AN1*TH1
 C U AND V ARE THE NUMERATOR AND DENOMINATOR, RESPECTIVELY, OF THE
 C CONDUCTANCE TERM DIVIDED BY WHAT IS ALREADY IN FAC.
 C DU AND DV ARE THEIR DERIVATIVES WITH RESPECT TO THE PARAMETER.
@@ -856,8 +874,6 @@ C=======================================================================
       SUBROUTINE SSEN1HUF1CV(PID,CO,THK1,IBP,IBM,NCOL,NROW,NLAY,CV,
      &                    DELR,DELC,J,I,K,IBOUND,IP,NU,NZ,IZON,
      &                    NZONAR,RMLT0,RMLT,NMLTAR,IOUT,HUFTHK,NHUF)
-C-----VERSION 1000 08AUG1995
-C     VERSION 19980522 ERB
 C     ******************************************************************
 C     CALCULATE THE DERIVATIVE OF THE VERTICAL CONDUCTANCES WITH
 C     RESPECT TO PARAMETER VALUES
@@ -871,9 +887,9 @@ C     ------------------------------------------------------------------
      &          IBOUND(NCOL,NROW,NLAY), CV(NCOL,NROW,NLAY),
      &          IZON(NCOL,NROW,NZONAR), HUFTMP(200),
      &          HUFTHK(NCOL,NROW,NHUF,2)
-      INCLUDE 'param.inc'
       COMMON /DISCOM/LBOTM(200),LAYCBD(200)
       COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
+      INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
       ZERO = 0.0
       IBP = 0

@@ -1,4 +1,4 @@
-C     Last change:  ERB  24 Oct 2001   12:27 pm
+C     Last change:  ERB   8 Jul 2002    4:47 pm
 C=======================================================================
       SUBROUTINE PES1GAU1AP(X,ND,NPE,HOBS,WT,WP,C,SCLE,G,H,DD,DMAX,CSA,
      &                      TOL,IND,IFO,AMP,AP,DMX,IOUT,B1,ITERP,IPRINT,
@@ -6,7 +6,7 @@ C=======================================================================
      &                      SOSR,NIPR,IPR,BUFF,WTP,NHT,WTQ,IOWTQ,NDMH,
      &                      IOSTAR,NPLIST,MPRAR,IPRAR,NDMHAR,BPRI,RMARM,
      &                      IAP,DMXA,NPAR,AMPA,AMCA,AAP,ITMXP,RMAR)
-C     VERSION 20000424 ERB
+C     VERSION 20020708 ERB
 C     ******************************************************************
 C     REGRESSION BY THE MODIFIED GAUSS-NEWTON METHOD
 C     ******************************************************************
@@ -25,11 +25,10 @@ C     ------------------------------------------------------------------
      &                 R(NPE*NPE/2+NPE),  S(NPE),
      &                 U(NPE), G, GD, DMXA(ITMXP)
       CHARACTER*1 CTYPE, DTYPE
-      DIMENSION X(NPE,ND), HOBS(ND), WT(ND),
-     &          WP(MPRAR), H(ND), BPRI(IPRAR),
-     &          B1(NPLIST), G(NPE), LN(NPLIST), PRM(NPLIST+1,MPRAR),
-     &          GD(NPE), XD(NPE,ND), NIPR(IPRAR), BUFF(MPRAR),
-     &          NPAR(ITMXP), AMPA(ITMXP), AMCA(ITMXP),
+      DIMENSION X(NPE,ND), HOBS(ND), WT(ND), WP(MPRAR), H(ND),
+     &          BPRI(IPRAR), B1(NPLIST), G(NPE), LN(NPLIST),
+     &          PRM(NPLIST+1,MPRAR), GD(NPE), XD(NPE,ND), NIPR(IPRAR),
+     &          BUFF(MPRAR), NPAR(ITMXP), AMPA(ITMXP), AMCA(ITMXP),
      &          AAP(ITMXP)
       DIMENSION WTQ(NDMHAR,NDMHAR), WTP(IPRAR,IPRAR)
       INCLUDE 'param.inc'
@@ -145,7 +144,7 @@ C----------CALCULATE SUM OF SQUARED RESIDUALS.
         W = WT(N)
         IF (W.LT.0.) THEN
           W = 1.E-20
-          IF (IFO.EQ.0) WT(N) = -WT(N)
+cc ERB 7-8-02          IF (IFO.EQ.0) WT(N) = -WT(N)
         ENDIF
         DO 40 IP = 1, NPE
           DTMPA = DBLE(W)*DBLE(X(IP,N))

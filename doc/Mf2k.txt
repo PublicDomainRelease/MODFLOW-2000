@@ -57,6 +57,23 @@ METHOD
 
 
 HISTORY
+     MODFLOW-2000 Version 1.10 2002/07/26 - Fixes bugs encountered when 
+        compiling the source code distributed with version 1.9 and a
+        problem in a seldom-used part of the LMG Package.
+
+     MODFLOW-2000 Version 1.9 2002/07/15 - Updates were made to the LAK3,
+        GAGE5, and HUF1 Packages: (1) The LAK Package was modified to add
+        compatibility with the LPF and HUF packages and MODPATH, to clarify
+        output, and report cumulative lake budget; (2) Modifications to the
+        GAGE Package allow optional additional output related to lake gages;
+        and (3) A problem related to the calculation of horizontal-
+        conductance sensitivities was fixed in the HUF Package.  Some
+        problems related to omission of observations (from the sum of
+        squared, weighted residuals objective function and other statistics
+        and the underscore ("_") output files) were corrected.  Please see
+        the Release Notes in the file release.txt for more information
+        related to these issues.
+
      MODFLOW-2000 Version 1.8 2002/05/01 - Added support for an option
         that can be used to suppress printing of cell lists in any or all
         of the RIV, GHB, DRN, DRT, HFB, WEL, and CHD Packages.  This

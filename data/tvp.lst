@@ -1,92 +1,92 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.8 05/01/2002
+                             VERSION 1.10 07/26/2002
 
 
  This model run combines GLOBAL and LIST output into this single file.
 
  GLOBAL LISTING FILE: tvp.lst
-                         UNIT  12
+                         UNIT   12
 #                                                                                                                                                                                                       
 # Global input files                                                                                                                                                                                    
 
  OPENING ../data/tvp.dis
- FILE TYPE:DIS   UNIT  41   STATUS:OLD    
+ FILE TYPE:DIS   UNIT   41   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tvp.zon
- FILE TYPE:ZONE   UNIT  42   STATUS:OLD    
+ FILE TYPE:ZONE   UNIT   42   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tvp.mlt
- FILE TYPE:MULT   UNIT  43   STATUS:OLD    
+ FILE TYPE:MULT   UNIT   43   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 #                                                                                                                                                                                                       
 # Flow process input files                                                                                                                                                                              
 
  OPENING ../data/tvp.bas
- FILE TYPE:BAS6   UNIT  51   STATUS:OLD    
+ FILE TYPE:BAS6   UNIT   51   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tvp.lpf
- FILE TYPE:LPF   UNIT  52   STATUS:OLD    
+ FILE TYPE:LPF   UNIT   52   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tvp.wel
- FILE TYPE:WEL   UNIT  53   STATUS:OLD    
+ FILE TYPE:WEL   UNIT   53   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tvp.pcg
- FILE TYPE:PCG   UNIT  54   STATUS:OLD    
+ FILE TYPE:PCG   UNIT   54   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tvp.oc
- FILE TYPE:OC   UNIT  55   STATUS:OLD    
+ FILE TYPE:OC   UNIT   55   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tvp.ghb
- FILE TYPE:GHB   UNIT  56   STATUS:OLD    
+ FILE TYPE:GHB   UNIT   56   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tvp.riv
- FILE TYPE:RIV   UNIT  57   STATUS:OLD    
+ FILE TYPE:RIV   UNIT   57   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tvp.rch
- FILE TYPE:RCH   UNIT  58   STATUS:OLD    
+ FILE TYPE:RCH   UNIT   58   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tvp.drt
- FILE TYPE:DRT   UNIT  59   STATUS:OLD    
+ FILE TYPE:DRT   UNIT   59   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tvp.drn
- FILE TYPE:DRN   UNIT  61   STATUS:OLD    
+ FILE TYPE:DRN   UNIT   61   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tvp.str
- FILE TYPE:STR   UNIT  62   STATUS:OLD    
+ FILE TYPE:STR   UNIT   62   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tvp.chd
- FILE TYPE:CHD   UNIT  63   STATUS:OLD    
+ FILE TYPE:CHD   UNIT   63   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tvp.evt
- FILE TYPE:EVT   UNIT  64   STATUS:OLD    
+ FILE TYPE:EVT   UNIT   64   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tvp.ets
- FILE TYPE:ETS   UNIT  65   STATUS:OLD    
+ FILE TYPE:ETS   UNIT   65   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  THE FREE FORMAT OPTION HAS BEEN SELECTED
 
- DISCRETIZATION INPUT DATA READ FROM UNIT 41
+ DISCRETIZATION INPUT DATA READ FROM UNIT   41
  # DIS file for test case tc1
  #
     2 LAYERS        18 ROWS        18 COLUMNS
-   5 STRESS PERIOD(S) IN SIMULATION
+    5 STRESS PERIOD(S) IN SIMULATION
  MODEL TIME UNIT IS SECONDS
  MODEL LENGTH UNIT IS METERS
  THE GROUND-WATER TRANSPORT PROCESS IS INACTIVE
@@ -98,10 +98,10 @@
  MODE: FORWARD
 
 
- ZONE OPTION, INPUT READ FROM UNIT 42
+ ZONE OPTION, INPUT READ FROM UNIT   42
      1 ZONE ARRAYS
 
- MULTIPLIER OPTION, INPUT READ FROM UNIT 43
+ MULTIPLIER OPTION, INPUT READ FROM UNIT   43
    5 MULTIPLIER ARRAYS
   Confining bed flag for each layer:
    1   0
@@ -139,7 +139,7 @@
 
 
             MULT. ARRAY: MULTARR_3 
- READING ON UNIT  43 WITH FORMAT: (18F3.0)            
+ READING ON UNIT   43 WITH FORMAT: (18F3.0)            
 
           1      2      3      4      5      6      7      8      9     10
          11     12     13     14     15     16     17     18
@@ -196,7 +196,7 @@
 
 
              ZONE ARRAY: ZONES_1   
- READING ON UNIT  42 WITH FORMAT: (18I2)              
+ READING ON UNIT   42 WITH FORMAT: (18I2)              
 
         1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
  ............................................................................
@@ -220,7 +220,7 @@
   18    1   1   1   1   1   1   3   3   3   4   4   4   2   2   2   2   2   2
 
  LPF1 -- LAYER PROPERTY FLOW PACKAGE, VERSION 1, 1/11/2000
-         INPUT READ FROM UNIT 52
+         INPUT READ FROM UNIT   52
  # LPF input file for test case tc1
  #
  CONSTANT-HEAD CELL-BY-CELL FLOWS WILL BE PRINTED WHEN ICLPFL IS NOT 0
@@ -278,31 +278,31 @@
 
  PARAMETER NAME:SS_1         TYPE:SS     CLUSTERS:   1
  Parameter value from package file is:   1.00000E-03
-                LAYER:  1    MULTIPLIER ARRAY: FIFTIETH    ZONE ARRAY: ALL
+                LAYER:   1    MULTIPLIER ARRAY: FIFTIETH    ZONE ARRAY: ALL
 
  PARAMETER NAME:HK_1         TYPE:HK     CLUSTERS:   1
  Parameter value from package file is:   3.30000E-04
-                LAYER:  1    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
+                LAYER:   1    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
 
  PARAMETER NAME:VERT_ANI_1   TYPE:VANI   CLUSTERS:   1
  Parameter value from package file is:    1.0000    
-                LAYER:  1    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
+                LAYER:   1    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
 
  PARAMETER NAME:VERT_K_CB    TYPE:VKCB   CLUSTERS:   1
  Parameter value from package file is:   1.30000E-07
-                LAYER:  1    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
+                LAYER:   1    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
 
  PARAMETER NAME:SS_2         TYPE:SS     CLUSTERS:   1
  Parameter value from package file is:   2.30000E-04
-                LAYER:  2    MULTIPLIER ARRAY: FIFTIETH    ZONE ARRAY: ALL
+                LAYER:   2    MULTIPLIER ARRAY: FIFTIETH    ZONE ARRAY: ALL
 
  PARAMETER NAME:HK_2         TYPE:HK     CLUSTERS:   1
  Parameter value from package file is:   4.30000E-05
-                LAYER:  2    MULTIPLIER ARRAY: MULTARR_3    ZONE ARRAY: ALL
+                LAYER:   2    MULTIPLIER ARRAY: MULTARR_3    ZONE ARRAY: ALL
 
  PARAMETER NAME:VERT_ANI_2   TYPE:VANI   CLUSTERS:   1
  Parameter value from package file is:    1.0000    
-                LAYER:  2    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
+                LAYER:   2    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
 
     HYD. COND. ALONG ROWS FOR LAYER   1 WILL BE DEFINED BY PARAMETERS
  (PRINT FLAG=  21)
@@ -329,67 +329,67 @@
  #                                                                               
  THE FREE FORMAT OPTION HAS BEEN SELECTED
     2 LAYERS        18 ROWS        18 COLUMNS
-   5 STRESS PERIOD(S) IN SIMULATION
+    5 STRESS PERIOD(S) IN SIMULATION
 
- BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 51
+ BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   51
          10 ELEMENTS IN IR ARRAY ARE USED BY BAS
 
- WEL6 -- WELL PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 53
+ WEL6 -- WELL PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   53
  # WELL input file
      1 Named Parameters         8 List entries
- MAXIMUM OF    2 ACTIVE WELLS AT ONE TIME
+ MAXIMUM OF      2 ACTIVE WELLS AT ONE TIME
          40 ELEMENTS IN RX ARRAY ARE USED BY WEL
 
- DRN6 -- DRAIN PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 61
+ DRN6 -- DRAIN PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   61
  # DRN input file
      1 Named Parameters        27 List entries
- MAXIMUM OF    9 ACTIVE DRAINs AT ONE TIME
+ MAXIMUM OF      9 ACTIVE DRAINS AT ONE TIME
         180 ELEMENTS IN RX ARRAY ARE USED BY DRN
 
- RIV6 -- RIVER PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 57
+ RIV6 -- RIVER PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   57
  # RIV file for test case tc1
  #
      1 Named Parameters        27 List entries
- MAXIMUM OF    9 ACTIVE RIVER REACHES AT ONE TIME
+ MAXIMUM OF      9 ACTIVE RIVER REACHES AT ONE TIME
         216 ELEMENTS IN RX ARRAY ARE USED BY RIV
 
  EVT6 -- EVAPOTRANSPIRATION PACKAGE, VERSION 6, 12/14/2000
-         INPUT READ FROM UNIT 64
+         INPUT READ FROM UNIT   64
  # EVT input file
      1 Named Parameters     
  OPTION 1 -- EVAPOTRANSPIRATION FROM TOP LAYER
         972 ELEMENTS IN RX ARRAY ARE USED BY EVT
         324 ELEMENTS IN IR ARRAY ARE USED BY EVT
 
- GHB6 -- GHB PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 56
+ GHB6 -- GHB PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   56
      1 Named Parameters        45 List entries
- MAXIMUM OF   18 ACTIVE GHB CELLS AT ONE TIME
+ MAXIMUM OF     18 ACTIVE GHB CELLS AT ONE TIME
         315 ELEMENTS IN RX ARRAY ARE USED BY GHB
 
- RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 58
+ RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   58
      2 Named Parameters     
  OPTION 1 -- RECHARGE TO TOP LAYER
         324 ELEMENTS IN RX ARRAY ARE USED BY RCH
         324 ELEMENTS IN IR ARRAY ARE USED BY RCH
 
- STRM -- STREAM PACKAGE, VERSION 6, 6/98 INPUT READ FROM UNIT 62
+ STRM -- STREAM PACKAGE, VERSION 6, 6/98 INPUT READ FROM UNIT   62
  # STR input file
      2 Named Parameters        27 List entries
- MAXIMUM OF   11 ACTIVE STREAM NODES AT ONE TIME
- NUMBER OF STREAM SEGMENTS IS     3
- NUMBER OF STREAM TRIBUTARIES IS     2
-      421 ELEMENTS IN RX ARRAY ARE USED FOR STREAMS
-      202 ELEMENTS IN IR ARRAY ARE USED FOR STREAMS
+ MAXIMUM OF     11 ACTIVE STREAM NODES AT ONE TIME
+ NUMBER OF STREAM SEGMENTS IS      3
+ NUMBER OF STREAM TRIBUTARIES IS      2
+        421 ELEMENTS IN RX ARRAY ARE USED FOR STREAMS
+        202 ELEMENTS IN IR ARRAY ARE USED FOR STREAMS
 
  CHD6 -- TIME-VARIANT SPECIFIED-HEAD PACKAGE, VERSION 6, 1/11/2000
- INPUT READ FROM UNIT 63
+ INPUT READ FROM UNIT   63
  # CHD input file -- 2 nodes representing a mine being dewatered
      1 Named Parameters         8 List entries
- MAXIMUM OF    2 TIME-VARIANT SPECIFIED-HEAD CELLS AT ONE TIME
+ MAXIMUM OF      2 TIME-VARIANT SPECIFIED-HEAD CELLS AT ONE TIME
          50 ELEMENTS IN RX ARRAY ARE USED BY CHD
 
  ETS1 -- EVAPOTRANSPIRATION SEGMENTS PACKAGE, VERSION 1, 5/2/2000
-         INPUT READ FROM UNIT 65
+         INPUT READ FROM UNIT   65
  # ETS input file
  OPTION 1 -- EVAPOTRANSPIRATION FROM TOP LAYER
      1 Named Parameters     
@@ -398,9 +398,9 @@
         324 ELEMENTS IN IR ARRAY ARE USED BY ETS
 
  DRT1 -- DRAIN RETURN PACKAGE, VERSION 1, 5/2/2000
- INPUT READ FROM UNIT 59
+ INPUT READ FROM UNIT   59
  # DRT input file
- MAXIMUM OF    1 ACTIVE DRAINS WITH RETURN FLOW AT ONE TIME
+ MAXIMUM OF      1 ACTIVE DRAINS WITH RETURN FLOW AT ONE TIME
      1 Named Parameters         5 List entries
  RETURN FLOW OPTION IS SELECTED
          54 ELEMENTS IN RX ARRAY ARE USED BY DRT
@@ -423,7 +423,7 @@
 
  OUTPUT CONTROL IS SPECIFIED ONLY AT TIME STEPS FOR WHICH OUTPUT IS DESIRED
  HEAD PRINT FORMAT CODE IS  14    DRAWDOWN PRINT FORMAT CODE IS   0
- HEADS WILL BE SAVED ON UNIT   0    DRAWDOWNS WILL BE SAVED ON UNIT   0
+ HEADS WILL BE SAVED ON UNIT    0    DRAWDOWNS WILL BE SAVED ON UNIT    0
 
     HYD. COND. ALONG ROWS is defined by the following parameters:
  HK_1      
@@ -954,11 +954,11 @@
  DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
       1      2     16     16      1     16     16  0.200000
 
-  19 PARAMETERS HAVE BEEN DEFINED IN ALL PACKAGES.
+   19 PARAMETERS HAVE BEEN DEFINED IN ALL PACKAGES.
  (SPACE IS ALLOCATED FOR  500 PARAMETERS.)
 1
-                            STRESS PERIOD NO.   1, LENGTH =   1.000000    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    1, LENGTH =   1.000000    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     1
 
@@ -966,7 +966,7 @@
 
                             INITIAL TIME STEP SIZE =   1.000000    
 
-     0 WELLS
+      0 WELLS
 
  Parameter:  DRN-K
    Instance:  Drn-a     
@@ -982,7 +982,7 @@
       8      1     17      1       116.0           1.200    
       9      1     18      1       117.0           1.200    
 
-     9 DRAINS
+      9 DRAINS
 
  Parameter:  RIVERS
    Instance:  Orig-rivs 
@@ -998,12 +998,12 @@
       8      1      8      1       107.0           1.200           90.00    
       9      1      9      1       108.0           1.200           90.00    
 
-     9 RIVER REACHES
+      9 RIVER REACHES
 
 
 
                          ET SURFACE
- READING ON UNIT  64 WITH FORMAT: (FREE)              
+ READING ON UNIT   64 WITH FORMAT: (FREE)              
 
          1     2     3     4     5     6     7     8     9    10    11    12    13    14    15    16    17    18
  ...............................................................................................................
@@ -1103,7 +1103,7 @@
      17      1      8     18       350.0          0.1000E-06
      18      1      9     18       350.0          0.1000E-06
 
-    18 GHB CELLS
+     18 GHB CELLS
 
 
 
@@ -1193,9 +1193,9 @@
        1      2      4        3        2         0.000       138.0     0.1000            135.0        137.0    
        1      1      3        3        3         0.000       137.0     0.1000            134.0        136.0    
 
-    11 STREAM REACHES
+     11 STREAM REACHES
 
-                              MAXIMUM NUMBER OF TRIBUTARY STREAMS IS     2
+                              MAXIMUM NUMBER OF TRIBUTARY STREAMS IS      2
 
                      STREAM SEGMENT               TRIBUTARY STREAM SEGMENT NUMBERS
                         1                        0    0
@@ -1203,12 +1203,12 @@
                         3                        1    2
 
 
-     0 TIME-VARIANT SPECIFIED-HEAD CELLS
+      0 TIME-VARIANT SPECIFIED-HEAD CELLS
 
 
 
                   ET SURFACE (ETSS)
- READING ON UNIT  65 WITH FORMAT: (FREE)              
+ READING ON UNIT   65 WITH FORMAT: (FREE)              
 
          1     2     3     4     5     6     7     8     9    10    11    12    13    14    15    16    17    18
  ...............................................................................................................
@@ -1298,15 +1298,15 @@
  DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
       1      2     16     16      1     16     16  1.000000
 
-     1 DRAIN-RETURN CELLS
+      1 DRAIN-RETURN CELLS
  
  SOLVING FOR HEAD 
 
 
-     7 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD  1
+     7 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD    1
     31 TOTAL ITERATIONS
 
- OUTPUT CONTROL FOR STRESS PERIOD  1   TIME STEP  1
+ OUTPUT CONTROL FOR STRESS PERIOD    1   TIME STEP   1
     PRINT HEAD FOR ALL LAYERS
     SAVE BUDGET
     PRINT BUDGET
@@ -1327,8 +1327,8 @@
                1         2         4         3         2         50.7         0.628E-01         50.6    
                1         1         3         3         3         50.6         0.294             50.3    
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
           1      2      3      4      5      6      7      8      9     10
          11     12     13     14     15     16     17     18
@@ -1370,8 +1370,8 @@
   18   117.2  127.1  136.0  143.7  150.4  156.2  161.0  164.9  168.1  170.5
        172.6  174.4  175.8  177.0  178.0  178.7  179.1  179.3
 1
-              HEAD IN LAYER  2 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   2 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
           1      2      3      4      5      6      7      8      9     10
          11     12     13     14     15     16     17     18
@@ -1413,8 +1413,8 @@
   18   118.5  127.5  136.4  143.8  150.5  156.0  160.8  164.6  167.8  170.2
        172.3  174.1  175.6  176.7  177.6  178.3  178.7  178.9
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD   1
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -1460,7 +1460,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  1
+          TIME SUMMARY AT END OF TIME STEP   1 IN STRESS PERIOD    1
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH  1.0000     1.66667E-02 2.77778E-04 1.15741E-05 3.16881E-08
@@ -1468,8 +1468,8 @@
          TOTAL TIME  1.0000     1.66667E-02 2.77778E-04 1.15741E-05 3.16881E-08
 1
 1
-                            STRESS PERIOD NO.   2, LENGTH =   86400.00    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    2, LENGTH =   86400.00    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     3
 
@@ -1484,7 +1484,7 @@
       1      1      9     10      -1.100    
       2      2      9     10      -1.100    
 
-     2 WELLS
+      2 WELLS
 
  Parameter:  DRN-K
    Instance:  Drn-b     
@@ -1500,7 +1500,7 @@
       8      1     17      1       118.0           1.400    
       9      1     18      1       119.0           1.400    
 
-     9 DRAINS
+      9 DRAINS
 
  Parameter:  RIVERS
    Instance:  Rivs-a    
@@ -1516,7 +1516,7 @@
       8      1      8      1       109.0           1.212           90.00    
       9      1      9      1       110.0           1.212           90.00    
 
-     9 RIVER REACHES
+      9 RIVER REACHES
 
  REUSING SURF FROM LAST STRESS PERIOD
 
@@ -1540,7 +1540,7 @@
      17      1      8     18       350.0          0.2000E-06
      18      1      9     18       350.0          0.2000E-06
 
-    18 GHB CELLS
+     18 GHB CELLS
 
 
 
@@ -1630,9 +1630,9 @@
        1      2      4        3        2         0.000       138.0     0.1000            135.0        137.0    
        1      1      3        3        3         0.000       137.0     0.1000            134.0        136.0    
 
-    11 STREAM REACHES
+     11 STREAM REACHES
 
-                              MAXIMUM NUMBER OF TRIBUTARY STREAMS IS     2
+                              MAXIMUM NUMBER OF TRIBUTARY STREAMS IS      2
 
                      STREAM SEGMENT               TRIBUTARY STREAM SEGMENT NUMBERS
                         1                        0    0
@@ -1647,7 +1647,7 @@
       2      1     13     18       164.0           161.0    
 
 
-     2 TIME-VARIANT SPECIFIED-HEAD CELLS
+      2 TIME-VARIANT SPECIFIED-HEAD CELLS
 
  REUSING ETSS FROM LAST STRESS PERIOD
 
@@ -1667,34 +1667,34 @@
  DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
       1      2     16     16      1     16     16  0.800000
 
-     1 DRAIN-RETURN CELLS
+      1 DRAIN-RETURN CELLS
  
  SOLVING FOR HEAD 
 
 
-     3 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD  2
+     3 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD    2
     11 TOTAL ITERATIONS
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  2   TIME STEP  1
+ NO OUTPUT CONTROL FOR STRESS PERIOD    2   TIME STEP   1
  
  SOLVING FOR HEAD 
-     3 CALLS TO PCG ROUTINE FOR TIME STEP   2 IN STRESS PERIOD  2
+     3 CALLS TO PCG ROUTINE FOR TIME STEP   2 IN STRESS PERIOD    2
     10 TOTAL ITERATIONS
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  2   TIME STEP  2
+ NO OUTPUT CONTROL FOR STRESS PERIOD    2   TIME STEP   2
  
  SOLVING FOR HEAD 
-     3 CALLS TO PCG ROUTINE FOR TIME STEP   3 IN STRESS PERIOD  2
+     3 CALLS TO PCG ROUTINE FOR TIME STEP   3 IN STRESS PERIOD    2
     10 TOTAL ITERATIONS
 
- OUTPUT CONTROL FOR STRESS PERIOD  2   TIME STEP  3
+ OUTPUT CONTROL FOR STRESS PERIOD    2   TIME STEP   3
     PRINT HEAD FOR ALL LAYERS
     SAVE BUDGET
     PRINT BUDGET
 
-    CONSTANT HEAD   PERIOD  2   STEP  3
- LAYER  1   ROW  12   COL  18   RATE  -0.466833    
- LAYER  1   ROW  13   COL  18   RATE  -0.486528    
+    CONSTANT HEAD   PERIOD    2   STEP   3
+ LAYER   1   ROW    12   COL    18   RATE   -0.466833    
+ LAYER   1   ROW    13   COL    18   RATE   -0.486528    
 
             LAYER      ROW     COLUMN     STREAM    REACH      FLOW INTO    FLOW INTO      FLOW OUT OF
                                            NUMBER   NUMBER    STREAM REACH    AQUIFER      STREAM REACH
@@ -1712,8 +1712,8 @@
                1         2         4         3         2         180.         0.536E-01         180.    
                1         1         3         3         3         180.         0.280             180.    
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP  3 IN STRESS PERIOD  2
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP   3 IN STRESS PERIOD    2
+  ---------------------------------------------------------------------------
 
           1      2      3      4      5      6      7      8      9     10
          11     12     13     14     15     16     17     18
@@ -1755,8 +1755,8 @@
   18   119.1  128.0  136.4  143.9  150.5  156.2  161.0  165.0  168.3  170.9
        173.1  174.8  176.0  177.1  177.9  178.5  178.9  179.1
 1
-              HEAD IN LAYER  2 AT END OF TIME STEP  3 IN STRESS PERIOD  2
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   2 AT END OF TIME STEP   3 IN STRESS PERIOD    2
+  ---------------------------------------------------------------------------
 
           1      2      3      4      5      6      7      8      9     10
          11     12     13     14     15     16     17     18
@@ -1798,8 +1798,8 @@
   18   120.2  128.3  136.7  144.0  150.5  156.1  160.8  164.7  167.9  170.5
        172.7  174.4  175.7  176.7  177.5  178.0  178.3  178.5
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  3 IN STRESS PERIOD  2
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  3 IN STRESS PERIOD   2
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -1845,7 +1845,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  3 IN STRESS PERIOD  2
+          TIME SUMMARY AT END OF TIME STEP   3 IN STRESS PERIOD    2
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH  28800.      480.00      8.0000     0.33333     9.12617E-04
@@ -1853,8 +1853,8 @@
          TOTAL TIME  86401.      1440.0      24.000      1.0000     2.73788E-03
 1
 1
-                            STRESS PERIOD NO.   3, LENGTH =   259200.0    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    3, LENGTH =   259200.0    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     3
 
@@ -1869,7 +1869,7 @@
       1      1      9     10      -1.210    
       2      2      9     10      -1.210    
 
-     2 WELLS
+      2 WELLS
 
  Parameter:  DRN-K
    Instance:  Drn-b     
@@ -1885,7 +1885,7 @@
       8      1     17      1       118.0           1.400    
       9      1     18      1       119.0           1.400    
 
-     9 DRAINS
+      9 DRAINS
 
  Parameter:  RIVERS
    Instance:  Rivs-a    
@@ -1901,7 +1901,7 @@
       8      1      8      1       109.0           1.212           90.00    
       9      1      9      1       110.0           1.212           90.00    
 
-     9 RIVER REACHES
+      9 RIVER REACHES
 
  REUSING SURF FROM LAST STRESS PERIOD
 
@@ -1972,7 +1972,7 @@
      17      1      8     18       350.0          0.4000E-06
      18      1      9     18       350.0          0.4000E-06
 
-    18 GHB CELLS
+     18 GHB CELLS
 
 
 
@@ -2062,9 +2062,9 @@
        1      2      4        3        2         0.000       138.0     0.1000            135.0        137.0    
        1      1      3        3        3         0.000       137.0     0.1000            134.0        136.0    
 
-    11 STREAM REACHES
+     11 STREAM REACHES
 
-                              MAXIMUM NUMBER OF TRIBUTARY STREAMS IS     2
+                              MAXIMUM NUMBER OF TRIBUTARY STREAMS IS      2
 
                      STREAM SEGMENT               TRIBUTARY STREAM SEGMENT NUMBERS
                         1                        0    0
@@ -2079,7 +2079,7 @@
       2      1     13     18       161.0           159.0    
 
 
-     2 TIME-VARIANT SPECIFIED-HEAD CELLS
+      2 TIME-VARIANT SPECIFIED-HEAD CELLS
 
  REUSING ETSS FROM LAST STRESS PERIOD
 
@@ -2099,32 +2099,32 @@
  DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
       1      2     16     16      1     16     16  0.600000
 
-     1 DRAIN-RETURN CELLS
+      1 DRAIN-RETURN CELLS
  
  SOLVING FOR HEAD 
 
 
-     4 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD  3
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD    3
     13 TOTAL ITERATIONS
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  3   TIME STEP  1
+ NO OUTPUT CONTROL FOR STRESS PERIOD    3   TIME STEP   1
  
  SOLVING FOR HEAD 
-     4 CALLS TO PCG ROUTINE FOR TIME STEP   2 IN STRESS PERIOD  3
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   2 IN STRESS PERIOD    3
     13 TOTAL ITERATIONS
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  3   TIME STEP  2
+ NO OUTPUT CONTROL FOR STRESS PERIOD    3   TIME STEP   2
  
  SOLVING FOR HEAD 
-     4 CALLS TO PCG ROUTINE FOR TIME STEP   3 IN STRESS PERIOD  3
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   3 IN STRESS PERIOD    3
     12 TOTAL ITERATIONS
 
- OUTPUT CONTROL FOR STRESS PERIOD  3   TIME STEP  3
+ OUTPUT CONTROL FOR STRESS PERIOD    3   TIME STEP   3
     SAVE BUDGET
 
-    CONSTANT HEAD   PERIOD  3   STEP  3
- LAYER  1   ROW  12   COL  18   RATE  -0.402885    
- LAYER  1   ROW  13   COL  18   RATE  -0.425674    
+    CONSTANT HEAD   PERIOD    3   STEP   3
+ LAYER   1   ROW    12   COL    18   RATE   -0.402885    
+ LAYER   1   ROW    13   COL    18   RATE   -0.425674    
 
             LAYER      ROW     COLUMN     STREAM    REACH      FLOW INTO    FLOW INTO      FLOW OUT OF
                                            NUMBER   NUMBER    STREAM REACH    AQUIFER      STREAM REACH
@@ -2142,8 +2142,8 @@
                1         2         4         3         2         180.         0.420E-01         180.    
                1         1         3         3         3         180.         0.271             180.    
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  3 IN STRESS PERIOD  3
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  3 IN STRESS PERIOD   3
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -2189,7 +2189,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  3 IN STRESS PERIOD  3
+          TIME SUMMARY AT END OF TIME STEP   3 IN STRESS PERIOD    3
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH  86400.      1440.0      24.000      1.0000     2.73785E-03
@@ -2197,8 +2197,8 @@
          TOTAL TIME 3.45601E+05  5760.0      96.000      4.0000     1.09514E-02
 1
 1
-                            STRESS PERIOD NO.   4, LENGTH =   518400.0    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    4, LENGTH =   518400.0    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     3
 
@@ -2213,7 +2213,7 @@
       1      1      9     10      -1.320    
       2      2      9     10      -1.320    
 
-     2 WELLS
+      2 WELLS
 
  Parameter:  DRN-K
    Instance:  Drn-b     
@@ -2229,7 +2229,7 @@
       8      1     17      1       118.0           1.400    
       9      1     18      1       119.0           1.400    
 
-     9 DRAINS
+      9 DRAINS
 
  Parameter:  RIVERS
    Instance:  Rivs-b    
@@ -2245,7 +2245,7 @@
       8      1      8      1       108.0           1.224           90.00    
       9      1      9      1       109.0           1.224           90.00    
 
-     9 RIVER REACHES
+      9 RIVER REACHES
 
  REUSING SURF FROM LAST STRESS PERIOD
 
@@ -2269,7 +2269,7 @@
      17      1      8     18       350.0          0.8000E-06
      18      1      9     18       350.0          0.8000E-06
 
-    18 GHB CELLS
+     18 GHB CELLS
 
 
 
@@ -2359,9 +2359,9 @@
        1      2      4        3        2         0.000       138.0     0.1000            135.0        137.0    
        1      1      3        3        3         0.000       137.0     0.1000            134.0        136.0    
 
-    11 STREAM REACHES
+     11 STREAM REACHES
 
-                              MAXIMUM NUMBER OF TRIBUTARY STREAMS IS     2
+                              MAXIMUM NUMBER OF TRIBUTARY STREAMS IS      2
 
                      STREAM SEGMENT               TRIBUTARY STREAM SEGMENT NUMBERS
                         1                        0    0
@@ -2376,7 +2376,7 @@
       2      1     13     18       159.0           157.0    
 
 
-     2 TIME-VARIANT SPECIFIED-HEAD CELLS
+      2 TIME-VARIANT SPECIFIED-HEAD CELLS
 
  REUSING ETSS FROM LAST STRESS PERIOD
 
@@ -2443,32 +2443,32 @@
  DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
       1      2     16     16      1     16     16  0.400000
 
-     1 DRAIN-RETURN CELLS
+      1 DRAIN-RETURN CELLS
  
  SOLVING FOR HEAD 
 
 
-     4 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD  4
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD    4
     13 TOTAL ITERATIONS
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  4   TIME STEP  1
+ NO OUTPUT CONTROL FOR STRESS PERIOD    4   TIME STEP   1
  
  SOLVING FOR HEAD 
-     4 CALLS TO PCG ROUTINE FOR TIME STEP   2 IN STRESS PERIOD  4
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   2 IN STRESS PERIOD    4
     13 TOTAL ITERATIONS
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  4   TIME STEP  2
+ NO OUTPUT CONTROL FOR STRESS PERIOD    4   TIME STEP   2
  
  SOLVING FOR HEAD 
-     4 CALLS TO PCG ROUTINE FOR TIME STEP   3 IN STRESS PERIOD  4
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   3 IN STRESS PERIOD    4
     13 TOTAL ITERATIONS
 
- OUTPUT CONTROL FOR STRESS PERIOD  4   TIME STEP  3
+ OUTPUT CONTROL FOR STRESS PERIOD    4   TIME STEP   3
     SAVE BUDGET
 
-    CONSTANT HEAD   PERIOD  4   STEP  3
- LAYER  1   ROW  12   COL  18   RATE  -0.363587    
- LAYER  1   ROW  13   COL  18   RATE  -0.391565    
+    CONSTANT HEAD   PERIOD    4   STEP   3
+ LAYER   1   ROW    12   COL    18   RATE   -0.363587    
+ LAYER   1   ROW    13   COL    18   RATE   -0.391565    
 
             LAYER      ROW     COLUMN     STREAM    REACH      FLOW INTO    FLOW INTO      FLOW OUT OF
                                            NUMBER   NUMBER    STREAM REACH    AQUIFER      STREAM REACH
@@ -2486,8 +2486,8 @@
                1         2         4         3         2         90.5         0.116E-01         90.5    
                1         1         3         3         3         90.5         0.251             90.3    
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  3 IN STRESS PERIOD  4
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  3 IN STRESS PERIOD   4
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -2533,7 +2533,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  3 IN STRESS PERIOD  4
+          TIME SUMMARY AT END OF TIME STEP   3 IN STRESS PERIOD    4
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH 1.72800E+05  2880.0      48.000      2.0000     5.47570E-03
@@ -2541,8 +2541,8 @@
          TOTAL TIME 8.64001E+05  14400.      240.00      10.000     2.73785E-02
 1
 1
-                            STRESS PERIOD NO.   5, LENGTH =  0.2592001E+08
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    5, LENGTH =  0.2592001E+08
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     9
 
@@ -2557,7 +2557,7 @@
       1      1      9     10      -1.430    
       2      2      9     10      -1.430    
 
-     2 WELLS
+      2 WELLS
 
  Parameter:  DRN-K
    Instance:  Drn-c     
@@ -2573,7 +2573,7 @@
       8      1     17      1       117.0           1.800    
       9      1     18      1       118.0           1.800    
 
-     9 DRAINS
+      9 DRAINS
 
  Parameter:  RIVERS
    Instance:  Rivs-b    
@@ -2589,7 +2589,7 @@
       8      1      8      1       108.0           1.224           90.00    
       9      1      9      1       109.0           1.224           90.00    
 
-     9 RIVER REACHES
+      9 RIVER REACHES
 
  REUSING SURF FROM LAST STRESS PERIOD
 
@@ -2613,7 +2613,7 @@
      17      1      8     18       350.0          0.1600E-05
      18      1      9     18       350.0          0.1600E-05
 
-    18 GHB CELLS
+     18 GHB CELLS
 
  REUSING RECH FROM LAST STRESS PERIOD
  Parameter:  STR-K-12
@@ -2635,9 +2635,9 @@
        1      2      4        3        2         0.000       138.0     0.1000            135.0        137.0    
        1      1      3        3        3         0.000       137.0     0.1000            134.0        136.0    
 
-    11 STREAM REACHES
+     11 STREAM REACHES
 
-                              MAXIMUM NUMBER OF TRIBUTARY STREAMS IS     2
+                              MAXIMUM NUMBER OF TRIBUTARY STREAMS IS      2
 
                      STREAM SEGMENT               TRIBUTARY STREAM SEGMENT NUMBERS
                         1                        0    0
@@ -2652,7 +2652,7 @@
       2      1     13     18       157.0           155.0    
 
 
-     2 TIME-VARIANT SPECIFIED-HEAD CELLS
+      2 TIME-VARIANT SPECIFIED-HEAD CELLS
 
  REUSING ETSS FROM LAST STRESS PERIOD
 
@@ -2672,62 +2672,62 @@
  DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
       1      2     16     16      1     16     16  0.200000
 
-     1 DRAIN-RETURN CELLS
+      1 DRAIN-RETURN CELLS
  
  SOLVING FOR HEAD 
 
 
-     4 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD  5
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD    5
     16 TOTAL ITERATIONS
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  1
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   1
  
  SOLVING FOR HEAD 
-     4 CALLS TO PCG ROUTINE FOR TIME STEP   2 IN STRESS PERIOD  5
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   2 IN STRESS PERIOD    5
     16 TOTAL ITERATIONS
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  2
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   2
  
  SOLVING FOR HEAD 
-     4 CALLS TO PCG ROUTINE FOR TIME STEP   3 IN STRESS PERIOD  5
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   3 IN STRESS PERIOD    5
     16 TOTAL ITERATIONS
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  3
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   3
  
  SOLVING FOR HEAD 
-     4 CALLS TO PCG ROUTINE FOR TIME STEP   4 IN STRESS PERIOD  5
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   4 IN STRESS PERIOD    5
     16 TOTAL ITERATIONS
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  4
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   4
  
  SOLVING FOR HEAD 
-     4 CALLS TO PCG ROUTINE FOR TIME STEP   5 IN STRESS PERIOD  5
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   5 IN STRESS PERIOD    5
     15 TOTAL ITERATIONS
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  5
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   5
  
  SOLVING FOR HEAD 
-     4 CALLS TO PCG ROUTINE FOR TIME STEP   6 IN STRESS PERIOD  5
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   6 IN STRESS PERIOD    5
     15 TOTAL ITERATIONS
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  6
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   6
  
  SOLVING FOR HEAD 
-     4 CALLS TO PCG ROUTINE FOR TIME STEP   7 IN STRESS PERIOD  5
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   7 IN STRESS PERIOD    5
     15 TOTAL ITERATIONS
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  7
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   7
  
  SOLVING FOR HEAD 
-     4 CALLS TO PCG ROUTINE FOR TIME STEP   8 IN STRESS PERIOD  5
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   8 IN STRESS PERIOD    5
     15 TOTAL ITERATIONS
 
- OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  8
+ OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   8
     SAVE BUDGET
 
-    CONSTANT HEAD   PERIOD  5   STEP  8
- LAYER  1   ROW  12   COL  18   RATE  -0.219617    
- LAYER  1   ROW  13   COL  18   RATE  -0.250400    
+    CONSTANT HEAD   PERIOD    5   STEP   8
+ LAYER   1   ROW    12   COL    18   RATE   -0.219617    
+ LAYER   1   ROW    13   COL    18   RATE   -0.250400    
 
             LAYER      ROW     COLUMN     STREAM    REACH      FLOW INTO    FLOW INTO      FLOW OUT OF
                                            NUMBER   NUMBER    STREAM REACH    AQUIFER      STREAM REACH
@@ -2746,17 +2746,17 @@
                1         1         3         3         3         90.2         0.253             89.9    
  
  SOLVING FOR HEAD 
-     4 CALLS TO PCG ROUTINE FOR TIME STEP   9 IN STRESS PERIOD  5
+     4 CALLS TO PCG ROUTINE FOR TIME STEP   9 IN STRESS PERIOD    5
     16 TOTAL ITERATIONS
 
- OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  9
+ OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   9
     PRINT HEAD FOR ALL LAYERS
     SAVE BUDGET
     PRINT BUDGET
 
-    CONSTANT HEAD   PERIOD  5   STEP  9
- LAYER  1   ROW  12   COL  18   RATE  -0.224326    
- LAYER  1   ROW  13   COL  18   RATE  -0.254726    
+    CONSTANT HEAD   PERIOD    5   STEP   9
+ LAYER   1   ROW    12   COL    18   RATE   -0.224326    
+ LAYER   1   ROW    13   COL    18   RATE   -0.254726    
 
             LAYER      ROW     COLUMN     STREAM    REACH      FLOW INTO    FLOW INTO      FLOW OUT OF
                                            NUMBER   NUMBER    STREAM REACH    AQUIFER      STREAM REACH
@@ -2774,8 +2774,8 @@
                1         2         4         3         2         90.2         0.163E-01         90.2    
                1         1         3         3         3         90.2         0.253             89.9    
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP  9 IN STRESS PERIOD  5
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP   9 IN STRESS PERIOD    5
+  ---------------------------------------------------------------------------
 
           1      2      3      4      5      6      7      8      9     10
          11     12     13     14     15     16     17     18
@@ -2817,8 +2817,8 @@
   18   118.1  128.6  137.6  145.1  151.3  156.3  160.2  163.2  165.5  167.1
        168.1  168.5  168.3  168.1  167.9  167.7  167.6  167.5
 1
-              HEAD IN LAYER  2 AT END OF TIME STEP  9 IN STRESS PERIOD  5
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   2 AT END OF TIME STEP   9 IN STRESS PERIOD    5
+  ---------------------------------------------------------------------------
 
           1      2      3      4      5      6      7      8      9     10
          11     12     13     14     15     16     17     18
@@ -2860,8 +2860,8 @@
   18   119.5  128.9  137.9  145.1  151.1  155.9  159.7  162.6  164.8  166.3
        167.2  167.7  167.7  167.6  167.3  167.1  167.0  166.9
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  9 IN STRESS PERIOD  5
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  9 IN STRESS PERIOD   5
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -2907,7 +2907,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  9 IN STRESS PERIOD  5
+          TIME SUMMARY AT END OF TIME STEP   9 IN STRESS PERIOD    5
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH 5.35852E+06  89309.      1488.5      62.020     0.16980    

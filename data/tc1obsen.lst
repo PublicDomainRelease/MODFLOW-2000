@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.8 05/01/2002
+                             VERSION 1.10 07/26/2002
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -10,33 +10,33 @@
  # test case tc1obsen                                                            
  THE FREE FORMAT OPTION HAS BEEN SELECTED
     2 LAYERS        18 ROWS        18 COLUMNS
-   5 STRESS PERIOD(S) IN SIMULATION
+    5 STRESS PERIOD(S) IN SIMULATION
 
- BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 41
+ BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   41
          10 ELEMENTS IN IR ARRAY ARE USED BY BAS
 
- WEL6 -- WELL PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 43
+ WEL6 -- WELL PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   43
  # WEL file for test case tc1obsen
  #
      1 Named Parameters         2 List entries
- MAXIMUM OF    2 ACTIVE WELLS AT ONE TIME
+ MAXIMUM OF      2 ACTIVE WELLS AT ONE TIME
          16 ELEMENTS IN RX ARRAY ARE USED BY WEL
 
- RIV6 -- RIVER PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 47
+ RIV6 -- RIVER PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   47
  # RIV file for test case tc1obsen
  #
      1 Named Parameters        18 List entries
- MAXIMUM OF   18 ACTIVE RIVER REACHES AT ONE TIME
+ MAXIMUM OF     18 ACTIVE RIVER REACHES AT ONE TIME
         216 ELEMENTS IN RX ARRAY ARE USED BY RIV
 
- GHB6 -- GHB PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 46
+ GHB6 -- GHB PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   46
  # GHB file for test case tc1obsen
  #
  No named parameters
- MAXIMUM OF   36 ACTIVE GHB CELLS AT ONE TIME
+ MAXIMUM OF     36 ACTIVE GHB CELLS AT ONE TIME
         180 ELEMENTS IN RX ARRAY ARE USED BY GHB
 
- RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 48
+ RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   48
  # RCH file for test case tc1obsen
  #
      2 Named Parameters     
@@ -62,7 +62,7 @@
 
  OUTPUT CONTROL IS SPECIFIED ONLY AT TIME STEPS FOR WHICH OUTPUT IS DESIRED
  HEAD PRINT FORMAT CODE IS  14    DRAWDOWN PRINT FORMAT CODE IS   0
- HEADS WILL BE SAVED ON UNIT   0    DRAWDOWNS WILL BE SAVED ON UNIT   0
+ HEADS WILL BE SAVED ON UNIT    0    DRAWDOWNS WILL BE SAVED ON UNIT    0
 
     HYD. COND. ALONG ROWS is defined by the following parameters:
  HK_1      
@@ -159,8 +159,8 @@
 
          SPECIFIC STORAGE =  4.000000E-06 FOR LAYER   2
 1
-                            STRESS PERIOD NO.   1, LENGTH =   1.000000    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    1, LENGTH =   1.000000    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     1
 
@@ -173,7 +173,7 @@
       1      1      9     10       0.000    
       2      2      9     10       0.000    
 
-     2 WELLS
+      2 WELLS
 
  Parameter:  RIVERS
  REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
@@ -197,7 +197,7 @@
      17      1     17      1       100.0           1.200           90.00    
      18      1     18      1       100.0           1.200           90.00    
 
-    18 RIVER REACHES
+     18 RIVER REACHES
 
  BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE   
  ----------------------------------------------------------
@@ -238,7 +238,7 @@
      35      2     17     18       350.0          0.1000E-06
      36      2     18     18       350.0          0.1000E-06
 
-    36 GHB CELLS
+     36 GHB CELLS
 
 
 
@@ -312,14 +312,14 @@
 
      324 UPPER PART EQS.       324 LOWER PART EQS.    BAND WIDTH + 1 =   37
 
-     3 INTERNAL ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD  1
+     3 INTERNAL ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD    1
 
- OUTPUT CONTROL FOR STRESS PERIOD  1   TIME STEP  1
+ OUTPUT CONTROL FOR STRESS PERIOD    1   TIME STEP   1
     PRINT HEAD FOR LAYERS:   1
     PRINT BUDGET
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
           1      2      3      4      5      6      7      8      9     10
          11     12     13     14     15     16     17     18
@@ -361,8 +361,8 @@
   18   100.2  114.4  126.8  137.4  146.6  154.4  160.9  166.3  170.7  174.1
        177.1  179.5  181.6  183.3  184.6  185.5  186.1  186.4
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD   1
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -398,7 +398,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  1
+          TIME SUMMARY AT END OF TIME STEP   1 IN STRESS PERIOD    1
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH  1.0000     1.66667E-02 2.77778E-04 1.15741E-05 3.16881E-08
@@ -415,8 +415,8 @@
  FOR TIME STEP    1 ALL VALUES ARE 0.0
 
 1
-                            STRESS PERIOD NO.   2, LENGTH =   87162.00    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    2, LENGTH =   87162.00    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     1
 
@@ -430,7 +430,7 @@
       1      1      9     10      -1.100    
       2      2      9     10      -1.100    
 
-     2 WELLS
+      2 WELLS
 
  Parameter:  RIVERS
  REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
@@ -454,22 +454,22 @@
      17      1     17      1       100.0           1.200           90.00    
      18      1     18      1       100.0           1.200           90.00    
 
-    18 RIVER REACHES
+     18 RIVER REACHES
 
  REUSING NON-PARAMETER GHB CELLS FROM LAST STRESS PERIOD
 
-    36 GHB CELLS
+     36 GHB CELLS
 
  REUSING RECH FROM LAST STRESS PERIOD
  
  SOLVING FOR HEAD 
 
-     2 INTERNAL ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD  2
+     2 INTERNAL ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD    2
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  2   TIME STEP  1
+ NO OUTPUT CONTROL FOR STRESS PERIOD    2   TIME STEP   1
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  2
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD   2
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -505,7 +505,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  2
+          TIME SUMMARY AT END OF TIME STEP   1 IN STRESS PERIOD    2
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH  87162.      1452.7      24.212      1.0088     2.76200E-03
@@ -517,8 +517,8 @@
  SUM OF POSITIVE RATES= 2.00000E+00    SUM OF NEGATIVE RATES= 2.00000E+00
                PERCENT DISCREPANCY=    0.00
 1
-                            STRESS PERIOD NO.   3, LENGTH =   261486.0    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    3, LENGTH =   261486.0    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     1
 
@@ -532,7 +532,7 @@
       1      1      9     10      -1.100    
       2      2      9     10      -1.100    
 
-     2 WELLS
+      2 WELLS
 
  Parameter:  RIVERS
  REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
@@ -556,22 +556,22 @@
      17      1     17      1       100.0           1.200           90.00    
      18      1     18      1       100.0           1.200           90.00    
 
-    18 RIVER REACHES
+     18 RIVER REACHES
 
  REUSING NON-PARAMETER GHB CELLS FROM LAST STRESS PERIOD
 
-    36 GHB CELLS
+     36 GHB CELLS
 
  REUSING RECH FROM LAST STRESS PERIOD
  
  SOLVING FOR HEAD 
 
-     2 INTERNAL ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD  3
+     2 INTERNAL ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD    3
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  3   TIME STEP  1
+ NO OUTPUT CONTROL FOR STRESS PERIOD    3   TIME STEP   1
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  3
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD   3
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -607,7 +607,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  3
+          TIME SUMMARY AT END OF TIME STEP   1 IN STRESS PERIOD    3
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH 2.61486E+05  4358.1      72.635      3.0265     8.28599E-03
@@ -619,8 +619,8 @@
  SUM OF POSITIVE RATES= 2.66642E+00    SUM OF NEGATIVE RATES= 2.66642E+00
                PERCENT DISCREPANCY=    0.00
 1
-                            STRESS PERIOD NO.   4, LENGTH =   522972.0    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    4, LENGTH =   522972.0    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     1
 
@@ -634,7 +634,7 @@
       1      1      9     10      -1.100    
       2      2      9     10      -1.100    
 
-     2 WELLS
+      2 WELLS
 
  Parameter:  RIVERS
  REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
@@ -658,22 +658,22 @@
      17      1     17      1       100.0           1.200           90.00    
      18      1     18      1       100.0           1.200           90.00    
 
-    18 RIVER REACHES
+     18 RIVER REACHES
 
  REUSING NON-PARAMETER GHB CELLS FROM LAST STRESS PERIOD
 
-    36 GHB CELLS
+     36 GHB CELLS
 
  REUSING RECH FROM LAST STRESS PERIOD
  
  SOLVING FOR HEAD 
 
-     2 INTERNAL ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD  4
+     2 INTERNAL ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD    4
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  4   TIME STEP  1
+ NO OUTPUT CONTROL FOR STRESS PERIOD    4   TIME STEP   1
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  4
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD   4
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -709,7 +709,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  4
+          TIME SUMMARY AT END OF TIME STEP   1 IN STRESS PERIOD    4
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH 5.22972E+05  8716.2      145.27      6.0529     1.65720E-02
@@ -721,8 +721,8 @@
  SUM OF POSITIVE RATES= 3.32069E+00    SUM OF NEGATIVE RATES= 3.32069E+00
                PERCENT DISCREPANCY=    0.00
 1
-                            STRESS PERIOD NO.   5, LENGTH =  0.2356745E+08
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    5, LENGTH =  0.2356745E+08
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     9
 
@@ -736,7 +736,7 @@
       1      1      9     10      -1.100    
       2      2      9     10      -1.100    
 
-     2 WELLS
+      2 WELLS
 
  Parameter:  RIVERS
  REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
@@ -760,96 +760,96 @@
      17      1     17      1       100.0           1.200           90.00    
      18      1     18      1       100.0           1.200           90.00    
 
-    18 RIVER REACHES
+     18 RIVER REACHES
 
  REUSING NON-PARAMETER GHB CELLS FROM LAST STRESS PERIOD
 
-    36 GHB CELLS
+     36 GHB CELLS
 
  REUSING RECH FROM LAST STRESS PERIOD
  
  SOLVING FOR HEAD 
 
-     2 INTERNAL ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD  5
+     2 INTERNAL ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD    5
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  1
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   1
  
  SOLVING PARAMETER SENSITIVITY FOR WELLS_TR  
  SUM OF POSITIVE RATES= 3.47287E+00    SUM OF NEGATIVE RATES= 3.47287E+00
                PERCENT DISCREPANCY=    0.00
  
  SOLVING FOR HEAD 
-     2 INTERNAL ITERATIONS FOR TIME STEP   2 IN STRESS PERIOD  5
+     2 INTERNAL ITERATIONS FOR TIME STEP   2 IN STRESS PERIOD    5
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  2
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   2
  
  SOLVING PARAMETER SENSITIVITY FOR WELLS_TR  
  SUM OF POSITIVE RATES= 4.58470E+00    SUM OF NEGATIVE RATES= 4.58470E+00
                PERCENT DISCREPANCY=    0.00
  
  SOLVING FOR HEAD 
-     2 INTERNAL ITERATIONS FOR TIME STEP   3 IN STRESS PERIOD  5
+     2 INTERNAL ITERATIONS FOR TIME STEP   3 IN STRESS PERIOD    5
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  3
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   3
  
  SOLVING PARAMETER SENSITIVITY FOR WELLS_TR  
  SUM OF POSITIVE RATES= 5.31170E+00    SUM OF NEGATIVE RATES= 5.31170E+00
                PERCENT DISCREPANCY=    0.00
  
  SOLVING FOR HEAD 
-     2 INTERNAL ITERATIONS FOR TIME STEP   4 IN STRESS PERIOD  5
+     2 INTERNAL ITERATIONS FOR TIME STEP   4 IN STRESS PERIOD    5
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  4
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   4
  
  SOLVING PARAMETER SENSITIVITY FOR WELLS_TR  
  SUM OF POSITIVE RATES= 5.72874E+00    SUM OF NEGATIVE RATES= 5.72874E+00
                PERCENT DISCREPANCY=    0.00
  
  SOLVING FOR HEAD 
-     2 INTERNAL ITERATIONS FOR TIME STEP   5 IN STRESS PERIOD  5
+     2 INTERNAL ITERATIONS FOR TIME STEP   5 IN STRESS PERIOD    5
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  5
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   5
  
  SOLVING PARAMETER SENSITIVITY FOR WELLS_TR  
  SUM OF POSITIVE RATES= 5.89826E+00    SUM OF NEGATIVE RATES= 5.89826E+00
                PERCENT DISCREPANCY=    0.00
  
  SOLVING FOR HEAD 
-     2 INTERNAL ITERATIONS FOR TIME STEP   6 IN STRESS PERIOD  5
+     2 INTERNAL ITERATIONS FOR TIME STEP   6 IN STRESS PERIOD    5
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  6
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   6
  
  SOLVING PARAMETER SENSITIVITY FOR WELLS_TR  
  SUM OF POSITIVE RATES= 5.87368E+00    SUM OF NEGATIVE RATES= 5.87368E+00
                PERCENT DISCREPANCY=    0.00
  
  SOLVING FOR HEAD 
-     2 INTERNAL ITERATIONS FOR TIME STEP   7 IN STRESS PERIOD  5
+     2 INTERNAL ITERATIONS FOR TIME STEP   7 IN STRESS PERIOD    5
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  7
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   7
  
  SOLVING PARAMETER SENSITIVITY FOR WELLS_TR  
  SUM OF POSITIVE RATES= 5.70300E+00    SUM OF NEGATIVE RATES= 5.70300E+00
                PERCENT DISCREPANCY=    0.00
  
  SOLVING FOR HEAD 
-     2 INTERNAL ITERATIONS FOR TIME STEP   8 IN STRESS PERIOD  5
+     2 INTERNAL ITERATIONS FOR TIME STEP   8 IN STRESS PERIOD    5
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  8
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   8
  
  SOLVING PARAMETER SENSITIVITY FOR WELLS_TR  
  SUM OF POSITIVE RATES= 5.43035E+00    SUM OF NEGATIVE RATES= 5.43035E+00
                PERCENT DISCREPANCY=    0.00
  
  SOLVING FOR HEAD 
-     2 INTERNAL ITERATIONS FOR TIME STEP   9 IN STRESS PERIOD  5
+     2 INTERNAL ITERATIONS FOR TIME STEP   9 IN STRESS PERIOD    5
 
- OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  9
+ OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   9
     PRINT HEAD FOR LAYERS:   1
     PRINT BUDGET
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP  9 IN STRESS PERIOD  5
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP   9 IN STRESS PERIOD    5
+  ---------------------------------------------------------------------------
 
           1      2      3      4      5      6      7      8      9     10
          11     12     13     14     15     16     17     18
@@ -891,8 +891,8 @@
   18   100.1  108.4  115.2  120.7  125.1  128.5  131.2  133.2  134.6  135.5
        136.3  137.2  138.0  138.8  139.4  139.9  140.2  140.4
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  9 IN STRESS PERIOD  5
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  9 IN STRESS PERIOD   5
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -928,7 +928,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  9 IN STRESS PERIOD  5
+          TIME SUMMARY AT END OF TIME STEP   9 IN STRESS PERIOD    5
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH 4.87217E+06  81203.      1353.4      56.391     0.15439    
@@ -986,12 +986,12 @@
 
  DATA FOR FLOWS REPRESENTED USING THE RIVER PACKAGE
 
-       OBSERVATION      MEAS.      CALC.                          WEIGHTED
-  OBS#    NAME          FLOW       FLOW     RESIDUAL  WEIGHT**.5  RESIDUAL
+        OBSERVATION      MEAS.      CALC.                          WEIGHTED
+   OBS#    NAME          FLOW       FLOW     RESIDUAL  WEIGHT**.5  RESIDUAL
 
-    33 SS             -4.40      -4.62      0.224       2.50      0.560    
-    34 TR3            -4.10      -4.48      0.382       2.63       1.00    
-    35 TR12           -2.20      -2.63      0.427       4.76       2.03    
+     33 SS             -4.40      -4.62      0.224       2.50      0.560    
+     34 TR3            -4.10      -4.48      0.382       2.63       1.00    
+     35 TR12           -2.20      -2.63      0.427       4.76       2.03    
 
  STATISTICS FOR RIVER FLOW RESIDUALS :
  MAXIMUM WEIGHTED RESIDUAL  :  2.03     OBS#     35
@@ -999,7 +999,7 @@
  AVERAGE WEIGHTED RESIDUAL  :  1.20    
  # RESIDUALS >= 0. :      3
  # RESIDUALS < 0.  :      0
- NUMBER OF RUNS  :    1  IN    3 OBSERVATIONS
+ NUMBER OF RUNS:      1  IN      3 OBSERVATIONS
 
  SUM OF SQUARED WEIGHTED RESIDUALS (RIVER FLOWS ONLY)   5.4484    
 
@@ -1020,8 +1020,8 @@
  ONE-PERCENT SCALED SENSITIVITIES FOR PARAMETER "WELLS_TR  ", SCALED BY *B/100.
 
 1
-  WELLS_TR   SENS. IN LAYER  1 AT END OF TIME STEP  9 IN STRESS PERIOD  5
-  -----------------------------------------------------------------------
+  WELLS_TR   SENS. IN LAYER   1 AT END OF TIME STEP   9 IN STRESS PERIOD    5
+  ---------------------------------------------------------------------------
 
             1           2           3           4           5           6
             7           8           9          10          11          12
@@ -1084,7 +1084,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  9 IN STRESS PERIOD  5
+          TIME SUMMARY AT END OF TIME STEP   9 IN STRESS PERIOD    5
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH 4.87217E+06  81203.      1353.4      56.391     0.15439    

@@ -24,12 +24,12 @@ C-------ASSIGN VERSION NUMBER AND DATE
       CHARACTER*40 VERSION
       PARAMETER (VERSION='1.2 02/25/2002')
       REAL B, BN, BOPT, FC, FL, FOBS, FOPT, FSTAT, PRM, SSE, SSTAT,
-     &     SUM, SUMA, SUMAA, SUMB, SUMC, SUMCC, SUMD, SUMDD, SUMY, 
+     &     SUM, SUMA, SUMAA, SUMB, SUMC, SUMCC, SUMD, SUMDD, SUMY,
 cc     &     SUMYY, TEMP, TEMP1, TMP, VAR, W, WP, WQ, X
      &     SUMYY, TEMP, TEMP1, TMP, W, WP, WQ, X
 Cerb change VAR from single to double precision
       DOUBLE PRECISION VAR
-      INTEGER I, II, IIN1, IIN2, IMP, IOUT, IP, J, JJ, LN, M, MPD, MPR, 
+      INTEGER I, II, IIN1, IIN2, IMP, IOUT, IP, J, JJ, LN, M, MPD, MPR,
      &        N1, N2, NDD, NDMH, NDMHD, NH, NHD, NOBS, NPD, NPTS,
      &        NRES, NVAR
       CHARACTER*10 PARNAM
@@ -43,12 +43,12 @@ cc      COMMON /FLT   / X
 C
       CHARACTER*80 VERSN, OUTNAM
       CHARACTER*84 FN
-      VERSN = 
+      VERSN =
      &  '$Id: bealep.f,v 3.1 1997/07/24 15:14:14 rsregan Exp rsregan $'
-      VERSN = 
+      VERSN =
      &'@(#)BEALEP - MODFLOWP UTILITY TO CALCULATE BEALE''S MEASURE OF NO
      &NLINEARLITY'
-      VERSN = 
+      VERSN =
      &'@(#)BEALEP - MODIFIED FROM COOLEY AND NAFF (1990), BY M.C. HILL 0
      &1JUN1992'
       VERSN = '@(#)BEALEP - CONTACT: H2OSOFT@USGS.GOV'

@@ -1,4 +1,4 @@
-C     Last change:  ERB  21 Sep 2001    4:33 pm
+C     Last change:  ERB  10 Jul 2002    3:59 pm
 C
 C       $Date: 1998/12/29 15:15:00 $
 C       $Revision: 2.4 $
@@ -209,9 +209,9 @@ C        WRITE(IOUT,895)
 C        WRITE(IOUT,900) (I,CC(I),CR(I),CV(I),HCOF(I),
 C     1     RHS(I),HNEW(I),IBOUND(I),I=1,nodes)
 C      ENDIF
-C 895  FORMAT ('    I',5X,'CC',10X,'CR',10X,'CV',9X,'HCOF',8X,'RHS',9X,
-C     &        'HNEW',4X,'IBOUND')
-C 900  FORMAT (I5,5E12.3,D12.3,I5)
+C 895  FORMAT ('    I',5X,'CC',13X,'CR',13X,'CV',12X,'HCOF',12X,'RHS',
+C     &        12X,'HNEW',7X,'IBOUND')
+C 900  FORMAT (I5,6G15.8,I5)
 C-------ASSIGN VARIABLE EQUAL TO THE NUMBER OF CELLS IN ONE LAYER
       NRC = NROW*NCOL
 C-------INITIALIZE VARIABLES USED TO CALCULATE ITERATION PARAMETERS
@@ -779,17 +779,17 @@ C-------IF END OF TIME STEP, PRINT # OF ITERATIONS THIS STEP
   510     FORMAT (1X,/1X)
           WRITE (IOUT,515) KITER, KSTP, KPER, NITER
   515     FORMAT (I6,' CALLS TO PCG ROUTINE FOR TIME STEP',I4,
-     &            ' IN STRESS PERIOD',I3,/,I6,' TOTAL ITERATIONS')
+     &            ' IN STRESS PERIOD ',I4,/,I6,' TOTAL ITERATIONS')
           IF (MUTPCG.LE.0) THEN
 C
 C-------PRINT HEAD CHANGE EACH ITERATION IF PRINTOUT INTERVAL IS REACHED
             IF (ICNVG.EQ.0 .OR. KSTP.EQ.NSTP .OR. MOD(KSTP,IPRPCG).EQ.0)
      &          CALL SPCG2P(HCHG,LHCH,RCHG,LRCH,ITER1,NITER,MXITER,IOUT,
-     &                      NPCOND,BPOLY,IT1,MUTPCG)
+     &                      NPCOND,BPOLY,IT1,MUTPCG,NCOL,NROW)
           ENDIF
         ELSE IF (MUTPCG.EQ.3) THEN
           IF (ICNVG.EQ.0) CALL SPCG2P(HCHG,LHCH,RCHG,LRCH,ITER1,NITER,
-     &             MXITER,IOUT,NPCOND,BPOLY,IT1,0)
+     &             MXITER,IOUT,NPCOND,BPOLY,IT1,0,NCOL,NROW)
         ENDIF
         NITER = 0
       ENDIF
@@ -806,7 +806,7 @@ C
 C
 C
       SUBROUTINE SPCG2P(HCHG,LHCH,RCHG,LRCH,ITER1,NITER,MXITER,IOUT,
-     &                  NPCOND,BPOLY,IT1,MUTPCG)
+     &                  NPCOND,BPOLY,IT1,MUTPCG,NCOL,NROW)
 C
 C-----VERSION 29DEC1998 SPCG2P
 C     ******************************************************************
@@ -817,7 +817,7 @@ C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL BPOLY, HCHG, RCHG
-      INTEGER I, IOUT, IT1, ITER1, J, LHCH, LRCH, MUTPCG, MXITER, NITER, 
+      INTEGER I, IOUT, IT1, ITER1, J, LHCH, LRCH, MUTPCG, MXITER, NITER,
      &        NPCOND, NGRP, K, L1, L2, JMIN
 C
       DIMENSION HCHG(MXITER*ITER1), LHCH(3,MXITER*ITER1)
@@ -838,10 +838,17 @@ C
             L1=(K-1)*5 +1
             L2=L1+4
             IF(K.EQ.NGRP) L2=NITER
-            WRITE(IOUT,10) (IT1(J),HCHG(J),J=L1,L2)
-            WRITE(IOUT,11) ((LHCH(I,J),I=1,3),J=L1,L2)
-10          FORMAT(5(2X,I1,G12.4))
-11          FORMAT(1X,5(:'  (',I3,',',I3,',',I3,')'))
+            IF (NCOL.LE.999 .AND. NROW.LE.999) THEN
+              WRITE(IOUT,10) (IT1(J),HCHG(J),J=L1,L2)
+              WRITE(IOUT,11) ((LHCH(I,J),I=1,3),J=L1,L2)
+10            FORMAT(5(2X,I1,G12.4))
+11            FORMAT(1X,5(:'  (',I3,',',I3,',',I3,')'))
+            ELSE
+              WRITE(IOUT,13) (IT1(J),HCHG(J),J=L1,L2)
+              WRITE(IOUT,14) ((LHCH(I,J),I=1,3),J=L1,L2)
+13            FORMAT(5(4X,I1,G12.4,2X))
+14            FORMAT(1X,5(:'  (',I3,',',I5,',',I5,')'))
+            ENDIF
 20       CONTINUE
          WRITE(IOUT,25)
 25       FORMAT(1X,/1X,'MAXIMUM RESIDUAL FOR EACH ITERATION',

@@ -1,53 +1,53 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.8 05/01/2002
+                             VERSION 1.10 07/26/2002
 
 
  This model run combines GLOBAL and LIST output into this single file.
 
  GLOBAL LISTING FILE: l1b2k.lst
-                         UNIT   1
+                         UNIT    1
 
  OPENING ../data/l1b2k.ba6
- FILE TYPE:BAS6   UNIT   7   STATUS:OLD    
+ FILE TYPE:BAS6   UNIT    7   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/l1b2k.bc6
- FILE TYPE:BCF6   UNIT  10   STATUS:OLD    
+ FILE TYPE:BCF6   UNIT   10   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/l1b2k.evt
- FILE TYPE:EVT   UNIT  11   STATUS:OLD    
+ FILE TYPE:EVT   UNIT   11   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/l1b2k.rch
- FILE TYPE:RCH   UNIT  12   STATUS:OLD    
+ FILE TYPE:RCH   UNIT   12   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/l1b2k.sip
- FILE TYPE:SIP   UNIT  13   STATUS:OLD    
+ FILE TYPE:SIP   UNIT   13   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/l1b2k.oc
- FILE TYPE:OC   UNIT  17   STATUS:OLD    
+ FILE TYPE:OC   UNIT   17   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/l1b2k.lak
- FILE TYPE:LAK   UNIT  16   STATUS:OLD    
+ FILE TYPE:LAK   UNIT   16   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/l1b2k.dis
- FILE TYPE:DIS   UNIT  14   STATUS:OLD    
+ FILE TYPE:DIS   UNIT   14   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/l1b2k.fhb
- FILE TYPE:FHB   UNIT  21   STATUS:OLD    
+ FILE TYPE:FHB   UNIT   21   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
 
- DISCRETIZATION INPUT DATA READ FROM UNIT 14
+ DISCRETIZATION INPUT DATA READ FROM UNIT   14
     5 LAYERS        17 ROWS        17 COLUMNS
-   1 STRESS PERIOD(S) IN SIMULATION
+    1 STRESS PERIOD(S) IN SIMULATION
  MODEL TIME UNIT IS DAYS
  MODEL LENGTH UNIT IS UNDEFINED
  THE GROUND-WATER TRANSPORT PROCESS IS INACTIVE
@@ -68,14 +68,14 @@
 
 
                                DELR
- READING ON UNIT  14 WITH FORMAT: (10F13.0)           
+ READING ON UNIT   14 WITH FORMAT: (10F13.0)           
    250.00       1000.0       1000.0       1000.0       1000.0       1000.0       500.00       500.00       500.00       500.00    
    500.00       1000.0       1000.0       1000.0       1000.0       1000.0       250.00    
 
 
 
                                DELC
- READING ON UNIT  14 WITH FORMAT: (10F13.0)           
+ READING ON UNIT   14 WITH FORMAT: (10F13.0)           
    250.00       1000.0       1000.0       1000.0       1000.0       1000.0       500.00       500.00       500.00       500.00    
    500.00       1000.0       1000.0       1000.0       1000.0       1000.0       250.00    
 
@@ -102,7 +102,7 @@
 
 
  SIP5 -- STRONGLY IMPLICIT PROCEDURE SOLUTION PACKAGE
-                    VERSION 5, 9/1/93 INPUT READ FROM UNIT 13
+                    VERSION 5, 9/1/93 INPUT READ FROM UNIT   13
  MAXIMUM OF 500 ITERATIONS ALLOWED FOR CLOSURE
   5 ITERATION PARAMETERS
        6285 ELEMENTS IN X ARRAY ARE USED BY SIP
@@ -127,9 +127,9 @@
  #Hypothetical simulator of lake and surficial aquifer interaction. ------------ 
  #Shows convergence to equilibrium in transient mode.                            
     5 LAYERS        17 ROWS        17 COLUMNS
-   1 STRESS PERIOD(S) IN SIMULATION
+    1 STRESS PERIOD(S) IN SIMULATION
 
- BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT  7
+ BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT    7
          25 ELEMENTS IN IR ARRAY ARE USED BY BAS
 
  BCF6 -- BLOCK-CENTERED FLOW PACKAGE, VERSION 6, 1/11/2000
@@ -149,13 +149,13 @@
        4340 ELEMENTS IN RX ARRAY ARE USED BY BCF
 
  EVT6 -- EVAPOTRANSPIRATION PACKAGE, VERSION 6, 12/14/2000
-         INPUT READ FROM UNIT 11
+         INPUT READ FROM UNIT   11
  No named parameters
  OPTION 3 -- EVAPOTRANSPIRATION FROM HIGHEST ACTIVE NODE IN EACH VERTICAL COLUMN
         867 ELEMENTS IN RX ARRAY ARE USED BY EVT
         289 ELEMENTS IN IR ARRAY ARE USED BY EVT
 
- RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 12
+ RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   12
  No named parameters
  OPTION 3 -- RECHARGE TO HIGHEST ACTIVE NODE IN EACH VERTICAL COLUMN
         289 ELEMENTS IN RX ARRAY ARE USED BY RCH
@@ -174,7 +174,7 @@
      1280 ELEMENTS IN IR ARRAY ARE USED FOR FHB1
 
  LAK3 -- LAKE PACKAGE, VERSION 3, 6/28/99 INPUT READ FROM UNIT 16
- SPACE ALLOCATION FOR   2890 GRID CELL FACES ADJACENT TO LAKES
+ SPACE ALLOCATION FOR   1445 GRID CELL FACES ADJACENT TO LAKES
  MAXIMUM NUMBER OF LAKES IS  1 FOR THIS SIMULATION
  CELL-BY-CELL SEEPAGES WILL NOT BE PRINTED OR SAVED
 
@@ -182,11 +182,11 @@
                     0.0 IS EXPLICIT, 0.5 IS CENTERED, AND 1.0 IS FULLY IMPLICIT.
 
  STEADY-STATE SOLUTION FOR LAKES.  MAXIMUM NUMBER OF ITERATIONS =   50   CONVERGENCE CRITERION =  1.00E-03
-       7254 ELEMENTS IN RX ARRAY ARE USED BY LAK
-      17349 ELEMENTS IN IR ARRAY ARE USED BY LAK
+       4376 ELEMENTS IN RX ARRAY ARE USED BY LAK
+      10124 ELEMENTS IN IR ARRAY ARE USED BY LAK
 
-      13071  ELEMENTS OF RX ARRAY USED OUT OF      13071
-      19233  ELEMENTS OF IR ARRAY USED OUT OF      19233
+      10193  ELEMENTS OF RX ARRAY USED OUT OF      10193
+      12008  ELEMENTS OF IR ARRAY USED OUT OF      12008
 1
  #Hypothetical simulator of lake and surficial aquifer interaction. ------------ 
  #Shows convergence to equilibrium in transient mode.                            
@@ -194,7 +194,7 @@
 
 
                      BOUNDARY ARRAY FOR LAYER   1
- READING ON UNIT   7 WITH FORMAT: (20I4)              
+ READING ON UNIT    7 WITH FORMAT: (20I4)              
 
         1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17
  ........................................................................
@@ -219,7 +219,7 @@
 
 
                      BOUNDARY ARRAY FOR LAYER   2
- READING ON UNIT   7 WITH FORMAT: (20I4)              
+ READING ON UNIT    7 WITH FORMAT: (20I4)              
 
         1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17
  ........................................................................
@@ -244,7 +244,7 @@
 
 
                      BOUNDARY ARRAY FOR LAYER   3
- READING ON UNIT   7 WITH FORMAT: (20I4)              
+ READING ON UNIT    7 WITH FORMAT: (20I4)              
 
         1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17
  ........................................................................
@@ -269,7 +269,7 @@
 
 
                      BOUNDARY ARRAY FOR LAYER   4
- READING ON UNIT   7 WITH FORMAT: (20I4)              
+ READING ON UNIT    7 WITH FORMAT: (20I4)              
 
         1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17
  ........................................................................
@@ -294,7 +294,7 @@
 
 
                      BOUNDARY ARRAY FOR LAYER   5
- READING ON UNIT   7 WITH FORMAT: (20I4)              
+ READING ON UNIT    7 WITH FORMAT: (20I4)              
 
         1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17
  ........................................................................
@@ -330,7 +330,7 @@
 
  OUTPUT CONTROL IS SPECIFIED EVERY TIME STEP
  HEAD PRINT FORMAT CODE IS -14    DRAWDOWN PRINT FORMAT CODE IS   9
- HEADS WILL BE SAVED ON UNIT  18    DRAWDOWNS WILL BE SAVED ON UNIT  19
+ HEADS WILL BE SAVED ON UNIT   18    DRAWDOWNS WILL BE SAVED ON UNIT   19
 
  COLUMN TO ROW ANISOTROPY =   1.00000    
 
@@ -341,7 +341,7 @@
 
 
                    WETDRY PARAMETER FOR LAYER   1
- READING ON UNIT  10 WITH FORMAT: (10F13.0)           
+ READING ON UNIT   10 WITH FORMAT: (10F13.0)           
 
          1     2     3     4     5     6     7     8     9    10    11    12    13    14    15    16    17
  .........................................................................................................
@@ -370,7 +370,7 @@
 
 
                    WETDRY PARAMETER FOR LAYER   2
- READING ON UNIT  10 WITH FORMAT: (10F13.0)           
+ READING ON UNIT   10 WITH FORMAT: (10F13.0)           
 
          1     2     3     4     5     6     7     8     9    10    11    12    13    14    15    16    17
  .........................................................................................................
@@ -399,7 +399,7 @@
 
 
                    WETDRY PARAMETER FOR LAYER   3
- READING ON UNIT  10 WITH FORMAT: (10F13.0)           
+ READING ON UNIT   10 WITH FORMAT: (10F13.0)           
 
          1     2     3     4     5     6     7     8     9    10    11    12    13    14    15    16    17
  .........................................................................................................
@@ -428,7 +428,7 @@
 
 
                    WETDRY PARAMETER FOR LAYER   4
- READING ON UNIT  10 WITH FORMAT: (10F13.0)           
+ READING ON UNIT   10 WITH FORMAT: (10F13.0)           
 
          1     2     3     4     5     6     7     8     9    10    11    12    13    14    15    16    17
  .........................................................................................................
@@ -455,7 +455,7 @@
 
 
                    WETDRY PARAMETER FOR LAYER   5
- READING ON UNIT  10 WITH FORMAT: (10F13.0)           
+ READING ON UNIT   10 WITH FORMAT: (10F13.0)           
 
          1     2     3     4     5     6     7     8     9    10    11    12    13    14    15    16    17
  .........................................................................................................
@@ -814,8 +814,8 @@
     5   17   15   64   142.7    
     5   17   16   64   141.1    
 1
-                            STRESS PERIOD NO.   1, LENGTH =   1.000000    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    1, LENGTH =   1.000000    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     1
 
@@ -826,7 +826,7 @@
 
 
                          ET SURFACE
- READING ON UNIT  11 WITH FORMAT: (19F6.1)            
+ READING ON UNIT   11 WITH FORMAT: (19F6.1)            
 
          1     2     3     4     5     6     7     8     9    10    11    12    13    14    15    16    17
  .........................................................................................................
@@ -865,7 +865,7 @@
 
 
                       LAKE ID ARRAY FOR LAYER   1
- READING ON UNIT  16 WITH FORMAT: (24I3)              
+ READING ON UNIT   16 WITH FORMAT: (24I3)              
 
         1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17
  ........................................................................
@@ -890,7 +890,7 @@
 
 
                       LAKE ID ARRAY FOR LAYER   2
- READING ON UNIT  16 WITH FORMAT: (24I3)              
+ READING ON UNIT   16 WITH FORMAT: (24I3)              
 
         1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17
  ........................................................................
@@ -933,58 +933,58 @@
        LOCATIONS, LAKE #, INTERFACE TYPE FOR GRID CELLS ADJACENT TO LAKES:
      -----------------------------------------------------------------------
      LAYER #    ROW #    COLUMN #   LAKE #  INTERFACE TYPE  LAKEBED LEAKANCE
-         1         7         6         1         1             0.10000
-         1         8         6         1         1             0.10000
-         1         9         6         1         1             0.10000
-         1        10         6         1         1             0.10000
-         1        11         6         1         1             0.10000
-         1         6         7         1         2             0.10000
-         2         7         7         1         0             0.10000
-         2         8         7         1         0             0.10000
-         2         8         7         1         1             0.10000
-         2         9         7         1         0             0.10000
-         2         9         7         1         1             0.10000
-         2        10         7         1         0             0.10000
-         2        10         7         1         1             0.10000
-         2        11         7         1         0             0.10000
-         1        12         7         1         2             0.10000
-         1         6         8         1         2             0.10000
-         2         7         8         1         0             0.10000
-         2         7         8         1         2             0.10000
-         3         8         8         1         0             0.10000
-         3         9         8         1         0             0.10000
-         3        10         8         1         0             0.10000
-         2        11         8         1         0             0.10000
-         2        11         8         1         2             0.10000
-         1        12         8         1         2             0.10000
-         1         6         9         1         2             0.10000
-         2         7         9         1         0             0.10000
-         2         7         9         1         2             0.10000
-         3         8         9         1         0             0.10000
-         3         9         9         1         0             0.10000
-         3        10         9         1         0             0.10000
-         2        11         9         1         0             0.10000
-         2        11         9         1         2             0.10000
-         1        12         9         1         2             0.10000
-         1         6        10         1         2             0.10000
-         2         7        10         1         0             0.10000
-         2         7        10         1         2             0.10000
-         3         8        10         1         0             0.10000
-         3         9        10         1         0             0.10000
-         3        10        10         1         0             0.10000
-         2        11        10         1         0             0.10000
-         2        11        10         1         2             0.10000
-         1        12        10         1         2             0.10000
-         1         6        11         1         2             0.10000
-         2         7        11         1         0             0.10000
-         2         8        11         1         0             0.10000
+         1         7         6         1         2             0.10000
+         1         8         6         1         2             0.10000
+         1         9         6         1         2             0.10000
+         1        10         6         1         2             0.10000
+         1        11         6         1         2             0.10000
+         1         6         7         1         3             0.10000
+         2         7         7         1         6             0.10000
+         2         8         7         1         6             0.10000
+         2         8         7         1         2             0.10000
+         2         9         7         1         6             0.10000
+         2         9         7         1         2             0.10000
+         2        10         7         1         6             0.10000
+         2        10         7         1         2             0.10000
+         2        11         7         1         6             0.10000
+         1        12         7         1         4             0.10000
+         1         6         8         1         3             0.10000
+         2         7         8         1         6             0.10000
+         2         7         8         1         3             0.10000
+         3         8         8         1         6             0.10000
+         3         9         8         1         6             0.10000
+         3        10         8         1         6             0.10000
+         2        11         8         1         6             0.10000
+         2        11         8         1         4             0.10000
+         1        12         8         1         4             0.10000
+         1         6         9         1         3             0.10000
+         2         7         9         1         6             0.10000
+         2         7         9         1         3             0.10000
+         3         8         9         1         6             0.10000
+         3         9         9         1         6             0.10000
+         3        10         9         1         6             0.10000
+         2        11         9         1         6             0.10000
+         2        11         9         1         4             0.10000
+         1        12         9         1         4             0.10000
+         1         6        10         1         3             0.10000
+         2         7        10         1         6             0.10000
+         2         7        10         1         3             0.10000
+         3         8        10         1         6             0.10000
+         3         9        10         1         6             0.10000
+         3        10        10         1         6             0.10000
+         2        11        10         1         6             0.10000
+         2        11        10         1         4             0.10000
+         1        12        10         1         4             0.10000
+         1         6        11         1         3             0.10000
+         2         7        11         1         6             0.10000
+         2         8        11         1         6             0.10000
          2         8        11         1         1             0.10000
-         2         9        11         1         0             0.10000
+         2         9        11         1         6             0.10000
          2         9        11         1         1             0.10000
-         2        10        11         1         0             0.10000
+         2        10        11         1         6             0.10000
          2        10        11         1         1             0.10000
-         2        11        11         1         0             0.10000
-         1        12        11         1         2             0.10000
+         2        11        11         1         6             0.10000
+         1        12        11         1         4             0.10000
          1         7        12         1         1             0.10000
          1         8        12         1         1             0.10000
          1         9        12         1         1             0.10000
@@ -1160,65 +1160,65 @@
 
 
 
-         C               INTERFACE CONDUCTANCES FOR LAKES
-   L     O
-   A     L  L  T      (IF TYPE = 1 OR 2, CONDUCTANCES ARE PER UNIT THICKNESS.)
+         C               INTERFACE CONDUCTANCES BETWEEN LAKE AND AQUIFER CELLS
+   L     O          (IF TYPE = 0, CONDUCTANCE (L^2/T) IS BETWEEN AQUIFER CELL AND OVERLYING LAKE CELL.)
+   A     L  L  T    (IF TYPE = 1 TO 4, CONDUCTANCES ARE PER UNIT SATURATED THICKNESS (L/T).)
    Y  R  U  A  Y
    E  O  M  K  P                        LAKEBED      C O N D U C T A N C E S
    R  W  N  E  E     DELTA Y   DELTA X  LEAKANCE   LAKEBED   AQUIFER  COMBINED
  _______________________________________________________________________________
-   1  7  6  1  1    5.00E+02  1.00E+03  1.00E-01  5.00E+01  3.00E+01  1.88E+01
-   1  8  6  1  1    5.00E+02  1.00E+03  1.00E-01  5.00E+01  3.00E+01  1.88E+01
-   1  9  6  1  1    5.00E+02  1.00E+03  1.00E-01  5.00E+01  3.00E+01  1.88E+01
-   1 10  6  1  1    5.00E+02  1.00E+03  1.00E-01  5.00E+01  3.00E+01  1.88E+01
-   1 11  6  1  1    5.00E+02  1.00E+03  1.00E-01  5.00E+01  3.00E+01  1.88E+01
-   1  6  7  1  2    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
-   2  7  7  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   2  8  7  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   2  8  7  1  1    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
-   2  9  7  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   2  9  7  1  1    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
-   2 10  7  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   2 10  7  1  1    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
-   2 11  7  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   1 12  7  1  2    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
-   1  6  8  1  2    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
-   2  7  8  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   2  7  8  1  2    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
-   3  8  8  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   3  9  8  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   3 10  8  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   2 11  8  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   2 11  8  1  2    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
-   1 12  8  1  2    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
-   1  6  9  1  2    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
-   2  7  9  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   2  7  9  1  2    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
-   3  8  9  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   3  9  9  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   3 10  9  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   2 11  9  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   2 11  9  1  2    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
-   1 12  9  1  2    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
-   1  6 10  1  2    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
-   2  7 10  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   2  7 10  1  2    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
-   3  8 10  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   3  9 10  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   3 10 10  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   2 11 10  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   2 11 10  1  2    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
-   1 12 10  1  2    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
-   1  6 11  1  2    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
-   2  7 11  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   2  8 11  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   1  7  6  1  2    5.00E+02  1.00E+03  1.00E-01  5.00E+01  3.00E+01  1.88E+01
+   1  8  6  1  2    5.00E+02  1.00E+03  1.00E-01  5.00E+01  3.00E+01  1.88E+01
+   1  9  6  1  2    5.00E+02  1.00E+03  1.00E-01  5.00E+01  3.00E+01  1.88E+01
+   1 10  6  1  2    5.00E+02  1.00E+03  1.00E-01  5.00E+01  3.00E+01  1.88E+01
+   1 11  6  1  2    5.00E+02  1.00E+03  1.00E-01  5.00E+01  3.00E+01  1.88E+01
+   1  6  7  1  3    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
+   2  7  7  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   2  8  7  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   2  8  7  1  2    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
+   2  9  7  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   2  9  7  1  2    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
+   2 10  7  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   2 10  7  1  2    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
+   2 11  7  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   1 12  7  1  4    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
+   1  6  8  1  3    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
+   2  7  8  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   2  7  8  1  3    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
+   3  8  8  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   3  9  8  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   3 10  8  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   2 11  8  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   2 11  8  1  4    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
+   1 12  8  1  4    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
+   1  6  9  1  3    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
+   2  7  9  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   2  7  9  1  3    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
+   3  8  9  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   3  9  9  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   3 10  9  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   2 11  9  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   2 11  9  1  4    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
+   1 12  9  1  4    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
+   1  6 10  1  3    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
+   2  7 10  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   2  7 10  1  3    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
+   3  8 10  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   3  9 10  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   3 10 10  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   2 11 10  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   2 11 10  1  4    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
+   1 12 10  1  4    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
+   1  6 11  1  3    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
+   2  7 11  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   2  8 11  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
    2  8 11  1  1    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
-   2  9 11  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   2  9 11  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
    2  9 11  1  1    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
-   2 10 11  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   2 10 11  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
    2 10 11  1  1    5.00E+02  5.00E+02  1.00E-01  5.00E+01  6.00E+01  2.73E+01
-   2 11 11  1  0    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
-   1 12 11  1  2    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
+   2 11 11  1  6    5.00E+02  5.00E+02  1.00E-01  2.50E+04  1.50E+06  2.46E+04
+   1 12 11  1  4    1.00E+03  5.00E+02  1.00E-01  5.00E+01  3.00E+01  1.88E+01
    1  7 12  1  1    5.00E+02  1.00E+03  1.00E-01  5.00E+01  3.00E+01  1.88E+01
    1  8 12  1  1    5.00E+02  1.00E+03  1.00E-01  5.00E+01  3.00E+01  1.88E+01
    1  9 12  1  1    5.00E+02  1.00E+03  1.00E-01  5.00E+01  3.00E+01  1.88E+01
@@ -2178,7 +2178,7 @@
  ALL LAKES CONVERGED TO STEADY-STATE AFTER   1  ITERATIONS
  LAKE STAGES =     148.284
 
-   472 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD  1
+   472 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD    1
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -2397,8 +2397,9 @@
  PERIOD TIME  1.0000E+00     TOTAL SIMULATION TIME  1.0000E+00
 
 
-     HYDROLOGIC BUDGET SUMMARIES FOR SIMULATED LAKES
-     -----------------------------------------------
+                 HYDROLOGIC BUDGET SUMMARIES FOR SIMULATED LAKES
+     (ALL FLUID FLUXES ARE VOLUMES ADDED TO THE LAKE DURING PRESENT TIME STEP)
+     -------------------------------------------------------------------------
  LAKE   STAGE     PRECIP       EVAP       RUNOFF
    1   148.28  7.2500E+04  6.4375E+04  0.0000E+00
 
@@ -2411,9 +2412,26 @@
    1   0.0000E+00   0.0000E+00   2.8052E+08    6.2500E+06   0.0000E+00  3.8284E+01
  --------------------------------------------------------------------------------
 
+
+
+            CUMULATIVE HYDROLOGIC BUDGET SUMMARIES FOR SIMULATED LAKES
+     (ALL FLUID FLUXES ARE SUMS OF VOLUMES ADDED TO THE LAKE SINCE INITIAL TIME)
+     ---------------------------------------------------------------------------
+ LAKE       PRECIP       EVAP       RUNOFF
+   1     7.2500E+04  6.4375E+04  0.0000E+00
+
+            GROUND WATER            SURFACE WATER
+ LAKE    INFLOW     OUTFLOW      INFLOW     OUTFLOW
+   1  1.6884E+04  2.4955E+04  0.0000E+00  0.0000E+00
+
+         WATER    CONNECTED LAKE
+ LAKE     USE         INFLUX
+   1   0.0000E+00   0.0000E+00
+ --------------------------------------------------------------------------------
+
 1
-              HEAD IN LAYER  5 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   5 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
           1      2      3      4      5      6      7      8      9     10
  .........................................................................
@@ -2435,8 +2453,8 @@
   16   160.0  158.6  156.7  155.1  153.4  151.9  150.7  149.9  149.1  148.4
   17   160.0  158.9  157.3  155.8  154.2  152.7  151.5  150.8  150.0  149.2
 1
-              HEAD IN LAYER  5 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   5 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
          11     12     13     14     15     16     17
  ....................................................
@@ -2458,8 +2476,8 @@
   16   147.6  146.4  144.9  143.4  141.9  140.6  140.0
   17   148.5  147.3  145.8  144.2  142.7  141.1  140.0
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD   1
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -2495,7 +2513,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  1
+          TIME SUMMARY AT END OF TIME STEP   1 IN STRESS PERIOD    1
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH  86400.      1440.0      24.000      1.0000     2.73785E-03

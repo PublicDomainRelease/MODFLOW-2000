@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.8 05/01/2002
+                             VERSION 1.10 07/26/2002
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -9,22 +9,22 @@
  #SAMPLE----3 LAYERS, 15 ROWS, 15 COLUMNS; STEADY STATE; CONSTANT HEADS COLUMN 1 
  #LAYERS 1 AND 2; RECHARGE, WELLS AND DRAINS                                     
     3 LAYERS        15 ROWS        15 COLUMNS
-   1 STRESS PERIOD(S) IN SIMULATION
+    1 STRESS PERIOD(S) IN SIMULATION
 
- BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT  3
+ BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT    3
          15 ELEMENTS IN IR ARRAY ARE USED BY BAS
 
- WEL6 -- WELL PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 12
+ WEL6 -- WELL PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   12
      1 Named Parameters        12 List entries
- MAXIMUM OF   15 ACTIVE WELLS AT ONE TIME
+ MAXIMUM OF     15 ACTIVE WELLS AT ONE TIME
         108 ELEMENTS IN RX ARRAY ARE USED BY WEL
 
- DRN6 -- DRAIN PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 13
+ DRN6 -- DRAIN PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   13
      1 Named Parameters         2 List entries
- MAXIMUM OF    9 ACTIVE DRAINs AT ONE TIME
+ MAXIMUM OF      9 ACTIVE DRAINS AT ONE TIME
          55 ELEMENTS IN RX ARRAY ARE USED BY DRN
 
- RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 18
+ RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   18
      2 Named Parameters     
  OPTION 1 -- RECHARGE TO TOP LAYER
         225 ELEMENTS IN RX ARRAY ARE USED BY RCH
@@ -39,7 +39,7 @@
 
 
                      BOUNDARY ARRAY FOR LAYER   1
- READING ON UNIT   3 WITH FORMAT: (20I4)              
+ READING ON UNIT    3 WITH FORMAT: (20I4)              
 
         1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
  ................................................................
@@ -62,7 +62,7 @@
 
 
                      BOUNDARY ARRAY FOR LAYER   2
- READING ON UNIT   3 WITH FORMAT: (20I4)              
+ READING ON UNIT    3 WITH FORMAT: (20I4)              
 
         1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
  ................................................................
@@ -94,7 +94,7 @@
 
  OUTPUT CONTROL IS SPECIFIED ONLY AT TIME STEPS FOR WHICH OUTPUT IS DESIRED
  HEAD PRINT FORMAT CODE IS  20    DRAWDOWN PRINT FORMAT CODE IS   0
- HEADS WILL BE SAVED ON UNIT   0    DRAWDOWNS WILL BE SAVED ON UNIT   0
+ HEADS WILL BE SAVED ON UNIT    0    DRAWDOWNS WILL BE SAVED ON UNIT    0
 
     HYD. COND. ALONG ROWS is defined by the following parameters:
  HK1       
@@ -121,8 +121,8 @@
 
     HYD. COND. ALONG ROWS =  2.000000E-04 FOR LAYER   3
 1
-                            STRESS PERIOD NO.   1, LENGTH =   86400.00    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    1, LENGTH =   86400.00    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     1
 
@@ -152,7 +152,7 @@
      14      1     13     12      -5.000    
      15      1     13     14      -5.000    
 
-    15 WELLS
+     15 WELLS
 
  DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE   
  ----------------------------------------------------------
@@ -170,7 +170,7 @@
       8      1      8      2       0.000           1.000    
       9      1      8      3       0.000           1.000    
 
-     9 DRAINS
+      9 DRAINS
 
 
 
@@ -181,7 +181,7 @@
  
  SOLVING FOR HEAD 
 
-    31 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD  1
+    31 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD    1
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -204,11 +204,11 @@
   (  1, 13, 12)
 
 
- OUTPUT CONTROL FOR STRESS PERIOD  1   TIME STEP  1
+ OUTPUT CONTROL FOR STRESS PERIOD    1   TIME STEP   1
     PRINT HEAD FOR ALL LAYERS
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
             1           2           3           4           5           6
             7           8           9          10          11          12
@@ -260,8 +260,8 @@
         65.02       67.52       69.94       72.01       74.29       76.22    
         78.22       79.66       80.82    
 1
-              HEAD IN LAYER  2 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   2 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
             1           2           3           4           5           6
             7           8           9          10          11          12
@@ -313,8 +313,8 @@
         64.84       67.34       69.76       71.84       74.11       76.04    
         78.04       79.49       80.65    
 1
-              HEAD IN LAYER  3 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   3 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
             1           2           3           4           5           6
             7           8           9          10          11          12
@@ -366,8 +366,8 @@
         64.59       67.11       69.52       71.61       73.87       75.82    
         77.81       79.27       80.42    
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD   1
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -401,7 +401,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  1
+          TIME SUMMARY AT END OF TIME STEP   1 IN STRESS PERIOD    1
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH  86400.      1440.0      24.000      1.0000     2.73785E-03

@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.8 05/01/2002
+                             VERSION 1.10 07/26/2002
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -31,75 +31,75 @@
 
 
  REWOUND tc2.lst
- FILE TYPE:LIST   UNIT  12
+ FILE TYPE:LIST   UNIT   12
 
  REWOUND tc2.bin
- FILE TYPE:DATA(BINARY)   UNIT  13
+ FILE TYPE:DATA(BINARY)   UNIT   13
 
  REWOUND ../data/tc2.obs
- FILE TYPE:OBS   UNIT  21
+ FILE TYPE:OBS   UNIT   21
 
  REWOUND ../data/tc2.ohd
- FILE TYPE:HOB   UNIT  22
+ FILE TYPE:HOB   UNIT   22
 
  REWOUND ../data/tc2.odr
- FILE TYPE:DROB   UNIT  23
+ FILE TYPE:DROB   UNIT   23
 
  REWOUND ../data/tc2.ogb
- FILE TYPE:GBOB   UNIT  24
+ FILE TYPE:GBOB   UNIT   24
 
  REWOUND ../data/tc2.dis
- FILE TYPE:DIS   UNIT  31
+ FILE TYPE:DIS   UNIT   31
 
  REWOUND ../data/tc2.zon
- FILE TYPE:ZONE   UNIT  32
+ FILE TYPE:ZONE   UNIT   32
 
  REWOUND ../data/tc2.bas
- FILE TYPE:BAS6   UNIT  41
+ FILE TYPE:BAS6   UNIT   41
 
  REWOUND ../data/tc2.wel
- FILE TYPE:WEL   UNIT  43
+ FILE TYPE:WEL   UNIT   43
 
  REWOUND ../data/tc2.drn
- FILE TYPE:DRN   UNIT  44
+ FILE TYPE:DRN   UNIT   44
 
  REWOUND ../data/tc2.evt
- FILE TYPE:EVT   UNIT  45
+ FILE TYPE:EVT   UNIT   45
 
  REWOUND ../data/tc2.ghb
- FILE TYPE:GHB   UNIT  46
+ FILE TYPE:GHB   UNIT   46
 
  REWOUND ../data/tc2.rch
- FILE TYPE:RCH   UNIT  47
+ FILE TYPE:RCH   UNIT   47
 
  REWOUND ../data/tc2.oc
- FILE TYPE:OC   UNIT  48
+ FILE TYPE:OC   UNIT   48
  
  # MODFLOW-2000 SIMULATION OF DEATH VALLEY TEST CASE 1                           
  # test case ymptc                                                               
  THE FREE FORMAT OPTION HAS BEEN SELECTED
     3 LAYERS        18 ROWS        18 COLUMNS
-   1 STRESS PERIOD(S) IN SIMULATION
+    1 STRESS PERIOD(S) IN SIMULATION
 
- BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 41
+ BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   41
          15 ELEMENTS IN IR ARRAY ARE USED BY BAS
 
- WEL6 -- WELL PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 43
+ WEL6 -- WELL PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   43
  # WEL file for test case tc2
  #
  No named parameters
- MAXIMUM OF    3 ACTIVE WELLS AT ONE TIME
+ MAXIMUM OF      3 ACTIVE WELLS AT ONE TIME
          12 ELEMENTS IN RX ARRAY ARE USED BY WEL
 
- DRN6 -- DRAIN PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 44
+ DRN6 -- DRAIN PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   44
  # DRN file for test case tc2
  #
      1 Named Parameters         5 List entries
- MAXIMUM OF    5 ACTIVE DRAINs AT ONE TIME
+ MAXIMUM OF      5 ACTIVE DRAINS AT ONE TIME
          50 ELEMENTS IN RX ARRAY ARE USED BY DRN
 
  EVT6 -- EVAPOTRANSPIRATION PACKAGE, VERSION 6, 12/14/2000
-         INPUT READ FROM UNIT 45
+         INPUT READ FROM UNIT   45
  # EVT file for test case tc2
  #
      1 Named Parameters     
@@ -107,14 +107,14 @@
         972 ELEMENTS IN RX ARRAY ARE USED BY EVT
         324 ELEMENTS IN IR ARRAY ARE USED BY EVT
 
- GHB6 -- GHB PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 46
+ GHB6 -- GHB PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   46
  # GHB file for test case tc2
  #
      1 Named Parameters         5 List entries
- MAXIMUM OF    5 ACTIVE GHB CELLS AT ONE TIME
+ MAXIMUM OF      5 ACTIVE GHB CELLS AT ONE TIME
          50 ELEMENTS IN RX ARRAY ARE USED BY GHB
 
- RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 47
+ RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   47
  # RCH file for test case tc2
  #
      1 Named Parameters     
@@ -131,24 +131,24 @@
 
 
                      BOUNDARY ARRAY FOR LAYER   1
- READING ON UNIT  41 WITH FORMAT: (18I3)              
+ READING ON UNIT   41 WITH FORMAT: (18I3)              
 
 
 
                      BOUNDARY ARRAY FOR LAYER   2
- READING ON UNIT  41 WITH FORMAT: (18I3)              
+ READING ON UNIT   41 WITH FORMAT: (18I3)              
 
 
 
                      BOUNDARY ARRAY FOR LAYER   3
- READING ON UNIT  41 WITH FORMAT: (18I3)              
+ READING ON UNIT   41 WITH FORMAT: (18I3)              
 
  AQUIFER HEAD WILL BE SET TO  9999.0     AT ALL NO-FLOW NODES (IBOUND=0).
 
 
 
                        INITIAL HEAD FOR LAYER   1
- READING ON UNIT  41 WITH FORMAT: (18F10.2)           
+ READING ON UNIT   41 WITH FORMAT: (18F10.2)           
 
             1           2           3           4           5           6
             7           8           9          10          11          12
@@ -212,7 +212,7 @@
 
 
                        INITIAL HEAD FOR LAYER   2
- READING ON UNIT  41 WITH FORMAT: (18F10.2)           
+ READING ON UNIT   41 WITH FORMAT: (18F10.2)           
 
             1           2           3           4           5           6
             7           8           9          10          11          12
@@ -276,7 +276,7 @@
 
 
                        INITIAL HEAD FOR LAYER   3
- READING ON UNIT  41 WITH FORMAT: (18F10.2)           
+ READING ON UNIT   41 WITH FORMAT: (18F10.2)           
 
             1           2           3           4           5           6
             7           8           9          10          11          12
@@ -339,7 +339,7 @@
 
  OUTPUT CONTROL IS SPECIFIED ONLY AT TIME STEPS FOR WHICH OUTPUT IS DESIRED
  HEAD PRINT FORMAT CODE IS  20    DRAWDOWN PRINT FORMAT CODE IS   0
- HEADS WILL BE SAVED ON UNIT  13    DRAWDOWNS WILL BE SAVED ON UNIT   0
+ HEADS WILL BE SAVED ON UNIT   13    DRAWDOWNS WILL BE SAVED ON UNIT    0
 
     HYD. COND. ALONG ROWS is defined by the following parameters:
  HK_1      
@@ -558,8 +558,8 @@
 
   HORIZ. TO VERTICAL ANI. =   1.00009     FOR LAYER   3
 1
-                            STRESS PERIOD NO.   1, LENGTH =   86400.00    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    1, LENGTH =   86400.00    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     1
 
@@ -573,7 +573,7 @@
       2      1      8     16      -200.0    
       3      1     11     13      -150.0    
 
-     3 WELLS
+      3 WELLS
 
  Parameter:  C_DRN
  DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE   
@@ -584,7 +584,7 @@
       4      1     15     14       1200.           1.000    
       5      1     16     14       1200.           1.000    
 
-     5 DRAINS
+      5 DRAINS
 
                ET SURFACE =   1000.00    
 
@@ -666,7 +666,7 @@
       4      1      5     11       500.0           1.000    
       5      1     12      9       1000.           1.000    
 
-     5 GHB CELLS
+      5 GHB CELLS
 
 
 
@@ -737,13 +737,13 @@
  
  SOLVING FOR HEAD 
 
- OUTPUT CONTROL FOR STRESS PERIOD  1   TIME STEP  1
+ OUTPUT CONTROL FOR STRESS PERIOD    1   TIME STEP   1
     PRINT HEAD FOR ALL LAYERS
     PRINT BUDGET
     SAVE HEAD FOR ALL LAYERS
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
             1           2           3           4           5           6
             7           8           9          10          11          12
@@ -804,8 +804,8 @@
         9999.       9999.       9999.       9999.       1248.       1245.    
         1237.       1225.       1210.       1197.       1196.       1195.    
 1
-              HEAD IN LAYER  2 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   2 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
             1           2           3           4           5           6
             7           8           9          10          11          12
@@ -866,8 +866,8 @@
         9999.       9999.       9999.       9999.       1248.       1245.    
         1238.       1227.       1215.       1203.       1198.       1195.    
 1
-              HEAD IN LAYER  3 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   3 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
             1           2           3           4           5           6
             7           8           9          10          11          12
@@ -928,10 +928,10 @@
         9999.       9999.       9999.       9999.       1248.       1245.    
         1238.       1229.       1218.       1208.       1202.       1197.    
 
- HEAD WILL BE SAVED ON UNIT  13 AT END OF TIME STEP  1, STRESS PERIOD  1
+ HEAD WILL BE SAVED ON UNIT   13 AT END OF TIME STEP   1, STRESS PERIOD    1
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD   1
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -969,7 +969,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  1
+          TIME SUMMARY AT END OF TIME STEP   1 IN STRESS PERIOD    1
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH 7.46496E+09 1.24416E+08 2.07360E+06  86400.      236.55    
@@ -1052,20 +1052,20 @@
  AVERAGE WEIGHTED RESIDUAL  : 0.166E-04
  # RESIDUALS >= 0. :      5
  # RESIDUALS < 0.  :      0
- NUMBER OF RUNS  :    1  IN    5 OBSERVATIONS
+ NUMBER OF RUNS:      1  IN      5 OBSERVATIONS
 
  SUM OF SQUARED WEIGHTED RESIDUALS (DRAIN FLOWS ONLY)  0.16815E-08
 
  DATA FOR FLOWS REPRESENTED USING THE GENERAL-HEAD BOUNDARY PACKAGE
 
-       OBSERVATION      MEAS.      CALC.                          WEIGHTED
-  OBS#    NAME          FLOW       FLOW     RESIDUAL  WEIGHT**.5  RESIDUAL
+        OBSERVATION      MEAS.      CALC.                          WEIGHTED
+   OBS#    NAME          FLOW       FLOW     RESIDUAL  WEIGHT**.5  RESIDUAL
 
-    48 GHB1           -612.      -612.     -0.366E-02  0.545E-02 -0.199E-04
-    49 GHB2           -691.      -691.     -0.531E-02  0.483E-02 -0.256E-04
-    50 GHB3           -663.      -663.     -0.433E-02  0.503E-02 -0.218E-04
-    51 GHB4           -657.      -657.     -0.409E-02  0.507E-02 -0.207E-04
-    52 GHB5           -38.8      -38.8      0.378E-03  0.860E-01  0.325E-04
+     48 GHB1           -612.      -612.     -0.366E-02  0.545E-02 -0.199E-04
+     49 GHB2           -691.      -691.     -0.531E-02  0.483E-02 -0.256E-04
+     50 GHB3           -663.      -663.     -0.433E-02  0.503E-02 -0.218E-04
+     51 GHB4           -657.      -657.     -0.409E-02  0.507E-02 -0.207E-04
+     52 GHB5           -38.8      -38.8      0.378E-03  0.860E-01  0.325E-04
 
  STATISTICS FOR GENERAL-HEAD BOUNDARY FLOW RESIDUALS :
  MAXIMUM WEIGHTED RESIDUAL  : 0.325E-04 OBS#     52
@@ -1073,7 +1073,7 @@
  AVERAGE WEIGHTED RESIDUAL  :-0.111E-04
  # RESIDUALS >= 0. :      1
  # RESIDUALS < 0.  :      4
- NUMBER OF RUNS  :    2  IN    5 OBSERVATIONS
+ NUMBER OF RUNS:      2  IN      5 OBSERVATIONS
 
  SUM OF SQUARED WEIGHTED RESIDUALS
    (GENERAL-HEAD BOUNDARY FLOWS ONLY)  0.30145E-08

@@ -1,96 +1,96 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.8 05/01/2002
+                             VERSION 1.10 07/26/2002
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
 
  GLOBAL LISTING FILE: tc1-true.glo
-                         UNIT  11
+                         UNIT   11
 
  OPENING tc1-true.lst
- FILE TYPE:LIST   UNIT  12   STATUS:REPLACE
+ FILE TYPE:LIST   UNIT   12   STATUS:REPLACE
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 #                                                                                                                                                                                                       
 # Obs-Sen-Pes process input files                                                                                                                                                                       
 
  OPENING ../data/tc1-true.obs
- FILE TYPE:OBS   UNIT  21   STATUS:OLD    
+ FILE TYPE:OBS   UNIT   21   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.hob
- FILE TYPE:HOB   UNIT  22   STATUS:OLD    
+ FILE TYPE:HOB   UNIT   22   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.orv
- FILE TYPE:RVOB   UNIT  23   STATUS:OLD    
+ FILE TYPE:RVOB   UNIT   23   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.sen
- FILE TYPE:SEN   UNIT  24   STATUS:OLD    
+ FILE TYPE:SEN   UNIT   24   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.pes
- FILE TYPE:PES   UNIT  25   STATUS:OLD    
+ FILE TYPE:PES   UNIT   25   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 #                                                                                                                                                                                                       
 # Global input files                                                                                                                                                                                    
 
  OPENING ../data/tc1-true.dis
- FILE TYPE:DIS   UNIT  31   STATUS:OLD    
+ FILE TYPE:DIS   UNIT   31   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.zon
- FILE TYPE:ZONE   UNIT  32   STATUS:OLD    
+ FILE TYPE:ZONE   UNIT   32   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.mlt
- FILE TYPE:MULT   UNIT  33   STATUS:OLD    
+ FILE TYPE:MULT   UNIT   33   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 #data            34  ../data/tc1-true.rca                                                                                                                                                               
 #                                                                                                                                                                                                       
 # Flow process input files                                                                                                                                                                              
 
  OPENING ../data/tc1-true.bas
- FILE TYPE:BAS6   UNIT  41   STATUS:OLD    
+ FILE TYPE:BAS6   UNIT   41   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.lpf
- FILE TYPE:LPF   UNIT  42   STATUS:OLD    
+ FILE TYPE:LPF   UNIT   42   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.wel
- FILE TYPE:WEL   UNIT  43   STATUS:OLD    
+ FILE TYPE:WEL   UNIT   43   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 #de4             44  ../data/tc1-true.de4                                                                                                                                                               
 
  OPENING ../data/tc1-true.pcg
- FILE TYPE:PCG   UNIT  45   STATUS:OLD    
+ FILE TYPE:PCG   UNIT   45   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.oc
- FILE TYPE:OC   UNIT  46   STATUS:OLD    
+ FILE TYPE:OC   UNIT   46   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.ghb
- FILE TYPE:GHB   UNIT  47   STATUS:OLD    
+ FILE TYPE:GHB   UNIT   47   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.riv
- FILE TYPE:RIV   UNIT  48   STATUS:OLD    
+ FILE TYPE:RIV   UNIT   48   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc1-true.rch
- FILE TYPE:RCH   UNIT  49   STATUS:OLD    
+ FILE TYPE:RCH   UNIT   49   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  THE FREE FORMAT OPTION HAS BEEN SELECTED
 
- DISCRETIZATION INPUT DATA READ FROM UNIT 31
+ DISCRETIZATION INPUT DATA READ FROM UNIT   31
  # DIS file for test case tc1
  #
     2 LAYERS        18 ROWS        18 COLUMNS
-   5 STRESS PERIOD(S) IN SIMULATION
+    5 STRESS PERIOD(S) IN SIMULATION
  MODEL TIME UNIT IS SECONDS
  MODEL LENGTH UNIT IS METERS
  THE GROUND-WATER TRANSPORT PROCESS IS INACTIVE
@@ -102,10 +102,10 @@
  MODE: PARAMETER ESTIMATION
 
 
- ZONE OPTION, INPUT READ FROM UNIT 32
+ ZONE OPTION, INPUT READ FROM UNIT   32
      1 ZONE ARRAYS
 
- MULTIPLIER OPTION, INPUT READ FROM UNIT 33
+ MULTIPLIER OPTION, INPUT READ FROM UNIT   33
    3 MULTIPLIER ARRAYS
   Confining bed flag for each layer:
    1   0
@@ -143,7 +143,7 @@
 
 
             MULT. ARRAY: MULTARR_3 
- READING ON UNIT  33 WITH FORMAT: (18F3.0)            
+ READING ON UNIT   33 WITH FORMAT: (18F3.0)            
 
           1      2      3      4      5      6      7      8      9     10
          11     12     13     14     15     16     17     18
@@ -192,7 +192,7 @@
 
 
              ZONE ARRAY: ZONES_1   
- READING ON UNIT  32 WITH FORMAT: (9I8)               
+ READING ON UNIT   32 WITH FORMAT: (9I8)               
 
         1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
  ............................................................................
@@ -216,7 +216,7 @@
   18    1   1   1   1   1   1   1   1   1   2   2   2   2   2   2   2   2   2
 
  LPF1 -- LAYER PROPERTY FLOW PACKAGE, VERSION 1, 1/11/2000
-         INPUT READ FROM UNIT 42
+         INPUT READ FROM UNIT   42
  # LPF input file for test case tc1-true
  #
  HEAD AT CELLS THAT CONVERT TO DRY=  -999.00    
@@ -248,19 +248,19 @@
        1296 ELEMENTS IN Z ARRAY ARE USED BY PCG
 
  SEN1BAS6 -- SENSITIVITY PROCESS, VERSION 1.0, 10/15/98
- INPUT READ FROM UNIT  24
+ INPUT READ FROM UNIT   24
 
  NUMBER OF PARAMETER VALUES TO BE READ FROM SEN FILE:    9
  ISENALL............................................:    0
  SENSITIVITIES WILL BE STORED IN MEMORY
  FOR UP TO   9 PARAMETERS
 
-        819 ELEMENTS IN X ARRAY ARE USED FOR SENSITIVITIES
+        832 ELEMENTS IN X ARRAY ARE USED FOR SENSITIVITIES
         648 ELEMENTS IN Z ARRAY ARE USED FOR SENSITIVITIES
          18 ELEMENTS IN IX ARRAY ARE USED FOR SENSITIVITIES
 
  PES1BAS6 -- PARAMETER-ESTIMATION PROCESS, VERSION 1.0, 07/22/99
- INPUT READ FROM UNIT  25
+ INPUT READ FROM UNIT   25
  # PES file for test case tc1
  #
 
@@ -294,9 +294,9 @@
  NUMBER OF PARAMETERS WITH CORRELATED PRIOR INFORMATION (IPR)  =     0
  NUMBER OF PRIOR-INFORMATION EQUATIONS (MPR) ----------------- =     0
 
-    244 ELEMENTS IN X ARRAY ARE USED FOR PARAMETER ESTIMATION
-    296 ELEMENTS IN Z ARRAY ARE USED FOR PARAMETER ESTIMATION
-     12 ELEMENTS IN IX ARRAY ARE USED FOR PARAMETER ESTIMATION
+        244 ELEMENTS IN X ARRAY ARE USED FOR PARAMETER ESTIMATION
+        296 ELEMENTS IN Z ARRAY ARE USED FOR PARAMETER ESTIMATION
+         12 ELEMENTS IN IX ARRAY ARE USED FOR PARAMETER ESTIMATION
 
  OBS1BAS6 -- OBSERVATION PROCESS, VERSION 1.0, 4/27/99
  INPUT READ FROM UNIT  21
@@ -314,11 +314,11 @@
 
  OBS1RIV6 -- OBSERVATION PROCESS (RIVER FLOW OBSERVATIONS)
  VERSION 1.0, 10/15/98
- INPUT READ FROM UNIT  23
+ INPUT READ FROM UNIT   23
 
- NUMBER OF FLOW-OBSERVATION RIVER-CELL GROUPS.......:    1
-   NUMBER OF CELLS IN RIVER-CELL GROUPS.............:   18
-   NUMBER OF RIVER-CELL FLOWS.......................:    3
+ NUMBER OF FLOW-OBSERVATION RIVER-CELL GROUPS.....:      1
+   NUMBER OF CELLS IN RIVER-CELL GROUPS...........:     18
+   NUMBER OF RIVER-CELL FLOWS.....................:      3
 
     1565 ELEMENTS IN X ARRAY ARE USED FOR OBSERVATIONS
       20 ELEMENTS IN Z ARRAY ARE USED FOR OBSERVATIONS
@@ -326,7 +326,7 @@
 
  COMMON ERROR VARIANCE FOR ALL OBSERVATIONS SET TO:       1.000    
 
-       7264  ELEMENTS OF X ARRAY USED OUT OF       7264
+       7277  ELEMENTS OF X ARRAY USED OUT OF       7277
        2260  ELEMENTS OF Z ARRAY USED OUT OF       2260
         731  ELEMENTS OF IX ARRAY USED OUT OF        731
        5832  ELEMENTS OF XHS ARRAY USED OUT OF       5832
@@ -465,8 +465,8 @@
  OBSERVED RIVER-CELL FLOW DATA
  -- TIME OFFSETS ARE MULTIPLIED BY:   86400.    
 
-   GROUP NUMBER:   1   BOUNDARY TYPE: RIV   NUMBER OF CELLS IN GROUP:   -18
-   NUMBER OF FLOW OBSERVATIONS:     3
+   GROUP NUMBER:      1   BOUNDARY TYPE: RIV   NUMBER OF CELLS IN GROUP:    -18
+   NUMBER OF FLOW OBSERVATIONS:      3
 
                                         OBSERVED
                     REFER.             RIVER FLOW
@@ -533,39 +533,39 @@
  Parameter value from package file is:   1.00000E-03
  This value has been changed to:         1.30000E-03, as read from
  the Sensitivity Process file
-                LAYER:  1    MULTIPLIER ARRAY: FIFTIETH    ZONE ARRAY: ALL
+                LAYER:   1    MULTIPLIER ARRAY: FIFTIETH    ZONE ARRAY: ALL
 
  PARAMETER NAME:HK_1         TYPE:HK     CLUSTERS:   1
  Parameter value from package file is:   3.30000E-04
  This value has been changed to:         3.00000E-04, as read from
  the Sensitivity Process file
-                LAYER:  1    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
+                LAYER:   1    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
 
  PARAMETER NAME:VERT_ANI_1   TYPE:VANI   CLUSTERS:   1
  Parameter value from package file is:    1.0000    
-                LAYER:  1    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
+                LAYER:   1    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
 
  PARAMETER NAME:VERT_K_CB    TYPE:VKCB   CLUSTERS:   1
  Parameter value from package file is:   1.30000E-07
  This value has been changed to:         1.00000E-07, as read from
  the Sensitivity Process file
-                LAYER:  1    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
+                LAYER:   1    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
 
  PARAMETER NAME:SS_2         TYPE:SS     CLUSTERS:   1
  Parameter value from package file is:   2.30000E-04
  This value has been changed to:         2.00000E-04, as read from
  the Sensitivity Process file
-                LAYER:  2    MULTIPLIER ARRAY: FIFTIETH    ZONE ARRAY: ALL
+                LAYER:   2    MULTIPLIER ARRAY: FIFTIETH    ZONE ARRAY: ALL
 
  PARAMETER NAME:HK_2         TYPE:HK     CLUSTERS:   1
  Parameter value from package file is:   4.30000E-05
  This value has been changed to:         4.00000E-05, as read from
  the Sensitivity Process file
-                LAYER:  2    MULTIPLIER ARRAY: MULTARR_3    ZONE ARRAY: ALL
+                LAYER:   2    MULTIPLIER ARRAY: MULTARR_3    ZONE ARRAY: ALL
 
  PARAMETER NAME:VERT_ANI_2   TYPE:VANI   CLUSTERS:   1
  Parameter value from package file is:    1.0000    
-                LAYER:  2    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
+                LAYER:   2    MULTIPLIER ARRAY: NONE    ZONE ARRAY: ALL
 
     HYD. COND. ALONG ROWS FOR LAYER   1 WILL BE DEFINED BY PARAMETERS
  (PRINT FLAG=  21)
@@ -648,7 +648,7 @@
                 MULTIPLIER ARRAY: mlt_rch    ZONE ARRAY: zones_1
                 ZONE VALUES:    2
 
-  11 PARAMETERS HAVE BEEN DEFINED IN ALL PACKAGES.
+   11 PARAMETERS HAVE BEEN DEFINED IN ALL PACKAGES.
  (SPACE IS ALLOCATED FOR  500 PARAMETERS.)
  
 OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     1

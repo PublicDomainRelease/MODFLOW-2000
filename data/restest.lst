@@ -1,45 +1,45 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.8 05/01/2002
+                             VERSION 1.10 07/26/2002
 
 
  This model run combines GLOBAL and LIST output into this single file.
 
  GLOBAL LISTING FILE: restest.lst
-                         UNIT   7
+                         UNIT    7
 
  OPENING ../data/restest.ba6
- FILE TYPE:BAS6   UNIT   8   STATUS:OLD    
+ FILE TYPE:BAS6   UNIT    8   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/restest.bc6
- FILE TYPE:BCF6   UNIT  11   STATUS:OLD    
+ FILE TYPE:BCF6   UNIT   11   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/restest.ghb
- FILE TYPE:GHB   UNIT  17   STATUS:OLD    
+ FILE TYPE:GHB   UNIT   17   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/restest.sip
- FILE TYPE:SIP   UNIT  19   STATUS:OLD    
+ FILE TYPE:SIP   UNIT   19   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/restest.oc
- FILE TYPE:OC   UNIT  22   STATUS:OLD    
+ FILE TYPE:OC   UNIT   22   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/restest.res
- FILE TYPE:RES   UNIT  27   STATUS:OLD    
+ FILE TYPE:RES   UNIT   27   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/restest.dis
- FILE TYPE:DIS   UNIT  10   STATUS:OLD    
+ FILE TYPE:DIS   UNIT   10   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
 
- DISCRETIZATION INPUT DATA READ FROM UNIT 10
+ DISCRETIZATION INPUT DATA READ FROM UNIT   10
     1 LAYERS        12 ROWS        12 COLUMNS
-   3 STRESS PERIOD(S) IN SIMULATION
+    3 STRESS PERIOD(S) IN SIMULATION
  MODEL TIME UNIT IS DAYS
  MODEL LENGTH UNIT IS UNDEFINED
  THE GROUND-WATER TRANSPORT PROCESS IS INACTIVE
@@ -78,7 +78,7 @@
 
 
  SIP5 -- STRONGLY IMPLICIT PROCEDURE SOLUTION PACKAGE
-                    VERSION 5, 9/1/93 INPUT READ FROM UNIT 19
+                    VERSION 5, 9/1/93 INPUT READ FROM UNIT   19
  MAXIMUM OF  50 ITERATIONS ALLOWED FOR CLOSURE
   5 ITERATION PARAMETERS
         631 ELEMENTS IN X ARRAY ARE USED BY SIP
@@ -105,9 +105,9 @@
  #Reservoir Package Example Problem                                              
  #June 25, 1996                                                                  
     1 LAYERS        12 ROWS        12 COLUMNS
-   3 STRESS PERIOD(S) IN SIMULATION
+    3 STRESS PERIOD(S) IN SIMULATION
 
- BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT  8
+ BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT    8
           5 ELEMENTS IN IR ARRAY ARE USED BY BAS
 
  BCF6 -- BLOCK-CENTERED FLOW PACKAGE, VERSION 6, 1/11/2000
@@ -120,9 +120,9 @@
          1            0          0 -- HARMONIC    
         145 ELEMENTS IN RX ARRAY ARE USED BY BCF
 
- GHB6 -- GHB PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 17
+ GHB6 -- GHB PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   17
  No named parameters
- MAXIMUM OF   24 ACTIVE GHB CELLS AT ONE TIME
+ MAXIMUM OF     24 ACTIVE GHB CELLS AT ONE TIME
         120 ELEMENTS IN RX ARRAY ARE USED BY GHB
 
 RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
@@ -142,7 +142,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
 
 
                      BOUNDARY ARRAY FOR LAYER   1
- READING ON UNIT   8 WITH FORMAT: (20I4)              
+ READING ON UNIT    8 WITH FORMAT: (20I4)              
 
         1   2   3   4   5   6   7   8   9  10  11  12
  ....................................................
@@ -165,7 +165,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
 
  OUTPUT CONTROL IS SPECIFIED EVERY TIME STEP
  HEAD PRINT FORMAT CODE IS   4    DRAWDOWN PRINT FORMAT CODE IS   4
- HEADS WILL BE SAVED ON UNIT   0    DRAWDOWNS WILL BE SAVED ON UNIT   0
+ HEADS WILL BE SAVED ON UNIT    0    DRAWDOWNS WILL BE SAVED ON UNIT    0
 
  COLUMN TO ROW ANISOTROPY =   1.00000    
 
@@ -176,8 +176,8 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
 
      0 GHB parameters
 1
-                            STRESS PERIOD NO.   1, LENGTH =   2.000000    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    1, LENGTH =   2.000000    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     2
 
@@ -212,12 +212,12 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
      23      1     11     12       0.000           1000.    
      24      1     12     12       0.000           1000.    
 
-    24 GHB CELLS
+     24 GHB CELLS
 
 
 
                  RESERVOIR LOCATION FOR LAYER   1
- READING ON UNIT  27 WITH FORMAT: (12I2)              
+ READING ON UNIT   27 WITH FORMAT: (12I2)              
 
         1   2   3   4   5   6   7   8   9  10  11  12
  ....................................................
@@ -238,7 +238,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
 
 
            RESERVOIR LAND SURF ELEV FOR LAYER   1
- READING ON UNIT  27 WITH FORMAT: (12F4.0)            
+ READING ON UNIT   27 WITH FORMAT: (12F4.0)            
 
          1     2     3     4     5     6     7     8     9    10    11    12
  ...........................................................................
@@ -285,7 +285,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
  
  SOLVING FOR HEAD 
 
-     8 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD  1
+     8 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD    1
 
  HEAD/DRAWDOWN PRINTOUT FLAG = 0     TOTAL BUDGET PRINTOUT FLAG = 0
  CELL-BY-CELL FLOW TERM FLAG = 0
@@ -301,7 +301,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
        1     12.000     0.47000E+06 0.18400E+07
  
  SOLVING FOR HEAD 
-     8 ITERATIONS FOR TIME STEP   2 IN STRESS PERIOD  1
+     8 ITERATIONS FOR TIME STEP   2 IN STRESS PERIOD    1
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -323,8 +323,8 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
  -----------------------------------------
     1       1         0       1       0
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP  2 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP   2 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
            1       2       3       4       5       6       7       8       9      10      11      12
  ...................................................................................................
@@ -341,8 +341,8 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
   11     1.65    1.94    2.32    2.76    3.14    3.33    3.31    3.11    2.78    2.38    1.96    1.65
   12     1.52    1.75    2.05    2.37    2.63    2.76    2.74    2.58    2.33    2.02    1.72    1.48
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  2 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  2 IN STRESS PERIOD   1
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -374,7 +374,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  2 IN STRESS PERIOD  1
+          TIME SUMMARY AT END OF TIME STEP   2 IN STRESS PERIOD    1
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH  86400.      1440.0      24.000      1.0000     2.73785E-03
@@ -382,8 +382,8 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
          TOTAL TIME 1.72800E+05  2880.0      48.000      2.0000     5.47570E-03
 1
 1
-                            STRESS PERIOD NO.   2, LENGTH =   2.000000    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    2, LENGTH =   2.000000    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     2
 
@@ -393,7 +393,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
 
  REUSING NON-PARAMETER GHB CELLS FROM LAST STRESS PERIOD
 
-    24 GHB CELLS
+     24 GHB CELLS
  RESERVOIR CONDITIONS FOR STRESS PERIOD   2, STEP   1 TIME   3.0000    
   RESERVOIR   HEAD         AREA        VOLUME
   ----------------------------------------------
@@ -401,7 +401,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
  
  SOLVING FOR HEAD 
 
-     8 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD  2
+     8 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD    2
 
  HEAD/DRAWDOWN PRINTOUT FLAG = 0     TOTAL BUDGET PRINTOUT FLAG = 0
  CELL-BY-CELL FLOW TERM FLAG = 0
@@ -417,7 +417,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
        1     14.000     0.47000E+06 0.27800E+07
  
  SOLVING FOR HEAD 
-     8 ITERATIONS FOR TIME STEP   2 IN STRESS PERIOD  2
+     8 ITERATIONS FOR TIME STEP   2 IN STRESS PERIOD    2
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -439,8 +439,8 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
  -----------------------------------------
     1       1         0       1       0
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP  2 IN STRESS PERIOD  2
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP   2 IN STRESS PERIOD    2
+  ---------------------------------------------------------------------------
 
            1       2       3       4       5       6       7       8       9      10      11      12
  ...................................................................................................
@@ -457,8 +457,8 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
   11     4.44    5.02    5.70    6.42    7.07    7.50    7.67    7.59    7.27    6.74    6.05    5.40
   12     4.27    4.79    5.39    6.00    6.53    6.90    7.05    6.97    6.69    6.23    5.67    5.11
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  2 IN STRESS PERIOD  2
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  2 IN STRESS PERIOD   2
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -490,7 +490,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  2 IN STRESS PERIOD  2
+          TIME SUMMARY AT END OF TIME STEP   2 IN STRESS PERIOD    2
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH  86400.      1440.0      24.000      1.0000     2.73785E-03
@@ -498,8 +498,8 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
          TOTAL TIME 3.45600E+05  5760.0      96.000      4.0000     1.09514E-02
 1
 1
-                            STRESS PERIOD NO.   3, LENGTH =   5.000000    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    3, LENGTH =   5.000000    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     5
 
@@ -509,7 +509,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
 
  REUSING NON-PARAMETER GHB CELLS FROM LAST STRESS PERIOD
 
-    24 GHB CELLS
+     24 GHB CELLS
  RESERVOIR CONDITIONS FOR STRESS PERIOD   3, STEP   1 TIME   5.0000    
   RESERVOIR   HEAD         AREA        VOLUME
   ----------------------------------------------
@@ -517,7 +517,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
  
  SOLVING FOR HEAD 
 
-     6 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD  3
+     6 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD    3
 
  HEAD/DRAWDOWN PRINTOUT FLAG = 0     TOTAL BUDGET PRINTOUT FLAG = 0
  CELL-BY-CELL FLOW TERM FLAG = 0
@@ -533,7 +533,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
        1     10.000     0.33000E+06 0.90000E+06
  
  SOLVING FOR HEAD 
-     6 ITERATIONS FOR TIME STEP   2 IN STRESS PERIOD  3
+     6 ITERATIONS FOR TIME STEP   2 IN STRESS PERIOD    3
 
  HEAD/DRAWDOWN PRINTOUT FLAG = 0     TOTAL BUDGET PRINTOUT FLAG = 0
  CELL-BY-CELL FLOW TERM FLAG = 0
@@ -544,7 +544,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
        1     8.0000     0.19000E+06 0.31000E+06
  
  SOLVING FOR HEAD 
-     6 ITERATIONS FOR TIME STEP   3 IN STRESS PERIOD  3
+     6 ITERATIONS FOR TIME STEP   3 IN STRESS PERIOD    3
 
  HEAD/DRAWDOWN PRINTOUT FLAG = 0     TOTAL BUDGET PRINTOUT FLAG = 0
  CELL-BY-CELL FLOW TERM FLAG = 0
@@ -555,7 +555,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
        1     6.0000      0.0000      0.0000    
  
  SOLVING FOR HEAD 
-     6 ITERATIONS FOR TIME STEP   4 IN STRESS PERIOD  3
+     6 ITERATIONS FOR TIME STEP   4 IN STRESS PERIOD    3
 
  HEAD/DRAWDOWN PRINTOUT FLAG = 0     TOTAL BUDGET PRINTOUT FLAG = 0
  CELL-BY-CELL FLOW TERM FLAG = 0
@@ -566,7 +566,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
        1     4.0000      0.0000      0.0000    
  
  SOLVING FOR HEAD 
-     5 ITERATIONS FOR TIME STEP   5 IN STRESS PERIOD  3
+     5 ITERATIONS FOR TIME STEP   5 IN STRESS PERIOD    3
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -586,8 +586,8 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
  -----------------------------------------
     1       1         0       1       0
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP  5 IN STRESS PERIOD  3
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP   5 IN STRESS PERIOD    3
+  ---------------------------------------------------------------------------
 
            1       2       3       4       5       6       7       8       9      10      11      12
  ...................................................................................................
@@ -604,8 +604,8 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
   11     5.56    6.05    6.47    6.81    7.05    7.20    7.24    7.17    6.99    6.71    6.31    5.82
   12     5.54    6.03    6.45    6.79    7.03    7.18    7.22    7.15    6.97    6.69    6.29    5.80
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  5 IN STRESS PERIOD  3
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  5 IN STRESS PERIOD   3
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -637,7 +637,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  5 IN STRESS PERIOD  3
+          TIME SUMMARY AT END OF TIME STEP   5 IN STRESS PERIOD    3
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH  86400.      1440.0      24.000      1.0000     2.73785E-03

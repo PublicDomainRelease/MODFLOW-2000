@@ -1,41 +1,41 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.8 05/01/2002
+                             VERSION 1.10 07/26/2002
 
 
  This model run combines GLOBAL and LIST output into this single file.
 
  GLOBAL LISTING FILE: ibs2k.lst
-                         UNIT   1
+                         UNIT    1
 
  OPENING ../data/ibs2k.ba6
- FILE TYPE:BAS6   UNIT   2   STATUS:OLD    
+ FILE TYPE:BAS6   UNIT    2   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/ibs2k.bc6
- FILE TYPE:BCF6   UNIT   7   STATUS:OLD    
+ FILE TYPE:BCF6   UNIT    7   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/ibs2k.dis
- FILE TYPE:DIS   UNIT  10   STATUS:OLD    
+ FILE TYPE:DIS   UNIT   10   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/ibs2k.oc
- FILE TYPE:OC   UNIT  11   STATUS:OLD    
+ FILE TYPE:OC   UNIT   11   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/ibs2k.ibs
- FILE TYPE:IBS   UNIT  13   STATUS:OLD    
+ FILE TYPE:IBS   UNIT   13   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/ibs2k.sip
- FILE TYPE:SIP   UNIT  19   STATUS:OLD    
+ FILE TYPE:SIP   UNIT   19   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
 
- DISCRETIZATION INPUT DATA READ FROM UNIT 10
+ DISCRETIZATION INPUT DATA READ FROM UNIT   10
     2 LAYERS        10 ROWS        12 COLUMNS
-   3 STRESS PERIOD(S) IN SIMULATION
+    3 STRESS PERIOD(S) IN SIMULATION
  MODEL TIME UNIT IS DAYS
  MODEL LENGTH UNIT IS UNDEFINED
  THE GROUND-WATER TRANSPORT PROCESS IS INACTIVE
@@ -76,7 +76,7 @@
 
 
  SIP5 -- STRONGLY IMPLICIT PROCEDURE SOLUTION PACKAGE
-                    VERSION 5, 9/1/93 INPUT READ FROM UNIT 19
+                    VERSION 5, 9/1/93 INPUT READ FROM UNIT   19
  MAXIMUM OF  50 ITERATIONS ALLOWED FOR CLOSURE
   5 ITERATION PARAMETERS
        1015 ELEMENTS IN X ARRAY ARE USED BY SIP
@@ -101,9 +101,9 @@
  #MODULAR MODEL STORAGE-DEPLETION TEST PROBLEM     --TESTS CALCULATION OF ULTIMA 
  #COMPACTION OF INTERBEDS                                                        
     2 LAYERS        10 ROWS        12 COLUMNS
-   3 STRESS PERIOD(S) IN SIMULATION
+    3 STRESS PERIOD(S) IN SIMULATION
 
- BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT  2
+ BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT    2
          10 ELEMENTS IN IR ARRAY ARE USED BY BAS
 
  BCF6 -- BLOCK-CENTERED FLOW PACKAGE, VERSION 6, 1/11/2000
@@ -129,7 +129,7 @@
 
 
                      BOUNDARY ARRAY FOR LAYER   1
- READING ON UNIT   2 WITH FORMAT: (20I4)              
+ READING ON UNIT    2 WITH FORMAT: (20I4)              
 
                 1           2           3           4           5           6           7           8           9          10
                11          12
@@ -158,7 +158,7 @@
 
 
                      BOUNDARY ARRAY FOR LAYER   2
- READING ON UNIT   2 WITH FORMAT: (20I4)              
+ READING ON UNIT    2 WITH FORMAT: (20I4)              
 
                 1           2           3           4           5           6           7           8           9          10
                11          12
@@ -189,7 +189,7 @@
 
 
                        INITIAL HEAD FOR LAYER   1
- READING ON UNIT   2 WITH FORMAT: (10F13.0)           
+ READING ON UNIT    2 WITH FORMAT: (10F13.0)           
 
             1           2           3           4           5           6           7           8           9          10
            11          12
@@ -218,7 +218,7 @@
 
 
                        INITIAL HEAD FOR LAYER   2
- READING ON UNIT   2 WITH FORMAT: (10F13.0)           
+ READING ON UNIT    2 WITH FORMAT: (10F13.0)           
 
             1           2           3           4           5           6           7           8           9          10
            11          12
@@ -246,7 +246,7 @@
 
  OUTPUT CONTROL IS SPECIFIED EVERY TIME STEP
  HEAD PRINT FORMAT CODE IS   5    DRAWDOWN PRINT FORMAT CODE IS   5
- HEADS WILL BE SAVED ON UNIT   0    DRAWDOWNS WILL BE SAVED ON UNIT   0
+ HEADS WILL BE SAVED ON UNIT    0    DRAWDOWNS WILL BE SAVED ON UNIT    0
 
  COLUMN TO ROW ANISOTROPY =   1.00000    
 
@@ -263,7 +263,7 @@
 
 
               PRECONSOLIDATION HEAD FOR LAYER   1
- READING ON UNIT  13 WITH FORMAT: (12F3.0)            
+ READING ON UNIT   13 WITH FORMAT: (12F3.0)            
 
             1           2           3           4           5           6           7           8           9          10
            11          12
@@ -295,8 +295,8 @@
 
       STARTING COMPACTION =   0.00000     FOR LAYER   1
 1
-                            STRESS PERIOD NO.   1, LENGTH =   1000.000    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    1, LENGTH =   1000.000    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =    10
 
@@ -313,7 +313,7 @@
 
   0.000000E+00 0.842424E+00 0.975170E+00 0.996087E+00 0.999383E+00
 
-    15 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD  1
+    15 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD    1
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -333,7 +333,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-    11 ITERATIONS FOR TIME STEP   2 IN STRESS PERIOD  1
+    11 ITERATIONS FOR TIME STEP   2 IN STRESS PERIOD    1
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -353,7 +353,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-    11 ITERATIONS FOR TIME STEP   3 IN STRESS PERIOD  1
+    11 ITERATIONS FOR TIME STEP   3 IN STRESS PERIOD    1
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -373,7 +373,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-    11 ITERATIONS FOR TIME STEP   4 IN STRESS PERIOD  1
+    11 ITERATIONS FOR TIME STEP   4 IN STRESS PERIOD    1
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -393,7 +393,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-    10 ITERATIONS FOR TIME STEP   5 IN STRESS PERIOD  1
+    10 ITERATIONS FOR TIME STEP   5 IN STRESS PERIOD    1
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -411,7 +411,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-    10 ITERATIONS FOR TIME STEP   6 IN STRESS PERIOD  1
+    10 ITERATIONS FOR TIME STEP   6 IN STRESS PERIOD    1
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -429,7 +429,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     8 ITERATIONS FOR TIME STEP   7 IN STRESS PERIOD  1
+     8 ITERATIONS FOR TIME STEP   7 IN STRESS PERIOD    1
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -447,7 +447,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     6 ITERATIONS FOR TIME STEP   8 IN STRESS PERIOD  1
+     6 ITERATIONS FOR TIME STEP   8 IN STRESS PERIOD    1
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -465,7 +465,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     5 ITERATIONS FOR TIME STEP   9 IN STRESS PERIOD  1
+     5 ITERATIONS FOR TIME STEP   9 IN STRESS PERIOD    1
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -481,7 +481,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP  10 IN STRESS PERIOD  1
+     1 ITERATIONS FOR TIME STEP  10 IN STRESS PERIOD    1
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -501,8 +501,8 @@
  ----------------------------------
      1         0       0       0
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP 10 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP  10 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
            1       2       3       4       5       6       7       8       9      10      11      12
  ...................................................................................................
@@ -517,8 +517,8 @@
    9    0.000   1.000   2.000   3.000   4.000   5.000   6.000   7.000   8.000   9.000  10.000  11.000
   10    0.000   1.000   2.000   3.000   4.000   5.000   6.000   7.000   8.000   9.000  10.000  11.000
 1
-              HEAD IN LAYER  2 AT END OF TIME STEP 10 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   2 AT END OF TIME STEP  10 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
            1       2       3       4       5       6       7       8       9      10      11      12
  ...................................................................................................
@@ -533,8 +533,8 @@
    9    0.000   1.000   2.000   3.000   4.000   5.000   6.000   7.000   8.000   9.000  10.000  11.000
   10    0.000   1.000   2.000   3.000   4.000   5.000   6.000   7.000   8.000   9.000  10.000  11.000
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP 10 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP 10 IN STRESS PERIOD   1
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -564,7 +564,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP 10 IN STRESS PERIOD  1
+          TIME SUMMARY AT END OF TIME STEP  10 IN STRESS PERIOD    1
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH 2.93083E+07 4.88471E+05  8141.2      339.22     0.92872    
@@ -572,8 +572,8 @@
          TOTAL TIME 8.64000E+07 1.44000E+06  24000.      1000.0      2.7379    
 1
 1
-        SUBSIDENCE IN LAYER  1 AT END OF TIME STEP 10 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+        SUBSIDENCE IN LAYER   1 AT END OF TIME STEP  10 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
             1           2           3           4           5           6           7           8           9          10
            11          12
@@ -599,8 +599,8 @@
   10    0.000      5.5000E-03  5.5000E-03  5.5000E-03  5.5000E-03  5.5000E-03  5.5000E-03  5.5000E-03  5.5000E-03  5.5000E-03
        5.5000E-03   0.000    
 1
-                            STRESS PERIOD NO.   2, LENGTH =   1000.000    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    2, LENGTH =   1000.000    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =    10
 
@@ -610,7 +610,7 @@
  
  SOLVING FOR HEAD 
 
-     1 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD  2
+     1 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD    2
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -626,7 +626,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP   2 IN STRESS PERIOD  2
+     1 ITERATIONS FOR TIME STEP   2 IN STRESS PERIOD    2
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -642,7 +642,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP   3 IN STRESS PERIOD  2
+     1 ITERATIONS FOR TIME STEP   3 IN STRESS PERIOD    2
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -658,7 +658,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP   4 IN STRESS PERIOD  2
+     1 ITERATIONS FOR TIME STEP   4 IN STRESS PERIOD    2
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -674,7 +674,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP   5 IN STRESS PERIOD  2
+     1 ITERATIONS FOR TIME STEP   5 IN STRESS PERIOD    2
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -690,7 +690,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP   6 IN STRESS PERIOD  2
+     1 ITERATIONS FOR TIME STEP   6 IN STRESS PERIOD    2
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -706,7 +706,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP   7 IN STRESS PERIOD  2
+     1 ITERATIONS FOR TIME STEP   7 IN STRESS PERIOD    2
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -722,7 +722,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP   8 IN STRESS PERIOD  2
+     1 ITERATIONS FOR TIME STEP   8 IN STRESS PERIOD    2
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -738,7 +738,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP   9 IN STRESS PERIOD  2
+     1 ITERATIONS FOR TIME STEP   9 IN STRESS PERIOD    2
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -754,7 +754,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP  10 IN STRESS PERIOD  2
+     1 ITERATIONS FOR TIME STEP  10 IN STRESS PERIOD    2
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -774,8 +774,8 @@
  ----------------------------------
      1         0       0       0
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP 10 IN STRESS PERIOD  2
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP  10 IN STRESS PERIOD    2
+  ---------------------------------------------------------------------------
 
            1       2       3       4       5       6       7       8       9      10      11      12
  ...................................................................................................
@@ -790,8 +790,8 @@
    9    0.000   1.000   2.000   3.000   4.000   5.000   6.000   7.000   8.000   9.000  10.000  11.000
   10    0.000   1.000   2.000   3.000   4.000   5.000   6.000   7.000   8.000   9.000  10.000  11.000
 1
-              HEAD IN LAYER  2 AT END OF TIME STEP 10 IN STRESS PERIOD  2
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   2 AT END OF TIME STEP  10 IN STRESS PERIOD    2
+  ---------------------------------------------------------------------------
 
            1       2       3       4       5       6       7       8       9      10      11      12
  ...................................................................................................
@@ -806,8 +806,8 @@
    9    0.000   1.000   2.000   3.000   4.000   5.000   6.000   7.000   8.000   9.000  10.000  11.000
   10    0.000   1.000   2.000   3.000   4.000   5.000   6.000   7.000   8.000   9.000  10.000  11.000
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP 10 IN STRESS PERIOD  2
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP 10 IN STRESS PERIOD   2
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -837,7 +837,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP 10 IN STRESS PERIOD  2
+          TIME SUMMARY AT END OF TIME STEP  10 IN STRESS PERIOD    2
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH 2.93083E+07 4.88471E+05  8141.2      339.22     0.92872    
@@ -845,8 +845,8 @@
          TOTAL TIME 1.72800E+08 2.88000E+06  48000.      2000.0      5.4757    
 1
 1
-        SUBSIDENCE IN LAYER  1 AT END OF TIME STEP 10 IN STRESS PERIOD  2
-  -----------------------------------------------------------------------
+        SUBSIDENCE IN LAYER   1 AT END OF TIME STEP  10 IN STRESS PERIOD    2
+  ---------------------------------------------------------------------------
 
             1           2           3           4           5           6           7           8           9          10
            11          12
@@ -872,8 +872,8 @@
   10    0.000      5.5000E-03  5.5000E-03  5.5000E-03  5.5000E-03  5.5000E-03  5.5000E-03  5.5000E-03  5.5000E-03  5.5000E-03
        5.5000E-03   0.000    
 1
-                            STRESS PERIOD NO.   3, LENGTH =   1000.000    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    3, LENGTH =   1000.000    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =    10
 
@@ -883,7 +883,7 @@
  
  SOLVING FOR HEAD 
 
-     1 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD  3
+     1 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD    3
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -899,7 +899,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP   2 IN STRESS PERIOD  3
+     1 ITERATIONS FOR TIME STEP   2 IN STRESS PERIOD    3
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -915,7 +915,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP   3 IN STRESS PERIOD  3
+     1 ITERATIONS FOR TIME STEP   3 IN STRESS PERIOD    3
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -931,7 +931,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP   4 IN STRESS PERIOD  3
+     1 ITERATIONS FOR TIME STEP   4 IN STRESS PERIOD    3
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -947,7 +947,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP   5 IN STRESS PERIOD  3
+     1 ITERATIONS FOR TIME STEP   5 IN STRESS PERIOD    3
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -963,7 +963,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP   6 IN STRESS PERIOD  3
+     1 ITERATIONS FOR TIME STEP   6 IN STRESS PERIOD    3
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -979,7 +979,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP   7 IN STRESS PERIOD  3
+     1 ITERATIONS FOR TIME STEP   7 IN STRESS PERIOD    3
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -995,7 +995,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP   8 IN STRESS PERIOD  3
+     1 ITERATIONS FOR TIME STEP   8 IN STRESS PERIOD    3
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -1011,7 +1011,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP   9 IN STRESS PERIOD  3
+     1 ITERATIONS FOR TIME STEP   9 IN STRESS PERIOD    3
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -1027,7 +1027,7 @@
  REUSING PREVIOUS VALUES OF IOFLG
  
  SOLVING FOR HEAD 
-     1 ITERATIONS FOR TIME STEP  10 IN STRESS PERIOD  3
+     1 ITERATIONS FOR TIME STEP  10 IN STRESS PERIOD    3
 
  MAXIMUM HEAD CHANGE FOR EACH ITERATION:
 
@@ -1047,8 +1047,8 @@
  ----------------------------------
      1         0       0       0
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP 10 IN STRESS PERIOD  3
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP  10 IN STRESS PERIOD    3
+  ---------------------------------------------------------------------------
 
            1       2       3       4       5       6       7       8       9      10      11      12
  ...................................................................................................
@@ -1063,8 +1063,8 @@
    9    0.000   1.000   2.000   3.000   4.000   5.000   6.000   7.000   8.000   9.000  10.000  11.000
   10    0.000   1.000   2.000   3.000   4.000   5.000   6.000   7.000   8.000   9.000  10.000  11.000
 1
-              HEAD IN LAYER  2 AT END OF TIME STEP 10 IN STRESS PERIOD  3
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   2 AT END OF TIME STEP  10 IN STRESS PERIOD    3
+  ---------------------------------------------------------------------------
 
            1       2       3       4       5       6       7       8       9      10      11      12
  ...................................................................................................
@@ -1079,8 +1079,8 @@
    9    0.000   1.000   2.000   3.000   4.000   5.000   6.000   7.000   8.000   9.000  10.000  11.000
   10    0.000   1.000   2.000   3.000   4.000   5.000   6.000   7.000   8.000   9.000  10.000  11.000
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP 10 IN STRESS PERIOD  3
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP 10 IN STRESS PERIOD   3
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -1110,7 +1110,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP 10 IN STRESS PERIOD  3
+          TIME SUMMARY AT END OF TIME STEP  10 IN STRESS PERIOD    3
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH 2.93083E+07 4.88471E+05  8141.2      339.22     0.92872    
@@ -1118,8 +1118,8 @@
          TOTAL TIME 2.59200E+08 4.32000E+06  72000.      3000.0      8.2136    
 1
 1
-        SUBSIDENCE IN LAYER  1 AT END OF TIME STEP 10 IN STRESS PERIOD  3
-  -----------------------------------------------------------------------
+        SUBSIDENCE IN LAYER   1 AT END OF TIME STEP  10 IN STRESS PERIOD    3
+  ---------------------------------------------------------------------------
 
             1           2           3           4           5           6           7           8           9          10
            11          12

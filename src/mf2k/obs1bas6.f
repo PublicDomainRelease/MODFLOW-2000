@@ -1,4 +1,4 @@
-C     Last change:  ERB   3 May 2002   10:45 am
+C     Last change:  ERB  26 Jul 2002    4:23 pm
 C=======================================================================
       SUBROUTINE OBS1BAS6DF(IFLD,IOBS,IOSTAR,IOWTQ,IOWTQDR,IOWTQGB,
      &                      IOWTQRV,IOWTQST,IQ1,IUOBS,JT,LCCOFF,LCHFB,
@@ -11,8 +11,8 @@ C=======================================================================
      &                      NQTST,NQTCH,NT,NTT2,IOBSUM,LCX,LCBUF2,NDAR,
      &                      LCOBDRT,LCSSDT,NQTDT,IOWTQDT,LCSSSF,NQTSF,
      &                      LCOBSFR,IOWTQSF,NHT,LCRSQA,LCRSPA,LCBUF1,
-     &                      LCH,LCHOBS,LCWTQS,LCHANI)
-C     VERSION 20000124
+     &                      LCH,LCHOBS,LCWTQS,LCHANI,LCXND)
+C     VERSION 20020709
 C     ******************************************************************
 C     INITIALIZE VARIABLES FOR OBSERVATION PROCESS
 C     ******************************************************************
@@ -22,8 +22,8 @@ C     ------------------------------------------------------------------
      &        LCNQOB, LCOBADV, LCOBDRN, LCOBGHB, LCOBBAS, LCOBRIV,
      &        LCOBSFR, LCOBSTR, LCQCLS, LCROFF, LCSSAD, LCSSCH, LCSSDR,
      &        LCSSGB, LCSSGF, LCSSPI, LCSSRV, LCSSST, LCSSTO, LCWT,
-     &        LCWTQ, ND, NDMH, NH, NOBADV, NQ, NQC, NQT, NQTDR, NQTGB,
-     &        NQTRV, NQTST, NQTCH, NTT2
+     &        LCWTQ, LCXND, ND, NDMH, NH, NOBADV, NQ, NQC, NQT, NQTDR,
+     &        NQTGB, NQTRV, NQTST, NQTCH, NTT2
 C     ------------------------------------------------------------------
       IOBS = 0
       IOBSUM=1
@@ -88,6 +88,7 @@ C     MAY BE REFERENCED BUT MAY NOT OTHERWISE GET ALLOCATED
       LCWTQ = 1
       LCWTQS = 1
       LCX=1
+      LCXND = 1
       NDAR= 1
       NDMHAR = 1
       NOBADV = 0
@@ -208,8 +209,8 @@ C=======================================================================
      &                      LCNQOB,LCNQCL,LCIQOB,LCQCLS,LCIPLO,LCIPLP,
      &                      IPR,MPR,IPRAR,LCBUF1,LCSSTO,ITMXP,LBUFF,
      &                      LCOBSE,ISOLDX,ISOLDZ,ISOLDI,MXSEN,LCBUF2,
-     &                      NDAR,NHT,LCRSQA,LCRSPA)
-C     VERSION 20020212 ERB
+     &                      NDAR,NHT,LCRSQA,LCRSPA,LCXND)
+C     VERSION 20020709 ERB
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR OBSERVATIONS
 C     ******************************************************************
@@ -217,7 +218,9 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       INTEGER IDRY, IOUT, IPAR, ISP, ISUM, ISUMZ, ISUMI, JDRY,
      &        LCH, LCHOBS, LCIPLO, LCTOFF, LCW1, LCW2, LCWT, LCWTQ,
-     &        LCWTQS, LCX, LCXD, ND, NDMH, NH, NHT, NPLIST
+     &        LCWTQS, LCX, LCXD, LCXND, ND, NDMH, NH, NHT, NPLIST
+C
+      INCLUDE 'parallel.inc'
 C     ------------------------------------------------------------------
 C
 C-----DEFINE NON-ZERO ARRAY DIMENSIONS
@@ -266,6 +269,10 @@ C----------ARRAYS USED FOR ALL DEPENDENT-VARIABLE DATA
       ISUM = ISUM + NDMH*NDMH
       LCWTQS = ISUM
       ISUM = ISUM + NDMH*NDMH
+      IF (NUMPROCS .GT. 1) THEN
+        LCXND = ISUM
+        ISUM = ISUM + ND
+      ENDIF
       IF (IPAR.NE.1) THEN
 C       (IF PES PROCESS IS ACTIVE, MEMORY FOR SSTO ARRAY WAS ALLOCATED
 C       IN PESBAS1AL)
@@ -482,21 +489,32 @@ C     PRINT
       RETURN
       END
 C=======================================================================
-      SUBROUTINE OBS1BAS6FM(H,ND)
-C     VERSION 20000120 ERB
+      SUBROUTINE OBS1BAS6FM(H,ND,NDAR,NDMH,NDMHAR,WT,WTQ)
+C     VERSION 20020708 ERB
 C     ******************************************************************
-C     INITIALIZE SIMULATED-EQUIVALENTS ARRAY
+C     INITIALIZE SIMULATED-EQUIVALENTS ARRAY AND ENSURE THAT THE WT
+C     ARRAY AND THE DIAGONAL ELEMENTS OF THE WTQ ARRAY CONTAIN NO
+C     NEGATIVE NUMBERS
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      INTEGER ND
-      REAL H
-      DIMENSION H(ND)
+      INTEGER ND, NDAR, NDMH, NDMHAR
+      REAL H, WT, WTQ
+      DIMENSION H(NDAR), WT(NDAR), WTQ(NDMHAR,NDMHAR)
 C     ------------------------------------------------------------------
 C
-      DO 10 I = 1, ND
-        H(I) = 0.0
-   10 CONTINUE
+      IF (ND.GT.0) THEN
+        DO 10 I = 1, ND
+          H(I) = 0.0
+          IF (WT(I).LT.0.0) WT(I) = -WT(I)
+   10   CONTINUE
+      ENDIF
+C
+      IF (NDMH.GT.0) THEN
+        DO 20 I=1, NDMH
+          IF (WTQ(I,I).LT.0.0) WTQ(I,I) = -WTQ(I,I)
+   20   CONTINUE
+      ENDIF
 C
       RETURN
       END
@@ -788,7 +806,7 @@ C=======================================================================
      &                      SSCH,SSPI,SSTO,ITMXP,IPES,BPRI,LCOBDRT,SSDT,
      &                      NQTDT,IOWTQDT,NRES,NPOST,NNEGT,NRUNS,NQTSF,
      &                      IOWTQSF,LCOBSFR,SSSF,NHT)
-C     VERSION 20010504 ERB
+C     VERSION 20020620 ERB
 C     ******************************************************************
 C     CALCULATE AND PRINT WEIGHTED RESIDUALS FOR DEPENDENT-VARIABLE
 C     OBSERVATIONS, PRIOR PARAMETER ESTIMATES, AND PRIOR ESTIMATES OF
@@ -917,7 +935,7 @@ C-------GENERAL-HEAD BOUNDARY FLOW OBSERVATIONS
      &                                 NDMH,WTRL,NRES,IUGDO,OUTTMP,
      &                                 IPLOT,IPLPTR,LCOBGHB,ISSWR,SSGB,
      &                                 ITMXP)
-C-------STREAMFLOW-ROUTING FLOW OBSERVATIONS
+C-------STREAMFLOW-ROUTING (STR) FLOW OBSERVATIONS
       IF (NQTST.GT.0) CALL SOBS1STR6OH(IO,IOWTQST,IOUT,NHT,NQTST,HOBS,H,
      &                                 WTQ,OBSNAM,IDIS,WTQS,D,AVET,
      &                                 NPOST,NNEGT,NRUNS,RSQ,ND,MPR,IPR,

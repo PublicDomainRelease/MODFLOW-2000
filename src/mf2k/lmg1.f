@@ -1,4 +1,4 @@
-C     Last change:  SWM  21 FEB 2001    10:30 pm
+C     Last change:  SWM  22 JUL 2002     4:35 pm
       SUBROUTINE LMG1AL(ISUM,ISUMI,LCA,LCIA,LCJA,LCU1,LCFRHS,LCIG,
      1                  ISIZ1,ISIZ2,ISIZ3,ISIZ4,ICG,NCOL,NROW,NLAY,
      2                  IN,IOUT,IFREFM)
@@ -6,7 +6,7 @@ C
 C-----VERSION 1.0 25JUL2001 LMG1AL 
 C
 C     ******************************************************************
-C     ALLOCATE STORAGE IN THE X ARRAY FOR PCG ARRAYS
+C     ALLOCATE STORAGE IN THE X ARRAY FOR LMG ARRAYS
 C     ******************************************************************
 C
 C        SPECIFICATIONS:
@@ -592,7 +592,7 @@ C
 C***********************************************************************
       SUBROUTINE ADAMP2(RSQ1,DDAMP,DAMP,DUP,DLOW,KITER)
 C
-C-----VERSION 1.0  31JAN2001 ADAMP2
+C-----VERSION 1.1  22JUL2002 ADAMP2
 C     ******************************************************************
 C     THIS SUBROUTINE CALCULATES THE DAMPING PARAMETER USING THE 
 C     RESIDUAL REDUCTION METHOD
@@ -601,7 +601,7 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       LOGICAL OSCIL
       DOUBLEPRECISION RSQ1,RSQ2,RSQ3,DDAMP
-      DATA ICONST, IMULT, IPER /49297,9301,233280/ 
+      DATA ICONST, IMULT, IPER /1283,106,6075/
       SAVE RSQ2,RSQ3,NRAN,DAMP3
 
 C1
@@ -649,10 +649,10 @@ C
         OSTERM=(RSQ3-RSQ1)/RSQ3
         IF(ABS(OSTERM) .LT. 0.10) OSCIL =.TRUE.
         IF(DDAMP .GT. DUP)DDAMP=DUP
-        IF(OSCIL .AND. DDAMP-DAMP3 .LT. 0.01)THEN
+        IF(OSCIL .AND. ABS(DDAMP-DAMP3)/DAMP3 .LT. 0.01)THEN
           NRAN=MOD(NRAN*IMULT+ICONST,IPER)
           QRAND=FLOAT(NRAN)/FLOAT(IPER)
-          DDAMP=0.D0+QRAND*(1.5D0-0.D0)
+          DDAMP=0.0001D0+QRAND*(1.5D0-0.D0)
         ENDIF
 C4
 C4-----STORE VALUES OF DAMP AND RESIDUALS FOR NEXT ITERATION

@@ -1,4 +1,4 @@
-C     Last change:  ERB  12 Apr 2002    5:10 pm
+C     Last change:  ERB  10 Jul 2002    1:58 pm
       SUBROUTINE UPARARRAL(IN,IOUT,LINE,NP)
 C
 C-----VERSION 15SEPT1998 UPARARRAL
@@ -129,7 +129,7 @@ C
      1   ' CLUSTERS WERE SPECIFIED, BUT THERE IS SPACE FOR ONLY',I5)
           WRITE(IOUT,*) NP,NCLU
           WRITE(IOUT,'(A)') PARNAM(NP)
-          WRITE(IOUT,'(2I10)') IPLOC
+          WRITE(IOUT,'(4I10)') IPLOC
           STOP
         END IF
         WRITE(IOUT,121) PARNAM(NP),PARTYP(NP),NCLU
@@ -194,7 +194,7 @@ C           Read zone numbers
    32       CONTINUE
             IF(ILFLG.NE.0) THEN
               WRITE(IOUT,36) IPCLST(1,I),LINE(IM1:IM2),LINE(IZ1:IZ2)
-   36         FORMAT(16X,'LAYER:',I3,'    MULTIPLIER ARRAY: ',A,
+   36         FORMAT(16X,'LAYER: ',I3,'    MULTIPLIER ARRAY: ',A,
      2        '    ZONE ARRAY: ',A)
             ELSE
               WRITE(IOUT,37) LINE(IM1:IM2),LINE(IZ1:IZ2)
@@ -739,8 +739,8 @@ C
           NTOT=NTOT+NLST
           IF(NTOT.GT.MXLST) THEN
             WRITE(IOUT,83) NTOT,MXLST
-   83       FORMAT(1X,/1X,'THE NUMBER OF ACTIVE LIST ENTRIES (',I4,
-     1       ')',/1X,'IS GREATER THAN THE MAXIMUM ALLOWED (',I4,')')
+   83       FORMAT(1X,/1X,'THE NUMBER OF ACTIVE LIST ENTRIES (',I6,
+     1       ')',/1X,'IS GREATER THAN THE MAXIMUM ALLOWED (',I6,')')
             STOP
           END IF
 C
@@ -986,7 +986,7 @@ C     ------------------------------------------------------------------
 C     ------------------------------------------------------------------
   500 FORMAT(1X,'ERROR: BLANK PARAMETER TYPE -- STOP EXECUTION',
      &       ' (UPARARRCK)')
-  510 FORMAT(1X,'ROW:',I5,', COLUMN:',I5,' IN LAYER ',I3,
+  510 FORMAT(1X,'ROW: ',I5,', COLUMN: ',I5,' IN LAYER ',I3,
      &       ' NOT DEFINED FOR PARAMETER TYPE ',A)
   520 FORMAT(/,1X,'PARAMETER DEFINITIONS INCOMPLETE -- STOP',
      &       ' EXECUTION (UPARARRCK)')

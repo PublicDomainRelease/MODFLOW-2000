@@ -1,4 +1,4 @@
-C     Last change:  ERA  19 Apr 2002
+C     Last change:  ERB  29 Jul 2002    9:42 am
 
 
       SUBROUTINE OBS1ADV2AL(IOUADV,NPTH,NTT2,IOUTT2,KTDIM,KTFLG,KTREV,
@@ -30,7 +30,7 @@ C----------------------------------------------------------------------
 C     IDENTIFY PROCESS
       WRITE(IOUT,490) IOUADV
   490 FORMAT(/,' ADV2 -- OBSERVATION PROCESS (ADVECTIVE TRANSPORT',
-     &    ' OBSERVATIONS)',/,' VERSION 2.3, 04/19/2002',/,
+     &    ' OBSERVATIONS)',/,' VERSION 2.4, 07/09/2002',/,
      &    ' INPUT READ FROM UNIT ',I3)
 C
 C  Turn off observation package if OBS is not active
@@ -1374,8 +1374,9 @@ C Get thicknesses of hydrogeologic unit in this cell and adjacent cells
             CALL SSEN1HUF1CH(COR,TH0,TH1C,HP,IPT,JJ,KPT,'CR',
      &                       RMLT0,HK,HKCC,NCOL,NROW,NLAY,DELC,DELR,
      &                       H,BOTM(1,1,LBOTM(KPT)),
-     &                       BOTM(1,1,LBOTM(KPT)-1),NZ,NM,ICL,
-     &                       IZON,NZONAR,RMLT,NMLTAR,C,TH0L,TH1L)
+     &                       BOTM(1,1,LBOTM(KPT)-1),NZ,NM,ICL,IZON,
+     &                       NZONAR,RMLT,NMLTAR,C,TH0L,TH1L,HUFTHK,NHUF,
+     &                       NU)
             CO(JCNT)=CO(JCNT)+COR
             IF (IUHFB.GT.0 .AND. COR.NE.0.)
      &        CALL SSEN1HFB6MD(C,'CR',COR,DELC,DELR,HFB,IPT,JJ,
@@ -1424,8 +1425,9 @@ C Get thicknesses of hydrogeologic unit in this cell and adjacent cells
             CALL SSEN1HUF1CH(COC,TH0,TH1R,HP,II,JPT,KPT,'CC',
      &                       RMLT0,HK,HKCC,NCOL,NROW,NLAY,DELC,DELR,
      &                       H,BOTM(1,1,LBOTM(KPT)),
-     &                       BOTM(1,1,LBOTM(KPT)-1),NZ,NM,ICL,
-     &                       IZON,NZONAR,RMLT,NMLTAR,C,TH0L,TH1L)
+     &                       BOTM(1,1,LBOTM(KPT)-1),NZ,NM,ICL,IZON,
+     &                       NZONAR,RMLT,NMLTAR,C,TH0L,TH1L,HUFTHK,NHUF,
+     &                       NU)
             CO(ICNT)=CO(ICNT)+COC
             IF (IUHFB.GT.0 .AND. COC.NE.0.)
      &        CALL SSEN1HFB6MD(C,'CC',COC,DELC,DELR,HFB,II,JPT,

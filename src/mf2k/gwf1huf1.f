@@ -1,4 +1,4 @@
-C     Last change:  ERA  18 Apr 2002
+C     Last change:  ERB  26 Jul 2002    1:51 pm
       SUBROUTINE GWF1HUF1AL(ISUM,LCHK,LCVKA,LCSC1,
      &  IN,ITRSS,NCOL,NROW,NLAY,IOUT,IHUFCB,LCWETD,
      &  HDRY,NPER,ISSFLG,LCHGUF,IREWND,
@@ -28,7 +28,7 @@ C
 C1------IDENTIFY PACKAGE
       WRITE(IOUT,1) IN
     1 FORMAT(1X,/1X,'HUF1 -- HYDROGEOLOGIC-UNIT FLOW PACKAGE, '
-     1' VERSION 1.03 ERA, 04/18/2002',/,' INPUT READ FROM UNIT',I3,/)
+     1' VERSION 1.04 ERA, 05/14/2002',/,' INPUT READ FROM UNIT',I3,/)
 C
 C2------READ FIRST RECORD AND WRITE
       CALL URDCOM(IN,IOUT,LINE)
@@ -138,7 +138,6 @@ C5------COMPUTE THE NUMBER OF CELLS IN THE ENTIRE GRID AND IN ONE LAYER.
       ISIZ=NRC*NLAY
 C
 C6------ALLOCATE SPACE FOR ARRAYS.
-C      IF(ISUM.EQ.1) ISUM=2
       ISOLD=ISUM
       ISOLDI=ISUMI
       LCHK=ISUM
@@ -738,9 +737,8 @@ C Zero out arrays
             HK(J,I,K)=0.
             HKCC(J,I,K)=0.
             VKA(J,I,K)=0.
-            IF(ITRSS.NE.0) THEN
-              SC1(J,I,K)=0.
-            ENDIF
+            IF(ITRSS.NE.0 .AND. KITER.EQ.0 .AND. KPER.EQ.0 .AND.
+     &         KSTP.EQ.0) SC1(J,I,K)=0.
    10     CONTINUE
    20   CONTINUE
    30 CONTINUE
@@ -801,7 +799,10 @@ C-----Populate arrays
 C
           CALL SGWF1HUF1VKA(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,BOTU,
      2                      VKA,HNEW,IBOUND,HUFHK,HUFVK,NHUF,NU)
-          IF(ITRSS.NE.0) THEN
+          IF(ITRSS.NE.0 .AND. KITER.EQ.0 .AND. KPER.EQ.0 .AND.
+     &       KSTP.EQ.0) THEN
+            TOPU = HUFTHK(J,I,NU,1)
+            BOTU = TOPU - THCKU
             CALL SGWF1HUF1SC1(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,
      &                        BOTU,SC1,HUFSS,KT,KB,NHUF,NU)
           ENDIF
@@ -1329,7 +1330,8 @@ C-------CONVERT HK TO HYDRAULIC CONDUCTVITY AND SC1 TO SPECIFIC STORAGE
           IF(IBOUND(J,I,K).NE.0) THEN
               TOP=BOTM(J,I,LBOTM(K)-1)
               BOT=BOTM(J,I,LBOTM(K))
-              IF(ITRSS.NE.0) SC1(J,I,K)=SC1(J,I,K)*DELR(J)*DELC(I)
+              IF(ITRSS.NE.0 .AND. KITER.EQ.0 .AND. KPER.EQ.0 .AND.
+     &           KSTP.EQ.0) SC1(J,I,K)=SC1(J,I,K)*DELR(J)*DELC(I)
               IF(LTHUF(K).NE.0.AND.HNEW(J,I,K).LT.TOP) 
      &            TOP=HNEW(J,I,K)
               HK(J,I,K)=HK(J,I,K)/(TOP-BOT)

@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.8 05/01/2002
+                             VERSION 1.10 07/26/2002
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -25,44 +25,44 @@
 
 
  REWOUND etsdrt.lst
- FILE TYPE:LIST   UNIT  12
+ FILE TYPE:LIST   UNIT   12
 
  REWOUND ../data/etsdrt.dis
- FILE TYPE:DIS   UNIT  21
+ FILE TYPE:DIS   UNIT   21
 
  REWOUND ../data/etsdrt.bas
- FILE TYPE:BAS6   UNIT  31
+ FILE TYPE:BAS6   UNIT   31
 
  REWOUND ../data/etsdrt.oc
- FILE TYPE:OC   UNIT  32
+ FILE TYPE:OC   UNIT   32
 
  REWOUND ../data/etsdrt.drt
- FILE TYPE:DRT   UNIT  34
+ FILE TYPE:DRT   UNIT   34
 
  REWOUND ../data/etsdrt.rch
- FILE TYPE:RCH   UNIT  36
+ FILE TYPE:RCH   UNIT   36
 
  REWOUND ../data/etsdrt.ets
- FILE TYPE:ETS   UNIT  37
+ FILE TYPE:ETS   UNIT   37
 
  REWOUND ../data/etsdrt.obs
- FILE TYPE:OBS   UNIT  41
+ FILE TYPE:OBS   UNIT   41
 
  REWOUND ../data/etsdrt.ohd
- FILE TYPE:HOB   UNIT  42
+ FILE TYPE:HOB   UNIT   42
 
  REWOUND ../data/etsdrt.odt
- FILE TYPE:DTOB   UNIT  43
+ FILE TYPE:DTOB   UNIT   43
  
  # BAS file for ets1, drt1, and etsdrt test cases                                
  THE FREE FORMAT OPTION HAS BEEN SELECTED
     1 LAYERS        11 ROWS        11 COLUMNS
-   1 STRESS PERIOD(S) IN SIMULATION
+    1 STRESS PERIOD(S) IN SIMULATION
 
- BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 31
+ BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   31
           5 ELEMENTS IN IR ARRAY ARE USED BY BAS
 
- RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 36
+ RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   36
  # RCH file for etsdrt test case
      1 Named Parameters     
  OPTION 1 -- RECHARGE TO TOP LAYER
@@ -70,7 +70,7 @@
         121 ELEMENTS IN IR ARRAY ARE USED BY RCH
 
  ETS1 -- EVAPOTRANSPIRATION SEGMENTS PACKAGE, VERSION 1, 5/2/2000
-         INPUT READ FROM UNIT 37
+         INPUT READ FROM UNIT   37
  # ETS input file for ets1 and etsdrt test cases
  #
  OPTION 1 -- EVAPOTRANSPIRATION FROM TOP LAYER
@@ -80,9 +80,9 @@
         121 ELEMENTS IN IR ARRAY ARE USED BY ETS
 
  DRT1 -- DRAIN RETURN PACKAGE, VERSION 1, 5/2/2000
- INPUT READ FROM UNIT 34
+ INPUT READ FROM UNIT   34
  # DRT file for drt1 and etsdrt test cases
- MAXIMUM OF    1 ACTIVE DRAINS WITH RETURN FLOW AT ONE TIME
+ MAXIMUM OF      1 ACTIVE DRAINS WITH RETURN FLOW AT ONE TIME
      1 Named Parameters         1 List entries
  RETURN FLOW OPTION IS SELECTED
          18 ELEMENTS IN RX ARRAY ARE USED BY DRT
@@ -96,27 +96,27 @@
 
 
                      BOUNDARY ARRAY FOR LAYER   1
- READING ON UNIT  31 WITH FORMAT: (FREE)              
+ READING ON UNIT   31 WITH FORMAT: (FREE)              
 
  AQUIFER HEAD WILL BE SET TO -999.00     AT ALL NO-FLOW NODES (IBOUND=0).
 
 
 
                        INITIAL HEAD FOR LAYER   1
- READING ON UNIT  31 WITH FORMAT: (FREE)              
+ READING ON UNIT   31 WITH FORMAT: (FREE)              
  # OC file for ets1, drt1, and etsdrt test cases
 
  OUTPUT CONTROL IS SPECIFIED ONLY AT TIME STEPS FOR WHICH OUTPUT IS DESIRED
  HEAD PRINT FORMAT CODE IS   8    DRAWDOWN PRINT FORMAT CODE IS   0
- HEADS WILL BE SAVED ON UNIT   0    DRAWDOWNS WILL BE SAVED ON UNIT   0
+ HEADS WILL BE SAVED ON UNIT    0    DRAWDOWNS WILL BE SAVED ON UNIT    0
 
     HYD. COND. ALONG ROWS is defined by the following parameters:
  HydCond   
 
     HYD. COND. ALONG ROWS =  5.000001E-02 FOR LAYER   1
 1
-                            STRESS PERIOD NO.   1, LENGTH =   0.000000    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    1, LENGTH =   0.000000    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     1
 
@@ -155,15 +155,15 @@
  DRAIN NO.  LAYER   ROW   COL   LAYER   ROW   COL    PROP.
       1      1      5      8      1      7      3  0.400000
 
-     1 DRAIN-RETURN CELLS
+      1 DRAIN-RETURN CELLS
  
  SOLVING FOR HEAD 
 
- OUTPUT CONTROL FOR STRESS PERIOD  1   TIME STEP  1
+ OUTPUT CONTROL FOR STRESS PERIOD    1   TIME STEP   1
     PRINT HEAD FOR ALL LAYERS
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
          1     2     3     4     5     6     7     8     9    10    11
  .....................................................................
@@ -179,8 +179,8 @@
   10   50.0  62.2  69.3  73.8  76.9  79.0  80.8  82.3  84.3  88.7 100.0
   11   50.0  62.1  69.3  73.8  76.8  79.0  80.8  82.3  84.3  88.7 100.0
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD   1
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -214,7 +214,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  1
+          TIME SUMMARY AT END OF TIME STEP   1 IN STRESS PERIOD    1
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH  0.0000      0.0000      0.0000      0.0000      0.0000    
@@ -262,10 +262,10 @@
 
  DATA FOR FLOWS REPRESENTED USING THE DRAIN RETURN PACKAGE
 
-       OBSERVATION      MEAS.      CALC.                          WEIGHTED
-  OBS#    NAME          FLOW       FLOW     RESIDUAL  WEIGHT**.5  RESIDUAL
+        OBSERVATION      MEAS.      CALC.                          WEIGHTED
+   OBS#    NAME          FLOW       FLOW     RESIDUAL  WEIGHT**.5  RESIDUAL
 
-    23 D-1            -38.3      -38.3      0.381E-05  0.261      0.997E-06
+     23 D-1            -38.3      -38.3      0.381E-05  0.261      0.997E-06
 
  STATISTICS FOR DRT PACKAGE FLOW RESIDUALS :
  MAXIMUM WEIGHTED RESIDUAL  : 0.997E-06 OBS#     23
@@ -273,7 +273,7 @@
  AVERAGE WEIGHTED RESIDUAL  : 0.997E-06
  # RESIDUALS >= 0. :      1
  # RESIDUALS < 0.  :      0
- NUMBER OF RUNS  :    1  IN    1 OBSERVATIONS
+ NUMBER OF RUNS:      1  IN      1 OBSERVATIONS
 
  SUM OF SQUARED WEIGHTED RESIDUALS (DRT FLOWS ONLY)  0.99420E-12
 

@@ -1,4 +1,4 @@
-C     Last change:  ERB  25 Sep 2001    4:19 pm
+C     Last change:  ERB  26 Jul 2002    1:39 pm
 C=======================================================================
       SUBROUTINE SEN1BAS6DF(ISENALL,ISEN,IPRINTS,IUSEN,LCB1,LCLN,LCSV,
      &                     NPE,NPLIST,RCLOSE,IUHEAD,MXSEN,LCSNEW,IOUT,
@@ -51,9 +51,9 @@ C=======================================================================
       SUBROUTINE SEN1BAS6AL(ISUM,ISUMI,NCOL,NROW,NLAY,IOUT,IUHEAD,
      &                      NPLIST,IU,IPAR,LCHCLO,LCRCLO,LCLN,IPRINTS,
      &                      LCISEN,LCBU,LCBL,LCB1,ISENALL,IREWND,LCSNEW,
-     &                      LCSOLD,ISUMGZ,ISEN,ISENSU,ISENPU,
-     &                      ISENFM,IPES,MXSEN,LCBSCA,ITMXP,MAXUNIT,
-     &                      MINRSV,MAXRSV,NSTP,NPER,NTIMES,LCSEND)
+     &                      LCSOLD,ISUMGZ,ISEN,ISENSU,ISENPU,ISENFM,
+     &                      IPES,MXSEN,LCBSCA,ITMXP,MAXUNIT,MINRSV,
+     &                      MAXRSV,NSTP,NPER,NTIMES,LCSEND,LCSNDT)
 C     VERSION 19990402 ERB
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR SENSITIVITY PROCESS
@@ -72,7 +72,7 @@ C1------IDENTIFY PROCESS AND PRINT HEADING
       IREWND=0
       WRITE (IOUT,500) IU
   500 FORMAT (/,' SEN1BAS6 -- SENSITIVITY PROCESS, ',
-     &        'VERSION 1.0, 10/15/98',/,' INPUT READ FROM UNIT ',I3)
+     &        'VERSION 1.0, 10/15/98',/,' INPUT READ FROM UNIT ',I4)
 C
 C-------READ & PRINT ITEM 1 OF THE SEN INPUT FILE
       CALL URDCOM(IU,IOUT,LINE)
@@ -218,6 +218,8 @@ C----------MISCELLANEOUS ARRAYS
       ISUM = ISUM + NPLIST
       LCSEND = ISUM
       ISUM = ISUM + MXSEN*NTIMES
+      LCSNDT = ISUM
+      ISUM = ISUM + NTIMES
 C
 C-------OPEN FILES FOR SAVING SENSITIVITY ARRAYS
       IERR = 0
@@ -981,14 +983,14 @@ C
       RETURN
       END
 C=======================================================================
-      SUBROUTINE SEN1BAS6PD(IOUT,NPE,NPER,NSTP,NTIMES,SEND)
+      SUBROUTINE SEN1BAS6PD(IOUT,NPE,NPER,NSTP,NTIMES,SEND,SNDT)
 C     VERSION 20000615 ERB
 C     ******************************************************************
 C     PRINT LARGEST PERCENT DISCREPANCY FROM SOLUTION OF SENSITIVITIES
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      DIMENSION NSTP(NPER), SEND(NPE,NTIMES)
+      DIMENSION NSTP(NPER), SEND(NPE,NTIMES), SNDT(NTIMES)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
 C
@@ -1000,7 +1002,7 @@ C
 C
 C     MERGE ARRAY CONTAINING PERCENT DISCREPANCIES FOR ALL PARAMETERS
 C     FOR ALL TIME STEPS
-      CALL PLL1MX(SEND,NPE,NTIMES)
+      CALL PLL1MX(SEND,SNDT,NPE,NTIMES)
 C
 C     DETERMINE LARGEST SOLVER DISCREPANCY AND ASSOCIATED PARAMETER,
 C     STRESS PERIOD AND TIME STEP

@@ -1,4 +1,4 @@
-C     Last change:  ERB   7 Nov 2001   10:39 am
+C     Last change:  ERB  10 Jul 2002   12:24 pm
       SUBROUTINE OBS1RIV6AL(IURVOB,NQ,NQC,NQT,IOUT,NQRV,NQTRV,IOBSUM,
      &                     LCOBRIV,ITMXP,LCSSRV,ISUM,IOBS)
 C     VERSION 20000125
@@ -14,7 +14,7 @@ C     IDENTIFY PROCESS
       WRITE(IOUT,490) IURVOB
   490 FORMAT(/,' OBS1RIV6 -- OBSERVATION PROCESS (RIVER FLOW ',
      &    'OBSERVATIONS)',/,' VERSION 1.0, 10/15/98',/,
-     &    ' INPUT READ FROM UNIT ',I3)
+     &    ' INPUT READ FROM UNIT ',I4)
 C
 C  Turn off observation package if OBS is not active
       IF(IOBS.LE.0) THEN
@@ -33,11 +33,10 @@ C  Read RVOB data
       CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,NQCRV,DUM,IOUT,IURVOB)
       CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,NQTRV,DUM,IOUT,IURVOB)
       WRITE (IOUT,500) NQRV, NQCRV, NQTRV
-   10 FORMAT(15I5)
   500 FORMAT (/,
-     &     ' NUMBER OF FLOW-OBSERVATION RIVER-CELL GROUPS.......:',I5,/,
-     &     '   NUMBER OF CELLS IN RIVER-CELL GROUPS.............:',I5,/,
-     &     '   NUMBER OF RIVER-CELL FLOWS.......................:',I5)
+     &     ' NUMBER OF FLOW-OBSERVATION RIVER-CELL GROUPS.....: ',I6,/,
+     &     '   NUMBER OF CELLS IN RIVER-CELL GROUPS...........: ',I6,/,
+     &     '   NUMBER OF RIVER-CELL FLOWS.....................: ',I6)
 C
       NQ = NQ + NQRV
       NQC = NQC + NQCRV
@@ -81,28 +80,26 @@ C     ------------------------------------------------------------------
 C     ------------------------------------------------------------------
   500 FORMAT (15X,2F5.0,F10.0)
   505 FORMAT (8F10.0)
-  510 FORMAT (A4,6X,I5,3F10.0,I5)
-  515 FORMAT (A3,2X,2I5)
   517 FORMAT (/,' RIVER-CELL FLOW OBSERVATION VARIANCES ARE',
      &        ' MULTIPLIED BY: ',G15.4)
   520 FORMAT (/,' OBSERVED RIVER-CELL FLOW DATA',/,' -- TIME OFFSETS',
      &        ' ARE MULTIPLIED BY: ',G12.5)
-  525 FORMAT (/,'   GROUP NUMBER: ',I3,'   BOUNDARY TYPE: ',A,
-     &'   NUMBER OF CELLS IN GROUP: ',I5,/,
-     &'   NUMBER OF FLOW OBSERVATIONS: ',I5,//,
+  525 FORMAT (/,'   GROUP NUMBER: ',I6,'   BOUNDARY TYPE: ',A,
+     &'   NUMBER OF CELLS IN GROUP: ',I6,/,
+     &'   NUMBER OF FLOW OBSERVATIONS: ',I6,//,
      &40X,'OBSERVED',/,
      &20X,'REFER.',13X,'RIVER FLOW',/,
      &7X,'OBSERVATION',2X,'STRESS',4X,'TIME',5X,'GAIN (-) OR',14X,
      &'STATISTIC   PLOT',/,
      &2X,'OBS#    NAME',6X,'PERIOD   OFFSET',5X,'LOSS (+)',
      &4X,'STATISTIC     TYPE      SYM.')
-  535 FORMAT (1X,I5,1X,A12,2X,I4,2X,G11.4,1X,G11.4,1X,G11.4,2X,A10,
+  535 FORMAT (I6,1X,A12,2X,I4,2X,G11.4,1X,G11.4,1X,G11.4,2X,A10,
      &1X,I5)
   540 FORMAT (/,'       LAYER  ROW  COLUMN    FACTOR')
   550 FORMAT (4X,F8.0,F6.0,F7.0,F9.2)
   555 FORMAT (4X,F8.0,F6.0,F9.2)
-  560 FORMAT (/,' FOR OBS',I5,' STATISTIC RELATED TO WEIGHT < OR =0 -- '
-     &        ,'STOP EXECUTION (OBS1RIV6RP)',/)
+  560 FORMAT (/,' FOR OBS ',I6,' STATISTIC RELATED TO WEIGHT < OR =0 --'
+     &        ,' STOP EXECUTION (OBS1RIV6RP)',/)
   565 FORMAT (/,' RIVER PACKAGE',
      &        ' IS NOT OPEN -- STOP EXECUTION (OBS1RIV6RP)')
   570 FORMAT (/,' LARGEST OBS TIME STEP (',I5,') LARGER THAN NPER (',I5,
@@ -110,7 +107,7 @@ C     ------------------------------------------------------------------
      &        ' -- STOP EXECUTION (OBS1RIV6RP)',/)
   590 FORMAT (/,' ROW OR COLUMN NUMBER INVALID',
      &        ' -- STOP EXECUTION (OBS1RIV6RP)',/)
-  605 FORMAT (/,' OBSERVATION',I5,' EQUALS ZERO, THE STATISTIC ',
+  605 FORMAT (/,' OBSERVATION ',I6,' EQUALS ZERO, THE STATISTIC ',
      &        'CAN NOT BE A',/,' COEFFICIENT OF VARIATION (ISTAT=2)',
      &        ' -- STOP EXECUTION(OBS1RIV6RP)')
   615 FORMAT (//,1X,A,/,1X,42('-'))
@@ -267,20 +264,19 @@ C     ------------------------------------------------------------------
      &' HEADS AT RIVER CELLS ARE BELOW THE',
      &' BOTTOM OF THE RIVER BED AT THE CELLS LISTED',/,
      &' BELOW.  THESE CONDITIONS DIMINISH THE IMPACT',
-     &' OF THE OBSERVATION ON ALL',/,
-     &' PARAMETERS EXCEPT, IN SOME CASES, THE HYDRAULIC CONDUCTIVITY',
-     &' OF THE RIVER BED',/,
-     &' (SEE TEXT FOR MORE INFORMATION).')
-  505 FORMAT (/,' OBS#',I5,', ID ',A,', TIME STEP ',I5)
+     &' OF THE OBSERVATION ON ESTIMATES OF',/,
+     &' ALL PARAMETERS EXCEPT THOSE THAT CONTROL THE HYDRAULIC',
+     &' CONDUCTIVITY OF THE',/,
+     &' RIVER BED.  (SEE TEXT FOR MORE INFORMATION).')
+  505 FORMAT (/,' OBS# ',I6,', ID ',A,', TIME STEP ',I5)
   510 FORMAT ('    LAYER   ROW  COLUMN')
   520 FORMAT (3I7)
-  525 FORMAT (' *',I5,I7)
   530 FORMAT (I7,' OF THE',I7,' CELLS USED TO SIMULATE THE',
      &        ' GAIN OR LOSS ARE',/,22X,'AFFECTED.')
-  535 FORMAT (' THIS OBSERVATION NO LONGER IMPACTS PARAMETER ',
-     &        'ESTIMATION AND WILL BE ELIMINATED FROM THIS PARAMETER ',
-     &        /,'ESTIMATION ITERATION')
-  540 FORMAT (' CELL OR REACH #',I5,
+  535 FORMAT (' ALL CELLS INCLUDED IN THIS OBSERVATION ARE INACTIVE.  ',
+     &        'THE OBSERVATION WILL',/
+     &        ,' BE OMITTED FROM THIS PARAMETER-ESTIMATION ITERATION')
+  540 FORMAT (' CELL OR REACH # ',I6,
      &        ' OF HEAD-DEP. BOUNDARY GAIN OR LOSS OBS#',I5,' ID=',A,/,
      &        ' NOT FOUND IN CELLS LISTED FOR RIVER PACKAGE',/,
      &        ' -- STOP EXECUTION (OBS1RIV6FM)')
@@ -321,8 +317,11 @@ C----------LOOP THROUGH DATA FILE TO FIND A MATCH.
                 JJ = RIVR(3,NB)
 C----------DO CALCULATIONS IF THIS IS A MATCH
                 IF (I.EQ.II.AND.J.EQ.JJ.AND.K.EQ.KK) THEN
-                  IF (IBOUND(J,I,K).LT.1) GOTO 30
                   IFLAG = 1
+                  IF (IBOUND(J,I,K).EQ.0) THEN
+                    KRBOT = KRBOT + 1
+                    GOTO 30
+                  ENDIF
 C-------------ASSIGN VARIABLE VALUES
                   HHNEW = HNEW(J,I,K)
                   HB = RIVR(4,NB)
@@ -339,8 +338,6 @@ C-------------CALCULATE FLOWS
                       WRITE (IOUT,510)
                     ENDIF
                     IRBOT = IRBOT + 1
-                    IF (IBT(2,IQ).EQ.0)
-     &                  KRBOT = KRBOT + 1
                     WRITE (IOUT,520) K, I, J
                   ENDIF
                   GOTO 20
@@ -404,24 +401,7 @@ C     ------------------------------------------------------------------
      &          NQCL(NQAR), IQOB(NQTAR), QCLS(5,NQCAR), TOFF(ND)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
-  500 FORMAT (/,
-     &' HEADS AT RIVER CELLS ARE BELOW THE',
-     &' BOTTOM OF THE RIVER BED AT THE CELLS LISTED',/,
-     &' BELOW.  THESE CONDITIONS DIMINISH THE IMPACT',
-     &' OF THE OBSERVATION ON ALL',/,
-     &' PARAMETERS EXCEPT, IN SOME CASES, THE HYDRAULIC CONDUCTIVITY',
-     &' OF THE RIVER BED',/,
-     &' (SEE TEXT FOR MORE INFORMATION).')
-  505 FORMAT (/,' OBS#',I5,', ID ',A4,', TIME STEP ',I5)
-  510 FORMAT ('    LAYER   ROW  COLUMN')
-  520 FORMAT (3I7)
-  525 FORMAT (' *',I5,I7)
-  530 FORMAT (I7,' OF THE',I7,' CELLS USED TO SIMULATE THE',
-     &        ' GAIN OR LOSS ARE',/,22X,'AFFECTED.')
-  535 FORMAT (' THIS OBSERVATION NO LONGER IMPACTS PARAMETER ',
-     &        'ESTIMATION AND WILL BE ELIMINATED FROM THIS PARAMETER ',
-     &        /,'ESTIMATION ITERATION')
-  540 FORMAT (' CELL OR REACH #',I5,
+  540 FORMAT (' CELL OR REACH # ',I6,
      &        ' OF HEAD-DEP. BOUNDARY GAIN OR LOSS OBS#',I5,' ID=',A,
      &        ' NOT FOUND IN CELLS LISTED FOR',/,' RIVER PACKAGE',
      &        ' -- STOP EXECUTION (OBS1RIV6DR)')
@@ -559,15 +539,15 @@ C     ------------------------------------------------------------------
 C     ------------------------------------------------------------------
 C
   500 FORMAT (/,' DATA FOR FLOWS REPRESENTED USING THE RIVER PACKAGE',//
-     &7X,'OBSERVATION      MEAS.      CALC.',14X,'WEIGHTED',/,
-     &'  OBS#    NAME',10X,'FLOW',7X,'FLOW',4X,'RESIDUAL',3X,
+     &8X,'OBSERVATION      MEAS.      CALC.',14X,'WEIGHTED',/,
+     &'   OBS#    NAME',10X,'FLOW',7X,'FLOW',4X,'RESIDUAL',3X,
      &        'RESIDUAL',/)
   505 FORMAT (/,' DATA FOR FLOWS REPRESENTED USING THE RIVER PACKAGE',//
-     &7X,'OBSERVATION',6X,'MEAS.      CALC.',26X,'WEIGHTED',/,
-     &2X,'OBS#    NAME',10X,'FLOW',7X,'FLOW',5X,'RESIDUAL',2X,
+     &8X,'OBSERVATION',6X,'MEAS.      CALC.',26X,'WEIGHTED',/,
+     &3X,'OBS#    NAME',10X,'FLOW',7X,'FLOW',5X,'RESIDUAL',2X,
      &'WEIGHT**.5',2X,'RESIDUAL',/)
-  510 FORMAT (1X,I5,1X,A12,1X,5(1X,G10.3))
-  515 FORMAT (1X,I5,1X,A12,2X,G10.3,'   DISCONNECTED')
+  510 FORMAT (1X,I6,1X,A12,1X,5(1X,G10.3))
+  515 FORMAT (1X,I6,1X,A12,2X,G10.3,'   DISCONNECTED')
   520 FORMAT (/,' SUM OF SQUARED WEIGHTED RESIDUALS (RIVER FLOWS ONLY)',
      &        2X,G11.5)
   525 FORMAT (/,' STATISTICS FOR RIVER FLOW RESIDUALS :',/,
@@ -575,7 +555,7 @@ C
      &        ' MINIMUM WEIGHTED RESIDUAL  :',G10.3,' OBS#',I7,/,
      &        ' AVERAGE WEIGHTED RESIDUAL  :',G10.3,/,
      &        ' # RESIDUALS >= 0. :',I7,/,' # RESIDUALS < 0.  :',I7,/,
-     &        ' NUMBER OF RUNS  :',I5,'  IN',I5,' OBSERVATIONS')
+     &        ' NUMBER OF RUNS: ',I6,'  IN ',I6,' OBSERVATIONS')
   530 FORMAT (2G20.7)
   535 FORMAT (' ')
   540 FORMAT (2(G15.7,1X),I5,2X,A)

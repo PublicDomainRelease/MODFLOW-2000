@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.8 05/01/2002
+                             VERSION 1.10 07/26/2002
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -9,34 +9,34 @@
  # MODFLOW-2000 test case tc2hufv4                                               
  THE FREE FORMAT OPTION HAS BEEN SELECTED
     3 LAYERS        18 ROWS        18 COLUMNS
-   1 STRESS PERIOD(S) IN SIMULATION
+    1 STRESS PERIOD(S) IN SIMULATION
 
- BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT  8
+ BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT    8
          15 ELEMENTS IN IR ARRAY ARE USED BY BAS
 
- WEL6 -- WELL PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 12
+ WEL6 -- WELL PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   12
  No named parameters
- MAXIMUM OF    3 ACTIVE WELLS AT ONE TIME
+ MAXIMUM OF      3 ACTIVE WELLS AT ONE TIME
          12 ELEMENTS IN RX ARRAY ARE USED BY WEL
 
- DRN6 -- DRAIN PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 13
+ DRN6 -- DRAIN PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   13
      1 Named Parameters         5 List entries
- MAXIMUM OF    5 ACTIVE DRAINs AT ONE TIME
+ MAXIMUM OF      5 ACTIVE DRAINS AT ONE TIME
          50 ELEMENTS IN RX ARRAY ARE USED BY DRN
 
  EVT6 -- EVAPOTRANSPIRATION PACKAGE, VERSION 6, 12/14/2000
-         INPUT READ FROM UNIT 15
+         INPUT READ FROM UNIT   15
      1 Named Parameters     
  OPTION 1 -- EVAPOTRANSPIRATION FROM TOP LAYER
         972 ELEMENTS IN RX ARRAY ARE USED BY EVT
         324 ELEMENTS IN IR ARRAY ARE USED BY EVT
 
- GHB6 -- GHB PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 17
+ GHB6 -- GHB PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   17
      1 Named Parameters         5 List entries
- MAXIMUM OF    5 ACTIVE GHB CELLS AT ONE TIME
+ MAXIMUM OF      5 ACTIVE GHB CELLS AT ONE TIME
          50 ELEMENTS IN RX ARRAY ARE USED BY GHB
 
- RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 18
+ RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   18
      1 Named Parameters     
  OPTION 1 -- RECHARGE TO TOP LAYER
         324 ELEMENTS IN RX ARRAY ARE USED BY RCH
@@ -51,39 +51,39 @@
 
 
                      BOUNDARY ARRAY FOR LAYER   1
- READING ON UNIT   8 WITH FORMAT: (18I3)              
+ READING ON UNIT    8 WITH FORMAT: (18I3)              
 
 
 
                      BOUNDARY ARRAY FOR LAYER   2
- READING ON UNIT   8 WITH FORMAT: (18I3)              
+ READING ON UNIT    8 WITH FORMAT: (18I3)              
 
 
 
                      BOUNDARY ARRAY FOR LAYER   3
- READING ON UNIT   8 WITH FORMAT: (18I3)              
+ READING ON UNIT    8 WITH FORMAT: (18I3)              
 
  AQUIFER HEAD WILL BE SET TO  9999.0     AT ALL NO-FLOW NODES (IBOUND=0).
 
 
 
                        INITIAL HEAD FOR LAYER   1
- READING ON UNIT   8 WITH FORMAT: (18F10.2)           
+ READING ON UNIT    8 WITH FORMAT: (18F10.2)           
 
 
 
                        INITIAL HEAD FOR LAYER   2
- READING ON UNIT   8 WITH FORMAT: (18F10.2)           
+ READING ON UNIT    8 WITH FORMAT: (18F10.2)           
 
 
 
                        INITIAL HEAD FOR LAYER   3
- READING ON UNIT   8 WITH FORMAT: (18F10.2)           
+ READING ON UNIT    8 WITH FORMAT: (18F10.2)           
 
  OUTPUT CONTROL IS SPECIFIED ONLY AT TIME STEPS FOR WHICH OUTPUT IS DESIRED
  HEADS WILL BE SAVED WITH FORMAT: (6G11.4)            
  HEAD PRINT FORMAT CODE IS  20    DRAWDOWN PRINT FORMAT CODE IS   0
- HEADS WILL BE SAVED ON UNIT   0    DRAWDOWNS WILL BE SAVED ON UNIT   0
+ HEADS WILL BE SAVED ON UNIT    0    DRAWDOWNS WILL BE SAVED ON UNIT    0
 
 
    HYD. COND. ALONG ROWS FOR UNIT HGU2      
@@ -220,8 +220,8 @@
         0.000       0.000       0.000       0.000      2.5000E-05  2.5000E-05
        2.5000E-05  2.5000E-05  2.5000E-05  2.5000E-03  2.5000E-03  2.5000E-03
 1
-                            STRESS PERIOD NO.   1, LENGTH =   86400.00    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    1, LENGTH =   86400.00    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     1
 
@@ -235,7 +235,7 @@
       2      1      8     16      -200.0    
       3      1     11     13      -150.0    
 
-     3 WELLS
+      3 WELLS
 
  Parameter:  DRAIN
  DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE   
@@ -246,7 +246,7 @@
       4      1     15     14       1200.           1.000    
       5      1     16     14       1200.           1.000    
 
-     5 DRAINS
+      5 DRAINS
 
                ET SURFACE =   1000.00    
 
@@ -328,7 +328,7 @@
       4      1      5     11       500.0           1.000    
       5      1     12      9       1000.           1.000    
 
-     5 GHB CELLS
+      5 GHB CELLS
 
 
 
@@ -400,15 +400,15 @@
  SOLVING FOR HEAD 
 
 
-    32 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD  1
+    32 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD    1
    246 TOTAL ITERATIONS
 
- OUTPUT CONTROL FOR STRESS PERIOD  1   TIME STEP  1
+ OUTPUT CONTROL FOR STRESS PERIOD    1   TIME STEP   1
     PRINT HEAD FOR ALL LAYERS
     SAVE HEAD FOR ALL LAYERS
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
             1           2           3           4           5           6
             7           8           9          10          11          12
@@ -469,8 +469,8 @@
         9999.       9999.       9999.       9999.       1245.       1242.    
         1235.       1223.       1208.       1195.       1195.       1194.    
 1
-              HEAD IN LAYER  2 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   2 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
             1           2           3           4           5           6
             7           8           9          10          11          12
@@ -531,8 +531,8 @@
         9999.       9999.       9999.       9999.       1245.       1242.    
         1235.       1225.       1213.       1202.       1197.       1194.    
 1
-              HEAD IN LAYER  3 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   3 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
             1           2           3           4           5           6
             7           8           9          10          11          12
@@ -593,8 +593,8 @@
         9999.       9999.       9999.       9999.       1244.       1242.    
         1236.       1227.       1216.       1207.       1200.       1196.    
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD   1
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -632,7 +632,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  1
+          TIME SUMMARY AT END OF TIME STEP   1 IN STRESS PERIOD    1
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH 7.46496E+09 1.24416E+08 2.07360E+06  86400.      236.55    
@@ -1032,20 +1032,20 @@
  AVERAGE WEIGHTED RESIDUAL  : 0.251E-02
  # RESIDUALS >= 0. :      5
  # RESIDUALS < 0.  :      0
- NUMBER OF RUNS  :    1  IN    5 OBSERVATIONS
+ NUMBER OF RUNS:      1  IN      5 OBSERVATIONS
 
  SUM OF SQUARED WEIGHTED RESIDUALS (DRAIN FLOWS ONLY)  0.81450E-04
 
  DATA FOR FLOWS REPRESENTED USING THE GENERAL-HEAD BOUNDARY PACKAGE
 
-       OBSERVATION      MEAS.      CALC.                          WEIGHTED
-  OBS#    NAME          FLOW       FLOW     RESIDUAL  WEIGHT**.5  RESIDUAL
+        OBSERVATION      MEAS.      CALC.                          WEIGHTED
+   OBS#    NAME          FLOW       FLOW     RESIDUAL  WEIGHT**.5  RESIDUAL
 
-    48 GHB1           -608.      -608.     -0.258      0.548E-02 -0.142E-02
-    49 GHB2           -687.      -687.      0.387      0.485E-02  0.188E-02
-    50 GHB3           -660.      -660.     -0.343      0.505E-02 -0.173E-02
-    51 GHB4           -654.      -654.      0.327      0.510E-02  0.167E-02
-    52 GHB5           -36.7      -36.7      0.256E-01  0.908E-01  0.232E-02
+     48 GHB1           -608.      -608.     -0.258      0.548E-02 -0.142E-02
+     49 GHB2           -687.      -687.      0.387      0.485E-02  0.188E-02
+     50 GHB3           -660.      -660.     -0.343      0.505E-02 -0.173E-02
+     51 GHB4           -654.      -654.      0.327      0.510E-02  0.167E-02
+     52 GHB5           -36.7      -36.7      0.256E-01  0.908E-01  0.232E-02
 
  STATISTICS FOR GENERAL-HEAD BOUNDARY FLOW RESIDUALS :
  MAXIMUM WEIGHTED RESIDUAL  : 0.232E-02 OBS#     52
@@ -1053,7 +1053,7 @@
  AVERAGE WEIGHTED RESIDUAL  : 0.544E-03
  # RESIDUALS >= 0. :      3
  # RESIDUALS < 0.  :      2
- NUMBER OF RUNS  :    4  IN    5 OBSERVATIONS
+ NUMBER OF RUNS:      4  IN      5 OBSERVATIONS
 
  SUM OF SQUARED WEIGHTED RESIDUALS
    (GENERAL-HEAD BOUNDARY FLOWS ONLY)  0.16717E-04

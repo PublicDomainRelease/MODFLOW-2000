@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.8 05/01/2002
+                             VERSION 1.10 07/26/2002
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -30,71 +30,71 @@
 
 
  REWOUND tc1-true.lst
- FILE TYPE:LIST   UNIT  12
+ FILE TYPE:LIST   UNIT   12
 
  REWOUND ../data/tc1-true.obs
- FILE TYPE:OBS   UNIT  21
+ FILE TYPE:OBS   UNIT   21
 
  REWOUND ../data/tc1-true.hob
- FILE TYPE:HOB   UNIT  22
+ FILE TYPE:HOB   UNIT   22
 
  REWOUND ../data/tc1-true.orv
- FILE TYPE:RVOB   UNIT  23
+ FILE TYPE:RVOB   UNIT   23
 
  REWOUND ../data/tc1-true.dis
- FILE TYPE:DIS   UNIT  31
+ FILE TYPE:DIS   UNIT   31
 
  REWOUND ../data/tc1-true.zon
- FILE TYPE:ZONE   UNIT  32
+ FILE TYPE:ZONE   UNIT   32
 
  REWOUND ../data/tc1-true.mlt
- FILE TYPE:MULT   UNIT  33
+ FILE TYPE:MULT   UNIT   33
 
  REWOUND ../data/tc1-true.bas
- FILE TYPE:BAS6   UNIT  41
+ FILE TYPE:BAS6   UNIT   41
 
  REWOUND ../data/tc1-true.wel
- FILE TYPE:WEL   UNIT  43
+ FILE TYPE:WEL   UNIT   43
 
  REWOUND ../data/tc1-true.oc
- FILE TYPE:OC   UNIT  46
+ FILE TYPE:OC   UNIT   46
 
  REWOUND ../data/tc1-true.ghb
- FILE TYPE:GHB   UNIT  47
+ FILE TYPE:GHB   UNIT   47
 
  REWOUND ../data/tc1-true.riv
- FILE TYPE:RIV   UNIT  48
+ FILE TYPE:RIV   UNIT   48
 
  REWOUND ../data/tc1-true.rch
- FILE TYPE:RCH   UNIT  49
+ FILE TYPE:RCH   UNIT   49
  
  # MODULAR MODEL - TWO-LAYER EXAMPLE PROBLEM, TEST CASE TC1                      
  #                                                                               
  THE FREE FORMAT OPTION HAS BEEN SELECTED
     2 LAYERS        18 ROWS        18 COLUMNS
-   5 STRESS PERIOD(S) IN SIMULATION
+    5 STRESS PERIOD(S) IN SIMULATION
 
- BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 41
+ BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   41
          10 ELEMENTS IN IR ARRAY ARE USED BY BAS
 
- WEL6 -- WELL PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 43
+ WEL6 -- WELL PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   43
      1 Named Parameters         2 List entries
- MAXIMUM OF    2 ACTIVE WELLS AT ONE TIME
+ MAXIMUM OF      2 ACTIVE WELLS AT ONE TIME
          16 ELEMENTS IN RX ARRAY ARE USED BY WEL
 
- RIV6 -- RIVER PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 48
+ RIV6 -- RIVER PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   48
  # RIV file for test case tc1
  #
      1 Named Parameters        18 List entries
- MAXIMUM OF   18 ACTIVE RIVER REACHES AT ONE TIME
+ MAXIMUM OF     18 ACTIVE RIVER REACHES AT ONE TIME
         216 ELEMENTS IN RX ARRAY ARE USED BY RIV
 
- GHB6 -- GHB PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 47
+ GHB6 -- GHB PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   47
  No named parameters
- MAXIMUM OF   36 ACTIVE GHB CELLS AT ONE TIME
+ MAXIMUM OF     36 ACTIVE GHB CELLS AT ONE TIME
         180 ELEMENTS IN RX ARRAY ARE USED BY GHB
 
- RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 49
+ RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   49
  # RCH file for test case tc1-true
  #
      2 Named Parameters     
@@ -120,7 +120,7 @@
 
  OUTPUT CONTROL IS SPECIFIED ONLY AT TIME STEPS FOR WHICH OUTPUT IS DESIRED
  HEAD PRINT FORMAT CODE IS   2    DRAWDOWN PRINT FORMAT CODE IS   0
- HEADS WILL BE SAVED ON UNIT   0    DRAWDOWNS WILL BE SAVED ON UNIT   0
+ HEADS WILL BE SAVED ON UNIT    0    DRAWDOWNS WILL BE SAVED ON UNIT    0
 
     HYD. COND. ALONG ROWS is defined by the following parameters:
  HK_1      
@@ -217,8 +217,8 @@
 
          SPECIFIC STORAGE =  1.999748E-06 FOR LAYER   2
 1
-                            STRESS PERIOD NO.   1, LENGTH =   1.000000    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    1, LENGTH =   1.000000    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     1
 
@@ -226,7 +226,7 @@
 
                             INITIAL TIME STEP SIZE =   1.000000    
 
-     0 WELLS
+      0 WELLS
 
  Parameter:  RIVERS
  REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
@@ -250,7 +250,7 @@
      17      1     17      1       100.0           1.003           90.00    
      18      1     18      1       100.0           1.003           90.00    
 
-    18 RIVER REACHES
+     18 RIVER REACHES
 
  BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE   
  ----------------------------------------------------------
@@ -291,7 +291,7 @@
      35      2     17     18       350.0          0.1000E-06
      36      2     18     18       350.0          0.1000E-06
 
-    36 GHB CELLS
+     36 GHB CELLS
 
 
 
@@ -344,11 +344,11 @@
  
  SOLVING FOR HEAD 
 
- OUTPUT CONTROL FOR STRESS PERIOD  1   TIME STEP  1
+ OUTPUT CONTROL FOR STRESS PERIOD    1   TIME STEP   1
     PRINT HEAD FOR ALL LAYERS
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
               1             2             3             4             5             6             7             8             9
              10            11            12            13            14            15            16            17            18
@@ -390,8 +390,8 @@
   18    100.225       109.979       118.910       126.939       134.257       140.864       146.860       152.264       157.146    
         161.541       165.308       168.490       171.133       173.268       174.927       176.137       176.925       177.311    
 1
-              HEAD IN LAYER  2 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   2 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
               1             2             3             4             5             6             7             8             9
              10            11            12            13            14            15            16            17            18
@@ -433,8 +433,8 @@
   18    101.235       110.307       119.315       127.149       134.471       140.973       146.953       152.287       157.134    
         161.418       165.142       168.278       170.892       172.992       174.626       175.809       176.576       176.945    
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD   1
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -470,7 +470,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  1
+          TIME SUMMARY AT END OF TIME STEP   1 IN STRESS PERIOD    1
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH  1.0000     1.66667E-02 2.77778E-04 1.15741E-05 3.16881E-08
@@ -478,8 +478,8 @@
          TOTAL TIME  1.0000     1.66667E-02 2.77778E-04 1.15741E-05 3.16881E-08
 1
 1
-                            STRESS PERIOD NO.   2, LENGTH =   87162.00    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    2, LENGTH =   87162.00    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     1
 
@@ -493,7 +493,7 @@
       1      1      9     10      -1.001    
       2      2      9     10      -1.001    
 
-     2 WELLS
+      2 WELLS
 
  Parameter:  RIVERS
  REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
@@ -517,21 +517,21 @@
      17      1     17      1       100.0           1.003           90.00    
      18      1     18      1       100.0           1.003           90.00    
 
-    18 RIVER REACHES
+     18 RIVER REACHES
 
  REUSING NON-PARAMETER GHB CELLS FROM LAST STRESS PERIOD
 
-    36 GHB CELLS
+     36 GHB CELLS
 
  REUSING RECH FROM LAST STRESS PERIOD
  
  SOLVING FOR HEAD 
 
- OUTPUT CONTROL FOR STRESS PERIOD  2   TIME STEP  1
+ OUTPUT CONTROL FOR STRESS PERIOD    2   TIME STEP   1
     PRINT HEAD FOR ALL LAYERS
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP  1 IN STRESS PERIOD  2
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP   1 IN STRESS PERIOD    2
+  ---------------------------------------------------------------------------
 
               1             2             3             4             5             6             7             8             9
              10            11            12            13            14            15            16            17            18
@@ -573,8 +573,8 @@
   18    100.225       109.978       118.906       126.932       134.248       140.849       146.840       152.240       157.117    
         161.509       165.276       168.460       171.107       173.246       174.910       176.123       176.913       177.300    
 1
-              HEAD IN LAYER  2 AT END OF TIME STEP  1 IN STRESS PERIOD  2
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   2 AT END OF TIME STEP   1 IN STRESS PERIOD    2
+  ---------------------------------------------------------------------------
 
               1             2             3             4             5             6             7             8             9
              10            11            12            13            14            15            16            17            18
@@ -616,8 +616,8 @@
   18    101.235       110.305       119.311       127.143       134.460       140.957       146.930       152.258       157.099    
         161.381       165.104       168.242       170.860       172.965       174.604       175.791       176.560       176.931    
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  2
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD   2
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -653,7 +653,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  2
+          TIME SUMMARY AT END OF TIME STEP   1 IN STRESS PERIOD    2
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH  87162.      1452.7      24.212      1.0088     2.76200E-03
@@ -661,8 +661,8 @@
          TOTAL TIME  87163.      1452.7      24.212      1.0088     2.76203E-03
 1
 1
-                            STRESS PERIOD NO.   3, LENGTH =   261486.0    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    3, LENGTH =   261486.0    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     1
 
@@ -676,7 +676,7 @@
       1      1      9     10      -1.001    
       2      2      9     10      -1.001    
 
-     2 WELLS
+      2 WELLS
 
  Parameter:  RIVERS
  REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
@@ -700,20 +700,20 @@
      17      1     17      1       100.0           1.003           90.00    
      18      1     18      1       100.0           1.003           90.00    
 
-    18 RIVER REACHES
+     18 RIVER REACHES
 
  REUSING NON-PARAMETER GHB CELLS FROM LAST STRESS PERIOD
 
-    36 GHB CELLS
+     36 GHB CELLS
 
  REUSING RECH FROM LAST STRESS PERIOD
  
  SOLVING FOR HEAD 
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  3   TIME STEP  1
+ NO OUTPUT CONTROL FOR STRESS PERIOD    3   TIME STEP   1
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  3
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD   3
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -749,7 +749,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  3
+          TIME SUMMARY AT END OF TIME STEP   1 IN STRESS PERIOD    3
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH 2.61486E+05  4358.1      72.635      3.0265     8.28599E-03
@@ -757,8 +757,8 @@
          TOTAL TIME 3.48649E+05  5810.8      96.847      4.0353     1.10480E-02
 1
 1
-                            STRESS PERIOD NO.   4, LENGTH =   522972.0    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    4, LENGTH =   522972.0    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     1
 
@@ -772,7 +772,7 @@
       1      1      9     10      -1.001    
       2      2      9     10      -1.001    
 
-     2 WELLS
+      2 WELLS
 
  Parameter:  RIVERS
  REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
@@ -796,20 +796,20 @@
      17      1     17      1       100.0           1.003           90.00    
      18      1     18      1       100.0           1.003           90.00    
 
-    18 RIVER REACHES
+     18 RIVER REACHES
 
  REUSING NON-PARAMETER GHB CELLS FROM LAST STRESS PERIOD
 
-    36 GHB CELLS
+     36 GHB CELLS
 
  REUSING RECH FROM LAST STRESS PERIOD
  
  SOLVING FOR HEAD 
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  4   TIME STEP  1
+ NO OUTPUT CONTROL FOR STRESS PERIOD    4   TIME STEP   1
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  4
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD   4
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -845,7 +845,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  4
+          TIME SUMMARY AT END OF TIME STEP   1 IN STRESS PERIOD    4
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH 5.22972E+05  8716.2      145.27      6.0529     1.65720E-02
@@ -853,8 +853,8 @@
          TOTAL TIME 8.71621E+05  14527.      242.12      10.088     2.76200E-02
 1
 1
-                            STRESS PERIOD NO.   5, LENGTH =  0.2356745E+08
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    5, LENGTH =  0.2356745E+08
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     9
 
@@ -868,7 +868,7 @@
       1      1      9     10      -1.001    
       2      2      9     10      -1.001    
 
-     2 WELLS
+      2 WELLS
 
  Parameter:  RIVERS
  REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
@@ -892,53 +892,53 @@
      17      1     17      1       100.0           1.003           90.00    
      18      1     18      1       100.0           1.003           90.00    
 
-    18 RIVER REACHES
+     18 RIVER REACHES
 
  REUSING NON-PARAMETER GHB CELLS FROM LAST STRESS PERIOD
 
-    36 GHB CELLS
+     36 GHB CELLS
 
  REUSING RECH FROM LAST STRESS PERIOD
  
  SOLVING FOR HEAD 
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  1
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   1
  
  SOLVING FOR HEAD 
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  2
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   2
  
  SOLVING FOR HEAD 
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  3
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   3
  
  SOLVING FOR HEAD 
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  4
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   4
  
  SOLVING FOR HEAD 
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  5
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   5
  
  SOLVING FOR HEAD 
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  6
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   6
  
  SOLVING FOR HEAD 
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  7
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   7
  
  SOLVING FOR HEAD 
 
- NO OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  8
+ NO OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   8
  
  SOLVING FOR HEAD 
 
- OUTPUT CONTROL FOR STRESS PERIOD  5   TIME STEP  9
+ OUTPUT CONTROL FOR STRESS PERIOD    5   TIME STEP   9
     PRINT HEAD FOR ALL LAYERS
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP  9 IN STRESS PERIOD  5
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP   9 IN STRESS PERIOD    5
+  ---------------------------------------------------------------------------
 
               1             2             3             4             5             6             7             8             9
              10            11            12            13            14            15            16            17            18
@@ -980,8 +980,8 @@
   18    100.127       105.440       110.142       114.247       117.902       121.159       124.115       126.827       129.364    
         131.778       133.909       135.784       137.408       138.776       139.877       140.703       141.250       141.523    
 1
-              HEAD IN LAYER  2 AT END OF TIME STEP  9 IN STRESS PERIOD  5
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   2 AT END OF TIME STEP   9 IN STRESS PERIOD    5
+  ---------------------------------------------------------------------------
 
               1             2             3             4             5             6             7             8             9
              10            11            12            13            14            15            16            17            18
@@ -1023,8 +1023,8 @@
   18    100.674       105.590       110.313       114.305       117.947       121.147       124.084       126.759       129.264    
         131.593       133.686       135.533       137.133       138.477       139.556       140.362       140.891       141.151    
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  9 IN STRESS PERIOD  5
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  9 IN STRESS PERIOD   5
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -1060,7 +1060,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  9 IN STRESS PERIOD  5
+          TIME SUMMARY AT END OF TIME STEP   9 IN STRESS PERIOD    5
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH 4.87217E+06  81203.      1353.4      56.391     0.15439    
@@ -1118,12 +1118,12 @@
 
  DATA FOR FLOWS REPRESENTED USING THE RIVER PACKAGE
 
-       OBSERVATION      MEAS.      CALC.                          WEIGHTED
-  OBS#    NAME          FLOW       FLOW     RESIDUAL  WEIGHT**.5  RESIDUAL
+        OBSERVATION      MEAS.      CALC.                          WEIGHTED
+   OBS#    NAME          FLOW       FLOW     RESIDUAL  WEIGHT**.5  RESIDUAL
 
-    33 SS             -4.05      -4.05      0.411E-02   2.50      0.103E-01
-    34 TR3            -3.78      -3.78     -0.486E-04   2.63     -0.128E-03
-    35 TR12           -2.10      -2.10     -0.232E-02   4.76     -0.110E-01
+     33 SS             -4.05      -4.05      0.411E-02   2.50      0.103E-01
+     34 TR3            -3.78      -3.78     -0.486E-04   2.63     -0.128E-03
+     35 TR12           -2.10      -2.10     -0.232E-02   4.76     -0.110E-01
 
  STATISTICS FOR RIVER FLOW RESIDUALS :
  MAXIMUM WEIGHTED RESIDUAL  : 0.103E-01 OBS#     33
@@ -1131,7 +1131,7 @@
  AVERAGE WEIGHTED RESIDUAL  :-0.299E-03
  # RESIDUALS >= 0. :      1
  # RESIDUALS < 0.  :      2
- NUMBER OF RUNS  :    2  IN    3 OBSERVATIONS
+ NUMBER OF RUNS:      2  IN      3 OBSERVATIONS
 
  SUM OF SQUARED WEIGHTED RESIDUALS (RIVER FLOWS ONLY)  0.22761E-03
 

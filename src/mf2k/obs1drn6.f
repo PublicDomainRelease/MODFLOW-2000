@@ -1,4 +1,4 @@
-C     Last change:  ERB   3 Dec 2001    1:26 pm
+C     Last change:  ERB  10 Jul 2002   12:24 pm
       SUBROUTINE OBS1DRN6AL(IUDROB,NQ,NQC,NQT,IOUT,NQDR,NQTDR,IOBSUM,
      &                     LCOBDRN,ITMXP,LCSSDR,ISUM,IOBS)
 C     VERSION 20000125
@@ -14,7 +14,7 @@ C     IDENTIFY PROCESS
       WRITE(IOUT,490) IUDROB
   490 FORMAT(/,' OBS1DRN6 -- OBSERVATION PROCESS (DRAIN FLOW ',
      &    'OBSERVATIONS)',/,' VERSION 1.0, 10/15/98',/,
-     &    ' INPUT READ FROM UNIT ',I3)
+     &    ' INPUT READ FROM UNIT ',I4)
 C
 C  Turn off observation package if OBS is not active
       IF (IOBS.LE.0) THEN
@@ -33,11 +33,10 @@ C  Read data
       CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,NQCDR,DUM,IOUT,IUDROB)
       CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,NQTDR,DUM,IOUT,IUDROB)
       WRITE (IOUT,500) NQDR, NQCDR, NQTDR
-   10 FORMAT(15I5)
   500 FORMAT (/,
-     &     ' NUMBER OF FLOW-OBSERVATION DRAIN-CELL GROUPS.......:',I5,/,
-     &     '   NUMBER OF CELLS IN DRAIN-CELL GROUPS.............:',I5,/,
-     &     '   NUMBER OF DRAIN-CELL FLOWS.......................:',I5)
+     &     ' NUMBER OF FLOW-OBSERVATION DRAIN-CELL GROUPS.....: ',I6,/,
+     &     '   NUMBER OF CELLS IN DRAIN-CELL GROUPS...........: ',I6,/,
+     &     '   NUMBER OF DRAIN-CELL FLOWS.....................: ',I6)
 C
       NQ = NQ + NQDR
       NQC = NQC + NQCDR
@@ -81,27 +80,25 @@ C     ------------------------------------------------------------------
 C     ------------------------------------------------------------------
   500 FORMAT (15X,2F5.0,F10.0)
   505 FORMAT (8F10.0)
-  510 FORMAT (A4,6X,I5,3F10.0,I5)
-  515 FORMAT (A3,2X,2I5)
   517 FORMAT (/,' DRAIN-CELL FLOW OBSERVATION VARIANCES ARE',
      &        ' MULTIPLIED BY: ',G15.4)
   520 FORMAT (/,' OBSERVED DRAIN-CELL FLOW DATA',/,' -- TIME OFFSETS',
      &        ' ARE MULTIPLIED BY: ',G12.5)
-  525 FORMAT (/,' GROUP NUMBER: ',I3,'     BOUNDARY TYPE: ',A,
-     &'     NUMBER OF CELLS IN GROUP: ',I5,/,
-     &' NUMBER OF FLOW OBSERVATIONS: ',I5,//,
+  525 FORMAT (/,' GROUP NUMBER: ',I6,'    BOUNDARY TYPE: ',A,
+     &'    NUMBER OF CELLS IN GROUP: ',I6,/,
+     &' NUMBER OF FLOW OBSERVATIONS: ',I6,//,
      &20X,'REFER.',14X,'OBSERVED',/,
      &7X,'OBSERVATION',2X,'STRESS',4X,'TIME',5X,'DRAIN FLOW',15X,
      &'STATISTIC   PLOT',/,
      &2X,'OBS#    NAME',6X,'PERIOD   OFFSET',5X,'GAIN (-)',
      &4X,'STATISTIC     TYPE      SYM.')
-  535 FORMAT (1X,I5,1X,A12,2X,I4,2X,G11.4,1X,G11.4,1X,G11.4,2X,A10,
+  535 FORMAT (I6,1X,A12,2X,I4,2X,G11.4,1X,G11.4,1X,G11.4,2X,A10,
      &1X,I5)
   540 FORMAT (/,'       LAYER  ROW  COLUMN    FACTOR')
   550 FORMAT (4X,F8.0,F6.0,F7.0,F9.2)
   555 FORMAT (4X,F8.0,F6.0,F9.2)
-  560 FORMAT (/,' FOR OBS',I5,' STATISTIC RELATED TO WEIGHT < OR =0 -- '
-     &        ,'STOP EXECUTION (OBS1DRN6RP)',/)
+  560 FORMAT (/,' FOR OBS ',I6,' STATISTIC RELATED TO WEIGHT < OR =0',/,
+     &        ' -- STOP EXECUTION (OBS1DRN6RP)',/)
   565 FORMAT (/,' DRAIN PACKAGE',
      &        ' IS NOT OPEN -- STOP EXECUTION (OBS1DRN6RP)')
   570 FORMAT (/,' LARGEST OBS TIME STEP (',I5,') LARGER THAN NPER (',I5,
@@ -109,7 +106,7 @@ C     ------------------------------------------------------------------
      &        ' -- STOP EXECUTION (OBS1DRN6RP)',/)
   590 FORMAT (/,' ROW OR COLUMN NUMBER INVALID',
      &        ' -- STOP EXECUTION (OBS1DRN6RP)',/)
-  605 FORMAT (/,' OBSERVATION',I5,' EQUALS ZERO, THE STATISTIC ',
+  605 FORMAT (/,' OBSERVATION ',I6,' EQUALS ZERO, THE STATISTIC ',
      &        'CAN NOT BE A',/,' COEFFICIENT OF VARIATION (ISTAT=2)',
      &        ' -- STOP EXECUTION(OBS1DRN6RP)')
   615 FORMAT (//,1X,A,/,1X,42('-'))
@@ -264,21 +261,18 @@ C     ------------------------------------------------------------------
      &' HEADS AT DRAIN CELLS ARE BELOW THE',
      &' BOTTOM OF THE DRAIN AT THE CELLS LISTED',/,
      &' BELOW.  THESE CONDITIONS DIMINISH THE IMPACT',
-     &' OF THE OBSERVATION ON ALL',/,
-     &' PARAMETERS EXCEPT, IN SOME CASES, THE HYDRAULIC CONDUCTIVITY',
-     &' OF THE DRAIN',/,
-     &' (SEE TEXT FOR MORE INFORMATION).')
-  505 FORMAT (/,' OBS#',I5,', ID ',A,', TIME STEP ',I5)
+     &' OF THE OBSERVATION ON ESTIMATES',/,
+     &' OF ALL PARAMETERS.  (SEE TEXT FOR MORE INFORMATION).')
+  505 FORMAT (/,' OBS# ',I6,', ID ',A,', TIME STEP ',I5)
   510 FORMAT ('    LAYER   ROW  COLUMN')
   520 FORMAT (3I7)
-  525 FORMAT (' *',I5,I7)
   530 FORMAT (I7,' OF THE',I7,' REACHES OR CELLS USED TO SIMULATE THE',
      &        ' GAIN OR LOSS ARE',/,22X,'AFFECTED.')
-  535 FORMAT (' THIS OBSERVATION NO LONGER IMPACTS PARAMETER ',
-     &        'ESTIMATION AND WILL BE ELIMINATED FROM THIS PARAMETER ',
-     &        /,'ESTIMATION ITERATION')
-  540 FORMAT (' CELL #',I5,
-     &        ' OF HEAD-DEP. BOUNDARY GAIN OR LOSS OBS#',I5,' ID=',A,/,
+  535 FORMAT (' ALL CELLS INCLUDED IN THIS OBSERVATION ARE INACTIVE.  ',
+     &        'THE OBSERVATION WILL',/
+     &        ,' BE OMITTED FROM THIS PARAMETER-ESTIMATION ITERATION')
+  540 FORMAT (' CELL # ',I6,
+     &        ' OF HEAD-DEP. BOUNDARY GAIN OR LOSS OBS# ',I6,' ID=',A,/,
      &        ' NOT FOUND IN CELLS LISTED FOR DRAIN PACKAGE',/,
      &        ' -- STOP EXECUTION (OBS1DRN6FM)')
 C
@@ -318,8 +312,11 @@ C----------LOOP THROUGH DATA FILE TO FIND A MATCH.
                 JJ = DRAI(3,NB)
 C----------DO CALCULATIONS IF THIS IS A MATCH
                 IF (I.EQ.II.AND.J.EQ.JJ.AND.K.EQ.KK) THEN
-                  IF (IBOUND(J,I,K).LT.1) GOTO 30
                   IFLAG = 1
+                  IF (IBOUND(J,I,K).EQ.0) THEN
+                    KRBOT = KRBOT + 1
+                    GOTO 30
+                  ENDIF
 C-------------ASSIGN VARIABLE VALUES
                   HHNEW = HNEW(J,I,K)
                   HB = DRAI(4,NB)
@@ -336,7 +333,6 @@ C-------------CALCULATE FLOWS
                       WRITE (IOUT,510)
                     ENDIF
                     IRBOT = IRBOT + 1
-                    IF (IBT(2,IQ).EQ.0) KRBOT = KRBOT + 1
                     WRITE (IOUT,520) K, I, J
                   ENDIF
                   GOTO 20
@@ -397,23 +393,6 @@ C     ------------------------------------------------------------------
      &          QCLS(5,NQCAR), TOFF(ND), DRAI(NDRNVL,MXDRN)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
-  500 FORMAT (/,
-     &' HEADS AT DRAIN CELLS ARE BELOW THE',
-     &' BOTTOM OF THE DRAIN AT THE CELLS LISTED',/,
-     &' BELOW.  THESE CONDITIONS DIMINISH THE IMPACT',
-     &' OF THE OBSERVATION ON ALL',/,
-     &' PARAMETERS EXCEPT, IN SOME CASES, THE HYDRAULIC CONDUCTIVITY',
-     &' OF THE DRAIN',/,
-     &' (SEE TEXT FOR MORE INFORMATION).')
-  505 FORMAT (/,' OBS#',I5,', ID ',A4,', TIME STEP ',I5)
-  510 FORMAT ('    LAYER   ROW  COLUMN')
-  520 FORMAT (3I7)
-  525 FORMAT (' *',I5,I7)
-  530 FORMAT (I7,' OF THE',I7,' REACHES OR CELLS USED TO SIMULATE THE',
-     &        ' GAIN OR LOSS ARE',/,22X,'AFFECTED.')
-  535 FORMAT (' THIS OBSERVATION NO LONGER IMPACTS PARAMETER ',
-     &        'ESTIMATION AND WILL BE ELIMINATED FROM THIS PARAMETER ',
-     &        /,'ESTIMATION ITERATION')
   540 FORMAT (' CELL #',I5,
      &        ' OF HEAD-DEP. BOUNDARY GAIN OR LOSS OBS#',I5,' ID=',A,
      &        ' NOT FOUND IN CELLS LISTED FOR',/,'DRAIN PACKAGE',
@@ -567,7 +546,7 @@ C
      &        ' MINIMUM WEIGHTED RESIDUAL  :',G10.3,' OBS#',I7,/,
      &        ' AVERAGE WEIGHTED RESIDUAL  :',G10.3,/,
      &        ' # RESIDUALS >= 0. :',I7,/,' # RESIDUALS < 0.  :',I7,/,
-     &        ' NUMBER OF RUNS  :',I5,'  IN',I5,' OBSERVATIONS')
+     &        ' NUMBER OF RUNS: ',I6,'  IN ',I6,' OBSERVATIONS')
   530 FORMAT (2G20.7)
   535 FORMAT (' ')
   540 FORMAT (2(G15.7,1X),I5,2X,A)

@@ -1,4 +1,4 @@
-C     Last change:  ERB   3 May 2002   10:07 am
+C     Last change:  ERB  26 Jul 2002    4:24 pm
 C     ******************************************************************
 C     MAIN CODE FOR U.S. GEOLOGICAL SURVEY MODULAR MODEL -- MODFLOW
 C           BY MICHAEL G. MCDONALD AND ARLEN W. HARBAUGH
@@ -29,7 +29,7 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
 C-------ASSIGN VERSION NUMBER AND DATE
       CHARACTER*40 VERSION
-      PARAMETER (VERSION='1.8 05/01/2002')
+      PARAMETER (VERSION='1.10 07/26/2002')
 C
 C-----DECLARE ARRAY TYPES
       REAL GX, X, RX, XHS
@@ -95,7 +95,7 @@ C
       CHARACTER*10 PARNEG(MXPAR)
       DATA CUNIT/'BCF6', 'WEL ', 'DRN ', 'RIV ', 'EVT ', '    ', 'GHB ',
      &           'RCH ', 'SIP ', 'DE4 ', 'SOR ', 'OC  ', 'PCG ', 'LMG ',
-     &           'GWT ', 'FHB ', 'RES ', 'STR ', 'IBS ', 'CHD ', 'HFB6',
+     &           '    ', 'FHB ', 'RES ', 'STR ', 'IBS ', 'CHD ', 'HFB6',
      &           'LAK ', 'LPF ', 'DIS ', 'SEN ', 'PES ', 'OBS ', 'HOB ',
      &           'ADV2', 'COB ', 'ZONE', 'MULT', 'DROB', 'RVOB', 'GBOB',
      &           'STOB', 'HUF ', 'CHOB', 'ETS ', 'DRT ', 'DTOB', '    ',
@@ -116,7 +116,7 @@ C     DEFINE RANGE OF RESERVED FILE UNITS
       MINRSV = 96
       MAXRSV = 99
       IBATCH = 0
-clak
+CLAK
       NSOL = 1
       DUM=0.0D0
 C
@@ -144,10 +144,17 @@ C2------OPEN FILE OF FILE NAMES.
         ELSE
           FNAME=' '
           COMLIN=' '
-C *** The following statement should be uncommented in order to use
-C *** GETARG to retrieve a command line argument.  The call to GETARG
-C *** may be commented out for compilers that do not support it.
+C *** Subroutines GETARG and GETCL are extensions to Fortran 90/95 that
+C *** allow a program to retrieve command-line arguments.  To enable
+C *** Modflow-2000 to read the name of a Name file from the command
+C *** line, either GETARG or GETCL must be called, but not both.  As
+C *** distributed, the call to GETARG is uncommented.  For compilers
+C *** that support GETCL but not GETARG, comment out the call to GETARG
+C *** and uncomment the call to GETCL.  The calls to both GETARG and
+C *** GETCL may be commented out for compilers that do not support
+C *** either extension.
           CALL GETARG(1,COMLIN)
+C          CALL GETCL(COMLIN)
           ICOL = 1
           IF(COMLIN.NE.' ') THEN
             FNAME=COMLIN
@@ -206,7 +213,7 @@ C  DEFINE (DF) PROCEDURE
      &                NQTGB,NQTRV,NQTST,NQTCH,NT,NTT2,IOBSUM,LCX,
      &                LCBUF2,NDAR,LCOBDRT,LCSSDT,NQTDT,IOWTQDT,LCSSSF,
      &                NQTSF,LCOBSFR,IOWTQSF,NHT,LCRSQA,LCRSPA,LCBUF1,
-     &                LCH,LCHOBS,LCWTQS,LCHANI)
+     &                LCH,LCHOBS,LCWTQS,LCHANI,LCXND)
       CALL SEN1BAS6DF(ISENALL,ISEN,IPRINTS,IUNIT(25),LCB1,LCLN,LCSV,NPE,
      &                NPLIST,RCLOSE,IUHEAD,MXSEN,LCSNEW,IOUTG,LCBSCA)
       CALL PES1BAS6DF(IBEFLG,IFO,IOUB,IPES,IPR,IPRAR,IPRINT,ITERPF,
@@ -281,7 +288,7 @@ C-----ALLOCATE SPACE FOR SENSITIVITY CALCULATIONS
      &                    IPRINTS,LCISEN,LCBU,LCBL,LCB1,ISENALL,
      &                    IREWND(25),LCSNEW,LCSOLD,ISUMZ,ISEN,ISENSU,
      &                    ISENPU,ISENFM,IPES,MXSEN,LCBSCA,ITMXP,MAXUNIT,
-     &                    MINRSV,MAXRSV,NSTP,NPER,NTIMES,LCSEND)
+     &                    MINRSV,MAXRSV,NSTP,NPER,NTIMES,LCSEND,LCSNDT)
 C-----ALLOCATE SPACE FOR PARAMETER-ESTIMATION PROCESS
       IF (IPES.GT.0)
      &    CALL PES1BAS6AL(ISUMX,ISUMZ,ISUMIX,IOUTG,NPLIST,LCC,LCSCLE,
@@ -345,7 +352,7 @@ C     OBSERVATIONS AND PRIOR INFORMATION. ALSO INITIALIZE SOME ARRAYS
      &                    MOBSAR,LCIBT,LCNQOB,LCNQCL,LCIQOB,LCQCLS,
      &                    LCIPLO,LCIPLP,IPR,MPR,IPRAR,LCBUF1,LCSSTO,
      &                    ITMXP,LBUFF,LCOBSE,ISOLDX,ISOLDZ,ISOLDI,MXSEN,
-     &                    LCBUF2,NDAR,NHT,LCRSQA,LCRSPA)
+     &                    LCBUF2,NDAR,NHT,LCRSQA,LCRSPA,LCXND)
 C
 C------DYNAMICALLY ALLOCATE X, Z, IX, XHS, NIPRNAM, EQNAM, NAMES, AND
 C      OBSNAM ARRAYS FOR OBS, SEN, AND PES PROCESSES; SOLVERS; AND
@@ -535,8 +542,9 @@ C---------REWIND INPUT FILES
      3                        LASTX,NPLIST,ITERPK)
         ENDIF
 C
-C-------INITIALIZE H AND X ARRAYS
-        IF (IOBS.GT.0) CALL OBS1BAS6FM(X(LCH),ND)
+C-------INITIALIZE H AND X ARRAYS, AND UNFLAG OMITTED OBSERVATIONS
+        IF (IOBS.GT.0) CALL OBS1BAS6FM(X(LCH),ND,NDAR,NDMH,NDMHAR,
+     &                                 X(LCWT),X(LCWTQ))
         IF (ISEN.GT.0 .AND. ITERPF.EQ.0) CALL OBS1BAS6DR(ND,NPE,X(LCX))
 C4------ALLOCATE SPACE IN RX AND IR ARRAYS.
         CALL GWF1BAS6AL(HEADNG,NPER,TOTIM,NCOL,NROW,NLAY,NODES,INBAS,
@@ -594,7 +602,7 @@ C4------ALLOCATE SPACE IN RX AND IR ARRAYS.
         IF (IUNIT(21).GT.0)
      &      CALL GWF1HFB6AL(IUNIT(21),IOUT,ISUMRX,LCHFB,MXACTFB,NHFBNP,
      &                      NPHFB,MXHFB,IHFB,NOPRHB)
-clak
+CLAK
         IF(IUNIT(22).GT.0)
      1               CALL LAK3AL(ISUMRX,ISUMIR,LCCOND,ICLAKE,MXLKND,
      2     LKNODE,LCSTAG,IUNIT(22),IOUT,ILKCB,NLAKES,INTRB,
@@ -607,9 +615,12 @@ clak
      9     LSLAKE,LSPPT,LSRNF,LSAUG,NSOL,IMSUB,IMSUB1,LSCGWL,LSSLAK,
      *     LSSWIN,LSSWOT,LSSPPT,LSCDRW,LSSRUN,
      *     LSGWIN,LSGWOT,LSLKSM,LSKLK,LSDONE,LSFLOB,LSRTCO,LSCLKO,
-     *     LSALKI,LSALKO,ISTRIN,ISTROT,LSIGLK,LKLMRR,IDSTRT)
-clak
-        CALL GAGE5AL(IUNIT(46),ISUMRX,LSGAGE,NUMGAGE,IOUT,
+     *     LSALKI,LSALKO,ISTRIN,ISTROT,LKLMRR,IDSTRT,
+     *     LKVI,ISTGLD2,LKCLKI,
+     *     LKCUM1,LKCUM2,LKCUM3,LKCUM4,LKCUM5,
+     *     LKCUM6,LKCUM7,LKCUM8,LKCUM9)
+CLAK
+        CALL GAGE5AL(IUNIT(46),ISUMIR,LSGAGE,NUMGAGE,IOUT,
      &                IUNIT(44),IUNIT(22),LKACC7,LCSTAG,LSLAKE,ICSTRM,
      &                NSTRM,NLAKES)
         IF(IUNIT(39).GT.0)
@@ -722,7 +733,7 @@ C
      &      CALL GWF1DRT1RQ(IUNIT(40),IOUTG,NDRTVL,IDRTAL,NCOL,NROW,
      &                      NLAY,NPDRT,RX(LCDRTF),IDRTPB,MXDRT,IFREFM,
      &                      ITERPK,IDRTFL,INAMLOC,NOPRDT)
-clak
+CLAK
 C  REVISED IF STATEMENT
 C       IF(IUNIT(46).GT.0.AND.(IUNIT(44).GT.0.OR.IUNIT(22).GT.0))
         IF(IUNIT(46).GT.0)
@@ -799,7 +810,7 @@ C----------READ USING PACKAGE READ AND PREPARE MODULES.
      &        CALL GWF1CHD6RP(RX(LCCHDS),NCHDS,MXCHD,IG(LCIBOU),NCOL,
      &                        NROW,NLAY,IUNIT(20),IOUT,NCHDVL,IFREFM,
      &                        NNPCHD,NPCHD,IPCBEG,NOPRCH)
-clak
+CLAK
           IF(IUNIT(22).GT.0) THEN
             CALL LAK3RP(IR(ICLAKE),LKNODE,MXLKND,
      1        IUNIT(22),IOUT,NLAKES,RX(LCSTAG),RX(LCLKPR),RX(LCLKEV),
@@ -810,14 +821,27 @@ clak
      6        IR(IBNLK),RX(ILKBL),IR(IBNLK),RX(ILKBL),NODES,
      7        RX(IBTMS),RX(LCRNF),RX(IAREN),IUNIT(44),NSS,
      8        IUNIT(15),RX(LSLAKE),RX(LSAUG),RX(LSPPT),RX(LSRNF),
-     9        NSOL,IOUTS,RX(LKSSMN),RX(LKSSMX),ISSFLG(KKPER))
+     9        NSOL,IOUTS,RX(LKSSMN),RX(LKSSMX),ISSFLG(KKPER),RX(LKVI),
+     *        RX(LKCLKI),RX(LKCUM1),RX(LKCUM2),RX(LKCUM3),RX(LKCUM4),
+     &        RX(LKCUM5),RX(LKCUM6),RX(LKCUM7),RX(LKCUM8),
+     &        RX(LKCUM9))
             IF (IUNIT(1).GT.0) THEN
-               CALL GWF1LAK3BCF6RP(IOUT,RX(LCCOND),IR(IBNLK),
+              CALL GWF1LAK3BCF6RP(IOUT,RX(LCCOND),IR(IBNLK),
      1             IR(ICLAKE),RX(LCCNDF),GX(LCDELR),GX(LCDELC),
      2             RX(LCHY),RX(LCTRPY),LAYHDT,MXLKND,NCOL,NROW,NLAY,
      3             LKNODE,IWDFLG,RX(LCCVWD))
+            ELSE IF (IUNIT(23).GT.0) THEN
+              CALL GWF1LAK3LPF1RP(IOUT,RX(LCCOND),IR(IBNLK),
+     1             IR(ICLAKE),RX(LCCNDF),GX(LCDELR),GX(LCDELC),
+     2             X(LCHK),X(LCHANI),LAYHDT,MXLKND,NCOL,NROW,NLAY,
+     3             LKNODE,X(LCVKA),X(LCVKCB),GX(LCBOTM),NBOTM)
+            ELSE IF(IUNIT(37).GT.0) THEN
+              CALL GWF1LAK3HUF1RP(IOUT,RX(LCCOND),IR(IBNLK),
+     1             IR(ICLAKE),RX(LCCNDF),GX(LCDELR),GX(LCDELC),
+     2             X(LCHK),X(LCHKCC),LAYHDT,MXLKND,NCOL,NROW,NLAY,
+     3             LKNODE,X(LCVKA),GX(LCBOTM),NBOTM)
             ELSE
-              WRITE(IOUT,*) ' BCF MUST BE USED WITH THE LAKE PACKAGE'
+              WRITE(IOUT,*) 'LAK Package requires BCF, LPF, or HUF'
               STOP
             END IF
 cc  Uncomment following call when SFR is added -- ERB 7/9/01
@@ -825,7 +849,7 @@ cc            IF (IUNIT(44).GT.0)
 cc     &          CALL LSN3RP(NTRB,NDV,NLAKES,IR(INTRB),IR(INDV),NSS,
 cc     &                      IR(LCIVAR),IR(LCOTSG),IOUT,NODES,GX(LCBUFF))
           END IF
-clak
+CLAK
           IF (IUNIT(46).GT.0.AND.
      &           (IUNIT(44).GT.0.OR.IUNIT(22).GT.0).AND.KKPER.EQ.1)
      &        CALL GAGE5I(IR(LSGAGE),NUMGAGE,IOUT,IUNIT(15),RX(LCSTAG),
@@ -889,11 +913,11 @@ C7C1----CALCULATE TIME STEP LENGTH. SET HOLD=HNEW.
      &          CALL RES1AD(RX(LCHRES),RX(LCHRSE),IR(LCIRES),RX(LCBRES),
      &                      GX(LCDELR),GX(LCDELC),NRES,IRESPT,NCOL,NROW,
      &                      PERLEN(KKPER),PERTIM,TOTIM,KKSTP,KKPER,IOUT)
-clak
+CLAK
             IF (IUNIT(22).GT.0)
      1           CALL LAK3AD(KKPER,KKSTP,NLAKES,RX(ISTGLD),
      2                       RX(ISTGNW),RX(LCSTAG),NROW,NCOL,NLAY,
-     3                       RX(LSFLOB),IUNIT(15),LKNODE)
+     3                       RX(LSFLOB),IUNIT(15),LKNODE,RX(ISTGLD2))
 C
 C---------INDICATE IN PRINTOUT THAT SOLUTION IS FOR HEADS
             CALL UMESPR('SOLVING FOR HEAD',' ',IOUT)
@@ -951,7 +975,7 @@ C7C2A---FORMULATE THE FINITE DIFFERENCE EQUATIONS.
      &            CALL GWF1RIV6FM(NRIVER,MXRIVR,RX(LCRIVR),GZ(LCHNEW),
      &                            GX(LCHCOF),GX(LCRHS),IG(LCIBOU),NCOL,
      &                            NROW,NLAY,NRIVVL)
-clak
+CLAK
               IF (IUNIT(5).GT.0) THEN
                 IF(IUNIT(22).GT.0.AND.NEVTOP.EQ.3)
      1                CALL LAK3ST(0,NCOL,NROW,NLAY,IG(LCIBOU),LKNODE,
@@ -970,7 +994,7 @@ clak
      &            CALL GWF1GHB6FM(NBOUND,MXBND,RX(LCBNDS),GX(LCHCOF),
      &                            GX(LCRHS),IG(LCIBOU),NCOL,NROW,NLAY,
      &                            NGHBVL)
-clak
+CLAK
               IF (IUNIT(8).GT.0) THEN
                 IF(IUNIT(22).GT.0.AND.NRCHOP.EQ.3)
      1                CALL LAK3ST(0,NCOL,NROW,NLAY,IG(LCIBOU),LKNODE,
@@ -1004,7 +1028,7 @@ clak
      2                            GX(LCHOLD),RX(LCHC),RX(LCSCE),
      3                            RX(LCSCV),IG(LCIBOU),NCOL,NROW,NLAY,
      4                            DELT,ISSFLG(KKPER),IBSDIM)
-clak
+CLAK
               IF (IUNIT(22).GT.0)
      *               CALL LAK3FM(LKNODE,MXLKND,IR(ICLAKE),
      1                      GZ(LCHNEW),GX(LCHCOF),GX(LCRHS),
@@ -1245,7 +1269,7 @@ C--RIVERS
      &                          GX(LCBUFF),IOUT,PERTIM,TOTIM,NRIVVL,
      &                          IRIVAL,IAUXSV)
 C--EVAPOTRANSPIRATION
-clak
+CLAK
             IF (IUNIT(5).GT.0) THEN
               IF(IUNIT(22).GT.0.AND.NEVTOP.EQ.3)
      1                CALL LAK3ST(0,NCOL,NROW,NLAY,IG(LCIBOU),LKNODE,
@@ -1269,7 +1293,7 @@ C--GENERAL-HEAD BOUNDARIES
      &                          GX(LCBUFF),IOUT,PERTIM,TOTIM,NGHBVL,
      &                          IGHBAL,IAUXSV)
 C--RECHARGE
-clak
+CLAK
             IF (IUNIT(8).GT.0) THEN
               IF(IUNIT(22).GT.0.AND.NRCHOP.EQ.3)
      1                CALL LAK3ST(0,NCOL,NROW,NLAY,IG(LCIBOU),LKNODE,
@@ -1306,6 +1330,7 @@ C--STREAM-AQUIFER RELATIONS (STR6 PACKAGE)
      &                      IOUT,NTRIB,NSSSTR6,RX(LCTRIB),IR(LCTBAR),
      &                      IR(LCIVAR_),IR(LCFGAR),ICALC,CONSTSTR6,
      &                      IPTFLG)
+C--INTERBED STORAGE
             IF (IUNIT(19).GT.0)
      1          CALL GWF1IBS6BD(IG(LCIBOU),GZ(LCHNEW),GX(LCHOLD),
      2                          RX(LCHC),RX(LCSCE),RX(LCSCV),RX(LCSUB),
@@ -1313,7 +1338,7 @@ C--STREAM-AQUIFER RELATIONS (STR6 PACKAGE)
      4                          DELT,VBVL,VBNM,MSUM,KSTP,KPER,IIBSCB,
      5                          ICBCFL,GX(LCBUFF),IOUT,ISSFLG(KKPER),
      6                          IBSDIM)
-clak
+C--LAKES
             IF (IUNIT(22).GT.0)
      &          CALL LAK3BD(LKNODE,MXLKND,NODES,IR(ICLAKE),GZ(LCHNEW),
      &                      IG(LCIBOU),NCOL,NROW,NLAY,NLAKES,DELT,NSS,
@@ -1332,7 +1357,11 @@ clak
      &                      THETA,RX(LKCNN),RX(LKCHN),RX(IAREN),
      &                      IUNIT(15),KCNT,IR(IMSUB),IR(IMSUB1),
      &                      IUNIT(46),NUMGAGE,IR(LSGAGE),RX(LSOVOL),
-     &                      RX(LSFLOB),IR(LSIGLK),ISSFLG(KPER),LAYHDT)
+     &                      RX(LSFLOB),ISSFLG(KPER),LAYHDT,
+     &                      IAUXSV,RX(LKVI),RX(ISTGLD2),RX(LKCUM1),
+     &                      RX(LKCUM2),RX(LKCUM3),
+     &                      RX(LKCUM4),RX(LKCUM5),RX(LKCUM6),
+     &                      RX(LKCUM7),RX(LKCUM8),RX(LKCUM9))
 C--EVAPOTRANSPIRATION WITH SEGMENTED RATE FUNCTION
             IF (IUNIT(39).GT.0)
      &          CALL GWF1ETS1BD(NETSOP,IR(LCIETS),RX(LCETSR),RX(LCETSX),
@@ -1434,7 +1463,7 @@ C-------INTERPOLATE, SAVE AND PRINT DATA FOR OBSERVATIONS.
      &                              MXBND,NBOUND,RX(LCBNDS),GZ(LCHNEW),
      &                              NCOL,NROW,NLAY,IOUT,IG(LCIBOU),NHT,
      &                              OBSNAM,X(LCH),X(LCTOFF),ITS,NQAR,
-     &                              NQCAR,NQTAR,NGHBVL,ND)
+     &                              NQCAR,NQTAR,NGHBVL,ND,X(LCWTQ),NDMH)
                 IF (IUNIT(18).NE.0)
      &              CALL OBS1STR6FM(NQ,IX(LCNQOB),IX(LCNQCL),
      &                              IX(LCIQOB),X(LCQCLS),IX(LCIBT),
@@ -1658,8 +1687,8 @@ C7C2B---MAKE ONE CUT AT AN APPROXIMATE SOLUTION.
      &                          IX(LCIUPP),IX(LCIEQP),X(LCD4B),MXUP,
      &                          MXLOW,MXEQ,MXBW,GX(LCCR),GX(LCCC),
      &                          GX(LCCV),GX(LCHCOF),GX(LCRHS),ACCL,
-     &                          KKITER,ITMX,1,ITMX,HCLOSES,IPRD4,ICNVG,
-     &                          NCOL,NROW,NLAY,IOUT,IX(LCLRCH),
+     &                          KKITER,ITMX,MXITER,NITER,HCLOSES,IPRD4,
+     &                          ICNVG,NCOL,NROW,NLAY,IOUT,IX(LCLRCH),
      &                          X(LCHDCG),0,KKSTP,KKPER,DELT,
      &                          NSTP(KKPER),ID4DIR,ID4DIM,3,IERR,IERRU)
                 IF (IUNIT(11).GT.0)
@@ -1867,9 +1896,10 @@ C-----END OF TIME STEP (KSTP) AND STRESS PERIOD (KPER) LOOPS
 C
         CALL PLL1BR()
         IF (ISEN.GT.0) THEN
-          CALL PLL1MX(X(LCX),NPE,ND)
+          CALL PLL1MX(X(LCX),X(LCXND),NPE,ND)
           IF (IFO.NE.1 .OR. LASTX.GT.0)
-     &        CALL SEN1BAS6PD(IOUT,NPE,NPER,NSTP,NTIMES,X(LCSEND))
+     &        CALL SEN1BAS6PD(IOUT,NPE,NPER,NSTP,NTIMES,X(LCSEND),
+     &                        X(LCSNDT))
         ENDIF
 C
 C       PRINT DATA FOR OBSERVED HEADS AND FLOWS.

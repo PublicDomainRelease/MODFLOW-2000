@@ -1,4 +1,4 @@
-C     Last change:  ERB   3 May 2001    4:50 pm
+C     Last change:  ERB  26 Jul 2002    1:30 pm
 CGR PARALLEL CODE FOR MODFLOW-2000
 
 C ----------------------------------------------------------------------
@@ -49,11 +49,11 @@ C     ASSIGN TO MPI PROCESS 0
       END
 
 C ----------------------------------------------------------------------
-      SUBROUTINE PLL1MX (X,IL,JL)
+      SUBROUTINE PLL1MX (X,XND,IL,JL)
 C
 C     MERGE X, A REPLICATED ARRAY USING A SUM ACTIVITY.
 C
-      DIMENSION X(IL,JL)
+      DIMENSION X(IL,JL), XND(JL)
       RETURN
       END
 

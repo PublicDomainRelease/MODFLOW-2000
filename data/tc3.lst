@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.8 05/01/2002
+                             VERSION 1.10 07/26/2002
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -31,76 +31,76 @@
 
 
  REWOUND tc3.lst
- FILE TYPE:LIST   UNIT  12
+ FILE TYPE:LIST   UNIT   12
 
  REWOUND ../data/tc3.obs
- FILE TYPE:OBS   UNIT  21
+ FILE TYPE:OBS   UNIT   21
 
  REWOUND ../data/tc3.hob
- FILE TYPE:HOB   UNIT  22
+ FILE TYPE:HOB   UNIT   22
 
  REWOUND ../data/tc3.dis
- FILE TYPE:DIS   UNIT  31
+ FILE TYPE:DIS   UNIT   31
 
  REWOUND ../data/tc3.mlt
- FILE TYPE:MULT   UNIT  32
+ FILE TYPE:MULT   UNIT   32
 
  REWOUND ../data/tc3.zon
- FILE TYPE:ZONE   UNIT  33
+ FILE TYPE:ZONE   UNIT   33
 
  REWOUND ../data/tc3.bas
- FILE TYPE:BAS6   UNIT  41
+ FILE TYPE:BAS6   UNIT   41
 
  REWOUND ../data/tc3.wel
- FILE TYPE:WEL   UNIT  43
+ FILE TYPE:WEL   UNIT   43
 
  REWOUND ../data/tc3.bnd
- FILE TYPE:DATA   UNIT  45
+ FILE TYPE:DATA   UNIT   45
 
  REWOUND ../data/tc3.oc
- FILE TYPE:OC   UNIT  46
+ FILE TYPE:OC   UNIT   46
 
  REWOUND ../data/tc3.shd
- FILE TYPE:DATA   UNIT  47
+ FILE TYPE:DATA   UNIT   47
 
  REWOUND ../data/tc3.riv
- FILE TYPE:RIV   UNIT  48
+ FILE TYPE:RIV   UNIT   48
 
  REWOUND ../data/tc3.chd
- FILE TYPE:CHD   UNIT  49
+ FILE TYPE:CHD   UNIT   49
 
  REWOUND ../data/tc3.rch
- FILE TYPE:RCH   UNIT  50
+ FILE TYPE:RCH   UNIT   50
  
  # CLASS PROBLEM - PARAMETER ESTIMATION -- test case tc3                         
  #                                                                               
  THE FREE FORMAT OPTION HAS BEEN SELECTED
     1 LAYERS        17 ROWS        16 COLUMNS
-   1 STRESS PERIOD(S) IN SIMULATION
+    1 STRESS PERIOD(S) IN SIMULATION
 
- BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 41
+ BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   41
           5 ELEMENTS IN IR ARRAY ARE USED BY BAS
 
- WEL6 -- WELL PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 43
+ WEL6 -- WELL PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   43
      4 Named Parameters        17 List entries
- MAXIMUM OF   17 ACTIVE WELLS AT ONE TIME
+ MAXIMUM OF     17 ACTIVE WELLS AT ONE TIME
         136 ELEMENTS IN RX ARRAY ARE USED BY WEL
 
- RIV6 -- RIVER PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 48
+ RIV6 -- RIVER PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   48
      1 Named Parameters        38 List entries
- MAXIMUM OF   38 ACTIVE RIVER REACHES AT ONE TIME
+ MAXIMUM OF     38 ACTIVE RIVER REACHES AT ONE TIME
         456 ELEMENTS IN RX ARRAY ARE USED BY RIV
 
- RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT 50
+ RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   50
      4 Named Parameters     
  OPTION 1 -- RECHARGE TO TOP LAYER
         272 ELEMENTS IN RX ARRAY ARE USED BY RCH
         272 ELEMENTS IN IR ARRAY ARE USED BY RCH
 
  CHD6 -- TIME-VARIANT SPECIFIED-HEAD PACKAGE, VERSION 6, 1/11/2000
- INPUT READ FROM UNIT 49
+ INPUT READ FROM UNIT   49
      1 Named Parameters        13 List entries
- MAXIMUM OF   13 TIME-VARIANT SPECIFIED-HEAD CELLS AT ONE TIME
+ MAXIMUM OF     13 TIME-VARIANT SPECIFIED-HEAD CELLS AT ONE TIME
         130 ELEMENTS IN RX ARRAY ARE USED BY CHD
 
         994  ELEMENTS OF RX ARRAY USED OUT OF        994
@@ -112,18 +112,18 @@
 
 
                      BOUNDARY ARRAY FOR LAYER   1
- READING ON UNIT  45 WITH FORMAT: (16I3)              
+ READING ON UNIT   45 WITH FORMAT: (16I3)              
 
  AQUIFER HEAD WILL BE SET TO  99999.     AT ALL NO-FLOW NODES (IBOUND=0).
 
 
 
                        INITIAL HEAD FOR LAYER   1
- READING ON UNIT  47 WITH FORMAT: (10F8.0)            
+ READING ON UNIT   47 WITH FORMAT: (10F8.0)            
 
  OUTPUT CONTROL IS SPECIFIED EVERY TIME STEP
  HEAD PRINT FORMAT CODE IS   2    DRAWDOWN PRINT FORMAT CODE IS   2
- HEADS WILL BE SAVED ON UNIT   0    DRAWDOWNS WILL BE SAVED ON UNIT   0
+ HEADS WILL BE SAVED ON UNIT    0    DRAWDOWNS WILL BE SAVED ON UNIT    0
 
     HYD. COND. ALONG ROWS is defined by the following parameters:
  HK_1      
@@ -171,8 +171,8 @@
   17    0.00000       0.00000       0.00000       0.00000       0.00000       13.3689       13.3689       13.3689       13.3689    
         13.3689       13.3689       13.3689       13.3689       13.3689       13.3689       13.3689    
 1
-                            STRESS PERIOD NO.   1, LENGTH =   86400.00    
-                            ----------------------------------------------
+                            STRESS PERIOD NO.    1, LENGTH =   86400.00    
+                            -----------------------------------------------
 
                               NUMBER OF TIME STEPS =     1
 
@@ -213,7 +213,7 @@
  --------------------------------------------
      17      1      9     12     -0.5104E+05
 
-    17 WELLS
+     17 WELLS
 
  Parameter:  RIVERS
  REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
@@ -257,7 +257,7 @@
      37      1     11     15       4.500          0.1610E+05      -4.500    
      38      1     11     16       4.500           804.9          -4.500    
 
-    38 RIVER REACHES
+     38 RIVER REACHES
 
 
 
@@ -326,7 +326,7 @@
      13      1     13     16       5.232           5.232    
 
 
-    13 TIME-VARIANT SPECIFIED-HEAD CELLS
+     13 TIME-VARIANT SPECIFIED-HEAD CELLS
  
  SOLVING FOR HEAD 
 
@@ -339,8 +339,8 @@
  ----------------------------------
      1         0       1       0
 1
-              HEAD IN LAYER  1 AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------
+              HEAD IN LAYER   1 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
 
               1             2             3             4             5             6             7             8             9
              10            11            12            13            14            15            16
@@ -380,8 +380,8 @@
   17    99999.0       99999.0       99999.0       99999.0       99999.0       63.7154       65.9217       68.2943       69.1162    
         71.6377       75.4347       78.3056       80.2073       81.2392       81.4958       81.2481    
 1
-  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD  1
-  -----------------------------------------------------------------------------
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD   1
+  ------------------------------------------------------------------------------
 
      CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
      ------------------                 ------------------------
@@ -415,7 +415,7 @@
 
 
 
-          TIME SUMMARY AT END OF TIME STEP  1 IN STRESS PERIOD  1
+          TIME SUMMARY AT END OF TIME STEP   1 IN STRESS PERIOD    1
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH 7.46496E+09 1.24416E+08 2.07360E+06  86400.      236.55    
