@@ -1,4 +1,3 @@
-C     Last change:  ERB  12 Sep 2002    4:33 pm
 C   September, 2000 -- updated to work with MODFLOW-2000
 C   May, 2000 -- fixed error that caused incorrect critical head values
 C   to be written in an external file when the option to write an
@@ -10,8 +9,14 @@ C   IBQ>0, some of the subroutines performed subsidence calculations when
 C   IBQ<0.  Note that this was a problem only if negative IBQ values
 C   were specified.  That is, the code has always worked correctly for
 C   IBQ=0 and IBQ>0.
+C   September, 2003 -- added the following:
+C    1. Print a warning message that the IBS1 Package has been supseseded
+C       by the SUB Package.
+C    2. If the SUB Package and the IBS package are used simultaneously,
+C       stop the simulation.
       SUBROUTINE GWF1IBS6ALP(ISUM,LCHC,LCSCE,LCSCV,LCSUB,
-     1                  NCOL,NROW,NLAY,IIBSCB,IIBSOC,IN,IOUT,IBSDIM)
+     1                  NCOL,NROW,NLAY,IIBSCB,IIBSOC,IN,IOUT,IBSDIM,
+     2                  INSUB)
 C
 C-----VERSION 07JUN1996 GWF1IBS6ALP
 C-----VERSION 01AUG1996 -- modified to allow 200 layers instead of 80
@@ -29,6 +34,22 @@ C1------IDENTIFY PACKAGE.
       WRITE(IOUT,1)IN
     1 FORMAT(1H0,'IBS -- INTERBED STORAGE PACKAGE, VERSION 6,',
      1     ' 09/15/2000',' INPUT READ FROM UNIT',I3)
+C1a------PRINT WARNING MESSAGE THAT PACKAGE HAS BEEN SUPERSEDED.
+      WRITE(IOUT,103)
+  103 FORMAT(1H0,'***NOTICE*** AS OF SEPTEMBER 2003, THE INTERBED ',
+     1     'STORAGE PACKAGE HAS ',/,
+     2     'BEEN SUPERSEDED BY THE SUBSIDENCE AND AQUIFER-SYSTEM ',
+     3     'COMPACTION PACKAGE.',/,' SUPPORT FOR IBS MAY BE ',
+     4     'DISCONTINUED IN THE FUTURE.')
+C1b------PRINT A MESSAGE AND STOP THE SIMULATION OF BOTH IBS AND SUB
+C1b------ ARE USED.
+      IF(INSUB.GT.0) THEN
+       WRITE(IOUT,104)
+  104  FORMAT(1H0,'***ERROR*** THE IBS AND SUB PACKAGE SHOULD ',
+     1     'NOT BOTH BE USED IN ',/,
+     2     'THE SAME SIMULATION. ********STOPPING******** ')
+       CALL USTOP(' ')
+      ENDIF
 C
 C4------READ FLAG FOR STORING CELL-BY-CELL STORAGE CHANGES AND
 C4------FLAG FOR PRINTING AND STORING COMPACTION, SUBSIDENCE, AND

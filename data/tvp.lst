@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.11 04/10/2003
+                             VERSION 1.12 09/08/2003
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -530,29 +530,29 @@
 
    INSTANCE:  WELL-a    
 
- WELL NO.  LAYER   ROW   COL   STRESS FACTOR   
- ----------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS FACTOR         
+ ----------------------------------------------------
       1      1      9     10       1.000    
       2      2      9     10       1.000    
 
    INSTANCE:  WELL-b    
 
- WELL NO.  LAYER   ROW   COL   STRESS FACTOR   
- ----------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS FACTOR         
+ ----------------------------------------------------
       1      1      9     10       1.100    
       2      2      9     10       1.100    
 
    INSTANCE:  WELL-c    
 
- WELL NO.  LAYER   ROW   COL   STRESS FACTOR   
- ----------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS FACTOR         
+ ----------------------------------------------------
       1      1      9     10       1.200    
       2      2      9     10       1.200    
 
    INSTANCE:  WELL-d    
 
- WELL NO.  LAYER   ROW   COL   STRESS FACTOR   
- ----------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS FACTOR         
+ ----------------------------------------------------
       1      1      9     10       1.300    
       2      2      9     10       1.300    
 
@@ -566,8 +566,8 @@
 
    INSTANCE:  Drn-a     
 
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
- ------------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR         
+ ------------------------------------------------------------------
       1      1     10      1       109.0           1.200    
       2      1     11      1       110.0           1.200    
       3      1     12      1       111.0           1.200    
@@ -580,8 +580,8 @@
 
    INSTANCE:  Drn-b     
 
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
- ------------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR         
+ ------------------------------------------------------------------
       1      1     10      1       111.0           1.400    
       2      1     11      1       112.0           1.400    
       3      1     12      1       113.0           1.400    
@@ -594,8 +594,8 @@
 
    INSTANCE:  Drn-c     
 
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
- ------------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR         
+ ------------------------------------------------------------------
       1      1     10      1       110.0           1.800    
       2      1     11      1       111.0           1.800    
       3      1     12      1       112.0           1.800    
@@ -616,8 +616,8 @@
 
    INSTANCE:  Orig-rivs 
 
- REACH NO.  LAYER   ROW   COL     STAGE    STRESS FACTOR     BOTTOM EL.   
- -------------------------------------------------------------------------
+ REACH NO.  LAYER   ROW   COL     STAGE    STRESS FACTOR     BOTTOM EL.         
+ -------------------------------------------------------------------------------
       1      1      1      1       100.0           1000.           90.00    
       2      1      2      1       101.0           1000.           90.00    
       3      1      3      1       102.0           1000.           90.00    
@@ -630,8 +630,8 @@
 
    INSTANCE:  Rivs-a    
 
- REACH NO.  LAYER   ROW   COL     STAGE    STRESS FACTOR     BOTTOM EL.   
- -------------------------------------------------------------------------
+ REACH NO.  LAYER   ROW   COL     STAGE    STRESS FACTOR     BOTTOM EL.         
+ -------------------------------------------------------------------------------
       1      1      1      1       102.0           1010.           90.00    
       2      1      2      1       103.0           1010.           90.00    
       3      1      3      1       104.0           1010.           90.00    
@@ -644,8 +644,8 @@
 
    INSTANCE:  Rivs-b    
 
- REACH NO.  LAYER   ROW   COL     STAGE    STRESS FACTOR     BOTTOM EL.   
- -------------------------------------------------------------------------
+ REACH NO.  LAYER   ROW   COL     STAGE    STRESS FACTOR     BOTTOM EL.         
+ -------------------------------------------------------------------------------
       1      1      1      1       101.0           1020.           90.00    
       2      1      2      1       102.0           1020.           90.00    
       3      1      3      1       103.0           1020.           90.00    
@@ -681,8 +681,8 @@
 
    INSTANCE:  GHB-SP1   
 
- BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR   
- ----------------------------------------------------------
+ BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR         
+ ----------------------------------------------------------------
       1      1      1     18       350.0          0.1000E-06
       2      1      2     18       350.0          0.1000E-06
       3      1      3     18       350.0          0.1000E-06
@@ -695,8 +695,8 @@
 
    INSTANCE:  GHB-SP2   
 
- BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR   
- ----------------------------------------------------------
+ BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR         
+ ----------------------------------------------------------------
       1      1      1     18       350.0          0.2000E-06
       2      1      2     18       350.0          0.2000E-06
       3      1      3     18       350.0          0.2000E-06
@@ -709,8 +709,8 @@
 
    INSTANCE:  GHB-SP3   
 
- BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR   
- ----------------------------------------------------------
+ BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR         
+ ----------------------------------------------------------------
       1      1      1     18       350.0          0.4000E-06
       2      1      2     18       350.0          0.4000E-06
       3      1      3     18       350.0          0.4000E-06
@@ -723,8 +723,8 @@
 
    INSTANCE:  GHB-SP4   
 
- BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR   
- ----------------------------------------------------------
+ BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR         
+ ----------------------------------------------------------------
       1      1      1     18       350.0          0.8000E-06
       2      1      2     18       350.0          0.8000E-06
       3      1      3     18       350.0          0.8000E-06
@@ -737,8 +737,8 @@
 
    INSTANCE:  GHB-SP5   
 
- BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR   
- ----------------------------------------------------------
+ BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR         
+ ----------------------------------------------------------------
       1      1      1     18       350.0          0.1600E-05
       2      1      2     18       350.0          0.1600E-05
       3      1      3     18       350.0          0.1600E-05
@@ -855,29 +855,29 @@
 
    INSTANCE:  CHD-a     
 
- CHD NO.   LAYER   ROW   COL   START FACTOR      END FACTOR   
- -------------------------------------------------------------
+ CHD NO.   LAYER   ROW   COL   START FACTOR      END FACTOR         
+ -------------------------------------------------------------------
       1      1     12     18       164.0           161.0    
       2      1     13     18       164.0           161.0    
 
    INSTANCE:  CHD-b     
 
- CHD NO.   LAYER   ROW   COL   START FACTOR      END FACTOR   
- -------------------------------------------------------------
+ CHD NO.   LAYER   ROW   COL   START FACTOR      END FACTOR         
+ -------------------------------------------------------------------
       1      1     12     18       161.0           159.0    
       2      1     13     18       161.0           159.0    
 
    INSTANCE:  CHD-c     
 
- CHD NO.   LAYER   ROW   COL   START FACTOR      END FACTOR   
- -------------------------------------------------------------
+ CHD NO.   LAYER   ROW   COL   START FACTOR      END FACTOR         
+ -------------------------------------------------------------------
       1      1     12     18       159.0           157.0    
       2      1     13     18       159.0           157.0    
 
    INSTANCE:  CHD-d     
 
- CHD NO.   LAYER   ROW   COL   START FACTOR      END FACTOR   
- -------------------------------------------------------------
+ CHD NO.   LAYER   ROW   COL   START FACTOR      END FACTOR         
+ -------------------------------------------------------------------
       1      1     12     18       157.0           155.0    
       2      1     13     18       157.0           155.0    
 
@@ -906,8 +906,8 @@
 
    INSTANCE:  DRT-SP1   
 
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
- ------------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR         
+ ------------------------------------------------------------------
       1      2     16     16       140.0           101.0    
 
            ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
@@ -916,8 +916,8 @@
 
    INSTANCE:  DRT-SP2   
 
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
- ------------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR         
+ ------------------------------------------------------------------
       1      2     16     16       140.0           102.0    
 
            ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
@@ -926,8 +926,8 @@
 
    INSTANCE:  DRT-SP3   
 
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
- ------------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR         
+ ------------------------------------------------------------------
       1      2     16     16       140.0           103.0    
 
            ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
@@ -936,8 +936,8 @@
 
    INSTANCE:  DRT-SP4   
 
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
- ------------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR         
+ ------------------------------------------------------------------
       1      2     16     16       140.0           104.0    
 
            ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
@@ -946,8 +946,8 @@
 
    INSTANCE:  DRT-SP5   
 
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
- ------------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR         
+ ------------------------------------------------------------------
       1      2     16     16       140.0           105.0    
 
            ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
@@ -970,8 +970,8 @@
 
  Parameter:  DRN-K
    Instance:  Drn-a     
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE   
- ----------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE         
+ ----------------------------------------------------------------
       1      1     10      1       109.0           1.200    
       2      1     11      1       110.0           1.200    
       3      1     12      1       111.0           1.200    
@@ -986,8 +986,8 @@
 
  Parameter:  RIVERS
    Instance:  Orig-rivs 
- REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
- -------------------------------------------------------------------------
+ REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.         
+ -------------------------------------------------------------------------------
       1      1      1      1       100.0           1.200           90.00    
       2      1      2      1       101.0           1.200           90.00    
       3      1      3      1       102.0           1.200           90.00    
@@ -1077,8 +1077,8 @@
 
          EXTINCTION DEPTH =   12.0000    
 
- BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE   
- ----------------------------------------------------------
+ BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE         
+ ----------------------------------------------------------------
       1      2      1     18       350.0          0.1000E-06
       2      2      2     18       350.0          0.1000E-06
       3      2      3     18       350.0          0.1000E-06
@@ -1091,8 +1091,8 @@
 
  Parameter:  GHB-Cond
    Instance:  GHB-sp1   
- BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE   
- ----------------------------------------------------------
+ BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE         
+ ----------------------------------------------------------------
      10      1      1     18       350.0          0.1000E-06
      11      1      2     18       350.0          0.1000E-06
      12      1      3     18       350.0          0.1000E-06
@@ -1290,8 +1290,8 @@
 
  Parameter:  DRT-Cond
    Instance:  Drt-SP1   
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE     
- ------------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE           
+ ------------------------------------------------------------------
       1      2     16     16       140.0          0.1010E-02
 
            ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
@@ -1479,8 +1479,8 @@
 
  Parameter:  WELLS_TR
    Instance:  Well-a    
- WELL NO.  LAYER   ROW   COL   STRESS RATE   
- --------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS RATE         
+ --------------------------------------------------
       1      1      9     10      -1.100    
       2      2      9     10      -1.100    
 
@@ -1488,8 +1488,8 @@
 
  Parameter:  DRN-K
    Instance:  Drn-b     
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE   
- ----------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE         
+ ----------------------------------------------------------------
       1      1     10      1       111.0           1.400    
       2      1     11      1       112.0           1.400    
       3      1     12      1       113.0           1.400    
@@ -1504,8 +1504,8 @@
 
  Parameter:  RIVERS
    Instance:  Rivs-a    
- REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
- -------------------------------------------------------------------------
+ REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.         
+ -------------------------------------------------------------------------------
       1      1      1      1       102.0           1.212           90.00    
       2      1      2      1       103.0           1.212           90.00    
       3      1      3      1       104.0           1.212           90.00    
@@ -1528,8 +1528,8 @@
 
  Parameter:  GHB-Cond
    Instance:  GHB-sp2   
- BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE   
- ----------------------------------------------------------
+ BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE         
+ ----------------------------------------------------------------
      10      1      1     18       350.0          0.2000E-06
      11      1      2     18       350.0          0.2000E-06
      12      1      3     18       350.0          0.2000E-06
@@ -1641,8 +1641,8 @@
 
  Parameter:  CHD-mine
    Instance:  CHD-a     
- CHD NO.   LAYER   ROW   COL    START HEAD        END HEAD   
- ------------------------------------------------------------
+ CHD NO.   LAYER   ROW   COL    START HEAD        END HEAD         
+ ------------------------------------------------------------------
       1      1     12     18       164.0           161.0    
       2      1     13     18       164.0           161.0    
 
@@ -1659,8 +1659,8 @@
 
  Parameter:  DRT-Cond
    Instance:  Drt-SP2   
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE     
- ------------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE           
+ ------------------------------------------------------------------
       1      2     16     16       140.0          0.1020E-02
 
            ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
@@ -1864,8 +1864,8 @@
 
  Parameter:  WELLS_TR
    Instance:  Well-b    
- WELL NO.  LAYER   ROW   COL   STRESS RATE   
- --------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS RATE         
+ --------------------------------------------------
       1      1      9     10      -1.210    
       2      2      9     10      -1.210    
 
@@ -1873,8 +1873,8 @@
 
  Parameter:  DRN-K
    Instance:  Drn-b     
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE   
- ----------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE         
+ ----------------------------------------------------------------
       1      1     10      1       111.0           1.400    
       2      1     11      1       112.0           1.400    
       3      1     12      1       113.0           1.400    
@@ -1889,8 +1889,8 @@
 
  Parameter:  RIVERS
    Instance:  Rivs-a    
- REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
- -------------------------------------------------------------------------
+ REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.         
+ -------------------------------------------------------------------------------
       1      1      1      1       102.0           1.212           90.00    
       2      1      2      1       103.0           1.212           90.00    
       3      1      3      1       104.0           1.212           90.00    
@@ -1960,8 +1960,8 @@
 
  Parameter:  GHB-Cond
    Instance:  GHB-sp3   
- BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE   
- ----------------------------------------------------------
+ BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE         
+ ----------------------------------------------------------------
      10      1      1     18       350.0          0.4000E-06
      11      1      2     18       350.0          0.4000E-06
      12      1      3     18       350.0          0.4000E-06
@@ -2073,8 +2073,8 @@
 
  Parameter:  CHD-mine
    Instance:  CHD-b     
- CHD NO.   LAYER   ROW   COL    START HEAD        END HEAD   
- ------------------------------------------------------------
+ CHD NO.   LAYER   ROW   COL    START HEAD        END HEAD         
+ ------------------------------------------------------------------
       1      1     12     18       161.0           159.0    
       2      1     13     18       161.0           159.0    
 
@@ -2091,8 +2091,8 @@
 
  Parameter:  DRT-Cond
    Instance:  Drt-SP3   
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE     
- ------------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE           
+ ------------------------------------------------------------------
       1      2     16     16       140.0          0.1030E-02
 
            ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
@@ -2208,8 +2208,8 @@
 
  Parameter:  WELLS_TR
    Instance:  Well-c    
- WELL NO.  LAYER   ROW   COL   STRESS RATE   
- --------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS RATE         
+ --------------------------------------------------
       1      1      9     10      -1.320    
       2      2      9     10      -1.320    
 
@@ -2217,8 +2217,8 @@
 
  Parameter:  DRN-K
    Instance:  Drn-b     
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE   
- ----------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE         
+ ----------------------------------------------------------------
       1      1     10      1       111.0           1.400    
       2      1     11      1       112.0           1.400    
       3      1     12      1       113.0           1.400    
@@ -2233,8 +2233,8 @@
 
  Parameter:  RIVERS
    Instance:  Rivs-b    
- REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
- -------------------------------------------------------------------------
+ REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.         
+ -------------------------------------------------------------------------------
       1      1      1      1       101.0           1.224           90.00    
       2      1      2      1       102.0           1.224           90.00    
       3      1      3      1       103.0           1.224           90.00    
@@ -2257,8 +2257,8 @@
 
  Parameter:  GHB-Cond
    Instance:  GHB-sp4   
- BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE   
- ----------------------------------------------------------
+ BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE         
+ ----------------------------------------------------------------
      10      1      1     18       350.0          0.8000E-06
      11      1      2     18       350.0          0.8000E-06
      12      1      3     18       350.0          0.8000E-06
@@ -2370,8 +2370,8 @@
 
  Parameter:  CHD-mine
    Instance:  CHD-c     
- CHD NO.   LAYER   ROW   COL    START HEAD        END HEAD   
- ------------------------------------------------------------
+ CHD NO.   LAYER   ROW   COL    START HEAD        END HEAD         
+ ------------------------------------------------------------------
       1      1     12     18       159.0           157.0    
       2      1     13     18       159.0           157.0    
 
@@ -2435,8 +2435,8 @@
 
  Parameter:  DRT-Cond
    Instance:  Drt-SP4   
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE     
- ------------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE           
+ ------------------------------------------------------------------
       1      2     16     16       140.0          0.1040E-02
 
            ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
@@ -2552,8 +2552,8 @@
 
  Parameter:  WELLS_TR
    Instance:  Well-d    
- WELL NO.  LAYER   ROW   COL   STRESS RATE   
- --------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS RATE         
+ --------------------------------------------------
       1      1      9     10      -1.430    
       2      2      9     10      -1.430    
 
@@ -2561,8 +2561,8 @@
 
  Parameter:  DRN-K
    Instance:  Drn-c     
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE   
- ----------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE         
+ ----------------------------------------------------------------
       1      1     10      1       110.0           1.800    
       2      1     11      1       111.0           1.800    
       3      1     12      1       112.0           1.800    
@@ -2577,8 +2577,8 @@
 
  Parameter:  RIVERS
    Instance:  Rivs-b    
- REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
- -------------------------------------------------------------------------
+ REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.         
+ -------------------------------------------------------------------------------
       1      1      1      1       101.0           1.224           90.00    
       2      1      2      1       102.0           1.224           90.00    
       3      1      3      1       103.0           1.224           90.00    
@@ -2601,8 +2601,8 @@
 
  Parameter:  GHB-Cond
    Instance:  GHB-sp5   
- BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE   
- ----------------------------------------------------------
+ BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE         
+ ----------------------------------------------------------------
      10      1      1     18       350.0          0.1600E-05
      11      1      2     18       350.0          0.1600E-05
      12      1      3     18       350.0          0.1600E-05
@@ -2646,8 +2646,8 @@
 
  Parameter:  CHD-mine
    Instance:  CHD-d     
- CHD NO.   LAYER   ROW   COL    START HEAD        END HEAD   
- ------------------------------------------------------------
+ CHD NO.   LAYER   ROW   COL    START HEAD        END HEAD         
+ ------------------------------------------------------------------
       1      1     12     18       157.0           155.0    
       2      1     13     18       157.0           155.0    
 
@@ -2664,8 +2664,8 @@
 
  Parameter:  DRT-Cond
    Instance:  Drt-SP5   
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE     
- ------------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE           
+ ------------------------------------------------------------------
       1      2     16     16       140.0          0.1050E-02
 
            ----DRAIN CELL----  --RECIPIENT CELL--   RETURN

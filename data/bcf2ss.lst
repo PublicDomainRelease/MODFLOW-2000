@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.11 04/10/2003
+                             VERSION 1.12 09/08/2003
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -219,8 +219,8 @@
 
       0 WELLS
 
- REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
- -------------------------------------------------------------------------
+ REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.         
+ -------------------------------------------------------------------------------
       1      2      1     15       0.000          0.1000E+05      -5.000    
       2      2      2     15       0.000          0.1000E+05      -5.000    
       3      2      3     15       0.000          0.1000E+05      -5.000    
@@ -363,8 +363,8 @@
 
                             INITIAL TIME STEP SIZE =   1.000000    
 
- WELL NO.  LAYER   ROW   COL   STRESS RATE   
- --------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS RATE         
+ --------------------------------------------------
       1      2      3      4     -0.3500E+05
       2      2      8      4     -0.3500E+05
 

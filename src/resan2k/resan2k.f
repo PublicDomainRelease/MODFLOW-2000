@@ -10,7 +10,7 @@ C***       f77 resanp.f -o resanp
 C       Modified to work with MODFLOW-2000 by E.R. Banta, 8/12/1999
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       CHARACTER*40 VERSION
-      PARAMETER (VERSION='1.3 04/15/2002')
+      PARAMETER (VERSION='1.4 07/08/2003')
       CHARACTER*4 BLANK
       ALLOCATABLE :: X(:,:), X0(:,:), COV(:,:), W(:), R(:,:), D(:),
      &               G(:), F(:), BUFF2(:), WQ(:,:), WP(:), NIPR(:),
@@ -101,9 +101,9 @@ C!      EQUIVALENCE (X(1,1),D(1)),(W(1),F(1),WP(1)),(COV(1,1),G(1))
  1250 FORMAT (G15.7,1X,I5,2X,A)
  1260 FORMAT (/,' COOK''S D STATISTIC'//
      &  ' OBSERVATION',2X,'PLOT-SYMBOL',2X,
-     &  'STUDENT_RESIDUAL    VAR(E)     VAR(Y)',6X,
+     &  'STUDENT_RESIDUAL  VAR(Y)/VAR(E)',3X,
      &  'COOK''S D')
- 1270 FORMAT (1X,A,4X,I4,10X,G10.4,2X,3(2X,G10.4))
+ 1270 FORMAT (1X,A,4X,I4,10X,G10.4,1X,2(4X,G10.4))
  1280 FORMAT (G15.8,2X,A,2X,I9)
  1290 FORMAT (//,' ANALYSIS OF COOKS D',/,
      &  ' FOR PLOTTING, COOKS D STATISTICS ARE LISTED IN THE _RC OUTPUT'
@@ -367,14 +367,13 @@ C
 C *** COMPUTE COOK'S D USING EQN 3.12.2 FROM DRAPER & SMITH, 1981
 C *** NOTE: R MATRIX AT THIS POINT IN PROGRAM IS (I-R)*VAR
       WRITE(IOUT,1260)
-      STD = SQRT(VAR)
       DO 310 I=1,NTOT
         RR = 1.D0-(R(I,I)/VAR)
         IF (RR.GE.0.0D0 .AND. RR.LT.1.0D0) THEN
-          CCD   = E(I)/( SQRT(STD*(1.D0-RR)) )
+          CCD = E(I)/( SQRT(VAR*(1.D0-RR)) )
           CD(I) = CCD*CCD*RR / ( (1.D0-RR)*NVAR )
           WRITE(IOUT,1270)DID(I),ISYM(I),
-     &                   CCD,STD*(SQRT(1.D0-RR)),STD*(SQRT(RR)),CD(I)
+     &                   CCD,(RR)/(1.D0-RR),CD(I)
         ELSE
           CD(I) = 0.0D0  ! To ensure that all CD are defined
           WRITE(IOUT,1390)DID(I),ISYM(I),RR
@@ -864,17 +863,17 @@ C        SPECIFICATIONS:
       INTEGER I, IP
       DIMENSION PNORM(2,54)
 C     ------------------------------------------------------------------
-      DATA (PNORM(1,I),I=1,54)/0.0, .15, .20, .25, .30, .35, .40, .45, 
-     &      .50, .55, .60, .65, .70, .75, .80, .85, .90, .95, 1.00, 
-     &      1.05, 1.10, 1.15, 1.20, 1.25, 1.30, 1.35, 1.40, 1.45, 1.50, 
+      DATA (PNORM(1,I),I=1,54)/0.0, .15, .20, .25, .30, .35, .40, .45,
+     &      .50, .55, .60, .65, .70, .75, .80, .85, .90, .95, 1.00,
+     &      1.05, 1.10, 1.15, 1.20, 1.25, 1.30, 1.35, 1.40, 1.45, 1.50,
      &      1.55, 1.60, 1.65, 1.70, 1.75, 1.80, 1.85, 1.90, 1.95, 2.0,
      &      2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.0, 3.5, 4.0,
      &      4.5, 5.0, 5.5/
-      DATA (PNORM(2,I),I=1,54)/.5, .5596, .5793, .5987, .6179, .6368, 
-     &      .6554, .6736, .6915, .7088, .7257, .7422, .7580, .7734, 
-     &      .7881, .8023, .8159, .8289, .8413, .8531, .8643, .8749, 
-     &      .8849, .8944, .90320, .91149, .91924, .92647, .93319, 
-     &      .93943, .94520, .95053, .95543, .95994, .96407, .96784, 
+      DATA (PNORM(2,I),I=1,54)/.5, .5596, .5793, .5987, .6179, .6368,
+     &      .6554, .6736, .6915, .7088, .7257, .7422, .7580, .7734,
+     &      .7881, .8023, .8159, .8289, .8413, .8531, .8643, .8749,
+     &      .8849, .8944, .90320, .91149, .91924, .92647, .93319,
+     &      .93943, .94520, .95053, .95543, .95994, .96407, .96784,
      &      .97128, .97441, .9772, .9821, .98610, .9893, .9918, .9938,
      &      .9953, .9965, .9974, .9981, .9987, .99976737,  .99996833,
      &      .99999660, .99999971, 1.0/
@@ -1313,7 +1312,7 @@ C4------LOOP THROUGH THE ROWS PRINTING EACH ONE IN ITS ENTIRETY.
       DO 1000 I=1,NPE
 C
 C------------ FORMAT 11G10.3
-        IF (IP.EQ.1) THEN 
+        IF (IP.EQ.1) THEN
           WRITE(IOUT,11) PARNAM(I),(BUF(J,I),J=1,NPE)
    11     FORMAT(1X,A,1X,1PG10.3,10(1X,G10.3):/(11X,11(1X,G10.3)))
 C
@@ -1338,7 +1337,7 @@ C------------ FORMAT 8G14.7
    51     FORMAT(1X,A,1X,1PG14.7,7(1X,G14.7):/(11X,8(1X,G14.7)))
 C
 C------------ FORMAT 6G10.3
-        ELSEIF (IP.EQ.6) THEN 
+        ELSEIF (IP.EQ.6) THEN
           WRITE(IOUT,61) PARNAM(I),(BUF(J,I),J=1,NPE)
    61     FORMAT(1X,A,1X,1PG10.3,5(1X,G10.3):/(11X,6(1X,G10.3)))
 C
@@ -1482,7 +1481,7 @@ C4------LOOP THROUGH THE ROWS PRINTING EACH ONE IN ITS ENTIRETY.
       DO 1000 I=1,NTOT
 C
 C------------ FORMAT 11G10.3
-        IF (IP.EQ.1) THEN 
+        IF (IP.EQ.1) THEN
           WRITE(IOUT,11) DID(I),(BUF(J,I),J=1,NTOT)
    11     FORMAT(1X,A,1X,1PG10.3,10(1X,G10.3):/(13X,11(1X,G10.3)))
 C
@@ -1507,7 +1506,7 @@ C------------ FORMAT 8G14.7
    51     FORMAT(1X,A,1X,1PG14.7,7(1X,G14.7):/(13X,8(1X,G14.7)))
 C
 C------------ FORMAT 6G10.3
-        ELSEIF (IP.EQ.6) THEN 
+        ELSEIF (IP.EQ.6) THEN
           WRITE(IOUT,61) DID(I),(BUF(J,I),J=1,NTOT)
    61     FORMAT(1X,A,1X,1PG10.3,5(1X,G10.3):/(13X,6(1X,G10.3)))
 C

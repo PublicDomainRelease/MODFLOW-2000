@@ -14,11 +14,11 @@ C     + + + + + + + + + + + COMMONS  + + + + + + + + + + + + + + + + + +
       INCLUDE 'ground.com'
 C
 C     + + + + + + + + + + + COMMON DEFINTIONS (startdaf.com) + + + + + +
-C     IDBG,NBRCH NXSEC(N) VIN(I,N) 
+C     IDBG,NBRCH NXSEC(N) VIN(I,N)
 C
 C     +  + + + + + + + + + + COMMON DEFINTIONS  (ground.com) + + + + + +
-C     AQGW(I,N,J) BC(I,N,J) BEL(I,N) BTH(I,N) CND(I,N) NCL(I,N) NLY(I,N) 
-C     NRW(I,N) VGW(I,N,J) 
+C     AQGW(I,N,J) BC(I,N,J) BEL(I,N) BTH(I,N) CND(I,N) NCL(I,N) NLY(I,N)
+C     NRW(I,N) VGW(I,N,J)
 C
 C     + + + + + + + + + + + + LOCAL VARIABLES  + + + + + + + + + + + + +
       INTEGER    I,IDAFBK,IDAFCB,IERR,II,INX,J,LUFLW,LUIN,LUGW,LUOT,N,NN
@@ -52,12 +52,12 @@ C
 C     ***************** zero arrays and preliminaries *******************
       IF(LUFLW.LE.0) THEN
         WRITE(LUOT,2040)
-        STOP
+        CALL USTOP(' ')
       END IF
       INQUIRE(UNIT=LUFLW,OPENED=OPTEST)
       IF(.NOT.OPTEST) THEN
          WRITE(LUOT,2040)
-         STOP
+         CALL USTOP(' ')
       END IF
       IERR=0
       DO 40 N=1,NOBR
@@ -81,7 +81,7 @@ C
 C     ******************** read ground water input *********************
       IF(LUGW.LE.0) THEN
          WRITE(LUOT,2030)
-         STOP
+         CALL USTOP(' ')
       END IF
       READ(LUGW,1000) TITLE
       WRITE(LUOT,2000) TITLE
@@ -120,7 +120,7 @@ C     ************* read data for each branch and subreach *************
   999 CLOSE(LUGW)
       IF(IERR.GT.20)THEN
         WRITE(LUOT,2020)
-        STOP
+        CALL USTOP(' ')
       END IF
       RETURN
       END
@@ -128,8 +128,8 @@ C
       SUBROUTINE GWF1DAF1AD(DELT,IERR,ITMUNI,LUIN,LUOT)
 C
 C     + + + + + + + + + + + + + PURPOSE  + + + + + + + + + + + + + + + +
-C     Compute NHRR, set VIN for repeated cycles, and 
-C     read boundary conditions for NHRR time steps 
+C     Compute NHRR, set VIN for repeated cycles, and
+C     read boundary conditions for NHRR time steps
 C
 C     + + +  + + + + + + + + + + + PARAMETERS  + + + + + + + + + + + + +
       INCLUDE 'params.inc'
@@ -208,7 +208,7 @@ C    ***  Compute number of daflow time steps per MODFLOW time step ****
       IF(IERR.GT.20)THEN
         I=IFIX(TIME/DT+0.501)-JTS+1
         WRITE(LUOT,2000)I
-        STOP
+        CALL USTOP(' ')
       END IF
       RETURN
       END
@@ -228,10 +228,10 @@ C     + + + + + + + + + + + + + COMMONS  + + + + + + + + + + + + + + + +
       INCLUDE 'ground.com'
 C
 C     + + + + + + + + COMMON DEFINTIONS  (startdaf.com)  + + + + + + + +
-C     AQ(I,N) NBRCH NHRR NXSEC(N) TIME TRB(I,N) V(I,N) VIN(I,N) 
+C     AQ(I,N) NBRCH NHRR NXSEC(N) TIME TRB(I,N) V(I,N) VIN(I,N)
 C
 C     + + + + + + + + COMMON DEFINTIONS  (ground.com)  + + + + + + + + +
-C     AQGW(I,N,J) BC(I,N,J) CCSTR(I,N) NCL(I,N) NLY(I,N) NRW(I,N) 
+C     AQGW(I,N,J) BC(I,N,J) CCSTR(I,N) NCL(I,N) NLY(I,N) NRW(I,N)
 C     RHSSTR(I,N) SEP(I,N) SSEP(I,N) VGW(I,N)
 C
 C     + + + + + + + + + + LOCAL VARIABLES  + + + + + + + + + + + + + + +
@@ -316,7 +316,7 @@ C       ************************* Route branches ***********************
   200   CONTINUE
   300 CONTINUE
 C     ************************ End of time loop ************************
-C    
+C
       IF(IERRR.EQ.1)WRITE(LUOT,2000)
       AA=1.0
       IF(ITMUNI.EQ.2)AA=60.0
@@ -342,7 +342,7 @@ C       ************* Nasty error comes to here ************************
           I=IFIX(TIME/DT+0.501)-JTS+1
           WRITE(LUOT,2010)I
           IF(IERR.EQ.21)WRITE(LUOT,2020)N,I
-          STOP
+          CALL USTOP(' ')
         END IF
       RETURN
       END
@@ -359,12 +359,12 @@ C     + + + + + + + + + + + + + COMMONS  + + + + + + + + + + + + + + + +
       INCLUDE 'ground.com'
 C
 C     + + + + + + + + COMMON DEFINTIONS  (startdaf.com)  + + + + + + + +
-C     AO(I,N) A1(I,N) A2(I,N) IDBG NBRCH NHRR NXSEC(N) VIN(I,N) 
-C     W1(I,N) W2(I,N) X(I,N) 
+C     AO(I,N) A1(I,N) A2(I,N) IDBG NBRCH NHRR NXSEC(N) VIN(I,N)
+C     W1(I,N) W2(I,N) X(I,N)
 C
 C     + + + + + + + + COMMON DEFINTIONS  (ground.com)  + + + + + + + + +
-C     BEL(I,N) BTH(I,N) CND(I,N) CSTR(I,N) NCL(I,N) NLY(I,N) 
-C     NRW(I,N) QSTR(I,N) SEP(I,N) STAGE(I,N) VGW(I,N) 
+C     BEL(I,N) BTH(I,N) CND(I,N) CSTR(I,N) NCL(I,N) NLY(I,N)
+C     NRW(I,N) QSTR(I,N) SEP(I,N) STAGE(I,N) VGW(I,N)
 C
 C     + + + + + + + + + + LOCAL VARIABLES  + + + + + + + + + + + + + + +
       INTEGER I,IDAFBK,INX,J,KITER,LUOT,N
@@ -429,7 +429,7 @@ C             ******** MODFLOW cell is active **************************
                 W=0.0
                 DPT=0.0
               END IF
-              AR=W*(X(I+1,N)-X(I,N)) 
+              AR=W*(X(I+1,N)-X(I,N))
               IF(IDAFBK.EQ.0) THEN
                 HD=HOLD(NCL(I+1,N),NRW(I+1,N),NLY(I+1,N))
               ELSE
@@ -463,17 +463,17 @@ C               ** GW head  has hydraulic connection too stream ********
                     AA=2.0*W2(I,N)
                     IF(A2(I,N).GT.AA)THEN
 C                   ********* Width depth ratio decreases with Q *******
-                      AA=A2(I,N)-W2(I,N)  
+                      AA=A2(I,N)-W2(I,N)
                       AA=((HD+DPT)*W1(I,N)/A1(I,N))**(1.0/AA)
                       AR=(W1(I,N)*AA**W2(I,N))*(X(I+1,N)-X(I,N))
-                      IF(IDBG.EQ.1) WRITE(LUOT,*) 
+                      IF(IDBG.EQ.1) WRITE(LUOT,*)
      1      'Width, Area based on gw head',W1(I,N)*AA**W2(I,N),AR
                     ELSE
 C                   ******** Width depth ratio increases with Q ********
-                      AR=(W+2.0*HD)*(X(I+1,N)-X(I,N))       
+                      AR=(W+2.0*HD)*(X(I+1,N)-X(I,N))
                       IF(IDBG.EQ.1) WRITE(LUOT,*)
      1     'Width, Area based on GW head',W+2.0*HD,AR
-                    END IF                              
+                    END IF
                   END IF
                   CSTR(I+1,N)=CND(I+1,N)*AR/BTH(I+1,N)
                   SEP(I+1,N)=CSTR(I+1,N)*HD
@@ -508,15 +508,15 @@ C     + + + + + + + + + + + + + COMMONS  + + + + + + + + + + + + + + + +
       INCLUDE 'startdaf.com'
       INCLUDE 'ground.com'
 C
-C     + + + + + + + + COMMON DEFINTIONS  (startdaf.com)  + + + + + + + + 
+C     + + + + + + + + COMMON DEFINTIONS  (startdaf.com)  + + + + + + + +
 C     DT JTS QI IDBG NHRR TIME TRB(I,N)
 C
 C     + + + + + + + + COMMON DEFINTIONS  (ground.com)  + + + + + + + + +
-C     BC(I,N,J) CCSTR(I,N)  CSTR(I,N) NCL(I,N) NLY(I,N) NRW(I,N) 
-C     QSTR(I,N) RHSSTR(I,N) SEP(I,N) SSEP(I,N) STAGE(I,N) 
+C     BC(I,N,J) CCSTR(I,N)  CSTR(I,N) NCL(I,N) NLY(I,N) NRW(I,N)
+C     QSTR(I,N) RHSSTR(I,N) SEP(I,N) SSEP(I,N) STAGE(I,N)
 C
 C     + + + + + + + + + + LOCAL VARIABLES  + + + + + + + + + + + + + + +
-      INTEGER I,IDAFBK,J,JJ,LUOT,N,NCOL,NROW,NLAY   
+      INTEGER I,IDAFBK,J,JJ,LUOT,N,NCOL,NROW,NLAY
       REAL    AA,BCNEW,HOLD(NCOL,NROW,NLAY),TRBOLD,TRBCHG
 C
 C     + + + + + + + + + + + LOCAL DEFINITIONS  + + + + + + + + + + + + +
@@ -610,7 +610,7 @@ C     + + + + + +  COMMON DEFINTIONS  (startdaf.com) + + + + + + + + + +
 C     AQ(I,N) NBRCH NHRR NXSEC(N) TRB(I,N) V(I,N)
 C
 C     + + + + + + + + COMMON DEFINTIONS  (ground.com)  + + + + + + + + +
-C     AQGW(I,N,J) BC(I,N,J) NCL(I,N) NRW(I,N) NLY(I,N) SSEP(I,N) 
+C     AQGW(I,N,J) BC(I,N,J) NCL(I,N) NRW(I,N) NLY(I,N) SSEP(I,N)
 C     VGW(I,N,J)
 C
 C     + + + + + + + + + + LOCAL VARIABLES  + + + + + + + + + + + + + + +

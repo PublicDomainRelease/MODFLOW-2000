@@ -1,0 +1,21 @@
+#
+# NOTE: Forward slashes (/) in pathnames may need to be converted
+#       to back slashes (\) in some computing environments
+#
+# Output file
+LIST                  2 tr2k_s3.lst
+#
+# Input files
+BAS6                  1 ../data/tr2k_s3.ba6
+DIS                  10 ../data/tr2k_s3.dis
+BCF6                 11 ../data/tr2k_s3.bc6
+WEL                  12 ../data/tr2k_s3.wel
+SIP                  13 ../data/tr2k_s3.sip
+OC                   15 ../data/tr2k_s3.oc
+SUB                  19 ../data/tr2k_s3.sub
+#
+# Binary output files
+DATA(BINARY)         21 tr2k_s3.hed REPLACE
+DATA(BINARY)         22 tr2k_s3.ddn REPLACE
+DATA(BINARY)         41 tr2k_s3.sbs REPLACE
+DATA(BINARY)         42 tr2k_s3.cmp REPLACE

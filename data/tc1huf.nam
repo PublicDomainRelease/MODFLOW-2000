@@ -18,7 +18,7 @@ pes          43  ../data/tc1huf.pes
 
 #Flow-Process files
 bas6         55  ../data/tc1huf.bas
-huf           7  ../data/tc1huf.huf
+huf2          7  ../data/tc1huf.huf
 wel           8  ../data/tc1huf.wel
 pcg           9  ../data/tc1huf.pcg
 dis          10  ../data/tc1huf.dis

@@ -55,7 +55,7 @@ C=======================================================================
      &                      WTQ,IOWTQ,IPRN,NDMH,NSTP,PERLEN,TSMULT,
      &                      ISSA,ITRSS,NQAR,NQCAR,NQTAR,IQ1,NQT1,NDD,
      &                      IURV,NQRV,NQTRV,NT,NC,IPLOT,NAMES,ND,IPR,
-     &                      MPR,IOWTQRV)
+     &                      MPR,IOWTQRV,OTIME)
 C     VERSION 20010921 ERB
 C     ******************************************************************
 C     READ, CHECK AND STORE FLOW-OBSERVATION DATA FOR RIVER BOUNDARIES.
@@ -75,6 +75,7 @@ C     ------------------------------------------------------------------
      &          PERLEN(NPER), TSMULT(NPER), ISSA(NPER)
       DIMENSION WTQ(NDMH,NDMH)
       CHARACTER*10 STATYP(0:2)
+      REAL OTIME(ND)
       DATA (STATYP(I),I=0,2)/'VARIANCE','STD. DEV.','COEF. VAR.'/
       DATA ANAME/'COVARIANCE OF RIVER-CELL FLOW OBSERVATIONS '/
 C     ------------------------------------------------------------------
@@ -169,11 +170,12 @@ C---------READ ITEM 4
             ENDIF
           ENDIF
           CALL UOBSTI(OBSNAM(N),IOUT,ISSA,ITRSS,NPER,NSTP,IREFSP,
-     &                IQOB(J),PERLEN,TOFF(N),TOFFSET,TOMULTRV,TSMULT,1)
+     &                IQOB(J),PERLEN,TOFF(N),TOFFSET,TOMULTRV,TSMULT,1,
+     &                OTIME(N))
 C----------ERROR CHECKING
           IF (IQOB(J).GE.JT) THEN
             JT = IQOB(J)
-            IF (TOFF(J).GT.0.) JT = JT+1
+            IF (TOFF(N).GT.0.) JT = JT+1
           ENDIF
           IF (IURV.EQ.0) THEN
             WRITE (IOUT,565)
@@ -293,7 +295,7 @@ C-------LOOP THROUGH BOUNDARY FLOWS
         IF (IBT1.NE.1) GOTO 50
 C----------WAS THERE A MEASUREMENT AT THIS BOUNDARY THIS TIME STEP?
         DO 40 NT = NT1, NT2
-          IF (IQOB(NT).EQ.ITS .OR. 
+          IF (IQOB(NT).EQ.ITS .OR.
      &        (IQOB(NT).EQ.ITS-1.AND.TOFF(NHT+NT).GT.ZERO)) THEN
 C----------ASSIGN VARIABLES ACCORDING TO BOUNDARY TYPE
             IRBOT = 0
@@ -386,7 +388,7 @@ C     PACKAGE
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL C, FACT, HB, HHNEW, QCLS, RBOT, RIVR, 
+      REAL C, FACT, HB, HHNEW, QCLS, RBOT, RIVR,
      &     TOFF, X, XX, ZERO
       INTEGER I, IBOUND, IBT, IBT1, IFLAG, II, IOUT, IP, IQ,
      &        IQOB, ITS, J, JJ, K, KK,
@@ -422,7 +424,7 @@ C-------LOOP THROUGH BOUNDARY FLOWS
         IF (IBT1.NE.1) GOTO 50
 C----------WAS THERE A MEASUREMENT AT THIS BOUNDARY THIS TIME STEP?
         DO 40 NT = NT1, NT2
-          IF (IQOB(NT).EQ.ITS .OR. 
+          IF (IQOB(NT).EQ.ITS .OR.
      &        (IQOB(NT).EQ.ITS-1.AND.TOFF(NHT+NT).GT.ZERO)) THEN
 C----------ASSIGN VARIABLES ACCORDING TO BOUNDARY TYPE
             NBN = NRIVER
@@ -519,14 +521,15 @@ C=======================================================================
       SUBROUTINE SOBS1RIV6OH(IO,IOWTQRV,IOUT,NHT,NQTRV,HOBS,H,WTQ,
      &                       OBSNAM,IDIS,WTQS,D,AVET,NPOST,NNEGT,NRUNS,
      &                       RSQ,ND,MPR,IPR,NDMH,WTRL,NRSO,IUGDO,OUTNAM,
-     &                       IPLOT,IPLPTR,LCOBRIV,ISSWR,SSRV,ITMXP)
+     &                       IPLOT,IPLPTR,LCOBRIV,ISSWR,SSRV,ITMXP,
+     &                       OTIME)
 C     VERSION 19990423 ERB
 C     ******************************************************************
 C     CALCULATE AND PRINT WEIGHTED RESIDUALS FOR RIVER FLOW OBSERVATIONS
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL AVE, AVET, D, H, HOBS, RES, RSQ, SWH, VMAX, VMIN, WT2, WTQ, 
+      REAL AVE, AVET, D, H, HOBS, RES, RSQ, SWH, VMAX, VMIN, WT2, WTQ,
      &     WTQS, WTR, WTRL
       INTEGER IDIS, IO, IOUT, IOWTQRV, IPR,
      &        J, MPR, N, ND, NDMH, NHT, NMAX, NMIN,
@@ -536,6 +539,7 @@ C     ------------------------------------------------------------------
       CHARACTER*200 OUTNAM
       DIMENSION H(ND), HOBS(ND), D(ND+MPR+IPR), WTQ(NDMH,NDMH),
      &          WTQS(NDMH,NDMH), SSRV(ITMXP+1)
+      REAL OTIME(ND)
 C     ------------------------------------------------------------------
 C
   500 FORMAT (/,' DATA FOR FLOWS REPRESENTED USING THE RIVER PACKAGE',//
@@ -558,7 +562,7 @@ C
      &        ' NUMBER OF RUNS: ',I6,'  IN ',I6,' OBSERVATIONS')
   530 FORMAT (2G20.7)
   535 FORMAT (' ')
-  540 FORMAT (2(G15.7,1X),I5,2X,A)
+  540 FORMAT (2(G15.7,1X),I5,2X,A,2X,G15.7)
   550 FORMAT (G15.7,1X,I5,2X,A)
 C
       IF (IO.EQ.1) THEN
@@ -611,7 +615,8 @@ C
         ENDIF
         IF (IO.EQ.1) THEN
           IF (OUTNAM.NE.'NONE') THEN
-            WRITE (IUGDO(1),540) H(N), HOBS(N), IPLOT(N), OBSNAM(N)
+            WRITE (IUGDO(1),540) H(N), HOBS(N), IPLOT(N), OBSNAM(N),
+     &                           OTIME(N)
             WRITE (IUGDO(2),540) SWH, OWH, IPLOT(N), OBSNAM(N)
             WRITE (IUGDO(3),540) SWH, WTR, IPLOT(N), OBSNAM(N)
             WRITE (IUGDO(4),550) RES, IPLOT(N), OBSNAM(N)
@@ -647,7 +652,7 @@ C
         NNEGT = NNEGT + NNEG
         AVE = AVE/REAL(NQTRV-IDISRV)
         IF (IO.EQ.1) THEN
-          WRITE (IOUT,525) VMAX, NMAX, VMIN, NMIN, AVE, NPOS, NNEG, 
+          WRITE (IOUT,525) VMAX, NMAX, VMIN, NMIN, AVE, NPOS, NNEG,
      &                     NRUNSRV, NRESRV
           WRITE (IOUT,520) RSQRV
         ENDIF

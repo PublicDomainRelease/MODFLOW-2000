@@ -6,7 +6,7 @@
 # Files for this variant
 global           1   tc2hufv4.glo
 list             2   tc2hufv4.lst
-huf             11   ../data/tc2hufv4.huf
+huf2            11   ../data/tc2hufv4.huf
 DATA            90   tc2hufv4.hds
 
 #Common files

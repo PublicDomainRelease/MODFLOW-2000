@@ -10,7 +10,8 @@ C         U.S. Geological Survey Open-File Report 01-82
 C
 C Revision History
 C     Version 6.0: 05-25-2001 cz
-C     Version 6.1: 05-01-2002 cz
+C             6.1: 05-01-2002 cz
+C             6.2: 07-15-2003 cz
 C ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 C
 C
@@ -25,12 +26,12 @@ C FILE IS COMPATIBLE WITH ALL VERSIONS OF MT3D/MT3DMS UP TO [3.50].
 C IF THE 'EXTENDED' HEADER OPTION IS SPECIFIED, THE LINK FILE IS
 C COMPATIBLE ONLY WITH MT3DMS VERSION [4.00] OR LATER.
 C *********************************************************************
-C last modified: 05-01-2002
+C last modified: 07-15-2003
 C
       INTEGER     NCOL,NROW,NLAY,IUNIT,NIUNIT,NPER,ISS,NODES,IBOUND,
      &            IU,N,MTISS,MTNPER,MTCHD,IMT3D,MTBCF,MTLPF,MTHUF,
      &            MTWEL,MTDRN,MTRCH,MTEVT,MTRIV,MTSTR,MTGHB,MTRES,
-     &            MTFHB,MTTLK,MTIBS,MTLAK,MTMAW,INUNIT,IOUT,ITYP1,
+     &            MTFHB,MTTLK,MTIBS,MTLAK,MTMNW,INUNIT,IOUT,ITYP1,
      &            ITYP2,ISTART,ISTOP,INAM1,INAM2,IFLEN,LLOC,INLMT,
      &            ILMTFMT,ILMTHEAD,IERR,MTUSR1,MTUSR2,MTUSR3,
      &            MTDRT,MTETS
@@ -42,7 +43,7 @@ C
       COMMON     /LINKMT3D/ILMTFMT
       DATA        INLMT,MTBCF,MTLPF,MTHUF,MTWEL,MTDRN,MTRCH,MTEVT,
      &            MTRIV,MTSTR,MTGHB,MTRES,MTFHB,MTDRT,MTETS,MTTLK,
-     &            MTIBS,MTLAK,MTMAW,MTUSR1,MTUSR2,MTUSR3
+     &            MTIBS,MTLAK,MTMNW,MTUSR1,MTUSR2,MTUSR3
      &           /22*0/
 C
 C--USE FILE SPECIFICATION of MODFLOW-2000
@@ -57,7 +58,7 @@ C--CHECK for OPTIONS/PACKAGES USED IN MODFLOW-2000
           MTBCF=IUNIT(IU)
         ELSEIF(CUNIT(IU).EQ.'LPF ') THEN
           MTLPF=IUNIT(IU)
-        ELSEIF(CUNIT(IU).EQ.'HUF ') THEN
+        ELSEIF(CUNIT(IU).EQ.'HUF2') THEN
           MTHUF=IUNIT(IU)
         ELSEIF(CUNIT(IU).EQ.'WEL ') THEN
           MTWEL=IUNIT(IU)
@@ -87,8 +88,8 @@ C--CHECK for OPTIONS/PACKAGES USED IN MODFLOW-2000
           MTIBS=IUNIT(IU)
         ELSEIF(CUNIT(IU).EQ.'LAK ') THEN
           MTLAK=IUNIT(IU)
-        ELSEIF(CUNIT(IU).EQ.'MAW ') THEN
-          MTMAW=IUNIT(IU)
+        ELSEIF(CUNIT(IU).EQ.'MNW1') THEN
+          MTMNW=IUNIT(IU)
         ELSEIF(CUNIT(IU).EQ.'USR1') THEN
           MTUSR1=IUNIT(IU)
         ELSEIF(CUNIT(IU).EQ.'USR2') THEN
@@ -244,7 +245,7 @@ C--ERROR CHECKING
         ELSEIF(MTLAK.GT.0) THEN
           WRITE(*,1210)
           CALL USTOP(' ')
-        ELSEIF(MTMAW.GT.0) THEN
+        ELSEIF(MTMNW.GT.0) THEN
           WRITE(*,1212)
           CALL USTOP(' ')
         ELSEIF(MTDRT.GT.0) THEN
@@ -258,6 +259,10 @@ C--ERROR CHECKING
           CALL USTOP(' ')
         ENDIF
       ENDIF
+      IF(MTEVT.GT.0.AND.MTETS.GT.0) THEN
+        WRITE(*,1300)
+        CALL USTOP(' ')
+      ENDIF
  1200 FORMAT(/1X,'Both RIV and STR packages are used in flow model;',
      &  /1X,'The Link-MT3DMS file must be saved with EXTENDED header.')
  1202 FORMAT(/1X,'The FHB Pacakge is used in flow simulation;',
@@ -270,7 +275,7 @@ C--ERROR CHECKING
      &  /1X,'The Link-MT3DMS file must be saved with EXTENDED header.')
  1210 FORMAT(/1X,'The LAK Pacakge is used in flow simulation;',
      &  /1X,'The Link-MT3DMS file must be saved with EXTENDED header.')
- 1212 FORMAT(/1X,'The MAW Pacakge is used in flow simulation;',
+ 1212 FORMAT(/1X,'The MNW Pacakge is used in flow simulation;',
      &  /1X,'The Link-MT3DMS file must be saved with EXTENDED header.')
  1214 FORMAT(/1X,'The DRT Pacakge is used in flow simulation;',
      &  /1X,'The Link-MT3DMS file must be saved with EXTENDED header.')
@@ -278,6 +283,9 @@ C--ERROR CHECKING
      &  /1X,'The Link-MT3DMS file must be saved with EXTENDED header.')
  1224 FORMAT(/1X,'A USER-DEFINED Pacakge is used in flow simulation;',
      &  /1X,'The Link-MT3DMS file must be saved with EXTENDED header.')
+ 1300 FORMAT(/1X,'Both EVT and ETS Packages are used in flow ',
+     &  'simulation;'
+     &  /1X,'Only one is allowed in the same transport simulation.')
 C
 C--WRITE A HEADER TO MODFLOW-MT3DMS LINK FILE
       IF(OUTPUT_FILE_HEADER.EQ.'STANDARD') THEN
@@ -293,12 +301,12 @@ C--WRITE A HEADER TO MODFLOW-MT3DMS LINK FILE
         IF(ILMTFMT.EQ.0) THEN
           WRITE(IMT3D) 'MT3D4.00.00',
      &     MTWEL,MTDRN,MTRCH,MTEVT,MTRIV,MTGHB,MTCHD,MTISS,MTNPER,
-     &     MTSTR,MTRES,MTFHB,MTDRT,MTETS,MTTLK,MTIBS,MTLAK,MTMAW,
+     &     MTSTR,MTRES,MTFHB,MTDRT,MTETS,MTTLK,MTIBS,MTLAK,MTMNW,
      &     MTUSR1,MTUSR2,MTUSR3
         ELSEIF(ILMTFMT.EQ.1) THEN
           WRITE(IMT3D,*) 'MT3D4.00.00',
      &     MTWEL,MTDRN,MTRCH,MTEVT,MTRIV,MTGHB,MTCHD,MTISS,MTNPER,
-     &     MTSTR,MTRES,MTFHB,MTDRT,MTETS,MTTLK,MTIBS,MTLAK,MTMAW,
+     &     MTSTR,MTRES,MTFHB,MTDRT,MTETS,MTTLK,MTIBS,MTLAK,MTMNW,
      &     MTUSR1,MTUSR2,MTUSR3
         ENDIF
       ENDIF
@@ -1031,7 +1039,7 @@ C--RETURN
       END
 C
 C
-      SUBROUTINE LMT6HUF1(HNEW,IBOUND,CR,CC,CV,ISS,ISSCURRENT,DELT,
+      SUBROUTINE LMT6HUF2(HNEW,IBOUND,CR,CC,CV,ISS,ISSCURRENT,DELT,
      & HOLD,SC1,BOTM,NBOTM,NCOL,NROW,NLAY,KSTP,KPER,HUFTHK,NHUF,IZON,
      & NZONAR,RMLT,NMLTAR,DELR,DELC,BUFF,IOUT)
 C *********************************************************************
@@ -1041,7 +1049,7 @@ C OF CONSTANT-HEAD CELLS FOR USE BY MT3D.  THIS SUBROUTINE IS CALLED
 C ONLY IF THE 'HUF' PACKAGE IS USED IN MODFLOW.
 C *********************************************************************
 C Modified from Harbaugh et al. (2000)
-C last modified: 05-01-2002
+C last modified: 07-15-2003
 C
       CHARACTER*16 TEXT
       DOUBLE PRECISION HNEW,HN,HD
@@ -1265,9 +1273,9 @@ C---------------Compute SC1 Component
               STRG=SC1(J,I,K)*TLED*(TOP-HN)
             ENDIF
 C---------------Compute SC2 Component
-            CALL SGWF1HUF1SC2(1,J,I,TOP,BOT,HN,HO,TLED,CHCOF,STRG,
+            CALL SGWF1HUF2SC2(1,J,I,K,TOP,BOT,HN,HO,TLED,CHCOF,STRG,
      &       HUFTHK,NCOL,NROW,NHUF,IZON,NZONAR,RMLT,NMLTAR,
-     &       DELR(J)*DELC(I))
+     &       DELR(J)*DELC(I),IOUT)          
 C------STRG=SOLD*(HOLD(J,I,K)-TP) + SNEW*TP - SNEW*HSING
             GOTO 288
 C
@@ -2030,5 +2038,278 @@ C--WRITE STREAM REACH LOCATION AND RATE
       ENDDO
 C
 C--NORMAL RETURN
+      RETURN
+      END
+C
+C
+      SUBROUTINE LMT6MNW1(MNWsite,nwell2,mxwel2,
+     & well2,ibound,ncol,nrow,nlay,nodes,kstp,kper,iout)
+C *********************************************************************
+C SAVE MNW LOCATIONS AND VOLUMETRIC FLOW RATES FOR USE BY MT3D.
+C *********************************************************************
+C Modified from MNW1 by K.J. Halford
+C last modification: 06-28-2003
+C
+      CHARACTER TEXT*16,MNWsite*32
+      DIMENSION IBOUND(nodes),WELL2(17,MXWEL2),MNWsite(mxwel2)
+      COMMON /LINKMT3D/ILMTFMT
+      TEXT='MNW'
+C
+C--WRITE AN IDENTIFYING HEADER
+      IF(ILMTFMT.EQ.0) THEN
+        WRITE(IOUT) KPER,KSTP,NCOL,NROW,NLAY,TEXT,NWELL2
+      ELSEIF(ILMTFMT.EQ.1) THEN
+        WRITE(IOUT,*) KPER,KSTP,NCOL,NROW,NLAY
+        WRITE(IOUT,*) TEXT,NWELL2
+      ENDIF
+C
+C--IF THERE ARE NO WELLS RETURN
+      IF(NWELL2.LE.0) RETURN
+C
+C--PROCESS WELL LIST
+      DO m = 1,nwell2
+        n = ifrl( well2(1,m) )
+        il = (n-1) / (ncol*nrow) + 1
+        ir = mod((n-1),ncol*nrow)/ncol + 1
+        ic = mod((n-1),ncol) + 1
+        iGroup = m
+        if(well2(8,m) .gt. 1.e30) iGroup = ifrl( well2(7,m) )
+        Q = well2(17,m)
+C
+C--IF CELL IS EXTERNAL Q=0
+        IF(IBOUND(n).LE.0) Q=0.
+C
+C--DUMMY VARIABLE QSW NOT USED, SET TO 0
+        QSW=0.
+C
+C--SAVE TO OUTPUT FILE
+        IF(ILMTFMT.EQ.0) THEN
+          WRITE(IOUT) IL,IR,IC,Q,iGroup,QSW
+        ELSEIF(ILMTFMT.EQ.1) THEN
+          WRITE(IOUT,*) IL,IR,IC,Q,iGroup,QSW
+        ENDIF
+      ENDDO
+C
+C--RETURN
+      RETURN
+      END
+C
+C
+      SUBROUTINE LMT6ETS1(NETSOP,IETS,ETSR,ETSX,ETSS,IBOUND,HNEW,
+     & NCOL,NROW,NLAY,KSTP,KPER,BUFF,IOUT,NETSEG,PXDP,PETM,NSEGAR)
+C ********************************************************************
+C SAVE SEGMENTED EVAPOTRANSPIRATION LAYER INDICES (IF NLAY>1) AND
+C VOLUMETRIC FLOW RATES FOR USE BY MT3D.
+C ********************************************************************
+C Modified from Banta (2000)
+C last modified: 7-15-2003
+C
+      CHARACTER*16 TEXT
+      DOUBLE PRECISION HNEW, QQ, HH, SS, DD, XX, HHCOF, RRHS,
+     &                 PXDP1, PXDP2
+      DIMENSION IETS(NCOL,NROW), ETSR(NCOL,NROW), ETSX(NCOL,NROW),
+     &          ETSS(NCOL,NROW), IBOUND(NCOL,NROW,NLAY),
+     &          HNEW(NCOL,NROW,NLAY),BUFF(NCOL,NROW,NLAY), 
+     &          PXDP(NCOL,NROW,NSEGAR),PETM(NCOL,NROW,NSEGAR)
+      COMMON /LINKMT3D/ILMTFMT
+      TEXT='ETS'
+C
+C--WRITE AN IDENTIFYING HEADER
+      IF(ILMTFMT.EQ.0) THEN
+        WRITE(IOUT) KPER,KSTP,NCOL,NROW,NLAY,TEXT
+      ELSEIF(ILMTFMT.EQ.1) THEN
+        WRITE(IOUT,*) KPER,KSTP,NCOL,NROW,NLAY
+        WRITE(IOUT,*) TEXT
+      ENDIF      
+C
+C--CLEAR THE BUFFER
+      DO IL=1,NLAY
+        DO IR=1,NROW
+          DO IC=1,NCOL
+            BUFF(IC,IR,IL)=0.
+          ENDDO   
+        ENDDO   
+      ENDDO   
+C
+C--PROCESS EACH HORIZONTAL CELL LOCATION
+      DO IR=1,NROW
+        DO IC=1,NCOL
+C
+C--SET THE LAYER INDEX EQUAL TO 1.
+          IL=1
+C
+C--IF OPTION 2 IS SPECIFIED THEN GET LAYER INDEX FROM IETS ARRAY
+          IF (NETSOP.EQ.2) IL=IETS(IC,IR)
+C
+C--IF CELL IS EXTERNAL THEN IGNORE IT.
+          IF (IBOUND(IC,IR,IL).LE.0) CYCLE
+C          
+          C=ETSR(IC,IR)
+          S=ETSS(IC,IR)
+          SS=S
+          HH=HNEW(IC,IR,IL)
+C
+C--IF HEAD IN CELL => ETSS,SET Q=MAX ET RATE.
+          IF (HH.GE.SS) THEN
+            QQ=-C
+          ELSE
+C
+C--IF DEPTH=>EXTINCTION DEPTH, ET IS 0.
+            X=ETSX(IC,IR)
+            XX=X
+            DD=SS-HH
+            IF (DD.LT.XX) THEN
+C--VARIABLE RANGE.  CALCULATE Q DEPENDING ON NUMBER OF SEGMENTS
+C
+              IF (NETSEG.GT.1) THEN
+C               DETERMINE WHICH SEGMENT APPLIES BASED ON HEAD, AND
+C               CALCULATE TERMS TO ADD TO RHS AND HCOF
+C
+C               SET PROPORTIONS CORRESPONDING TO ETSS ELEVATION
+                PXDP1 = 0.0
+                PETM1 = 1.0
+                DO ISEG = 1,NETSEG
+C                 SET PROPORTIONS CORRESPONDING TO LOWER END OF
+C                 SEGMENT
+                  IF (ISEG.LT.NETSEG) THEN
+                    PXDP2 = PXDP(IC,IR,ISEG)
+                    PETM2 = PETM(IC,IR,ISEG)
+                  ELSE
+                    PXDP2 = 1.0
+                    PETM2 = 0.0
+                  ENDIF
+                  IF (DD.LE.PXDP2*XX) THEN
+C                   HEAD IS IN DOMAIN OF THIS SEGMENT
+                    EXIT
+                  ENDIF
+C                 PROPORTIONS AT LOWER END OF SEGMENT WILL BE FOR
+C                 UPPER END OF SEGMENT NEXT TIME THROUGH LOOP
+                  PXDP1 = PXDP2
+                  PETM1 = PETM2
+                ENDDO   
+C--CALCULATE ET RATE BASED ON SEGMENT THAT APPLIES AT HEAD
+C--ELEVATION
+                HHCOF = -(PETM1-PETM2)*C/((PXDP2-PXDP1)*X)
+                RRHS = -HHCOF*(S-PXDP1*X) - PETM1*C
+              ELSE
+C--SIMPLE LINEAR RELATION.  Q=-ETSR*(HNEW-(ETSS-ETSX))/ETSX, WHICH
+C--IS FORMULATED AS Q= -HNEW*ETSR/ETSX + (ETSR*ETSS/ETSX -ETSR).
+                HHCOF = -C/X
+                RRHS = (C*S/X) - C
+              ENDIF
+              QQ = HH*HHCOF + RRHS
+            ELSE
+              QQ = 0.0
+            ENDIF
+          ENDIF  
+C
+C--ADD Q TO BUFFER.
+          Q=QQ
+          BUFF(IC,IR,1)=Q
+        ENDDO   
+      ENDDO   
+C
+C--RECORD THEM
+      IF(NETSOP.EQ.1) THEN
+        IL=1
+        IF(ILMTFMT.EQ.0) WRITE(IOUT)   ((IL,J=1,NCOL),I=1,NROW)
+        IF(ILMTFMT.EQ.1) WRITE(IOUT,*) ((IL,J=1,NCOL),I=1,NROW)
+      ELSEIF(NETSOP.NE.1) THEN
+        IF(ILMTFMT.EQ.0) WRITE(IOUT)   ((IETS(J,I),J=1,NCOL),I=1,NROW)
+        IF(ILMTFMT.EQ.1) WRITE(IOUT,*) ((IETS(J,I),J=1,NCOL),I=1,NROW)
+      ENDIF
+C
+      IF(ILMTFMT.EQ.0) THEN
+        WRITE(IOUT) ((BUFF(J,I,1),J=1,NCOL),I=1,NROW)
+      ELSEIF(ILMTFMT.EQ.1) THEN
+        WRITE(IOUT,*) ((BUFF(J,I,1),J=1,NCOL),I=1,NROW)
+      ENDIF
+C
+C--RETURN
+      RETURN
+      END
+C
+C
+      SUBROUTINE LMT6DRT1(NDRTCL,MXDRT,DRTF,HNEW,NCOL,NROW,NLAY,
+     & IBOUND,KSTP,KPER,IOUT,NDRTVL,IDRTFL,NRFLOW)
+C ******************************************************************
+C SAVE DRT (Drain with Return Flow) CELL LOCATIONS AND 
+C VOLUMETRIC FLOW RATES FOR USE BY MT3D
+C ******************************************************************
+C Modified from Banta (2000)
+C last modified: 7-15-2003
+C
+      CHARACTER*16 TEXT
+      DOUBLE PRECISION HNEW,HHNEW,EEL,CC,CEL,QQ
+      DIMENSION DRTF(NDRTVL,MXDRT),HNEW(NCOL,NROW,NLAY),
+     &          IBOUND(NCOL,NROW,NLAY)
+      COMMON /LINKMT3D/ILMTFMT
+      TEXT='DRT'
+C
+C--WRITE AN IDENTIFYING HEADER
+      IF(ILMTFMT.EQ.0) THEN
+        WRITE(IOUT) KPER,KSTP,NCOL,NROW,NLAY,TEXT,NDRTCL+NRFLOW
+      ELSEIF(ILMTFMT.EQ.1) THEN
+        WRITE(IOUT,*) KPER,KSTP,NCOL,NROW,NLAY
+        WRITE(IOUT,*) TEXT,NDRTCL+NRFLOW
+      ENDIF      
+C
+C--IF THERE ARE NO DRAIN-RETURN CELLS, SKIP.
+      IF (NDRTCL+NRFLOW.LE.0) RETURN
+C
+C--LOOP THROUGH EACH DRAIN-RETURN CELL, CALCULATING FLOW.
+      DO L=1,NDRTCL
+C
+C--GET LAYER, ROW & COLUMN OF CELL CONTAINING DRAIN.
+        IL=DRTF(1,L)
+        IR=DRTF(2,L)
+        IC=DRTF(3,L)
+        Q=0.
+C
+C--IF CELL IS NO-FLOW OR CONSTANT-HEAD, IGNORE IT.
+        IF (IBOUND(IC,IR,IL).LE.0) GOTO 99
+C
+C--GET DRAIN PARAMETERS FROM DRAIN-RETURN LIST.
+        EL=DRTF(4,L)
+        EEL=EL
+        C=DRTF(5,L)
+        HHNEW=HNEW(IC,IR,IL)
+C
+C--IF HEAD HIGHER THAN DRAIN, CALCULATE Q=C*(EL-HHNEW).
+C--SUBTRACT Q FROM RATOUT.
+        IF (HHNEW.GT.EEL) THEN
+          CC=C
+          CEL=C*EL
+          QQ=CEL - CC*HHNEW
+          Q=QQ
+          ILR=0
+          IF (IDRTFL.GT.0) THEN
+            ILR = DRTF(6,L)
+            IF (ILR.NE.0) THEN
+              IRR = DRTF(7,L)
+              ICR = DRTF(8,L)
+              RFPROP = DRTF(9,L)
+              QQIN = RFPROP*(CC*HHNEW-CEL)
+              QIN = QQIN
+            ENDIF
+          ENDIF
+        ENDIF
+   99   CONTINUE     
+C
+C--WRITE DRT LOCATION AND RATE (both host and recipient)
+        mhost=0.
+        QSW=0.
+C       main drain (host to recipient cell)
+        IF(ILMTFMT.EQ.0) WRITE(IOUT)   IL,IR,IC,Q,mhost,QSW
+        IF(ILMTFMT.EQ.1) WRITE(IOUT,*) IL,IR,IC,Q,mhost,QSW 
+C       return flow recipient cell 
+        if(ILR.ne.0) then
+          mhost = ncol*nrow*(IL-1) + ncol*(IR-1) + IC
+          IF(ILMTFMT.EQ.0) WRITE(IOUT)   ILR,IRR,ICR,QIN,mhost,QSW
+          IF(ILMTFMT.EQ.1) WRITE(IOUT,*) ILR,IRR,ICR,QIN,mhost,QSW
+        endif
+      ENDDO   
+C
+C--RETURN
       RETURN
       END

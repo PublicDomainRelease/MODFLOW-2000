@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.11 04/10/2003
+                             VERSION 1.12 09/08/2003
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -130,15 +130,15 @@
 
                             INITIAL TIME STEP SIZE =   86400.00    
 
- WELL NO.  LAYER   ROW   COL   STRESS RATE   
- --------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS RATE         
+ --------------------------------------------------
       1      3      5     11      -5.000    
       2      2      4      6      -5.000    
       3      2      6     12      -5.000    
 
  Parameter:  WELL1
- WELL NO.  LAYER   ROW   COL   STRESS RATE   
- --------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS RATE         
+ --------------------------------------------------
       4      1      9      8      -5.000    
       5      1      9     10      -5.000    
       6      1      9     12      -5.000    
@@ -154,8 +154,8 @@
 
      15 WELLS
 
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE   
- ----------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE         
+ ----------------------------------------------------------------
       1      1      8      4       10.00           1.000    
       2      1      8      5       20.00           1.000    
       3      1      8      6       30.00           1.000    
@@ -165,8 +165,8 @@
       7      1      8     10       100.0           1.000    
 
  Parameter:  DRN1
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE   
- ----------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE         
+ ----------------------------------------------------------------
       8      1      8      2       0.000           1.000    
       9      1      8      3       0.000           1.000    
 

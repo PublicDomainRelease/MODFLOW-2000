@@ -2,7 +2,7 @@ C     Last change:  ERB  15 Jan 2003   12:59 pm
 C=======================================================================
       SUBROUTINE SEN1BAS6DF(ISENALL,ISEN,IPRINTS,IUSEN,LCB1,LCLN,LCSV,
      &                     NPE,NPLIST,RCLOSE,IUHEAD,MXSEN,LCSNEW,IOUT,
-     &                     LCBSCA)
+     &                     LCBSCA,LCISEN)
 C     VERSION 19990618 ERB
 C     ******************************************************************
 C     INITIALIZE VARIABLES FOR SENSITIVITY PROCESS
@@ -31,6 +31,7 @@ C     OTHERWISE GET ALLOCATED
       NPLIST= 1
       LCB1 = 1
       LCBSCA = 1
+      LCISEN = 1
       LCLN = 1
       LCSNEW = 1
       LCSV = 1
@@ -1100,7 +1101,7 @@ C     UNSCALE THE SNEW ARRAY
       DO 70 K=1,NLAY
         DO 69 I=1,NROW
           DO 68 J=1,NCOL
-            SNEW(J,I,K)=SNEW(J,I,K)*100.0/DB
+            IF(IBOUND(J,I,K).NE.0) SNEW(J,I,K)=SNEW(J,I,K)*100.0/DB
    68     CONTINUE
    69   CONTINUE
    70 CONTINUE
@@ -1115,7 +1116,7 @@ C5------WILL BE PRODUCED.
       IF(IPFLG.NE.0 .AND. IP.EQ.NPE) THEN
         CALL SGWF1BAS6T(KSTP,KPER,DELT,PERTIM,TOTIM,ITMUNI,IOUT)
         WRITE(IOUT,101)
-  101   FORMAT('1')
+  101   FORMAT(' ')
       ENDIF
 C
 C6------RETURN

@@ -1,4 +1,6 @@
-C     Last change: KJH  20030327      -- Patched Hyd.K term in LPF option -- cel2wel function
+C                  KJH  20030327      -- Patched Hyd.K term in LPF option -- cel2wel function
+C     Last change: KJH  20030717      -- Patched budget output switch -- subroutine GWF1MNW1bd
+c                                        Cleaned output so outrageous pointers are not printed
       SUBROUTINE GWF1MNW1DF(LCHANI,LCHK,LCHKCC,LCHUFTHK,LCHY,LCSSHMN,
      &                      LCTRPY,NHUFAR)
 C     VERSION 20020129 ERB
@@ -175,7 +177,9 @@ c3------set lcwel2 equal to location of well list in x array.
       lcwel2 = isum
 c
 c4------add amount of space used by well list to isum.
-      isp  = 16 * mxwel2
+cerb      isp  = 16 * mxwel2
+cerb  Change made 7/11/2003 - ERB
+      isp  = 17 * (mxwel2 + 1)    !!7/13/2003 - CZ: increased to 17 from 16
       isum = isum+isp
 c  set aside a single precision array for a set of reference heads
       lchref = isum
@@ -222,7 +226,7 @@ c
 c        specifications:
 c     ------------------------------------------------------------------
       dimension MNWsite(mxwel2)
-      dimension well2(16,mxwel2), hold(nodes),href(nodes), ibound(nodes)
+      dimension well2(17,mxwel2), hold(nodes),href(nodes), ibound(nodes)
       dimension delr(ncol), delc(nrow),cr(nodes),cc(nodes)
       dimension hy(nodes)
       dimension rn(25), iowell2(3)
@@ -285,6 +289,8 @@ c        13   = Minimum flow rate -  to turn off
 c        14   = Minimum flow rate -- to turn on
 c        15   = Reserve Desired flow rate
 c        16   = Non-linear loss term
+c        17   = Actual flow rate to individual nodes of a multi-node well
+c               kept for transport or other purposes !!7/13/2003 - CZ
 c------------------------------------------------------------------
 c
 c1------read itmp(number of wells or flag saying reuse well data)
@@ -565,10 +571,22 @@ c
           endif
           well2(11,m) = cond
 c
+c ---------Modified OUTPUT to hide internal pointers that "Look Funny" --KJH-- July 10, 2003
+          if( well2(8,m) .gt. 1.0e30 )then
+            if( well2(7,m) .lt. 1.0e30 )then
+              ne = ifrl(well2(7,m))
+              hlim = well2(7,ne)
+              hrfw = well2(8,ne)
+            else
+            endif
+          else
+            hlim = well2(7,m)
+            hrfw = well2(8,m)
+          endif
           write (iout,'(1x,4i6,6(1x,g10.4),g13.6,i10,g13.6,
      +          2f10.3,2x,a32)')
-     +          m, k,j,i, (well2(ii,m), ii = 3,8),well2(16,m),
-     +          igrp, well2(11,m),
+     +          m, k,j,i, (well2(ii,m),ii=3,6),hlim, hrfw,
+     +          well2(16,m), igrp, well2(11,m),
      +          (well2(ii,m)*100.0, ii = 13,14), MNWsite(m)
 c
         enddo
@@ -621,7 +639,7 @@ c     ******************************************************************
 c
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      dimension well2(16,mxwel2), ibound(nodes)
+      dimension well2(17,mxwel2), ibound(nodes)
       dimension delr(ncol), delc(nrow),cr(nodes),cc(nodes)
       dimension hy(nodes)
       dimension hnew(nodes)
@@ -761,7 +779,7 @@ c     ******************************************************************
 c
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      dimension well2(16,mxwel2), ibound(nodes)
+      dimension well2(17,mxwel2), ibound(nodes)
       dimension delr(ncol), delc(nrow),cr(nodes),cc(nodes)
       dimension hy(nodes)
       dimension hcof(nodes), rhs(nodes)
@@ -937,7 +955,7 @@ c
       SUBROUTINE GWF1MNW1bd(MNWsite,nwell2,mxwel2,vbnm,vbvl,msum,delt,
      +        well2,ibound,hnew,ncol,nrow,nodes,nstp,kstp,kper,iwl2cb,
      +             icbcfl,buff,iout,iowell2,totim,PLoss,Hdry)
-C     VERSION 20020819 KJH
+C     VERSION 20030710 KJH
 c
 c----- MNW1 by K.J. Halford        1/31/98
 c     ******************************************************************
@@ -947,7 +965,7 @@ c
 c        specifications:
 c     ------------------------------------------------------------------
       dimension MNWsite(mxwel2)
-      dimension vbvl(4,msum),well2(16,mxwel2),
+      dimension vbvl(4,msum),well2(17,mxwel2),
      1          ibound(nodes), buff(nodes)
       dimension iowell2(3)
       dimension hnew(nodes)
@@ -1037,6 +1055,7 @@ c
             well2(3,m) = 0.0000
           endif
           q = well2(3,m)
+          well2(17,m)=q     !!7/13/2003 - CZ: preserve q
 c
 c    Report all wells with production less than the desired rate......
           if(ibound(n).ne.0 .or. DryTest**2.lt.zero) then
@@ -1045,8 +1064,17 @@ c    Report all wells with production less than the desired rate......
             ic = mod((n-1),ncol) + 1
             qd = well2(2,m)
             hlim = well2(7,m)
-            href = well2(8,m)
-            if( href .gt. 1.0E30 ) imult = 1
+c -----Modified OUTPUT to hide internal pointers that "Look Funny" in DD column--KJH-- July 10, 2003
+            if( well2(8,m) .gt. 1.0e30 )then
+              imult = 1
+              if( well2(7,m) .lt. 1.0e30 )then
+                ne = ifrl(well2(7,m))
+                href = well2(8,ne)
+              else
+              endif
+            else
+              href = well2(8,m)
+            endif
             hwell = well2(10,m)
             QWbar = well2(11,m)
             dd  = hwell - href
@@ -1155,7 +1183,7 @@ c  ----- END  MULTI-NODE reporting section -------------
 c
         nlay = nodes / ncol / nrow
 c6------if cell-by-cell flows will be saved call ubudsv to record them
-        if( ioch.eq.1 )then
+        if( abs(iwl2cb).gt.0 .and. icbcfl.ne.0 ) then           !! BooBoo Fix--July 10,2003  KJH
           ioc = abs(iwl2cb)
           if( ibd.eq.2 ) then   !!  Write COMPACT budget
             NWELVL  = 1  !!  Dummy value
@@ -1201,7 +1229,7 @@ c
 c        specifications:
 c     ------------------------------------------------------------------
       dimension MNWsite(mxwel2)
-      dimension well2(16,mxwel2)
+      dimension well2(17,mxwel2)
       dimension iowell2(3)
       character*1  tab
       character*32  MNWsite, TempTag,TT, LastTag, EOFtag
@@ -1414,6 +1442,7 @@ C     ------------------------------------------------------------------
       COMMON /BCFCOM/LAYCON(200)
       COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
      1               LAYWET(200)
+      REAL KY
 C     ------------------------------------------------------------------
  1000 FORMAT(/1X,
      &'***ERROR: MNW1 PACKAGE DOES NOT SUPPORT HEAD-DEPENDENT',/,

@@ -1,6 +1,4 @@
 # OBS file for test case tc1
 #
-tc1   1              Item 1: OUTNAM ISCALS
+tc1   1   allfiles      Item 1: OUTNAM ISCALS ALLFILES
 
-
-none 1

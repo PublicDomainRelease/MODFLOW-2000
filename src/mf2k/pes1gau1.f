@@ -60,7 +60,7 @@ C     ------------------------------------------------------------------
      &     2X,' OSCILL. CONTROL FACTOR (1, NO EFFECT)-- = ',G11.5,/,
      &     2X,' DAMPING PARAMETER (RANGE 0 TO 1) ------ = ',G11.5,/,
      &     2X,'      CONTROLLED BY PARAMETER "',A,'"',' TYPE ',A,/)
-  525 FORMAT (6(3X,A10)) 
+  525 FORMAT (6(3X,A10))
   530 FORMAT (6(2X,1PG11.4))
   535 FORMAT (E10.3,I5,/,3E10.3)
   540 FORMAT (/,
@@ -163,7 +163,7 @@ C-------------ESTIMATES OF PARAMETER SUMS
         DO 100 IPM = 1, MPR
           TMPA = 0.
           DO 70 IP = 1, NPLIST
-            IF (PRM(IP,IPM).GT.0.) TMPA = TMPA + PRM(IP,IPM)*B(IP)
+            TMPA = TMPA + PRM(IP,IPM)*B(IP)
    70     CONTINUE
           TMPA = PRM(NPLIST+1,IPM) - TMPA
           DO 90 IP = 1, NPE
@@ -246,11 +246,11 @@ C---------------P for transformed parameters with positive DD
 C----------ABDMXx Absolute value of BDMXx
 C----------ADMXx Values used to calculate the damping parameter (Col B,
 C----------------------Table B1)
-C----------AP   Value of the damping parameter used. Results in all 
+C----------AP   Value of the damping parameter used. Results in all
 C----------------------parameters respecting MAX-CHANGE or MAX-CHANGE*
-C----------APx  Value of the damping parameter if only the U, N, or P 
+C----------APx  Value of the damping parameter if only the U, N, or P
 C----------------------parameters were considered
-C----------BDMXx  Maximum fractional parameter change calculated 
+C----------BDMXx  Maximum fractional parameter change calculated
 C----------------------by the normal equations (Col A, Table B1)
 C----------DDMAXx Maximum dd value; used only for x= N and P
 C----------DMAXIx Indicator for adjusting dmax for extreme
@@ -260,7 +260,7 @@ C----------JDx  Parameter that governs damping; JDx may not equal JJx
 C----------JJx  Parameter with maximum change for convergence testing
 C----------DEFINITION OF VARIABLE NOT CHANGED IN THE CALCULATIONS
 C----------IAP = 0, Apply dmax in native space (AP is set to equal 0)
-C----------IAP = 1, Apply dmax in parameter optimization 
+C----------IAP = 1, Apply dmax in parameter optimization
 C--------------------------(possibly transformed) space
       DMXO = DMX
       ADMXU = 0.0
@@ -374,7 +374,7 @@ C------------------LARGEST CHANGE
         ENDIF
   170 CONTINUE
 C
-C-------FOR CONVERGENCE CHECK, FIND LARGEST BDMXx (NATIVE PARAMETER CHANGE 
+C-------FOR CONVERGENCE CHECK, FIND LARGEST BDMXx (NATIVE PARAMETER CHANGE
 C-------FROM THE NORMAL EQUATIONS) AND ASSOCIATED PARAMETER NUMBER.
       IF (ABDMXU.GE.ABDMXP .AND. ABDMXU.GE.ABDMXN) THEN
         JCHG = JJU
@@ -396,10 +396,10 @@ C-------FROM THE NORMAL EQUATIONS) AND ASSOCIATED PARAMETER NUMBER.
         DMX = DMXN
       ENDIF
 C
-C-----WITH A MIXTURE OF NATIVE AND TRANSFORMED PARAMETERS, THE 
-C-----DAMPING PARAMETER MAY NOT BE ASSOCIATED WITH THE PARAMETER 
-C-----WITH THE LARGEST NATIVE PARAMETER CHANGE AS CALCULATED BY 
-C-----THE NORMAL EQUATIONS. USE DAMPING PARAMETERS FOR ALL 
+C-----WITH A MIXTURE OF NATIVE AND TRANSFORMED PARAMETERS, THE
+C-----DAMPING PARAMETER MAY NOT BE ASSOCIATED WITH THE PARAMETER
+C-----WITH THE LARGEST NATIVE PARAMETER CHANGE AS CALCULATED BY
+C-----THE NORMAL EQUATIONS. USE DAMPING PARAMETERS FOR ALL
 C-----TYPES CALCULATED ABOVE AND PICK THE SMALLEST ONE.
 C
 C
@@ -435,9 +435,9 @@ C--------...OTHERWISE, FIND THE SMALLEST DAMPING PARAMETER
         ENDIF
       ENDIF
 C
-C---------IF THE SAME PARAMETER CONTROLLED THE DAMPING PARAMETER 
+C---------IF THE SAME PARAMETER CONTROLLED THE DAMPING PARAMETER
 C---------LAST ITERATION, CONSIDER OSCILLATION CONTROL.
-C-----------THESE CALCULATIONS ARE DONE IN TRANSFORMED PARAMETER 
+C-----------THESE CALCULATIONS ARE DONE IN TRANSFORMED PARAMETER
 C-----------SPACE USING DMXx
       OCF = 1.0
       IF (ITERP.GT.1) THEN
@@ -506,7 +506,7 @@ C======================================================================
       SUBROUTINE SPES1GAU1DM (DMAX1,DMAXI)
 C     VERSION 20000424 ERB
 C     ******************************************************************
-C     ADJUST DMAX FOR PARAMETER VALUES FAR FROM THE STARTING VALUE SO 
+C     ADJUST DMAX FOR PARAMETER VALUES FAR FROM THE STARTING VALUE SO
 C     SO THAT EXTREME VALUES CAN RECOVER.
 C     ******************************************************************
 C        SPECIFICATIONS:
@@ -734,12 +734,12 @@ C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL H, HOBS, SOSR, WT, WTQ, X, XD
-      INTEGER I, IIP, IOWTQ, IPP, ITERP, J, JM1, JP1, K, K1, L, L1, M, 
+      INTEGER I, IIP, IOWTQ, IPP, ITERP, J, JM1, JP1, K, K1, L, L1, M,
      &        N, N1, ND, NDMH, NFIT, NHT, NPE
       DOUBLE PRECISION C(NPE,NPE), DD(NPE), SUM, TMPA, DS, DGD, DU, CF,
      &                 QD, TMP, T, R(NPE*NPE/2+NPE), DPGD, DPU, U(NPE),
      &                 S(NPE), G, GD, DPGI, W1
-      DIMENSION G(NPE), GD(NPE), X(NPE,ND), HOBS(ND), H(ND), WT(ND), 
+      DIMENSION G(NPE), GD(NPE), X(NPE,ND), HOBS(ND), H(ND), WT(ND),
      &          XD(NPE,ND), WTQ(NDMH,NDMH)
 C     ------------------------------------------------------------------
 C

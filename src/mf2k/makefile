@@ -1,3 +1,5 @@
+# Makefile for non-USGS distribution
+#
 # @ (#) Makefile for Modtools 27June1997
 # (Supplied by L. Orzol -- erb)
 #
@@ -23,7 +25,6 @@ USRLIB  =
 
 OBJECTS = \
 	mf2k.o \
-	amg1r6.o \
 	ctime.o \
 	daf1.o \
 	de45.o \
@@ -40,7 +41,7 @@ OBJECTS = \
 	gwf1gag5.o \
 	gwf1ghb6.o \
 	gwf1hfb6.o \
-	gwf1huf1.o \
+	gwf1huf2.o \
 	gwf1ibs6.o \
 	gwf1lak3.o \
 	gwf1lpf1.o \
@@ -49,7 +50,9 @@ OBJECTS = \
 	gwf1res1.o \
 	gwf1riv6.o \
 	gwf1str6.o \
+	gwf1sub1.o \
 	gwf1wel6.o \
+	hufutl2.o \
 	hydmod.o \
 	lmg1.o \
 	lmt6.o \
@@ -74,7 +77,7 @@ OBJECTS = \
 	sen1evt6.o \
 	sen1ghb6.o \
 	sen1hfb6.o \
-	sen1huf1.o \
+	sen1huf2.o \
 	sen1lpf1.o \
 	sen1rch6.o \
 	sen1riv6.o \

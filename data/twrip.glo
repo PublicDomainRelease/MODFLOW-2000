@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.11 04/10/2003
+                             VERSION 1.12 09/08/2003
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
@@ -232,8 +232,8 @@
  Parameter value from package file is:    1.0000    
    NUMBER OF ENTRIES:     12
 
- WELL NO.  LAYER   ROW   COL   STRESS FACTOR   
- ----------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS FACTOR         
+ ----------------------------------------------------
       1      1      9      8      -5.000    
       2      1      9     10      -5.000    
       3      1      9     12      -5.000    
@@ -254,8 +254,8 @@
  Parameter value from package file is:    1.0000    
    NUMBER OF ENTRIES:      2
 
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
- ------------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR         
+ ------------------------------------------------------------------
       1      1      8      2       0.000           1.000    
       2      1      8      3       0.000           1.000    
 

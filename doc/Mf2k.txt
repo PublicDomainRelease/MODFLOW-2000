@@ -58,7 +58,18 @@ METHOD
 
 HISTORY
 
-     MODFLOW-2000 Version 1.11 2003/04/10 - Added the DAF Package to allow
+      MODFLOW-2000 Version 1.12 2003/09/08 - Added the SUB Package to allow 
+        simulation of subsidence and aquifer-system compaction.  The HUF 
+        Package was upgraded from version 1 to version 2, providing support 
+        for the new Layer Variable-Direction Horizontal Anisotropy (LVDA) 
+        capability, an alternative specification of storage properties for
+        the uppermost active cells, calculation of flow in  hydrogeologic
+        units, and the new Hydraulic-Conductivity Depth-Decay (KDEP)
+        capability.  The ADV Package was updated from version 2.3 to version 
+        2.4, which includes support for porosity parameters.  Additional 
+        enhancements and bug fixes are described in release.txt.
+        
+      MODFLOW-2000 Version 1.11 2003/04/10 - Added the DAF Package to allow
         coupling of MODFLOW with the Diffusion Analogy Surface-Water Flow 
         Model, and the MNW Package to allow simulation of well completed in
         intervals represented by multiple model cells.  New options for
@@ -321,7 +332,7 @@ PACKAGES
          PCG2 -- Version 2 of Preconditioned Conjugate Gradient
                  Package
          DE45 -- Direct solver
-         LMG1 -- Multigrid solver
+         LMG1 -- Multigrid solver (for USGS use only)
          STR6 -- Streamflow-Routing Package
          ADV2 -- Advective-Transport Observation Package
          RES1 -- Reservoir Package (RES is the file type in the
@@ -330,13 +341,14 @@ PACKAGES
                  type in the MODFLOW name file)
          IBS6 -- Interbed Storage (subsidence) Package (IBS is the
                  file type in the name file)
-         HUF1 -- Hydrogeologic-Unit Flow Package
+         HUF2 -- Hydrogeologic-Unit Flow Package
          LAK3 -- Lake Package
          ETS1 -- Evapotranspiration with a Segmented Function Package
          DRT1 -- Drains with Return Flow Package
          LMT6 -- Link to MT3DMS contaminant-transport model
          MNW1 -- Multi-Node Well Package
          DAF1 -- Diffusion Analogy Surface-Water Flow Package
+         SUB1 -- Subsidence and Aquifer-System Compaction Package
 
 ADDITIONAL CAPABILITIES:
 
@@ -406,7 +418,7 @@ DOCUMENTATION
      equations: U.S. Geological Survey Water-Resources
      Investigations Report 90-4048, 43 p.
 
-  The Streamflow-Routing Package is documented in:
+  The Streamflow-Routing (STR) Package is documented in:
 
      Prudic, D.E., 1989, Documentation of a computer program to
      simulate stream-aquifer relations using a modular,
@@ -461,6 +473,12 @@ DOCUMENTATION
      fields to the three-dimensional ground-water flow
      parameter-estimation model MODFLOWP: U.S. Geological
      Survey Open-File Report 97-14, 67 p.
+     
+     Anderman, E.R. and Hill, M.C., 2001, MODFLOW-2000, the U.S. 
+     Geological Survey modular ground-water model -- Documentation 
+     of the  Advective-Transport Observation (ADV2) Package, 
+     version 2: U.S. Geological Survey Open-File Report 01-54,
+     69 p.
 
   HYDMOD is documented in:
 
@@ -468,7 +486,7 @@ DOCUMENTATION
      a program for extracting and processing time-series data
      from the U.S. Geological Survey's modular three-dimensional
      finite-difference ground-water flow model: U.S. Geological
-     Survey Open-File report 98-564, 57 p.
+     Survey Open-File Report 98-564, 57 p.
 
   The IBS Package is documented in:
 
@@ -484,6 +502,20 @@ DOCUMENTATION
      Geological Survey modular ground-water model -- Documentation
      of the Hydrogeologic-Unit Flow (HUF) Package: U.S. Geological
      Survey Open-File Report 00-342, 89 p.
+     
+     Anderman, E.R., Kipp, K.L., Hill, M.C., Valstar, Johan, and 
+     Neupauer, R.M., 2002, MODFLOW-2000, the U.S. Geological Survey
+     modular ground-water model -- Documentation of the Model-Layer 
+     Variable-Direction Horizontal Anisotropy (LVDA) capability of
+     the Hydrogeologic-Unit Flow (HUF) Package: U.S. Geological
+     Survey Open-File Report 02-409, 60 p.
+
+     Anderman, E.R., and Hill, M.C., 2003, MODFLOW-2000, the U.S. 
+     Geological Survey modular ground-water model -- Three additions 
+     to the Hydrogeologic-Unit Flow (HUF) Package: Alternative storage
+     for the uppermost active cells, Flows in hydrogeologic units, and
+     the Hydraulic-coductivity depth-dependence (KDEP) capability:
+     U.S. Geological Survey Open-File Report 03-347, 36 p.
 
   The LAK Package is documented in:
 
@@ -502,6 +534,7 @@ DOCUMENTATION
      Open-File Report 00-466, 127 p.
 
   The LMG Package is documented in:
+
      Mehl, S.E. and Hill, M.C., MODFLOW-2000, the U.S. Geological
      Survey modular ground-water model -- User guide to the LINK-AMG
      (LMG) Package for solving matrix equations using an algebraic
@@ -509,6 +542,7 @@ DOCUMENTATION
      33 p.
 
   The LMT Package is documented in:
+
      Zheng, Chunmiao, Hill, M.C., and Hsieh, P.A., 2001, MODFLOW-2000,
      the U.S. Geological Survey modular ground-water model - User
      guide to the LMT6 package, the linkage with MT3DMS for multi-
@@ -516,6 +550,7 @@ DOCUMENTATION
      Report 01-82, 43 p.
 
   The MNW Package is documented in:
+
      Halford, K.J. and Hanson, R.T., 2002, User guide for the drawdown-
      limited, multi-node well (MNW) package for the U.S. Geological
      Survey's modular three-dimensional finite-difference ground-water
@@ -523,10 +558,19 @@ DOCUMENTATION
      Survey Open-File Report 02-293, 33 p.
 
   The DAF Package is documented in:
+
      Jobson, H.E. and Harbaugh, A.W., 1999, Modifications to the
      diffusion analogy surface-water flow model (DAFLOW) for coupling
      to the moddular finite-difference ground-water flow model (MODFLOW):
      U.S. Geological Survey Open-File Report 99-217, 107 p.
+     
+  The SUB Package is documented in: 
+
+     Hoffmann, J., Leake, S.A., Galloway, D.L., and Wilson, A.M., 2003,
+     MODFLOW-2000 Ground-Water Model--User Guide to the Subsidence and
+     Aquifer-System Compaction (SUB) Package: U.S. Geological Survey 
+     Open-File Report 03-233, 44 p.
+
 
 CONTACTS
      Operation:

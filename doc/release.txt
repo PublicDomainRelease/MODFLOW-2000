@@ -1,4 +1,4 @@
-RELEASE.TXT
+release.txt
 
                            MODFLOW-2000 Release Notes
 
@@ -11,6 +11,86 @@ these packages and processes, see mf2k.txt ("Summary of MODFLOW-2000").
 
 NOTE: Any use of trade, product or firm names is for descriptive purposes 
       only and does not imply endorsement by the U.S. Government.
+
+o Version 1.12 09/08/2003:
+
+The new Subsidence and Aquifer-System Compaction (SUB) Package is introduced
+with this release.  The new package encompasses all the capabilities of the
+Interbed Storage (IBS) Package and adds enhancements.  This version of
+Modflow-2000 also includes the IBS Package, but the IBS Package is
+considered obsolescent, and future versions of Modflow-2000 may not support
+it.  Concurrent use of the SUB and IBS Packages will result in an error
+message.  The SUB Package is documented in USGS Open-File Report 03-233.
+
+Version 2 of the HUF Package replaces version 1.  The new version of HUF
+includes the Layer Variable-Direction Horizontal Anisotropy (LVDA)
+capability documented in USGS Open-File Report 02-409, as well as three
+additional capabilities documented in USGS Open-File Report 03-347.
+
+The ADV Package has been updated to version 2.4.  The new version adds
+support for porosity parameters, documented in ADV-porosity-parameters.pdf
+in the doc directory of the Modflow-2000 distribution.  The use of the ADV
+Package is now restricted to simulations in which the first stress period is
+steady-state, and which include no other steady-state stress periods.
+
+Unfortunately, due to licensing restrictions, the USGS is no longer able to
+publicly distribute the Algebraic Multi-Grid (AMG) solver, on which the
+Link-AMG (LMG) Package relies.  USGS users can download a version of
+Modflow-2000 that includes AMG from a restricted web site (please contact
+Ned Banta or Arlen Harbaugh for the URL).  Users outside the USGS who intend
+to use AMG strictly for research purposes can request the code directly from
+Dr. Klaus Stuben of Fraunhofer-Institute for Algorithms and Scientific
+Computing (SCAI), Sankt Augustin, Germany, at
+klaus.stueben@scai.fraunhofer.de.
+
+A new optional setting in the OBS Process input file is available.  If
+"ALLFILES" is specified following the OUTNAM value, and if the value
+specified for OUTNAM is not "NONE", up to three additional output files
+are generated with the filename base defined by OUTNAM.  The
+"underscore.txt" file in the doc directory describes the new files.
+
+A fifth column has been added to the _os output file, which was originally
+described in table 5 on page 28 of USGS Open-File Report 00-184.  The fifth
+column lists the observation time, in model time units, from the beginning
+of the simulation.  For prior information, -1.0 is written.  The code
+modification for ADV assumes that all ADV observations are in the first
+stress period.
+
+Efficiency of the check for duplicate observation names was improved.
+
+The DATA AT HEAD LOCATIONS table was edited to improve clarity.
+
+The LMT6 Package (which provides linkage between Modflow-2000 and the MT3DMS
+multi-species mass transport model, see USGS Open-File Report 01-82) has
+been updated to support the HUF Package, version 2, and the MNW, ETS, and
+DRT Packages.  Please see lmt6.txt in the doc directory for more information.
+
+Bug fixes:
+
+A bug that caused problems when the <tab> character is used as a delimiter
+in input files has been fixed.
+
+A bug that could incorrectly cause printing of an error message referring
+to incorrect specification of interblock transmissivity averaging method
+when calculating sensitivity for "HK" or "HANI" type parameters, even if
+averaging method is correctly specified as HARMONIC MEAN, has been fixed.
+
+A bug that caused inaccurate sensitivity results or program failure when
+calculating sensitivities in a situation where one or both cells adjacent to
+a horizontal flow barrier (of the HFB Package) are inactive (IBOUND=0) has
+been fixed.
+
+Fixed bug that caused calculated heads to be incorrect when OBS Process is
+active, SEN Process is inactive, LPF Package is active, and first parameter
+defined in LPF file is either of type VKCB or HK.
+
+Several bugs in the MNW Package were fixed.
+
+A minor bug in the DAF Package was fixed.
+
+In Resan2k, a bug in the calculation of Cook's D was fixed, and the table
+showing Cook's D was modified to eliminate colums VAR(E) and VAR(Y), and add
+column VAR(Y)/VAR(E).
 
 o Version 1.11 04/10/2003:
 

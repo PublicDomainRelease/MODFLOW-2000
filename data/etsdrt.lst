@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.11 04/10/2003
+                             VERSION 1.12 09/08/2003
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -147,8 +147,8 @@
        ET RATE PROPORTION =  0.100000    
 
  Parameter:  DRT-Cond
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE     
- ------------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  CONDUCTANCE           
+ ------------------------------------------------------------------
       1      1      5      8       60.00           2.000    
 
            ----DRAIN CELL----  --RECIPIENT CELL--   RETURN
@@ -224,9 +224,9 @@
 
  DATA AT HEAD LOCATIONS
 
-        OBSERVATION      MEAS.      CALC.                          WEIGHTED
-   OBS#    NAME          HEAD       HEAD     RESIDUAL  WEIGHT**.5  RESIDUAL
-
+        OBSERVATION     OBSER-     SIMUL.                          WEIGHTED
+   OBS#    NAME         VATION     EQUIV.    RESIDUAL  WEIGHT**.5  RESIDUAL
+                          *          *
       1 h-1-8           82.3       82.3     -0.763E-05   10.0     -0.763E-04
       2 h-2-3           69.1       69.1       0.00       10.0       0.00    
       3 h-3-5           76.6       76.6      0.763E-05   10.0      0.763E-04
@@ -249,6 +249,10 @@
      20 h-9-2           62.2       62.2       0.00       10.0       0.00    
      21 h-10-3          69.3       69.3       0.00       10.0       0.00    
      22 h-11-9          84.3       84.3     -0.763E-05   10.0     -0.763E-04
+
+ * THE OBSERVATION (AND CORRESPONDING SIMULATED EQUIVALENT) IS HEAD OR TEMPORAL
+   CHANGE IN HEAD, AS SPECIFIED IN THE "HOB" INPUT FILE.  NEGATIVE TEMPORAL
+   CHANGES INDICATE DRAWDOWN.
 
  STATISTICS FOR HEAD RESIDUALS :
  MAXIMUM WEIGHTED RESIDUAL  : 0.763E-04 OBS#      3

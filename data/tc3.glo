@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.11 04/10/2003
+                             VERSION 1.12 09/08/2003
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
@@ -325,13 +325,13 @@
    NUMBER OF MULTILAYER HEADS.......................:    0
    MAXIMUM NUMBER OF LAYERS FOR MULTILAYER HEADS....:    0
 
-    1671 ELEMENTS IN X ARRAY ARE USED FOR OBSERVATIONS
-       2 ELEMENTS IN Z ARRAY ARE USED FOR OBSERVATIONS
-     341 ELEMENTS IN IX ARRAY ARE USED FOR OBSERVATIONS
+       1704 ELEMENTS IN X ARRAY ARE USED FOR OBSERVATIONS
+          2 ELEMENTS IN Z ARRAY ARE USED FOR OBSERVATIONS
+        341 ELEMENTS IN IX ARRAY ARE USED FOR OBSERVATIONS
 
  COMMON ERROR VARIANCE FOR ALL OBSERVATIONS SET TO:       1.000    
 
-       3672  ELEMENTS OF X ARRAY USED OUT OF       3672
+       3705  ELEMENTS OF X ARRAY USED OUT OF       3705
        1576  ELEMENTS OF Z ARRAY USED OUT OF       1576
         668  ELEMENTS OF IX ARRAY USED OUT OF        668
        3264  ELEMENTS OF XHS ARRAY USED OUT OF       3264
@@ -525,8 +525,8 @@
  the Sensitivity Process file
    NUMBER OF ENTRIES:      6
 
- WELL NO.  LAYER   ROW   COL   STRESS FACTOR   
- ----------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS FACTOR         
+ ----------------------------------------------------
       1      1      1      1       10.00    
       2      1      1      2       10.00    
       3      1      1      3       10.00    
@@ -540,8 +540,8 @@
  the Sensitivity Process file
    NUMBER OF ENTRIES:      9
 
- WELL NO.  LAYER   ROW   COL   STRESS FACTOR   
- ----------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS FACTOR         
+ ----------------------------------------------------
       1      1      1      7      0.5600    
       2      1      1      8      0.1120    
       3      1      1      9      0.1120    
@@ -558,8 +558,8 @@
  the Sensitivity Process file
    NUMBER OF ENTRIES:      1
 
- WELL NO.  LAYER   ROW   COL   STRESS FACTOR   
- ----------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS FACTOR         
+ ----------------------------------------------------
       1      1      7     11       1.000    
 
  PARAMETER NAME:WQ_4         TYPE:Q   
@@ -568,8 +568,8 @@
  the Sensitivity Process file
    NUMBER OF ENTRIES:      1
 
- WELL NO.  LAYER   ROW   COL   STRESS FACTOR   
- ----------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS FACTOR         
+ ----------------------------------------------------
       1      1      9     12       1.000    
 
 
@@ -581,8 +581,8 @@
  the Sensitivity Process file
    NUMBER OF ENTRIES:     38
 
- REACH NO.  LAYER   ROW   COL     STAGE    STRESS FACTOR     BOTTOM EL.   
- -------------------------------------------------------------------------
+ REACH NO.  LAYER   ROW   COL     STAGE    STRESS FACTOR     BOTTOM EL.         
+ -------------------------------------------------------------------------------
       1      1      1      8       4.500          0.1000E+05      -4.500    
       2      1      2      8       4.500          0.2000E+06      -4.500    
       3      1      3      8       4.500          0.2000E+06      -4.500    
@@ -658,8 +658,8 @@
  Parameter value from package file is:    1.0000    
    NUMBER OF ENTRIES:     13
 
- CHD NO.   LAYER   ROW   COL   START FACTOR      END FACTOR   
- -------------------------------------------------------------
+ CHD NO.   LAYER   ROW   COL   START FACTOR      END FACTOR         
+ -------------------------------------------------------------------
       1      1      1     16       10.40           10.40    
       2      1      2     16       10.06           10.06    
       3      1      3     16       9.448           9.448    

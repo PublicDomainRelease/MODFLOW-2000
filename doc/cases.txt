@@ -317,6 +317,19 @@ include "noise."
   Solver: PCG2
   Types of parameters defined / package: none
 
+21. Test case tr2k_s3:
+
+  This test case is documented in Hoffman and others (2003).
+  
+  Grid dimensions: 3 Layers, 10 Rows, 10 Columns
+  Stress periods: 1 steady, 30 transient
+  Optional processes: none
+  Mode: Forward
+  Flow package: BCF6
+  Stress packages: SUB, WEL
+  Solver: SIP
+  Types of parameters defined / package: none
+  
 
 REFERENCES
 
@@ -355,6 +368,11 @@ MODFLOW-2000, the U.S. Geological Survey modular ground-water model -- User
 guide to the observation, sensitivity, and parameter-estimation processes 
 and three post-processing programs: U.S. Geological Survey Water-Resources 
 Investigations Report 00-184, 210 p.
+
+Hoffmann, J., Leake, S.A., Galloway, D.L., and Wilson, A.M., 2003,
+MODFLOW-2000 Ground-Water Model--User Guide to the Subsidence and
+Aquifer-System Compaction (SUB) Package: U.S. Geological Survey Open-File
+Report 03-233, 44 p.
 
 Jobson, H.E., and Harbaugh, A.W., 1999, Modifications to the Diffusion 
 Analogy Surface-Water Flow Model (DAFLOW) for coupling to the modular 

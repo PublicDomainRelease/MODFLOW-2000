@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.11 04/10/2003
+                             VERSION 1.12 09/08/2003
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
@@ -13,7 +13,7 @@
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING ../data/tc2hufv4.huf
- FILE TYPE:HUF   UNIT   11   STATUS:OLD    
+ FILE TYPE:HUF2   UNIT   11   STATUS:OLD    
  FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
 
  OPENING tc2hufv4.hds
@@ -158,14 +158,17 @@
              ZONE ARRAY: RCHETM    
  READING ON UNIT   39 WITH FORMAT: (I1,17I2)           
 
- HUF1 -- HYDROGEOLOGIC-UNIT FLOW PACKAGE,  VERSION 1.04 ERA, 05/14/2002
+ HUF2 -- HYDROGEOLOGIC-UNIT FLOW PACKAGE,            VERSION 2.0, 07/02/2003
  INPUT READ FROM UNIT 11
 
  # HUF file for Test Case 2 Variant 4
  #
  HEAD AT CELLS THAT CONVERT TO DRY=  -999.00    
- Hydrogeologic-Unit Flow Package Active with  12 parameters
+ Hydrogeologic-Unit Flow Package Active with   5 units and  12 parameters
  HEADS IN HYDROGEOLOGIC UNITS WILL BE SAVED ON UNIT 90
+
+ IOHUFFLWS NOT FOUND AND WILL BE SET TO BE ZERO
+
     12 Named Parameters     
  STEADY-STATE SIMULATION
 
@@ -213,13 +216,13 @@
    NUMBER OF CELLS IN GENERAL-HEAD-CELL GROUPS......:      5
    NUMBER OF GENERAL-HEAD-CELL FLOWS................:      5
 
-     987 ELEMENTS IN X ARRAY ARE USED FOR OBSERVATIONS
-     132 ELEMENTS IN Z ARRAY ARE USED FOR OBSERVATIONS
-     509 ELEMENTS IN IX ARRAY ARE USED FOR OBSERVATIONS
+       1040 ELEMENTS IN X ARRAY ARE USED FOR OBSERVATIONS
+        132 ELEMENTS IN Z ARRAY ARE USED FOR OBSERVATIONS
+        509 ELEMENTS IN IX ARRAY ARE USED FOR OBSERVATIONS
 
  COMMON ERROR VARIANCE FOR ALL OBSERVATIONS SET TO:       1.000    
 
-      14707  ELEMENTS OF X ARRAY USED OUT OF      14707
+      14760  ELEMENTS OF X ARRAY USED OUT OF      14760
        4020  ELEMENTS OF Z ARRAY USED OUT OF       4020
       14534  ELEMENTS OF IX ARRAY USED OUT OF      14534
           0  ELEMENTS OF XHS ARRAY USED OUT OF          1
@@ -231,97 +234,97 @@
                     REFER.
        OBSERVATION  STRESS    TIME                              STATISTIC   PLOT
   OBS#    NAME      PERIOD   OFFSET    OBSERVATION  STATISTIC     TYPE      SYM.
-     1 W2L              1    0.000       979.0       5.000      STD. DEV.      1
-     2 WL2              1    0.000       1015.       5.000      STD. DEV.      1
-     3 WL2              1    0.000       1186.       5.000      STD. DEV.      1
-     4 WL4              1    0.000       291.7       5.000      STD. DEV.      1
-     5 WL4              1    0.000       964.4       5.000      STD. DEV.      1
-     6 WL4              1    0.000       1177.       5.000      STD. DEV.      1
-     7 WL4              1    0.000       1192.       5.000      STD. DEV.      1
-     8 WL5              1    0.000       760.7       5.000      STD. DEV.      1
+     1 Wl2-4            1    0.000       979.0       5.000      STD. DEV.      1
+     2 WL2-7            1    0.000       1015.       5.000      STD. DEV.      1
+     3 WL2-10           1    0.000       1186.       5.000      STD. DEV.      1
+     4 WL4-2            1    0.000       291.7       5.000      STD. DEV.      1
+     5 WL4-6            1    0.000       964.4       5.000      STD. DEV.      1
+     6 WL4-9            1    0.000       1177.       5.000      STD. DEV.      1
+     7 WL4-12           1    0.000       1192.       5.000      STD. DEV.      1
+     8 WL5-4            1    0.000       760.7       5.000      STD. DEV.      1
      MULTIPLE LAYERS AND PROPORTIONS :    1, 0.34       2, 0.33       3, 0.33
-     9 WL6              1    0.000       188.8       5.000      STD. DEV.      1
-    10 WL6              1    0.000       892.6       5.000      STD. DEV.      1
-    11 WL6              1    0.000       906.9       5.000      STD. DEV.      1
-    12 WL6              1    0.000       1201.       5.000      STD. DEV.      1
-    13 WL6              1    0.000       1198.       5.000      STD. DEV.      1
-    14 WL6              1    0.000       1198.       5.000      STD. DEV.      1
-    15 WL8              1    0.000       210.0       5.000      STD. DEV.      1
-    16 WL8              1    0.000       642.5       5.000      STD. DEV.      1
-    17 WL8              1    0.000       1014.       5.000      STD. DEV.      1
-    18 WL8              1    0.000       1233.       5.000      STD. DEV.      1
-    19 WL8              1    0.000       1257.       5.000      STD. DEV.      1
-    20 WL8              1    0.000       1201.       5.000      STD. DEV.      1
-    21 WL9              1    0.000       445.0       5.000      STD. DEV.      1
-    22 WL10             1    0.000       635.4       5.000      STD. DEV.      1
-    23 WL10             1    0.000       941.0       5.000      STD. DEV.      1
+     9 WL6-2            1    0.000       188.8       5.000      STD. DEV.      1
+    10 WL6-6            1    0.000       892.6       5.000      STD. DEV.      1
+    11 WL6-8            1    0.000       906.9       5.000      STD. DEV.      1
+    12 WL6-11           1    0.000       1201.       5.000      STD. DEV.      1
+    13 WL6-14           1    0.000       1198.       5.000      STD. DEV.      1
+    14 WL6-16           1    0.000       1198.       5.000      STD. DEV.      1
+    15 WL8-2            1    0.000       210.0       5.000      STD. DEV.      1
+    16 WL8-4            1    0.000       642.5       5.000      STD. DEV.      1
+    17 WL8-7            1    0.000       1014.       5.000      STD. DEV.      1
+    18 WL8-10           1    0.000       1233.       5.000      STD. DEV.      1
+    19 WL8-13           1    0.000       1257.       5.000      STD. DEV.      1
+    20 WL8-16           1    0.000       1201.       5.000      STD. DEV.      1
+    21 WL9-3            1    0.000       445.0       5.000      STD. DEV.      1
+    22 WL10-4           1    0.000       635.4       5.000      STD. DEV.      1
+    23 WL10-6           1    0.000       941.0       5.000      STD. DEV.      1
      MULTIPLE LAYERS AND PROPORTIONS :    1, 0.34       2, 0.33       3, 0.33
-    24 WL10             1    0.000       1108.       5.000      STD. DEV.      1
-    25 WL10             1    0.000       1395.       5.000      STD. DEV.      1
-    26 WL10             1    0.000       1277.       5.000      STD. DEV.      1
-    27 WL10             1    0.000       1159.       5.000      STD. DEV.      1
-    28 WL11             1    0.000       336.4       5.000      STD. DEV.      1
-    29 WL12             1    0.000       1063.       5.000      STD. DEV.      1
-    30 WL12             1    0.000       1312.       5.000      STD. DEV.      1
-    31 WL12             1    0.000       1479.       5.000      STD. DEV.      1
-    32 WL12             1    0.000       1219.       5.000      STD. DEV.      1
-    33 WL13             1    0.000       1483.       5.000      STD. DEV.      1
-    34 WL13             1    0.000       1315.       5.000      STD. DEV.      1
-    35 WL14             1    0.000       1225.       5.000      STD. DEV.      1
-    36 WL14             1    0.000       1405.       5.000      STD. DEV.      1
-    37 WL14             1    0.000       1193.       5.000      STD. DEV.      1
-    38 WL15             1    0.000       1219.       5.000      STD. DEV.      1
-    39 WL16             1    0.000       1263.       5.000      STD. DEV.      1
-    40 WL16             1    0.000       1197.       5.000      STD. DEV.      1
-    41 WL18             1    0.000       1235.       5.000      STD. DEV.      1
-    42 WL18             1    0.000       1194.       5.000      STD. DEV.      1
+    24 WL10-9           1    0.000       1108.       5.000      STD. DEV.      1
+    25 WL10-11          1    0.000       1395.       5.000      STD. DEV.      1
+    26 WL10-14          1    0.000       1277.       5.000      STD. DEV.      1
+    27 WL10-17          1    0.000       1159.       5.000      STD. DEV.      1
+    28 WL11-2           1    0.000       336.4       5.000      STD. DEV.      1
+    29 WL12-8           1    0.000       1063.       5.000      STD. DEV.      1
+    30 WL12-10          1    0.000       1312.       5.000      STD. DEV.      1
+    31 WL12-13          1    0.000       1479.       5.000      STD. DEV.      1
+    32 WL12-16          1    0.000       1219.       5.000      STD. DEV.      1
+    33 WL13-11          1    0.000       1483.       5.000      STD. DEV.      1
+    34 WL13-15          1    0.000       1315.       5.000      STD. DEV.      1
+    35 WL14-9           1    0.000       1225.       5.000      STD. DEV.      1
+    36 WL14-12          1    0.000       1405.       5.000      STD. DEV.      1
+    37 WL14-17          1    0.000       1193.       5.000      STD. DEV.      1
+    38 WL15-14          1    0.000       1219.       5.000      STD. DEV.      1
+    39 WL16-12          1    0.000       1263.       5.000      STD. DEV.      1
+    40 WL16-16          1    0.000       1197.       5.000      STD. DEV.      1
+    41 WL18-13          1    0.000       1235.       5.000      STD. DEV.      1
+    42 WL18-18          1    0.000       1194.       5.000      STD. DEV.      1
 
                                                      HEAD CHANGE
                                                       REFERENCE
         OBSERVATION                   ROW     COL    OBSERVATION
   OBS#     NAME       LAY  ROW  COL  OFFSET  OFFSET   (IF > 0)
-     1  W2L             1    2    4   0.000   0.000        0
-     2  WL2             1    2    7   0.000   0.000        0
-     3  WL2             1    2   10   0.000   0.000        0
-     4  WL4             1    4    2   0.000   0.000        0
-     5  WL4             1    4    6   0.000   0.000        0
-     6  WL4             1    4    9   0.000   0.000        0
-     7  WL4             1    4   12   0.000   0.000        0
-     8  WL5            -3    5    4   0.000   0.000        0
-     9  WL6             1    6    2   0.000   0.000        0
-    10  WL6             1    6    6   0.000   0.000        0
-    11  WL6             1    6    8   0.000   0.000        0
-    12  WL6             1    6   11   0.000   0.000        0
-    13  WL6             1    6   14   0.000   0.000        0
-    14  WL6             1    6   16   0.000   0.000        0
-    15  WL8             1    8    2   0.000   0.000        0
-    16  WL8             1    8    4   0.000   0.000        0
-    17  WL8             1    8    7   0.000   0.000        0
-    18  WL8             1    8   10   0.000   0.000        0
-    19  WL8             1    8   13   0.000   0.000        0
-    20  WL8             1    8   16   0.000   0.000        0
-    21  WL9             1    9    3   0.000   0.000        0
-    22  WL10            1   10    4   0.000   0.000        0
-    23  WL10           -3   10    6   0.000   0.000        0
-    24  WL10            1   10    9   0.000   0.000        0
-    25  WL10            1   10   11   0.000   0.000        0
-    26  WL10            1   10   14   0.000   0.000        0
-    27  WL10            1   10   17   0.000   0.000        0
-    28  WL11            1   11    2   0.000   0.000        0
-    29  WL12            1   12    8   0.000   0.000        0
-    30  WL12            1   12   10   0.000   0.000        0
-    31  WL12            1   12   13   0.000   0.000        0
-    32  WL12            1   12   16   0.000   0.000        0
-    33  WL13            1   13   11   0.000   0.000        0
-    34  WL13            1   13   15   0.000   0.000        0
-    35  WL14            1   14    9   0.000   0.000        0
-    36  WL14            1   14   12   0.000   0.000        0
-    37  WL14            1   14   17   0.000   0.000        0
-    38  WL15            1   15   14   0.000   0.000        0
-    39  WL16            1   16   12   0.000   0.000        0
-    40  WL16            1   16   16   0.000   0.000        0
-    41  WL18            1   18   13   0.000   0.000        0
-    42  WL18            1   18   18   0.000   0.000        0
+     1  Wl2-4           1    2    4   0.000   0.000        0
+     2  WL2-7           1    2    7   0.000   0.000        0
+     3  WL2-10          1    2   10   0.000   0.000        0
+     4  WL4-2           1    4    2   0.000   0.000        0
+     5  WL4-6           1    4    6   0.000   0.000        0
+     6  WL4-9           1    4    9   0.000   0.000        0
+     7  WL4-12          1    4   12   0.000   0.000        0
+     8  WL5-4          -3    5    4   0.000   0.000        0
+     9  WL6-2           1    6    2   0.000   0.000        0
+    10  WL6-6           1    6    6   0.000   0.000        0
+    11  WL6-8           1    6    8   0.000   0.000        0
+    12  WL6-11          1    6   11   0.000   0.000        0
+    13  WL6-14          1    6   14   0.000   0.000        0
+    14  WL6-16          1    6   16   0.000   0.000        0
+    15  WL8-2           1    8    2   0.000   0.000        0
+    16  WL8-4           1    8    4   0.000   0.000        0
+    17  WL8-7           1    8    7   0.000   0.000        0
+    18  WL8-10          1    8   10   0.000   0.000        0
+    19  WL8-13          1    8   13   0.000   0.000        0
+    20  WL8-16          1    8   16   0.000   0.000        0
+    21  WL9-3           1    9    3   0.000   0.000        0
+    22  WL10-4          1   10    4   0.000   0.000        0
+    23  WL10-6         -3   10    6   0.000   0.000        0
+    24  WL10-9          1   10    9   0.000   0.000        0
+    25  WL10-11         1   10   11   0.000   0.000        0
+    26  WL10-14         1   10   14   0.000   0.000        0
+    27  WL10-17         1   10   17   0.000   0.000        0
+    28  WL11-2          1   11    2   0.000   0.000        0
+    29  WL12-8          1   12    8   0.000   0.000        0
+    30  WL12-10         1   12   10   0.000   0.000        0
+    31  WL12-13         1   12   13   0.000   0.000        0
+    32  WL12-16         1   12   16   0.000   0.000        0
+    33  WL13-11         1   13   11   0.000   0.000        0
+    34  WL13-15         1   13   15   0.000   0.000        0
+    35  WL14-9          1   14    9   0.000   0.000        0
+    36  WL14-12         1   14   12   0.000   0.000        0
+    37  WL14-17         1   14   17   0.000   0.000        0
+    38  WL15-14         1   15   14   0.000   0.000        0
+    39  WL16-12         1   16   12   0.000   0.000        0
+    40  WL16-16         1   16   16   0.000   0.000        0
+    41  WL18-13         1   18   13   0.000   0.000        0
+    42  WL18-18         1   18   18   0.000   0.000        0
 
  DRAIN-CELL FLOW OBSERVATION VARIANCES ARE MULTIPLIED BY:       1.000    
 
@@ -345,7 +348,7 @@
                     REFER.              OBSERVED
        OBSERVATION  STRESS    TIME     DRAIN FLOW               STATISTIC   PLOT
   OBS#    NAME      PERIOD   OFFSET     GAIN (-)    STATISTIC     TYPE      SYM.
-    44 DRN1             1    0.000      -845.0      0.3000      COEF. VAR.     4
+    44 DRN2             1    0.000      -845.0      0.3000      COEF. VAR.     4
 
        LAYER  ROW  COLUMN    FACTOR
           1.   10.    11.     1.00
@@ -356,7 +359,7 @@
                     REFER.              OBSERVED
        OBSERVATION  STRESS    TIME     DRAIN FLOW               STATISTIC   PLOT
   OBS#    NAME      PERIOD   OFFSET     GAIN (-)    STATISTIC     TYPE      SYM.
-    45 DRN1             1    0.000      -133.0      0.3000      COEF. VAR.     4
+    45 DRN3             1    0.000      -133.0      0.3000      COEF. VAR.     4
 
        LAYER  ROW  COLUMN    FACTOR
           1.   14.    14.     1.00
@@ -367,7 +370,7 @@
                     REFER.              OBSERVED
        OBSERVATION  STRESS    TIME     DRAIN FLOW               STATISTIC   PLOT
   OBS#    NAME      PERIOD   OFFSET     GAIN (-)    STATISTIC     TYPE      SYM.
-    46 DRN1             1    0.000      -19.00      0.3000      COEF. VAR.     4
+    46 DRN4             1    0.000      -19.00      0.3000      COEF. VAR.     4
 
        LAYER  ROW  COLUMN    FACTOR
           1.   15.    14.     1.00
@@ -378,7 +381,7 @@
                     REFER.              OBSERVED
        OBSERVATION  STRESS    TIME     DRAIN FLOW               STATISTIC   PLOT
   OBS#    NAME      PERIOD   OFFSET     GAIN (-)    STATISTIC     TYPE      SYM.
-    47 DRN1             1    0.000      -6.200      0.3000      COEF. VAR.     4
+    47 DRN5             1    0.000      -6.200      0.3000      COEF. VAR.     4
 
        LAYER  ROW  COLUMN    FACTOR
           1.   16.    14.     1.00
@@ -448,9 +451,6 @@
        LAYER  ROW  COLUMN    FACTOR
           1.   12.     9.     1.00
 
- *** WARNING:  THE OBSERVATION DATA SET CONTAINS DUPLICATE OBSERVATION NAMES.
- *** FUTURE VERSIONS OF MODFLOW MAY NOT ALLOW DUPLICATION OF OBSERVATION NAMES.
-
 
 
                                     SOLUTION BY THE CONJUGATE-GRADIENT METHOD
@@ -469,7 +469,7 @@
  WETTING CAPABILITY IS NOT ACTIVE IN ANY LAYER
 
 
- HUF1 -- HYDROGEOLOGIC-UNIT FLOW PACKAGE
+ HUF2 -- HYDROGEOLOGIC-UNIT FLOW PACKAGE
  ---------------------------------------------------------------------------
 
 
@@ -815,159 +815,158 @@
  PARAMETER NAME:HK1          TYPE:HK   UNITS:   5
  The parameter value from the package file is:   1.0000    
 UNIT HGU1      CORRESPONDS TO UNIT NO.     1
-                LAYER:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  1   MULTIPLIER:NONE   ZONE:ZLAY1
                 ZONE VALUES:    1
 UNIT HGU2      CORRESPONDS TO UNIT NO.     2
-                LAYER:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  2   MULTIPLIER:NONE   ZONE:ZLAY1
                 ZONE VALUES:    1
 UNIT HGU3      CORRESPONDS TO UNIT NO.     3
-                LAYER:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  3   MULTIPLIER:NONE   ZONE:ZLAY2
                 ZONE VALUES:    1
 UNIT HGU4      CORRESPONDS TO UNIT NO.     4
-                LAYER:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  4   MULTIPLIER:NONE   ZONE:ZLAY2
                 ZONE VALUES:    1
 UNIT HGU5      CORRESPONDS TO UNIT NO.     5
-                LAYER:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                UNIT:  5   MULTIPLIER:NONE   ZONE:ZLAY3
                 ZONE VALUES:    1
 
  PARAMETER NAME:HK2          TYPE:HK   UNITS:   5
  The parameter value from the package file is:  1.00000E-02
 UNIT HGU1      CORRESPONDS TO UNIT NO.     1
-                LAYER:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  1   MULTIPLIER:NONE   ZONE:ZLAY1
                 ZONE VALUES:    2
 UNIT HGU2      CORRESPONDS TO UNIT NO.     2
-                LAYER:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  2   MULTIPLIER:NONE   ZONE:ZLAY1
                 ZONE VALUES:    2
 UNIT HGU3      CORRESPONDS TO UNIT NO.     3
-                LAYER:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  3   MULTIPLIER:NONE   ZONE:ZLAY2
                 ZONE VALUES:    2
 UNIT HGU4      CORRESPONDS TO UNIT NO.     4
-                LAYER:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  4   MULTIPLIER:NONE   ZONE:ZLAY2
                 ZONE VALUES:    2
 UNIT HGU5      CORRESPONDS TO UNIT NO.     5
-                LAYER:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                UNIT:  5   MULTIPLIER:NONE   ZONE:ZLAY3
                 ZONE VALUES:    2
 
  PARAMETER NAME:HK3          TYPE:HK   UNITS:   5
  The parameter value from the package file is:  1.00000E-04
 UNIT HGU1      CORRESPONDS TO UNIT NO.     1
-                LAYER:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  1   MULTIPLIER:NONE   ZONE:ZLAY1
                 ZONE VALUES:    3
 UNIT HGU2      CORRESPONDS TO UNIT NO.     2
-                LAYER:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  2   MULTIPLIER:NONE   ZONE:ZLAY1
                 ZONE VALUES:    3
 UNIT HGU3      CORRESPONDS TO UNIT NO.     3
-                LAYER:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  3   MULTIPLIER:NONE   ZONE:ZLAY2
                 ZONE VALUES:    3
 UNIT HGU4      CORRESPONDS TO UNIT NO.     4
-                LAYER:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  4   MULTIPLIER:NONE   ZONE:ZLAY2
                 ZONE VALUES:    3
 UNIT HGU5      CORRESPONDS TO UNIT NO.     5
-                LAYER:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                UNIT:  5   MULTIPLIER:NONE   ZONE:ZLAY3
                 ZONE VALUES:    3
 
  PARAMETER NAME:HK4          TYPE:HK   UNITS:   5
  The parameter value from the package file is:  1.00000E-06
 UNIT HGU1      CORRESPONDS TO UNIT NO.     1
-                LAYER:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  1   MULTIPLIER:NONE   ZONE:ZLAY1
                 ZONE VALUES:    4
 UNIT HGU2      CORRESPONDS TO UNIT NO.     2
-                LAYER:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  2   MULTIPLIER:NONE   ZONE:ZLAY1
                 ZONE VALUES:    4
 UNIT HGU3      CORRESPONDS TO UNIT NO.     3
-                LAYER:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  3   MULTIPLIER:NONE   ZONE:ZLAY2
                 ZONE VALUES:    4
 UNIT HGU4      CORRESPONDS TO UNIT NO.     4
-                LAYER:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  4   MULTIPLIER:NONE   ZONE:ZLAY2
                 ZONE VALUES:    4
 UNIT HGU5      CORRESPONDS TO UNIT NO.     5
-                LAYER:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                UNIT:  5   MULTIPLIER:NONE   ZONE:ZLAY3
                 ZONE VALUES:    4
 
  PARAMETER NAME:VKA12_1      TYPE:VK   UNITS:   4
  The parameter value from the package file is:  0.25000    
 UNIT HGU1      CORRESPONDS TO UNIT NO.     1
-                LAYER:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  1   MULTIPLIER:NONE   ZONE:ZLAY1
                 ZONE VALUES:    1
 UNIT HGU2      CORRESPONDS TO UNIT NO.     2
-                LAYER:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  2   MULTIPLIER:NONE   ZONE:ZLAY1
                 ZONE VALUES:    1
 UNIT HGU3      CORRESPONDS TO UNIT NO.     3
-                LAYER:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  3   MULTIPLIER:NONE   ZONE:ZLAY2
                 ZONE VALUES:    1
 UNIT HGU4      CORRESPONDS TO UNIT NO.     4
-                LAYER:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  4   MULTIPLIER:NONE   ZONE:ZLAY2
                 ZONE VALUES:    1
 
  PARAMETER NAME:VKA12_2      TYPE:VK   UNITS:   4
  The parameter value from the package file is:  2.50000E-03
 UNIT HGU1      CORRESPONDS TO UNIT NO.     1
-                LAYER:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  1   MULTIPLIER:NONE   ZONE:ZLAY1
                 ZONE VALUES:    2
 UNIT HGU2      CORRESPONDS TO UNIT NO.     2
-                LAYER:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  2   MULTIPLIER:NONE   ZONE:ZLAY1
                 ZONE VALUES:    2
 UNIT HGU3      CORRESPONDS TO UNIT NO.     3
-                LAYER:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  3   MULTIPLIER:NONE   ZONE:ZLAY2
                 ZONE VALUES:    2
 UNIT HGU4      CORRESPONDS TO UNIT NO.     4
-                LAYER:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  4   MULTIPLIER:NONE   ZONE:ZLAY2
                 ZONE VALUES:    2
 
  PARAMETER NAME:VKA12_3      TYPE:VK   UNITS:   4
  The parameter value from the package file is:  2.50000E-05
 UNIT HGU1      CORRESPONDS TO UNIT NO.     1
-                LAYER:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  1   MULTIPLIER:NONE   ZONE:ZLAY1
                 ZONE VALUES:    3
 UNIT HGU2      CORRESPONDS TO UNIT NO.     2
-                LAYER:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  2   MULTIPLIER:NONE   ZONE:ZLAY1
                 ZONE VALUES:    3
 UNIT HGU3      CORRESPONDS TO UNIT NO.     3
-                LAYER:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  3   MULTIPLIER:NONE   ZONE:ZLAY2
                 ZONE VALUES:    3
 UNIT HGU4      CORRESPONDS TO UNIT NO.     4
-                LAYER:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  4   MULTIPLIER:NONE   ZONE:ZLAY2
                 ZONE VALUES:    3
 
  PARAMETER NAME:VKA12_4      TYPE:VK   UNITS:   4
  The parameter value from the package file is:  2.50000E-07
 UNIT HGU1      CORRESPONDS TO UNIT NO.     1
-                LAYER:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  1   MULTIPLIER:NONE   ZONE:ZLAY1
                 ZONE VALUES:    4
 UNIT HGU2      CORRESPONDS TO UNIT NO.     2
-                LAYER:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  2   MULTIPLIER:NONE   ZONE:ZLAY1
                 ZONE VALUES:    4
 UNIT HGU3      CORRESPONDS TO UNIT NO.     3
-                LAYER:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  3   MULTIPLIER:NONE   ZONE:ZLAY2
                 ZONE VALUES:    4
 UNIT HGU4      CORRESPONDS TO UNIT NO.     4
-                LAYER:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  4   MULTIPLIER:NONE   ZONE:ZLAY2
                 ZONE VALUES:    4
 
  PARAMETER NAME:VKA3_1       TYPE:VK   UNITS:   1
  The parameter value from the package file is:   1.0000    
 UNIT HGU5      CORRESPONDS TO UNIT NO.     5
-                LAYER:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                UNIT:  5   MULTIPLIER:NONE   ZONE:ZLAY3
                 ZONE VALUES:    1
 
  PARAMETER NAME:VKA3_2       TYPE:VK   UNITS:   1
  The parameter value from the package file is:  1.00000E-02
 UNIT HGU5      CORRESPONDS TO UNIT NO.     5
-                LAYER:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                UNIT:  5   MULTIPLIER:NONE   ZONE:ZLAY3
                 ZONE VALUES:    2
 
  PARAMETER NAME:VKA3_3       TYPE:VK   UNITS:   1
  The parameter value from the package file is:  1.00000E-04
 UNIT HGU5      CORRESPONDS TO UNIT NO.     5
-                LAYER:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                UNIT:  5   MULTIPLIER:NONE   ZONE:ZLAY3
                 ZONE VALUES:    3
 
  PARAMETER NAME:VKA3_4       TYPE:VK   UNITS:   1
  The parameter value from the package file is:  1.00000E-06
 UNIT HGU5      CORRESPONDS TO UNIT NO.     5
-                LAYER:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                UNIT:  5   MULTIPLIER:NONE   ZONE:ZLAY3
                 ZONE VALUES:    4
- ITRSS 0
 
 Reading PRINTCODE information
 UNIT HGU2      CORRESPONDS TO UNIT NO.     2
@@ -992,8 +991,8 @@ HGU5           0     0     0     0     0
  Parameter value from package file is:    1.0000    
    NUMBER OF ENTRIES:      5
 
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
- ------------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR         
+ ------------------------------------------------------------------
       1      1      7      6       400.0           1.000    
       2      1     10     11       550.0           1.000    
       3      1     14     14       1200.           1.000    
@@ -1015,8 +1014,8 @@ HGU5           0     0     0     0     0
  Parameter value from package file is:    1.0000    
    NUMBER OF ENTRIES:      5
 
- BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR   
- ----------------------------------------------------------
+ BOUND. NO. LAYER   ROW   COL     STAGE    STRESS FACTOR         
+ ----------------------------------------------------------------
       1      1      3      6       350.0           1.000    
       2      1      3     11       500.0           1.000    
       3      1      4     11       500.0           1.000    
@@ -1039,11 +1038,11 @@ HGU5           0     0     0     0     0
       SMALLEST WEIGHTED RESIDUALS      |       LARGEST WEIGHTED RESIDUALS
                 WEIGHTED   PERCENT OF  |                 WEIGHTED   PERCENT OF
  NAME           RESIDUAL    OBJ FUNC   |  NAME           RESIDUAL    OBJ FUNC
- GHB3          -0.173E-02     3.05     |  DRN1           0.879E-02    78.51
+ GHB3          -0.173E-02     3.05     |  DRN3           0.879E-02    78.51
  GHB1          -0.142E-02     2.04     |  GHB5           0.232E-02     5.49
- WL12          -0.122E-03     0.02     |  GHB2           0.188E-02     3.59
- WL12          -0.122E-03     0.02     |  GHB4           0.167E-02     2.82
- WL4           -0.977E-04     0.01     |  DRN1           0.139E-02     1.96
+ WL12-13       -0.122E-03     0.02     |  GHB2           0.188E-02     3.59
+ WL12-10       -0.122E-03     0.02     |  GHB4           0.167E-02     2.82
+ WL4-2         -0.977E-04     0.01     |  DRN2           0.139E-02     1.96
 
  STATISTICS FOR ALL RESIDUALS :
  AVERAGE WEIGHTED RESIDUAL  : 0.294E-03
@@ -1065,7 +1064,7 @@ HGU5           0     0     0     0     0
 
 
  CORRELATION BETWEEN ORDERED WEIGHTED RESIDUALS AND NORMAL ORDER STATISTICS
- FOR OBSERVATIONS =    0.404    
+ FOR OBSERVATIONS =    0.405    
 
  --------------------------------------------------------------------------
  COMMENTS ON THE INTERPRETATION OF THE CORRELATION BETWEEN

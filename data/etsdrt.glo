@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.11 04/10/2003
+                             VERSION 1.12 09/08/2003
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
@@ -217,13 +217,13 @@
    NUMBER OF CELLS IN DRAIN-CELL GROUPS...........:      1
    NUMBER OF DRAIN-CELL FLOWS.....................:      1
 
-     670 ELEMENTS IN X ARRAY ARE USED FOR OBSERVATIONS
-       6 ELEMENTS IN Z ARRAY ARE USED FOR OBSERVATIONS
-     231 ELEMENTS IN IX ARRAY ARE USED FOR OBSERVATIONS
+        694 ELEMENTS IN X ARRAY ARE USED FOR OBSERVATIONS
+          6 ELEMENTS IN Z ARRAY ARE USED FOR OBSERVATIONS
+        231 ELEMENTS IN IX ARRAY ARE USED FOR OBSERVATIONS
 
  COMMON ERROR VARIANCE FOR ALL OBSERVATIONS SET TO:       1.000    
 
-       2493  ELEMENTS OF X ARRAY USED OUT OF       2493
+       2517  ELEMENTS OF X ARRAY USED OUT OF       2517
         710  ELEMENTS OF Z ARRAY USED OUT OF        710
        3627  ELEMENTS OF IX ARRAY USED OUT OF       3627
         484  ELEMENTS OF XHS ARRAY USED OUT OF        484
@@ -384,8 +384,8 @@
  the Sensitivity Process file
    NUMBER OF ENTRIES:      1
 
- DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR   
- ------------------------------------------------------------
+ DRAIN NO.  LAYER   ROW   COL     DRAIN EL.  STRESS FACTOR         
+ ------------------------------------------------------------------
       1      1      5      8       60.00           1.000    
 
            ----DRAIN CELL----  --RECIPIENT CELL--   RETURN

@@ -33,7 +33,7 @@ C=======================================================================
      &                   SSDR,SSRV,SSGB,SSST,SSAD,SSCH,SSPI,SSTO,ITMXP,
      &                   IPES,BPRI,ITERP,IERR,IERRU,NTT2,LCOBDRT,SSDT,
      &                   NQTDT,IOWTQDT,NRSO,NPOST,NNEGT,NRUNS,NQTSF,
-     &                   IOWTQSF,LCOBSFR,SSSF,KTDIM,NHT)
+     &                   IOWTQSF,LCOBSFR,SSSF,KTDIM,NHT,OTIME)
 C-----VERSION 20010329 ERB
 C     ******************************************************************
 C     BECAUSE CONVERGENCE CRITERIA HAVE NOT BEEN MET,
@@ -59,6 +59,7 @@ C     ------------------------------------------------------------------
       DIMENSION WTQ(NDMHAR,NDMHAR), WTQS(NDMHAR,NDMHAR),
      &          WTPS(IPRAR,IPRAR)
       DIMENSION SSDT(ITMXP+1), SSSF(ITMXP+1)
+      REAL OTIME(ND)
       INCLUDE 'param.inc'
 C
       IF (IPAR.EQ.0 .OR. IPAR.EQ.-1) THEN
@@ -80,7 +81,8 @@ C
      &                   LCOBGHB,LCOBSTR,LCOBCHD,LCOBADV,-1,SSGF,SSDR,
      &                   SSRV,SSGB,SSST,SSAD,SSCH,SSPI,SSTO,ITMXP,IPES,
      &                   BPRI,LCOBDRT,SSDT,NQTDT,IOWTQDT,NRSO,NPOST,
-     &                   NNEGT,NRUNS,NQTSF,IOWTQSF,LCOBSFR,SSSF,NHT)
+     &                   NNEGT,NRUNS,NQTSF,IOWTQSF,LCOBSFR,SSSF,NHT,
+     &                   OTIME)
       ENDIF
       IF (IP.EQ.0) THEN
         WRITE (IOUT,540) KSTP,KPER
@@ -1149,7 +1151,7 @@ C3B-----When word is not quoted, space, comma, or tab will terminate.
       ELSE
          DO 30 J=I,LINLEN
          IF(LINE(J:J).EQ.' ' .OR. LINE(J:J).EQ.','
-     &    .OR. LINE(I:I).EQ.TAB) GO TO 40
+     &    .OR. LINE(J:J).EQ.TAB) GO TO 40
 30       CONTINUE
       END IF
 C
@@ -1670,7 +1672,7 @@ C     ------------------------------------------------------------------
 C
 C  Define the label
       BUF=LABEL
-      NBUF=LEN(LABEL)+3
+      NBUF=LEN(LABEL)+9
       IF(NAUX.GT.0) THEN
       DO 10 I=1,NAUX
          N1=NBUF+1
@@ -2109,7 +2111,8 @@ C5------RETURN
       RETURN
       END
       SUBROUTINE UOBSTI(ID,IOUT,ISSA,ITRSS,NPER,NSTP,IREFSP,NUMTS,
-     &                  PERLEN,TOFF1,TOFFSET,TOMULT,TSMULT,ITR1ST)
+     &                  PERLEN,TOFF1,TOFFSET,TOMULT,TSMULT,ITR1ST,
+     &                  OBSTIME)
 C-----VERSION 19990729 ERB
 C     ******************************************************************
 C     ASSIGN OBSERVATION TIME STEP (NUMTS) AND TOFF GIVEN REFERENCE
@@ -2138,9 +2141,11 @@ C-----ENSURE THAT SPECIFIED REFERENCE STRESS PERIOD IS VALID
 C
 C-----FIND NUMBER OF TIME STEPS PRECEDING REFERENCE STRESS PERIOD
       NUMTS = 0
+      OBSTIME = 0.0
       IF (IREFSP.GT.1) THEN
         DO 10 I = 1, IREFSP-1
           NUMTS = NUMTS + NSTP(I)
+          OBSTIME = OBSTIME + PERLEN(I)
  10     CONTINUE
       ENDIF
 C
@@ -2149,6 +2154,7 @@ C
 C-----USE TOMULT TO CONVERT TOFFSET TO MODEL-TIME UNITS (ASSUMES THAT
 C     USER HAS DEFINED TOMULT CORRECTLY)
       TOFFMULT = TOFFSET*TOMULT
+      OBSTIME = OBSTIME + TOFFMULT
 C
 C-----FIND STRESS PERIOD IN WHICH OBSERVATION TIME FALLS.
 C     LOOP THROUGH STRESS PERIODS STARTING AT REFERENCE STRESS PERIOD.
@@ -2640,4 +2646,53 @@ C     ------------------------------------------------------------------
       ENDIF
       STOP
 
+      END
+C=======================================================================
+      SUBROUTINE SHELLSORT (X, N)
+C
+C      Algorithm obtained from http://www.nist.gov/dads/HTML/shellsort.html
+C      Thank you NIST!
+C
+C        ALGORITHM AS 304.8 APPL.STATIST. (1996), VOL.45, NO.3
+C
+C        Sorts the N values stored in array X in ascending order
+C
+C  Based on an "adaptation by Marlene Metzner" this algorithm is referred to as
+C  the Shell-Metzner sort by John P. Grillo, A Comparison of Sorts, Creative
+C  Computing, 2:76-80, Nov/Dec 1976. Grillo cites Fredric Stuart, FORTRAN
+C  Programming, John Wiley and Sons, New York, 1969, page 294. In crediting
+C  "one of the fastest" programs for sorting, Stuart says in a footnote,
+C  "Published by Marlene Metzner, Pratt & Whitney Aircraft Company. From a
+C  method described by D. L. Shell."
+C
+      INTEGER N
+      CHARACTER*12 X(N)
+C
+      INTEGER I, J, INCR
+      CHARACTER*12 TEMP
+C
+      INCR = 1
+C
+C        Loop : calculate the increment
+C
+   10 INCR = 3 * INCR + 1
+      IF (INCR .LE. N) GOTO 10
+C
+C        Loop : Shell-Metzner sort
+C
+   20 INCR = INCR / 3
+      I = INCR + 1
+   30 IF (I .GT. N) GOTO 60
+      TEMP = X(I)
+      J = I
+   40 IF (X(J - INCR) .LT. TEMP) GOTO 50
+      X(J) = X(J - INCR)
+      J = J - INCR
+      IF (J .GT. INCR) GOTO 40
+   50 X(J) = TEMP
+      I = I + 1
+      GOTO 30
+   60 IF (INCR .GT. 1) GOTO 20
+C
+      RETURN
       END

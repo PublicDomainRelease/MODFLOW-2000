@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.11 04/10/2003
+                             VERSION 1.12 09/08/2003
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
@@ -270,6 +270,7 @@
  #
  OBSERVATION GRAPH-DATA OUTPUT FILES
  WILL BE PRINTED AND NAMED USING THE BASE: tc1obsen
+ THE EXTENDED SET OF OUTPUT FILES WILL BE PRINTED
  DIMENSIONLESS SCALED OBSERVATION SENSITIVITIES WILL BE PRINTED
  ONE-PERCENT SCALED OBSERVATION SENSITIVITIES WILL BE PRINTED
 
@@ -291,13 +292,13 @@
    NUMBER OF CELLS IN RIVER-CELL GROUPS...........:     18
    NUMBER OF RIVER-CELL FLOWS.....................:      3
 
-    1531 ELEMENTS IN X ARRAY ARE USED FOR OBSERVATIONS
-      20 ELEMENTS IN Z ARRAY ARE USED FOR OBSERVATIONS
-     339 ELEMENTS IN IX ARRAY ARE USED FOR OBSERVATIONS
+       1567 ELEMENTS IN X ARRAY ARE USED FOR OBSERVATIONS
+         20 ELEMENTS IN Z ARRAY ARE USED FOR OBSERVATIONS
+        339 ELEMENTS IN IX ARRAY ARE USED FOR OBSERVATIONS
 
  COMMON ERROR VARIANCE FOR ALL OBSERVATIONS SET TO:       1.000    
 
-      19869  ELEMENTS OF X ARRAY USED OUT OF      19869
+      19905  ELEMENTS OF X ARRAY USED OUT OF      19905
         668  ELEMENTS OF Z ARRAY USED OUT OF        668
        3315  ELEMENTS OF IX ARRAY USED OUT OF       3315
        5832  ELEMENTS OF XHS ARRAY USED OUT OF       5832
@@ -553,8 +554,8 @@
  Parameter value from package file is:   -1.1000    
    NUMBER OF ENTRIES:      2
 
- WELL NO.  LAYER   ROW   COL   STRESS FACTOR   
- ----------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS FACTOR         
+ ----------------------------------------------------
       1      1      9     10       1.000    
       2      2      9     10       1.000    
 
@@ -565,8 +566,8 @@
  Parameter value from package file is:   1.20000E-03
    NUMBER OF ENTRIES:     18
 
- REACH NO.  LAYER   ROW   COL     STAGE    STRESS FACTOR     BOTTOM EL.   
- -------------------------------------------------------------------------
+ REACH NO.  LAYER   ROW   COL     STAGE    STRESS FACTOR     BOTTOM EL.         
+ -------------------------------------------------------------------------------
       1      1      1      1       100.0           1000.           90.00    
       2      1      2      1       100.0           1000.           90.00    
       3      1      3      1       100.0           1000.           90.00    

@@ -407,8 +407,9 @@ C     ------------------------------------------------------------------
   542 FORMAT(3X,A)
   585 FORMAT (/,' WARNING -- NPE > ND/3 : YOU MAY BE TRYING TO ESTIMATE'
      &       ,' TOO MANY',/,4X,'PARAMETERS FOR THE DATA (PES1BAS6RP)',/)
-  590 FORMAT (/,' ND MUST BE GREATER THAN NPE',
-     &        ' -- STOP EXECUTION (PES1BAS6RP)')
+  590 FORMAT (/,' NUMBER OF OBSERVATIONS MUST BE GREATER THAN NUMBER OF',
+     &        ' PARAMETERS BEING',/,
+     &        ' ESTIMATED -- STOP EXECUTION (PES1BAS6RP)')
   620 FORMAT (/,' ERROR: SEARCH ABOVE FOR ERROR MESSAGE(S)',/,
      &        ' -- STOP EXECUTION (PES1BAS6RP)')
   640 FORMAT (/,' ERROR: PARAMETER NAME "',A,'" NOT DEFINED',/,
@@ -1002,7 +1003,7 @@ C=======================================================================
      &                      NPLIST,MPRAR,IPRAR,IOUB,ISENS,IBEALE,ITERP,
      &                      ITMXP,NDMHAR,PRNT,OUTNAM,PAREST,SSPI,SSTO,
      &                      NPAR,DMXA,BPRI,BSCAL,IPRINT,AAP,AMCA,RSQA,
-     &                      RSPA,AMPA,ITERPK)
+     &                      RSPA,AMPA,ITERPK,OBSALL,IUSS)
 C     VERSION 20010613 ERB
 C     ******************************************************************
 C     FINAL GAUSS-NEWTON OUTPUT FOR PARAMETER ESTIMATION
@@ -1014,7 +1015,7 @@ C     ------------------------------------------------------------------
       INTEGER I, IDRY, ISENS, IFO, IND, IOUT, IOWTQ, IP, IPR, IPRC,
      &        ITERPF, LN, LPRINT, MPR, ND, NDMH, NHT, NIPR, NPE
       CHARACTER*45 ANAME1
-      CHARACTER*200 OUTNAM
+      CHARACTER*200 OUTNAM, FN
       DOUBLE PRECISION C(NPE,NPE), SCLE(NPE), EIGL(NPE),
      &                 EIGV(NPE,NPE), EIGW(NPE), DMXA(ITMXP+1), VAR
       DIMENSION BUFF(NPE,NPE+2), WT(ND), HOBS(ND), H(ND), BPRI(IPRAR),
@@ -1025,6 +1026,7 @@ C     ------------------------------------------------------------------
      &          SSTO(ITMXP+1), NPAR(ITMXP+1), AAP(ITMXP), AMCA(ITMXP),
      &          RSQA(ITMXP+1), RSPA(ITMXP+1), AMPA(ITMXP+1),
      &          NIPR(IPRAR)
+      LOGICAL OBSALL
       INCLUDE 'param.inc'
       INCLUDE 'parallel.inc'
       DATA ANAME1 /'VARIANCE-COVARIANCE MATRIX FOR THE PARAMETERS'/
@@ -1051,6 +1053,9 @@ C
   600 FORMAT (20A4)
   605 FORMAT (7I5,I10,E13.6)
   645 FORMAT (13X,6(5X,I2,4X),/,25(13X,6(5X,I2,4X),/))
+  650 FORMAT(500(2X,A,3X))
+  660 FORMAT(500(G14.7,1X))
+  670 FORMAT(1X, 'STANDARD ERROR OF THE REGRESSION: ',G14.7)
 C
 C-----WRITE FINAL SET OF PARAMETER VALUES TO IOUB FILE IF PARAMETER
 C     ESTIMATION DID NOT CONVERGE
@@ -1076,6 +1081,7 @@ C
         IF (ITERP.EQ.ITMXP) THEN
 C---------EXCEEDED MAXIMUM NUMBER OF PARAMETER-ESTIMATION ITERATIONS
           WRITE (IOUT,510)
+          IF (MYID.EQ.MPROC .AND. OUTNAM.NE.'NONE') CLOSE(IUSS)
         ENDIF
         RETURN
       ENDIF
@@ -1110,12 +1116,25 @@ C-------PRINT VARIANCE-COVARIANCE MATRIX.
    50   CONTINUE
         WRITE (IOUT,570) ANAME1
         CALL UPARPM(BUFF,NPE,IPRC,IOUT)
+C
+        IF (OBSALL) THEN
+C         WRITE VARIANCE-COVARIANCE MATRIX TO _mv FILE
+          IMV = IGETUNIT(7,1000)
+          FN = TRIM(OUTNAM)//'._mv'
+          OPEN(IMV,FILE=FN)
+          WRITE(IMV,650) (PARNAM(IPPTR(I)),I=1,NPE)
+          DO 70 IP = 1, NPE
+            WRITE(IMV,660) (BUFF(I,IP),I=1,NPE)
+   70     CONTINUE
+          CLOSE(IMV)
+        ENDIF
+C
 C-------EIGENVALUES AND EIGENVECTORS OF COV MATRIX SCALED BY PARAMETERS
         IF (LPRINT.NE.0) CALL SPES1BAS6EV(C,EIGV,EIGW,NPE,NPLIST,EIGL,
      &                                    IOUT,B1,ITERPF,BUFF,IPRC)
 C-------PRINT PARAMETER STATISTICS
         CALL SPES1BAS6WS(NPE,BUFF,LN,IOUT,SCLE,ND,MPR,BL,BU,C,IPRC,
-     &                   NPLIST,PRNT,OUTNAM)
+     &                   NPLIST,PRNT,OUTNAM,OBSALL)
 C-------CALCULATE CORRELATION COEFFICIENT
         CALL SOBS1BAS6CC(ND,WT,HOBS,H,R,R1,MPR,WP,B,PRM,IPR,
      &                   NIPR,WTPS,NHT,WTQ,WTQS,IOWTQ,NDMH,NPLIST,MPRAR,
@@ -1125,6 +1144,15 @@ C-------PRINT FINAL RSQ'S, ERROR VARIANCE, CORRELATION, ITERATIONS
 C-------CALC AND PRINT STATISTICS BASED ON MAX LIKELIHOOD OBJ FUNCTION
         CALL SOBS1BAS6ML(RSQP,WT,NPE,ND,WP,MPR,IOUT,EV,IPR,DETWTP,NHT,
      &                   DTLWTQ,MPRAR)
+
+C
+        IF (OUTNAM.NE.'NONE') THEN
+C         WRITE STANDARD ERROR OF REGRESSION TO _ss FILE AND CLOSE IT
+          WRITE(IUSS,670) VAR**.5
+C         CLOSE _ss FILE
+          CLOSE (UNIT=IUSS)
+        ENDIF
+
       ENDIF
 C
 C-----OUTPUT FOR PROGRAM BEALEP
@@ -1612,7 +1640,7 @@ C
       END
 C=======================================================================
       SUBROUTINE SPES1BAS6WS(NPE,BUFF,LN,IOUT,SCLE,ND,MPR,BL,BU,C,IPRC,
-     &                       NPLIST,PRNT,OUTNAM)
+     &                       NPLIST,PRNT,OUTNAM,OBSALL)
 C
 C     VERSION 19980925 ERB
 C     ******************************************************************
@@ -1629,6 +1657,7 @@ C     ------------------------------------------------------------------
       DOUBLE PRECISION C(NPE,NPE), SCLE(NPE)
       DIMENSION BUFF(NPE,NPE+2), LN(NPLIST), BL(NPLIST), BU(NPLIST),
      &          PRNT(NPE,9)
+      LOGICAL OBSALL
       INCLUDE 'param.inc'
       DATA ANAME2 /'CORRELATION MATRIX FOR THE PARAMETERS'/
 C     ------------------------------------------------------------------
@@ -1723,6 +1752,8 @@ C     ------------------------------------------------------------------
      &'              ARTIFICIALLY LIMITED TO 0.99E29 TO AVOID NUMERIC',
      &' OVERFLOW ***')
   670 FORMAT(A,2X,I5,2X,5(G14.7,2X))
+  680 FORMAT(500(2X,A,3X))
+  690 FORMAT(500(G14.7,1X))
 C
 C-------PRINT FINAL PARAMETER VALUES, STD. DEV., COEFFICIENTS OF
 C-------VARIATION, AND PARAMETER 95-PERCENT LINEAR CONFIDENCE INTERVALS
@@ -1966,6 +1997,19 @@ C     BUFF REPLACES C FOR NEXT 30 LINES
   210   CONTINUE
         WRITE (IOUT,570) ANAME2
         CALL UPARPM(BUFF,NPE,IPRC,IOUT)
+C
+        IF (OBSALL) THEN
+C         WRITE CORRELATION MATRIX TO _mc FILE
+          IMC = IGETUNIT(7,1000)
+          FN = TRIM(OUTNAM)//'._mc'
+          OPEN(IMC,FILE=FN)
+          WRITE(IMC,680) (PARNAM(IPPTR(I)),I=1,NPE)
+          DO 70 IP = 1, NPE
+            WRITE(IMC,690) (BUFF(I,IP),I=1,NPE)
+   70     CONTINUE
+          CLOSE(IMC)
+        ENDIF
+C
 C--------CHECK FOR HIGHLY CORRELATED PARAMETER PAIRS
         WRITE (IOUT,515)
         DO 230 IP = 1, NPE
@@ -2353,7 +2397,7 @@ C
      &        ' NUMBER OF RUNS  :',I5,'  IN',I5,' OBSERVATIONS')
   515 FORMAT (2G20.7)
   520 FORMAT (' ')
-  540 FORMAT (2(G15.7,1X),I5,2X,A)
+  540 FORMAT (2(G15.7,1X),I5,2X,A,2X,G15.7)
   550 FORMAT (G15.7,1X,I5,2X,A)
 C
       IF (IO.EQ.1) WRITE (IOUT,500)
@@ -2393,7 +2437,7 @@ C           PRM ALLOWED TO SUM LOGS
           WRITE (IOUT,505) EQNAM(IMP), TEMP1E, TEMPE, BDIF, WPSR, BWP
           IF (OUTNAM.NE.'NONE') THEN
             WRITE (IUGDO(1),540) TEMP, TEMP1, IPLOT(ND+IMP),
-     &                           EQNAM(IMP)
+     &                           EQNAM(IMP), -1.0
             IF (LFLAG.EQ.0) THEN
               WRITE (IUGDO(2),540) WPSR*TEMP, WPSR*TEMP1, IPLOT(ND+IMP),
      &                             EQNAM(IMP)
@@ -2472,7 +2516,7 @@ C
      &        ' # RESIDUALS >= 0. :',I7,/,' # RESIDUALS < 0.  :',I7,/,
      &        ' NUMBER OF RUNS  :',I5,'  IN',I5,' OBSERVATIONS')
   515 FORMAT (2G20.7)
-  540 FORMAT (2(G15.7,1X),I5,2X,A)
+  540 FORMAT (2(G15.7,1X),I5,2X,A,2X,G15.7)
   550 FORMAT (G15.7,1X,I5,2X,A)
 C
       RSQIPR = 0.0
@@ -2515,7 +2559,7 @@ CC MH: "LET STEEN LOOK AT THIS"
      &                     BOBSWP, BCALWP, BWP
           IF (OUTNAM.NE.'NONE') THEN
             WRITE (IUGDO(1),540) BCAL, BOBS, IPLOT(ND+MPR+I1),
-     &                           NAMES(ND+MPR+I1)
+     &                           NAMES(ND+MPR+I1), -1.0
             WRITE (IUGDO(2),540) BCALWP, BOBSWP, IPLOT(ND+MPR+I1),
      &                           NAMES(ND+MPR+I1)
             WRITE (IUGDO(3),540) BCALWP, BWP, IPLOT(ND+MPR+I1),

@@ -1,0 +1,62 @@
+compressedmatrix.txt
+
+This file describes a convention for storage of a sparse matrix in
+compressed form.  This convention has no restrictions with respect to the
+shape or contents of the matrix being stored.  This convention is used, for
+example, for the weight matrix on observations in "_wt" files.
+
+----------------------------------------------------------------------------
+
+The format in which a compressed matrix is stored on disk is as follows.
+COMPRESSEDMATRIX is a keyword written as shown; NNZ is the total number of
+non-zero values in the matrix; NR is the number of rows in the matrix; NC
+is the number of columns in the matrix; IPOS(i) is the position in the
+matrix of the ith non-zero value in the matrix, assuming a column-major
+storage order where all elements of column 1 are first (starting with row
+1), followed by all elements of column 2, and so on; and VAL(i) is the ith
+non-zero value in the matrix.
+
+COMPRESSEDMATRIX
+NNZ   NR   NC
+IPOS(1)    VAL(1)
+IPOS(2)    VAL(2)
+...
+IPOS(NNZ)  VAL(NNZ)
+
+Example:
+
+Assume a sparse matrix of 6 rows and 8 columns is to be stored on disk.
+Column-major storage order implies that the positions in the matrix are
+numbered as follows:
+
+     1     7    13    19    25    31    37    43
+     2     8    14    20    26    32    38    44
+     3     9    15    21    27    33    39    45
+     4    10    16    22    28    34    40    46
+     5    11    17    23    29    35    41    47
+     6    12    18    24    30    36    42    48
+
+Assume that the matrix is populated like this:
+
+   11.    0.    0.    0.    0.    0.    0.    0.
+   21.    0.    0.    0.    0.    0.    0.    0.
+    0.   32.   33.    0.    0.   35.    0.    0.
+    0.    0.    0.   44.   45.    0.    0.    0.
+    0.    0.   53.    0.    0.    0.    0.   58.
+    0.    0.    0.    0.    0.    0.   67.    0.
+
+This matrix contains 10 non-zero values, so NNZ = 10.  This matrix could be
+represented in a disk file in compressed form as follows:
+
+COMPRESSEDMATRIX
+    10    6    8
+          1       11.
+          2       21.
+          9       32.
+         15       33.
+         17       53.
+         22       44.
+         28       45.
+         33       35.
+         42       67.
+         47       58.

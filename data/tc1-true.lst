@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                             VERSION 1.11 04/10/2003
+                             VERSION 1.12 09/08/2003
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -229,8 +229,8 @@
       0 WELLS
 
  Parameter:  RIVERS
- REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
- -------------------------------------------------------------------------
+ REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.         
+ -------------------------------------------------------------------------------
       1      1      1      1       100.0           1.003           90.00    
       2      1      2      1       100.0           1.003           90.00    
       3      1      3      1       100.0           1.003           90.00    
@@ -252,8 +252,8 @@
 
      18 RIVER REACHES
 
- BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE   
- ----------------------------------------------------------
+ BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE         
+ ----------------------------------------------------------------
       1      1      1     18       350.0          0.1000E-06
       2      1      2     18       350.0          0.1000E-06
       3      1      3     18       350.0          0.1000E-06
@@ -488,16 +488,16 @@
                             INITIAL TIME STEP SIZE =   87162.00    
 
  Parameter:  WELLS_TR
- WELL NO.  LAYER   ROW   COL   STRESS RATE   
- --------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS RATE         
+ --------------------------------------------------
       1      1      9     10      -1.001    
       2      2      9     10      -1.001    
 
       2 WELLS
 
  Parameter:  RIVERS
- REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
- -------------------------------------------------------------------------
+ REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.         
+ -------------------------------------------------------------------------------
       1      1      1      1       100.0           1.003           90.00    
       2      1      2      1       100.0           1.003           90.00    
       3      1      3      1       100.0           1.003           90.00    
@@ -671,16 +671,16 @@
                             INITIAL TIME STEP SIZE =   261486.0    
 
  Parameter:  WELLS_TR
- WELL NO.  LAYER   ROW   COL   STRESS RATE   
- --------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS RATE         
+ --------------------------------------------------
       1      1      9     10      -1.001    
       2      2      9     10      -1.001    
 
       2 WELLS
 
  Parameter:  RIVERS
- REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
- -------------------------------------------------------------------------
+ REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.         
+ -------------------------------------------------------------------------------
       1      1      1      1       100.0           1.003           90.00    
       2      1      2      1       100.0           1.003           90.00    
       3      1      3      1       100.0           1.003           90.00    
@@ -767,16 +767,16 @@
                             INITIAL TIME STEP SIZE =   522972.0    
 
  Parameter:  WELLS_TR
- WELL NO.  LAYER   ROW   COL   STRESS RATE   
- --------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS RATE         
+ --------------------------------------------------
       1      1      9     10      -1.001    
       2      2      9     10      -1.001    
 
       2 WELLS
 
  Parameter:  RIVERS
- REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
- -------------------------------------------------------------------------
+ REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.         
+ -------------------------------------------------------------------------------
       1      1      1      1       100.0           1.003           90.00    
       2      1      2      1       100.0           1.003           90.00    
       3      1      3      1       100.0           1.003           90.00    
@@ -863,16 +863,16 @@
                             INITIAL TIME STEP SIZE =   1133110.    
 
  Parameter:  WELLS_TR
- WELL NO.  LAYER   ROW   COL   STRESS RATE   
- --------------------------------------------
+ WELL NO.  LAYER   ROW   COL   STRESS RATE         
+ --------------------------------------------------
       1      1      9     10      -1.001    
       2      2      9     10      -1.001    
 
       2 WELLS
 
  Parameter:  RIVERS
- REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.   
- -------------------------------------------------------------------------
+ REACH NO.  LAYER   ROW   COL     STAGE      CONDUCTANCE     BOTTOM EL.         
+ -------------------------------------------------------------------------------
       1      1      1      1       100.0           1.003           90.00    
       2      1      2      1       100.0           1.003           90.00    
       3      1      3      1       100.0           1.003           90.00    
@@ -1070,9 +1070,9 @@
 
  DATA AT HEAD LOCATIONS
 
-        OBSERVATION      MEAS.      CALC.                          WEIGHTED
-   OBS#    NAME          HEAD       HEAD     RESIDUAL  WEIGHT**.5  RESIDUAL
-
+        OBSERVATION     OBSER-     SIMUL.                          WEIGHTED
+   OBS#    NAME         VATION     EQUIV.    RESIDUAL  WEIGHT**.5  RESIDUAL
+                          *          *
       1 1.0             100.       100.      0.374E-03  0.999      0.373E-03
       2 1.1             0.00     -0.107E-03  0.107E-03   20.0      0.214E-02
       3 1.12          -0.106     -0.106      0.290E-03   20.0      0.580E-02
@@ -1105,6 +1105,10 @@
      30 0.0             141.       141.     -0.137E-02  0.999     -0.137E-02
      31 0.1           -0.160E-01 -0.163E-01  0.275E-03   20.0      0.549E-02
      32 0.12           -19.8      -19.8      0.120E-02   20.0      0.240E-01
+
+ * THE OBSERVATION (AND CORRESPONDING SIMULATED EQUIVALENT) IS HEAD OR TEMPORAL
+   CHANGE IN HEAD, AS SPECIFIED IN THE "HOB" INPUT FILE.  NEGATIVE TEMPORAL
+   CHANGES INDICATE DRAWDOWN.
 
  STATISTICS FOR HEAD RESIDUALS :
  MAXIMUM WEIGHTED RESIDUAL  : 0.240E-01 OBS#     32

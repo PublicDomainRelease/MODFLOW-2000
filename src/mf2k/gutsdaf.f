@@ -98,6 +98,9 @@ C     **************** Zero arrays and preliminaries *******************
           W1(I,N)=0.0
           W2(I,N)=0.0
           VIN(I,N)=0.0
+C  8-28-2003   AWH
+          V(I,N)=0.0
+          AQ(I,N)=0.0
    20   CONTINUE
         DO 30 K=1,NOSH
           F(K,N)=0.0
