@@ -74,9 +74,9 @@ C     ------------------------------------------------------------------
      &          SV(NCOL,NROW,NLAY), HK(NCOL,NROW,NLAY),
      &          VKA(NCOL,NROW,NLAY), HFB(7,MXACTFB),
      &          HANI(NCOL,NROW,NLAY)
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
-      COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
-     1               LAYWET(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
+      COMMON /LPFCOM/LAYTYP(999),LAYAVG(999),CHANI(999),LAYVKA(999),
+     1               LAYWET(999)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
 C
@@ -299,9 +299,9 @@ C     ------------------------------------------------------------------
      &          SC1(NCOL,NROW,NLAY), SC2(NCOL,NROW,NLAY),
      &          HK(NCOL,NROW,NLAY), CV(NCOL,NROW,NLAY),
      &          HANI(NCOL,NROW,NLAY), VKA(NCOL,NROW,NLAY)
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
-      COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
-     1               LAYWET(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
+      COMMON /LPFCOM/LAYTYP(999),LAYAVG(999),CHANI(999),LAYVKA(999),
+     1               LAYWET(999)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
 C
@@ -371,9 +371,9 @@ C     ------------------------------------------------------------------
       DIMENSION SV(NCOL,NROW,NLAY), RMLT(NCOL,NROW,NMLTAR),
      &          IZON(NCOL,NROW,NZONAR)
 C
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
-      COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
-     1               LAYWET(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
+      COMMON /LPFCOM/LAYTYP(999),LAYAVG(999),CHANI(999),LAYVKA(999),
+     1               LAYWET(999)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
       ZERO = 0.0
@@ -433,9 +433,9 @@ C     ------------------------------------------------------------------
       DIMENSION CR(NC,NR,NL), CC(NC,NR,NL), CV(NC,NR,NL), HK(NC,NR,NL),
      &          VKA(NC,NR,NL), DELR(NC), DELC(NR), RHS(NC,NR,NL),
      &          IBOUND(NC,NR,NL), BOTM(NC,NR,0:NBOTM), HANI(NC,NR,NL)
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
-      COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
-     1               LAYWET(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
+      COMMON /LPFCOM/LAYTYP(999),LAYAVG(999),CHANI(999),LAYVKA(999),
+     1               LAYWET(999)
 C     ------------------------------------------------------------------
 C
       ZERO = 0.0
@@ -582,8 +582,8 @@ C     ------------------------------------------------------------------
      &          HK(NCOL,NROW,NLAY), DELC(NROW), DELR(NCOL),
      &          BOT(NCOL,NROW), TOP(NCOL,NROW), HANI(NCOL,NROW,NLAY)
       DOUBLE PRECISION DZERO, H(NCOL*NROW*NLAY), HP
-      COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
-     1               LAYWET(200)
+      COMMON /LPFCOM/LAYTYP(999),LAYAVG(999),CHANI(999),LAYVKA(999),
+     1               LAYWET(999)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
       DZERO = 0.0
@@ -682,8 +682,8 @@ C     ------------------------------------------------------------------
      &          HK(NCOL,NROW,NLAY), DELC(NROW), DELR(NCOL),
      &          BOT(NCOL,NROW), TOP(NCOL,NROW) ,HANI(NCOL,NROW,NLAY)
       DOUBLE PRECISION DZERO, H(NCOL*NROW*NLAY), HP
-      COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
-     1               LAYWET(200)
+      COMMON /LPFCOM/LAYTYP(999),LAYAVG(999),CHANI(999),LAYVKA(999),
+     1               LAYWET(999)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
       DZERO = 0.0
@@ -762,9 +762,9 @@ C     ------------------------------------------------------------------
      &          IBOUND(NCOL,NROW,NLAY),
      &          CV(NCOL,NROW,NLAY), VKA(NCOL,NROW,NLAY)
       INCLUDE 'param.inc'
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
-      COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
-     &               LAYWET(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
+      COMMON /LPFCOM/LAYTYP(999),LAYAVG(999),CHANI(999),LAYVKA(999),
+     &               LAYWET(999)
 C     ------------------------------------------------------------------
       ZERO = 0.0
       IBP = 0

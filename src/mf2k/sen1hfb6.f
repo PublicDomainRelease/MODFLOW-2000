@@ -18,7 +18,7 @@ C     ------------------------------------------------------------------
       DIMENSION BOTM(NCOL,NROW,0:NBOTM), DELC(NROW), DELR(NCOL),
      &          HFB(7,MXHFB), RHS(NCOL,NROW,NLAY), LAYHDT(NLAY),
      &          IBOUND(NCOL,NROW,NLAY)
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
 C

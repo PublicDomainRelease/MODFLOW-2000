@@ -49,6 +49,7 @@ OBJECTS = \
 	gwf1rch6.o \
 	gwf1res1.o \
 	gwf1riv6.o \
+	gwf1sfr1.o \
 	gwf1str6.o \
 	gwf1sub1.o \
 	gwf1wel6.o \

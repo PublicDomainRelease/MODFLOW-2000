@@ -1,3 +1,4 @@
+! Time of File Save by ERB: 3/15/2004 11:27AM
 C     Last change:  ERB  10 Jan 2003    9:27 am
       SUBROUTINE OBS1DRT1AL(IUDTOB,NQ,NQC,NQT,IOUT,NQDT,NQTDT,IOBSUM,
      &                      LCOBDRT,ITMXP,LCSSDT,ISUM,IOBS)
@@ -249,13 +250,13 @@ C     RETURN PACKAGE
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL C, DRTF, FACT, H, HB, HH, HHNEW, QCLS, TOFF, WTQ, ZERO
+      REAL C, DRTF, FACT, H, HB, QCLS, TOFF, WTQ, ZERO
       INTEGER I, IBOUND, IBT, IBT1, IFLAG, II, IOUT, IQ, IQOB, IRBOT,
      &        ITS, J, JJ, JRBOT, K, KK, KRBOT, MXDRT, N, NB, NBN, NC,
      &        NC1, NC2, NCOL, NDMH, NDRTCL, NHT, NLAY, NQ, NQCL, NQOB,
      &        NROW, NT, NT1, NT2
       CHARACTER*12 OBSNAM(ND)
-      DOUBLE PRECISION HNEW(NCOL,NROW,NLAY)
+      DOUBLE PRECISION HH, HHNEW, HNEW(NCOL,NROW,NLAY)
       DIMENSION IBOUND(NCOL,NROW,NLAY), IBT(2,NQAR), NQOB(NQAR),
      &          NQCL(NQAR), IQOB(NQTAR), QCLS(5,NQCAR), H(ND),
      &          TOFF(ND), DRTF(NDRTVL,MXDRT), WTQ(NDMH,NDMH)

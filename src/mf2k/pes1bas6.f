@@ -1,3 +1,4 @@
+! Time of File Save by ERB: 2/18/2004 11:45AM
 C     Last change:  ERB  14 Jan 2003    4:09 pm
 C=======================================================================
       SUBROUTINE PES1BAS6DF(IBEFLG,IFO,IOUB,IPES,IPR,IPRAR,IPRINT,
@@ -389,7 +390,7 @@ C     ------------------------------------------------------------------
      &          NIPR(IPRAR), NIPRNAM(IPRAR), EQNAM(MPRAR), IPNG(NPNGAR),
      &          PARNEG(MXPN), BPRI(IPRAR), NPAR(ITMXP+1)
 C
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
   525 FORMAT (/,' PRIOR ESTIMATES OF PARAMETER SUMS EQUATION',I3,
@@ -407,8 +408,8 @@ C     ------------------------------------------------------------------
   542 FORMAT(3X,A)
   585 FORMAT (/,' WARNING -- NPE > ND/3 : YOU MAY BE TRYING TO ESTIMATE'
      &       ,' TOO MANY',/,4X,'PARAMETERS FOR THE DATA (PES1BAS6RP)',/)
-  590 FORMAT (/,' NUMBER OF OBSERVATIONS MUST BE GREATER THAN NUMBER OF',
-     &        ' PARAMETERS BEING',/,
+  590 FORMAT (/,' NUMBER OF OBSERVATIONS MUST BE GREATER THAN NUMBER',
+     &        ' OF PARAMETERS BEING',/,
      &        ' ESTIMATED -- STOP EXECUTION (PES1BAS6RP)')
   620 FORMAT (/,' ERROR: SEARCH ABOVE FOR ERROR MESSAGE(S)',/,
      &        ' -- STOP EXECUTION (PES1BAS6RP)')

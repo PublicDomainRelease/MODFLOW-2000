@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.13.00 01/22/2004
+                           VERSION 1.14.00 05/03/2004
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -183,11 +183,11 @@
 
  STEADY-STATE SOLUTION FOR LAKES.
  MAXIMUM NUMBER OF ITERATIONS =   50   CONVERGENCE CRITERION =  1.00E-03
-       4376 ELEMENTS IN RX ARRAY ARE USED BY LAK
-      10124 ELEMENTS IN IR ARRAY ARE USED BY LAK
+       4379 ELEMENTS IN RX ARRAY ARE USED BY LAK
+      10126 ELEMENTS IN IR ARRAY ARE USED BY LAK
 
-      10193  ELEMENTS OF RX ARRAY USED OUT OF      10193
-      12008  ELEMENTS OF IR ARRAY USED OUT OF      12008
+      10196  ELEMENTS OF RX ARRAY USED OUT OF      10196
+      12010  ELEMENTS OF IR ARRAY USED OUT OF      12010
 1
  #Hypothetical simulator of lake and surficial aquifer interaction. ------------ 
  #Shows convergence to equilibrium in transient mode.                            

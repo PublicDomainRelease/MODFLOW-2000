@@ -1,3 +1,4 @@
+! Time of File Save by ERB: 3/15/2004 11:23AM
 C     Last change:  ERB   3 Sep 2002    2:20 pm
       SUBROUTINE OBS1RIV6AL(IURVOB,NQ,NQC,NQT,IOUT,NQRV,NQTRV,IOBSUM,
      &                     LCOBRIV,ITMXP,LCSSRV,ISUM,IOBS)
@@ -245,8 +246,7 @@ C     PACKAGE
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL C, FACT, H, HB, HH, HHNEW, QCLS, RBOT, RIVR,
-     &     TOFF, WTQ, ZERO
+      REAL C, FACT, H, HB, QCLS, RBOT, RIVR, TOFF, WTQ, ZERO
       INTEGER I, IBOUND, IBT, IBT1, IFLAG, II, IOUT, IQ,
      &        IQOB, IRBOT, ITS, J, JJ, JRBOT, K, KK, KRBOT,
      &        MXRIVR, N, NB, NBN, NC, NC1, NC2, NCOL, NDMH, NHT,
@@ -254,6 +254,7 @@ C     ------------------------------------------------------------------
      &        NT1, NT2
       CHARACTER*12 OBSNAM(ND)
       DOUBLE PRECISION HNEW(NCOL,NROW,NLAY)
+      DOUBLE PRECISION HH, HHNEW
       DIMENSION RIVR(NRIVVL,MXRIVR), IBOUND(NCOL,NROW,NLAY),
      &          IBT(2,NQAR), NQOB(NQAR), NQCL(NQAR), IQOB(NQTAR),
      &          QCLS(5,NQCAR), H(ND), TOFF(ND), WTQ(NDMH,NDMH)

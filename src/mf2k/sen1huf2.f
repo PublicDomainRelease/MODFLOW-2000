@@ -21,8 +21,8 @@ C     ------------------------------------------------------------------
      & HK(NCOL,NROW,NLAY), HUFTHK(NCOL,NROW,NHUF,2),
      & RMLT(NCOL,NROW,NMLTAR),IZON(NCOL,NROW,NZONAR),
      & HFBP(7,MXACTFB),HOLD(NCOL*NROW*NLAY),HKCC(NCOL,NROW,NLAY)
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
-      COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
+      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
 C
@@ -256,8 +256,8 @@ C     ------------------------------------------------------------------
      &          HKCC(NCOL,NROW,NLAY), CV(NCOL,NROW,NLAY),
      &          HUFTHK(NCOL,NROW,NHUF,2), IZON(NCOL,NROW,NZONAR),
      &          RMLT(NCOL,NROW,NMLTAR), GS(NCOL,NROW)
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
-      COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
+      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
 C     ------------------------------------------------------------------
 C
 C-------TERMS FOR UNCONFINED AQUIFERS
@@ -335,10 +335,10 @@ C     ------------------------------------------------------------------
       DIMENSION CR(NC,NR,NL), CC(NC,NR,NL), HK(NC,NR,NL),
      &  DELR(NC), DELC(NR), RHS(NC,NR,NL), IBOUND(NC,NR,NL),
      &  BOTM(NC,NR,0:NBOTM),HKCC(NC,NR,NL),HUFTHK(NC,NR,NHUF,2),
-     &  HUFTMP(200), CV(NC,NR,NL), RMLT(NC,NR,NMLTAR),
+     &  HUFTMP(999), CV(NC,NR,NL), RMLT(NC,NR,NMLTAR),
      &  IZON(NC,NR,NZONAR), GS(NC,NR)
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
-      COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
+      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
 C     ------------------------------------------------------------------
 C
       ZERO = 0.0
@@ -596,10 +596,10 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL LAMBDA, MULTKDEP
       DIMENSION RMLT(NCOL,NROW,NMLTAR),
-     &          IZON(NCOL,NROW,NZONAR), HUFTMP(200),
+     &          IZON(NCOL,NROW,NZONAR), HUFTMP(999),
      &          HUFTHK(NCOL,NROW,NHUF,2), TOP(NCOL,NROW),
      &          BOT(NCOL,NROW), GS(NCOL,NROW)
-      COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
+      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
 C
       HUFTMP(NU) = 0.0
       CALL UHUF2POP(HUFTMP,'KDEP',NCOL,NROW,NHUF,I,J,HUFTHK,
@@ -667,8 +667,8 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL LMBDU
       DIMENSION RMLT(NCOL,NROW,NMLTAR),IZON(NCOL,NROW,NZONAR),
-     &  HUFTMP(200),HUFTHK(NCOL,NROW,NHUF,2)
-      COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
+     &  HUFTMP(999),HUFTHK(NCOL,NROW,NHUF,2)
+      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
 C     ------------------------------------------------------------------
       HUFTMP(NU) = 0.0
       CALL UHUF2POP(HUFTMP,'HK  ',NCOL,NROW,NHUF,I,J,HUFTHK,
@@ -709,7 +709,7 @@ C     ------------------------------------------------------------------
      & RMLT(NCOL,NROW,NMLTAR),IZON(NCOL,NROW,NZONAR),
      & HUFTHK(NCOL,NROW,NHUF,2),GS(NCOL,NROW)
       DOUBLE PRECISION H(NCOL*NROW*NLAY), HP, H0
-      COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
+      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
       ZERO = 0.0
@@ -822,7 +822,7 @@ C     ------------------------------------------------------------------
      & RMLT(NCOL,NROW,NMLTAR),IZON(NCOL,NROW,NZONAR),
      & HUFTHK(NCOL,NROW,NHUF,2),GS(NCOL,NROW)
       DOUBLE PRECISION H(NCOL*NROW*NLAY), HP, H0
-      COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
+      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
       ZERO = 0.0
@@ -889,9 +889,9 @@ C     ------------------------------------------------------------------
       CHARACTER*4 PID
       DIMENSION DELC(NROW), DELR(NCOL), RMLT(NCOL,NROW,NMLTAR),
      &          IBOUND(NCOL,NROW,NLAY), CV(NCOL,NROW,NLAY),
-     &          IZON(NCOL,NROW,NZONAR), HUFTMP(200),
+     &          IZON(NCOL,NROW,NZONAR), HUFTMP(999),
      &          HUFTHK(NCOL,NROW,NHUF,2)
-      COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
+      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
 C     ------------------------------------------------------------------
       ZERO = 0.0
       IBP = 0
@@ -1005,8 +1005,8 @@ C      DOUBLE PRECISION
      &     MID2
       INTEGER ICL, LT, JCNT, JJ, NZ, ICNT, II, KK
 C---COMMON:
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
-      COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
+      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
       INCLUDE 'param.inc'
 C----------------------------------------------------------------------
       EXTERNAL SSEN1HUF2CH, SSEN1HUF2CV, SSEN1HFB6MD
@@ -1196,7 +1196,7 @@ C     ------------------------------------------------------------------
      & RMLT(NCOL,NROW,NMLTAR),IZON(NCOL,NROW,NZONAR),
      & HUFTHK(NCOL,NROW,NHUF,2), GS(NCOL,NROW)
       DOUBLE PRECISION H(NCOL*NROW*NLAY), HP, H0
-      COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
+      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
       ZERO = 0.0
@@ -1583,8 +1583,8 @@ C---ARGUMENTS:
      &          GS(NCOL,NROW)
       CHARACTER*4 PID
 C---COMMON:
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
-      COMMON /HUFCOM/LTHUF(200),HGUHANI(200),HGUVANI(200),LAYWT(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
+      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
       INCLUDE 'param.inc'
 C----------------------------------------------------------------------
 C

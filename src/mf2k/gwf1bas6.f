@@ -1398,7 +1398,7 @@ C     ------------------------------------------------------------------
       DIMENSION IOFLG(NLAY,5)
       CHARACTER*200 LINE
       CHARACTER*(*) LABEL
-      DIMENSION LAYER(200)
+      DIMENSION LAYER(999)
 C     ------------------------------------------------------------------
 C
 C1------INITIALIZE COUNTER FOR NUMBER OF LAYERS FOR WHICH OUTPUT IS

@@ -26,8 +26,8 @@ C     ******************************************************************
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      DIMENSION IBQ1(200)
-      COMMON /IBSCOM/ IBQ(200)
+      DIMENSION IBQ1(999)
+      COMMON /IBSCOM/ IBQ(999)
 C     ------------------------------------------------------------------
 C
 C1------IDENTIFY PACKAGE.
@@ -120,7 +120,7 @@ C     ------------------------------------------------------------------
      1       SCE(NCOL,NROW,IBSDIM),SCV(NCOL,NROW,IBSDIM),
      2       SUB(NCOL,NROW,IBSDIM),DELR(NCOL),DELC(NROW)
 C
-      COMMON /IBSCOM/ IBQ(200)
+      COMMON /IBSCOM/ IBQ(999)
 C
       DATA ANAME(1) /'   PRECONSOLIDATION HEAD'/
       DATA ANAME(2) /'ELASTIC INTERBED STORAGE'/
@@ -194,7 +194,7 @@ C     ******************************************************************
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      COMMON /IBSCOM/ IBQ(200)
+      COMMON /IBSCOM/ IBQ(999)
       DOUBLE PRECISION HNEW
       DIMENSION ISSFLG(KPER),HNEW(NCOL,NROW,NLAY),HC(NCOL,NROW,IBSDIM)
 C     ------------------------------------------------------------------
@@ -242,7 +242,7 @@ C     ------------------------------------------------------------------
      2          HOLD(NCOL,NROW,NLAY),HC(NCOL,NROW,IBSDIM),
      3          SCE(NCOL,NROW,IBSDIM),SCV(NCOL,NROW,IBSDIM)
 C
-      COMMON /IBSCOM/ IBQ(200)
+      COMMON /IBSCOM/ IBQ(999)
 C     ------------------------------------------------------------------
 C
 C0------Return if stress period is steady state.
@@ -294,7 +294,7 @@ C     ------------------------------------------------------------------
      3          SUB(NCOL,NROW,IBSDIM),VBVL(4,MSUM),
      4          BUFF(NCOL,NROW,NLAY),DELR(NCOL),DELC(NROW)
 C
-      COMMON /IBSCOM/ IBQ(200)
+      COMMON /IBSCOM/ IBQ(999)
       DATA TEXT /'INTERBED STORAGE'/
 C     ------------------------------------------------------------------
 C
@@ -399,7 +399,7 @@ C     ------------------------------------------------------------------
       CHARACTER*16 TEXT(3)
       DIMENSION HC(NCOL,NROW,IBSDIM),SUB(NCOL,NROW,IBSDIM),
      1          BUFF(NCOL,NROW,NLAY)
-      COMMON /IBSCOM/ IBQ(200)
+      COMMON /IBSCOM/ IBQ(999)
       DATA TEXT(1) /'      SUBSIDENCE'/
       DATA TEXT(2) /'      COMPACTION'/
       DATA TEXT(3) /'   CRITICAL HEAD'/

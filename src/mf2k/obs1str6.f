@@ -1,3 +1,4 @@
+! Time of File Save by ERB: 3/15/2004 11:26AM
 C     Last change:  ERB   3 Sep 2002    2:21 pm
       SUBROUTINE OBS1STR6AL(IUSTOB,NQ,NQC,NQT,IOUT,NQST,NQTST,IOBSUM,
      &                     LCOBSTR,ITMXP,LCSSST,ISUM,IOBS)
@@ -251,15 +252,14 @@ C     STREAMFLOW-ROUTING PACKAGE
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL C, FACT, H, HB, HH, HHNEW, QCLS, RBOT,
-     &     STRM, TOFF, WTQ, ZERO
+      REAL C, FACT, H, HB, QCLS, RBOT, STRM, TOFF, WTQ, ZERO
       INTEGER I, IBOUND, IBT, IBT1, IFLAG, IOUT, IQ,
      &        IQOB, IR, IRBOT, IS, ISTRF, ISTRM, ITS, J, JRBOT, K,
      &        KRBOT, MXSTRM, N, NB, NBN, NC, NC1, NC2, NCOL,
      &        NDMH, NHT, NLAY, NQ, NQCL, NQOB, NROW,
      &        NSTREM, NT, NT1, NT2
       CHARACTER*12 OBSNAM(ND)
-      DOUBLE PRECISION HNEW(NCOL,NROW,NLAY)
+      DOUBLE PRECISION HH, HHNEW, HNEW(NCOL,NROW,NLAY)
       DIMENSION IBOUND(NCOL,NROW,NLAY), IBT(2,NQAR), NQOB(NQAR),
      &          NQCL(NQAR), IQOB(NQTAR), QCLS(5,NQCAR), H(ND),
      &          TOFF(ND), STRM(11,MXSTRM), ISTRM(5,MXSTRM),

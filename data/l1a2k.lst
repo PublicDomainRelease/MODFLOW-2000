@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.13.00 01/22/2004
+                           VERSION 1.14.00 05/03/2004
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -188,12 +188,13 @@
 
  THETA =       0.00  METHOD FOR UPDATING LAKE STAGES IN ITERATIONS OF THE SOLUTION FOR AQUIFER HEADS.
                     0.0 IS EXPLICIT, 0.5 IS CENTERED, AND 1.0 IS FULLY IMPLICIT.
-       4376 ELEMENTS IN RX ARRAY ARE USED BY LAK
-      10124 ELEMENTS IN IR ARRAY ARE USED BY LAK
-          3 ELEMENTS IN IX ARRAY ARE USED BY GAGE
+       4379 ELEMENTS IN RX ARRAY ARE USED BY LAK
+      10126 ELEMENTS IN IR ARRAY ARE USED BY LAK
+          0 ELEMENTS IN RX ARRAY ARE USED BY GAGE
+         11 ELEMENTS IN IR ARRAY ARE USED BY GAGE
 
-      12505  ELEMENTS OF RX ARRAY USED OUT OF      12505
-      12011  ELEMENTS OF IR ARRAY USED OUT OF      12011
+      12508  ELEMENTS OF RX ARRAY USED OUT OF      12508
+      12021  ELEMENTS OF IR ARRAY USED OUT OF      12021
 1
  #Hypothetical simulator of lake and surficial aquifer interaction. ------------ 
  #Shows convergence to equilibrium in transient mode.                            

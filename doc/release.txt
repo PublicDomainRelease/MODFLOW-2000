@@ -12,6 +12,32 @@ these packages and processes, see mf2k.txt ("Summary of MODFLOW-2000").
 NOTE: Any use of trade, product or firm names is for descriptive purposes 
       only and does not imply endorsement by the U.S. Government.
 
+o Version 1.14.00 7/01/2004:
+
+The new Stream-Flow Routing (SFR1) Package is introduced with this release.
+The new package encompasses the capabilities of the STR Package that are
+part of the Ground Water Flow Process and adds enhancements.  The SFR1
+Package is documented in USGS Open-File Report 2004-1042.  The SFR1 Package
+is integrated with the MODFLOW Ground Water Transport Process to allow
+simulation of solute transport in streams.  The report also describes
+enhancements to the GAGE capability to work with the SFR Package.
+
+The LAK3 Package is updated to work with the new SFR1 Package.
+
+The maximum number of layers has been increased from 200 to 999.
+
+Simulated equivalents are now calculated using double-precision variables;
+differences are expected to be small.
+
+If available system memory is insufficient to allocate the main arrays, a
+message explaining the problem is printed and the program stops.
+
+Two minor bugs were fixed in the MNW Package.
+
+Errata sheets for USGS Open-File Reports 00-92 and 00-184 have been added to
+the doc directory.  The names of the files are ofr-00-92-errata.pdf and
+ofr-00-184-errata.pdf.
+
 o Version 1.13.00 1/22/2004:
 
 This release includes revisions to the LAK3 Package, including changes that
@@ -24,7 +50,7 @@ doc directory of the Modflow-2000 distribution for more details.
 
 Additional explanatory text is written to the Global output file when the
 simulation time is truncated by the Sensitivity Process, to the time step
-required for the last observtion, to reduce execution time.
+required for the last observation, to reduce execution time.
 
 The SUB Package was modified to work correctly when batch mode is used.
 

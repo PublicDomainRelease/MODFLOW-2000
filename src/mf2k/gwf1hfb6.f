@@ -76,7 +76,7 @@ C       SPECIFICATIONS:
 C     ------------------------------------------------------------------
       DIMENSION BOTM(NCOL,NROW,0:NBOTM), CC(NODES), CR(NODES),
      &          DELC(NROW), DELR(NCOL), HFB(7,MXHFB), LAYHDT(NLAY)
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
       CHARACTER*16 AUX(1)
 C     ------------------------------------------------------------------
   500 FORMAT(//,1X,I5,' HFB parameters')
@@ -185,7 +185,7 @@ C     ------------------------------------------------------------------
      &          CR(NCOL,NROW,NLAY), DELC(NROW), DELR(NCOL),
      &          HFB(7,MXACTFB), HNEW(NCOL,NROW,NLAY), LAYHDT(NLAY)
 C
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
 C     ------------------------------------------------------------------
 C1----FOR EACH BARRIER, MODIFY HORIZONTAL BRANCH
 C1----CONDUCTANCES IF LAYER IS CONVERTIBLE
@@ -285,7 +285,7 @@ C     ------------------------------------------------------------------
       DIMENSION BOTM(NCOL,NROW,0:NBOTM), CR(NCOL,NROW,NLAY),
      &          CC(NCOL,NROW,NLAY), DELR(NCOL), DELC(NROW),
      &          HFB(7,MXHFB), LAYHDT(NLAY)
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
 C     ------------------------------------------------------------------
 C
 C1------INITIALIZE ERROR FLAG TO ZERO.

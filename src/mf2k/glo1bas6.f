@@ -17,7 +17,7 @@ C     ------------------------------------------------------------------
       CHARACTER*4 CUNIT(NIUNIT)
       CHARACTER*10 CHDATE, CHTIME, CHZONE
       INTEGER IBDT(8)
-      INTEGER LAYHDT(200), IUNIT(NIUNIT), IREWND(NIUNIT)
+      INTEGER LAYHDT(999), IUNIT(NIUNIT), IREWND(NIUNIT)
       CHARACTER*40 VERSION
       CHARACTER*200 LINE
       LOGICAL SHOWPROG
@@ -100,11 +100,11 @@ C6------PRINT # OF LAYERS, ROWS, COLUMNS AND STRESS PERIODS.
          CALL USTOP(' ')
       END IF
 C
-C6.5----STOP THE SIMULATION IF THERE ARE MORE THAN 200 LAYERS.
-      IF(NLAY.GT.200) THEN
+C6.5----STOP THE SIMULATION IF THERE ARE MORE THAN 999 LAYERS.
+      IF(NLAY.GT.999) THEN
          WRITE(IOUT,625)
-  625    FORMAT(1X,/1X,'YOU HAVE SPECIFIED MORE THAN 200 MODEL LAYERS'/
-     1 1X,'SPACE IS RESERVED FOR A MAXIMUM OF 200 LAYERS IN LPF ARRAYS')
+  625    FORMAT(1X,/1X,'YOU HAVE SPECIFIED MORE THAN 999 MODEL LAYERS'/
+     1 1X,'SPACE IS RESERVED FOR A MAXIMUM OF 999 LAYERS')
          CALL USTOP(' ')
       END IF
 C
@@ -180,7 +180,7 @@ C     ******************************************************************
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
 C     ------------------------------------------------------------------
 C
 C  Print message about GWT Package
@@ -266,7 +266,7 @@ C     ******************************************************************
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
       DIMENSION PERLEN(NPER),NSTP(NPER),TSMULT(NPER),ISSFLG(NPER)
       DIMENSION BOTM(NCOL,NROW,0:NBOTM),DELR(NCOL),DELC(NROW),
      &          RMLT(NCOL,NROW,NMLTAR),IZON(NCOL,NROW,NZONAR)

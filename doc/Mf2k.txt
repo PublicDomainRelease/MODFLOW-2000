@@ -58,6 +58,10 @@ METHOD
 
 HISTORY
 
+      MODFLOW-2000 version 1.14.00 2004/07/01 - Added the SFR Package to 
+        allow enhanced capabilities for simulation of streams.  The maximum
+        number of layers is increased from 200 to 999.
+
       MODFLOW-2000 Version 1.13.00 2004/01/22 - Includes revisions to the
         LAK3 Package and bug fixes for the DRT, SUB, HUF2, and PCG2
         Packages.
@@ -356,10 +360,13 @@ PACKAGES
          MNW1 -- Multi-Node Well Package
          DAF1 -- Diffusion Analogy Surface-Water Flow Package
          SUB1 -- Subsidence and Aquifer-System Compaction Package
+         SFR1 -- Stream-Flow Routing Package
 
 ADDITIONAL CAPABILITIES:
 
          HYDMOD -- Hydrograph option
+         GAGE -- Hydrograph option for lakes (LAK3 Package) and streams 
+                 (SFR Package)
             
 
 DOCUMENTATION
@@ -577,6 +584,13 @@ DOCUMENTATION
      MODFLOW-2000 Ground-Water Model--User Guide to the Subsidence and
      Aquifer-System Compaction (SUB) Package: U.S. Geological Survey 
      Open-File Report 03-233, 44 p.
+
+  The SFR Package is documented in:
+
+     Prudic, D.E., Konikow, L.F., and Banta, E.R., 2004, A new stream-
+     flow routing (SFR1) package to simulate stream-aquifer interaction
+     with MODFLOW-2000: U.S. Geological Survey Open-File Report
+     2004-1042, 95 p.
 
 
 CONTACTS

@@ -1,3 +1,4 @@
+! Time of File Save by ERB: 3/15/2004 11:27AM
 C     Last change:  ERB  10 Jan 2003    9:28 am
       SUBROUTINE OBS1DRN6AL(IUDROB,NQ,NQC,NQT,IOUT,NQDR,NQTDR,IOBSUM,
      &                     LCOBDRN,ITMXP,LCSSDR,ISUM,IOBS)
@@ -244,13 +245,13 @@ C     PACKAGE
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL C, DRAI, FACT, H, HB, HH, HHNEW, QCLS, TOFF, WTQ, ZERO
+      REAL C, DRAI, FACT, H, HB, QCLS, TOFF, WTQ, ZERO
       INTEGER I, IBOUND, IBT, IBT1, IFLAG, II, IOUT, IQ, IQOB, IRBOT,
      &        ITS, J, JJ, JRBOT, K, KK, KRBOT, MXDRN, N, NB, NBN, NC,
      &        NC1, NC2, NCOL, NDMH, NDRAIN, NHT, NLAY, NQ, NQCL, NQOB,
      &        NROW, NT, NT1, NT2
       CHARACTER*12 OBSNAM(ND)
-      DOUBLE PRECISION HNEW(NCOL,NROW,NLAY)
+      DOUBLE PRECISION HH, HHNEW, HNEW(NCOL,NROW,NLAY)
       DIMENSION IBOUND(NCOL,NROW,NLAY), IBT(2,NQAR), NQOB(NQAR),
      &          NQCL(NQAR), IQOB(NQTAR), QCLS(5,NQCAR), H(ND),
      &          TOFF(ND), DRAI(NDRNVL,MXDRN), WTQ(NDMH,NDMH)

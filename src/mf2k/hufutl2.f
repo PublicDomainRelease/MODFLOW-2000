@@ -44,7 +44,7 @@ C     ------------------------------------------------------------------
       CHARACTER*(*) PTYP
       CHARACTER*200 LINE
       CHARACTER*10 PN,CTMP1,CTMP2,HGUNAM
-      COMMON /HUFCOMC/HGUNAM(200)
+      COMMON /HUFCOMC/HGUNAM(999)
 C     ------------------------------------------------------------------
 C
       ILFLG=1
@@ -267,7 +267,7 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       INCLUDE 'param.inc'
       CHARACTER*4 PTYPE,PTEMP
-      DIMENSION HUFARRAY(200),HUFTHK(NCOL,NROW,NHUF,2),
+      DIMENSION HUFARRAY(999),HUFTHK(NCOL,NROW,NHUF,2),
      &    IZON(NCOL,NROW,NZONAR),RMLT(NCOL,NROW,NMLTAR)
 C
 C Loop through parameters

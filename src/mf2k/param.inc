@@ -1,5 +1,10 @@
-C     Last change:  ERB   1 Feb 2002    3:18 pm
+! Time of File Save by ERB: 2/9/2004 5:32PM
 C  Data definitions for Named Parameters
+C  Explicitly declare all variables to enable subroutines that include
+C  this file to use the IMPLICIT NONE statement - ERB 2/9/2004.
+      INTEGER ICLSUM, IDEFPAR, IACTIVE, IPCLST, IPLOC, IPPTR, IPSUM,
+     &        MXCLST, MXINST, MXMLT, MXPAR, MXZON
+      REAL B
       PARAMETER (MXPAR=500,MXCLST=1000,MXZON=500,MXMLT=500,MXINST=1000)
       COMMON /GLOCOM/B(MXPAR),IPSUM,ICLSUM,IDEFPAR,
      1               IPLOC(4,MXPAR),IACTIVE(MXPAR),IPCLST(14,MXCLST),
@@ -32,7 +37,7 @@ C                      that instance 1 of a time-varying parameter is
 C                      active
 C      IACTIVE >  1 is the number of the active instance of a
 C                      time-varying parameter
-C                            
+C
 C  B(p) -- Parameter value
 C  PARNAM(p) -- Parameter name
 C  PARTYP(p) -- Parameter type
@@ -45,8 +50,8 @@ C                      n=3 zone array number (0 indicates all cells)
 C                      n=4 index of last zone number for this cluster
 C                      n=5-14 zone numbers
 C
-C  IPPTR(p) -- Pointer to parameter number for parameters which are to 
-C              undergo estimation or sensitivity analysis, that is, 
+C  IPPTR(p) -- Pointer to parameter number for parameters which are to
+C              undergo estimation or sensitivity analysis, that is,
 C              parameters for which ISENS is greater than zero.
 C
 C  "z" indicates the zone array number

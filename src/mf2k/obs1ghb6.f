@@ -1,3 +1,4 @@
+! Time of File Save by ERB: 3/15/2004 11:28AM
 C     Last change:  ERB   3 Sep 2002    2:20 pm
       SUBROUTINE OBS1GHB6AL(IUGBOB,NQ,NQC,NQT,IOUT,NQGB,NQTGB,IOBSUM,
      &                     LCOBGHB,ITMXP,LCSSGB,ISUM,IOBS)
@@ -246,12 +247,12 @@ C     HEAD BOUNDARY PACKAGE
 C     ******************************************************************
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL BNDS, C, FACT, H, HB, HH, HHNEW, QCLS, TOFF, ZERO
+      REAL BNDS, C, FACT, H, HB, QCLS, TOFF, ZERO
       INTEGER I, IBOUND, IBT, IBT1, IFLAG, II, IOUT, IQ, IQOB, ITS, J,
      &        JJ, K, KK, MXBND, N, NB, NBN, NBOUND, NC, NC1, NC2, NCOL,
      &        NHT, NLAY, NQ, NQCL, NQOB, NROW, NT, NT1, NT2
       CHARACTER*12 OBSNAM(ND)
-      DOUBLE PRECISION HNEW(NCOL,NROW,NLAY)
+      DOUBLE PRECISION HH, HHNEW, HNEW(NCOL,NROW,NLAY)
       DIMENSION BNDS(NGHBVL,MXBND), IBOUND(NCOL,NROW,NLAY), IBT(2,NQAR),
      &          NQOB(NQAR), NQCL(NQAR), IQOB(NQTAR), QCLS(5,NQCAR),
      &          H(ND), TOFF(ND), WTQ(NDMH,NDMH)

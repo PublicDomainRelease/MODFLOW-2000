@@ -232,7 +232,7 @@ C     ------------------------------------------------------------------
       CHARACTER PCKG*3,ARR*2,INTYP*1
       DIMENSION HYDM(18,NHYDM),DELR(NCOL),DELC(NROW)
       LOGICAL IBCHK
-      COMMON /IBSCOM/ IBQ(200)
+      COMMON /IBSCOM/ IBQ(999)
 C     ------------------------------------------------------------------
       NIJ=NROW*NCOL
       NCOL1=NCOL-1

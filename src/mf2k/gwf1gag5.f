@@ -1,46 +1,98 @@
+! Time of File Save by ERB: 3/24/2004 10:13AM
+C     revised:      DEP  09 Feb 2004 & 22 Mar 2004
 C     Last change:  ERB  15 Jan 2003    2:44 pm
+C     REVISED:      LFK  07 Aug 2003
 C  GAGE5 Gaging Stations
 C  1/99
 C
+C-------SUBROUTINE GWF1GAG5DF
+C
+      SUBROUTINE GWF1GAG5DF(NUMGAGE,LSGAGE,NSTRM,ICSTRM,NLAKES,LKACC7,
+     &                      LCSTAG,LSLAKE,NLAKESAR,NSTRMAR,NSS,NSSAR,
+     &                      LCIVAR)
+C     VERSION  4:CONNECTED TO LAK3 PACKAGE AND MODFLOW-GWT-- FEB. 2004
+C     ******************************************************************
+C     INITIALIZE POINTER VARIABLES USED BY SFR1 TO SUPPORT LAKE3 AND
+C     GAGE PACKAGES AND THE GWT PROCESS
+C     ******************************************************************
+      NUMGAGE=0
+      LSGAGE=1
+C
+C     CONNECTION TO SFR1 PACKAGE
+        NSTRM=0
+        NSTRMAR=1
+        NSS=0
+        NSSAR=1
+        ICSTRM=1
+        LCIVAR=1
+C
+C     CONNECTION TO LAK3 PACKAGE
+        NLAKES=0
+        NLAKESAR=1
+        LKACC7=1
+        LCSTAG=1
+        LSLAKE=1
+      RETURN
+      END
+
 C GWF1GAG5ALP ALLOCATE SPACE FOR GAGING STATIONS
 C
 C     ******************************************************************
-      SUBROUTINE GWF1GAG5ALP(INGAGE,ISUMIR,LSGAGE,NUMGAGE,IOUT,IUNITSFR,
-     *    IUNITLAK,LKACC7,LCSTAG,LSLAKE,ICSTRM,NSTRM,NLAKES)
+      SUBROUTINE GWF1GAG5ALP(INGAGE,ISUMIR,ISUMRX,LSGAGE,NUMGAGE,IOUT,
+     *    IUNITSFR,IUNITLAK,LKACC7,LCSTAG,LSLAKE,ICSTRM,LCIVAR)
 C
 C     ******************************************************************
-      IF(INGAGE.LE.0) THEN
+      IF(IUNITSFR.LE.0.AND.IUNITLAK.LE.0) THEN
+         WRITE(IOUT,1)
+    1    FORMAT(1X,' GAGE PACKAGE ACTIVE EVEN THOUGH SFR AND LAK3 ',
+     &         'PACKAGES ARE INACTIVE: '
+     &         'GAGE PACKAGE IS BEING TURNED OFF')
+         INGAGE=0
          LSGAGE=1
          NUMGAGE=0
          RETURN
       END IF
       READ(INGAGE,*) NUMGAGE
       IF(NUMGAGE.LE.0) THEN
-         WRITE(IOUT,1)
-    1    FORMAT(1X,' NUMGAGE=0, SO GAGE IS BEING TURNED OFF')
+         WRITE(IOUT,2)
+    2    FORMAT(1X,' NUMGAGE=0, SO GAGE IS BEING TURNED OFF')
          INGAGE=0
          LSGAGE=1
          NUMGAGE=0
          RETURN
       END IF
 C
-C     ARRAY IS SEGMENT (or LAKE) NUMBER, REACH NUMBER, UNIT#
+C     ARRAY IS SEGMENT (or LAKE) NUMBER, REACH NUMBER, UNIT#.
       LSGAGE=ISUMIR
-      ISUMIR=ISUMIR+NUMGAGE*3
-      ISP=NUMGAGE*3
+      ISUMIR=ISUMIR+NUMGAGE*4
+      ISP=NUMGAGE*4
+C
+C     DEFINE ICSTRM AND NSTRM IF SFR1 NOT ACTIVE.
       IF (IUNITSFR.LE.0) THEN
-         ICSTRM=1
-         NSTRM=1
-      END IF
-      IF (IUNITLAK.LE.0) THEN
-         LKACC7=1
-         LCSTAG=1
-         LSLAKE=1
-         NLAKES=1
+         ICSTRM=ISUMIR
+         ISUMIR=ISUMIR+5   ! ERB
+         LCIVAR=ISUMIR
+         ISUMIR=ISUMIR+2   ! ERB
+         ISP=ISP+7
       END IF
 C
-      WRITE(IOUT,101) ISP
-  101 FORMAT(1X,I10,' ELEMENTS IN IX ARRAY ARE USED BY GAGE')
+C     DEFINE LKACC7,LCSTAG,LSLAKE IF LAK3 NOT ACTIVE.
+      ISPRX=0
+      IF (IUNITLAK.LE.0) THEN
+         LKACC7=ISUMRX
+         ISUMRX=ISUMRX+1
+         LCSTAG=ISUMRX
+         ISUMRX=ISUMRX+1
+         LSLAKE=ISUMRX
+         ISUMRX=ISUMRX+1
+         ISPRX=ISPRX+3
+      END IF
+C
+C     PRINT SPACE USED BY GAGE PACKAGE.
+      WRITE (IOUT,101)ISPRX
+  101 FORMAT(1X,I10,' ELEMENTS IN RX ARRAY ARE USED BY GAGE')
+      WRITE(IOUT,102) ISP
+  102 FORMAT(1X,I10,' ELEMENTS IN IR ARRAY ARE USED BY GAGE')
 C
       RETURN
       END
@@ -56,10 +108,10 @@ C     ******************************************************************
 C
 C     READ GAGING STATION LOCATIONS
 C     ******************************************************************
-C     IGGLST ARRAY IS SEGMENT (or LAKE) NUMBER, REACH NUMBER (or OUTTYPE
-C     for LAKE), and UNIT#
+C     IGGLST ARRAY IS (1) SEGMENT (or LAKE) NUMBER; (2) REACH NUMBER
+C          (null for LAKE); (3) UNIT #; and (4) OUTTYPE
 C
-      DIMENSION IGGLST(3,NUMGAGE)
+      DIMENSION IGGLST(4,NUMGAGE)
 C
 C     ******************************************************************
 C
@@ -75,7 +127,8 @@ C READ THE FIRST RECORD OF LIST
          IF (IGGLST(1,IOB).GT.0) THEN
 C           for stream:
             NSG=NSG+1
-            READ(INGAGE,*) IGGLST(1,IOB),IGGLST(2,IOB),IGGLST(3,IOB)
+            READ(INGAGE,*) IGGLST(1,IOB),IGGLST(2,IOB),IGGLST(3,IOB),
+     *                     IGGLST(4,IOB)
          ELSE
             IF(IGGLST(1,IOB).EQ.0) THEN
                WRITE(IOUT,170)
@@ -84,12 +137,13 @@ C           for stream:
 C              for lake:
                NLG=NLG+1
                READ(INGAGE,*) IGGLST(1,IOB),IGGLST(3,IOB)
+               IGGLST(2,IOB)=0
 C              check for negative unit number, which designates OUTTYPE is read
                IF (IGGLST(3,IOB).LT.0) THEN
                 BACKSPACE INGAGE
-                READ(INGAGE,*) IGGLST(1,IOB),IGGLST(3,IOB),IGGLST(2,IOB)
+                READ(INGAGE,*) IGGLST(1,IOB),IGGLST(3,IOB),IGGLST(4,IOB)
                ELSE
-                 IGGLST(2,IOB)=0
+                 IGGLST(4,IOB)=0
                END IF
             END IF
          END IF
@@ -102,8 +156,8 @@ C PRINT STREAM GAGES
         WRITE (IOUT,150)
         DO 136 IOB=1,NUMGAGE
           IF (IGGLST(1,IOB).GT.0) THEN
-            WRITE(IOUT,'(4I8,13X,A40)') IOB,IGGLST(1,IOB),
-     *                                 IGGLST(2,IOB),IGGLST(3,IOB)
+            WRITE(IOUT,'(5I8,13X,A40)') IOB,IGGLST(1,IOB),
+     *                        IGGLST(2,IOB),IGGLST(3,IOB),IGGLST(4,IOB)
           END IF
   136   CONTINUE
       END IF
@@ -116,7 +170,7 @@ C PRINT LAKE GAGES
           IF (IGGLST(1,IOB).LT.0) THEN
             IF (IGGLST(3,IOB).LT.0) THEN
               WRITE(IOUT,'(4I8)') IOB,IGGLST(1,IOB),
-     *                  IGGLST(3,IOB),IGGLST(2,IOB)
+     *                  IGGLST(3,IOB),IGGLST(4,IOB)
             ELSE
               WRITE(IOUT,'(3I8)') IOB,IGGLST(1,IOB),IGGLST(3,IOB)
             END IF
@@ -133,7 +187,7 @@ C
      *'identified by a negative value of the Lake Number)',/5X,'RECORDS'
      1,' WILL BE WRITTEN TO SEPARATE OUTPUT FILE REPRESENTED BY ',
      2'FOLLOWING UNIT NUMBER:')
-  150 FORMAT('  GAGE #   SEGMENT   REACH   UNIT')
+  150 FORMAT('  GAGE #   SEGMENT   REACH   UNIT   OUTTYPE')
   155 FORMAT('  GAGE #    LAKE     UNIT   OUTTYPE')
   170 FORMAT(/'*** ERROR *** Expected non-zero value for segment no.'/
      * 25X,'EXECUTION STOPPING')
@@ -143,13 +197,14 @@ C
 C
 C
 C GWF1GAG5I GAGING STATIONS--WRITE HEADER LINES TO OUTPUT FILES
-C                          --DETERMINE & SAVE CROSS-REFERENCE INDEX
-C                          --RECORD INITIAL CONDITIONS FOR LAKE GAGES
+C                       --DETERMINE & SAVE CROSS-REFERENCE INDEX
+C                       --RECORD INITIAL CONDITIONS FOR LAKE GAGES
 C
 C     ******************************************************************
 C
       SUBROUTINE GWF1GAG5I(IGGLST,NUMGAGE,IOUT,IUNITGWT,STAGES,CLAKE,
-     *                     NLAKES,ISTRM,NSTRM,DUM,NSOL,VOL)
+     *                  NLAKES,ISTRM,NSTRM,IDIVAR,DUM,NSOL,VOL,
+     *                  NLAKESAR,NSTRMAR,NSSAR)
 C
 C     ******************************************************************
 C
@@ -161,11 +216,12 @@ C
       CHARACTER*1256  LFRMAT
 C TEMPORARY ARRAYS
       ALLOCATABLE CONCNAME(:),DCTSNAME(:),DCCMNAME(:),DUMMY(:,:)
-      DIMENSION IGGLST(3,NUMGAGE),VOL(NLAKES)
-      DIMENSION STAGES(NLAKES),CLAKE(NLAKES,NSOL),ISTRM(5,NSTRM)
+      DIMENSION IGGLST(4,NUMGAGE),VOL(NLAKESAR)
+      DIMENSION STAGES(NLAKESAR),CLAKE(NLAKESAR,NSOL),ISTRM(5,NSTRMAR)
+      DIMENSION IDIVAR(2,NSSAR)
 C ALLOCATE TEMPORARY ARRAYS
       ALLOCATE(CONCNAME(NSOL),DCTSNAME(NSOL),DCCMNAME(NSOL),
-     *DUMMY(NLAKES,NSOL))
+     *DUMMY(NLAKESAR,NSOL))
 C
 C     ******************************************************************
 C
@@ -180,22 +236,73 @@ C---Stream gage; save stream reach index; write header lines
             DO 20 IRCH=1,NSTRM
                IF (ISTRM(4,IRCH).EQ.IG.AND.ISTRM(5,IRCH).EQ.IG2) THEN
 C---              Convert reach no. from segment list to master list
-                  IGGLST(1,IOG)=IRCH
+                  IGGLST(2,IOG)=IRCH
                   GO TO 30
                END IF
  20         CONTINUE
             WRITE (IOUT,100) IOG,IG3
             GO TO 10
  30         CONTINUE
-            IF (IGGLST(1,IOG).GT.0) THEN
-               II=IGGLST(1,IOG)
+            IF (IGGLST(2,IOG).GT.0) THEN
+               II=IGGLST(2,IOG)
                WRITE (IG3,200) IOG,ISTRM(1,II),ISTRM(2,II),ISTRM(3,II),
      *                         ISTRM(4,II),ISTRM(5,II)
+C---Check if gage station if a diversion when outtype is 5
+               IF(IGGLST(4,IOG).EQ.5) THEN
+                 IF(IDIVAR(1,IG).LE.0.OR.IDIVAR(2,IG).GT.0) THEN
+                   WRITE(IG3,201) IOG,IG
+                   IGGLST(4,IOG)=0
+                 ELSE IF (ISTRM(5,II).NE.1) THEN
+                   WRITE(IG3,202) IOG,IG,ISTRM(5,II)
+                   IGGLST(4,IOG)=0
+                 ELSE
+                   WRITE(IG3,203) IG,IDIVAR(1,IG),IDIVAR(2,IG)
+                 END IF
+               END IF
+C              TRANSPORT OFF
                IF (IUNITGWT.LE.0) THEN
-                  WRITE (IG3,300)
+C                GET OUTTYPE
+                 SELECT CASE (IGGLST(4,IOG))
+                   CASE (0)
+                     WRITE (IG3,250)
+                   CASE (1)
+                     WRITE (IG3,255)
+                   CASE (2)
+                     WRITE (IG3,260)
+                   CASE (3)
+                     WRITE (IG3,250)
+                   CASE (4)
+                     WRITE (IG3,265)
+                   CASE (5)
+                     WRITE (IG3,267)
+                 END SELECT
                ELSE
-                  IF (NSOL.EQ.1) WRITE (IG3,310)
-                  IF (NSOL.GT.1) WRITE (IG3,312) NSOL
+C              TRANSPORT ON
+C                GET OUTTYPE
+                 IF (NSOL.LE.0) THEN
+                    WRITE (IOUT,240)
+                     CALL USTOP(' ')
+                 END IF
+                 SELECT CASE (IGGLST(4,IOG))
+                 CASE(0)
+                  IF (NSOL.EQ.1) WRITE (IG3,270)
+                  IF (NSOL.GT.1) WRITE (IG3,272) NSOL
+                 CASE(1)
+                  IF (NSOL.EQ.1) WRITE (IG3,275)
+                  IF (NSOL.GT.1) WRITE (IG3,277) NSOL
+                 CASE(2)
+                  IF (NSOL.EQ.1) WRITE (IG3,280)
+                  IF (NSOL.GT.1) WRITE (IG3,282) NSOL
+                 CASE(3)
+                  IF (NSOL.EQ.1) WRITE (IG3,281)
+                  IF (NSOL.GT.1) WRITE (IG3,284) NSOL
+                 CASE(4)
+                  IF (NSOL.EQ.1) WRITE (IG3,285)
+                  IF (NSOL.GT.1) WRITE (IG3,287) NSOL
+                 CASE(5)
+                  IF (NSOL.EQ.1) WRITE (IG3,290)
+                  IF (NSOL.GT.1) WRITE (IG3,292) NSOL
+                 END SELECT
                END IF
             END IF
          ELSE
@@ -209,7 +316,7 @@ C---Lake gage; write header lines; write initial conditions
 C              TRANSPORT OFF
                IF (IUNITGWT.LE.0) THEN
 C                GET OUTTYPE
-                 SELECT CASE (IGGLST(2,IOG))
+                 SELECT CASE (IGGLST(4,IOG))
                    CASE (0)
                      WRITE (IG3,305)
                      WRITE (IG3,400) DUM,STAGES(LK),VOL(LK)
@@ -230,7 +337,7 @@ C                GET OUTTYPE
 C              TRANSPORT ON
 C                Prepare array of header names for multiple constituents
                  DFLAG=0
-                 IF(IGGLST(2,IOG).EQ.2.OR.IGGLST(2,IOG).EQ.3) DFLAG=1
+                 IF(IGGLST(4,IOG).EQ.2.OR.IGGLST(4,IOG).EQ.3) DFLAG=1
                  DO 1000 ISOL=1,NSOL
                    IF (ISOL.LT.10) THEN
                      WRITE(A,'(I1)') ISOL
@@ -252,7 +359,7 @@ C                Prepare array of header names for multiple constituents
                    END IF
  1000            CONTINUE
 C                GET OUTTYPE
-                 SELECT CASE (IGGLST(2,IOG))
+                 SELECT CASE (IGGLST(4,IOG))
                  CASE(0)
                    WRITE (LFRMAT,315) NSOL
                    WRITE (IG3,LFRMAT) (CONCNAME(ISOL),ISOL=1,NSOL)
@@ -297,40 +404,99 @@ C
      *   ' LAKE',/10X,'NO DATA WILL BE WRITTEN TO UNIT ',I3/)
  200  FORMAT (1X,'"GAGE No.',I3,':  K,I,J Coord. = ',I3,',',I3,',',I3,
      *   ';  STREAM SEGMENT = ',I3,';  REACH = ',I3,' "')
+ 201  FORMAT (/2X,'*** WARNING ***  GAGE ',I3,' ON STREAM SEGMENT ',I3,
+     *   ' NOT A DIVERSION AS THERE IS NO UPSTREAM SEGMENT OR ',
+     *   ' DIVERSION TYPE (IPRIOR)',/10X,
+     *   ' RESETTING OUTTYPE FROM 5 TO 0')
+ 202  FORMAT (/2X,'*** WARNING ***  GAGE ',I3,' ON STREAM SEGMENT ',I3,
+     *   ' REACH NO. ',I3,' IS NOT LOCATED ON FIRST REACH OF A'
+     *   ' DIVERSION',/10X,' RESETTING OUTTYPE FROM 5 TO 0')
+ 203  FORMAT (/2X,'STREAM SEGMENT ',I3,' IS DIVERTED FROM SEGMENT ',I3,
+     *        ' DIVERSION TYPE IS IPRIOR OF ',I3)
  210  FORMAT (1X,'"GAGE No.',I3,':  Lake No. = ',I3,' "')
- 300  FORMAT (1X,'"DATA:  Time',7X,'Stage',7X,'Width',8X,'Flow"')
+ 240  FORMAT (/2X,'*** ERROR ***   NSOL NEEDED BUT NOT DEFINED IN ',
+     *   'GAGE PACKAGE.  PROGRAM TERMINATING.')
+ 250  FORMAT (1X,'"DATA:  Time',7X,'Stage',8X,'Flow"')
+ 255  FORMAT (1X,'"DATA:  Time',7X,'Stage',8X,'Flow',
+     *           7X,'Depth',7X,'Width',6X,'M-P Flow"')
+ 260  FORMAT (1X,'"DATA:  Time',7X,'Stage',8X,'Flow',
+     *           7X,'Cond.',5X,'HeadDiff',4X,'Hyd.Grad."')
+ 265  FORMAT (1X,'"DATA:  Time',7X,'Stage',8X,'Flow',
+     *           8X,'Depth',7X,'Width',6X,'M-P Flow',
+     *           5X,'Cond.',5X,'HeadDiff',4X,'Hyd.Grad."')
+ 267  FORMAT (1X,'"DATA:  Time',7X,'Stage',4X,
+     *           'Max. Rate',4X,'Rate Diverted',2X,
+     *           'Upstream Flow"')
+ 270  FORMAT (1X,'"DATA:  Time',7X,'Stage',8X,'Flow',
+     *           '    Concentration"')
+ 272  FORMAT (1X,'"DATA:  Time',7X,'Stage',8X,'Flow',
+     *           '    Concentration ',
+     *   'of ',I3,' Solutes "')
+ 275  FORMAT (1X,'"DATA:  Time',7X,'Stage',8X,'Flow',
+     *           7X,'Depth',7X,'Width',6X,'M-P Flow',
+     *           '  Concentration"')
+ 277  FORMAT (1X,'"DATA:  Time',7X,'Stage',8X,'Flow',
+     *           7X,'Depth',7X,'Width',6X,'M-P Flow',
+     *           '  Concentration ',
+     *   'of ',I3,' Solutes "')
+ 280  FORMAT (1X,'"DATA:  Time',7X,'Stage',8X,'Flow',
+     *           7X,'Cond.',5X,'HeadDiff',4X,'Hyd.Grad.',
+     *           '  Concentration"')
+ 281  FORMAT (1X,'"DATA:  Time',7X,'Stage',8X,'Flow',
+     *           '   Concentration    Load"')
+ 282  FORMAT (1X,'"DATA:  Time',7X,'Stage',8X,'Flow',
+     *           7X,'Cond.',5X,'HeadDiff',4X,'Hyd.Grad.',
+     *           '  Concentration ',
+     *   'of ',I3,' Solutes "')
+ 284  FORMAT (1X,'"DATA:  Time',7X,'Stage',8X,'Flow',
+     *           '  Concentration  &  Load ',
+     *   'of ',I3,' Solutes "')
+ 285  FORMAT (1X,'"DATA:  Time',7X,'Stage',8X,'Flow',
+     *           7X,'Depth',7X,'Width',6X,'M-P Flow',
+     *           5X,'Cond.',5X,'HeadDiff',4X,'Hyd.Grad.',
+     *           ' Concentration    Load"')
+ 287  FORMAT (1X,'"DATA:  Time',7X,'Stage',8X,'Flow',
+     *           7X,'Depth',7X,'Width',6X,'M-P Flow',
+     *           5X,'Cond.',5X,'HeadDiff',4X,'Hyd.Grad.',
+     *           '  Concentration  &  Load ',
+     *   'of ',I3,' Solutes "')
+ 290  FORMAT (1X,'"DATA:  Time',4X,'Stage',4X,
+     *           'Max. Rate',4X,'Rate Diverted',4X,
+     *           'Upstream Flow',4X,' Concentration',4X,
+     *           'Load"')
+ 292  FORMAT (1X,'"DATA:  Time',7X,'Stage',4X,
+     *           'Max. Rate',4X,'Rate Diverted',2X,
+     *           'Upstream Flow',4X,' Concentration  & ',
+     *           'Load of ',I3,' Solutes "')
  305  FORMAT (1X,'"DATA:  Time',6X,'Stage(H)',4X,'Volume "')
  306  FORMAT (1X,'"DATA:  Time',6X,'Stage(H)',2X,'Volume',5X,'Precip.',
      1 5x,'Evap.',5x,'Runoff',4x,'GW-Inflw',3x,'GW-Outflw',2x,'SW-Inflw'
-     2 ,3x,'SW-Outflw',1x,'Withdrawal',1x,'Lake-Inflx',1x,'Total-Cond "'
-     3)
+     2 ,3x,'SW-Outflw',x,'Withdrawal',1x,'Lake-Inflx',x,'Total-Cond "')
  307  FORMAT (1X,'"DATA:  Time',6X,'Stage(H)',2X,'Volume',
      * 5x,'Del-H-TS',3x,'Del-V-TS',2x,'Del-H-Cum',2x,'Del-V-Cum "')
  308  FORMAT (1X,'"DATA:  Time',6X,'Stage(H)',2X,'Volume',5X,'Precip.',
      1 5x,'Evap.',5x,'Runoff',4x,'GW-Inflw',3x,'GW-Outflw',2x,'SW-Inflw'
-     2 ,3x,'SW-Outflw',1x,'Withdrawal',1x,'Lake-Inflx',1x,'Total-Cond ',
+     2 ,3x,'SW-Outflw',x,'Withdrawal',1x,'Lake-Inflx',x,'Total-Cond ',
      * 2x,'Del-H-TS',3x,'Del-V-TS',2x,'Del-H-Cum',2x,'Del-V-Cum "')
- 310  FORMAT (1X,'"DATA:  Time',7X,'Stage',7X,'Width',8X,'Flow',
-     *           '    Concentration"')
- 312  FORMAT (1X,'"DATA:  Time',7X,'Stage',8X,'Flow    Concentration ',
-     *   'of ',I3,' Solutes "')
  315  FORMAT ('( 1X,''"DATA:  Time'',6X,''Stage(H)'',2X,''Volume'',2X,'
      *,I2,'A12, '' "'')')
  316  FORMAT ('( 1X,''"DATA:  Time'',6X,''Stage(H)'',2X,''Volume'',2X,'
      *,I2,'A12,5X,''Precip'',5x,''Evap.'',5x,''Runoff'',4x,''GW-Inflw'',
-     *3x,''GW-Outflw'',2x,''SW-Inflw'',3x,''SW-Outflw'',1x,''Withdrawal'
-     *',1x,''Lake-Inflx'',1x,''Total-Cond "'')')
+     *3x,''GW-Outflw'',2x,''SW-Inflw'',3x,''SW-Outflw'',x,''Withdrawal''
+     *,x,''Lake-Inflx'',x,''Total-Cond "'')')
  317  FORMAT ('( 1X,''"DATA:  Time'',6X,''Stage(H)'',2X,''Volume'',2X,'
-     *,I2,'A12,4x,''Del-H-TS'',4x,''Del-V-TS'',0x,',I2,'A12,3x,
-     *''Del-H-Cum'',3x,''Del-V-Cum'',0x,',I2,'A12,'' "'')')
+c     *,I2,'A12,4x,''Del-H-TS'',4x,''Del-V-TS'',0x,',I2,'A12,3x,
+     *,I2,'A12,4x,''Del-H-TS'',4x,''Del-V-TS'',',I2,'A12,3x,
+c     *''Del-H-Cum'',3x,''Del-V-Cum'',0x,',I2,'A12,'' "'')')
+     *''Del-H-Cum'',3x,''Del-V-Cum'',',I2,'A12,'' "'')')
  318  FORMAT ('( 1X,''"DATA:  Time'',6X,''Stage(H)'',2X,''Volume'',2X,'
      *,I2,'A12,5X,''Precip'',5x,''Evap.'',5x,''Runoff'',4x,''GW-Inflw'',
-     *3x,''GW-Outflw'',2x,''SW-Inflw'',3x,''SW-Outflw'',1x,''Withdrawal'
-     *'
-     *,1x,''Lake-Inflx'',1x,''Total-Cond'',3x,''Del-H-TS'',4x,''Del-V-TS
-     *''
-     *,0x,',I2,'A12,3x,
-     *''Del-H-Cum'',3x,''Del-V-Cum'',0x,',I2,'A12,'' "'')')
+     *3x,''GW-Outflw'',2x,''SW-Inflw'',3x,''SW-Outflw'',x,''Withdrawal''
+     *,x,''Lake-Inflx'',x,''Total-Cond'',3x,''Del-H-TS'',4x,''Del-V-TS''
+c     *,0x,',I2,'A12,3x,
+     *,',I2,'A12,3x,
+c     *''Del-H-Cum'',3x,''Del-V-Cum'',0x,',I2,'A12,'' "'')')
+     *''Del-H-Cum'',3x,''Del-V-Cum'',',I2,'A12,'' "'')')
  400  FORMAT (4X,1PE11.3,0PF11.3,1PE11.3)
  401  FORMAT (4X,1PE11.3,0PF11.3,1P11E11.3)
  402  FORMAT (4X,1PE11.3,0PF11.3,1P5E11.3)
@@ -339,10 +505,10 @@ C
  426  FORMAT ('(4X,1PE11.3,0PF11.3,1PE11.3,1X,',I3,'(E11.3,1X),
      *10E11.3)')
  427  FORMAT ('(4X,1PE11.3,0PF11.3,1PE11.3,1X,',I3,'(E11.3,1X),
-     *E11.3,1X,E11.3,1X,',I3,'(E11.3,1X),E11.3,1X,E11.3,1X,
+     *E11.3,X,E11.3,X,',I3,'(E11.3,1X),E11.3,X,E11.3,X,
      *',I3,'(E11.3,1X))')
  428  FORMAT ('(4X,1PE11.3,0PF11.3,1PE11.3,1X,',I3,'(E11.3,1X),10E11.3,
-     *E11.3,1X,E11.3,1X,',I3,'(E11.3,1X),E11.3,1X,E11.3,1X,
+     *E11.3,X,E11.3,X,',I3,'(E11.3,1X),E11.3,X,E11.3,X,
      *',I3,'(E11.3,1X))')
 C
 C  RELEASE MEMORY
@@ -365,7 +531,7 @@ C
 C     ******************************************************************
 C
       CHARACTER*1256  LFRMAT
-      DIMENSION IGGLST(3,NUMGAGE),VOL(NLAKES)
+      DIMENSION IGGLST(4,NUMGAGE),VOL(NLAKES)
       DIMENSION STGNEW(NLAKES),CLAKE(NLAKES,NSOL)
       DIMENSION PRECIP(NLAKES),EVAP(NLAKES),RNF(NLAKES),
      * GWIN(NLAKES),GWOUT(NLAKES),SURFIN(NLAKES),SURFOT(NLAKES),
@@ -392,7 +558,7 @@ C---Lake gage: write time, stage, volume, concentration of each solute
 C              TRANSPORT OFF
                IF (IUNITGWT.LE.0) THEN
 C                GET OUTTYPE
-                 SELECT CASE (IGGLST(2,IOG))
+                 SELECT CASE (IGGLST(4,IOG))
                  CASE (0)
                    WRITE (IG3,300) GAGETM,STGNEW(LK),VOL(LK)
                  CASE (1)
@@ -412,7 +578,7 @@ C                GET OUTTYPE
                  END SELECT
                ELSE
 C              TRANSPORT ON
-                 SELECT CASE (IGGLST(2,IOG))
+                 SELECT CASE (IGGLST(4,IOG))
                  CASE (0)
                    WRITE (LFRMAT,425) NSOL
                    WRITE (IG3,LFRMAT) GAGETM,STGNEW(LK),VOL(LK),
@@ -463,10 +629,10 @@ C
  426  FORMAT ('(4X,1PE11.3,0PF11.3,1PE11.3,1X,',I3,'(E11.3,1X),
      *10E11.3)')
  427  FORMAT ('(4X,1PE11.3,0PF11.3,1PE11.3,1X,',I3,'(E11.3,1X),
-     *E11.3,1X,E11.3,1X,',I3,'(E11.3,1X),E11.3,1X,E11.3,1X,
+     *E11.3,X,E11.3,X,',I3,'(E11.3,1X),E11.3,X,E11.3,X,
      *',I3,'(E11.3,1X))')
  428  FORMAT ('(4X,1PE11.3,0PF11.3,1PE11.3,1X,',I3,'(E11.3,1X),10E11.3,
-     *E11.3,1X,E11.3,1X,',I3,'(E11.3,1X),E11.3,1X,E11.3,1X,
+     *E11.3,X,E11.3,X,',I3,'(E11.3,1X),E11.3,X,E11.3,X,
      *',I3,'(E11.3,1X))')
 C
 C  RELEASE MEMORY
@@ -479,14 +645,19 @@ C SGWF1GAG5SO Stream GAGING STATIONS--RECORD DATA (Write output to separate file
 C
 C     ******************************************************************
 C
-      SUBROUTINE SGWF1GAG5SO(IGGLST,NUMGAGE,IUNITGWT,STRM,
-     *                  NSTRM,GAGETM,NSOL,COUT)
+      SUBROUTINE SGWF1GAG5SO(IGGLST,NUMGAGE,IUNITGWT,STRM,ISEG,
+     *                  NSEGDIM,NSTRM,GAGETM,NSOL,COUT,SFRQ,NSS,SEG,
+     *                  SGOTFLW,IDIVAR)
 C
 C     ******************************************************************
 C
       CHARACTER*50  LFRMAT
-      DIMENSION IGGLST(3,NUMGAGE)
-      DIMENSION STRM(16,NSTRM),COUT(NSTRM,NSOL)
+      REAL SFRQ(5,NSTRM)
+      ALLOCATABLE CLOAD(:)
+      DIMENSION IGGLST(4,NUMGAGE),ISEG(3,NSEGDIM)
+      DIMENSION STRM(18,NSTRM),COUT(NSTRM,NSOL)
+      DIMENSION SEG(17,NSS),IDIVAR(2,NSS),SGOTFLW(NSS)
+      ALLOCATE(CLOAD(NSOL))
 C
 C     ******************************************************************
 C
@@ -495,22 +666,113 @@ C  LOOP OVER GAGING STATIONS
          IG1=IGGLST(1,IOG)
          IG3=IGGLST(3,IOG)
          IF (IG1.GT.0) THEN
-            II=IGGLST(1,IOG)
+            II=IGGLST(2,IOG)
+C
+C        CALCULATE STREAM DEPTH
+              DEPTH=STRM(7,II)
+                IF (ISEG(1,IG1).EQ.0) THEN
+                 DEPTH=STRM(15,II)-STRM(3,II)
+              END IF
+C       COMPUTE DIVERSION RATES IF OUTTYPE IS 5
+              IF(IGGLST(4,IOG).EQ.5) THEN
+                   IUPSEG=IDIVAR(1,IG1)
+                   UPSTRFLW=STRM(10,II)+SGOTFLW(IUPSEG)
+                   IF(IDIVAR(2,IG1).GE.-1) PMXDVRT=SEG(2,IG1)
+                   IF(IDIVAR(2,IG1).EQ.-2) PMXDVRT=SEG(2,IG1)*UPSTRFLW
+                   IF(IDIVAR(2,IG1).EQ.-3) PMXDVRT=UPSTRFLW-SEG(2,IG1)
+              END IF
+C
+C              TRANSPORT OFF
                IF (IUNITGWT.LE.0) THEN
-                  WRITE (IG3,300) GAGETM,STRM(7,II),STRM(5,II),
-     *                            STRM(9,II)
+C                GET OUTTYPE
+                 SELECT CASE (IGGLST(4,IOG))
+                   CASE (0)
+                     WRITE (IG3,250) GAGETM,STRM(15,II),STRM(9,II)
+                   CASE (1)
+                     WRITE (IG3,255) GAGETM,STRM(15,II),STRM(9,II),
+     *                    DEPTH,STRM(5,II),SFRQ(1,II)
+                   CASE (2)
+                     WRITE (IG3,260) GAGETM,STRM(15,II),STRM(9,II),
+     *                    STRM(16,II),STRM(17,II),STRM(18,II)
+                   CASE (3)
+                     WRITE (IG3,250) GAGETM,STRM(15,II),STRM(9,II)
+                   CASE (4)
+                     WRITE (IG3,265) GAGETM,STRM(15,II),STRM(9,II),
+     *                    DEPTH,STRM(5,II),SFRQ(1,II),
+     *                    STRM(16,II),STRM(17,II),STRM(18,II)
+C              OUTTYPE 5 IS USED TO PRINT TIME SERIES OF DIVERSIONS
+                   CASE (5)
+                     WRITE (IG3,270) GAGETM,STRM(15,II),PMXDVRT,
+     *                    STRM(10,II),UPSTRFLW
+                 END SELECT
                ELSE
-                  WRITE (LFRMAT,435) NSOL
-                  WRITE (IG3,LFRMAT) GAGETM,STRM(7,II),STRM(5,II),
+C              TRANSPORT ON
+C                GET OUTTYPE
+                 IF (NSOL.LE.0) THEN
+                     CALL USTOP(' ')
+                 END IF
+                 SELECT CASE (IGGLST(4,IOG))
+                 CASE(0)
+                  WRITE (LFRMAT,450) NSOL
+                  WRITE (IG3,LFRMAT) GAGETM,STRM(15,II),
      *                          STRM(9,II),(COUT(II,ISOL),ISOL=1,NSOL)
+                 CASE(1)
+                  WRITE (LFRMAT,455) NSOL
+                  WRITE (IG3,LFRMAT) GAGETM,STRM(15,II),STRM(9,II),
+     *                    DEPTH,STRM(5,II),SFRQ(1,II),
+     *                          (COUT(II,ISOL),ISOL=1,NSOL)
+                 CASE(2)
+                  WRITE (LFRMAT,460) NSOL
+                  WRITE (IG3,LFRMAT) GAGETM,STRM(15,II),STRM(9,II),
+     *                    STRM(16,II),STRM(17,II),STRM(18,II),
+     *                          (COUT(II,ISOL),ISOL=1,NSOL)
+                 CASE(3)
+                  DO 5 ISOL=1,NSOL
+                     CLOAD(ISOL)=STRM(9,II)*COUT(II,ISOL)
+  5               CONTINUE
+                  WRITE (LFRMAT,452) NSOL
+                  WRITE (IG3,LFRMAT) GAGETM,STRM(15,II),
+     *                      STRM(9,II),
+     *                      ((COUT(II,ISOL),CLOAD(ISOL)),ISOL=1,NSOL)
+                 CASE(4)
+                  DO 6 ISOL=1,NSOL
+                     CLOAD(ISOL)=STRM(9,II)*COUT(II,ISOL)
+  6               CONTINUE
+                  WRITE (LFRMAT,465) NSOL
+                  WRITE (IG3,LFRMAT) GAGETM,STRM(15,II),STRM(9,II),
+     *                    DEPTH,STRM(5,II),SFRQ(1,II),
+     *                    STRM(16,II),STRM(17,II),STRM(18,II),
+     *                    ((COUT(II,ISOL),CLOAD(ISOL)),ISOL=1,NSOL)
+C              OUTTYPE 5 IS USED TO PRINT TIME SERIES OF DIVERSIONS
+                   CASE (5)
+                 DO 7 ISOL=1,NSOL
+                     CLOAD(ISOL)=STRM(9,II)*COUT(II,ISOL)
+  7               CONTINUE
+                  WRITE (LFRMAT,470) NSOL
+                  WRITE (IG3,LFRMAT) GAGETM,STRM(15,II),PMXDVRT,
+     *                    STRM(10,II),UPSTRFLW,
+     *                    ((COUT(II,ISOL),CLOAD(ISOL)),ISOL=1,NSOL)
+                 END SELECT
                END IF
          ELSE
             GO TO 10
          END IF
  10   CONTINUE
 C
- 300  FORMAT (4X,1PE11.3,1X,3(E11.3,1X))
- 435  FORMAT ('(4X,1PE11.3,1X,3(E11.3,1X),',I3,'(E11.3,1X))')
+ 250  FORMAT (4X,1PE11.3,1X,2(E11.3,1X))
+ 255  FORMAT (4X,1PE11.3,1X,5(E11.3,1X))
+ 260  FORMAT (4X,1PE11.3,1X,5(E11.3,1X))
+ 265  FORMAT (4X,1PE11.3,1X,8(E11.3,1X))
+ 270  FORMAT (4X,1PE11.3,1X,4(E11.3,2X))
+ 450  FORMAT ('(4X,1PE11.3,1X,2(E11.3,1X),',I3,'E11.3,1X))')
+ 452  FORMAT ('(4X,1PE11.3,1X,2(E11.3,1X),',I3,'(2(E11.3,1X)))')
+ 455  FORMAT ('(4X,1PE11.3,1X,5(E11.3,1X),',I3,'(E11.3,1X))')
+ 460  FORMAT ('(4X,1PE11.3,1X,5(E11.3,1X),',I3,'(E11.3,1X))')
+ 465  FORMAT ('(4X,1PE11.3,1X,8(E11.3,1X),',I3,'(2(E11.3,1X)))')
+ 470  FORMAT ('(4X,1PE11.3,1X,4(E11.3,2X),',I3,'(2(E11.3,1X)))')
+C
+C  RELEASE MEMORY
+      DEALLOCATE(CLOAD)
 C
       RETURN
       END

@@ -1,3 +1,4 @@
+! Time of File Save by ERB: 4/27/2004 11:46AM
 C                  KJH  20030327      -- Patched Hyd.K term in LPF option -- cel2wel function
 C     Last change: KJH  20030717      -- Patched budget output switch -- subroutine GWF1MNW1bd
 c                                        Cleaned output so outrageous pointers are not printed
@@ -56,15 +57,18 @@ c2------unit or flag for cell-by-cell flow terms.
       call ncread(in,txt,ierr)
       call UPCASE(txt)
 c
-      kspref = 1
       ki = index(txt,'REF')
-      tx2 = txt(ki:256)
-      call qread(rn,1,tx2,ierr)
-      if( ierr.eq.0 ) kspref = ifrl( rn(1) )
+      if( ki.gt.0 ) then  
+        tx2 = txt(ki:256)
+        call qread(rn,1,tx2,ierr)
+        if( ierr.eq.0 ) kspref = ifrl( rn(1) )
+        txt(ki:256) = '                                '
+      else
+        kspref = 1
+      endif  
 c
-      txt(ki:256) = '                                '
       call qread(rn,4,txt,ierr)
-      mxwel2 = ifrl( rn(1) )
+      mxwel2 = ifrl( rn(1) )      
       iwl2cb = 0
       if(ierr.le.2) iwl2cb = ifrl( rn(2) )
       iwelpt = 0
@@ -226,12 +230,12 @@ c
 c        specifications:
 c     ------------------------------------------------------------------
       dimension MNWsite(mxwel2)
-      dimension well2(17,mxwel2), hold(nodes),href(nodes), ibound(nodes)
+      dimension well2(17,mxwel2+1),hold(nodes),href(nodes),ibound(nodes)
       dimension delr(ncol), delc(nrow),cr(nodes),cc(nodes)
       dimension hy(nodes)
       dimension rn(25), iowell2(3)
       common /rev23/ iwelpt
-      COMMON /BCFCOM/LAYCON(200)
+      COMMON /BCFCOM/LAYCON(999)
       dimension hnew(nodes)
       double precision hnew
       character*1  tab
@@ -339,7 +343,7 @@ c    Test for if well is in active grid ......
           iok = 1
           if(i.gt.ncol .or. j.gt.nrow .or. node.gt.nodes) iok = 0
           DryTest = Hnew(node) - Hdry
-          if( iok.gt.0 .and. DryTest**2.gt.zero) iok = ibound(node)
+          if( iok.gt.0 .and. ABS(DryTest).gt.zero) iok = ibound(node)
 c
 c  Should MNW wells be allowed in specified-head cells?
           if( iok .ne. 0 ) then     !! Allow SH now, "gt" for no SH
@@ -547,7 +551,7 @@ c
         write(iout,'(3x,4h No.,3x,3hLay,3x,3hRow,3x,3hCol,4x,6hStress,
      +        3x,8hQW param,6x,2hRw,7x,4hSkin,4x,8hWL Limit,
      +        4x,8hWL Refer,3x,12hNonLinear Cp,2x,8hQW Group,2x,
-     +        12hCell-To-Well,2x,8hMin-Qoff,2x,8hMin-Qon,2x,
+     +        12hCell-To-Well,2x,8hMin-Qoff,2x,7hMin-Qon,2x,
      +        16hSite Identifier  )')
 c
         do m = 1, nwell2
@@ -643,7 +647,7 @@ C     ------------------------------------------------------------------
       dimension delr(ncol), delc(nrow),cr(nodes),cc(nodes)
       dimension hy(nodes)
       dimension hnew(nodes)
-      COMMON /BCFCOM/LAYCON(200)
+      COMMON /BCFCOM/LAYCON(999)
       double precision hnew
       DIMENSION BOTM(NCOL,NROW,0:NBOTM),
      &          HANI(NCOL,NROW,NLAY), HK(NODES), HKCC(NCOL,NROW,NLAY),
@@ -785,7 +789,7 @@ C     ------------------------------------------------------------------
       dimension hcof(nodes), rhs(nodes)
       dimension hnew(nodes)
       double precision hnew
-      COMMON /BCFCOM/LAYCON(200)
+      COMMON /BCFCOM/LAYCON(999)
       DIMENSION BOTM(NCOL,NROW,0:NBOTM),
      &          HANI(NCOL,NROW,NLAY), HK(NODES), HKCC(NCOL,NROW,NLAY),
      &          LAYHDT(NLAY), TRPY(NLAY)
@@ -1051,14 +1055,14 @@ c
         do m = 1,nwell2
           n = ifrl( well2(1,m) )
           DryTest = Hnew(n) - Hdry
-          if(DryTest**2.lt.zero) then
+          if(ABS(DryTest).lt.zero) then
             well2(3,m) = 0.0000
           endif
           q = well2(3,m)
           well2(17,m)=q     !!7/13/2003 - CZ: preserve q
 c
 c    Report all wells with production less than the desired rate......
-          if(ibound(n).ne.0 .or. DryTest**2.lt.zero) then
+          if(ibound(n).ne.0 .or. ABS(DryTest).lt.zero) then
             il = (n-1) / (ncol*nrow) + 1
             ir = mod((n-1),ncol*nrow)/ncol + 1
             ic = mod((n-1),ncol) + 1
@@ -1438,10 +1442,10 @@ C     ------------------------------------------------------------------
       DIMENSION BOTM(NCOL,NROW,0:NBOTM),
      &          HANI(NCOL,NROW,NLAY), HK(NODES), HKCC(NCOL,NROW,NLAY),
      &          LAYHDT(NLAY), TRPY(NLAY)
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
-      COMMON /BCFCOM/LAYCON(200)
-      COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
-     1               LAYWET(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
+      COMMON /BCFCOM/LAYCON(999)
+      COMMON /LPFCOM/LAYTYP(999),LAYAVG(999),CHANI(999),LAYVKA(999),
+     1               LAYWET(999)
       REAL KY
 C     ------------------------------------------------------------------
  1000 FORMAT(/1X,

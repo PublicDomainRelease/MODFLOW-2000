@@ -1,0 +1,750 @@
+                                  MODFLOW-2000
+      U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
+                           VERSION 1.14.00 07/01/2004
+
+
+ This model run combines GLOBAL and LIST output into this single file.
+
+ GLOBAL LISTING FILE: test1ss.lst
+                         UNIT    9
+
+ OPENING ../data/test1ss.ba6
+ FILE TYPE:BAS6   UNIT   75   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/test1ss.lpf
+ FILE TYPE:LPF   UNIT    7   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/test1ss.dis
+ FILE TYPE:DIS   UNIT    8   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/test1ss.sip
+ FILE TYPE:SIP   UNIT   13   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/test1ss.oc
+ FILE TYPE:OC   UNIT   14   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/test1ss.sfr
+ FILE TYPE:SFR   UNIT   15   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/test1ss.ghb
+ FILE TYPE:GHB   UNIT   17   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/test1ss.evt
+ FILE TYPE:EVT   UNIT   18   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/test1ss.rch
+ FILE TYPE:RCH   UNIT   19   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING ../data/test1ss.gag
+ FILE TYPE:GAGE   UNIT   32   STATUS:OLD    
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING test1ss.hds
+ FILE TYPE:DATA   UNIT   58   STATUS:UNKNOWN
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING test1ss.et
+ FILE TYPE:DATA(BINARY)   UNIT   59   STATUS:UNKNOWN
+ FORMAT:UNFORMATTED            ACCESS:TRANSPARENT         
+
+ OPENING test1ss.flw
+ FILE TYPE:DATA   UNIT   81   STATUS:UNKNOWN
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING test1ss.sg1
+ FILE TYPE:DATA   UNIT   83   STATUS:UNKNOWN
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING test1ss.sg2
+ FILE TYPE:DATA   UNIT   84   STATUS:UNKNOWN
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING test1ss.sg3
+ FILE TYPE:DATA   UNIT   85   STATUS:UNKNOWN
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING test1ss.sg4
+ FILE TYPE:DATA   UNIT   86   STATUS:UNKNOWN
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING test1ss.sg5
+ FILE TYPE:DATA   UNIT   87   STATUS:UNKNOWN
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING test1ss.sg6
+ FILE TYPE:DATA   UNIT   88   STATUS:UNKNOWN
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING test1ss.sg7
+ FILE TYPE:DATA   UNIT   89   STATUS:UNKNOWN
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING test1ss.sg8
+ FILE TYPE:DATA   UNIT   90   STATUS:UNKNOWN
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ OPENING test1ss.dvsg9
+ FILE TYPE:DATA   UNIT   91   STATUS:UNKNOWN
+ FORMAT:FORMATTED              ACCESS:SEQUENTIAL          
+
+ THE FREE FORMAT OPTION HAS BEEN SELECTED
+
+ DISCRETIZATION INPUT DATA READ FROM UNIT    8
+ #Discretization input data for Test1 --Steady State
+    1 LAYERS        15 ROWS        10 COLUMNS
+    1 STRESS PERIOD(S) IN SIMULATION
+ MODEL TIME UNIT IS SECONDS
+ MODEL LENGTH UNIT IS FEET
+ THE GROUND-WATER TRANSPORT PROCESS IS INACTIVE
+
+ THE OBSERVATION PROCESS IS INACTIVE
+ THE SENSITIVITY PROCESS IS INACTIVE
+ THE PARAMETER-ESTIMATION PROCESS IS INACTIVE
+
+ MODE: FORWARD
+
+  Confining bed flag for each layer:
+   0
+
+       1375  ELEMENTS OF GX ARRAY USED OUT OF       1375
+        150  ELEMENTS OF GZ ARRAY USED OUT OF        150
+        150  ELEMENTS OF IG ARRAY USED OUT OF        150
+
+
+
+                               DELR
+ READING ON UNIT    8 WITH FORMAT: (10F10.0)           
+   5000.0       5000.0       5000.0       5000.0       5000.0       5000.0       5000.0       5000.0       5000.0       5000.0    
+
+
+
+                               DELC
+ READING ON UNIT    8 WITH FORMAT: (10F10.0)           
+   5000.0       5000.0       5000.0       5000.0       5000.0       5000.0       5000.0       5000.0       5000.0       5000.0    
+   5000.0       5000.0       5000.0       5000.0       5000.0    
+
+
+
+           TOP ELEVATION OF LAYER 1
+ READING ON UNIT    8 WITH FORMAT: (10F10.0)           
+
+            1           2           3           4           5           6           7           8           9          10
+ ........................................................................................................................
+   1    1105.       1105.       0.000       0.000       0.000       0.000       0.000       0.000       0.000       0.000    
+   2    1105.       1095.       1105.       0.000       0.000       1100.       1100.       1110.       0.000       0.000    
+   3    0.000       1100.       1085.       1080.       1078.       1076.       1073.       1090.       0.000       0.000    
+   4    1110.       1100.       1090.       1085.       1076.       1080.       1080.       1070.       1100.       0.000    
+   5    1110.       1100.       1085.       1080.       1078.       1074.       1077.       1066.       1075.       1080.    
+   6    1105.       1095.       1080.       1077.       1073.       1069.       1070.       1063.       1085.       1095.    
+   7    1105.       1090.       1075.       1072.       1070.       1065.       1065.       1069.       1090.       0.000    
+   8    0.000       1080.       1070.       1068.       1063.       1060.       1063.       1067.       1090.       0.000    
+   9    0.000       1075.       1065.       1062.       1058.       1052.       1055.       1065.       1090.       0.000    
+  10    0.000       1070.       1060.       1055.       1046.       1046.       1044.       1060.       1088.       1100.    
+  11    0.000       1055.       1050.       1045.       1041.       1042.       1040.       1050.       1075.       0.000    
+  12    1027.       1028.       1028.       1032.       1032.       1033.       1032.       1040.       1060.       0.000    
+  13    997.0       1004.       1008.       1014.       1020.       1027.       1032.       1038.       1050.       0.000    
+  14    0.000       1030.       1040.       1045.       1050.       1050.       1050.       1050.       1044.       0.000    
+  15    0.000       0.000       1080.       1080.       1080.       1080.       0.000       0.000       0.000       0.000    
+
+
+
+             MODEL LAYER BOTTOM EL. FOR LAYER   1
+ READING ON UNIT    8 WITH FORMAT: (10F10.0)           
+
+            1           2           3           4           5           6           7           8           9          10
+ ........................................................................................................................
+   1    1000.       1000.       0.000       0.000       0.000       0.000       0.000       0.000       0.000       0.000    
+   2    1000.       900.0       900.0       0.000       0.000       1000.       1000.       1000.       0.000       0.000    
+   3    0.000       850.0       670.0       680.0       680.0       770.0       770.0       890.0       0.000       0.000    
+   4    950.0       850.0       650.0       650.0       650.0       680.0       740.0       850.0       1000.       0.000    
+   5    950.0       800.0       650.0       600.0       600.0       600.0       650.0       720.0       850.0       950.0    
+   6    950.0       800.0       650.0       600.0       550.0       600.0       650.0       720.0       850.0       970.0    
+   7    950.0       800.0       650.0       600.0       550.0       600.0       650.0       720.0       950.0       0.000    
+   8    0.000       850.0       700.0       650.0       570.0       600.0       700.0       850.0       950.0       0.000    
+   9    0.000       850.0       700.0       650.0       540.0       580.0       700.0       850.0       950.0       0.000    
+  10    0.000       850.0       700.0       630.0       530.0       580.0       650.0       800.0       900.0       950.0    
+  11    0.000       850.0       700.0       620.0       580.0       620.0       700.0       800.0       900.0       0.000    
+  12    900.0       830.0       710.0       640.0       600.0       650.0       700.0       800.0       900.0       0.000    
+  13    900.0       810.0       750.0       700.0       650.0       700.0       750.0       800.0       900.0       0.000    
+  14    0.000       950.0       850.0       850.0       850.0       850.0       850.0       850.0       850.0       0.000    
+  15    0.000       0.000       950.0       950.0       950.0       950.0       0.000       0.000       0.000       0.000    
+
+
+ STRESS PERIOD     LENGTH       TIME STEPS     MULTIPLIER FOR DELT    SS FLAG
+ ----------------------------------------------------------------------------
+        1         86400.00          1                    1.000         SS
+
+ STEADY-STATE SIMULATION
+
+
+
+
+ LPF1 -- LAYER PROPERTY FLOW PACKAGE, VERSION 1, 1/11/2000
+         INPUT READ FROM UNIT    7
+ # Layer-Property Flow Package input
+ HEAD AT CELLS THAT CONVERT TO DRY=   0.0000    
+ No named parameters
+
+   LAYER FLAGS:
+ LAYER       LAYTYP        LAYAVG         CHANI        LAYVKA        LAYWET
+ ---------------------------------------------------------------------------
+    1             1             0     1.000E+00             1             0
+
+   INTERPRETATION OF LAYER FLAGS:
+                        INTERBLOCK     HORIZONTAL    DATA IN
+         LAYER TYPE   TRANSMISSIVITY   ANISOTROPY   ARRAY VKA   WETTABILITY
+ LAYER      (LAYTYP)      (LAYAVG)       (CHANI)      (LAYVKA)      (LAYWET)
+ ---------------------------------------------------------------------------
+    1   CONVERTIBLE      HARMONIC     1.000E+00    ANISOTROPY  NON-WETTABLE
+
+        300 ELEMENTS IN X ARRAY ARE USED BY LPF
+          6 ELEMENTS IN IX ARRAY ARE USED BY LPF
+
+ SIP5 -- STRONGLY IMPLICIT PROCEDURE SOLUTION PACKAGE
+                    VERSION 5, 9/1/93 INPUT READ FROM UNIT   13
+ MAXIMUM OF 150 ITERATIONS ALLOWED FOR CLOSURE
+  5 ITERATION PARAMETERS
+        755 ELEMENTS IN X ARRAY ARE USED BY SIP
+        450 ELEMENTS IN IX ARRAY ARE USED BY SIP
+
+       1055  ELEMENTS OF X ARRAY USED OUT OF       1055
+          0  ELEMENTS OF Z ARRAY USED OUT OF          1
+        456  ELEMENTS OF IX ARRAY USED OUT OF        456
+          0  ELEMENTS OF XHS ARRAY USED OUT OF          1
+
+
+
+          SOLUTION BY THE STRONGLY IMPLICIT PROCEDURE
+          -------------------------------------------
+ MAXIMUM ITERATIONS ALLOWED FOR CLOSURE =      150
+                 ACCELERATION PARAMETER =    0.70000    
+      HEAD CHANGE CRITERION FOR CLOSURE =    0.10000E-03
+      SIP HEAD CHANGE PRINTOUT INTERVAL =        1
+
+     CALCULATE ITERATION PARAMETERS FROM MODEL CALCULATED WSEED
+
+ WETTING CAPABILITY IS NOT ACTIVE IN ANY LAYER
+
+
+
+              HYD. COND. ALONG ROWS FOR LAYER   1
+ READING ON UNIT    7 WITH FORMAT: (10F5.0)            
+
+            1           2           3           4           5           6           7           8           9          10
+ ........................................................................................................................
+   1   2.0000E-03  2.0000E-03   0.000       0.000       0.000       0.000       0.000       0.000       0.000       0.000    
+   2   4.0000E-04  2.0000E-03  2.0000E-03   0.000       0.000      4.0000E-04  4.0000E-04  4.0000E-04   0.000       0.000    
+   3    0.000      4.0000E-04  2.0000E-03  2.0000E-03  4.0000E-04  4.0000E-04  4.0000E-04  4.0000E-04   0.000       0.000    
+   4   4.0000E-04  4.0000E-04  4.0000E-04  2.0000E-03  2.0000E-03  2.0000E-03  4.0000E-04  4.0000E-04  4.0000E-04   0.000    
+   5   4.0000E-04  4.0000E-04  4.0000E-04  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03
+   6   4.0000E-04  4.0000E-04  4.0000E-04  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03  4.0000E-04  4.0000E-04
+   7   4.0000E-04  4.0000E-04  4.0000E-04  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03  4.0000E-04   0.000    
+   8    0.000      4.0000E-04  4.0000E-04  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03  4.0000E-04  4.0000E-04   0.000    
+   9    0.000      4.0000E-04  4.0000E-04  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03  4.0000E-04  4.0000E-04   0.000    
+  10    0.000      4.0000E-04  4.0000E-04  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03  4.0000E-04  4.0000E-04  4.0000E-04
+  11    0.000      4.0000E-04  4.0000E-04  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03  4.0000E-04  4.0000E-04   0.000    
+  12   4.0000E-04  4.0000E-04  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03  4.0000E-04  4.0000E-04   0.000    
+  13   2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03  2.0000E-03   0.000    
+  14    0.000      4.0000E-04  4.0000E-04  4.0000E-04  4.0000E-04  4.0000E-04  4.0000E-04  4.0000E-04  2.0000E-03   0.000    
+  15    0.000       0.000      4.0000E-04  4.0000E-04  4.0000E-04  4.0000E-04   0.000       0.000       0.000       0.000    
+
+  HORIZ. TO VERTICAL ANI. =   1.00000     FOR LAYER   1
+ 
+ #Test Problem 1                                                                 
+ #Steady-state simulation of Stream-Aquifer Interaction                          
+ THE FREE FORMAT OPTION HAS BEEN SELECTED
+    1 LAYERS        15 ROWS        10 COLUMNS
+    1 STRESS PERIOD(S) IN SIMULATION
+
+ BAS6 -- BASIC PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   75
+          5 ELEMENTS IN IR ARRAY ARE USED BY BAS
+
+ EVT6 -- EVAPOTRANSPIRATION PACKAGE, VERSION 6, 12/14/2000
+         INPUT READ FROM UNIT   18
+ No named parameters
+ OPTION 1 -- EVAPOTRANSPIRATION FROM TOP LAYER
+ CELL-BY-CELL FLOWS WILL BE SAVED ON UNIT   59
+        450 ELEMENTS IN RX ARRAY ARE USED BY EVT
+        150 ELEMENTS IN IR ARRAY ARE USED BY EVT
+
+ GHB6 -- GHB PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   17
+ No named parameters
+ MAXIMUM OF      2 ACTIVE GHB CELLS AT ONE TIME
+ CELL-BY-CELL FLOWS WILL BE PRINTED WHEN ICBCFL NOT 0
+         10 ELEMENTS IN RX ARRAY ARE USED BY GHB
+
+ RCH6 -- RECHARGE PACKAGE, VERSION 6, 1/11/2000 INPUT READ FROM UNIT   19
+ No named parameters
+ OPTION 1 -- RECHARGE TO TOP LAYER
+        150 ELEMENTS IN RX ARRAY ARE USED BY RCH
+        150 ELEMENTS IN IR ARRAY ARE USED BY RCH
+
+ SFR1 -- STREAMFLOW ROUTING PACKAGE, VERSION 1, 8/15/2003
+         INPUT READ FROM UNIT  15
+ #Test Problem 1 using SFR1
+
+
+ NUMBER OF STREAM NODES IS     36
+
+ NUMBER OF STREAM SEGMENTS IS      8
+
+ NUMBER OF STREAM PARAMETERS IS    0
+
+ NUMBER OF STREAM SEGMENTS DEFINED USING PARAMETERS IS      0
+
+ MAXIMUM DIFFERENCE IN STREAM HEAD BETWEEN ITERATONS IS   1.00E-04
+
+ CONSTANT FOR MANNINGS EQUATION IS  1.4860E+00
+
+
+
+ STREAMFLOW OUT OF EACH REACH WILL BE SAVED ON UNIT   81
+       2147 ELEMENTS IN RX ARRAY ARE USED BY SFR
+        236 ELEMENTS IN IR ARRAY ARE USED BY SFR
+          3 ELEMENTS IN RX ARRAY ARE USED BY GAGE
+         36 ELEMENTS IN IR ARRAY ARE USED BY GAGE
+
+       2940  ELEMENTS OF RX ARRAY USED OUT OF       2940
+        577  ELEMENTS OF IR ARRAY USED OUT OF        577
+1
+ #Test Problem 1                                                                 
+ #Steady-state simulation of Stream-Aquifer Interaction                          
+
+
+
+                     BOUNDARY ARRAY FOR LAYER   1
+ READING ON UNIT   75 WITH FORMAT: (20I4)              
+
+                1           2           3           4           5           6           7           8           9          10
+ ............................................................................................................................
+   1            1           1           0           0           0           0           0           0           0           0
+   2            1           1           1           0           0           1           1           1           0           0
+   3            0           1           1           1           1           1           1           1           0           0
+   4            1           1           1           1           1           1           1           1           1           0
+   5            1           1           1           1           1           1           1           1           1           1
+   6            1           1           1           1           1           1           1           1           1           1
+   7            1           1           1           1           1           1           1           1           1           0
+   8            0           1           1           1           1           1           1           1           1           0
+   9            0           1           1           1           1           1           1           1           1           0
+  10            0           1           1           1           1           1           1           1           1           1
+  11            0           1           1           1           1           1           1           1           1           0
+  12            1           1           1           1           1           1           1           1           1           0
+  13            1           1           1           1           1           1           1           1           1           0
+  14            0           1           1           1           1           1           1           1           1           0
+  15            0           0           1           1           1           1           0           0           0           0
+
+ AQUIFER HEAD WILL BE SET TO  6999.0     AT ALL NO-FLOW NODES (IBOUND=0).
+
+
+
+                       INITIAL HEAD FOR LAYER   1
+ READING ON UNIT   75 WITH FORMAT: (10F7.0)            
+
+            1           2           3           4           5           6           7           8           9          10
+ ........................................................................................................................
+   1    1050.       1050.       6999.       6999.       6999.       6999.       6999.       6999.       6999.       6999.    
+   2    1050.       1050.       1050.       6999.       6999.       1050.       1050.       1050.       6999.       6999.    
+   3    6999.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       6999.       6999.    
+   4    1050.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       6999.    
+   5    1050.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       1050.    
+   6    1050.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       1050.    
+   7    1050.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       6999.    
+   8    6999.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       6999.    
+   9    6999.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       6999.    
+  10    6999.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       1050.    
+  11    6999.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       6999.    
+  12    1050.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       6999.    
+  13    994.0       999.0       1050.       1050.       1050.       1050.       1050.       1050.       1050.       6999.    
+  14    6999.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       1050.       6999.    
+  15    6999.       6999.       1011.       1050.       1050.       1050.       6999.       6999.       6999.       6999.    
+
+ OUTPUT CONTROL IS SPECIFIED ONLY AT TIME STEPS FOR WHICH OUTPUT IS DESIRED
+ HEADS WILL BE SAVED WITH FORMAT: (10F8.1)            
+ SAVED HEADS WILL BE LABELED
+ HEAD PRINT FORMAT CODE IS   4    DRAWDOWN PRINT FORMAT CODE IS   0
+ HEADS WILL BE SAVED ON UNIT   58    DRAWDOWNS WILL BE SAVED ON UNIT    0
+
+
+     0 Evapotranspiration parameters
+
+
+     0 GHB parameters
+
+
+     0 Recharge parameters
+
+
+   STREAM NETWORK DESCRIPTION: 
+
+   LAYER    ROW    COL   SEGMENT   REACH     LENGTH
+                          NUMBER   NUMBER    IN CELL
+   --------------------------------------------------
+       1      1      1       1        1     4.500E+03
+       1      2      2       1        2     7.000E+03
+       1      3      3       1        3     6.000E+03
+       1      3      4       1        4     5.550E+03
+       1      4      5       2        1     6.500E+03
+       1      5      6       2        2     5.000E+03
+       1      6      6       2        3     5.000E+03
+       1      7      6       2        4     5.000E+03
+       1      8      6       2        5     5.000E+03
+       1      3      5       3        1     5.000E+03
+       1      3      6       3        2     5.000E+03
+       1      3      7       3        3     4.500E+03
+       1      4      8       3        4     6.000E+03
+       1      5      8       3        5     5.000E+03
+       1      6      8       3        6     2.000E+03
+       1      5     10       4        1     2.500E+03
+       1      5      9       4        2     5.000E+03
+       1      6      8       4        3     3.500E+03
+       1      6      8       5        1     4.000E+03
+       1      7      7       5        2     5.000E+03
+       1      8      7       5        3     3.500E+03
+       1      8      6       5        4     2.500E+03
+       1      9      6       6        1     5.000E+03
+       1     10      7       6        2     5.000E+03
+       1     11      7       6        3     5.000E+03
+       1     12      7       6        4     5.000E+03
+       1     13      7       6        5     2.000E+03
+       1     14      9       7        1     5.000E+03
+       1     13      8       7        2     5.500E+03
+       1     13      7       7        3     5.000E+03
+       1     13      6       8        1     5.000E+03
+       1     13      5       8        2     5.000E+03
+       1     13      4       8        3     5.000E+03
+       1     13      3       8        4     5.000E+03
+       1     13      2       8        5     5.000E+03
+       1     13      1       8        6     3.000E+03
+
+
+
+
+
+
+   9 GAGING STATIONS WERE SPECIFIED.
+     (Lakes are identified by a negative value of the Lake Number)
+     RECORDS WILL BE WRITTEN TO SEPARATE OUTPUT FILES REPRESENTED BY FOLLOWING UNIT NUMBERS:
+
+ Stream Gages:
+  GAGE #   SEGMENT   REACH   UNIT   OUTTYPE
+       1       1       4      83       4
+       2       2       3      84       1
+       3       3       5      85       1
+       4       4       3      86       1
+       5       5       4      87       4
+       6       6       5      88       1
+       7       7       3      89       4
+       8       8       6      90       4
+       9       3       1      91       5
+
+
+
+
+1
+                            STRESS PERIOD NO.    1, LENGTH =   86400.00    
+                            -----------------------------------------------
+
+                              NUMBER OF TIME STEPS =     1
+
+                               MULTIPLIER FOR DELT =     1.000
+
+                            INITIAL TIME STEP SIZE =   86400.00    
+
+
+
+                         ET SURFACE
+ READING ON UNIT   18 WITH FORMAT: (10F7.0)            
+
+            1           2           3           4           5           6           7           8           9          10
+ ........................................................................................................................
+   1    1110.       1110.       0.000       0.000       0.000       0.000       0.000       0.000       0.000       0.000    
+   2    1110.       1105.       1110.       0.000       0.000       1100.       1100.       1110.       0.000       0.000    
+   3    0.000       1100.       1095.       1088.       1085.       1085.       1085.       1090.       0.000       0.000    
+   4    1105.       1100.       1090.       1083.       1078.       1075.       1080.       1085.       1100.       0.000    
+   5    1105.       1090.       1080.       1077.       1074.       1073.       1074.       1078.       1080.       1085.    
+   6    1100.       1080.       1075.       1072.       1071.       1069.       1070.       1075.       1080.       1100.    
+   7    1100.       1080.       1070.       1065.       1065.       1065.       1065.       1070.       1090.       0.000    
+   8    0.000       1075.       1065.       1059.       1059.       1058.       1063.       1070.       1090.       0.000    
+   9    0.000       1065.       1055.       1053.       1053.       1052.       1055.       1065.       1090.       0.000    
+  10    0.000       1060.       1046.       1046.       1046.       1046.       1044.       1060.       1088.       1100.    
+  11    0.000       1045.       1039.       1040.       1041.       1042.       1040.       1050.       1075.       0.000    
+  12    1027.       1028.       1028.       1032.       1032.       1033.       1032.       1040.       1060.       0.000    
+  13    997.0       1004.       1008.       1014.       1020.       1027.       1032.       1038.       1050.       0.000    
+  14    0.000       1030.       1040.       1045.       1050.       1050.       1050.       1050.       1044.       0.000    
+  15    0.000       0.000       1080.       1080.       1080.       1080.       0.000       0.000       0.000       0.000    
+
+  EVAPOTRANSPIRATION RATE =  9.500000E-08
+
+         EXTINCTION DEPTH =   15.0000    
+
+ BOUND. NO. LAYER   ROW   COL     STAGE      CONDUCTANCE         
+ ----------------------------------------------------------------
+      1      1     13      1       988.0          0.3800E-01
+      2      1     14      9       1045.          0.3800E-01
+
+      2 GHB CELLS
+
+
+
+                           RECHARGE
+ READING ON UNIT   19 WITH FORMAT: (10F4.0)            
+
+            1           2           3           4           5           6           7           8           9          10
+ ........................................................................................................................
+   1   2.5000E-10  1.0000E-09   0.000       0.000       0.000       0.000       0.000       0.000       0.000       0.000    
+   2   1.0000E-09  2.5000E-10  1.0000E-09   0.000       0.000      4.0000E-09  4.0000E-09  4.0000E-09   0.000       0.000    
+   3    0.000      1.0000E-09  2.5000E-10  1.0000E-09  1.0000E-09  2.5000E-10  2.5000E-10  2.5000E-10   0.000       0.000    
+   4   4.0000E-09  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  1.0000E-09   0.000    
+   5   4.0000E-09  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10
+   6   1.0000E-09  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  1.0000E-09
+   7   1.0000E-09  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  1.0000E-09   0.000    
+   8    0.000      1.0000E-09  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  1.0000E-09   0.000    
+   9    0.000      1.0000E-09  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  1.0000E-09   0.000    
+  10    0.000      1.0000E-09  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  4.0000E-09
+  11    0.000      1.0000E-09  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  1.0000E-09   0.000    
+  12   1.0000E-09  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  1.0000E-09   0.000    
+  13   2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  1.0000E-09   0.000    
+  14    0.000      2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  2.5000E-10  1.0000E-09  1.0000E-09  2.5000E-10   0.000    
+  15    0.000       0.000      1.0000E-09  1.0000E-09  1.0000E-09  1.0000E-09   0.000       0.000       0.000       0.000    
+
+
+
+ CLASSIFICATION & COUNT OF STREAM SEGMENTS BASED ON SOURCE OF INFLOW:
+
+                HEADWATER     DIVERSION     RECEIVES TRIBUTARY FLOW
+                ---------     ---------     -----------------------
+                     3              1               4
+
+
+
+                    INPUT DATA FOR EACH STREAM SEGMENT
+ ---------------------------------------------------------------------------------------------
+
+ SEGMENT    SEG.     INFLOW   OVERLAND   STREAM    STREAM   ICALC  OUTFLOW  DIVERSION PRIORITY
+    NO.    LENGTH     RATE     RUNOFF      ET       PPT.    METH.  TO SEG.  FROM SEG.    NO.
+
+      1  2.305E+04 2.500E+01 0.000E+00 0.000E+00 0.000E+00    4        2        0        0
+      2  2.650E+04 0.000E+00 0.000E+00 0.000E+00 0.000E+00    1        6        0        0
+      3  2.750E+04 1.000E+01 0.000E+00 0.000E+00 0.000E+00    0        5        1        0
+      4  1.100E+04 1.000E+01 0.000E+00 0.000E+00 0.000E+00    1        5        0        0
+      5  1.500E+04 0.000E+00 0.000E+00 0.000E+00 0.000E+00    3        6        0        0
+      6  2.200E+04 0.000E+00 0.000E+00 0.000E+00 0.000E+00    1        8        0        0
+      7  1.550E+04 1.500E+02 0.000E+00 0.000E+00 0.000E+00    2        8        0        0
+      8  2.800E+04 0.000E+00 0.000E+00 0.000E+00 0.000E+00    2        0        0        0
+
+
+         STREAMBED PROPERTIES AND STREAM DIMENSIONS
+
+ SEGMENT     BED HYD. COND.      BED THICKNESS     ELEV.-TOP OF BED     WIDTH OF STREAM     DEPTH OF STREAM    STREAM ROUGHNESS
+    No.     UPPER     LOWER     UPPER     LOWER     UPPER     LOWER     UPPER     LOWER     UPPER     LOWER   CHANNEL      BANK
+
+     1  3.000E-05 3.000E-05 3.000E+00 3.000E+00 1.095E+03 1.075E+03
+     2  3.000E-05 3.000E-05 3.000E+00 3.000E+00 1.075E+03 1.050E+03 1.200E+01 1.200E+01                     3.000E-02
+     3  3.000E-05 3.000E-05 2.000E+00 2.000E+00 1.075E+03 1.060E+03 1.000E+01 6.000E+00 2.000E+00 1.000E+00
+     4  3.000E-05 3.000E-05 3.000E+00 3.000E+00 1.080E+03 1.060E+03 1.000E+01 1.000E+01                     3.000E-02
+     5  3.000E-05 3.000E-05 3.000E+00 3.000E+00 1.060E+03 1.045E+03
+     6  3.000E-05 3.000E-05 3.000E+00 3.000E+00 1.045E+03 1.025E+03 1.200E+01 1.200E+01                     3.000E-02
+     7  6.000E-05 6.000E-05 3.000E+00 3.000E+00 1.040E+03 1.025E+03                                         2.500E-02 4.500E-02
+     8  6.000E-05 6.000E-05 3.000E+00 3.000E+00 1.025E+03 9.900E+02                                         2.500E-02 4.500E-02
+
+  EIGHT POINT CROSS SECTION DATA FOR SEGMENTS WITH ICALC = 2
+    X VALUES X VALUES START FROM LEFT SIDE LOOKING DOWNSTREAM
+
+     SEGMENT NO.        X1        X2        X3        X4        X5        X6        X7        X8
+            7      0.000E+00 1.000E+01 8.000E+01 1.000E+02 1.500E+02 1.700E+02 2.400E+02 2.500E+02
+            8      0.000E+00 1.000E+01 8.000E+01 1.000E+02 1.500E+02 1.700E+02 2.400E+02 2.500E+02
+
+    Z VALUES ARE RELATIVE TO STREAMBED ELEVATION
+
+     SEGMENT NO.          Z1        Z2        Z3        Z4        Z5        Z6        Z7        Z8
+            7      2.000E+01 1.300E+01 1.000E+01 2.000E+00 0.000E+00 1.000E+01 1.300E+01 2.000E+01
+            8      2.500E+01 1.700E+01 1.300E+01 4.000E+00 0.000E+00 1.000E+01 1.600E+01 2.000E+01
+
+ STREAMFLOW RELATION WITH DEPTH IS BASED ON EQUATION Q = CDPTH*(DEPTH)**FDPTH
+ STREAMFLOW RELATION WITH WIDTH IS BASED ON EQUATION Q = AWDTH*(WIDTH)**BWDTH
+
+ SEGMENT NO.      CDPTH     FDPTH    AWDTH     BWDTH
+
+          5 3.000E-01 3.500E-01 3.800E+00 6.000E-01
+
+ STREAMFLOW RELATION WITH DEPTH AND WIDTH IS BASED ON TABULATED VALUES
+
+  SEGMENT NO.   STREAMFLOW       DEPTH       WIDTH
+
+          1     5.0000E-01   2.5000E-01   3.0000E+00
+          1     1.0000E+00   4.0000E-01   3.5000E+00
+          1     2.0000E+00   5.5000E-01   4.2000E+00
+          1     4.0000E+00   7.0000E-01   5.3000E+00
+          1     7.0000E+00   8.0000E-01   7.0000E+00
+          1     1.0000E+01   9.0000E-01   8.5000E+00
+          1     2.0000E+01   1.1000E+00   1.2000E+01
+          1     3.0000E+01   1.2500E+00   1.4000E+01
+          1     5.0000E+01   1.4000E+00   1.7000E+01
+          1     7.5000E+01   1.7000E+00   2.0000E+01
+          1     1.0000E+02   2.6000E+00   2.2000E+01
+
+
+
+ 
+ SOLVING FOR HEAD 
+
+ AVERAGE SEED = 0.00923954
+ MINIMUM SEED = 0.00155820
+
+     5 ITERATION PARAMETERS CALCULATED FROM AVERAGE SEED:
+
+  0.000000E+00 0.689964E+00 0.903877E+00 0.970199E+00 0.990760E+00
+
+    23 ITERATIONS FOR TIME STEP   1 IN STRESS PERIOD    1
+
+ MAXIMUM HEAD CHANGE FOR EACH ITERATION:
+
+    HEAD CHANGE   HEAD CHANGE   HEAD CHANGE   HEAD CHANGE   HEAD CHANGE
+  LAYER,ROW,COL LAYER,ROW,COL LAYER,ROW,COL LAYER,ROW,COL LAYER,ROW,COL
+ ----------------------------------------------------------------------
+     -49.64         13.13         12.65         2.402         2.122    
+  (  1, 14,  2) (  1,  2,  1) (  1,  2,  3) (  1,  4,  1) (  1,  3,  4)
+     -1.017        0.3066        0.2130       -0.8868E-01   -0.6455E-01
+  (  1, 10, 10) (  1,  4,  1) (  1,  4,  1) (  1, 10, 10) (  1, 10, 10)
+    -0.7561E-01   -0.2103E-01   -0.8731E-02   -0.5751E-02   -0.3077E-02
+  (  1, 10, 10) (  1, 10, 10) (  1, 10, 10) (  1, 10, 10) (  1, 10, 10)
+    -0.4238E-02   -0.1049E-02    0.5282E-03    0.2813E-03   -0.1814E-03
+  (  1, 10, 10) (  1, 10, 10) (  1,  6,  1) (  1,  6,  1) (  1, 10, 10)
+    -0.1993E-03   -0.1163E-03   -0.9876E-04
+  (  1, 10, 10) (  1, 13,  2) (  1, 13,  6)
+
+
+ OUTPUT CONTROL FOR STRESS PERIOD    1   TIME STEP   1
+    PRINT BUDGET
+    PRINT HEAD FOR ALL LAYERS
+    SAVE HEAD FOR ALL LAYERS
+    SAVE BUDGET
+ UBUDSV SAVING "              ET" ON UNIT 59 AT TIME STEP  1, STRESS PERIOD    1
+
+  HEAD DEP BOUNDS   PERIOD    1   STEP   1
+ BOUNDARY      1   LAYER   1   ROW    13   COL     1   RATE   -0.248317    
+ BOUNDARY      2   LAYER   1   ROW    14   COL     9   RATE    0.215257    
+
+
+
+   STREAM LEAKAGE   PERIOD    1   STEP   1
+
+ LAYER ROW COL. STREAM  RCH.  FLOW INTO    FLOW TO  FLOW OUT OF  OVRLND.   DIRECT    STREAM    STREAM    STREAM    STREAM  STREAMBED  STREAMBED
+                SEG.NO.  NO.  STRM. RCH.   AQUIFER   STRM. RCH.  RUNOFF    PRECIP      ET       HEAD      DEPTH     WIDTH  CONDCTNC.   GRADIENT
+
+   1    1    1     1     1    2.500E+01   7.921E-01  2.421E+01  0.00E+00  0.00E+00  0.00E+00  1.09E+03  1.17E+00  1.30E+01  5.84E-01  4.52E-01
+   1    2    2     1     2    2.421E+01   2.139E+00  2.207E+01  0.00E+00  0.00E+00  0.00E+00  1.09E+03  1.15E+00  1.27E+01  8.88E-01  8.03E-01
+   1    3    3     1     3    2.207E+01   2.991E+00  1.908E+01  0.00E+00  0.00E+00  0.00E+00  1.08E+03  1.11E+00  1.21E+01  7.28E-01  1.37E+00
+   1    3    4     1     4    1.908E+01   2.554E+00  1.652E+01  0.00E+00  0.00E+00  0.00E+00  1.08E+03  1.06E+00  1.13E+01  6.29E-01  1.35E+00
+   1    4    5     2     1    6.524E+00   2.761E+00  3.764E+00  0.00E+00  0.00E+00  0.00E+00  1.07E+03  5.39E-01  1.20E+01  7.80E-01  1.18E+00
+   1    5    6     2     2    3.764E+00   2.033E+00  1.731E+00  0.00E+00  0.00E+00  0.00E+00  1.07E+03  3.88E-01  1.20E+01  6.00E-01  1.13E+00
+   1    6    6     2     3    1.731E+00   1.731E+00  0.000E+00  0.00E+00  0.00E+00  0.00E+00  1.06E+03  2.43E-01  1.20E+01  6.00E-01  1.08E+00
+   1    7    6     2     4    0.000E+00   0.000E+00  0.000E+00  0.00E+00  0.00E+00  0.00E+00  1.06E+03  0.00E+00  1.20E+01  6.00E-01  1.00E+00
+   1    8    6     2     5    0.000E+00   0.000E+00  0.000E+00  0.00E+00  0.00E+00  0.00E+00  1.05E+03  0.00E+00  1.20E+01  6.00E-01  1.00E+00
+   1    3    5     3     1    1.000E+01   2.181E+00  7.819E+00  0.00E+00  0.00E+00  0.00E+00  1.08E+03  1.91E+00  9.64E+00  7.23E-01  1.51E+00
+   1    3    6     3     2    7.819E+00   1.367E+00  6.452E+00  0.00E+00  0.00E+00  0.00E+00  1.07E+03  1.73E+00  8.91E+00  6.68E-01  1.02E+00
+   1    3    7     3     3    6.452E+00   4.262E-01  6.026E+00  0.00E+00  0.00E+00  0.00E+00  1.07E+03  1.55E+00  8.22E+00  5.55E-01  3.84E-01
+   1    4    8     3     4    6.026E+00   6.079E-01  5.418E+00  0.00E+00  0.00E+00  0.00E+00  1.07E+03  1.36E+00  7.45E+00  6.71E-01  4.53E-01
+   1    5    8     3     5    5.418E+00   7.978E-01  4.620E+00  0.00E+00  0.00E+00  0.00E+00  1.06E+03  1.16E+00  6.65E+00  4.99E-01  7.99E-01
+   1    6    8     3     6    4.620E+00   4.578E-01  4.162E+00  0.00E+00  0.00E+00  0.00E+00  1.06E+03  1.04E+00  6.15E+00  1.84E-01  1.24E+00
+   1    5   10     4     1    1.000E+01   9.096E-01  9.090E+00  0.00E+00  0.00E+00  0.00E+00  1.08E+03  6.39E-01  1.00E+01  2.50E-01  1.21E+00
+   1    5    9     4     2    9.090E+00   1.802E+00  7.289E+00  0.00E+00  0.00E+00  0.00E+00  1.07E+03  6.03E-01  1.00E+01  5.00E-01  1.20E+00
+   1    6    8     4     3    7.289E+00   1.235E+00  6.054E+00  0.00E+00  0.00E+00  0.00E+00  1.06E+03  5.28E-01  1.00E+01  3.50E-01  1.18E+00
+   1    6    8     5     1    1.022E+01  -2.588E-01  1.047E+01  0.00E+00  0.00E+00  0.00E+00  1.06E+03  6.80E-01  1.54E+01  6.18E-01 -1.40E-01
+   1    7    7     5     2    1.047E+01   7.437E-01  9.731E+00  0.00E+00  0.00E+00  0.00E+00  1.05E+03  6.74E-01  1.52E+01  7.61E-01  3.26E-01
+   1    8    7     5     3    9.731E+00   1.044E+00  8.687E+00  0.00E+00  0.00E+00  0.00E+00  1.05E+03  6.53E-01  1.44E+01  5.04E-01  6.91E-01
+   1    8    6     5     4    8.687E+00   1.512E-01  8.536E+00  0.00E+00  0.00E+00  0.00E+00  1.05E+03  6.37E-01  1.38E+01  3.46E-01  1.46E-01
+   1    9    6     6     1    8.536E+00   1.375E+00  7.161E+00  0.00E+00  0.00E+00  0.00E+00  1.04E+03  6.09E-01  1.20E+01  6.00E-01  7.64E-01
+   1   10    7     6     2    7.161E+00   1.330E+00  5.831E+00  0.00E+00  0.00E+00  0.00E+00  1.04E+03  5.44E-01  1.20E+01  6.00E-01  7.39E-01
+   1   11    7     6     3    5.831E+00   1.216E+00  4.615E+00  0.00E+00  0.00E+00  0.00E+00  1.03E+03  4.77E-01  1.20E+01  6.00E-01  6.75E-01
+   1   12    7     6     4    4.615E+00   5.685E-01  4.047E+00  0.00E+00  0.00E+00  0.00E+00  1.03E+03  4.26E-01  1.20E+01  6.00E-01  3.16E-01
+   1   13    7     6     5    4.047E+00  -6.612E-01  4.708E+00  0.00E+00  0.00E+00  0.00E+00  1.03E+03  4.29E-01  1.20E+01  2.40E-01 -9.18E-01
+   1   14    9     7     1    1.500E+02   2.956E+00  1.470E+02  0.00E+00  0.00E+00  0.00E+00  1.04E+03  2.28E+00  5.53E+01  5.59E+00  1.76E-01
+   1   13    8     7     2    1.470E+02   4.054E+00  1.430E+02  0.00E+00  0.00E+00  0.00E+00  1.03E+03  2.26E+00  5.52E+01  6.14E+00  2.20E-01
+   1   13    7     7     3    1.430E+02   3.182E+00  1.398E+02  0.00E+00  0.00E+00  0.00E+00  1.03E+03  2.25E+00  5.51E+01  5.57E+00  1.90E-01
+   1   13    6     8     1    1.445E+02   1.569E+00  1.429E+02  0.00E+00  0.00E+00  0.00E+00  1.02E+03  2.77E+00  4.02E+01  4.10E+00  1.28E-01
+   1   13    5     8     2    1.429E+02  -1.253E+00  1.442E+02  0.00E+00  0.00E+00  0.00E+00  1.02E+03  2.77E+00  4.02E+01  4.09E+00 -1.02E-01
+   1   13    4     8     3    1.442E+02  -2.966E+00  1.472E+02  0.00E+00  0.00E+00  0.00E+00  1.01E+03  2.79E+00  4.04E+01  4.12E+00 -2.40E-01
+   1   13    3     8     4    1.472E+02  -3.050E+00  1.502E+02  0.00E+00  0.00E+00  0.00E+00  1.01E+03  2.81E+00  4.07E+01  4.15E+00 -2.45E-01
+   1   13    2     8     5    1.502E+02  -1.112E+00  1.513E+02  0.00E+00  0.00E+00  0.00E+00  1.00E+03  2.82E+00  4.09E+01  4.17E+00 -8.89E-02
+   1   13    1     8     6    1.513E+02   4.133E-01  1.509E+02  0.00E+00  0.00E+00  0.00E+00  9.95E+02  2.82E+00  4.10E+01  2.50E+00  5.50E-02
+
+
+
+1
+              HEAD IN LAYER   1 AT END OF TIME STEP   1 IN STRESS PERIOD    1
+  ---------------------------------------------------------------------------
+
+           1       2       3       4       5       6       7       8       9      10
+ ...................................................................................
+   1  1092.87 1089.47 6999.00 6999.00 6999.00 6999.00 6999.00 6999.00 6999.00 6999.00
+   2  1089.90 1086.80 1081.58 6999.00 6999.00 1072.26 1071.49 1071.07 6999.00 6999.00
+   3  6999.00 1079.54 1077.70 1073.72 1072.53 1070.59 1069.10 1068.32 6999.00 6999.00
+   4  1069.20 1070.76 1070.32 1067.12 1065.51 1063.65 1063.87 1065.91 1066.06 6999.00
+   5  1065.01 1064.00 1062.99 1061.53 1060.83 1060.77 1060.22 1062.02 1065.68 1068.13
+   6  1059.87 1058.34 1057.21 1056.44 1056.29 1056.88 1057.20 1059.10 1061.91 1065.58
+   7  1056.11 1052.98 1051.75 1051.20 1051.26 1051.86 1053.20 1055.47 1056.48 6999.00
+   8  6999.00 1046.31 1045.75 1045.55 1045.75 1046.45 1047.83 1049.85 1050.40 6999.00
+   9  6999.00 1039.07 1039.14 1039.48 1040.04 1041.05 1041.64 1042.86 1044.04 6999.00
+  10  6999.00 1031.09 1031.79 1033.26 1034.32 1035.44 1036.51 1037.62 1039.32 1041.58
+  11  6999.00 1021.43 1023.10 1026.84 1028.70 1030.49 1032.09 1033.56 1035.71 6999.00
+  12  1001.17 1009.24 1014.51 1019.62 1023.14 1026.18 1028.57 1030.37 1034.29 6999.00
+  13   994.53  999.96 1006.67 1012.88 1018.70 1024.26 1029.09 1034.10 1036.13 6999.00
+  14  6999.00 1004.01 1008.96 1013.70 1018.89 1024.03 1029.48 1035.09 1039.34 6999.00
+  15  6999.00 6999.00 1011.92 1015.10 1019.13 1022.39 6999.00 6999.00 6999.00 6999.00
+
+ HEAD WILL BE SAVED ON UNIT   58 AT END OF TIME STEP   1, STRESS PERIOD    1
+1
+  VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  1 IN STRESS PERIOD   1
+  ------------------------------------------------------------------------------
+
+     CUMULATIVE VOLUMES      L**3       RATES FOR THIS TIME STEP      L**3/T
+     ------------------                 ------------------------
+
+           IN:                                      IN:
+           ---                                      ---
+             STORAGE =           0.0000               STORAGE =           0.0000
+       CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
+                  ET =           0.0000                    ET =           0.0000
+     HEAD DEP BOUNDS =       18598.2305       HEAD DEP BOUNDS =           0.2153
+            RECHARGE =      154980.0000              RECHARGE =           1.7937
+      STREAM LEAKAGE =     3748656.0000        STREAM LEAKAGE =          43.3872
+
+            TOTAL IN =     3922234.2500              TOTAL IN =          45.3962
+
+          OUT:                                     OUT:
+          ----                                     ----
+             STORAGE =           0.0000               STORAGE =           0.0000
+       CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
+                  ET =     3097118.5000                    ET =          35.8463
+     HEAD DEP BOUNDS =       21454.6094       HEAD DEP BOUNDS =           0.2483
+            RECHARGE =           0.0000              RECHARGE =           0.0000
+      STREAM LEAKAGE =      803529.5000        STREAM LEAKAGE =           9.3001
+
+           TOTAL OUT =     3922102.5000             TOTAL OUT =          45.3947
+
+            IN - OUT =         131.6211              IN - OUT =       1.5233E-03
+
+ PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
+
+
+
+
+
+
+          TIME SUMMARY AT END OF TIME STEP   1 IN STRESS PERIOD    1
+                    SECONDS     MINUTES      HOURS       DAYS        YEARS
+                    -----------------------------------------------------------
+   TIME STEP LENGTH  86400.      1440.0      24.000      1.0000     2.73785E-03
+ STRESS PERIOD TIME  86400.      1440.0      24.000      1.0000     2.73785E-03
+         TOTAL TIME  86400.      1440.0      24.000      1.0000     2.73785E-03
+1

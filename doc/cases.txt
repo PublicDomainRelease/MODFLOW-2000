@@ -1,6 +1,6 @@
 File cases.txt
 
-This directory contains input and output files for 17 test cases for
+This directory contains input and output files for 23 test cases for
 MODFLOW-2000 (Harbaugh and others, 2000; Hill and others, 2000).  This file
 briefly describes each test case.  For each test case, the name of the name
 file is the name of the test case followed by a period and the extension
@@ -329,6 +329,34 @@ include "noise."
   Stress packages: SUB, WEL
   Solver: SIP
   Types of parameters defined / package: none
+
+22. Test case test1ss:
+
+  This test case is documented as the steady-state simulation 
+  of test simulation 1 in Appendix 2 of Prudic and others (2004).
+
+  Grid dimensions: 1 Layer, 15 Rows, 10 Columns
+  Stress periods: 1 steady
+  Optional processes: none
+  Mode: Forward
+  Flow package: LPF
+  Stress packages: SFR, GHB, EVT, RCH
+  Solver: SIP
+  Types of parameters defined / package: none
+
+23. Test case test1tr:
+
+  This test case is documented as the transient simulation 
+  of test simulation 1 in Appendix 2 of Prudic and others (2004).
+
+  Grid dimensions: 1 Layer, 15 Rows, 10 Columns
+  Stress periods: 2 transient
+  Optional processes: none
+  Mode: Forward
+  Flow package: LPF
+  Stress packages: SFR, GHB, EVT, RCH, WEL
+  Solver: SIP
+  Types of parameters defined / package: none
   
 
 REFERENCES
@@ -404,3 +432,7 @@ Prudic, D.E., 1989, Documentation of a computer program to simulate
 stream-aquifer relations using a modular, finite-difference,
 ground-water flow model: U.S. Geological Survey Open-File Report
 88-729, 113 p.
+
+Prudic, D.E., Konikow, L.F., and Banta, E.R., 2004, A new streamflow-routing
+(SFR1) package to simulate stream-aquifer interaction with MODFLOW-2000:
+U.S. G eological Survey Open-File Report 2004-1042, 95 p.

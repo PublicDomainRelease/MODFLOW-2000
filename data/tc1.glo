@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.13.00 01/22/2004
+                           VERSION 1.14.00 05/03/2004
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
@@ -811,11 +811,11 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     1
    VERT_K_CB    SS_2         HK_2      
 
    -1.059        34.78        49.48       5.1481E-04   1.1490E-03   4.2270E-04
-   2.1603E-07   5.4338E-05   4.7335E-05
+   2.1603E-07   5.4340E-05   4.7335E-05
 
  SUMS OF SQUARED, WEIGHTED RESIDUALS:
-   ALL DEPENDENT VARIABLES:   63.234    
-   DEP. VARIABLES PLUS PARAMETERS:   63.234    
+   ALL DEPENDENT VARIABLES:   63.230    
+   DEP. VARIABLES PLUS PARAMETERS:   63.230    
 
  MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =     3
 
@@ -836,17 +836,17 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     1
    VERT_K_CB    SS_2         HK_2      
 
    -1.074        34.15        50.44       9.7337E-04   1.1385E-03   4.2533E-04
-   2.1625E-07   6.2073E-05   4.8223E-05
+   2.1625E-07   6.2078E-05   4.8223E-05
 
  SUMS OF SQUARED, WEIGHTED RESIDUALS:
-   ALL DEPENDENT VARIABLES:   40.713    
-   DEP. VARIABLES PLUS PARAMETERS:   40.713    
+   ALL DEPENDENT VARIABLES:   40.712    
+   DEP. VARIABLES PLUS PARAMETERS:   40.712    
 
  MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =     4
 
  VALUES FROM SOLVING THE NORMAL EQUATION :
    MARQUARDT PARAMETER ------------------- =  0.0000    
-   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-01) = 0.34342    
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-01) = 0.34338    
         OCCURRED FOR PARAMETER  "RIVERS    " TYPE P
 
  CALCULATION OF DAMPING PARAMETER
@@ -860,18 +860,18 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     1
    WELLS_TR     RCH_ZONE_1   RCH_ZONE_2   RIVERS       SS_1         HK_1      
    VERT_K_CB    SS_2         HK_2      
 
-   -1.074        34.12        50.48       1.3076E-03   1.1383E-03   4.2554E-04
-   2.1653E-07   6.1863E-05   4.8233E-05
+   -1.074        34.12        50.48       1.3076E-03   1.1384E-03   4.2554E-04
+   2.1654E-07   6.1862E-05   4.8233E-05
 
  SUMS OF SQUARED, WEIGHTED RESIDUALS:
-   ALL DEPENDENT VARIABLES:   36.594    
-   DEP. VARIABLES PLUS PARAMETERS:   36.594    
+   ALL DEPENDENT VARIABLES:   36.592    
+   DEP. VARIABLES PLUS PARAMETERS:   36.592    
 
  MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =     5
 
  VALUES FROM SOLVING THE NORMAL EQUATION :
    MARQUARDT PARAMETER ------------------- =  0.0000    
-   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-01) = 0.55311E-01
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-01) = 0.55330E-01
         OCCURRED FOR PARAMETER  "RIVERS    " TYPE P
 
  CALCULATION OF DAMPING PARAMETER
@@ -886,17 +886,17 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     1
    VERT_K_CB    SS_2         HK_2      
 
    -1.074        34.12        50.49       1.3800E-03   1.1383E-03   4.2557E-04
-   2.1652E-07   6.1948E-05   4.8237E-05
+   2.1652E-07   6.1943E-05   4.8237E-05
 
  SUMS OF SQUARED, WEIGHTED RESIDUALS:
-   ALL DEPENDENT VARIABLES:   36.507    
-   DEP. VARIABLES PLUS PARAMETERS:   36.507    
+   ALL DEPENDENT VARIABLES:   36.505    
+   DEP. VARIABLES PLUS PARAMETERS:   36.505    
 
  MODIFIED GAUSS-NEWTON PROCEDURE FOR PARAMETER-ESTIMATION ITERATION NO. =     6
 
  VALUES FROM SOLVING THE NORMAL EQUATION :
    MARQUARDT PARAMETER ------------------- =  0.0000    
-   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-01) = 0.17228E-02
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-01) = 0.16536E-02
         OCCURRED FOR PARAMETER  "RIVERS    " TYPE P
 
  CALCULATION OF DAMPING PARAMETER
@@ -910,8 +910,8 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     1
    WELLS_TR     RCH_ZONE_1   RCH_ZONE_2   RIVERS       SS_1         HK_1      
    VERT_K_CB    SS_2         HK_2      
 
-   -1.074        34.12        50.48       1.3824E-03   1.1383E-03   4.2556E-04
-   2.1651E-07   6.1957E-05   4.8237E-05
+   -1.074        34.12        50.49       1.3822E-03   1.1383E-03   4.2556E-04
+   2.1651E-07   6.1959E-05   4.8237E-05
 
  *** PARAMETER ESTIMATION CONVERGED BY SATISFYING THE TOL CRITERION ***
 
@@ -923,40 +923,40 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     6
          PARAMETER:   WELLS_TR    RCH_ZONE_1  RCH_ZONE_2  RIVERS      SS_1      
  OBS #  OBSERVATION
      1  1.0             0.00       0.705E-01   0.104      -0.175        0.00    
-     2  1.1            0.168E-02    0.00        0.00       0.173E-02   0.523E-02
+     2  1.1            0.168E-02  -0.159E-06    0.00       0.177E-02   0.523E-02
      3  1.12            1.66        0.00        0.00        1.66       0.118    
      4  2.0             0.00        9.34        17.6      -0.175        0.00    
-     5  2.1            0.674        0.00        0.00       0.314E-03    1.70    
+     5  2.1            0.674        0.00        0.00       0.318E-03    1.70    
      6  2.2             10.9        0.00        0.00       0.160E-01    17.4    
      7  2.8             231.        0.00        0.00        1.16        76.8    
      8  2.12            284.        0.00        0.00        1.65        19.7    
      9  3.0             0.00        15.0        42.0      -0.175        0.00    
-    10  3.1             86.4        0.00      -0.602E-04   0.197E-04    60.1    
-    11  3.12            852.        0.00       0.602E-04    1.58        43.6    
+    10  3.1             86.4        0.00        0.00       0.197E-04    60.1    
+    11  3.12            852.        0.00        0.00        1.58        43.6    
     12  4.0             0.00        9.34        17.6      -0.175        0.00    
-    13  4.1             1.03        0.00        0.00       0.405E-03    2.40    
+    13  4.1             1.03        0.00        0.00       0.409E-03    2.40    
     14  4.12            285.        0.00        0.00        1.63        19.7    
     15  5.0             0.00        12.9        28.0      -0.175        0.00    
-    16  5.1             1.97        0.00        0.00       0.796E-04    4.10    
+    16  5.1             1.97        0.00        0.00       0.805E-04    4.10    
     17  5.12            433.        0.00        0.00        1.59        30.6    
     18  6.0             0.00        9.33        17.8      -0.175        0.00    
-    19  6.1            0.767        0.00        0.00       0.332E-03    1.83    
-    20  6.12            287.        0.00       0.301E-04    1.65        19.9    
+    19  6.1            0.767        0.00        0.00       0.337E-03    1.83    
+    20  6.12            287.        0.00        0.00        1.65        19.9    
     21  7.0             0.00       0.452       0.749      -0.175        0.00    
-    22  7.1            0.547E-01  -0.636E-06  -0.940E-06   0.666E-02   0.128    
-    23  7.12            13.0        0.00        0.00        1.80       0.848    
+    22  7.1            0.547E-01  -0.636E-06  -0.940E-06   0.669E-02   0.128    
+    23  7.12            13.0        0.00      -0.940E-06    1.80       0.848    
     24  8.0             0.00        14.9        42.1      -0.175        0.00    
-    25  8.1             111.        0.00      -0.602E-04   0.229E-04    52.5    
-    26  8.12            862.       0.203E-04    0.00        1.58        43.6    
+    25  8.1             111.        0.00        0.00       0.232E-04    52.5    
+    26  8.12            862.        0.00        0.00        1.58        43.6    
     27  9.0             0.00        15.0        61.7      -0.175        0.00    
     28  9.1             2.01      -0.203E-04    0.00       0.298E-06    3.94    
     29  9.12            767.        0.00        0.00        1.53        59.6    
     30  0.0             0.00        12.8        28.2      -0.175        0.00    
-    31  0.1            0.334        0.00      -0.602E-04   0.355E-04   0.960    
-    32  0.12            398.        0.00        0.00        1.57        30.7    
-    33  SS              0.00       -4.38       -6.48      -0.135E-03    0.00    
-    34  TR3           -0.759       -4.61       -6.82       0.414E-02  -0.841    
-    35  TR12           -9.98       -8.35       -12.3       0.198E-02  -0.698    
+    31  0.1            0.334      -0.203E-04    0.00       0.367E-04   0.960    
+    32  0.12            398.      -0.203E-04    0.00        1.57        30.7    
+    33  SS              0.00       -4.38       -6.48       0.188E-03    0.00    
+    34  TR3           -0.759       -4.61       -6.82       0.412E-02  -0.841    
+    35  TR12           -9.99       -8.35       -12.3       0.194E-02  -0.698    
 
         COMPOSITE SCALED SENSITIVITIES ((SUM OF THE SQUARED VALUES)/ND)**.5
                         279.        6.26        17.0       0.895        25.6    
@@ -965,7 +965,7 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     6
 
          PARAMETER:   HK_1        VERT_K_CB   SS_2        HK_2      
  OBS #  OBSERVATION
-     1  1.0            0.824E-05   0.183E-07    0.00       0.285E-05
+     1  1.0            0.824E-05   0.160E-07    0.00       0.285E-05
      2  1.1           -0.423E-02   0.219E-03   0.386E-03  -0.157E-02
      3  1.12          -0.911E-01   0.106E-03   0.642E-02  -0.338E-01
      4  2.0            -23.2      -0.864E-01    0.00       -3.47    
@@ -997,7 +997,7 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     6
     30  0.0            -33.9      -0.231        0.00       -6.64    
     31  0.1           -0.448       0.107       0.846E-01  -0.369    
     32  0.12            310.        3.54        1.67        49.5    
-    33  SS            -0.512E-03  -0.106E-05    0.00      -0.177E-03
+    33  SS            -0.513E-03  -0.103E-05    0.00      -0.177E-03
     34  TR3            0.723      -0.178E-02  -0.480E-01   0.163    
     35  TR12           0.567       0.214E-02  -0.380E-01   0.164    
 
@@ -1006,15 +1006,15 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     6
 
   PARAMETER    COMPOSITE SCALED SENSITIVITY
   ----------   ----------------------------
-  WELLS_TR       2.78817E+02
-  RCH_ZONE_1     6.26049E+00
-  RCH_ZONE_2     1.69889E+01
-  RIVERS         8.95114E-01
+  WELLS_TR       2.78818E+02
+  RCH_ZONE_1     6.26045E+00
+  RCH_ZONE_2     1.69891E+01
+  RIVERS         8.95049E-01
   SS_1           2.56474E+01
   HK_1           2.01322E+02
-  VERT_K_CB      4.57249E+00
-  SS_2           1.76893E+00
-  HK_2           5.80054E+01
+  VERT_K_CB      4.57248E+00
+  SS_2           1.76879E+00
+  HK_2           5.80053E+01
 
  FINAL PARAMETER VALUES AND STATISTICS:
 
@@ -1023,8 +1023,8 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     6
    WELLS_TR     RCH_ZONE_1   RCH_ZONE_2   RIVERS       SS_1         HK_1      
    VERT_K_CB    SS_2         HK_2      
 
-   -1.074        34.12        50.48       1.3824E-03   1.1383E-03   4.2556E-04
-   2.1651E-07   6.1957E-05   4.8237E-05
+   -1.074        34.12        50.49       1.3822E-03   1.1383E-03   4.2556E-04
+   2.1651E-07   6.1959E-05   4.8237E-05
 
  SUMS OF SQUARED WEIGHTED RESIDUALS:
    OBSERVATIONS   PRIOR INFO.    TOTAL
@@ -1037,12 +1037,12 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     6
         MAX. PARAMETER CALC. CHANGE   MAX. CHANGE     DAMPING
  ITER.     PARNAM     MAX. CHANGE       ALLOWED      PARAMETER
  -----   ----------  -------------   -------------  ------------
-    1    VERT_K_CB    0.865658         2.00000        1.0000    
+    1    VERT_K_CB    0.865659         2.00000        1.0000    
     2    RIVERS        1.43665         2.00000        1.0000    
-    3    RIVERS       0.890732         2.00000        1.0000    
-    4    RIVERS       0.343423         2.00000        1.0000    
-    5    RIVERS       0.553110E-01     2.00000        1.0000    
-    6    RIVERS       0.172284E-02     2.00000        1.0000    
+    3    RIVERS       0.890730         2.00000        1.0000    
+    4    RIVERS       0.343383         2.00000        1.0000    
+    5    RIVERS       0.553296E-01     2.00000        1.0000    
+    6    RIVERS       0.165364E-02     2.00000        1.0000    
 
  SUMS OF SQUARED WEIGHTED RESIDUALS FOR EACH ITERATION
 
@@ -1050,11 +1050,11 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     6
  ITER.  OBSERVATIONS  PRIOR INFO.      TOTAL
      1   0.26760E+06    0.0000       0.26760E+06
      2    1123.9        0.0000        1123.9    
-     3    63.234        0.0000        63.234    
-     4    40.713        0.0000        40.713    
-     5    36.594        0.0000        36.594    
-     6    36.507        0.0000        36.507    
- FINAL    36.506        0.0000        36.506    
+     3    63.230        0.0000        63.230    
+     4    40.712        0.0000        40.712    
+     5    36.592        0.0000        36.592    
+     6    36.505        0.0000        36.505    
+ FINAL    36.502        0.0000        36.502    
 
  *** PARAMETER ESTIMATION CONVERGED BY SATISFYING THE TOL CRITERION ***
 
@@ -1066,24 +1066,24 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     6
             WELLS_TR   RCH_ZONE_1 RCH_ZONE_2 RIVERS     SS_1       HK_1      
             VERT_K_CB  SS_2       HK_2      
  ............................................................................
- WELLS_TR    5.978E-03 -4.435E-02 -0.349     -5.391E-03 -5.631E-03 -5.552E-03
-            -5.620E-03 -4.829E-03 -5.606E-03
- RCH_ZONE_1 -4.435E-02   14.4      -4.72      2.399E-02  3.950E-02  4.248E-02
-             4.295E-02  5.474E-02  3.756E-02
+ WELLS_TR    5.978E-03 -4.434E-02 -0.349     -5.394E-03 -5.630E-03 -5.551E-03
+            -5.619E-03 -4.830E-03 -5.606E-03
+ RCH_ZONE_1 -4.434E-02   14.4      -4.72      2.407E-02  3.949E-02  4.247E-02
+             4.294E-02  5.477E-02  3.755E-02
  RCH_ZONE_2 -0.349      -4.72       24.6      0.345      0.326      0.324    
              0.323      0.316      0.329    
- RIVERS     -5.391E-03  2.399E-02  0.345      0.350     -5.832E-03  2.270E-03
-            -2.169E-02  0.168      1.169E-02
- SS_1       -5.631E-03  3.950E-02  0.326     -5.832E-03  7.525E-03  5.208E-03
-             8.615E-03 -2.603E-02  5.243E-03
- HK_1       -5.552E-03  4.248E-02  0.324      2.270E-03  5.208E-03  5.198E-03
-             5.302E-03  4.500E-03  5.098E-03
- VERT_K_CB  -5.620E-03  4.295E-02  0.323     -2.169E-02  8.615E-03  5.302E-03
-             1.371E-02 -4.703E-02  4.967E-03
- SS_2       -4.829E-03  5.474E-02  0.316      0.168     -2.603E-02  4.500E-03
-            -4.703E-02  0.454      5.454E-03
- HK_2       -5.606E-03  3.756E-02  0.329      1.169E-02  5.243E-03  5.098E-03
-             4.967E-03  5.454E-03  5.565E-03
+ RIVERS     -5.394E-03  2.407E-02  0.345      0.350     -5.828E-03  2.273E-03
+            -2.169E-02  0.168      1.170E-02
+ SS_1       -5.630E-03  3.949E-02  0.326     -5.828E-03  7.524E-03  5.207E-03
+             8.614E-03 -2.603E-02  5.243E-03
+ HK_1       -5.551E-03  4.247E-02  0.324      2.273E-03  5.207E-03  5.197E-03
+             5.301E-03  4.501E-03  5.097E-03
+ VERT_K_CB  -5.619E-03  4.294E-02  0.323     -2.169E-02  8.614E-03  5.301E-03
+             1.371E-02 -4.703E-02  4.966E-03
+ SS_2       -4.830E-03  5.477E-02  0.316      0.168     -2.603E-02  4.501E-03
+            -4.703E-02  0.454      5.455E-03
+ HK_2       -5.606E-03  3.755E-02  0.329      1.170E-02  5.243E-03  5.097E-03
+             4.966E-03  5.455E-03  5.565E-03
 
 
  _________________
@@ -1181,20 +1181,20 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     6
             VERT_K_CB  SS_2       HK_2      
  ............................................................................
  WELLS_TR     1.00     -0.151     -0.911     -0.118     -0.840     -0.996    
-            -0.621     -9.267E-02 -0.972    
- RCH_ZONE_1 -0.151       1.00     -0.251      1.071E-02  0.120      0.155    
-             9.677E-02  2.143E-02  0.133    
+            -0.621     -9.269E-02 -0.972    
+ RCH_ZONE_1 -0.151       1.00     -0.251      1.074E-02  0.120      0.155    
+             9.676E-02  2.144E-02  0.133    
  RCH_ZONE_2 -0.911     -0.251       1.00      0.118      0.759      0.906    
-             0.556      9.448E-02  0.891    
- RIVERS     -0.118      1.071E-02  0.118       1.00     -0.114      5.327E-02
+             0.556      9.449E-02  0.891    
+ RIVERS     -0.118      1.074E-02  0.118       1.00     -0.114      5.334E-02
             -0.313      0.421      0.265    
  SS_1       -0.840      0.120      0.759     -0.114       1.00      0.833    
              0.848     -0.445      0.810    
- HK_1       -0.996      0.155      0.906      5.327E-02  0.833       1.00    
-             0.628      9.262E-02  0.948    
- VERT_K_CB  -0.621      9.677E-02  0.556     -0.313      0.848      0.628    
+ HK_1       -0.996      0.155      0.906      5.334E-02  0.833       1.00    
+             0.628      9.264E-02  0.948    
+ VERT_K_CB  -0.621      9.676E-02  0.556     -0.313      0.848      0.628    
               1.00     -0.596      0.569    
- SS_2       -9.267E-02  2.143E-02  9.448E-02  0.421     -0.445      9.262E-02
+ SS_2       -9.269E-02  2.144E-02  9.449E-02  0.421     -0.445      9.264E-02
             -0.596       1.00      0.108    
  HK_2       -0.972      0.133      0.891      0.265      0.810      0.948    
              0.569      0.108       1.00    
@@ -1227,17 +1227,17 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     6
  THE INITIAL PARAMETER VALUES ARE IN THE SEN FILE.
 
 
-  LEAST-SQUARES OBJ FUNC (DEP.VAR. ONLY)- =  36.506    
-  LEAST-SQUARES OBJ FUNC (W/PARAMETERS)-- =  36.506    
-  CALCULATED ERROR VARIANCE-------------- =  1.4041    
+  LEAST-SQUARES OBJ FUNC (DEP.VAR. ONLY)- =  36.502    
+  LEAST-SQUARES OBJ FUNC (W/PARAMETERS)-- =  36.502    
+  CALCULATED ERROR VARIANCE-------------- =  1.4039    
   STANDARD ERROR OF THE REGRESSION------- =  1.1849    
   CORRELATION COEFFICIENT---------------- = 0.99999    
        W/PARAMETERS---------------------- = 0.99999    
   ITERATIONS----------------------------- =       6
 
-  MAX LIKE OBJ FUNC = -37.844    
-  AIC STATISTIC---- = -19.844    
-  BIC STATISTIC---- = -5.8461    
+  MAX LIKE OBJ FUNC = -37.849    
+  AIC STATISTIC---- = -19.849    
+  BIC STATISTIC---- = -5.8507    
 
  SMALLEST AND LARGEST WEIGHTED RESIDUALS
 
@@ -1245,7 +1245,7 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     6
                 WEIGHTED   PERCENT OF  |                 WEIGHTED   PERCENT OF
  NAME           RESIDUAL    OBJ FUNC   |  NAME           RESIDUAL    OBJ FUNC
  8.12           -2.21        13.34     |  9.12            2.25        13.85
- 4.0            -2.10        12.05     |  9.1             1.99        10.80
+ 4.0            -2.10        12.05     |  9.1             1.98        10.79
  3.1            -1.23         4.13     |  7.12            1.63         7.29
  4.12           -1.07         3.12     |  1.0             1.63         7.25
  1.12          -0.927         2.35     |  2.0             1.12         3.45

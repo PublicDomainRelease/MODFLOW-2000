@@ -219,7 +219,7 @@ C---LOCAL:
       CHARACTER*4 PTYP
       CHARACTER*9 PFLG
 C---COMMON:
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
 C----------------------------------------------------------------------
       EXTERNAL U2DREL, ULAPRW
 C----------------------------------------------------------------------
@@ -560,7 +560,7 @@ C---LOCAL:
      &        NEWI, NEWJ, NEWK, NPART, NTPNT, OLDK
 C---COMMON:
       INCLUDE 'param.inc'
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
 C----------------------------------------------------------------------
       EXTERNAL U2DREL, ULAPRW
 C-----------------------------------------------------------------------
@@ -1000,7 +1000,7 @@ C---LOCAL:
      &     TOPB, TOPL, TOPR, TOPT, ZB, ZL, ZR, ZT, HNSG
       INTEGER IBB, IBL, IBR, IBT, LTP
 C---COMMON:
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
       INCLUDE 'param.inc'
 C----------------------------------------------------------------------
   500 FORMAT (/,' CELL (',3I4,') IS NOT ACTIVE. (SOBS1ADV2L)')
@@ -1449,7 +1449,7 @@ C        SPECIFICATIONS:
      &          STRM(11,MXSTRM),RIVR(NRIVVL,MXRIVR), DRAI(NDRNVL,MXDRN)
       INTEGER BND
 C---COMMON:
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
       INCLUDE 'param.inc'
 C-----------------------------------------------------------------------
 C
@@ -1659,9 +1659,9 @@ C---LOCAL:
       INTEGER ICL, IL, K, LT, LZ1, M, JCNT, JJ, IFLAG0, IZ, NZ, ICNT,
      &        II, KK
 C---COMMON:
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
-      COMMON /LPFCOM/LAYTYP(200),LAYAVG(200),CHANI(200),LAYVKA(200),
-     1               LAYWET(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
+      COMMON /LPFCOM/LAYTYP(999),LAYAVG(999),CHANI(999),LAYVKA(999),
+     1               LAYWET(999)
       INCLUDE 'param.inc'
 C----------------------------------------------------------------------
       EXTERNAL SSEN1LPF1CH, SSEN1LPF1CV, SSEN1HFB6MD
@@ -1816,7 +1816,7 @@ C---LOCAL:
       REAL DC, DPSTP, DR, DTT2, DTX, DTY, DTZ, DVX, DVY, DVZ, HN, ZT
       INTEGER NXFLG, NYFLG, NZFLG
 C---COMMON:
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
 C----------------------------------------------------------------------
 C
 C%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2440,7 +2440,7 @@ C---ARGUMENTS:
      &        IND, KTDIM, KTFLG,GPT
       CHARACTER*12 OBSNAM
       CHARACTER*10 HGUNAM,TMPNAM,CTMP1
-      COMMON /HUFCOMC/HGUNAM(200)
+      COMMON /HUFCOMC/HGUNAM(999)
 C----------------------------------------------------------------------
   500 FORMAT (3I5,1X,4(G12.5,1X),1X,A)
   505 FORMAT (80('.'),/,'OBS # ',I5,'-',I5,5X,'OBS NAME: ',A,/,
@@ -2460,7 +2460,7 @@ cc    make these statements contingent on IP>0 - erb 8/18/00
 C-----------------------------------------------------------------------
 C     SET UNIT NAME
       IF(IADVHUF.EQ.0) THEN
-        TMPNAM=''
+        TMPNAM=' '
       ELSE
         TMPNAM=HGUNAM(GPT)
       ENDIF
@@ -2592,7 +2592,7 @@ C---ARGUMENTS:
      &  RMLT(NCOL,NROW,NMLTAR),IZON(NCOL,NROW,NZONAR)
 C---COMMON:
       INCLUDE 'param.inc'
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
 C     ------------------------------------------------------------------
 C
       PID = '    '
@@ -2753,7 +2753,7 @@ C
       DIMENSION PRST(NCOL,NROW,NPRST),RMLT(NCOL,NROW,NMLTAR),
      &  IZON(NCOL,NROW,NZONAR)
 C---COMMON:
-      COMMON /DISCOM/LBOTM(200),LAYCBD(200)
+      COMMON /DISCOM/LBOTM(999),LAYCBD(999)
 C     ------------------------------------------------------------------
       DATA ANAME(1)/'                POROSITY'/
       DATA ANAME(2)/'  CONFINING BED POROSITY'/
