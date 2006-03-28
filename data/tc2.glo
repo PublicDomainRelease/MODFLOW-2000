@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.15.01 04/05/2005
+                           VERSION 1.16.00 03/28/2006
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
@@ -14,7 +14,7 @@
 
  OPENING tc2.bin
  FILE TYPE:DATA(BINARY)   UNIT   13   STATUS:UNKNOWN
- FORMAT:UNFORMATTED            ACCESS:TRANSPARENT         
+ FORMAT:BINARY                 ACCESS:SEQUENTIAL          
 #                                                                                                                                                                                                       
 # Obs-Sen-Pes process input files                                                                                                                                                                       
 

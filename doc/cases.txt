@@ -358,6 +358,20 @@ include "noise."
   Solver: SIP
   Types of parameters defined / package: none
   
+24. Test case testsfr2:
+
+  This test case is documented as the hypothetical test simulation
+  in Niswonger and Prudic (2005).
+  
+  Grid dimensions: 1 Layer, 7 Rows, 100 Columns
+  Stress periods: 50 transient
+  Optional processes: none
+  Mode: Forward
+  Flow package: LPF
+  Stress packages: SFR, GHB
+  Solver: PCG2
+  Types of parameters defined / package: none
+  
 
 REFERENCES
 
@@ -435,4 +449,9 @@ ground-water flow model: U.S. Geological Survey Open-File Report
 
 Prudic, D.E., Konikow, L.F., and Banta, E.R., 2004, A new streamflow-routing
 (SFR1) package to simulate stream-aquifer interaction with MODFLOW-2000:
-U.S. G eological Survey Open-File Report 2004-1042, 95 p.
+U.S. Geological Survey Open-File Report 2004-1042, 95 p.
+
+Niswonger, R.G. and Prudic, D.E., 2005, Documentation of the Streamflow-
+Routing (SFR2) Package to include unsaturated flow beneath streams--
+A modification to SFR1: U.S. Geological Survey Techniques and Methods, 
+Book 6, Chap. A13, 47 p.

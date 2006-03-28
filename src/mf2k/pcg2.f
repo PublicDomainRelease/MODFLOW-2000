@@ -1,3 +1,4 @@
+! Time of File Save by ERB: 5/12/2005 5:07PM
 C  1-3-2003  Added code to apply damping only to external iterations
 C
       SUBROUTINE PCG2ALG(ISUM,ISUMI,LCV,LCSS,LCP,LCCD,LCHCHG,LCLHCH,
@@ -100,7 +101,7 @@ C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL DAMP, HCLOSE, RCLOSE, RELAX
-      INTEGER IN, IOUT, IPRPCG, ITER1, MUTPCG, MXITER, NBPOL, 
+      INTEGER IN, IOUT, IPRPCG, ITER1, MUTPCG, MXITER, NBPOL,
      &        NITER, NPCOND, IFREFM
 C     ------------------------------------------------------------------
 C
@@ -177,13 +178,13 @@ C     ******************************************************************
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
-      REAL BIGH, BIGR, BPOLY, C0, C1, C2, CC, CD, CD1, CR, CV, DAMP, 
+      REAL BIGH, BIGR, BPOLY, C0, C1, C2, CC, CD, CD1, CR, CV, DAMP,
      &     HCHG, HCLOSE, HCOF, RCHG, RCLOSE, RELAX, RHS, T
       INTEGER I, IBOUND, IC, ICNVG, IH, II, IICNVG, IITER, IL, IOUT,
-     &        IPRPCG, IR, IT1, ITER1, J, JH, JJ, JR, K, KH, KITER, 
-     &        KK, KPER, KR, KSTP, LHCH, LRCH, MUTPCG, MXITER, N, NBPOL, 
-     &        NC, NCD, NCF, NCL, NCN, NCOL, NH, NITER, NL, NLAY, NLL, 
-     &        NLN, NLS, NLZ, NODES, NORM, NPCOND, NR, NRB, NRC, NRH, 
+     &        IPRPCG, IR, IT1, ITER1, J, JH, JJ, JR, K, KH, KITER,
+     &        KK, KPER, KR, KSTP, LHCH, LRCH, MUTPCG, MXITER, N, NBPOL,
+     &        NC, NCD, NCF, NCL, NCN, NCOL, NH, NITER, NL, NLAY, NLL,
+     &        NLN, NLS, NLZ, NODES, NORM, NPCOND, NR, NRB, NRC, NRH,
      &        NRL, NRN, NROW, NSTP
       DOUBLE PRECISION DZERO, DONE
       PARAMETER (DZERO=0.D0,DONE=1.D0)
@@ -196,9 +197,9 @@ C     ------------------------------------------------------------------
       DOUBLE PRECISION FCC, FCR, FCV, FV
       DOUBLE PRECISION DDAMP, BIGGESTPOS, BIGGESTNEG
 C
-      DIMENSION HNEW(NODES), IBOUND(NODES), CR(NODES), CC(NODES), 
-     &          CV(NODES), HCOF(NODES), RHS(NODES), IT1(MXITER*ITER1), 
-     &          V(NODES), SS(NODES), P(NODES), CD(NODES), 
+      DIMENSION HNEW(NODES), IBOUND(NODES), CR(NODES), CC(NODES),
+     &          CV(NODES), HCOF(NODES), RHS(NODES), IT1(MXITER*ITER1),
+     &          V(NODES), SS(NODES), P(NODES), CD(NODES),
      &          HCHG(MXITER*ITER1), LHCH(3,MXITER*ITER1),
      &          RCHG(MXITER*ITER1), LRCH(3,MXITER*ITER1),
      &          RES(NODES), HCSV(NODES), HPCG(NODES)
@@ -207,18 +208,22 @@ C     ------------------------------------------------------------------
       BIGGESTPOS = HUGE(BIGH)
       BIGGESTNEG = -BIGGESTPOS
 C
-
-
 c      IF(NITER.EQ.0) THEN
 c        WRITE(IOUT,895)
-c        WRITE(IOUT,900) (I,CC(I),CR(I),CV(I),HCOF(I),
-c     1     RHS(I),HNEW(I),IBOUND(I),I=1,nodes)
+c        IFIRST=1
+c        IF(NLAY .GT. 1) THEN
+c          NODESM1LAY=NODES-NCOL*NROW
+c          WRITE(IOUT,900) (I,CC(I),CR(I),CV(I),HCOF(I),
+c     1     RHS(I),HNEW(I),IBOUND(I),I=1,NODESM1LAY)
+c          IFIRST=NODESM1LAY+1
+c        ENDIF
+c        WRITE(IOUT,901) (I,CC(I),CR(I),HCOF(I),
+c     1     RHS(I),HNEW(I),IBOUND(I),I=IFIRST,NODES)
 c      ENDIF
-c 895  FORMAT ('    I',5X,'CC',13X,'CR',13X,'CV',12X,'HCOF',12X,'RHS',
+c 895  FORMAT ('     I',5X,'CC',13X,'CR',13X,'CV',12X,'HCOF',12X,'RHS',
 c     &        12X,'HNEW',7X,'IBOUND')
-c 900  FORMAT (I5,6G15.8,I5)
-
-
+c 900  FORMAT (I6,6G15.8,I5)
+c 901  FORMAT (I6,2G15.8,15X,3G15.8,I5)
       DDAMP=DAMP
 C-------ASSIGN VARIABLE EQUAL TO THE NUMBER OF CELLS IN ONE LAYER
       NRC = NROW*NCOL
@@ -358,7 +363,7 @@ C-------CALCULATE THE DIAGONAL OF THE A MATRIX, AND STORE IT IN HCOF.
             E = -Z - B - D - F - H - S
             RRHS = RHS(N)
             HHCOF = HNEW(N)*HCOF(N)
-            RES(N) = RRHS - ZHNEW - BHNEW - DHNEW - HHCOF - FHNEW - 
+            RES(N) = RRHS - ZHNEW - BHNEW - DHNEW - HHCOF - FHNEW -
      &               HHNEW - SHNEW
             IF (NORM.EQ.1) HCOF(N) = HCOF(N) + E
             IF (IBOUND(N).LT.0) RES(N) = 0.
@@ -374,11 +379,11 @@ C-------SCALE CC,CR,CV,RES AND HNEW IF NORM=1.
               N = J + (I-1)*NCOL + (K-1)*NRC
               IF (IBOUND(N).EQ.0) GOTO 60
               HHCOF = SQRT(-HCOF(N))
-              IF (N.LE.(NODES-NCOL) .AND. CC(N).GT.0.) 
+              IF (N.LE.(NODES-NCOL) .AND. CC(N).GT.0.)
      &            CC(N) = CC(N)/(HHCOF*(SQRT(-HCOF(N+NCOL))))
-              IF (CR(N).GT.0.) 
+              IF (CR(N).GT.0.)
      &            CR(N) = CR(N)/(HHCOF*(SQRT(-HCOF(N+1))))
-              IF (N.LE.(NODES-NRC) .AND. CV(N).GT.0.) 
+              IF (N.LE.(NODES-NRC) .AND. CV(N).GT.0.)
      &            CV(N) = CV(N)/(HHCOF*(SQRT(-HCOF(N+NRC))))
               HNEW(N) = HNEW(N)*HHCOF
               RES(N) = RES(N)/HHCOF
@@ -555,7 +560,7 @@ C                 MODIFIED FROM HILL(1990) 9/27/90: 2 REPLACES 1
                   HHCOF = HCOF(N) - Z - B - D - F - H - S
                 ENDIF
                 IF (NORM.EQ.1) HHCOF = -DONE
-                CD(N) = (DONE+DEL)*HHCOF - CDCR - CDCC - CDCV - 
+                CD(N) = (DONE+DEL)*HHCOF - CDCR - CDCC - CDCV -
      &                  RELAX*(FCR+FCC+FCV)
                 IF (CD1.EQ.0. .AND. CD(N).NE.0.) CD1 = CD(N)
 C--------.LT. CHANGED TO .LE. 01SEPT1991
@@ -786,11 +791,11 @@ C-------UNSCALE CR,CC,CV AND HNEW
         DO 310 N = 1, NODES
           IF (IBOUND(N).EQ.0) GOTO 310
           HHCOF = SQRT(-HCOF(N))
-          IF (N.LE.(NODES-NCOL) .AND. CC(N).GT.0.) 
+          IF (N.LE.(NODES-NCOL) .AND. CC(N).GT.0.)
      &        CC(N) = CC(N)*(HHCOF*(SQRT(-HCOF(N+NCOL))))
-          IF (N.LE.(NODES-1) .AND. CR(N).GT.0.) 
+          IF (N.LE.(NODES-1) .AND. CR(N).GT.0.)
      &        CR(N) = CR(N)*(HHCOF*(SQRT(-HCOF(N+1))))
-          IF (N.LE.(NODES-NRC) .AND. CV(N).GT.0.) 
+          IF (N.LE.(NODES-NRC) .AND. CV(N).GT.0.)
      &        CV(N) = CV(N)*(HHCOF*(SQRT(-HCOF(N+NRC))))
           HNEW(N) = HNEW(N)/HHCOF
   310   CONTINUE
@@ -942,11 +947,11 @@ C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL C, CC, CR, CV, HCOF, RES
-      INTEGER I, IBOUND, J, K, N, NCD, NCF, NCL, NCN, NCOL, NLAY, NLL, 
+      INTEGER I, IBOUND, J, K, N, NCD, NCF, NCL, NCN, NCOL, NLAY, NLL,
      &        NLN, NLS, NLZ, NODES, NORM, NRB, NRC, NRH, NRL, NRN, NROW
-      DOUBLE PRECISION VN, CRHS, Z, B, D, F, H, S, ZV, BV, DV, FV, HV, 
+      DOUBLE PRECISION VN, CRHS, Z, B, D, F, H, S, ZV, BV, DV, FV, HV,
      &                 SV, DZERO, VIN, VOUT
-      DIMENSION IBOUND(NODES), CR(NODES), CC(NODES), CV(NODES), 
+      DIMENSION IBOUND(NODES), CR(NODES), CC(NODES), CV(NODES),
      &          RES(NODES), VIN(NODES), VOUT(NODES), HCOF(NODES)
 C     ------------------------------------------------------------------
 C

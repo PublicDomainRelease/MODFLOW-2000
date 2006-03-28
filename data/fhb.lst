@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.15.01 04/05/2005
+                           VERSION 1.16.00 03/28/2006
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -34,11 +34,11 @@
 
  OPENING fhb.hds
  FILE TYPE:DATA(BINARY)   UNIT   41   STATUS:REPLACE
- FORMAT:UNFORMATTED            ACCESS:TRANSPARENT         
+ FORMAT:BINARY                 ACCESS:SEQUENTIAL          
 
  OPENING fhb.cbc
  FILE TYPE:DATA(BINARY)   UNIT   44   STATUS:REPLACE
- FORMAT:UNFORMATTED            ACCESS:TRANSPARENT         
+ FORMAT:BINARY                 ACCESS:SEQUENTIAL          
 
 
  DISCRETIZATION INPUT DATA READ FROM UNIT   10

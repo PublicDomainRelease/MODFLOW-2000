@@ -58,13 +58,19 @@ METHOD
 
 HISTORY
 
+      MODFLOW-2000 Version 1.16.00 2006/03/28 - The SFR2 Package replaces
+        the SFR1 Package of version 1.14.00, adding support for simulation
+        of unsaturated flow beneath streams.  The ADV2 Package has been
+        made more compatible with MODPATH.  Other changes and bug fixes
+        are described in release.txt.
+
       MODFLOW-2000 Version 1.15.01 2005/04/05 - This is a bug-fix release.
         Bug fixes are described in release.txt.
 
-      MODFLOW-2000 version 1.15.00 2004/08/06 - Added the GMG Solver Package.
+      MODFLOW-2000 Version 1.15.00 2004/08/06 - Added the GMG Solver Package.
         Modifications were made to the SFR Package.
 
-      MODFLOW-2000 version 1.14.00 2004/07/01 - Added the SFR Package to 
+      MODFLOW-2000 Version 1.14.00 2004/07/01 - Added the SFR Package to 
         allow enhanced capabilities for simulation of streams.  The maximum
         number of layers is increased from 200 to 999.
 
@@ -311,16 +317,20 @@ OUTPUT OPTIONS
      written into a separate file.
 
 SYSTEM REQUIREMENTS
-     MODFLOW-2000 is written in Fortran 77 with the following
-     extensions:  use of variable names longer than 6 characters,
-     Fortran 90 statements for dynamic memory allocation, a call
-     to SUBROUTINE GETARG to retrieve command-line arguments, and
-     two calls to DATE_AND_TIME, which is a Fortran 90 intrinsic
-     subroutine. Generally, the program is easily installed on
-     most computer systems.  The code has been used on UNIX-based
-     computers and DOS-based 386 or greater computers having a
-     math coprocessor and 4 mb of memory.
-
+     MODFLOW-2000 generally is written in Fortran 77 with the 
+     following extensions:  use of variable names longer than 6
+     characters, Fortran 90 statements for dynamic memory
+     allocation, a call to SUBROUTINE GETARG to retrieve command-
+     line arguments, and two calls to DATE_AND_TIME, which is a
+     Fortran 90 intrinsic subroutine. Generally, the program is
+     easily installed on most computer systems.  The code has
+     been used on UNIX-based computers and DOS-based 386 or
+     greater computers having a math coprocessor and 4 mb of 
+     memory.
+     
+     Starting with version 1.12, a Fortran-90 or later compiler 
+     is required to compile one or more of the source-code files, 
+     including gwf1sub1.f.
 
 PROCESSES
      This version of MODFLOW includes the following processes:
@@ -366,7 +376,7 @@ PACKAGES
          MNW1 -- Multi-Node Well Package
          DAF1 -- Diffusion Analogy Surface-Water Flow Package
          SUB1 -- Subsidence and Aquifer-System Compaction Package
-         SFR1 -- Stream-Flow Routing Package
+         SFR2 -- Stream-Flow Routing Package, version 2
          GMG1 -- Geometric MultiGrid Solver Package
 
 ADDITIONAL CAPABILITIES:
@@ -500,6 +510,9 @@ DOCUMENTATION
      of the  Advective-Transport Observation (ADV2) Package, 
      version 2: U.S. Geological Survey Open-File Report 01-54,
      69 p.
+     
+     File MODPATH-ADV_compatibility_3-2006.pdf, which is included 
+     in the doc directory of the MODFLOW-2000 distribution.
 
   HYDMOD is documented in:
 
@@ -598,6 +611,11 @@ DOCUMENTATION
      flow routing (SFR1) package to simulate stream-aquifer interaction
      with MODFLOW-2000: U.S. Geological Survey Open-File Report
      2004-1042, 95 p.
+     
+     Niswonger, R.G. and Prudic, D.E., 2005, Documentation of the 
+     Streamflow-Routing (SFR2) Package to include unsaturated flow 
+     beneath streams--A modification to SFR1: U.S. Geological Survey 
+     Techniques and Methods, Book 6, Chap. A13, 47 p.
 
   The GMG Package is documented in:
 

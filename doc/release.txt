@@ -12,6 +12,41 @@ these packages and processes, see mf2k.txt ("Summary of MODFLOW-2000").
 NOTE: Any use of trade, product or firm names is for descriptive purposes 
       only and does not imply endorsement by the U.S. Government.
 
+o Version 1.16.00 03/28/2006:
+
+This version includes updates to three packages, and several bug fixes.
+
+Version 2 of the SFR Package replaces SFR1 in this version.  SFR2 adds 
+support for simulation of unsaturated flow beneath streams.  Files prepared 
+according to SFR1 instructions will work as they did with SFR1.  The GAGE
+and LAK3 Packages were revised to work with SFR2.  SFR2 is documented in 
+USGS report TM6-A13.
+
+The ADV2 Package has been modified to improve compatibility with MODPATH.
+The changes are documented in MODPATH-ADV_compatibility_3-2006.pdf, which
+is included in the doc directory of the MODFLOW-2000 distribution.
+
+Values in some tables produced by the STR Package have been modified to be
+written with additional decimal places.
+
+This version includes fixes to the following bugs:
+
+Calculation of sensitivities to EVT parameters failed when NEVTOP was 
+specified as 3.
+
+"ALLOCATION OF ARRAYS RX, IR, RZ FAILED" when batch mode was used.
+
+Compact budget file was incorrectly written when drain-return cells 
+specified in the DRT Package are dry.
+
+In LAK3, in cases in which a lake that had gone dry was underlain by a 
+confined type of layer, an undefined variable caused a run-time error.
+
+Several bugs in HUF2.
+
+Array-bound access error was caused when there were LPF parameters of type 
+HK or HANI not listed in the SEN file.
+
 o Version 1.15.01 04/05/2005:
 
 This version includes fixes to bugs in the following packages and

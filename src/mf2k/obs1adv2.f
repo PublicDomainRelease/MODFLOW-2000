@@ -1,3 +1,4 @@
+! Time of File Save by ERB: 3/28/2006 11:08AM
       SUBROUTINE OBS1ADV2AL(IOUADV,NPTH,NTT2,IOUTT2,KTDIM,KTFLG,KTREV,
      &                      ADVSTP,IOUT,LCICLS,LCPRST,NPRST,LCTT2,
      &                      LCPOFF,LCNPNT,ND,ISUM,ISUMI,NROW,NCOL,NLAY,
@@ -7,7 +8,8 @@
      &                      LCIRCH,LCRECH,ICSTRM,LCSTRM,MXSTRM,NSTREM,
      &                      NDRNVL,NGHBVL,NRIVVL,NRIVER,LCHANI,LCHKCC,
      &                      LCHUFTHK,NHUF,LCGS,LCVDHT,LCDVDH,
-     &                      LCWELL,NWELVL,MXWELL,NWELLS,ISEN,IADVHUF)
+     &                      LCWELL,NWELVL,MXWELL,NWELLS,ISEN,IADVHUF,
+     &                      IMPATHOUT,IMPATHOFF)
 C
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR ADVECTIVE-TRANSPORT OBSERVATIONS
@@ -19,7 +21,7 @@ C---ARGUMENTS:
       REAL ADVSTP
       INTEGER IOUADV, NPTH, NTT2, IOUTT2, KTDIM, KTFLG, KTREV,
      &        IOUT, LCICLS, LCPOFF, LCNPNT, ND, ISUM,
-     &        NROW, NCOL, NLAY,  NBOTM
+     &        NROW, NCOL, NLAY, NBOTM, IADVHUF, IMPATHOFF,IMPATHOUT
       DIMENSION IUNIT(NIUNIT)
 C---LOCAL:
       INTEGER LCPRST, LCTT2
@@ -28,7 +30,7 @@ C----------------------------------------------------------------------
 C     IDENTIFY PROCESS
       WRITE(IOUT,490) IOUADV
   490 FORMAT(/,' ADV2 -- OBSERVATION PROCESS (ADVECTIVE TRANSPORT',
-     &    ' OBSERVATIONS)',/,' VERSION 2.5.1, 07/09/2003',/,
+     &    ' OBSERVATIONS)',/,' VERSION 2.5.2, 03/30/2006',/,
      &    ' INPUT READ FROM UNIT ',I3)
 C
 C  Turn off observation package if OBS is not active
@@ -51,6 +53,8 @@ C%%%%%READ PARTICLE TRACKING INFO 11FEB1995 ER ANDERMAN
       CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,KTREV,DUM,IOUT,IOUADV)
       CALL URWORD(LINE,LLOC,ISTART,ISTOP,3,IDUM,ADVSTP,IOUT,IOUADV)
       CALL URWORD(LINE,LLOC,ISTART,ISTOP,3,IDUM,FSNK,IOUT,IOUADV)
+      CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,IMPATHOUT,DUM,-1,IOUADV)
+      CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,IMPATHOFF,DUM,-1,IOUADV)
       CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,IADVHUF,DUM,-1,IOUADV)
       IF (NLAY.EQ.1) THEN
         KTDIM = 2
@@ -60,7 +64,7 @@ C%%%%%READ PARTICLE TRACKING INFO 11FEB1995 ER ANDERMAN
 C
 C%%%%%WRITE TRAVEL TIME INFO
       WRITE (IOUT,505) NPTH, NTT2, IOUTT2, KTDIM, KTFLG, ADVSTP,
-     &                 KTREV, FSNK, IADVHUF
+     &                 KTREV, FSNK, IPATHOUT, IPATHOFF, IADVHUF
       IF (KTREV.NE.-1 .AND. KTREV.NE.1) THEN
         WRITE (IOUT,500)
         CALL USTOP(' ')
@@ -77,6 +81,8 @@ C%%%%%WRITE TRAVEL TIME INFO
      &  ' TIME STEP (IF KTFLG>1)..............................',G15.8,/,
      &  ' FORWARD OR BACKWARD PARTICLE TRACKING (KTREV).......',I5,/,
      &  ' WEAK SINK FLAG/FRACTION.............................',G15.8,/,
+     &  ' OUTPUT UNIT NUMBER FOR MODPATH PATHLINE FILE........',I5,/,
+     &  ' INPUT OFFSETS USING MODPATH CONVENTIONS (0=NO,1=YES)',I5,/,
      &  ' TRACKING IN HYDROGEOLOGIC UNITS (IADVHUF)...........',I5)
   510 FORMAT (6I5,F10.0)
 C
@@ -191,7 +197,7 @@ C
      &                      DELC,WTQ,ND,KTDIM,IOUADV,NDMH,IOWTQ,BOTM,
      &                      NBOTM,IPLOT,NAMES,IPR,MPR,JT,NPADV,INAMLOC,
      &                      IPFLG,IADVHUF,NHUF,OTIME,PERLEN,NPER,
-     &                      NSTP,ISSFLG,IADVPER)
+     &                      NSTP,ISSFLG,IADVPER,TDELC,IMPATHOFF)
 C
 C        SPECIFICATIONS:
 C----------------------------------------------------------------------
@@ -256,6 +262,12 @@ C=======================================================================
 C
 C     WRITE BANNER
       WRITE (IOUT,500)
+C
+C-----SUM DELC. NEEDED FOR MODPATH PATHLINE FILE mch 3/18/2006
+C
+      TDELC=0.0
+      DO 5 I=1,NCOL
+    5 TDELC=TDELC+DELC(I)
 C
 C-----FIND SIMULATION TIME AND NUMBER OF TIME STEPS PRECEDING FIRST
 C     STEADY-STATE STRESS PERIOD
@@ -335,7 +347,7 @@ C     START READING OBSERVATIONS
         I2 = NHT + NQT + 1
         NTPNT = 0
         DO 80 I = 1, NPTH
-C---------Read ADV ITEM 2
+C---------Read ADV ITEM 2 -- STARTING LOCATIONS
           CALL URDCOM(IOUADV,IOUT,LINE)
           LLOC = 1
           CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,NPNT(I),DUM,IOUT,IOUADV)
@@ -352,17 +364,25 @@ C---------Read ADV ITEM 2
           CALL URWORD(LINE,LLOC,ISTART,ISTOP,3,N,POFF(3,I),IOUT,
      &                IOUADV)
           WRITE (IOUT,530) I, (ICLS(J,I),J=1,3), (POFF(J,I),J=1,3)
+C-----------CONVERT POFF IF NEEDED mch 03/20/2006
+          IF(IMPATHOFF.EQ.1) THEN
+            POFF(1,I)=POFF(1,I)-0.5
+            POFF(2,I)=-POFF(2,I)+0.5
+            POFF(3,I)=POFF(3,I)-0.5
+          ENDIF
+C-----------CHECK THAT NUMBER OF OBSERVATIONS>0 FOR THIS PARTICLE
           IF(NPNT(I).LE.0) THEN
             WRITE(IOUT,505)
             WRITE(IOUT,*) ' NPNT MUST BE LARGER THAN 0'
             CALL USTOP(' ')
           ENDIF
+C-----------OBSERVATIONS
           DO 70 IPNT = 1, NPNT(I)
             NTPNT = NTPNT + 1
             I11 = I2 - NHT
             I12 = I11 + 1
             I13 = I11 + 2
-C-----------Read ADV ITEM 3
+C-----------Read ADV ITEM 3 -- OBSERVATIONS
             CALL URDCOM(IOUADV,IOUT,LINE)
             LLOC = 1
             CALL URWORD(LINE,LLOC,ISTART,ISTOP,1,N,DUM,IOUT,IOUADV)
@@ -370,9 +390,9 @@ C-----------Read ADV ITEM 3
             CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,T2LAY,DUM,IOUT,IOUADV)
             CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,T2ROW,DUM,IOUT,IOUADV)
             CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,T2COL,DUM,IOUT,IOUADV)
-            CALL URWORD(LINE,LLOC,ISTART,ISTOP,3,N,T2LOF,IOUT,IOUADV)
-            CALL URWORD(LINE,LLOC,ISTART,ISTOP,3,N,T2ROF,IOUT,IOUADV)
-            CALL URWORD(LINE,LLOC,ISTART,ISTOP,3,N,T2COF,IOUT,IOUADV)
+            CALL URWORD(LINE,LLOC,ISTART,ISTOP,3,N,T2LOFR,IOUT,IOUADV)
+            CALL URWORD(LINE,LLOC,ISTART,ISTOP,3,N,T2ROFR,IOUT,IOUADV)
+            CALL URWORD(LINE,LLOC,ISTART,ISTOP,3,N,T2COFR,IOUT,IOUADV)
             CALL URWORD(LINE,LLOC,ISTART,ISTOP,3,N,WTQ(I11,I11),IOUT,
      &                  IOUADV)
             CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,IXWT,DUM,IOUT,IOUADV)
@@ -387,6 +407,12 @@ C-----------Read ADV ITEM 3
      &                  IOUADV)
             NAMES(I2) = OBSNAM(I2)
             IF (KTDIM.EQ.3) WTQ(I13,I13) = ZWT
+C-----------CONVERT T2LOF, T2ROF AND T2COF IF NEEDED mch 03/20/2006
+          IF(IMPATHOFF.EQ.1) THEN
+            T2LOF=T2LOFR-0.5
+            T2ROF=-T2ROFR+0.5
+            T2COF=T2COFR-0.5
+          ENDIF
 CERB
 CERB  ASSIGN OBSERVATION TIME -- THIS WILL NEED TO BE MODIFIED TO
 CERB  SUPPORT ADV OBSERVATIONS IN STRESS PERIODS > 1
@@ -431,10 +457,10 @@ C%%%%%CALCULATE WEIGHTS
      &          WTQ(I13,I13) = WTQ(I13,I13)*WTQ(I13,I13)
             IF (KTDIM.EQ.2) THEN
               WRITE (IOUT,540) I2, I2+1, OBSNAM(I2), TT2(NTPNT), T2LAY,
-     &                         T2ROW, T2COL, T2LOF, T2ROF, T2COF
+     &                         T2ROW, T2COL, T2LOFR, T2ROFR, T2COFR
             ELSEIF (KTDIM.EQ.3) THEN
               WRITE (IOUT,540) I2, I2+2, OBSNAM(I2), TT2(NTPNT), T2LAY,
-     &                         T2ROW, T2COL, T2LOF, T2ROF, T2COF
+     &                         T2ROW, T2COL, T2LOFR, T2ROFR, T2COFR
             ENDIF
             I2 = I2 + KTDIM
    70     CONTINUE
@@ -510,7 +536,7 @@ C
      &                 NGHBVL,NRIVVL,NDRNVL,LAYHDT,LN,NPLIST,ISCALS,
      &                 FSNK,WTQ,NDMH,BSCAL,HKCC,HUFTHK,NHUF,IULPF,IUHUF,
      &                 GS,VDHT,ILVDA,DVDH,NPADV,IPFLG,IADVHUF,IADVPER,
-     &                 KPER)
+     &                 KPER,IMPATHOUT,TDELC)
 C%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 C     MAIN SUBROUTINE TO TRACK A PARTICLE USING LINEAR VELOCITY
 C     INTERPOLATION AND THEN THE SEMI-ANALYTICAL TRACKING SCHEME.
@@ -518,6 +544,8 @@ C     THIS IS CALLED FROM MAIN ONLY
 C     SUBROUTINES CALLED ARE:
 C        SOBS1ADV2L = LINEAR INTERPOLATION
 C        SOBS1ADV2S = SEMI-ANALYTICAL TRACKING
+C        SOBS1ADV2UP = UPDATE POSITION OF THE PARTICLE
+C        SOBS1ADV2WR = WRITE TO OUTPUT FILES
 C%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 C
 C        SPECIFICATIONS:
@@ -610,6 +638,12 @@ C-----------------------------------------------------------------------
 C
 C     RETURN IF STRESS PERIOD IS LATER THAN THE FIRST STEADY PERIOD
       IF (KPER.GT.IADVPER) RETURN
+C-----WRITE FIRST LINE OF IMPATHOUT OUTPUT FILE  mchill 3-22-2006
+      IF (IP.EQ.0) THEN
+      WRITE (IMPATHOUT,'(4A20)')
+     &      '@ [ MODPATH Version ','4.00 (BY ADV2     ,',
+     &      ' 3-2006) (TREF=   0.','000000E+00 ) ]'
+      ENDIF
 C-----DEFINE POROSITY FOR NAMED PARAMETERS
       IF(NPADV.GT.0) CALL SOBS1ADV2PRST(PRST,NPRST,NCOL,NROW,NLAY,NBOTM,
      &                                  IPFLG,RMLT,NMLTAR,IZON,NZONAR,
@@ -740,22 +774,17 @@ C             PARAMETER IS LOG-TRANSFORMED
           ENDIF
           IF (IOUTT2.GT.0) WRITE (IOUTT2,*) NPART
         ENDIF
-        IF (IP.NE.0) THEN
+cmch revised so scaled sens does not change with log transformation
+        IF (IP.GT.0) THEN
           BB = ABS(B(IIPP))
-          IF (LN(IIPP).LE.0) THEN
-C           PARAMETER IS NOT LOG-TRANSFORMED
-            IF (BB.LT.BSCAL(IIPP)) BB = BSCAL(IIPP)
-          ELSE
-C           PARAMETER IS LOG-TRANSFORMED
-            IF (BB.EQ.0.0) BB = 1.0
-          ENDIF
+          IF (BB.LT.BSCAL(IIPP)) BB = BSCAL(IIPP)
         ELSE
-          BB = 0.0
+          BB=0.0
         ENDIF
         CALL SOBS1ADV2WR(1,IP,IPRINT,ITERP,PSTP,IOUT,KPT,IPT,JPT,XP,YP,
      &               ZP,TP,DXP,DYP,DZP,BB,IOUTT2,IND,VXP,VYP,VZP,VP,
      &               KTDIM,OBSNAM(IND),KTFLG,ISCALS,LNIIPP,WTQ(IND-NHT,
-     &               IND-NHT),GPT,IADVHUF)
+     &               IND-NHT),GPT,IADVHUF,IMPATHOUT,TDELC,NPART)
 
 C%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 C
@@ -767,7 +796,8 @@ C%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
    50     IF ((IPT.LT.0) .OR. (IPT.GT.NROW) .OR. (JPT.LT.0) .OR.
      &        (JPT.GT.NCOL) .OR. (IBOUND(JPT,IPT,KPT).EQ.0) .OR.
      &        (KPT.LT.1.OR.KPT.GT.NLAY)) GOTO 100
-          IF(DTC.GT.0) GOTO 60
+cmch 1-15-2006 changed 0 to 0.0 in following if statement
+          IF(DTC.GT.0.0) GOTO 60
 C
 C     CALL SOBS1ADV2L TO CALCULATE INTERPOLATED VELOCITY (AND
 C           SENSITIVITIES IF IP.GT.0)
@@ -807,22 +837,18 @@ C     UPDATE POSITION
             IF(IEXIT.EQ.4) IEXIT=0
 C
 C      AND PRINT OUT INFORMATION
-            IF (IP.NE.0) THEN
+cmch revised so scaled sens does not change with log transformation
+            IF (IP.GT.0) THEN
               BB = ABS(B(IIPP))
-              IF (LN(IIPP).LE.0) THEN
-C               PARAMETER IS NOT LOG-TRANSFORMED
-                IF (BB.LT.BSCAL(IIPP)) BB = BSCAL(IIPP)
-              ELSE
-C               PARAMETER IS LOG-TRANSFORMED
-                IF (BB.EQ.0.0) BB = 1.0
-              ENDIF
+              IF (BB.LT.BSCAL(IIPP)) BB = BSCAL(IIPP)
             ELSE
-              BB = 0.0
+              BB=0.0
             ENDIF
             CALL SOBS1ADV2WR(IEXIT,IP,IPRINT,ITERP,PSTP,IOUT,KPT,IPT,
      &                 JPT,XP,YP,ZP,TP,DXP,DYP,DZP,BB,IOUTT2,IND,VXP,
      &                 VYP,VZP,VP,KTDIM,OBSNAM(IND),KTFLG,ISCALS,LNIIPP,
-     &                 WTQ(IND-NHT,IND-NHT),GPT,IADVHUF)
+     &                 WTQ(IND-NHT,IND-NHT),GPT,IADVHUF,IMPATHOUT,TDELC,
+     &                 NPART)
             IEXIT=IEXITOLD
           ENDIF
 C
@@ -839,7 +865,8 @@ C     OTHERWISE CHECK TO SEE IF THE PARTICLE IS GOING INTO A CONFINING LAYER
      &                    OBSNAM(IND),IPRINT,ITERP,IOUT,XP,YP,DXP,DYP,
      &                    IOUTT2,KTDIM,ISCALS,NPE,ND,NPLIST,BOTM,NBOTM,
      &                    DTP,LNIIPP,WTQ(IND-NHT,IND-NHT),BSCAL,DTC,ZPC,
-     &                    RMLT,NMLTAR,IZON,NZONAR,NPRST)
+     &                    RMLT,NMLTAR,IZON,NZONAR,NPRST,IMPATHOUT,TDELC,
+     &                    NPART)
           ENDIF
 C     END OF CONFINING LAYER CALCULATIONS
 C
@@ -855,10 +882,11 @@ C     IF PARTICLE IS ON EDGE OF GRID AND TIME OF OBSERVATION HAS NOT BEEN
 C        REACHED, THEN PROJECT FINAL POSITION BASED ON CURRENT VELOCITIES
 C        (IF IEXIT=4 MEANS NEW POSITION IS NOT IN GRID),THEN GOTO NEXT
 C        PARTICLE
+Cmchill 1-23-2006. 4th line down. Change NE to GT
    95     CONTINUE
           IF (IEXIT.EQ.2.OR.IEXIT.EQ.4) THEN
             WRITE (IOUT,530)
-            IF (IOUTT2.NE.0) WRITE (IOUTT2,531)
+            IF (IOUTT2.GT.0) WRITE (IOUTT2,531)
             IEXIT = 3
             IF (KTFLG.GT.1) PSTP = 0.0
             DO 80 KPTH = IPTH, NPNT(NPART)
@@ -877,23 +905,18 @@ C     UPDATE POSITION
      &                   KTDIM,IP,DXP,DDX,DYP,DDY,DZP,DDZ,X,LN,NPE,
      &                   ND,NPLIST,IIPP,DTP)
 C      AND PRINT OUT INFORMATION
-              IF (IP.NE.0) THEN
+cmch revised so scaled sens does not change with log transformation
+              IF (IP.GT.0) THEN
                 BB = ABS(B(IIPP))
-                IF (LN(IIPP).LE.0) THEN
-C                 PARAMETER IS NOT LOG-TRANSFORMED
-                  IF (BB.LT.BSCAL(IIPP)) BB = BSCAL(IIPP)
-                ELSE
-C                 PARAMETER IS LOG-TRANSFORMED
-                  IF (BB.EQ.0.0) BB = 1.0
-                ENDIF
+                IF (BB.LT.BSCAL(IIPP)) BB = BSCAL(IIPP)
               ELSE
-                BB = 0.0
+                BB=0.0
               ENDIF
               CALL SOBS1ADV2WR(IEXIT,IP,IPRINT,ITERP,PSTP,IOUT,KPT,IPT,
      &                     JPT,XP,YP,ZP,TP,DXP,DYP,DZP,BB,IOUTT2,IND,
      &                     VXP,VYP,VZP,VP,KTDIM,OBSNAM(IND),KTFLG,
      &                     ISCALS,LNIIPP,WTQ(IND-NHT,IND-NHT),
-     &                     GPT,IADVHUF)
+     &                     GPT,IADVHUF,IMPATHOUT,TDELC,NPART)
               IND = IND + KTDIM
               IF (KPTH.LT.NPNT(NPART)) NTPNT = NTPNT + 1
    80       CONTINUE
@@ -1995,6 +2018,7 @@ C
 C     -OR-
 C
 C.......PUT IN Z-DIRECTION AND..........................................
+Cmchill 1-23-2006 11th line down. Changed LT to LE in IF(NEWK.LE.NLAY)
 C
 C-------PUT INTO NEW LAYER
         ELSEIF (IDIR.EQ.3) THEN
@@ -2005,7 +2029,7 @@ C-------PUT INTO NEW LAYER
           IF (VZP.LT.0.0) THEN
             NEWK = KPT + 1
             DZ = -ZPC
-            IF(NEWK.LT.NLAY) ZPC = BOTM(JPT,IPT,LBOTM(NEWK)-1)
+            IF(NEWK.LE.NLAY) ZPC = BOTM(JPT,IPT,LBOTM(NEWK)-1)
      &                             - BOTM(JPT,IPT,LBOTM(NEWK))
           ENDIF
           IF (VZP.GT.0.0) THEN
@@ -2220,7 +2244,8 @@ C
       DT = 0.0
       NFLG = 0
       IF (V1.GE.0.0 .AND. V2.LE.0.0) NFLG = 1
-      IF (ABS(VP).LT.1.E-8) NFLG = 1
+cmch 2-2-2006 Changed 1.E-8 to 1.E-12
+      IF (ABS(VP).LT.1.E-12) NFLG = 1
       IF (NFLG.NE.1) THEN
 C------1 TO 2
         IF (VP.GT.0.0) THEN
@@ -2430,14 +2455,14 @@ C
       SUBROUTINE SOBS1ADV2WR(IEXIT,IP,IPRINT,ITERP,PSTP,IOUT,KPT,IPT,
      &                   JPT,XP,YP,ZP,TP,DXP,DYP,DZP,B,IOUTT2,IND,VXP,
      &                   VYP,VZP,VP,KTDIM,OBSNAM,KTFLG,ISCALS,LNIIPP,
-     &                   WTQ,GPT,IADVHUF)
+     &                   WTQ,GPT,IADVHUF,IMPATHOUT,TDELC,NPART)
 C
 C        SPECIFICATIONS:
 C----------------------------------------------------------------------
 C---ARGUMENTS:
       REAL PSTP, XP, YP, ZP, TP, DXP, DYP, DZP, B, VXP, VYP, VZP, VP
       INTEGER IEXIT, IP, IPRINT, ITERP, IOUT, KPT, IPT, JPT, IOUTT2,
-     &        IND, KTDIM, KTFLG,GPT
+     &        IND, KTDIM, KTFLG, GPT, NPART, IMPATHOUT
       CHARACTER*12 OBSNAM
       CHARACTER*10 HGUNAM,TMPNAM,CTMP1
       COMMON /HUFCOMC/HGUNAM(999)
@@ -2447,14 +2472,15 @@ C----------------------------------------------------------------------
      &        3I5,1X,4(G12.5,1X),1X,A,/,80('.'))
   600 FORMAT (24X,3I5,1X,8(E16.8,1X),1X,A)
   605 FORMAT (I5,'-',I5,1X,A,3I5,1X,8(E16.8,1X),1X,A)
+  610 FORMAT (I5,1X,5(E20.12,1X),2(I3,1X),I3,A10)
 C----------------------------------------------------------------------
 C
 cc    make these statements contingent on IP>0 - erb 8/18/00
+cc    revised scaling for log-transformed parameters
+cmch revised so scaled sens does not change with log-transformation
+      BB=0.0
       if (ip.gt.0) then
-        BB=1.0
-        IF(LNIIPP.GT.0) BB=BB*LOG(B)
-        IF (ABS(BB).LT.1.E-25) BB = 1.0
-        IF(ISCALS.GT.0) BB=BB*B*SQRT(WTQ)
+        IF(ISCALS.GT.0) BB=B*SQRT(WTQ)
         IF (ABS(BB).LT.1.E-25) BB = 1.0
       endif
 C-----------------------------------------------------------------------
@@ -2464,6 +2490,37 @@ C     SET UNIT NAME
       ELSE
         TMPNAM=HGUNAM(GPT)
       ENDIF
+C-----------------------------------------------------------------------
+C
+C**********PRINT TO IMPATHOUT OUTPUT FILE mchill 3/19/2006
+C
+      IF (IP.EQ.0) THEN
+      IF(IMPATHOUT.GT.0) THEN
+C-----------------------------------------------------------------------
+C     PRINT OUT NORMAL OUTPUT(IEXIT=1 OR 0)
+C
+        IF (IEXIT.LT.2) THEN
+          IF (IPRINT.EQ.0 .AND. ITERP.LT.2 .AND.
+     &        ((KTFLG.LT.3.AND.PSTP.EQ.0.0).OR.KTFLG.EQ.3)) THEN
+            WRITE (IMPATHOUT,610) NPART,XP,(TDELC-YP),0.0,ZP,TP,
+     &                           JPT,IPT,KPT,TMPNAM
+          ENDIF
+C-----------------------------------------------------------------------
+C      PRINT SIMULATED EQUIVALENT TO OBSERVATION (IEXIT=3)
+C
+        ELSEIF (IEXIT.EQ.3) THEN
+          IF (IPRINT.EQ.0 .AND. ITERP.LT.2) THEN
+            WRITE (IMPATHOUT,610) NPART,XP,(TDELC-YP),0.0,ZP,-TP,
+     &                           JPT,IPT,KPT,TMPNAM
+            WRITE (IMPATHOUT,610) NPART,XP,(TDELC-YP),0.0,ZP,TP,
+     &                           JPT,IPT,KPT,TMPNAM
+          ENDIF
+        ENDIF
+      ENDIF
+      ENDIF
+C
+C***********PRINT TO ADV OUTPUT FILE
+C
 C-----------------------------------------------------------------------
 C     PRINT OUT NORMAL OUTPUT(I.E. IEXIT=1 OR 0)
 C
@@ -2492,35 +2549,37 @@ C-----SENSITIVITIES
         IF (IPRINT.EQ.0 .AND. ITERP.LT.2) THEN
           IF (KTDIM.EQ.2) THEN
             WRITE (IOUT,505) IND, IND+1, OBSNAM, KPT, IPT, JPT,
-     &                     DXP*BB, DYP*BB, DZP*BB, TP,TMPNAM
+     &                     DXP*BB, DYP*BB, DZP*BB, TP, TMPNAM
             IF (IOUTT2.GT.0)
      &        WRITE (IOUTT2,605) IND, IND + 1, OBSNAM, KPT, IPT, JPT,
-     &                           XP, YP, ZP, VP, TP, DXP*BB, DYP*BB,
-     &                           DZP*BB,TMPNAM
+     &                         XP, YP, ZP, VP, TP, DXP*BB, DYP*BB,
+     &                         DZP*BB, TMPNAM
           ELSEIF (KTDIM.EQ.3) THEN
             WRITE (IOUT,505) IND, IND+2, OBSNAM, KPT, IPT, JPT,
      &                     DXP*BB, DYP*BB, DZP*BB, TP,TMPNAM
-            IF (IOUTT2.GT.0) WRITE (IOUTT2,605) IND, IND+2,OBSNAM,KPT,
-     &                            IPT, JPT, XP, YP, ZP, VP, TP, DXP*BB,
-     &                            DYP*BB, DZP*BB,TMPNAM
+            IF (IOUTT2.GT.0)
+     &        WRITE (IOUTT2,605) IND, IND+2, OBSNAM, KPT, IPT, JPT,
+     &                         XP, YP, ZP, VP, TP, DXP*BB, DYP*BB,
+     &                         DZP*BB, TMPNAM
           ENDIF
         ENDIF
 C-----PARTICLE TRACKING
       ELSEIF (IPRINT.EQ.0 .AND. ITERP.LT.2) THEN
         IF (KTDIM.EQ.2) THEN
           WRITE (IOUT,505) IND, IND+1, OBSNAM, KPT, IPT, JPT, XP, YP,
-     &                     ZP, TP,TMPNAM
+     &                     ZP, TP, TMPNAM
           IF (IOUTT2.GT.0) WRITE (IOUTT2,605) IND, IND+1, OBSNAM, KPT,
-     &                                        IPT, JPT, XP, YP, ZP, VXP,
-     &                                        VYP, VZP, VP, TP,TMPNAM
+     &                                      IPT, JPT, XP, YP, ZP, VXP,
+     &                                      VYP, VZP, VP, TP, TMPNAM
         ELSEIF (KTDIM.EQ.3) THEN
           WRITE (IOUT,505) IND, IND+2, OBSNAM, KPT, IPT, JPT, XP, YP,
-     &                     ZP, TP,TMPNAM
+     &                     ZP, TP, TMPNAM
           IF (IOUTT2.GT.0) WRITE (IOUTT2,605) IND, IND+2, OBSNAM, KPT,
-     &                                        IPT, JPT, XP, YP, ZP, VXP,
-     &                                        VYP, VZP, VP, TP,TMPNAM
+     &                                      IPT, JPT, XP, YP, ZP, VXP,
+     &                                      VYP, VZP, VP, TP, TMPNAM
         ENDIF
       ENDIF
+C
       RETURN
       END
 C=======================================================================
@@ -2575,7 +2634,8 @@ C=======================================================================
      &                   H,DZP,X,LN,IIPP,NCOL,NROW,IND,OBSNAM,IPRINT,
      &                   ITERP,IOUT,XP,YP,DXP,DYP,IOUTT2,KTDIM,
      &                   ISCALS,NPE,ND,NPLIST,BOTM,NBOTM,DTP,LNIIPP,WTQ,
-     &                   BSCAL,DTC,ZPC,RMLT,NMLTAR,IZON,NZONAR,NPRST)
+     &                   BSCAL,DTC,ZPC,RMLT,NMLTAR,IZON,NZONAR,NPRST,
+     &                   IMPATHOUT,TDELC,NPART)
 C     ******************************************************************
 C     TRACK PARTICLE THROUGH CONFINING UNIT
 C     ******************************************************************
@@ -2727,7 +2787,7 @@ C                   PARAMETER IS LOG-TRANSFORMED
       CALL SOBS1ADV2WR(IEXIT,IP,IPRINT,ITERP,PSTP,IOUT,KPT,IPT,
      &             JPT,XP,YP,ZP,TP,DXP,DYP,DZP,BB,IOUTT2,IND,
      &             VXP,VYP,VZP,VP,KTDIM,OBSNAM,KTFLG,ISCALS,LNIIPP,
-     &             WTQ,0,0)
+     &             WTQ,0,0,IMPATHOUT,TDELC,NPART)
       IF(DTC.EQ.0.0) THEN
 C        CALCULATE NEW CELL DISPLACEMENT
         IF (NEWK.GT.OLDK) THEN

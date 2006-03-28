@@ -1,8 +1,13 @@
-! Time of File Save by ERB: 4/6/2005 2:28PM
+! Time of File Save by ERB: 3/22/2006 2:58PM
 C                  KJH  20030327      -- Patched Hyd.K term in LPF option -- cel2wel function
 C                  KJH  20030717      -- Patched budget output switch -- subroutine GWF1MNW1bd
 c                                        Cleaned output so outrageous pointers are not printed
-c     Last change: GZH  20050405      -- Converted calculations to use double precision
+c                  GZH  20050405      -- Converted calculations to use double precision
+c                  KJH  20050419      -- Array WELL2 dimensioned to 18 to store well id
+c                  RTH  20060221      -- Fixed Variable declaration & constant declarations
+c                                        Fixed variable declaration errors in bd subroutine
+c                  ERB  20060308      -- Completed conversion to double precision
+c                                        Moved PLoss from argument lists to common block rev23
       SUBROUTINE GWF1MNW1DF(LCHANI,LCHK,LCHKCC,LCHUFTHK,LCHY,LCSSHMN,
      &                      LCTRPY,NHUFAR)
 C     VERSION 20020129 ERB
@@ -10,6 +15,9 @@ C     ******************************************************************
 C     INITIALIZE POINTER VARIABLES USED BY MNW1 TO SUPPORT MULTIPLE FLOW
 C     PACKAGES
 C     ******************************************************************
+      IMPLICIT NONE
+      INTEGER LCHANI, LCHK, LCHKCC, LCHUFTHK, LCHY, LCSSHMN, LCTRPY,
+     &        NHUFAR
       LCHANI = 1
       LCHK = 1
       LCHKCC = 1
@@ -24,7 +32,7 @@ c
 c-------------------------------------------------------------------------
 c
       SUBROUTINE GWF1MNW1al(isum, lcwel2, mxwel2, nwell2, lchref,
-     +       nodes, kspref, in, iout, iwl2cb,iowell2, NoMoIter, PLoss,
+     +       nodes, kspref, in, iout, iwl2cb,iowell2, NoMoIter,
      +        MNWname, Fname)
 C     VERSION 20020819 KJH
 c
@@ -35,8 +43,12 @@ c     ******************************************************************
 c
 c        specifications:
 c     ------------------------------------------------------------------
-      common /rev23/ iwelpt
-      double precision rn
+      IMPLICIT NONE
+      common /rev23/ PLOSS, iwelpt
+      double precision BS, PLOSS, rn
+      INTEGER NOMOITER, IWL2CB, IOUT, IN, KSPREF, NODES, LCHREF, NWELL2,
+     &        MXWEL2, LCWEL2, ISUM, IWELPT, ICF, IOWELL2, IERR, KI,
+     &        IFRL, KF, KE, IOK, KIO, JF, ISP, IO
       dimension rn(25), iowell2(3), icF(3)
       character*6 ftag(3)
       character*200 FNAME, MNWname                          !!08/19/02KJH-MODIFIED
@@ -94,9 +106,9 @@ c   Define well model to be used
 c
       call ncread(in,txt,ierr)
       call UPCASE(txt)
-      PLoss = 0.0   !!  Default use of Skin so linear loss varies with T
+      PLoss = 0.0D0   !!  Default use of Skin so linear loss varies with T
       if( index(txt,'LINEAR').gt.0 ) then
-        PLoss = 1.0 !!  ADD THIS LINE to make sure that the power term is 1 for the linear model
+        PLoss = 1.0D0 !!  ADD THIS LINE to make sure that the power term is 1 for the linear model
         ki = index(txt,':') + 1
         tx2 = txt(ki:256)
         call qread(rn,1,tx2,ierr)
@@ -185,7 +197,8 @@ c
 c4------add amount of space used by well list to isum.
 cerb      isp  = 16 * mxwel2
 cerb  Change made 7/11/2003 - ERB
-      isp  = 17 * (mxwel2 + 1)    !!7/13/2003 - CZ: increased to 17 from 16
+ckjh      isp  = 17 * (mxwel2 + 1)    !!7/13/2003 - CZ: increased to 17 from 16
+      isp  = 18 * (mxwel2 + 1)    !!4/18/2005 - KJH:  Explicit well tracking addition
       isum = isum+isp
 c  set aside a single precision array for a set of reference heads
       lchref = isum
@@ -221,7 +234,7 @@ c
       SUBROUTINE GWF1MNW1RP(MNWsite,well2,nwell2,mxwel2,hold,href,
      +  ibound,delr,delc,cr,cc,hy,hnew,hclose,small,Hdry,nodes,nrow,
      +  ncol,kper,kspref,in,iout,iowell2,totim,LAYHDT,BOTM,NBOTM,HK,
-     &  IUBCF,IULPF,IUHUF,NLAY,PLoss,TRPY,HKCC,HANI)
+     &  IUBCF,IULPF,IUHUF,NLAY,TRPY,HKCC,HANI)
 C     VERSION 20020819 KJH
 c
 c----- MNW1 by K.J. Halford        1/31/98
@@ -231,16 +244,26 @@ c     ******************************************************************
 c
 c        specifications:
 c     ------------------------------------------------------------------
+      IMPLICIT NONE
+      common /rev23/ PLOSS, iwelpt
+      COMMON /BCFCOM/LAYCON(999)
+      INTEGER MXWEL2, NODES, IBOUND, NCOL, NROW, NBOTM, NLAY, LAYHDT, M,
+     &        K, J, I, IRMX, NODE, IOK, IPT, IUHUF, IULPF, IUBCF, IOUT,
+     &        IN, IOWELL2, IWELPT, LAYCON, NQREJECT, NL, N, IERR,
+     &        KSPREF, KPER, NWELL2, ITMP, NSTART, IFRL, KQC, KCP, KPC,
+     &        KSITEID, KBLK, KTAB, KFINI, KI, IP, N1, MSTEP, IDIRECT,
+     &        NN, ICMN, NGRP, NE, NB, IIN, IDWELL, MM, II, IO, IGRP
+      DOUBLE PRECISION PLOSS, Q
+      REAL TOTIM, HOLD, DELR, DELC, CR, CC, HY, BOTM, HANI, HK, HKCC,
+     *     TRPY, HDRY, HCLOSE
       double precision well2,href,rn
       double precision zero,Qfrcmn,Qfrcmx,Qreject,small,hmax,DryTest,
      * ipole,hlim,hrfw,qsum,rw,cond,Qact,sk,Cf
       dimension MNWsite(mxwel2)
-      dimension well2(17,mxwel2+1),hold(nodes),href(nodes),ibound(nodes)
+      dimension well2(18,mxwel2+1),hold(nodes),href(nodes),ibound(nodes)
       dimension delr(ncol), delc(nrow),cr(nodes),cc(nodes)
       dimension hy(nodes)
       dimension rn(25), iowell2(3)
-      common /rev23/ iwelpt
-      COMMON /BCFCOM/LAYCON(999)
       dimension hnew(nodes)
       double precision hnew
       character*1  tab
@@ -260,7 +283,7 @@ C
       Qreject  = 0.00000000000D0
       NQreject = 0
       NL = 0
-      if( PLoss.gt.1.001 ) NL = 1  !!  Read NL loss Coefficient after Skin
+      if( PLoss.gt.1.001D0 ) NL = 1  !!  Read NL loss Coefficient after Skin
       small = hclose
 c
 c  Check for setting the HREFerence array
@@ -280,7 +303,7 @@ CERB     IN FIRST STRESS PERIOD, HOLD IS UNDEFINED, SO USE HNEW INSTEAD
       endif
 c
 c------------------------------------------------------------------
-c     The 16 rows of the well array store:
+c     The 18 rows of the well array store:
 c      Row #  = Description
 c------------------------------------------------------------------
 c         1   = Well node locator
@@ -301,6 +324,7 @@ c        15   = Reserve Desired flow rate
 c        16   = Non-linear loss term
 c        17   = Actual flow rate to individual nodes of a multi-node well
 c               kept for transport or other purposes !!7/13/2003 - CZ
+c        18   = Explicit well identifier -- Same value for all nodes in a well
 c------------------------------------------------------------------
 c
 c1------read itmp(number of wells or flag saying reuse well data)
@@ -462,7 +486,7 @@ c  Define direction and # of points in well
                 well2(6,ipt) = well2(6,ipt-1)
                 well2(16,ipt)= well2(16,ipt-1)  !!  NonLinear Loss Coefficient
                 well2(9,ipt) = well2(9,ipt-1)
-                well2(8,ipt) = -1.0E31
+                well2(8,ipt) = -1.0D31
                 well2(13,ipt) = 0.0000D0
                 well2(14,ipt) = 0.0000D0
                 icmn = icmn + 1
@@ -472,7 +496,7 @@ c  Flag as part of a multi-node well if MN is detected.
             elseif( index(tx2,'MN')  .gt. 0 .and.
      +              abs(well2(5,ipt)).gt.zero) then
 c  Set to very large -value to flag MN status
-                well2(8,ipt) = -1.0E31
+                well2(8,ipt) = -1.0D31
               icmn = icmn + 1
                 well2(7,ipt) = icmn
             else
@@ -493,8 +517,8 @@ c
         if( nstart.lt.1 )      nstart = 1
         if( nstart.gt.nwell2 ) nstart = nwell2 - itmp + 1
         do i = nstart, nwell2
-          if( well2(8,i).lt.-1.E30 .and. well2(8,i+1).gt.-1.E30 .or.
-     +        well2(8,i).lt.-1.E30 .and. i.eq.nwell2          ) then
+          if( well2(8,i).lt.-1.D30 .and. well2(8,i+1).gt.-1.D30 .or.
+     +        well2(8,i).lt.-1.D30 .and. i.eq.nwell2          ) then
             ngrp = ifrl( well2(7,i)      )
             ne   = i
             nb   = ne - ngrp + 1
@@ -538,10 +562,25 @@ C
       endif
 c
 c   Place desired flow rates in a reserved location
-c
       do m = 1, nwell2
         well2(15,m) = well2(2,m)
       enddo
+c
+c--assign unique well id for use with MT3DMS link package (cdl: 4/19/05)
+        m=0
+        IDwell=1
+        do while (m.lt.nwell2)
+           m=m+1
+           if(well2(8,m).gt.1e30) then
+              do mm=m,ifrl(well2(7,m))
+                 well2(18,mm)=IDwell
+              enddo
+              m=ifrl(well2(7,m))
+           else
+              well2(18,m)=IDwell
+           endif
+           IDwell=IDwell+1
+        enddo
 c
 c   Echo input to iout file
 c
@@ -597,7 +636,7 @@ c ---------Modified OUTPUT to hide internal pointers that "Look Funny" --KJH-- J
      +          2f10.3,2x,a32)')
      +          m, k,j,i, (well2(ii,m),ii=3,6),hlim, hrfw,
      +          well2(16,m), igrp, well2(11,m),
-     +          (well2(ii,m)*100.0, ii = 13,14), MNWsite(m)
+     +          (well2(ii,m)*100.0D0, ii = 13,14), MNWsite(m)
 c
         enddo
       else
@@ -637,7 +676,7 @@ c_______________________________________________________________________________
 c
       SUBROUTINE GWF1MNW1ad(nwell2,mxwel2,well2,ibound,delr,delc,cr,cc,
      +               hy,small,Hdry,hnew, ncol, nrow, nodes,LAYHDT,BOTM,
-     &                NBOTM,HK,IUBCF,IULPF,IUHUF,NLAY,PLoss,TRPY,HKCC,
+     &                NBOTM,HK,IUBCF,IULPF,IUHUF,NLAY,TRPY,HKCC,
      &                HANI)
 C     VERSION 20020819 KJH
 c
@@ -649,14 +688,21 @@ c     ******************************************************************
 c
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
+      IMPLICIT NONE
+      COMMON /BCFCOM/LAYCON(999)
+      common /rev23/ PLOSS, iwelpt
+      INTEGER IGRP, IUHUF, IULPF, IUBCF, NWELL2, MXWEL2, NODES, IBOUND,
+     &        NCOL, NROW, LAYCON, NBOTM, NLAY, LAYHDT, M, N, IFRL, NE,
+     &        IIN, IWELPT
+      REAL HDRY, DELR, DELC, CR, CC, HY, BOTM, HANI, HK, HKCC, TRPY
+      DOUBLE PRECISION ZERO, PLOSS
       double precision well2
       double precision qres,rw,cond,Qact,sk,Cf,qoff,qon,Qsmall,qdes,
      * csum,chsum,hwell,hlim,href,ipole,ddmax,ddsim,qpot,ratio,small
-      dimension well2(17,mxwel2), ibound(nodes)
+      dimension well2(18,mxwel2), ibound(nodes)
       dimension delr(ncol), delc(nrow),cr(nodes),cc(nodes)
       dimension hy(nodes)
       dimension hnew(nodes)
-      COMMON /BCFCOM/LAYCON(999)
       double precision hnew
       DIMENSION BOTM(NCOL,NROW,0:NBOTM),
      &          HANI(NCOL,NROW,NLAY), HK(NODES), HKCC(NCOL,NROW,NLAY),
@@ -782,7 +828,7 @@ c
       SUBROUTINE GWF1MNW1fm(nwell2,mxwel2,well2,ibound,delr,delc,cr,cc,
      +    hy,small,Hdry, hcof, rhs, hnew, ncol, nrow, nodes,kiter,
      +    NoMoIter,LAYHDT,BOTM,NBOTM,HK,IUBCF,IULPF,IUHUF,NLAY,
-     &    PLoss,TRPY,HKCC,HANI)
+     &    TRPY,HKCC,HANI)
 C     VERSION 20020819 KJH
 c
 c----- MNW1 by K.J. Halford
@@ -793,10 +839,18 @@ c     ******************************************************************
 c
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
+      IMPLICIT NONE
+      common /rev23/ PLOSS, iwelpt
+      INTEGER MXWEL2, NODES, IBOUND, NCOL, NROW, NBOTM, NLAY, IUHUF,
+     &        IULPF, IUBCF, NOMOITER, KITER, NWELL2, LAYCON, LAYHDT,
+     &        M, N, IFRL, IWELPT, NE, IIN, IQSLV
+      REAL DELR, DELC, CR, CC, HY, HCOF, RHS, HANI, HK, HKCC, HDRY,
+     &     BOTM, TRPY
+      DOUBLE PRECISION PLOSS
       double precision well2
       double precision zero,qres,rw,cond,Qact,sk,Cf,qdes,csum,chsum,
      * hwell,ipole,hlim,href,ddmax,ddsim,ratio,dhc2w,small
-      dimension well2(17,mxwel2), ibound(nodes)
+      dimension well2(18,mxwel2), ibound(nodes)
       dimension delr(ncol), delc(nrow),cr(nodes),cc(nodes)
       dimension hy(nodes)
       dimension hcof(nodes), rhs(nodes)
@@ -808,7 +862,7 @@ C     ------------------------------------------------------------------
      &          HANI(NCOL,NROW,NLAY), HK(NODES), HKCC(NCOL,NROW,NLAY),
      &          LAYHDT(NLAY), TRPY(NLAY)
 C
-      zero = 1.0E-20
+      zero = 1.0D-20
 c
 c                 CR( i, j, k)    ------>   CR  i + 1/2
 c                 CC( i, j, k)    ------>   CC  j + 1/2
@@ -834,7 +888,7 @@ c-----if the cell is inactive or specified then bypass processing.
             cond = cel2wel(delr,delc,cr,cc,hy,hnew,ncol,nrow,nodes,n,rw,
      &                 sk,Qact,Cf,PLoss,small,Hdry,LAYHDT,BOTM,NBOTM,HK,
      &                     IUBCF,IULPF,IUHUF,NLAY,TRPY,HKCC,HANI)
-            if( rw .lt. zero ) cond = cond * 1.0E3
+            if( rw .lt. zero ) cond = cond * 1.0D3
           endif
           well2(11,m) = cond
         endif
@@ -844,23 +898,23 @@ c   Prepare components and limits of a multi-node well
       m = 0
       do while( m .lt. nwell2 )
         m = m + 1
-        well2(10,m) = 1.0E31
+        well2(10,m) = 1.0D31
 c
 c   A very large # in WL reference array (8,m) triggers multi-node calculation
 c
-        if( well2(8,m) .gt. 1.0E30 ) then
+        if( well2(8,m) .gt. 1.0D30 ) then
           ne  = ifrl( well2(7,m) )
           qdes = well2(2,ne)
           qact = qdes
-          csum = 0.000
-          chsum = 0.000
+          csum = 0.000D0
+          chsum = 0.000D0
           do iin = m, ne
             n = ifrl( well2(1,iin) )
             if( ibound(n) .ne. 0 ) then
               csum  = csum  + well2(11,iin)
               chsum = chsum + well2(11,iin)*hnew(n)
             else
-              well2(3,iin) = 0.00000000
+              well2(3,iin) = 0.0D0
             endif
           enddo
 c---div0 ---  CSUM could go to zero if the entire well is dry
@@ -883,11 +937,11 @@ c
             qact = hwell*csum - chsum
 c      DD constraints that stop production are not tested until after the 2nd iteration
             if( kiter .gt.2 ) then
-              ratio = 1.00
+              ratio = 1.00D0
               if( abs(qdes) .gt. small ) ratio =  qact / qdes
-              if( ratio .lt. 0.00001 ) then
-                qact  = 0.000
-                if (csum .gt. 0.0) then
+              if( ratio .lt. 0.00001D0 ) then
+                qact  = 0.000D0
+                if (csum .gt. 0.0D0) then
                   hwell = chsum / csum
                 else
                   hwell = hnew(n)
@@ -920,7 +974,7 @@ c-----if the cell is inactive then bypass processing.
 c
           hlim = well2(7,m)
           href = well2(8,m)
-          if( well2(10,m).gt.1.0E30 .and. cond.gt.zero ) then
+          if( well2(10,m).gt.1.0D30 .and. cond.gt.zero ) then
             dhc2w = Qact / cond
 c   Process single-node wells
 c   Test DD constraints, Hlim is assumed to be a Max/Min for Injection/Production wells
@@ -930,20 +984,20 @@ c   Test DD constraints, Hlim is assumed to be a Max/Min for Injection/Productio
             well2(10,m) = hwell
             ddsim = ipole*( hwell - href )
             ddmax = ipole*( hlim - href ) - small
-            ratio = 1.00
+            ratio = 1.00D0
             if( abs(qdes) .gt. zero ) ratio =  qact / qdes
-            if( abs(ratio).gt. 1.00 ) qact = qdes
-            if( ratio     .lt. zero ) qact = 0.000000
+            if( abs(ratio).gt. 1.00D0 ) qact = qdes
+            if( ratio     .lt. zero ) qact = 0.0D0
 c    Well will be simulated as a specified rate or GHB
             iqslv = 0
             if( ddsim.gt.ddmax .and. ddmax.gt.zero ) iqslv = 1
             if((qdes-qact)**2 .gt. small           ) iqslv = 1
             if(abs(qact).lt.zero .and.  ddsim.gt.ddmax) iqslv = 0
             if(abs(qact).lt.zero .and.  ddsim.lt.ddmax) iqslv = 1
-            if(abs(qdes).lt.zero .or. ratio.gt.1.0-zero ) iqslv = 0
+            if(abs(qdes).lt.zero .or. ratio.gt.1.0D0-zero ) iqslv = 0
 c
           elseif( cond.lt.zero ) then
-            qact = 0.00000
+            qact = 0.0D0
             iqslv = 0
           else
 c Process multi-node wells, Constraints were already tested when allocating flow
@@ -976,7 +1030,7 @@ c_______________________________________________________________________________
 c
       SUBROUTINE GWF1MNW1bd(MNWsite,nwell2,mxwel2,vbnm,vbvl,msum,delt,
      +        well2,ibound,hnew,ncol,nrow,nodes,nstp,kstp,kper,iwl2cb,
-     +             icbcfl,buff,iout,iowell2,totim,PLoss,Hdry)
+     +             icbcfl,buff,iout,iowell2,totim,Hdry)
 C     VERSION 20030710 KJH
 c
 c----- MNW1 by K.J. Halford        1/31/98
@@ -986,11 +1040,19 @@ c     ******************************************************************
 c
 c        specifications:
 c     ------------------------------------------------------------------
+      IMPLICIT NONE
+      common /rev23/ PLOSS, iwelpt
+      INTEGER MXWEL2, MSUM , NODES, IBOUND, IBD, NAUX, NLAY, N, M,
+     &        IGRP1, M2, IGRP2, IMULT, IL,M IR, IC, NE, IOCH, IWELPT,
+     &        IOBYND, IIN, IOQSUM, IOC, NWELVL, IOUT, ICBCFL, IWL2CB,
+     &        KPER, KSTP, NSTP, NROW, NCOL, NWELL2, IOWELL2, IFRL, IR
+      REAL HDRY, VBVL, BUFF, PERTIM, TOTIM, DELT
+      DOUBLE PRECISION HWELL, PLOSS
       double precision well2
-      double precision zero,ratin,ratout,qwsum,qsum,qwbarDryTest,q,
-     * qd,hlim,href,hwel,dd,s,ipole,sNL,sL,qin,qout,qwfsum
+      double precision zero,ratin,ratout,qwsum,qsum,qwbar,DryTest,q,
+     * qd,hlim,href,dd,s,ipole,sNL,sL,qin,qout,qwfsum
       dimension MNWsite(mxwel2)
-      dimension vbvl(4,msum),well2(17,mxwel2),
+      dimension vbvl(4,msum),well2(18,mxwel2),
      1          ibound(nodes), buff(nodes)
       dimension iowell2(3)
       dimension hnew(nodes)
@@ -1000,12 +1062,12 @@ c
       character*32 MNWsite
 c             ----+----1----+-
       text = '             MNW'
-      zero = 1.E-25
+      zero = 1.D-25
 c     ------------------------------------------------------------------
 c
 c  clear ratin and ratout accumulators.
-      ratin=0.
-      ratout=0.
+      ratin=0.D0
+      ratout=0.D0
       ibd=0
       IF(IWL2CB.GT.0) IBD=ICBCFL
 C
@@ -1041,21 +1103,21 @@ c     Compute flow weighted QW values and store in well2(11,m)
 c
         do m = 1, nwell2
           well2(11,m) = well2(3,m) * well2(4,m)
-          well2(12,m) = 0.000
-          if( well2(4,m).lt.0.00 .or. well2(3,m).gt.0.00 ) then
-            well2(11,m) = -1
-            well2(12,m) =  1
+          well2(12,m) = 0.D0
+          if( well2(4,m).lt.0.D0 .or. well2(3,m).gt.0.D0 ) then
+            well2(11,m) = -1.D0
+            well2(12,m) =  1.D0
           endif
         enddo
 c
         do m = 1, nwell2
           igrp1 = ifrl( well2(9,m) )
-          if( well2(12,m) .lt. 0.5 ) then
+          if( well2(12,m) .lt. 0.5D0 ) then
             qwsum = 0.0000D0
             qsum = 0.0000D0
             do m2 = m, nwell2
               igrp2 = ifrl( well2(9,m2) )
-              if( igrp1.eq.igrp2 .and. well2(12,m2).lt.0.5) then
+              if( igrp1.eq.igrp2 .and. well2(12,m2).lt.0.5D0) then
                 qwsum = qwsum + well2(11,m2)
                 qsum  = qsum  + well2(3,m2)
                 well2(12,m2) = 1
@@ -1066,7 +1128,7 @@ c
             if( qsum**2.gt.zero ) qwbar = qwsum / qsum
             do m2 = m, nwell2
               igrp2 = ifrl( well2(9,m2) )
-              if( igrp1.eq.igrp2 .and. well2(4,m2).ge.0.0 )
+              if( igrp1.eq.igrp2 .and. well2(4,m2).ge.0.0D0 )
      +            well2(11,m2) = QWbar
             enddo
           endif
@@ -1077,7 +1139,7 @@ c
           n = ifrl( well2(1,m) )
           DryTest = Hnew(n) - Hdry
           if(ABS(DryTest).lt.zero) then
-            well2(3,m) = 0.0000
+            well2(3,m) = 0.0D0
           endif
           q = well2(3,m)
           well2(17,m)=q     !!7/13/2003 - CZ: preserve q
@@ -1090,9 +1152,9 @@ c    Report all wells with production less than the desired rate......
             qd = well2(2,m)
             hlim = well2(7,m)
 c -----Modified OUTPUT to hide internal pointers that "Look Funny" in DD column--KJH-- July 10, 2003
-            if( well2(8,m) .gt. 1.0e30 )then
+            if( well2(8,m) .gt. 1.0D30 )then
               imult = 1
-              if( well2(7,m) .lt. 1.0e30 )then
+              if( well2(7,m) .lt. 1.0D30 )then
                 ne = ifrl(well2(7,m))
                 href = well2(8,ne)
               else
@@ -1132,7 +1194,7 @@ c  Create WEL1 file if iowell2(1) > 0
             endif
 c
             buff(n) = buff(n) + q
-            if( q.ge.0.000 ) then
+            if( q.ge.0.0D0 ) then
 c -----pumping rate is positive(recharge). add it to ratin.
               ratin = ratin + q
             else
@@ -1155,7 +1217,7 @@ c
         m = 0
         do while( m .lt. nwell2 )
           m = m + 1
-          if( well2(8,m) .gt. 1.0E30 ) then
+          if( well2(8,m) .gt. 1.0D30 ) then
             ne  = ifrl( well2(7,m) )
             qwsum = 0.000D0
             qwfsum = 0.000D0
@@ -1165,7 +1227,8 @@ c
             do iin = m, ne
               n = ifrl( well2(1,iin) )
               if( ibound(n).eq.0 ) well2(3,iin) = 0.0D0
-              if( well2(4,iin).ge.0.0 .and. well2(3,iin).le.0.0 ) then
+              if( well2(4,iin).ge.0.0D0 .and. well2(3,iin).le.0.0D0 )
+     &            then
                 qwfsum  = qwfsum + well2(3,iin)
                 qwsum   = qwsum  + well2(3,iin)*well2(4,iin)
               endif
@@ -1253,17 +1316,23 @@ c     ******************************************************************
 c
 c        specifications:
 c     ------------------------------------------------------------------
+      IMPLICIT NONE
+      INTEGER NWELL2, MXWEL2, IOWELL2, IOSTART, I, IOBYND, IOQSUM, ICNT,
+     &        ISTOP, NODE, ME, IOT, IFRL, IOPT, NE, NB, IO, K1, K2
+      REAL HCELL, TIMMULT
+      DOUBLE PRECISION QWBAR, QSUM
       double precision well2
       double precision zero,Tnow,hwell,conc,Qt,Qin,Qout,Q,TimeIN
+      double precision hwellOUT,concOUT
       dimension MNWsite(mxwel2)
-      dimension well2(17,mxwel2)
+      dimension well2(18,mxwel2)
       dimension iowell2(3)
       character*1  tab
       character*32  MNWsite, TempTag,TT, LastTag, EOFtag
       character*200 OUTname
 c
       tab = char(9)
-      zero = 1.E-25
+      zero = 1.D-25
       IOstart = 1000
       EOFtag = 'EndOfFile__EndOfFile__EndOfFile_'
 c   Set Flag for printing header info once
@@ -1312,7 +1381,7 @@ c
       nwell2= 0
       iCNT  = 0
       iSTOP = 0
-      Tnow  = -1.0000
+      Tnow  = -1.0000D0
       LastTag = 'NO-PRINT'
 c
       do while( iSTOP.eq.0 )
@@ -1338,19 +1407,24 @@ c   Write a Header ?????
             endif
           endif
 c   END of "Write a Header"  Section
-          Hwell = well2(3,iCNT)
-          Conc  = well2(4,iCNT)
+C _________________          Bug FIX 1/14/2006 KJH _______________________________________
+c    Overwrote Hwell & Conc varibles before storing.
+          HwellOUT = well2(3,iCNT)    !! Could use well2() array directly.  Opted for
+          ConcOUT  = well2(4,iCNT)    !! copying to temporary variables for clarity.
+c
+c  Bug identified by Jacob Gudbjerg, DHI Water & Environment, DK-2970  Hørsholm
+C___________________________________________________________________________________
           if( iCNT.gt.1 ) then
             Qt   = well2(7,1)
             Qin  = well2(5,1)
             Qout = well2(6,1)
             write(IOT,'(99(g15.8,a1))')
-     +      well2(10,1),tab, Qt,tab, Hwell,tab, conc,
+     +      well2(10,1),tab, Qt,tab, HwellOUT,tab, concOUT,
      +      tab,Qin, tab,Qout, (tab,well2(2,i),i=1,iCNT)
           else
             Qt = well2(2,1)
             write(IOT,'(99(g15.8,a1))')
-     +      well2(10,1),tab, Qt,tab, Hwell,tab, conc
+     +      well2(10,1),tab, Qt,tab, HwellOUT,tab, concOUT
 c
           endif
           iCNT = 0     !! RESET node counter
@@ -1402,6 +1476,8 @@ c_______________________________________________________________________________
 c
       subroutine ioWellOUT(TempTag,OUTname,nwell2,
      +           mxwel2,MNWsite,IOstart,io)
+      IMPLICIT NONE
+      INTEGER IO, IOSTART, NWELL2, MXWEL2, I, K1, K2
       dimension MNWsite(mxwel2)
       character*32  MNWsite, TempTag
       character*200 OUTname
@@ -1458,6 +1534,13 @@ C     ERB 1/29/01.
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
+      IMPLICIT NONE
+      INTEGER NCOL, NROW, NODES, IUHUF, IULPF, IUBCF, N, NBOTM,
+     &        NLAY, LAYHDT, LAYCBD, LBOTM, LAYCON, LAYWET, LAYVKA,
+     &        LAYAVG, LAYTYP, IX, IY, IZ
+      REAL DELR, DELC, CR, CC, HY, HDRY, BOTM, HANI, HK, HKCC, TRPY,
+     &     CHANI
+      DOUBLE PRECISION PLOSS
       double precision rw,Q,Cf,zero,pi,skin,small,ro,AH,KY,TempKX,
      * dx,dy,top,bot,dxp,dxm,Txm,Txp,dyp,dym,Typ,Tym,div,Txx,Tyy,
      * THICK,upper,yx4,xy4,Tpi2,A,B,C
@@ -1599,11 +1682,11 @@ c
       else
         yx4 = (Tyy/Txx)**0.25D0
         xy4 = (Txx/Tyy)**0.25D0
-        ro = 0.28 *((yx4*dx)**2 +(xy4*dy)**2)**0.5D0 / (yx4+xy4)
+        ro = 0.28D0 *((yx4*dx)**2 +(xy4*dy)**2)**0.5D0 / (yx4+xy4)
 c
         Tpi2 = 2.D0*pi * (Txx*Tyy)**0.5D0
         A = log(ro/rw) / Tpi2
-        if( Ploss .gt. 0.99 ) then
+        if( Ploss .gt. 0.99D0 ) then
           B = Skin
           C = Cf * abs(Q)**(PLoss-1)
         else
@@ -1625,6 +1708,8 @@ c     ******************************************************************
 c     Define direction of pointer along a row, column, or layer
 c     ******************************************************************
 c
+      IMPLICIT NONE
+      INTEGER NROW, NCOL, N2, N1
       idirect = ncol
       if( abs( n2-n1 ) .gt. ncol*nrow ) idirect = ncol*nrow
       if( abs( n2-n1 ) .lt. ncol      ) idirect = 1
@@ -1637,6 +1722,8 @@ c_______________________________________________________________________________
 c
 c
       integer function itxend( txt )
+      IMPLICIT NONE
+      INTEGER K
       character*256 txt
       k = 256
       do while( txt(k:k).eq.' ' .and. k.gt.1 )
@@ -1650,6 +1737,8 @@ c
 c_________________________________________________________________________________
 c
       integer function ifrl( r )
+      IMPLICIT NONE
+      INTEGER IP
       DOUBLE PRECISION R
       ip = abs(r) + 0.5D0
       if( r .lt. 0.000D0 )  ip = -ip
@@ -1662,6 +1751,8 @@ c
 c   NCREAD: reads lines of input and ignores lines that begin with a "#" sign.
 c          All information after a ! is wiped from the input card.
       subroutine ncread(io,txt,ierr)
+      IMPLICIT NONE
+      INTEGER IERR, IO, IOALT, IOFLIP, KI, IOHOLD
       character*128  afile
       character*256  txt,tx2
       data ioflip,ioalt /69,69/
@@ -1735,6 +1826,8 @@ c
 c_________________________________________________________________________________
 c
       subroutine shorten(txt,test,n,tx2)
+      IMPLICIT NONE
+      INTEGER N, KI, KC
       character*256 txt,tx2,test
 c
       tx2 = '???????'
@@ -1754,6 +1847,8 @@ c  GENERIC UTILITIES that were IN MNWutil.for  file
 c_________________________________________________________________________________
 c
       subroutine conden(txt,n)
+      IMPLICIT NONE
+      INTEGER I, L, K, M, N
       character*256 txt
       if(n.gt.64) n=64
       do  i=1,256-n
@@ -1776,6 +1871,8 @@ c
 c_________________________________________________________________________________
 c
       subroutine bakped(n,io)
+      IMPLICIT NONE
+      INTEGER IO, N, I
 c
       do i=1,n
         backspace(io)
@@ -1787,6 +1884,8 @@ c
 c_________________________________________________________________________________
 c
       subroutine qread(r,ni,ain,ierr)
+      IMPLICIT NONE
+      INTEGER IERR, NI, MRNV, I, N, KI, ND, ISTAT
       parameter (mrnv=25)
       double precision r
       dimension r(mrnv)
