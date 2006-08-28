@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.16.00 03/28/2006
+                           VERSION 1.17.00 07/25/2006
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -88,6 +88,7 @@
          18 ELEMENTS IN RX ARRAY ARE USED BY DRT
 
         744  ELEMENTS OF RX ARRAY USED OUT OF        744
+          0  ELEMENTS OF RZ ARRAY USED OUT OF          1
         247  ELEMENTS OF IR ARRAY USED OUT OF        247
 1
  # BAS file for ets1, drt1, and etsdrt test cases                                

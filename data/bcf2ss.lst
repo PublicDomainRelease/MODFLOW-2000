@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.16.00 03/28/2006
+                           VERSION 1.17.00 07/25/2006
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -154,6 +154,7 @@
         150 ELEMENTS IN IR ARRAY ARE USED BY RCH
 
         820  ELEMENTS OF RX ARRAY USED OUT OF        820
+          0  ELEMENTS OF RZ ARRAY USED OUT OF          1
         160  ELEMENTS OF IR ARRAY USED OUT OF        160
 1
  #Valley aquifer with 2 sand layers separated by silt.  Stress period 1 is natur 

@@ -1,4 +1,4 @@
-! Time of File Save by ERB: 12/20/2005 11:08AM
+! Time of File Save by ERB: 6/6/2006 4:07PM
 C     Last change:  ERB  22 Oct 2002    2:05 pm
       SUBROUTINE GWF1DRT1ALP(ISUM,LCDRTF,MXDRT,NDRTCL,IN,IOUT,IDRTCB,
      &                       NDRTVL,IDRTAL,IFREFM,NPDRT,IDRTPB,NDRTNP,
@@ -260,7 +260,7 @@ C=======================================================================
       SUBROUTINE GWF1DRT1FM(NDRTCL,MXDRT,DRTF,HNEW,HCOF,RHS,IBOUND,
      &                      NCOL,NROW,NLAY,NDRTVL,IDRTFL)
 C
-C-----VERSION 20000620 ERB
+C-----VERSION 20060606 ERB
 C     ******************************************************************
 C     ADD DRAIN-RETURN FLOW TO SOURCE TERMS FOR BOTH DRAIN-RETURN CELLS
 C     AND RECIPIENT CELLS
@@ -305,10 +305,12 @@ C7------HEAD IS HIGHER THAN DRAIN. ADD TERMS TO RHS AND HCOF.
           IF (ILR.NE.0) THEN
             IRR = DRTF(7,L)
             ICR = DRTF(8,L)
-            RFPROP = DRTF(9,L)
-            H = HNEW(IC,IR,IL)
-            RHS(ICR,IRR,ILR) = RHS(ICR,IRR,ILR)
-     &                         - RFPROP*C*(H-EL)
+            IF (IBOUND(ICR,IRR,ILR) .GT. 0) THEN
+              RFPROP = DRTF(9,L)
+              H = HNEW(IC,IR,IL)
+              RHS(ICR,IRR,ILR) = RHS(ICR,IRR,ILR)
+     &                           - RFPROP*C*(H-EL)
+            ENDIF
           ENDIF
         ENDIF
   100 CONTINUE
@@ -321,7 +323,7 @@ C=======================================================================
      &                      NCOL,NROW,NLAY,IBOUND,KSTP,KPER,IDRTCB,
      &                      ICBCFL,BUFF,IOUT,PERTIM,TOTIM,NDRTVL,IDRTAL,
      &                      IDRTFL,NRFLOW,IAUXSV)
-C-----VERSION 20040113 ERB
+C-----VERSION 20060606 ERB
 C     ******************************************************************
 C     CALCULATE VOLUMETRIC BUDGET FOR DRAIN-RETURN CELLS
 C     ******************************************************************
@@ -383,6 +385,7 @@ C5A-----GET LAYER, ROW & COLUMN OF CELL CONTAINING DRAIN.
           ILR = DRTF(6,L)
           IRR = DRTF(7,L)
           ICR = DRTF(8,L)
+          IF (IBOUND(ICR,IRR,ILR) .LE. 0) ILR = 0
         END IF
 C
 C5B-----IF CELL IS NO-FLOW OR CONSTANT-HEAD, IGNORE IT.

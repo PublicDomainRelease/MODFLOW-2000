@@ -1,7 +1,7 @@
 readme.unix
 
 
-                  MODFLOW-2000 - Version: 1.16.00 03/28/2006
+                  MODFLOW-2000 - Version: 1.17.00 07/25/2006
          Three-dimensional finite-difference ground-water flow model
 
 
@@ -33,7 +33,7 @@ A. DISTRIBUTION FILE
 
 The following distribution file is for use on computers running Unix:
 
-         mf2k1_16_00.tar.Z
+         mf2k1_17_00.tar.Z
 
 The distribution file contains:
 
@@ -51,20 +51,20 @@ B. EXTRACTING FILES
 The distribution file contains numerous individual files that have been
 combined into one file using the tar command and compressed using the
 compress command.  To extract the individual files, the distribution file
-mf2k1_16.tar.Z first must be uncompressed using the command:
+mf2k1_17.tar.Z first must be uncompressed using the command:
 
-uncompress mf2k1_16_00.tar.Z
+uncompress mf2k1_17_00.tar.Z
 
-Execution of the uncompress command will produce the file mf2k1_16.tar.  This
+Execution of the uncompress command will produce the file mf2k1_17.tar.  This
 file is used to generate the individual files with the command:
 
-tar -xf mf2k1_16_00.tar
+tar -xf mf2k1_17_00.tar
 
 Execution of the tar command will generate the following directory structure:
 
 
    |
-   |--mf2k.1_16
+   |--mf2k.1_17
    |    |--data      ; standard data sets used in verification tests
    |    |--doc       ; documentation files
    |    |--src       ; source code
@@ -83,11 +83,11 @@ Execution of the tar command will generate the following directory structure:
    |    |--test      ; empty -- for use in testing MODFLOW-2000
 
 
-It is recommended that no user files are kept in the mf2k.1_16 directory
-structure.  If you do plan to put files in the mf2k.1_16 directory
+It is recommended that no user files are kept in the mf2k.1_17 directory
+structure.  If you do plan to put files in the mf2k.1_17 directory
 structure, do so only by creating subdirectories.
 
-Included in directory mf2k.1_16\doc are various documentation files.  Some of
+Included in directory mf2k.1_17\doc are various documentation files.  Some of
 them are Portable Document Format (PDF) files. The PDF files are readable
 and printable on various computer platforms using Acrobat Reader from Adobe.
 The Acrobat Reader is freely available from the following World Wide Web
@@ -98,7 +98,7 @@ sites:
 
 C. COMPILING
 
-The source code provided in the mf2k.1_16\src directories must be compiled to
+The source code provided in the mf2k.1_17\src directories must be compiled to
 produce executable files for use on computers running Unix.  However, no
 support can be provided for users generating their own versions of the
 source code.  
@@ -117,10 +117,10 @@ MODFLOW-2000 is run.
 
 When compiling MODFLOW-2000 for use in the typical serial-processing (as 
 opposed to parallel-processing) mode, all required source-code files except 
-one are in the mf2k.1_16\src\mf2k\ directory.  In addition to the files in 
-the mf2k.1_16\src\mf2k\ directory,the file para-non.f in the 
-mf2k.1_16\src\mf2k\serial\ directory must be compiled.  The makefile in the 
-mf2k.1_16\src\mf2k directory can be used with the "make" command.  It will 
+one are in the mf2k.1_17\src\mf2k\ directory.  In addition to the files in 
+the mf2k.1_17\src\mf2k\ directory,the file para-non.f in the 
+mf2k.1_17\src\mf2k\serial\ directory must be compiled.  The makefile in the 
+mf2k.1_17\src\mf2k directory can be used with the "make" command.  It will 
 look for para-non.f in the serial directory and will compile and link the 
 program for serial processing.
 
@@ -131,7 +131,7 @@ To make the executable versions of the programs accessible from any
 directory, the directory(ies) containing the executables (generated when the
 programs are compiled) should be included in the PATH environment variable.
 One option would be to put all the executable files in this release into an
-mf2k.1_16/bin directory.  Also, if a prior release of MODFLOW-2000 is
+mf2k.1_17/bin directory.  Also, if a prior release of MODFLOW-2000 is
 installed on your system, the directory containing the executables for the
 prior release should be removed from the PATH environment variable.
 
@@ -177,7 +177,7 @@ F. TESTING
 
 Test data sets are provided to verify that MODFLOW-2000 is correctly
 installed and running on the system.  The tests may also be looked at as
-examples of how to use the program.  The directory MF2K.1_16\data contains
+examples of how to use the program.  The directory MF2K.1_17\data contains
 the input data and expected results for each test.  To run one of the test
 cases (for example, the twri test), cd to the "test" directory and execute
 MODFLOW-2000 in the following form:

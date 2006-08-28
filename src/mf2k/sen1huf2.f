@@ -1,4 +1,11 @@
 C     VERSION 2.0, 07/02/2003
+C  I edited all occurrences of common block HUFCOM (in sen1huf2.f, 
+C  lmt6.f, gwfhuf2.f, and obs1bas6.f) to put all REAL arrays before all 
+C  INTEGER arrays.  The original order is OK when both REALs and 
+C  INTEGERs are KIND=4.  But when REALs are promoted to DOUBLE 
+C  PRECISION, KIND goes from 4 to 8, and this generates alignment 
+C  problems.  The alignment problems are avoided when all variables of 
+C  larger KIND precede all variables of smaller KIND. -- ERB 6/29/2006
       SUBROUTINE SEN1HUF2FM(H,NCOL,NROW,NLAY,PID,HK,HKCC,DELR,
      &                     DELC,IBOUND,RHS,CV,BOTM,NBOTM,HUFTHK,
      &                     NHUF,IP,IZON,NZONAR,RMLT,NMLTAR,IUHFBP,
@@ -22,7 +29,7 @@ C     ------------------------------------------------------------------
      & RMLT(NCOL,NROW,NMLTAR),IZON(NCOL,NROW,NZONAR),
      & HFBP(7,MXACTFB),HOLD(NCOL*NROW*NLAY),HKCC(NCOL,NROW,NLAY)
       COMMON /DISCOM/LBOTM(999),LAYCBD(999)
-      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
+      COMMON /HUFCOM/HGUHANI(999),HGUVANI(999),LTHUF(999),LAYWT(999)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
 C
@@ -257,7 +264,7 @@ C     ------------------------------------------------------------------
      &          HUFTHK(NCOL,NROW,NHUF,2), IZON(NCOL,NROW,NZONAR),
      &          RMLT(NCOL,NROW,NMLTAR), GS(NCOL,NROW)
       COMMON /DISCOM/LBOTM(999),LAYCBD(999)
-      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
+      COMMON /HUFCOM/HGUHANI(999),HGUVANI(999),LTHUF(999),LAYWT(999)
 C     ------------------------------------------------------------------
 C
 C-------TERMS FOR UNCONFINED AQUIFERS
@@ -338,7 +345,7 @@ C     ------------------------------------------------------------------
      &  HUFTMP(999), CV(NC,NR,NL), RMLT(NC,NR,NMLTAR),
      &  IZON(NC,NR,NZONAR), GS(NC,NR)
       COMMON /DISCOM/LBOTM(999),LAYCBD(999)
-      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
+      COMMON /HUFCOM/HGUHANI(999),HGUVANI(999),LTHUF(999),LAYWT(999)
 C     ------------------------------------------------------------------
 C
       ZERO = 0.0
@@ -599,7 +606,7 @@ C     ------------------------------------------------------------------
      &          IZON(NCOL,NROW,NZONAR), HUFTMP(999),
      &          HUFTHK(NCOL,NROW,NHUF,2), TOP(NCOL,NROW),
      &          BOT(NCOL,NROW), GS(NCOL,NROW)
-      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
+      COMMON /HUFCOM/HGUHANI(999),HGUVANI(999),LTHUF(999),LAYWT(999)
 C
       HUFTMP(NU) = 0.0
       CALL UHUF2POP(HUFTMP,'KDEP',NCOL,NROW,NHUF,I,J,HUFTHK,
@@ -668,7 +675,7 @@ C     ------------------------------------------------------------------
       REAL LMBDU
       DIMENSION RMLT(NCOL,NROW,NMLTAR),IZON(NCOL,NROW,NZONAR),
      &  HUFTMP(999),HUFTHK(NCOL,NROW,NHUF,2)
-      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
+      COMMON /HUFCOM/HGUHANI(999),HGUVANI(999),LTHUF(999),LAYWT(999)
 C     ------------------------------------------------------------------
       HUFTMP(NU) = 0.0
       CALL UHUF2POP(HUFTMP,'HK  ',NCOL,NROW,NHUF,I,J,HUFTHK,
@@ -709,7 +716,7 @@ C     ------------------------------------------------------------------
      & RMLT(NCOL,NROW,NMLTAR),IZON(NCOL,NROW,NZONAR),
      & HUFTHK(NCOL,NROW,NHUF,2),GS(NCOL,NROW)
       DOUBLE PRECISION H(NCOL*NROW*NLAY), HP, H0
-      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
+      COMMON /HUFCOM/HGUHANI(999),HGUVANI(999),LTHUF(999),LAYWT(999)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
       ZERO = 0.0
@@ -822,7 +829,7 @@ C     ------------------------------------------------------------------
      & RMLT(NCOL,NROW,NMLTAR),IZON(NCOL,NROW,NZONAR),
      & HUFTHK(NCOL,NROW,NHUF,2),GS(NCOL,NROW)
       DOUBLE PRECISION H(NCOL*NROW*NLAY), HP, H0
-      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
+      COMMON /HUFCOM/HGUHANI(999),HGUVANI(999),LTHUF(999),LAYWT(999)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
       ZERO = 0.0
@@ -891,7 +898,7 @@ C     ------------------------------------------------------------------
      &          IBOUND(NCOL,NROW,NLAY), CV(NCOL,NROW,NLAY),
      &          IZON(NCOL,NROW,NZONAR), HUFTMP(999),
      &          HUFTHK(NCOL,NROW,NHUF,2)
-      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
+      COMMON /HUFCOM/HGUHANI(999),HGUVANI(999),LTHUF(999),LAYWT(999)
 C     ------------------------------------------------------------------
       ZERO = 0.0
       IBP = 0
@@ -1006,7 +1013,7 @@ C      DOUBLE PRECISION
       INTEGER ICL, LT, JCNT, JJ, NZ, ICNT, II, KK
 C---COMMON:
       COMMON /DISCOM/LBOTM(999),LAYCBD(999)
-      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
+      COMMON /HUFCOM/HGUHANI(999),HGUVANI(999),LTHUF(999),LAYWT(999)
       INCLUDE 'param.inc'
 C----------------------------------------------------------------------
       EXTERNAL SSEN1HUF2CH, SSEN1HUF2CV, SSEN1HFB6MD
@@ -1196,7 +1203,7 @@ C     ------------------------------------------------------------------
      & RMLT(NCOL,NROW,NMLTAR),IZON(NCOL,NROW,NZONAR),
      & HUFTHK(NCOL,NROW,NHUF,2), GS(NCOL,NROW)
       DOUBLE PRECISION H(NCOL*NROW*NLAY), HP, H0
-      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
+      COMMON /HUFCOM/HGUHANI(999),HGUVANI(999),LTHUF(999),LAYWT(999)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
       ZERO = 0.0
@@ -1584,7 +1591,7 @@ C---ARGUMENTS:
       CHARACTER*4 PID
 C---COMMON:
       COMMON /DISCOM/LBOTM(999),LAYCBD(999)
-      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
+      COMMON /HUFCOM/HGUHANI(999),HGUVANI(999),LTHUF(999),LAYWT(999)
       INCLUDE 'param.inc'
 C----------------------------------------------------------------------
 C

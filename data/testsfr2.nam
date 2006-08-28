@@ -1,6 +1,9 @@
 # Name file for hypothetical test simulation
-# Test of SFR2 Package
-global          11  testsfr2.glo
+# Test of SFR2 Package; revised 5/20/2006
+#
+# NOTE: Forward slashes (/) in pathnames may need to be converted
+#       to back slashes (\) in some computing environments
+#
 list            12  testsfr2.lst
 dis             13  ../data/testsfr2.dis
 ghb             15  ../data/testsfr2.ghb
@@ -10,11 +13,11 @@ pcg             43  ../data/testsfr2.pcg
 oc              44  ../data/testsfr2.oc
 sfr             45  ../data/testsfr2.sfr
 gage            46  ../data/testsfr2.gag
-data            83  testsfr2.gg1
-data            84  testsfr2.gg2
-data            85  testsfr2.gg3
-data            86  testsfr2.gg4
-data            87  testsfr2.gg5
-data            88  testsfr2.gg6
-data            89  testsfr2.gg7
-data            90  testsfr2.gg8
+data            83  ../data/testsfr2.gg1
+data            84  ../data/testsfr2.gg2
+data            85  ../data/testsfr2.gg3
+data            86  ../data/testsfr2.gg4
+data            87  ../data/testsfr2.gg5
+data            88  ../data/testsfr2.gg6
+data            89  ../data/testsfr2.gg7
+data            90  ../data/testsfr2.gg8

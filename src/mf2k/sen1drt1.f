@@ -1,7 +1,8 @@
+! Time of File Save by ERB: 6/6/2006 4:22PM
 C     Last change:  ERB   8 Nov 2001    3:06 pm
       SUBROUTINE SEN1DRT1FM(MXDRT,DRTF,HNEW,NCOL,NROW,NLAY,IBOUND,RHS,
      &                      IP,NDRTVL,IDRTFL)
-C-----VERSION 20011108 ERB
+C-----VERSION 20060606 ERB
 C     ******************************************************************
 C     FOR DRAIN-RETURN AND RECIPIENT CELLS: CALCULATE MATRIX AND VECTOR
 C     DERIVATIVES, MULTIPLY BY HEADS, AND ADD COMPONENTS TO RHS.
@@ -47,9 +48,11 @@ C  CALCULATE CONTRIBUTION TO SENSITIVITY OF RETURN FLOW
               IF (KR.NE.0) THEN
                 IR = DRTF(7,ICP)
                 JR = DRTF(8,ICP)
-                RFPROP = DRTF(9,ICP)
-                DFR = RFPROP*FACTOR*(HH-ELEVD)
-                RHS(JR,IR,KR) = RHS(JR,IR,KR) - DFR
+                IF (IBOUND(JR,IR,KR) .GT. 0) THEN
+                  RFPROP = DRTF(9,ICP)
+                  DFR = RFPROP*FACTOR*(HH-ELEVD)
+                  RHS(JR,IR,KR) = RHS(JR,IR,KR) - DFR
+                ENDIF
               ENDIF
             ENDIF
           ENDIF

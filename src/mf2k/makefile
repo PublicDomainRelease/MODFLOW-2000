@@ -15,15 +15,16 @@ INCDIR= .
 # Define the Fortran compile flags
 
 F77FLAGS=
-
+F90FLAGS=
 F77= f90
+F90= f90
 
 # 
 # Define the C compile flags
 # -D_UF defines UNIX naming conventions for mixed language compilation.
 # 
 CFLAGS= -D_UF -O3
-CC= cc
+CC= gcc
 
 # Define GMG objects
 #
@@ -43,6 +44,7 @@ USRLIB  =
 
 OBJECTS = \
         mf2k.o \
+        mhc1.o \
         ctime.o \
         daf1.o \
         de45.o \
@@ -138,6 +140,9 @@ para-non.o: serial/para-non.f
 
 .f.o:
 	$(F77) $(F77FLAGS) -c $<
+	
+mhc1.o:
+	$(F90) $(F90FLAGS) -c mhc1.f90
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<

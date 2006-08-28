@@ -1,3 +1,10 @@
+C  I edited all occurrences of common block HUFCOM (in sen1huf2.f, 
+C  lmt6.f, gwfhuf2.f, and obs1bas6.f) to put all REAL arrays before all 
+C  INTEGER arrays.  The original order is OK when both REALs and 
+C  INTEGERs are KIND=4.  But when REALs are promoted to DOUBLE 
+C  PRECISION, KIND goes from 4 to 8, and this generates alignment 
+C  problems.  The alignment problems are avoided when all variables of 
+C  larger KIND precede all variables of smaller KIND. -- ERB 6/29/2006
 C
 C ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 C LINK-MT3DMS (LMT) PACKAGE FOR MODFLOW-2000
@@ -1062,7 +1069,7 @@ C
      & BUFF(NCOL,NROW,NLAY),HOLD(NCOL,NROW,NLAY),
      & VDHT(NCOL,NROW,NLAY,3)
       COMMON /DISCOM/LBOTM(999),LAYCBD(999)
-      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
+      COMMON /HUFCOM/HGUHANI(999),HGUVANI(999),LTHUF(999),LAYWT(999)
       COMMON /LINKMT3D/ILMTFMT
 C
 C--CALCULATE AND SAVE SATURATED THICKNESS

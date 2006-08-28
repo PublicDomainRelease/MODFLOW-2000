@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.16.00 03/28/2006
+                           VERSION 1.17.00 07/25/2006
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -184,6 +184,7 @@
     588 ELEMENTS IN X ARRAY ARE USED FOR MNW1
 
        1678  ELEMENTS OF RX ARRAY USED OUT OF       1678
+       2766  ELEMENTS OF RZ ARRAY USED OUT OF       2766
         304  ELEMENTS OF IR ARRAY USED OUT OF        304
 1
  #  3D, Transient aquifer to demonstrate MNW1 package                            

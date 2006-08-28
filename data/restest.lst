@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.16.00 03/28/2006
+                           VERSION 1.17.00 07/25/2006
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -134,6 +134,7 @@ RES1 -- RESERVOIR PACKAGE, VERSION 1, 1/15/95 INPUT READ FROM UNIT 27
       288 ELEMENTS IN IR ARRAY ARE USED FOR RESERVOIRS
 
         700  ELEMENTS OF RX ARRAY USED OUT OF        700
+          0  ELEMENTS OF RZ ARRAY USED OUT OF          1
         293  ELEMENTS OF IR ARRAY USED OUT OF        293
 1
  #Reservoir Package Example Problem                                              

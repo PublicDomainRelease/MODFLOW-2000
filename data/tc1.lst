@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.16.00 03/28/2006
+                           VERSION 1.17.00 07/25/2006
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -101,6 +101,7 @@
         324 ELEMENTS IN IR ARRAY ARE USED BY RCH
 
         736  ELEMENTS OF RX ARRAY USED OUT OF        736
+          0  ELEMENTS OF RZ ARRAY USED OUT OF          1
         334  ELEMENTS OF IR ARRAY USED OUT OF        334
 1
  # MODULAR MODEL - TWO-LAYER EXAMPLE PROBLEM, TEST CASE TC1                      

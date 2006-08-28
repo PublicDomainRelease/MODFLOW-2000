@@ -1,3 +1,4 @@
+! Time of File Save by ERB: 6/15/2006 12:56PM
 C     Last change:  ERB  29 Aug 2002    1:22 pm
       SUBROUTINE GLO1BAS6DF(INUNIT,IUNIT,CUNIT,IREWND,NIUNIT,IOUTG,IOUT,
      1                    VERSION,NCOL,NROW,NLAY,NPER,ITMUNI,ISUMGX,
@@ -65,6 +66,12 @@ C  Initialize parameter definition variables.
         IPLOC(2,N)=0
         IACTIVE(N)=0
    10 CONTINUE
+      DO N=1,MXMLT
+        MLTNAM(N) = ' '
+      ENDDO
+      DO N=1,MXZON
+        ZONNAM(N) = ' '
+      ENDDO
 C
 C------Check for existence of discretization file
       INDIS=IUNIT(IUDIS)

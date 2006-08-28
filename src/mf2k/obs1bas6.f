@@ -1,5 +1,10 @@
-! Time of File Save by ERB: 10/21/2004 9:32AM
-C     Last change:  ERB  14 Jan 2003    3:53 pm
+C  I edited all occurrences of common block HUFCOM (in sen1huf2.f, 
+C  lmt6.f, gwfhuf2.f, and obs1bas6.f) to put all REAL arrays before all 
+C  INTEGER arrays.  The original order is OK when both REALs and 
+C  INTEGERs are KIND=4.  But when REALs are promoted to DOUBLE 
+C  PRECISION, KIND goes from 4 to 8, and this generates alignment 
+C  problems.  The alignment problems are avoided when all variables of 
+C  larger KIND precede all variables of smaller KIND. -- ERB 6/29/2006
 C=======================================================================
       SUBROUTINE OBS1BAS6DF(IOBS,IOSTAR,IOWTQ,IOWTQDR,IOWTQGB,
      &                      IOWTQRV,IOWTQST,IQ1,IUOBS,JT,LCCOFF,LCHFB,
@@ -414,8 +419,7 @@ C     ------------------------------------------------------------------
       INTEGER IERR, NC, NQC, NT, NQT, IOUT
 C     ------------------------------------------------------------------
   550 FORMAT(/,1X,'*** WARNING:  THE OBSERVATION DATA SET CONTAINS',
-     &' DUPLICATE OBSERVATION NAMES.',/,1X,'*** FUTURE VERSIONS OF',
-     &' MODFLOW MAY NOT ALLOW DUPLICATION OF OBSERVATION NAMES.')
+     &' DUPLICATE OBSERVATION NAMES.')
   555 FORMAT(/,1X,'*** Duplicate OBSNAM: ',A)
   580 FORMAT (/,' NQC CAN BE REDUCED FROM',I5,' TO',I5)
   585 FORMAT (/,' NQT CAN BE REDUCED FROM',I5,' TO',I5)
@@ -4217,7 +4221,7 @@ C     ------------------------------------------------------------------
       CHARACTER*4 PID
 C
       COMMON /DISCOM/LBOTM(999),LAYCBD(999)
-      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
+      COMMON /HUFCOM/HGUHANI(999),HGUVANI(999),LTHUF(999),LAYWT(999)
       INCLUDE 'param.inc'
 C     ------------------------------------------------------------------
 

@@ -1,13 +1,18 @@
-! Time of File Save by ERB: 3/22/2006 2:58PM
-C                  KJH  20030327      -- Patched Hyd.K term in LPF option -- cel2wel function
-C                  KJH  20030717      -- Patched budget output switch -- subroutine GWF1MNW1bd
-c                                        Cleaned output so outrageous pointers are not printed
-c                  GZH  20050405      -- Converted calculations to use double precision
-c                  KJH  20050419      -- Array WELL2 dimensioned to 18 to store well id
-c                  RTH  20060221      -- Fixed Variable declaration & constant declarations
-c                                        Fixed variable declaration errors in bd subroutine
-c                  ERB  20060308      -- Completed conversion to double precision
-c                                        Moved PLoss from argument lists to common block rev23
+! Time of File Save by ERB: 6/16/2006 11:22AM
+C   KJH  20030327  -- Patched Hyd.K term in LPF option -- cel2wel function
+C   KJH  20030717  -- Patched budget output switch -- subroutine GWF1MNW1bd
+c                     Cleaned output so outrageous pointers are not printed
+c   GZH  20050405  -- Converted calculations to use double precision
+c   KJH  20050419  -- Array WELL2 dimensioned to 18 to store well id
+c   RTH  20060221  -- Fixed Variable declaration & constant declarations
+c                     Fixed variable declaration errors in bd subroutine
+c   ERB  20060308  -- Completed conversion to double precision
+c                     Moved PLoss from argument lists to common block rev23
+c   LJK  20060406  -- Edited GWF1MNW1BD to use well2(17,m) (which contains
+c                     the cell-by-cell flows) rather than well2(3,m) (which
+c                     contains the entire well value) in the call to UBDSVB
+c   ERB  20060616  -- Added PERTIM to argument list of GWF1MNW1BD because
+c                     it's needed in call to UBDSV4
       SUBROUTINE GWF1MNW1DF(LCHANI,LCHK,LCHKCC,LCHUFTHK,LCHY,LCSSHMN,
      &                      LCTRPY,NHUFAR)
 C     VERSION 20020129 ERB
@@ -1030,7 +1035,7 @@ c_______________________________________________________________________________
 c
       SUBROUTINE GWF1MNW1bd(MNWsite,nwell2,mxwel2,vbnm,vbvl,msum,delt,
      +        well2,ibound,hnew,ncol,nrow,nodes,nstp,kstp,kper,iwl2cb,
-     +             icbcfl,buff,iout,iowell2,totim,Hdry)
+     +             icbcfl,buff,iout,iowell2,totim,Hdry,PERTIM)
 C     VERSION 20030710 KJH
 c
 c----- MNW1 by K.J. Halford        1/31/98
@@ -1046,7 +1051,7 @@ c     ------------------------------------------------------------------
      &        IGRP1, M2, IGRP2, IMULT, IL,M IR, IC, NE, IOCH, IWELPT,
      &        IOBYND, IIN, IOQSUM, IOC, NWELVL, IOUT, ICBCFL, IWL2CB,
      &        KPER, KSTP, NSTP, NROW, NCOL, NWELL2, IOWELL2, IFRL, IR
-      REAL HDRY, VBVL, BUFF, PERTIM, TOTIM, DELT
+      REAL HDRY, VBVL, BUFF, PERTIM, TOTIM, DELT, q2
       DOUBLE PRECISION HWELL, PLOSS
       double precision well2
       double precision zero,ratin,ratout,qwsum,qsum,qwbar,DryTest,q,
@@ -1065,6 +1070,8 @@ c             ----+----1----+-
       zero = 1.D-25
 c     ------------------------------------------------------------------
 c
+cljk moved this line from below
+      nlay = nodes / ncol / nrow
 c  clear ratin and ratout accumulators.
       ratin=0.D0
       ratout=0.D0
@@ -1269,7 +1276,7 @@ c -----print the summed rates to auxillary file if requested .
 c
 c  ----- END  MULTI-NODE reporting section -------------
 c
-        nlay = nodes / ncol / nrow
+cljk        nlay = nodes / ncol / nrow
 c6------if cell-by-cell flows will be saved call ubudsv to record them
         if( abs(iwl2cb).gt.0 .and. icbcfl.ne.0 ) then           !! BooBoo Fix--July 10,2003  KJH
           ioc = abs(iwl2cb)
@@ -1278,7 +1285,9 @@ c6------if cell-by-cell flows will be saved call ubudsv to record them
             do m = 1, nwell2
               n = ifrl( well2(1,m) )
               q = well2(3,m)
-              call UBDSVB(ioc,ncol, nrow,n,1,1,Q,well2(1,m),
+              q2=well2(17,m)
+cljk          call UBDSVB(ioc,ncol, nrow,n,1,1,Q,well2(1,m),
+              call UBDSVB(ioc,ncol, nrow,n,1,1,Q2,well2(1,m),
      +                    NWELVL,NAUX,5,IBOUND,NLAY)
             enddo
           else                  !!  Write full 3D array

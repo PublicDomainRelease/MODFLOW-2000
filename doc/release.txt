@@ -12,6 +12,52 @@ these packages and processes, see mf2k.txt ("Summary of MODFLOW-2000").
 NOTE: Any use of trade, product or firm names is for descriptive purposes 
       only and does not imply endorsement by the U.S. Government.
 
+o Version 1.17.00 07/25/2006:
+
+Note to users of the Hydraulic-Conductivity Depth-Dependence (KDEP) 
+capability of the HUF Package: A program error was found in the KDEP 
+capability beginning with its first release with version 1.12 of MODFLOW-2000 
+(Mf2k) and continuing through version 1.15 of the code. The error was fixed 
+beginning with version 1.16.  The error has been found to cause problems in 
+some (but not all) models that specified input variable IFKDEP equal to 0. 
+Variable IFKDEP is a flag indicating the source of the array specifying 
+reference-surface elevations used for the depth-dependent hydraulic-
+conductivity calculations. When IFKDEP = 0, the TOP array specified in the 
+Discretization Package Input File is used; when IFKDEP = 1, the array is 
+specified in the KDEP input file (variable RS). In some circumstances, 
+specification of IFKDEP = 0 led to mis-allocation of elements in the Mf2k X 
+array, which led to errors in some of the budget calculations. Models that 
+used IFKDEP = 1 should not be affected by this error.  If KDEP users of Mf2k 
+versions 1.12 - 1.15 are uncertain as to whether or not their results are 
+affected by this error, they are encouraged to run their data sets with Mf2k 
+versions 1.16 and higher and compare the results calculated by version 1.16 
+with those of the earlier version.
+
+The LAK3, SFR2, and GAG5 Packages have been updated to support new 
+capabilities.  The new capabilities and other changes are documented in 
+files "Read_me.LAK3.v1.17.txt" and "Read_me.SFR2.v1.17.txt" in the 
+doc directory.  Changes that should be made to USGS Techniques and 
+Methods 6-A13 are documented in "tma6a13_SFR2revision_history.pdf", also 
+in the doc directory.
+
+The GMG Package has been updated to support a new adaptive damping option, 
+which may be useful in obtaining solutions to highly nonlinear problems.  
+The new damping option is documented in "GMG_Damping.pdf" and 
+"Banta_damping_paper.pdf" in the doc directory.
+
+The SUB Package was modified to allow comment lines to be inserted into 
+the SUB input file anywhere except where arrays are to be read by one of 
+the array-reader subroutines (U2DREL or U2DINT).
+
+A minor bug affecting output of the ADV Package has been fixed.
+
+Several bugs in the MNW Package have been fixed.
+
+A bug in the DRT Package that caused a budget error when a drain-return cell 
+is inactive has been fixed.  Now, if the return cell is inactive (IBOUND=0) 
+or constant-head (IBOUND<0), no return flow takes place, and all drain flow 
+exits the model.
+
 o Version 1.16.00 03/28/2006:
 
 This version includes updates to three packages, and several bug fixes.

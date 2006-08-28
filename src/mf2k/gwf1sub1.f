@@ -1,4 +1,4 @@
-! Time of File Save by ERB: 4/1/2005 11:49AM
+! Time of File Save by ERB: 6/15/2006 12:51PM
 C     Last change:  SAL   3 Sep 2003    7:37 am
       MODULE SUBARRAYS
       LOGICAL NDF,NNDF,OCFLGS,OCLAY
@@ -30,10 +30,19 @@ C     Last change:  SAL   3 Sep 2003    7:37 am
      1    ITMIN,NNDB,NDB,NMZ,NN,NND1,ND1,ND2,IDSAVE,IDREST,ISSFLG,NPER,
      2    NSTP,NSTPT,IN,IOUT,ISIP,LCV,ISEN)
 C
-C-----VERSION 0000 22SEP2004 GWF1SUB1ALP
+C-----VERSION 0000 06JUN2006 GWF1SUB1ALP
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR SUBSIDENCE PACKAGE
 C     ******************************************************************
+C        Modifications, 06JUN2006:
+C                  1. Made check for error condition of ND2<1 active only
+C                     when delay beds are present.
+C                  2. Corrected the way space is allocated for arrays
+c                     OCFLGS, OCLAY, and ILSYS to allow the package to
+C                     allocate when delay beds are not present.
+C                  3. Changed some READ statements to calls to URDCOM to
+C                     allow use of comments at select locations in the
+C                     input file.
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
@@ -84,7 +93,7 @@ C
 C4------READ FLAG FOR STORING CELL-BY-CELL STORAGE CHANGES AND
 C4------FLAG FOR PRINTING AND STORING COMPACTION, SUBSIDENCE, AND
 C4------CRITICAL HEAD ARRAYS.
-      READ(IN,'(A)') LINE
+      CALL URDCOM(IN,IOUT,LINE)
       LLOC=1
       CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,IIBSCB,R,IOUT,IN)
       CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,ISUBOC,R,IOUT,IN)
@@ -160,9 +169,9 @@ C5------IF CELL-BY-CELL TERMS TO BE SAVED THEN PRINT UNIT NUMBER.
    80 FORMAT(1X,'CELL-BY-CELL FLOW TERMS WILL BE SAVED ON UNIT',I3)
 C
 C5A-----IF OUTPUT CONTROL FOR PRINTING ARRAYS IS SELECTED PRINT MESSAGE.
-      IF(ISUBOC.GT.0) WRITE(IOUT,90)
-   90 FORMAT(1X,'OUTPUT CONTROL RECORDS FOR SUB1 PACKAGE WILL BE ',
-     1 'READ EACH TIME STEP.')
+      IF(ISUBOC.GT.0) WRITE(IOUT,90) ISUBOC
+   90 FORMAT(1X,I4,' OUTPUT CONTROL RECORDS FOR SUB PACKAGE WILL BE ',
+     1 'READ.')
 C ------READ IN MODEL LAYER NUMBERS FOR EACH SYSTEM OF INTERBEDS,
 C ------FOR LAYERS WITHOUT DELAY.
       IF(NNDF) THEN
@@ -170,7 +179,8 @@ C ------FOR LAYERS WITHOUT DELAY.
        WRITE(IOUT,100) NNDB
   100  FORMAT(/,' MODEL LAYER ASSIGNMENTS FOR EACH OF',I3,' NO-DELAY',
      1  ' SYSTEMS OF INTERBEDS:')
-       READ(IN,*) (LN(N),N=1,NNDB)
+       CALL URDCOM(IN,IOUT,LINE)
+       READ(LINE,*) (LN(N),N=1,NNDB)
        WRITE(IOUT,115) (LN(N),N=1,NNDB)
   115  FORMAT(1X,25I4)
        DO 120 N=1,NNDB
@@ -188,7 +198,8 @@ C ------FOR LAYERS WITH DELAY.
        WRITE(IOUT,135) NDB
   135  FORMAT(/,' MODEL LAYER ASSIGNMENTS FOR EACH OF',I3,' DELAY',
      1  ' SYSTEMS OF INTERBEDS:')
-       READ(IN,*) (LDN(N),N=1,NDB)
+       CALL URDCOM(IN,IOUT,LINE)
+       READ(LINE,*) (LDN(N),N=1,NDB)
        WRITE(IOUT,115) (LDN(N),N=1,NDB)
        DO 140 N=1,NDB
        IF(LDN(N).GE.1.AND.LDN(N).LE.NLAY) GO TO 140
@@ -432,7 +443,7 @@ C ------SET ALL FLAGS FOR OUTPUT CONTROL TO "FALSE".
 C
 C5------READ FORMATS AND UNIT NUMBERS OUTPUT FLAGS.
       IF(ISUBOC.GT.0) THEN
-       READ(IN,'(A)') LINE
+       CALL URDCOM(IN,IOUT,LINE)
        LLOC=1
        CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,ISBOCF(1),R,IOUT,IN)
        CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,ISBOCU(1),R,IOUT,IN)
@@ -466,7 +477,7 @@ C5------READ FORMATS AND UNIT NUMBERS OUTPUT FLAGS.
   370   CONTINUE
        ENDIF
        DO 450 NOCLIN=1,ISUBOC
-       READ(IN,'(A)',END=500) LINE
+      CALL URDCOM(IN,IOUT,LINE)
        LLOC=1
        CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,ISP1,R,IOUT,IN)
        CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,ISP2,R,IOUT,IN)

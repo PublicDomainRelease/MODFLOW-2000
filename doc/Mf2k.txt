@@ -58,30 +58,38 @@ METHOD
 
 HISTORY
 
-      MODFLOW-2000 Version 1.16.00 2006/03/28 - The SFR2 Package replaces
+     MODFLOW-2000 Version 1.17.00 2006/07/25 - The LAK3, SFR2, and GAG5
+        Packages have been updated to support simulation of new 
+        capabilities.  The GMG Package has been updated to support a new 
+        adaptive-damping option.  This version also includes a change in the
+        SUB Package and fixes for bugs in the ADV, MNW, and DRT Packages.  
+        Please see release.txt and files referenced therein for details on 
+        the new options and changes.
+
+     MODFLOW-2000 Version 1.16.00 2006/03/28 - The SFR2 Package replaces
         the SFR1 Package of version 1.14.00, adding support for simulation
         of unsaturated flow beneath streams.  The ADV2 Package has been
         made more compatible with MODPATH.  Other changes and bug fixes
         are described in release.txt.
 
-      MODFLOW-2000 Version 1.15.01 2005/04/05 - This is a bug-fix release.
+     MODFLOW-2000 Version 1.15.01 2005/04/05 - This is a bug-fix release.
         Bug fixes are described in release.txt.
 
-      MODFLOW-2000 Version 1.15.00 2004/08/06 - Added the GMG Solver Package.
+     MODFLOW-2000 Version 1.15.00 2004/08/06 - Added the GMG Solver Package.
         Modifications were made to the SFR Package.
 
-      MODFLOW-2000 Version 1.14.00 2004/07/01 - Added the SFR Package to 
+     MODFLOW-2000 Version 1.14.00 2004/07/01 - Added the SFR Package to 
         allow enhanced capabilities for simulation of streams.  The maximum
         number of layers is increased from 200 to 999.
 
-      MODFLOW-2000 Version 1.13.00 2004/01/22 - Includes revisions to the
+     MODFLOW-2000 Version 1.13.00 2004/01/22 - Includes revisions to the
         LAK3 Package and bug fixes for the DRT, SUB, HUF2, and PCG2
         Packages.
 
-      MODFLOW-2000 Version 1.12.01 2003/10/03 - This is a bug-fix release.
+     MODFLOW-2000 Version 1.12.01 2003/10/03 - This is a bug-fix release.
         Bug fixes are described in release.txt.
 
-      MODFLOW-2000 Version 1.12 2003/09/08 - Added the SUB Package to allow 
+     MODFLOW-2000 Version 1.12 2003/09/08 - Added the SUB Package to allow 
         simulation of subsidence and aquifer-system compaction.  The HUF 
         Package was upgraded from version 1 to version 2, providing support 
         for the new Layer Variable-Direction Horizontal Anisotropy (LVDA) 
@@ -92,7 +100,7 @@ HISTORY
         2.4, which includes support for porosity parameters.  Additional 
         enhancements and bug fixes are described in release.txt.
         
-      MODFLOW-2000 Version 1.11 2003/04/10 - Added the DAF Package to allow
+     MODFLOW-2000 Version 1.11 2003/04/10 - Added the DAF Package to allow
         coupling of MODFLOW with the Diffusion Analogy Surface-Water Flow 
         Model, and the MNW Package to allow simulation of well completed in
         intervals represented by multiple model cells.  New options for
