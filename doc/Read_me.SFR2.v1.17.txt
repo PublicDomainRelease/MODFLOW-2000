@@ -3,7 +3,7 @@ by Prudic and others (2004) and Niswonger and Prudic (2005):
 
 Update (June 2006):
 
-        Several minor coding changes were made since the initial
+	Several minor coding changes were made since the initial
 release to fix bugs in relation to the different input options for
 SFR2 (Niswonger and Prudic, 2005). These fixes to SFR2 resulted
 from inconsistencies in the original data input by stream segments
@@ -18,7 +18,7 @@ printed document are listed in the tma6a13_SFR2revision_history.pdf
 file included in document (doc) directory of MODFLOW-2000 version 
 1.17.
 
-        An important change was made to SFR2 in the Formulate
+	An important change was made to SFR2 in the Formulate
 and Budget modules that pertain to the computation of outflow from
 lakes when streams are connected to lakes in the LAKE(LAK3) Package
 (Merritt and Konikow, 2000). These changes were necessary to
@@ -31,7 +31,7 @@ in the lake outflow that affects streamflow leakage downstream of
 the lake and could prevent MODFLOW from reaching convergence during
 a time step. 
 
-        A new subroutine named GWF1SFR2LAKOUTFLW was added to SFR2.
+	A new subroutine named GWF1SFR2LAKOUTFLW was added to SFR2.
 The new subroutine computes the relation of stream stage with
 streamflow at the beginning of a stream segment that receives outflow
 from a lake. The relation between stream stage and streamflow are
@@ -39,7 +39,7 @@ saved in tables that are passed to the revised Lake (LAK3) Package
 where the tables are used in computing lake stage and lake outflow to
 the stream segment using the Newton iteration method.
 
-        The changes to the Formulate and Budget modules in SFR2
+	The changes to the Formulate and Budget modules in SFR2
 do not affect previous model results unless outflow from a
 lake is simulated as inflow to a stream. Model results when
 lake outflow is simulated as inflow to a stream could differ

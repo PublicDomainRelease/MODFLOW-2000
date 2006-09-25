@@ -12,6 +12,25 @@ these packages and processes, see mf2k.txt ("Summary of MODFLOW-2000").
 NOTE: Any use of trade, product or firm names is for descriptive purposes 
       only and does not imply endorsement by the U.S. Government.
 
+o Version 1.17.01 09/22/2006:
+
+This version includes fixes to bugs in the following packages:
+
+SFR - Previous version (1.17.00) wrote incorrect flow values to the compact 
+      cell-by-cell budget file when a cell contains more than one SFR reach.
+      
+    - Non-parameter data for stress period 1 were not read correctly.
+    
+FHB - A bug affected assignment of head for the special cases of having only 
+      one time at which heads are specified and having a steady-state stress 
+      period.
+      
+    - A bug caused an invalid entry to be written to a compact cell-by-cell 
+      budget file.
+      
+LAK - Bug caused probram to crash when THETA was specified as a negative, 
+      floating-point number.
+
 o Version 1.17.00 07/25/2006:
 
 Note to users of the Hydraulic-Conductivity Depth-Dependence (KDEP) 

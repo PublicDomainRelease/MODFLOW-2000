@@ -138,9 +138,9 @@ Cdep    Allow user to specify number of iterations and closure criteria.
         THETA=ABS(THETA)
         IF(THETA.LE.0.5) THETA = 0.5
         IF(IFREFM.EQ.0) THEN
-          READ(IN,'(F10.2,I10,F10.2)') IDUM,NSSITR,SSCNCR
+          READ(IN,'(F10.2,I10,F10.2)') DUM,NSSITR,SSCNCR
         ELSE
-          READ(IN,*) IDUM,NSSITR,SSCNCR
+          READ(IN,*) DUM,NSSITR,SSCNCR
         END IF
       END IF
 Cdep   Add check to reset THETA to 1 is greater than 1.

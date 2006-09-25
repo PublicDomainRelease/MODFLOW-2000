@@ -1285,10 +1285,17 @@ C6------READ NON-PARAMETER STREAM SEGMENT DATA.
       IF ( Itmp.GT.0 ) THEN
         lstbeg = 1
         ichk = 1
-        IF ( Kkper.GT.1 ) CALL SGWF1SFR2RDSEG(Itmp, lstbeg, In, Iout,
-     +       Seg, Iseg, Idivar, Iotsg, Maxpts, Xsec, Qstage, I15, Concq,
-     +       Concrun, Concppt, Nsol, Nsegdim, Nsegck, Nss, ichk, Nss,
-     +       Isfropt, Kkper)
+        IF ( ISFROPT.GT.0 ) THEN
+          IF ( Kkper.GT.1 ) CALL SGWF1SFR2RDSEG(Itmp, lstbeg, In, Iout,
+     +         Seg, Iseg, Idivar, Iotsg, Maxpts, Xsec, Qstage, I15, 
+     +         Concq,Concrun, Concppt, Nsol, Nsegdim, Nsegck, Nss, ichk,
+     +          Nss,Isfropt, Kkper)
+        ELSEIF( NSFRPAR.NE.0 ) THEN
+          CALL SGWF1SFR2RDSEG(Itmp, lstbeg, In, Iout,
+     +         Seg, Iseg, Idivar, Iotsg, Maxpts, Xsec, Qstage, I15,
+     +         Concq,Concrun, Concppt, Nsol, Nsegdim, Nsegck, Nss, ichk,
+     +          Nss,Isfropt, Kkper)
+        END IF
       END IF
 C
 C7------DEACTIVATE ANY PREVIOUSLY USED STREAM PARAMETERS, AND ACTIVATE
@@ -2047,7 +2054,7 @@ C     -----------------------------------------------------------------
      +        nreach, maxwav, icalccheck, iskip
 Cdep added closezero and nearzero 6/5/2006
       REAL CLOSEZERO
-      DOUBLE PRECISION FIVE_THIRDS, NEARZERO
+      DOUBLE PRECISION FIVE_THIRDS, NEARZERO, dvrsn
       PARAMETER (CLOSEZERO=1.0E-15)
       PARAMETER (FIVE_THIRDS=5.0D0/3.0D0, NEARZERO=1.0D-30)
 C     -----------------------------------------------------------------
@@ -2216,75 +2223,26 @@ Cdep              END IF
             END IF 
           END IF
 C
-C14-----CHECK IF UPSTREAM SEGMENT GETS DIVERTED AND DETERMINE
-C         SEGMENT NUMBER OF DIVERSION. CHANGES MADE BY CSTILLERY TO
-C         ALLOW FOR MULTIPLE DIVERSIONS AT END OF A STREAM SEGMENT.
-          IF ( istsg.GT.1 ) THEN
-            iprvsg = Istrm(4, ll)
-            kss = 1
-            DO WHILE ( kss.LE.Nss )
-              idivseg = 0
-              iupseg = 0
-              DO WHILE ( iprvsg.NE.iupseg )
-                iupseg = Idivar(1, kss)
-                IF ( iupseg.EQ.iprvsg ) idivseg = kss
-                kss = kss + 1
-                IF ( kss.GT.Nss ) iprvsg = iupseg
-              END DO
-              IF ( idivseg.GT.0 ) THEN
-C
-C15-----DETERMINE DIVERSION AND SUBTRACT IT FROM FLOW AT END OF
-C         UPSTREAM SEGMENT.
-                Dvrsflw(idivseg) = Seg(2, idivseg)
-                upflw = Sgotflw(iupseg)
-                iprior = Idivar(2, idivseg)
-C
-C16-----IF IPRIOR IS ZERO THEN FLOW DIVERTED CAN BE ALL OF
-C         STREAMFLOW UP TO SPECIFIED FLOW.
-                IF ( iprior.EQ.0 ) THEN
-                  dif = upflw - Dvrsflw(idivseg)
-                  IF ( dif.GE.0.0 ) THEN
-                    Sgotflw(iupseg) = dif
-                  ELSE
-                    Sgotflw(iupseg) = 0.0
-                    Dvrsflw(idivseg) = upflw
-                  END IF
-C
-C17-----IF IPRIOR IS -1 THEN FLOW DIVERTED ONLY IF SPECIFIED FLOW
-C         AVAILABLE, OTHERWISE NO FLOW DIVERTED.
-                ELSE IF ( iprior.EQ.-1 ) THEN
-                  dif = upflw - Dvrsflw(idivseg)
-                  IF ( dif.GE.0.0 ) THEN
-                    Sgotflw(iupseg) = dif
-                  ELSE
-                    Dvrsflw(idivseg) = 0.0
-                  END IF
-C
-C18-----IF IPRIOR IS -2 THEN FLOW DIVERTED IS PERCENTAGE OF
-C         AVAILABLE STREAMFLOW.
-                ELSE IF ( iprior.EQ.-2 ) THEN
-                  prcnt = Dvrsflw(idivseg)
-                  Dvrsflw(idivseg) = upflw*prcnt
-                  Sgotflw(iupseg) = upflw - Dvrsflw(idivseg)
-C
-C19-----IF IPRIOR IS -3 THEN FLOW DIVERTED ONLY WHEN STREAMLFOW
-C         EXCEEDS SPECIFIED FLOW (FLOOD CONTROL DIVERSION).
-                ELSE IF ( iprior.EQ.-3 ) THEN
-                  IF ( upflw.GT.Dvrsflw(idivseg) ) THEN
-                    Dvrsflw(idivseg) = upflw - Seg(2, idivseg)
-                    Sgotflw(iupseg) = Seg(2, idivseg)
-                  ELSE
-                    Dvrsflw(idivseg) = 0.0
-                  END IF
+C14-----COMPUTE ONE OR MORE DIVERSIONS FROM UPSTREAM SEGMENT.
+Crgn&dep   revised computation of diversions and added subroutine
+            IF( istsg.GT.1 )THEN
+              DO kss = 2, Nss
+                upflw = Sgotflw(istsg-1)
+                idivseg = kss
+                IF( Idivar(1,kss).EQ.istsg-1 ) THEN
+                   dvrsn = Seg(2,idivseg)
+                   iprior = Idivar(2,kss)
+                  CALL GWF2SFR2DIVERS(iprior, idivseg, upflw, dvrsn)
+                  Dvrsflw(kss) = dvrsn
+                  Sgotflw(istsg-1) = Sgotflw(istsg-1) - dvrsn
                 END IF
-              END IF
-            END DO
-          END IF
+              END DO
 C
 C20-----SET FLOW INTO DIVERSION IF SEGMENT IS DIVERSION.
-          IF ( istsg.GE.1 .AND. Iseg(3, istsg).EQ.6 ) THEN
-            IF ( Idivar(1, istsg).GT.0 ) flowin = Dvrsflw(istsg)
-          END IF
+              IF( Iseg(3,istsg).EQ.6 ) THEN
+                IF( Idivar(1,istsg).GT.0 ) flowin = Dvrsflw(istsg)
+              END IF
+            END IF
 C
 C21-----SUM TRIBUTARY OUTFLOW AND USE AS INFLOW INTO DOWNSTREAM SEGMENT.
           IF ( istsg.GE.1 .AND. Iseg(3, istsg).EQ.7 ) THEN
@@ -3203,22 +3161,21 @@ C          MODEL CELL IS INACTIVE.
             ELSE
               etstr = 0.0D0
             END IF
-          ELSE IF ( icalc.GE.2 ) THEN
-            depth = 0.0D0
-            cstr = 0.0D0
+          ELSE
+crgn used width in calculations. 9/20/06
             IF ( icalc.EQ.2 ) THEN
-              width = Xsec(6, istsg) - Xsec(3, istsg)
+              width = XSEC(6, istsg) - XSEC(3, istsg)
             ELSE IF ( icalc.EQ.3 ) THEN
               width = 10.0D0
             ELSE IF ( icalc.EQ.4 ) THEN
               width = Qstage((1+2*Iseg(2,istsg)), istsg)
      +                + Qstage(3*Iseg(2, istsg), istsg)/2.0D0
             END IF
-            flowc = (precip-etstr)*width
+            flowc = flowin + runof + (precip-etstr)*width
             flwmpt = 0.5D0*flowc
             IF ( flowc.LT.NEARZERO ) THEN
               flowc = 0.0D0
-              etstr = precip
+              etstr = (flowin + runof)/width + precip
               flwmpt = 0.0D0
             END IF
           END IF
@@ -3227,6 +3184,11 @@ C66----COMPUTE STREAM LEAKAGE IF STREAM DEPTH WAS NOT COMPUTED
 C        USING EITHER BISECTION OR NEWTON METHOD.
           IF ( iskip.EQ.0 ) THEN
             cstr = strleak*width/sbdthk
+crgn added next 4 lines.
+            IF (icalc.GT.1 ) THEN
+              etstr = etstr*width
+              precip = precip*width
+            END IF
             IF ( flowc.LT.NEARZERO ) THEN
               hstr = Strm(3, l)
               IF ( h.LT.hstr ) THEN
@@ -3473,7 +3435,7 @@ C     ------------------------------------------------------------------
      +                 dflwlw, dflwhi, dstglw, dstghi, dlglak, dlgslp,
      +                 dlgflw, cdpth, fdpth, hdiff, grad, depth, hld,
      +                 fbcheck, totflwt, totdelstor, totuzstor, thetas,
-     +                 epsilon, thr
+     +                 epsilon, thr, gwflow, dvrsn
 C     ------------------------------------------------------------------
 C     LOCAL STATIC VARIABLES
 C     ------------------------------------------------------------------
@@ -3524,7 +3486,7 @@ Cdep    REVISED TO ALLOW FOR COMPACT AND NONCOMPACT BUDGETS.
       ibstlb = 0
 C
 C2------WRITE HEADER WHEN CELL-BY-CELL FLOWS WILL BE SAVED AS A LIST.
-      IF ( ibd.EQ.2 ) CALL UBDSV2 (Kstp, Kper, text,Iout1, Ncol, Nrow, 
+      IF ( ibd.EQ.2 ) CALL UBDSV2 (Kstp, Kper, text, Iout1, Ncol, Nrow, 
      +                             Nlay, Nstrm, Iout, Delt, Pertim,
      +                             Totim, Ibound)
       IF ( ibdst.EQ.2 ) CALL UBDSV2 (Kstp, Kper, strtxt, Iout2, Ncol, 
@@ -3553,6 +3515,7 @@ Cdep          Strout(i) = zero
 C
 C5------DETERMINE LAYER, ROW, COLUMN OF EACH REACH.
       DO l = 1, Nstrm
+        gwflow = 0.0D0
         ll = l - 1
         il = Istrm(1, l)
         ir = Istrm(2, l)
@@ -3689,75 +3652,26 @@ C              Strout(istsg) = flowin
 C            END IF
 C          END IF
 C
-C15-----CHECK IF UPSTREAM SEGMENT GETS DIVERTED AND DETERMINE
-C        SEGMENT NUMBER OF DIVERSION. CHANGES MADE BY CSTILLERY TO
-C        ALLOW FOR MULTIPLE DIVERSIONS AT END OF A STREAM SEGMENT.
-          IF ( istsg.GT.1 ) THEN
-            iprvsg = Istrm(4, ll)
-            kss = 1
-            DO WHILE ( kss.LE.Nss )
-              idivseg = 0
-              iupseg = 0
-              DO WHILE ( iprvsg.NE.iupseg )
-                iupseg = Idivar(1, kss)
-                IF ( iupseg.EQ.iprvsg ) idivseg = kss
-                kss = kss + 1
-                IF ( kss.GT.Nss ) iprvsg = iupseg
-              END DO
-              IF ( idivseg.GT.0 ) THEN
-C
-C16-----DETERMINE DIVERSION AND SUBTRACT IT FROM
-C         FLOW AT END OF UPSTREAM SEGMENT.
-                Dvrsflw(idivseg) = Seg(2, idivseg)
-                upflw = Sgotflw(iupseg)
-                iprior = Idivar(2, idivseg)
-C
-C17-----IF IPRIOR IS ZERO, THEN FLOW DIVERTED CAN BE ALL OF
-C         STREAMFLOW UP TO SPECIFIED FLOW.
-                IF ( iprior.EQ.0 ) THEN
-                  dif = upflw - Dvrsflw(idivseg)
-                  IF ( dif.GT.CLOSEZERO ) THEN
-                    Sgotflw(iupseg) = dif
-                  ELSE
-                    Sgotflw(iupseg) = 0.0
-                    Dvrsflw(idivseg) = upflw
-                  END IF
-C
-C18-----IF IPRIOR IS -1, THEN FLOW DIVERTED ONLY IF SPECIFIED FLOW
-C         AVAILABLE OTHERWISE NO FLOW DIVERTED.
-                ELSE IF ( iprior.EQ.-1 ) THEN
-                  dif = upflw - Dvrsflw(idivseg)
-                  IF ( dif.GT.CLOSEZERO ) THEN
-                    Sgotflw(iupseg) = dif
-                  ELSE
-                    Dvrsflw(idivseg) = 0.0
-                  END IF
-C
-C19-----IF IPRIOR IS -2 THEN FLOW DIVERTED IS PERCENTAGE OF
-C         AVAILABLE STREAMFLOW.
-                ELSE IF ( iprior.EQ.-2 ) THEN
-                  prcnt = Dvrsflw(idivseg)
-                  Dvrsflw(idivseg) = upflw*prcnt
-                  Sgotflw(iupseg) = upflw - Dvrsflw(idivseg)
-C
-C20-----IF IPRIOR IS -3 THEN FLOW DIVERTED ONLY WHEN STREAMLFOW
-C         EXCEEDS SPECIFIED FLOW (FLOOD CONTROL DIVERSION).
-                ELSE IF ( iprior.EQ.-3 ) THEN
-                  IF ( upflw.GT.Dvrsflw(idivseg) ) THEN
-                    Dvrsflw(idivseg) = upflw - Seg(2, idivseg)
-                    Sgotflw(iupseg) = Seg(2, idivseg)
-                  ELSE
-                    Dvrsflw(idivseg) = 0.0
-                  END IF
+C14-----COMPUTE ONE OR MORE DIVERSIONS FROM UPSTREAM SEGMENT.
+Crgn&dep   revised computation of diversions and added subroutine
+            IF( istsg.GT.1 )THEN
+              DO kss = 2, Nss
+                upflw = Sgotflw(istsg-1)
+                idivseg = kss
+                IF( Idivar(1,kss).EQ.istsg-1 ) THEN
+                   dvrsn = Seg(2,idivseg)
+                   iprior = Idivar(2,kss)
+                  CALL GWF2SFR2DIVERS(iprior, idivseg, upflw, dvrsn)
+                  Dvrsflw(kss) = dvrsn
+                  Sgotflw(istsg-1) = Sgotflw(istsg-1) - dvrsn
                 END IF
-              END IF
-            END DO
-          END IF
+              END DO
 C
-C21-----SET FLOW INTO DIVERSION IF SEGMENT IS DIVERSION.
-          IF ( istsg.GE.1 .AND. Iseg(3, istsg).EQ.6 ) THEN
-            IF ( Idivar(1, istsg).GT.0 ) flowin = Dvrsflw(istsg)
-          END IF
+C20-----SET FLOW INTO DIVERSION IF SEGMENT IS DIVERSION.
+              IF( Iseg(3,istsg).EQ.6 ) THEN
+                IF( Idivar(1,istsg).GT.0 ) flowin = Dvrsflw(istsg)
+              END IF
+            END IF
 C
 C22-----SUM TRIBUTARY OUTFLOW AND USE AS INFLOW INTO DOWNSTREAM SEGMENT.
           IF ( istsg.GE.1 .AND. Iseg(3, istsg).EQ.7 ) THEN
@@ -3978,9 +3892,10 @@ C35-----ADD RATES TO BUFFERS.
      +                   strlen, l, Delt, Totim, totflwt, totuzstor,
      +                   totdelstor, Kper, Kstp, hstr, iwidthcheck,
      +                   Avwat, Wat1, Numave, Avdpt, Sfruzbd, ibd,
-     +                   icalc, Iunitgage)
+     +                   icalc, Iunitgage, gwflow)
            FOLDFLBT(l) = flobot
         ELSE
+          gwflow = flobot
           Buff(ic, ir, il) = Buff(ic, ir, il) + flobot
           IF ( Iuzt.GT.0 ) totdelstor = 0.0D0
 C
@@ -4079,9 +3994,9 @@ C         WHEN UNSATURATED FLOW IS ACTIVE.
         END IF
 C
 C42A----SAVE FLOW TO AND FROM GROUND WATER IN LIST FILE WHEN
-C         IBD IS EQUAL TO 2. Revised dep 5/10/2006
+C         IBD IS EQUAL TO 2. Revised dep 5/10/2006--Fixed 9/15/2006
         IF ( ibd.EQ.2 ) CALL UBDSVA(Iout1, Ncol, Nrow, ic, ir, il,
-     +                              Buff(ic, ir, il), Ibound, Nlay)
+     +                              SNGL(gwflow), Ibound, Nlay)
       END DO
 C
 C43-----SAVE FLOW TO AND FROM GROUND WATER AS A 3-D ARRAY WHEN
@@ -4266,6 +4181,58 @@ C4-----FLOW FROM LAKE COMPUTED USING TABULATED VALUES.
       END DO
       RETURN
       END SUBROUTINE GWF1SFR2LAKOUTFLW
+C
+C-------SUBROUTINE GWF2SFR2DIVERS
+      SUBROUTINE GWF2SFR2DIVERS(Iprior, Idivseg, Upflw, Dvrsn)
+C     ******************************************************************
+C     COMPUTES DIVERSIONS FROM AN UPSTREAM SEGMENT
+C     VERSION  7.1: SEPTEMBER 20, 2006   DEP AND RGN
+C     ******************************************************************
+      IMPLICIT NONE
+C     SPECIFICATIONS:
+C     ------------------------------------------------------------------
+C     ARGUMENTS
+C     ------------------------------------------------------------------
+      INTEGER Iprior, Idivseg
+      DOUBLE PRECISION  Upflw, Dvrsn
+C     ------------------------------------------------------------------
+C     LOCAL VARIABLES
+C     ------------------------------------------------------------------
+      DOUBLE PRECISION dif, prcnt
+C     ------------------------------------------------------------------
+C1------IF IPRIOR IS ZERO THEN FLOW DIVERTED CAN BE ALL OF
+C         STREAMFLOW UP TO SPECIFIED FLOW.
+      IF ( Iprior.EQ.0 ) THEN
+        dif = Upflw - Dvrsn
+        IF ( dif.LT.0.0D0 ) THEN
+          Dvrsn = Upflw
+        END IF
+C
+C2------IF IPRIOR IS -1 THEN FLOW DIVERTED ONLY IF SPECIFIED FLOW
+C         AVAILABLE OTHERWISE NO FLOW DIVERTED.
+      ELSE IF ( Iprior.EQ.-1 ) THEN
+        dif = Upflw - Dvrsn
+        IF ( dif.LT.0.0D0 ) THEN
+          Dvrsn = 0.0D0
+        END IF
+C
+C3------IF IPRIOR IS -2 THEN FLOW DIVERTED IS PERCENTAGE OF
+C         AVAILABLE STREAMFLOW.
+      ELSE IF ( Iprior.EQ.-2 ) THEN
+        prcnt = Dvrsn
+        Dvrsn = Upflw*prcnt
+C
+C4------IF IPRIOR IS -3 THEN FLOW DIVERTED ONLY WHEN STREAMLFOW
+C         EXCEEDS SPECIFIED FLOW (FLOOD CONTROL DIVERSION).
+      ELSE IF ( Iprior.EQ.-3 ) THEN
+        IF ( Upflw.GT.Dvrsn ) THEN
+          Dvrsn = Upflw - Dvrsn
+        ELSE
+          Dvrsn = 0.0D0
+        END IF
+      END IF
+      RETURN
+      END SUBROUTINE GWF2SFR2DIVERS
 C
 C-------SUBROUTINE GWF1SFR2UZOT
       SUBROUTINE GWF1SFR2UZOT(Delt, Kstp, Kper, Sfruzbd, Iout)
@@ -5527,7 +5494,7 @@ C1------PRINT INPUT FLOW RATES FOR EACH STREAM SEGMENT.
       END DO
 C
 C2------PRINT STREAMBED PROPERTIES AND STREAM DIMENSIONS.
-C      IF ( Lstbeg.EQ.1 ) THEN
+      IF ( Lstbeg.EQ.1 ) THEN
         IF ( Isfropt.EQ.0 ) THEN
           WRITE (Iout, 9004)
  9004     FORMAT (1X, //9X, 'STREAMBED PROPERTIES AND STREAM ',
@@ -5599,7 +5566,17 @@ C      IF ( Lstbeg.EQ.1 ) THEN
      +              , 'UPPER     LOWER   CHANNEL      BANK'/)
           END IF
         END IF
-C      END IF
+c rgn added else and write statement.
+      ELSE
+        WRITE(IOUT,210)
+  210   FORMAT (1X,//9X,'STREAMBED PROPERTIES AND STREAM ',
+     1        'DIMENSIONS',//1X,'SEGMENT  BED HYD. COND. FACTOR',2X,
+     2        'BED THICKNESS     ELEV.-TOP OF BED     WIDTH OF ',
+     3        'STREAM     DEPTH OF STREAM    STREAM ROUGHNESS',/1X,
+     4        '   No.     UPPER     LOWER     UPPER     ',
+     5        'LOWER     UPPER     LOWER     UPPER     LOWER     ',
+     6        'UPPER     LOWER   CHANNEL      BANK'/)
+      END IF
       nseg = Lstbeg
       DO WHILE ( nseg.LE.lstend )
         IF ( Lstbeg.EQ.1 ) THEN
@@ -6105,7 +6082,8 @@ C-------SUBROUTINE UZMASSBAL
      +                     Flobot, Sbot, Strlen, L, Delt, Totim,
      +                     Totflwt, Totuzstor, Totdelstor, Kkper, Kkstp,
      +                     Hstr, Iwidthcheck, Avwat, Wat1, Numave,
-     +                     Avdpt, Sfruzbd, Ibd, Icalc, Iunitgage)
+     +                     Avdpt, Sfruzbd, Ibd, Icalc, Iunitgage, 
+     +                     Gwflow)
 C     ******************************************************************
 C     COMPUTE INFLOW, OUTFLOW, AND CHANGE IN STORAGE IN UNSATURATED
 C     ZONE BENEATH STREAMBED.
@@ -6128,7 +6106,7 @@ C     ------------------------------------------------------------------
      +                 Uzdpst, Uzthst, H, Hld, Uzseep, Uzolsflx, Uzflwt,
      +                 Totflwt, Wetper, Uzwdth, Delstor, Uzstor,
      +                 Foldflbt, Hstr, Totdelstor, Totuzstor, Thr,
-     +                 Thetas, Epsilon
+     +                 Thetas, Epsilon, Gwflow
       DIMENSION Uzspst(Nuzst, Ntotrl), Uzflst(Nuzst, Ntotrl),
      +          Uzthst(Nuzst, Ntotrl), Uzolsflx(Nuzst, Iuzn)
       DIMENSION Uzdpst(Nuzst, Ntotrl), Uzflwt(Nuzst, Iuzn),
@@ -6177,6 +6155,8 @@ C1------INITIALIZE VARIABLES.
         nwavecheck = nwavecheck + Nwavst(L, i)
       END DO
       IF ( fluxdif.LT.1.0E-09 ) iflag = 1
+C
+C2------NO UNSATURATED ZONE.
       IF ( htest1.GE.0.0D0 .AND. htest2.GE.0.0D0 ) THEN
         iset = 1
         DO i = 1, iuznhold
@@ -6191,9 +6171,10 @@ C1------INITIALIZE VARIABLES.
         ELSE
           Ratin = Ratin + Flobot
         END IF
+        Gwflow = Flobot
         Buff(Ic, Ir, Il) = Buff(Ic, Ir, Il) + Flobot
 C
-C2------REMOVE ALL UNSATURATED ZONE WAVES AND CALCULATE CHANGE IN
+C3------REMOVE ALL UNSATURATED ZONE WAVES AND CALCULATE CHANGE IN
 C         STORAGE WHEN WATER TABLE RISES TO ELEVATION OF STREAMBED.
       ELSE IF ( htest1.GE.0.0D0 .AND. htest2.LT.0.0D0 ) THEN
         DO kk = 1, iuznhold
@@ -6274,9 +6255,10 @@ C         STORAGE WHEN WATER TABLE RISES TO ELEVATION OF STREAMBED.
           Sfruzbd(5) = Sfruzbd(5) - Totflwt/Delt
           Sfruzbd(6) = Sfruzbd(6) + Totflwt/Delt
         END IF
-        Buff(Ic, Ir, Il) = Buff(Ic, Ir, Il) + Flobot + Totflwt/Delt
+        Gwflow = Flobot + Totflwt/Delt
+        Buff(Ic, Ir, Il) = Buff(Ic, Ir, Il) + Gwflow
 C
-C3------CALCULATE CHANGE IN STORAGE AND UPDATE UNSATURATED ZONE WAVES
+C4------CALCULATE CHANGE IN STORAGE AND UPDATE UNSATURATED ZONE WAVES
 C         WHEN WATER TABLE REMAINS BELOW STREAMBED ELEVATION
 C         AND FLUX IS CONSTANT.
       ELSE IF ( hdif.LT.2.0E-4 .AND. nwavecheck.EQ.iuznhold .AND.
@@ -6289,12 +6271,13 @@ C         AND FLUX IS CONSTANT.
      +                   *Uzwdth(L, i)*Strlen
           Uzflwt(L, i) = Uzseep(L, i)*Uzwdth(L, i)*Strlen*Delt
           Uzolsflx(L, i) = Uzseep(L, i)
-          Ratin = Ratin + (Uzflwt(L, i)/Delt)
-          Buff(Ic, Ir, Il) = Buff(Ic, Ir, Il) + (Uzflwt(L, i)/Delt)
-          iset = iset + Ntotrl/Iuzn
+          Gwflow = Gwflow + (Uzflwt(L, i)/Delt)
+          iset = iset + Ntotrl/Iuzn 
         END DO
+        Ratin = Ratin + Gwflow
+        Buff(Ic, Ir, Il) = Buff(Ic, Ir, Il) + Gwflow
 C
-C4------CALCULATE CHANGE IN STORAGE AND UPDATE UNSATURATED ZONE WAVES
+C5------CALCULATE CHANGE IN STORAGE AND UPDATE UNSATURATED ZONE WAVES
 C         WHEN WATER TABLE REMAINS BELOW STREAMBED ELEVATION.
       ELSE IF ( htest1.LT.0.0D0 .AND. htest2.LT.0.0D0 ) THEN
         CALL ROUTWAVESST(L, Nuzst, Delt, seep, H, Hld, Uzdpst, Uzthst,
@@ -6318,7 +6301,7 @@ C         WHEN WATER TABLE REMAINS BELOW STREAMBED ELEVATION.
         DO i = 1, iuznhold
           IF ( Loop(i).GT.0 ) THEN
 C
-C5------CALCULATE CHANGE IN UNSATURATED ZONE STORAGE WHEN
+C6------CALCULATE CHANGE IN UNSATURATED ZONE STORAGE WHEN
 C         WATER TABLE RISES.
             IF ( H.GT.Hld ) THEN
               fm = 0.0D0
@@ -6331,7 +6314,7 @@ C         WATER TABLE RISES.
               END DO
               jk = iset + 1
 C
-C6------WATER TABLE RISES THROUGH WAVES.
+C7------WATER TABLE RISES THROUGH WAVES.
               IF ( jj.GE.jk ) THEN
                 DO j = iset, iset + Nwavst(L, i) - 1
                   Itrlsth(j) = Itrlst(L, j)
@@ -6355,12 +6338,12 @@ C6------WATER TABLE RISES THROUGH WAVES.
                   k = k + 1
                 END DO
 C
-C7------LOOP THROUGH NUMBER OF TRAIL WAVES INTERSECTED BY WATER TABLE.
+C8------LOOP THROUGH NUMBER OF TRAIL WAVES INTERSECTED BY WATER TABLE.
                 DO j = iset, jj + 1
                   IF ( j.EQ.jj+1 ) THEN
                     IF ( Itrlsth(j).GT.0 ) THEN
 C
-C8------LEAD TRAIL WAVE BELOW WATER TABLE AND FIRST TRAIL WAVE IS
+C9------LEAD TRAIL WAVE BELOW WATER TABLE AND FIRST TRAIL WAVE IS
 C         ABOVE WATER TABLE.
                       IF ( Itrlsth(j).EQ.1 ) THEN
                         Ltrlst(L, j-1) = 1
@@ -6387,7 +6370,7 @@ C         ABOVE WATER TABLE.
                         END IF
                       ELSE
 C
-C9------LEAD TRAIL WAVE BELOW WATER TABLE AND MULTIPLE TRAIL WAVES
+C10-----LEAD TRAIL WAVE BELOW WATER TABLE AND MULTIPLE TRAIL WAVES
 C         ABOVE WATER TABLE.
                         DO k = iset + 1, iset + Itrlsth(j)
                           Ltrlst(L, k) = 1
@@ -6417,7 +6400,7 @@ C         ABOVE WATER TABLE.
                     END IF
                   ELSE IF ( j.NE.jj ) THEN
 C
-C10-----MULTIPLE TRAIL WAVES BELOW AND ABOVE WATER TABLE.
+C11-----MULTIPLE TRAIL WAVES BELOW AND ABOVE WATER TABLE.
                     IF ( Itrlsth(j).GT.jj-j+1 ) THEN
                       DO k = iset + 1, iset + Itrlsth(j) - (jj-j) - 1
                         Ltrlst(L, k) = 1
@@ -6445,7 +6428,7 @@ C10-----MULTIPLE TRAIL WAVES BELOW AND ABOVE WATER TABLE.
                       END DO
                     END IF
 C
-C11-----ONLY ONE LEAD TRAIL AND ONE TRAIL WAVE BELOW WATER TABLE
+C12-----ONLY ONE LEAD TRAIL AND ONE TRAIL WAVE BELOW WATER TABLE
 C         AND THERE ARE MUTIPLE TRAIL WAVES IN SET ABOVE WATER TABLE.
                   ELSE IF ( Itrlsth(j).GT.1 ) THEN
                     DO k = iset + 1, iset + Itrlsth(j) - 1
@@ -6474,7 +6457,7 @@ C         AND THERE ARE MUTIPLE TRAIL WAVES IN SET ABOVE WATER TABLE.
                   END IF
                 END DO
 C
-C12-----DETERMINE VOLUME OF WATER IN WAVES BELOW WATER TABLE.
+C13-----DETERMINE VOLUME OF WATER IN WAVES BELOW WATER TABLE.
                 fm = 0.0D0
                 j = iset
                 DO WHILE ( j.LE.iset+Nwavst(L, i)-2 )
@@ -6508,7 +6491,7 @@ C12-----DETERMINE VOLUME OF WATER IN WAVES BELOW WATER TABLE.
      +               (Uzthst(L, iset+Nwavst(L,i)-1)-Thr)
      +               *Uzdpst(L, iset+Nwavst(L, i)-1)
 C
-C13-----COMPUTE VOLUME OF WATER BELOW WATER TABLE WHEN
+C14-----COMPUTE VOLUME OF WATER BELOW WATER TABLE WHEN
 C         WHEN NO WAVES INTERSECTED.
               ELSE
                 fm = 0.0D0
@@ -6550,7 +6533,7 @@ C         WHEN NO WAVES INTERSECTED.
               Uzstor(L, i) = fm*Uzwdth(L, i)*Strlen
               Delstor(L, i) = Uzstor(L, i) - uzstorhold
 C
-C14------CALCULATE CHANGE IN UNSATURATED ZONE STORAGE WHEN GROUND-
+C15------CALCULATE CHANGE IN UNSATURATED ZONE STORAGE WHEN GROUND-
 C          WATER LEVEL DROPS.
             ELSE IF ( H.LE.Hld ) THEN
               fm = 0.0D0
@@ -6599,8 +6582,9 @@ C          WATER LEVEL DROPS.
             Totuzstor = Totuzstor + Uzstor(L, i)
           END IF
         END DO
-        Ratin = Ratin + Totflwt/Delt
-        Buff(Ic, Ir, Il) = Buff(Ic, Ir, Il) + Totflwt/Delt
+        Gwflow = Totflwt/Delt
+        Ratin = Ratin + Gwflow
+        Buff(Ic, Ir, Il) = Buff(Ic, Ir, Il) + Gwflow
         Sfruzbd(1) = Sfruzbd(1) + Flobot*Delt
         Sfruzbd(2) = Sfruzbd(2) + Totdelstor
         Sfruzbd(3) = Sfruzbd(3) + Totflwt
@@ -6608,7 +6592,7 @@ C          WATER LEVEL DROPS.
         Sfruzbd(5) = Sfruzbd(5) + Totdelstor/Delt
         Sfruzbd(6) = Sfruzbd(6) + Totflwt/Delt
 C
-C15-----UPDATE ALL UNSATURATED ZONE WAVES WHEN WATER TABLE DROPS
+C16-----UPDATE ALL UNSATURATED ZONE WAVES WHEN WATER TABLE DROPS
 C         BELOW STREAMBED.
       ELSE IF ( htest1.LE.0.0D0 .AND. htest2.GE.0.0D0 ) THEN
         iset = 1
@@ -6664,11 +6648,9 @@ C         BELOW STREAMBED.
             Totuzstor = Totuzstor + Uzstor(L, i)
           END IF
         END DO
-C
-C16-----UPDATE RATES AND BUFFERS.
-C
-        Ratin = Ratin + Totflwt/Delt
-        Buff(Ic, Ir, Il) = Buff(Ic, Ir, Il) + Totflwt/Delt
+        Gwflow = Totflwt/Delt
+        Ratin = Ratin + Gwflow
+        Buff(Ic, Ir, Il) = Buff(Ic, Ir, Il) + Gwflow
         Sfruzbd(1) = Sfruzbd(1) + Flobot*Delt
         Sfruzbd(2) = Sfruzbd(2) + Totdelstor
         Sfruzbd(3) = Sfruzbd(3) + Totflwt

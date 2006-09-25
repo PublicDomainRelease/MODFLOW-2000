@@ -58,6 +58,9 @@ METHOD
 
 HISTORY
 
+     MODFLOW-2000 Version 1.17.01 2006/09/22 - This is a bug-fix release.
+        Bug fixes are described in release.txt.
+
      MODFLOW-2000 Version 1.17.00 2006/07/25 - The LAK3, SFR2, and GAG5
         Packages have been updated to support simulation of new 
         capabilities.  The GMG Package has been updated to support a new 
