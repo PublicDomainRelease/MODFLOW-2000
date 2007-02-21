@@ -2,7 +2,7 @@
 C Revised May 20, 2006 DEP and RGN;
 C The Package was modified to be compatible with modifications made
 C  to the Lake (LAK3) Package for computing Lake Outflow
-C
+C RGN Two bugs fixed 10/23/06; initialize flowc; IF logic for calls to RDSEG
 C-------SUBROUTINE GWF1SFR2DF
       SUBROUTINE GWF1SFR2DF(Nlakes, Nlakesar, Lkacc7, Lcstag, Lslake,
      +                      Lstgld, Lcrnf, Istrin, Idstrt, Istrot,
@@ -547,8 +547,8 @@ C33-----RETURN.
       END SUBROUTINE GWF1SFR2ALP
 C
 C-------SUBROUTINE GWF1SFR2RPP
-      SUBROUTINE GWF1SFR2RPP(Strm, Istrm, Nstrm, In, Iout, Seg, Iseg,
-     +                       Nss, Idivar, Iotsg, Sgotflw, Dvrsflw,
+      SUBROUTINE GWF1SFR2RPP(Itrss, Strm, Istrm, Nstrm, In, Iout, Seg, 
+     +                       Iseg, Nss, Idivar, Iotsg, Sgotflw, Dvrsflw,
      +                       Maxpts, Xsec, Qstage, I15, Concq, Concrun,
      +                       Concppt, Nsol, Iouts, Nsfrpar, Nsegdim,
      +                       Iterp, Inamloc, Ibound, Ncol, Nrow, Nlay,
@@ -577,7 +577,7 @@ C     ------------------------------------------------------------------
      +     Sc1, Seg, Sfruzbd, Sgotflw, Strm, Strt, Sy, Uhc, Xsec
       INTEGER I15, Ibound, Idivar, In, Inamloc, Iotsg, Iout, Iouts
       INTEGER Iseg, Isfropt, Istrm, Isuzn, Iterp, Itrlit, Itrlst,
-     +        Itrlsth, Iunitbc6, Iunitlak, Iuzt, Nsegck 
+     +        Itrlsth, Iunitbc6, Iunitlak, Iuzt, Nsegck, Itrss
       INTEGER Ltrlit, Ltrlst, Maxpts, Nbotm, Ncol, Nlay, Nrow, Nsegdim,
      +        Nsfrpar, Nsol, Iss, Itmp, Irdflg, Iptflg, Np
       INTEGER Nss, Nstotrl, Nstrm, Nuzcol, Nuzrow, Nuzst, Nwavst, Nsslk
@@ -784,17 +784,21 @@ C2------READ AND PRINT DATA FOR EACH STREAM REACH.
 C
 C3------CALCULATE RESIDUAL WATER CONTENT FROM SATURATED WATER CONTENT
 C         AND SPECIFIC YIELD WHEN UNSATURATED FLOW IS ACTIVE.
-        IF ( Isfropt.EQ.2 .OR. Isfropt.EQ.3 ) THEN
-          IF ( Iunitbc6.EQ.0 ) THEN
-            Thtr(ii) = Thts(ii) - Sy(jrch, irch, krch)
-     +                 /(Delr(jrch)*Delc(irch))
-          ELSE IF ( LAYCON(krch).EQ.1 ) THEN
-            Thtr(ii) = Thts(ii) - Sc1(jrch, irch, krch)
-     +                 /(Delr(jrch)*Delc(irch))
-          ELSE
-            Thtr(ii) = Thts(ii) - Sy(jrch, irch, krch)
-     +                 /(Delr(jrch)*Delc(irch))
+        IF ( Itrss.EQ.1 ) THEN
+          IF ( Isfropt.EQ.2 .OR. Isfropt.EQ.3 ) THEN
+            IF ( Iunitbc6.EQ.0 ) THEN
+              Thtr(ii) = Thts(ii) - Sy(jrch, irch, krch)
+     +                   /(Delr(jrch)*Delc(irch))
+            ELSE IF ( LAYCON(krch).EQ.1 ) THEN
+              Thtr(ii) = Thts(ii) - Sc1(jrch, irch, krch)
+     +                   /(Delr(jrch)*Delc(irch))
+            ELSE
+              Thtr(ii) = Thts(ii) - Sy(jrch, irch, krch)
+     +                   /(Delr(jrch)*Delc(irch))
+            END IF
           END IF
+        ELSEIF ( Isfropt.EQ.2 .OR. Isfropt.EQ.3 ) THEN
+          Thtr(ii) = 0.0
         END IF
         IF ( Isfropt.EQ.0 ) THEN
           WRITE (Iout, 9009) krch, irch, jrch, jseg, ireach, Strm(1, ii)
@@ -904,17 +908,21 @@ C
 C7------CALCULATE RESIDUAL WATER CONTENT FROM SATURATED WATER CONTENT
 C        AND SPECIFIC YIELD WHEN UNSATURATED FLOW IS ACTIVE.
 Crevised 4/21/2006
-              IF ( Isfropt.EQ.4 .OR. Isfropt.EQ.5 ) THEN
-                IF ( Iunitbc6.EQ.0 ) THEN
-                  Thtr(irch) = Thts(irch) - Sy(jrck, irck, krck)
-     +                       /(Delr(jrck)*Delc(irck))
-                ELSE IF ( LAYCON(krck).EQ.1 ) THEN
-                  Thtr(irch) = Thts(irch) - Sc1(jrck, irck, krck)
-     +                       /(Delr(jrck)*Delc(irck))
-                ELSE
-                  Thtr(irch) = Thts(irch) - Sy(jrck, irck, krck)
-     +                       /(Delr(jrck)*Delc(irck))
+              IF ( Itrss.EQ.1 ) THEN
+                IF ( Isfropt.EQ.4 .OR. Isfropt.EQ.5 ) THEN
+                  IF ( Iunitbc6.EQ.0 ) THEN
+                    Thtr(irch) = Thts(irch) - Sy(jrck, irck, krck)
+     +                         /(Delr(jrck)*Delc(irck))
+                  ELSE IF ( LAYCON(krck).EQ.1 ) THEN
+                    Thtr(irch) = Thts(irch) - Sc1(jrck, irck, krck)
+     +                        /(Delr(jrck)*Delc(irck))
+                  ELSE
+                    Thtr(irch) = Thts(irch) - Sy(jrck, irck, krck)
+     +                         /(Delr(jrck)*Delc(irck))
+                  END IF
                 END IF
+              ELSEIF ( Isfropt.EQ.4 .OR. Isfropt.EQ.5 ) THEN
+                Thtr(irch) = 0.0
               END IF
 C
 C8------CHECK THAT RESIDUAL WATER CONTENT IS LESS THAN SATURATED
@@ -1285,13 +1293,14 @@ C6------READ NON-PARAMETER STREAM SEGMENT DATA.
       IF ( Itmp.GT.0 ) THEN
         lstbeg = 1
         ichk = 1
+crgn changed ELSEIF statement below 10/23/06
         IF ( ISFROPT.GT.0 ) THEN
           IF ( Kkper.GT.1 ) CALL SGWF1SFR2RDSEG(Itmp, lstbeg, In, Iout,
      +         Seg, Iseg, Idivar, Iotsg, Maxpts, Xsec, Qstage, I15, 
      +         Concq,Concrun, Concppt, Nsol, Nsegdim, Nsegck, Nss, ichk,
      +          Nss,Isfropt, Kkper)
-        ELSEIF( NSFRPAR.NE.0 ) THEN
-          CALL SGWF1SFR2RDSEG(Itmp, lstbeg, In, Iout,
+        ELSEIF( NSFRPAR.EQ.0 ) THEN
+          IF ( Kkper.GT.1 )CALL SGWF1SFR2RDSEG(Itmp, lstbeg, In, Iout,
      +         Seg, Iseg, Idivar, Iotsg, Maxpts, Xsec, Qstage, I15,
      +         Concq,Concrun, Concppt, Nsol, Nsegdim, Nsegck, Nss, ichk,
      +          Nss,Isfropt, Kkper)
@@ -1825,7 +1834,7 @@ C         WHEN FIRST STRESS PERIOD IS STEADY STATE.
      +                                  ) + Thtr(l)
                     top = (Uzthst(l, iwvcnt)-Thtr(l))
                     Uzstor(l, i) = (Uzdpst(l, iwvcnt))
-     +                             *top*Wetper(l, iwvcnt)*strlen
+     +                             *top*Wetper(l, i)*strlen
                     Uzolsflx(l, i) = Uzseep(l, i)
                   ELSE
                     Uzflst(l, iwvcnt) = 0.0D0
@@ -2361,6 +2370,8 @@ C
 C28-----COMPUTE FLOW AT MIDPOINT OF REACH IGNORING STREAMBED LEAKAGE.
         IF ( icalc.EQ.0 ) THEN
           flwmpt = flowin + 0.5D0*(runof-etstr+precip)
+Crgn added next line 10/23/06
+          flowc = flowin + runof-etstr+precip
           Sfrq(4, l) = width
           IF ( flwmpt.LT.NEARZERO ) flwmpt = 0.0D0
         END IF
@@ -2845,7 +2856,8 @@ C49-----USE BISECTION WHEN LEAKAGE IS LIMITED BY FLOW IN CHANNEL.
      +                              itstr, widthp, Iout, iprndpth)
                 ELSE IF ( icalc.EQ.3 ) THEN
                   depthx = cdpth*(flwx**fdpth)
-                  widthp = awdth*(flwx**bwdth)
+Crgn changed widhtp to widthx 12/5/06
+                  widthx = awdth*(flwx**bwdth)
                   wetpermx = widthx
                 ELSE IF ( icalc.EQ.4 ) THEN
                   CALL GWF1SFR2TBD(flwx, Qstage, depthx, widthx,

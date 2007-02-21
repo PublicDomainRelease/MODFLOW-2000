@@ -11,6 +11,36 @@ these packages and processes, see mf2k.txt ("Summary of MODFLOW-2000").
 
 NOTE: Any use of trade, product or firm names is for descriptive purposes 
       only and does not imply endorsement by the U.S. Government.
+      
+o Version 1.17.02 02/14/2007:
+
+This version includes fixes to bugs and minor changes in the following 
+packages:
+
+LAK - Several arrays were converted from single precision to double 
+      precision.
+      
+GAG - Two arrays that are common to GAG and LAK were converted from single
+      precision to double precision.
+
+SFR - A bug that caused non-parameter data for stress period 2 and later 
+      stress periods not to be read correctly when unsaturated flow is not
+      simulated was fixed.
+
+RCH - Interpretation of the IRCH array was modified to add support for 0 
+      (zero) values in the array.  A value of 0 is now interpreted to mean
+      no recharge is to be simulated at this location.
+      
+EVT - Interpretation of the IEVT array was modified to add support for 0 
+      (zero) values in the array.  A value of 0 is now interpreted to mean
+      no evapotranspiration is to be simulated at this location.
+      
+ETS - Interpretation of the IETS array was modified to add support for 0 
+      (zero) values in the array.  A value of 0 is now interpreted to mean
+      no evapotranspiration is to be simulated at this location.
+      
+HUF - Output identifying the zone array associated with each hydrogeologic 
+      unit now uses text "ZONE ARRAY" instead of "ZONE".
 
 o Version 1.17.01 09/22/2006:
 
@@ -28,7 +58,7 @@ FHB - A bug affected assignment of head for the special cases of having only
     - A bug caused an invalid entry to be written to a compact cell-by-cell 
       budget file.
       
-LAK - Bug caused probram to crash when THETA was specified as a negative, 
+LAK - Bug caused program to crash when THETA was specified as a negative, 
       floating-point number.
 
 o Version 1.17.00 07/25/2006:

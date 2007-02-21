@@ -1,4 +1,3 @@
-! Time of File Save by ERB: 6/29/2006 12:33PM
 C     ******************************************************************
 C     MAIN CODE FOR U.S. GEOLOGICAL SURVEY MODULAR MODEL -- MODFLOW
 C           BY MICHAEL G. MCDONALD AND ARLEN W. HARBAUGH
@@ -29,7 +28,7 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
 C-------ASSIGN VERSION NUMBER AND DATE
       CHARACTER*40 VERSION
-      PARAMETER (VERSION='1.17.01 09/22/2006')
+      PARAMETER (VERSION='1.17.02 02/14/2007')
 C
 C-----DECLARE ARRAY TYPES
       REAL GX, X, RX, XHS
@@ -233,11 +232,13 @@ C  DEFINE (DF) PROCEDURE
       CALL SEN1BAS6DF(ISENALL,ISEN,IPRINTS,IUNIT(25),LCB1,LCLN,LCSV,NPE,
      &                NPLIST,RCLOSE,IUHEAD,MXSEN,LCSNEW,IOUTG,LCBSCA,
      &                LCISEN)
-      CALL PES1BAS6DF(IBEFLG,IFO,IOUB,IPES,IPR,IPRAR,IPRINT,ITERPF,
+      CALL PES1BAS6DF(IBEALE,IBEFLG,IFO,IOUB,IPES,
+     &                IPR,IPRAR,IPRINT,ITERPF,
      &                ITERPK,ITMXP,IUNIT(26),IYCFLG,JMAX,LASTX,LCDMXA,
      &                LCNIPR,LCNPAR,LCPRM,LCWP,LCWTP,LCWTPS,LCW3,LCW4,
      &                MPR,MPRAR,NPNGAR,SOSC,SOSR,BEFIRST,LCBPRI,LCPARE,
      &                LCAMPA,LCAMCA,LCAAP)
+      CALL GWF1HUF2DF(IOHUFHDS,IOHUFFLWS)
 Cdep replaced SFR1 with SFR2
       CALL GWF1SFR2DF(NLAKES,NLAKESAR,LKACC7,LCSTAG,LSLAKE,LSTGLD,
      &                LCRNF,ISTRIN,IDSTRT,ISTROT,ISTGNW,LSCOUT,LSCONQ,
@@ -862,7 +863,7 @@ C---------FLOW-SIMULATION OPTIONS
 Cdep  Replaced SFR1 with SFR2-- Note either BCF or LPF used for SFR2
 Cdep  Added three new variables for computing lake outflow in Lake Package
         IF(IUNIT(44).GT.0.AND.IUNIT(23).GT.0)THEN
-            CALL GWF1SFR2RPP(RX(LCSTRM),IR(ICSTRM),
+            CALL GWF1SFR2RPP(ITRSS,RX(LCSTRM),IR(ICSTRM),
      2       NSTRM,IUNIT(44),IOUTG,RX(LCSEG),IR(ICSEG),NSS,
      3       IR(LCIVAR),IR(LCOTSG),RX(LCOTFLW),RX(LCDVFLW),MAXPTS,
      4       RX(LCXSEC),RX(LCQSTG),IUNIT(15),RX(LSCONQ),
@@ -885,7 +886,7 @@ Cdep  Added three new variables for computing lake outflow in Lake Package
             END IF
         ELSEIF(IUNIT(44).GT.0.AND.IUNIT(1).GT.0)THEN
 Cdep  Added three new variables for computing lake outflow in Lake Package
-            CALL GWF1SFR2RPP(RX(LCSTRM),IR(ICSTRM),
+            CALL GWF1SFR2RPP(ITRSS,RX(LCSTRM),IR(ICSTRM),
      2       NSTRM,IUNIT(44),IOUTG,RX(LCSEG),IR(ICSEG),NSS,
      3       IR(LCIVAR),IR(LCOTSG),RX(LCOTFLW),RX(LCDVFLW),MAXPTS,
      4       RX(LCXSEC),RX(LCQSTG),IUNIT(15),RX(LSCONQ),
@@ -1328,14 +1329,14 @@ Cdep Revised Lake Package call statement  June 4, 2006
      4                      IOUT,DELT,NSS,NTRB,NDV,IR(INTRB),IR(INDV),
      5                      RX(ISTRIN),RX(ISTROT),RX(ISTGNW),
      6                      RX(LCWTDR),RX(LCLKPR),RX(LCLKEV),
-     7                      GX(LCDELR),GX(LCDELC),RX(LKACC1),
-     8                      RX(LKACC2),RX(LKACC3),RX(LKACC4),
+     7                      GX(LCDELR),GX(LCDELC),RZ(LKACC1),
+     8                      RZ(LKACC2),RZ(LKACC3),RX(LKACC4),
      9                      RX(LKACC5),RX(LKACC6),THETA,RX(LCRNF),
      *                      KKSTP,KKITER,ISSFLG(KKPER),NSSITR,SSCNCR,
      *                      RX(LKSSMN),RX(LKSSMX),RX(IDSTRT),IR(LKNCN),
      *                      RX(LKDSR),RX(LKCNN),RX(LKCHN),RX(IAREN),
      *                      IR(LKLMRR),NSSAR,IUNIT(44),RX(ISTGITR),
-     *                      RX(LKSEP3),RX(IAREATAB),RX(IDPTHTAB),
+     *                      RZ(LKSEP3),RX(IAREATAB),RX(IDPTHTAB),
      *                      NSSLK,RZ(ISLKOTFLW),RZ(IDLKOTFLW),
      *                      RZ(IDLKSTAGE),RX(IBTMS),RX(LCEVAPO),
      *                      RX(LCFLWIN),RX(LCFLWIT),RX(LCWITDW),
@@ -1697,8 +1698,8 @@ C--LAKES
      &              GX(LCBOTM),NBOTM,VBVL,VBNM,MSUM,KSTP,KPER,
      &              ILKCB,ICBCFL,GX(LCBUFF),IOUT,RX(LCSTAG),
      &              PERTIM,TOTIM,IR(IICS),IR(IISUB),RX(ISILL),
-     &              ICMX,NCLS,RX(LCWTDR),LWRT,RX(LKACC1),
-     &              RX(LKACC2),RX(LKACC3),RX(LKACC4),RX(LKACC5),
+     &              ICMX,NCLS,RX(LCWTDR),LWRT,RZ(LKACC1),
+     &              RZ(LKACC2),RZ(LKACC3),RX(LKACC4),RX(LKACC5),
      &              RX(LKACC6),RX(LKACC7),RX(LKACC8),RX(LKACC9),
      &              RX(LKACC10),RX(LKACC11),IR(LKDRY),RX(IBTMS),
      &              IR(LKNCNT),IR(LKKSUB),RX(LKSADJ),RX(LKFLXI),

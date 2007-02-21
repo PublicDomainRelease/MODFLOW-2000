@@ -34,7 +34,10 @@ C----- interest. Open file.
      $ 'from MODFLOW: '
       READ(*,'(A)') FN1
 CERB      OPEN(UNIT=79,FILE=FN1,FORM='UNFORMATTED')
-      OPEN(UNIT=79,FILE=FN1,FORM='UNFORMATTED',ACCESS='TRANSPARENT')
+      ! Use the following line when compiling with Absoft compiler
+      !OPEN(UNIT=79,FILE=FN1,FORM='UNFORMATTED',ACCESS='TRANSPARENT')
+      ! Use the following line when compiling with Lahey or Intel compiler
+      OPEN(UNIT=79,FILE=FN1,FORM='BINARY',ACCESS='SEQUENTIAL')
 C----- Read name of array from which hydrograph values will be saved
       WRITE(*,*) ' Name of unformatted array (i.e. HEAD, DRAWDOWN):'
       READ(*,'(A)') NAME

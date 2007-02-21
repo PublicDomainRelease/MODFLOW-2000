@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.17.01 09/22/2006
+                           VERSION 1.17.02 02/14/2007
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -274,7 +274,7 @@ Branch   3 Extends from JNCT  1 to JNCT  4 and receives 1.00 of flow at JNCT  1
      3    30      2.50      1.00      0.100E-03     1    39    11
      3    31      1.90      1.00      0.100E-03     1    40    11
      3    32      1.30      1.00      0.100E-07     1    41    11
-  CELL-BY-CELL FLOWS WILL BE SAVED ON UNIT 44
+  CELL-BY-CELL FLOWS WILL BE SAVED ON UNIT          44
   DAF debugging is turned off
   DAFLOW is using central differencing for ground-water head
 
@@ -474,7 +474,7 @@ Branch   3 Extends from JNCT  1 to JNCT  4 and receives 1.00 of flow at JNCT  1
      21      1      1     21       6000.    
 
      21 WELLS
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
 
@@ -488,7 +488,7 @@ Branch   3 Extends from JNCT  1 to JNCT  4 and receives 1.00 of flow at JNCT  1
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
   1  0.8901E-06
-   (  1,  2,  3)
+   (  1,  2,  6)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
 
@@ -607,25 +607,25 @@ Branch   3 Extends from JNCT  1 to JNCT  4 and receives 1.00 of flow at JNCT  1
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =           0.0000               STORAGE =           0.0000
+             STORAGE =           2.4283               STORAGE =         116.5517
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =        2625.1313                 WELLS =      126000.0000
               DAFLOW =           0.0000                DAFLOW =           0.0000
 
-            TOTAL IN =        2625.1313              TOTAL IN =      126000.0000
+            TOTAL IN =        2627.5596              TOTAL IN =      126116.5547
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =           0.0000               STORAGE =           0.0000
-       CONSTANT HEAD =        2625.1313         CONSTANT HEAD =      126000.0080
+             STORAGE =          10.2413               STORAGE =         491.5572
+       CONSTANT HEAD =        2625.1316         CONSTANT HEAD =      126000.0078
                WELLS =           0.0000                 WELLS =           0.0000
               DAFLOW =           0.0000                DAFLOW =           0.0000
 
-           TOTAL OUT =        2625.1313             TOTAL OUT =      126000.0080
+           TOTAL OUT =        2635.3728             TOTAL OUT =      126491.5625
 
-            IN - OUT =           0.0000              IN - OUT =      -7.8125E-03
+            IN - OUT =          -7.8132              IN - OUT =        -375.0078
 
- PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
+ PERCENT DISCREPANCY =          -0.30     PERCENT DISCREPANCY =          -0.30
 
 
 
@@ -639,11 +639,11 @@ Branch   3 Extends from JNCT  1 to JNCT  4 and receives 1.00 of flow at JNCT  1
  STRESS PERIOD TIME  1800.1      30.002     0.50003     2.08344E-02 5.70414E-05
          TOTAL TIME  1800.1      30.002     0.50003     2.08344E-02 5.70414E-05
 1
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
-Computed negative flow of    -0.253E-02 at   2 branch  1 node  4
-Computed negative flow of    -0.253E-02 at   2 branch  2 node  4
+Computed negative flow of    -0.252E-02 at   2 branch  1 node  4
+Computed negative flow of    -0.252E-02 at   2 branch  2 node  4
 Computed negative flow of    -0.261E-02 at   2 branch  1 node  4
 Computed negative flow of    -0.261E-02 at   2 branch  2 node  4
      3 CALLS TO PCG ROUTINE FOR TIME STEP   2 IN STRESS PERIOD    1
@@ -662,7 +662,7 @@ Computed negative flow of    -0.261E-02 at   2 branch  2 node  4
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1 -0.6219      0 -0.1045E-04  1 -0.8587      0 -0.1444E-04  1  0.1177E-02
+  1 -0.6220      0 -0.1045E-04  1 -0.8587      0 -0.1443E-04  1  0.1179E-02
    (  1,  2, 20)  (  1,  3, 19)  (  1,  2, 20)  (  1,  3, 19)  (  1,  1,  1)
 
 
@@ -674,23 +674,23 @@ Computed negative flow of    -0.261E-02 at   2 branch  2 node  4
  Day   1  Hour  0.88 Branch  node  Discharge
                           1    12     0.000    
                           3    32     0.000    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
 Computed negative flow of    -0.235E-02 at   2 branch  1 node  6
 Computed negative flow of    -0.235E-02 at   2 branch  2 node  6
-Computed negative flow of    -0.127E-02 at   1 branch  1 node  5
-Computed negative flow of    -0.127E-02 at   1 branch  2 node  5
-Computed negative flow of    -0.894E-02 at   2 branch  1 node  6
-Computed negative flow of    -0.894E-02 at   2 branch  2 node  6
+Computed negative flow of    -0.128E-02 at   1 branch  1 node  5
+Computed negative flow of    -0.128E-02 at   1 branch  2 node  5
+Computed negative flow of    -0.893E-02 at   2 branch  1 node  6
+Computed negative flow of    -0.893E-02 at   2 branch  2 node  6
 Computed negative flow of    -0.130E-02 at   1 branch  1 node  5
 Computed negative flow of    -0.130E-02 at   1 branch  2 node  5
 Computed negative flow of    -0.122E-02 at   2 branch  1 node  6
 Computed negative flow of    -0.122E-02 at   2 branch  2 node  6
-Computed negative flow of    -0.123E-02 at   1 branch  1 node  5
-Computed negative flow of    -0.123E-02 at   1 branch  2 node  5
-Computed negative flow of    -0.101E-02 at   2 branch  1 node  6
-Computed negative flow of    -0.101E-02 at   2 branch  2 node  6
+Computed negative flow of    -0.125E-02 at   1 branch  1 node  5
+Computed negative flow of    -0.125E-02 at   1 branch  2 node  5
+Computed negative flow of    -0.103E-02 at   2 branch  1 node  6
+Computed negative flow of    -0.103E-02 at   2 branch  2 node  6
      4 CALLS TO PCG ROUTINE FOR TIME STEP   3 IN STRESS PERIOD    1
      7 TOTAL ITERATIONS
 
@@ -701,7 +701,7 @@ Computed negative flow of    -0.101E-02 at   2 branch  2 node  6
  ---------------------------------------------------------------------------
   1  0.8320E-01  0 -0.1601E-05  1  0.4297E-01  0 -0.7872E-06  1 -0.2228E-02
    (  1,  1, 21)  (  1,  2,  2)  (  1,  1, 21)  (  1,  3,  3)  (  1,  4,  4)
-  0 -0.4258E-07  1  0.2708E-03
+  0 -0.4259E-07  1  0.2708E-03
    (  1,  3, 19)  (  1,  3,  3)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -710,9 +710,9 @@ Computed negative flow of    -0.101E-02 at   2 branch  2 node  6
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
   1   4.149      0 -0.2675E-04  1   2.057      0 -0.2648E-04  1  0.1097    
-   (  1,  2,  2)  (  1,  4, 18)  (  1,  2,  2)  (  1,  1,  5)  (  1,  3, 19)
+   (  1,  2,  2)  (  1,  4, 18)  (  1,  2,  2)  (  1,  5,  1)  (  1,  3, 19)
   0  0.2183E-05  1 -0.1110E-01
-   (  1,  1, 21)  (  1,  2,  4)
+   (  1,  1, 21)  (  1,  4,  2)
 
 
 
@@ -723,29 +723,29 @@ Computed negative flow of    -0.101E-02 at   2 branch  2 node  6
  Day   1  Hour  1.38 Branch  node  Discharge
                           1    12     0.000    
                           3    32     0.000    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
-Computed negative flow of    -0.869E-02 at   1 branch  1 node  7
-Computed negative flow of    -0.869E-02 at   1 branch  2 node  7
-Computed negative flow of    -0.870E-02 at   2 branch  1 node  9
-Computed negative flow of    -0.870E-02 at   2 branch  2 node  9
-Computed negative flow of    -0.847E-02 at   1 branch  1 node  7
-Computed negative flow of    -0.847E-02 at   1 branch  2 node  7
-Computed negative flow of    -0.544E-02 at   2 branch  1 node  9
-Computed negative flow of    -0.544E-02 at   2 branch  2 node  9
-Computed negative flow of    -0.898E-02 at   1 branch  1 node  7
-Computed negative flow of    -0.898E-02 at   1 branch  2 node  7
-Computed negative flow of    -0.816E-02 at   2 branch  1 node  9
-Computed negative flow of    -0.816E-02 at   2 branch  2 node  9
-Computed negative flow of    -0.902E-02 at   1 branch  1 node  7
-Computed negative flow of    -0.902E-02 at   1 branch  2 node  7
-Computed negative flow of    -0.898E-02 at   2 branch  1 node  9
-Computed negative flow of    -0.898E-02 at   2 branch  2 node  9
-Computed negative flow of    -0.898E-02 at   1 branch  1 node  7
-Computed negative flow of    -0.898E-02 at   1 branch  2 node  7
-Computed negative flow of    -0.890E-02 at   2 branch  1 node  9
-Computed negative flow of    -0.890E-02 at   2 branch  2 node  9
+Computed negative flow of    -0.872E-02 at   1 branch  1 node  7
+Computed negative flow of    -0.872E-02 at   1 branch  2 node  7
+Computed negative flow of    -0.903E-02 at   2 branch  1 node  9
+Computed negative flow of    -0.903E-02 at   2 branch  2 node  9
+Computed negative flow of    -0.848E-02 at   1 branch  1 node  7
+Computed negative flow of    -0.848E-02 at   1 branch  2 node  7
+Computed negative flow of    -0.526E-02 at   2 branch  1 node  9
+Computed negative flow of    -0.526E-02 at   2 branch  2 node  9
+Computed negative flow of    -0.901E-02 at   1 branch  1 node  7
+Computed negative flow of    -0.901E-02 at   1 branch  2 node  7
+Computed negative flow of    -0.858E-02 at   2 branch  1 node  9
+Computed negative flow of    -0.858E-02 at   2 branch  2 node  9
+Computed negative flow of    -0.907E-02 at   1 branch  1 node  7
+Computed negative flow of    -0.907E-02 at   1 branch  2 node  7
+Computed negative flow of    -0.894E-02 at   2 branch  1 node  9
+Computed negative flow of    -0.894E-02 at   2 branch  2 node  9
+Computed negative flow of    -0.903E-02 at   1 branch  1 node  7
+Computed negative flow of    -0.903E-02 at   1 branch  2 node  7
+Computed negative flow of    -0.886E-02 at   2 branch  1 node  9
+Computed negative flow of    -0.886E-02 at   2 branch  2 node  9
      5 CALLS TO PCG ROUTINE FOR TIME STEP   4 IN STRESS PERIOD    1
      9 TOTAL ITERATIONS
 
@@ -754,8 +754,8 @@ Computed negative flow of    -0.890E-02 at   2 branch  2 node  9
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1  0.1553      0 -0.2718E-05  1  0.8250E-01  0  0.1386E-05  1 -0.7487E-02
-   (  1,  1, 21)  (  1,  3,  3)  (  1,  4,  4)  (  1,  5,  3)  (  1,  5,  5)
+  1  0.1553      0 -0.2718E-05  1  0.8250E-01  0  0.1386E-05  1 -0.7486E-02
+   (  1,  1, 21)  (  1,  3,  3)  (  1,  4,  4)  (  1,  3,  5)  (  1,  5,  5)
   0 -0.1258E-06  1  0.1076E-02  0  0.1808E-07  1 -0.9430E-04
    (  1,  4,  6)  (  1,  5,  5)  (  1,  4,  6)  (  1,  6,  6)
 
@@ -764,10 +764,10 @@ Computed negative flow of    -0.890E-02 at   2 branch  2 node  9
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1   7.179      0 -0.9388E-04  1   3.616      0 -0.5679E-04  1  0.3068    
-   (  1,  3,  3)  (  1,  1,  5)  (  1,  4,  4)  (  1,  2,  6)  (  1,  4,  6)
+  1   7.179      0 -0.9388E-04  1   3.616      0 -0.5680E-04  1  0.3068    
+   (  1,  3,  3)  (  1,  1,  5)  (  1,  4,  4)  (  1,  6,  2)  (  1,  6,  4)
   0  0.5154E-05  1 -0.4412E-01  0 -0.7410E-06  1  0.3865E-02
-   (  1,  3,  7)  (  1,  4,  6)  (  1,  3,  7)  (  1,  5,  7)
+   (  1,  3,  7)  (  1,  6,  4)  (  1,  3,  7)  (  1,  5,  7)
 
 
 
@@ -878,25 +878,25 @@ Computed negative flow of    -0.890E-02 at   2 branch  2 node  9
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =           0.0000               STORAGE =           0.0000
+             STORAGE =           9.5958               STORAGE =         108.4657
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =       10500.5254                 WELLS =      126000.0000
-              DAFLOW =      128390.2730                DAFLOW =     4465402.5000
+              DAFLOW =      128390.2500                DAFLOW =     4465401.5000
 
-            TOTAL IN =      138890.7970              TOTAL IN =     4591402.5000
+            TOTAL IN =      138900.3750              TOTAL IN =     4591510.0000
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =      128392.7890               STORAGE =     4465563.5000
-       CONSTANT HEAD =       10500.5254         CONSTANT HEAD =      126000.0080
+             STORAGE =      128430.4688               STORAGE =     4465972.5000
+       CONSTANT HEAD =       10500.5264         CONSTANT HEAD =      126000.0078
                WELLS =           0.0000                 WELLS =           0.0000
-              DAFLOW =           0.0000                DAFLOW =           0.0000
+              DAFLOW =       4.4597E-05                DAFLOW =       1.3248E-03
 
-           TOTAL OUT =      138893.3120             TOTAL OUT =     4591563.5000
+           TOTAL OUT =      138931.0000             TOTAL OUT =     4591972.5000
 
-            IN - OUT =          -2.5156              IN - OUT =        -161.0078
+            IN - OUT =         -30.6250              IN - OUT =        -462.5000
 
- PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
+ PERCENT DISCREPANCY =          -0.02     PERCENT DISCREPANCY =          -0.01
 
 
 
@@ -910,28 +910,28 @@ Computed negative flow of    -0.890E-02 at   2 branch  2 node  9
  STRESS PERIOD TIME  7200.4      120.01      2.0001     8.33375E-02 2.28166E-04
          TOTAL TIME  7200.4      120.01      2.0001     8.33375E-02 2.28166E-04
 1
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
-Computed negative flow of    -0.933E-02 at   1 branch  1 node 10
-Computed negative flow of    -0.933E-02 at   1 branch  2 node 10
-Computed negative flow of    -0.708E-05 at   2 branch  3 node  4
-Computed negative flow of    -0.734E-02 at   1 branch  1 node 10
-Computed negative flow of    -0.734E-02 at   1 branch  2 node 10
+Computed negative flow of    -0.936E-02 at   1 branch  1 node 10
+Computed negative flow of    -0.936E-02 at   1 branch  2 node 10
+Computed negative flow of    -0.244E-04 at   2 branch  3 node  4
+Computed negative flow of    -0.733E-02 at   1 branch  1 node 10
+Computed negative flow of    -0.733E-02 at   1 branch  2 node 10
 Computed negative flow of    -0.171E-01 at   2 branch  1 node 12
 Computed negative flow of    -0.171E-01 at   2 branch  2 node 12
-Computed negative flow of    -0.599E-02 at   1 branch  1 node 10
-Computed negative flow of    -0.599E-02 at   1 branch  2 node 10
+Computed negative flow of    -0.600E-02 at   1 branch  1 node 10
+Computed negative flow of    -0.600E-02 at   1 branch  2 node 10
 Computed negative flow of    -0.114E-01 at   2 branch  1 node 12
 Computed negative flow of    -0.114E-01 at   2 branch  2 node 12
-Computed negative flow of    -0.676E-02 at   1 branch  1 node 10
-Computed negative flow of    -0.676E-02 at   1 branch  2 node 10
-Computed negative flow of    -0.968E-02 at   2 branch  1 node 12
-Computed negative flow of    -0.968E-02 at   2 branch  2 node 12
-Computed negative flow of    -0.617E-02 at   1 branch  1 node 10
-Computed negative flow of    -0.617E-02 at   1 branch  2 node 10
-Computed negative flow of    -0.102E-01 at   2 branch  1 node 12
-Computed negative flow of    -0.102E-01 at   2 branch  2 node 12
+Computed negative flow of    -0.677E-02 at   1 branch  1 node 10
+Computed negative flow of    -0.677E-02 at   1 branch  2 node 10
+Computed negative flow of    -0.970E-02 at   2 branch  1 node 12
+Computed negative flow of    -0.970E-02 at   2 branch  2 node 12
+Computed negative flow of    -0.628E-02 at   1 branch  1 node 10
+Computed negative flow of    -0.628E-02 at   1 branch  2 node 10
+Computed negative flow of    -0.100E-01 at   2 branch  1 node 12
+Computed negative flow of    -0.100E-01 at   2 branch  2 node 12
      5 CALLS TO PCG ROUTINE FOR TIME STEP   5 IN STRESS PERIOD    1
      9 TOTAL ITERATIONS
 
@@ -940,9 +940,9 @@ Computed negative flow of    -0.102E-01 at   2 branch  2 node 12
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1  0.2338      0 -0.3849E-05  1  0.8829E-01  0  0.1483E-05  1 -0.1111E-01
-   (  1,  1, 21)  (  1,  4,  4)  (  1,  6,  6)  (  1,  7,  5)  (  1,  9,  9)
-  0 -0.2040E-06  1  0.2602E-02  0  0.4613E-07  1 -0.2952E-03
+  1  0.2338      0 -0.3849E-05  1  0.8829E-01  0  0.1483E-05  1 -0.1112E-01
+   (  1,  1, 21)  (  1,  4,  4)  (  1,  6,  6)  (  1,  5,  7)  (  1,  9,  9)
+  0 -0.2041E-06  1  0.2602E-02  0  0.4616E-07  1 -0.2972E-03
    (  1,  8, 14)  (  1,  9,  9)  (  1,  8, 14)  (  1,  9,  9)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -950,9 +950,9 @@ Computed negative flow of    -0.102E-01 at   2 branch  2 node 12
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1   10.35      0 -0.1458E-03  1  -3.832      0 -0.6078E-04  1  0.5319    
+  1   10.35      0 -0.1458E-03  1  -3.832      0 -0.6078E-04  1  0.5321    
    (  1,  4,  4)  (  1,  6,  2)  (  1,  7, 15)  (  1,  4,  8)  (  1,  8, 14)
-  0  0.7651E-05  1 -0.1203      0 -0.1791E-05  1  0.1336E-01
+  0  0.7653E-05  1 -0.1204      0 -0.1792E-05  1  0.1345E-01
    (  1,  7, 11)  (  1,  8, 14)  (  1,  7, 11)  (  1,  8, 14)
 
 
@@ -964,16 +964,16 @@ Computed negative flow of    -0.102E-01 at   2 branch  2 node 12
  Day   1  Hour  2.38 Branch  node  Discharge
                           1    12     0.000    
                           3    32     0.000    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
-Computed negative flow of    -0.134E-03 at   1 branch  3 node  5
-Computed negative flow of    -0.211E-04 at   1 branch  3 node  4
-Computed negative flow of    -0.266E-02 at   2 branch  3 node  7
-Computed negative flow of    -0.394E-02 at   2 branch  3 node  7
-Computed negative flow of    -0.376E-02 at   2 branch  3 node  7
-Computed negative flow of    -0.125E-03 at   1 branch  3 node  4
-Computed negative flow of    -0.207E-02 at   2 branch  3 node  7
+Computed negative flow of    -0.228E-04 at   1 branch  3 node  5
+Computed negative flow of    -0.775E-04 at   1 branch  3 node  4
+Computed negative flow of    -0.314E-02 at   2 branch  3 node  7
+Computed negative flow of    -0.455E-02 at   2 branch  3 node  7
+Computed negative flow of    -0.419E-02 at   2 branch  3 node  7
+Computed negative flow of    -0.172E-03 at   1 branch  3 node  4
+Computed negative flow of    -0.196E-02 at   2 branch  3 node  7
      5 CALLS TO PCG ROUTINE FOR TIME STEP   6 IN STRESS PERIOD    1
      9 TOTAL ITERATIONS
 
@@ -984,7 +984,7 @@ Computed negative flow of    -0.207E-02 at   2 branch  3 node  7
  ---------------------------------------------------------------------------
   1  0.2752      0 -0.4630E-05  1  0.1970      0  0.3294E-05  1 -0.3103E-01
    (  1,  5,  5)  (  1,  6,  6)  (  1, 11, 11)  (  1, 12, 10)  (  1, 13, 11)
-  0 -0.5203E-06  1  0.3138E-02  0  0.5630E-07  1 -0.3815E-03
+  0 -0.5203E-06  1  0.3143E-02  0  0.5637E-07  1 -0.3815E-03
    (  1, 14, 10)  (  1, 11, 11)  (  1, 10, 12)  (  1, 14, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -994,7 +994,7 @@ Computed negative flow of    -0.207E-02 at   2 branch  3 node  7
  ---------------------------------------------------------------------------
   1   12.59      0 -0.1894E-03  1  -8.029      0 -0.1344E-03  1   1.265    
    (  1,  6,  6)  (  1,  3,  7)  (  1, 12, 10)  (  1, 13,  9)  (  1, 14, 10)
-  0  0.2120E-04  1 -0.1515      0 -0.2138E-05  1  0.1559E-01
+  0  0.2120E-04  1 -0.1517      0 -0.2141E-05  1  0.1559E-01
    (  1, 15,  9)  (  1, 10, 12)  (  1, 13,  9)  (  1, 15, 10)
 
 
@@ -1016,25 +1016,25 @@ Computed negative flow of    -0.207E-02 at   2 branch  3 node  7
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =           0.0000               STORAGE =           0.0000
+             STORAGE =          13.6172               STORAGE =          92.0060
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =       15750.7871                 WELLS =      126000.0000
-              DAFLOW =      666561.2500                DAFLOW =    16130289.0000
+              DAFLOW =      666561.5000                DAFLOW =    16130303.0000
 
-            TOTAL IN =      682312.0630              TOTAL IN =    16256289.0000
+            TOTAL IN =      682325.8750              TOTAL IN =    16256395.0000
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =      666583.1250               STORAGE =    16130824.0000
-       CONSTANT HEAD =       15750.7891         CONSTANT HEAD =      126000.0080
+             STORAGE =      666634.0625               STORAGE =    16131113.0000
+       CONSTANT HEAD =       15750.7900         CONSTANT HEAD =      126000.0078
                WELLS =           0.0000                 WELLS =           0.0000
-              DAFLOW =       1.0350E-04                DAFLOW =       4.9338E-03
+              DAFLOW =       2.5403E-04                DAFLOW =       7.9615E-03
 
-           TOTAL OUT =      682333.9380             TOTAL OUT =    16256824.0000
+           TOTAL OUT =      682384.8750             TOTAL OUT =    16257113.0000
 
-            IN - OUT =         -21.8771              IN - OUT =        -535.0128
+            IN - OUT =         -59.0000              IN - OUT =        -718.0000
 
- PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
+ PERCENT DISCREPANCY =          -0.01     PERCENT DISCREPANCY =           0.00
 
 
 
@@ -1045,22 +1045,22 @@ Computed negative flow of    -0.207E-02 at   2 branch  3 node  7
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH  1800.1      30.002     0.50003     2.08344E-02 5.70414E-05
- STRESS PERIOD TIME  10801.      180.01      3.0002     0.12501     3.42249E-04
-         TOTAL TIME  10801.      180.01      3.0002     0.12501     3.42249E-04
+ STRESS PERIOD TIME  10801.      180.01      3.0001     0.12501     3.42248E-04
+         TOTAL TIME  10801.      180.01      3.0001     0.12501     3.42248E-04
 1
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
-Computed negative flow of    -0.130E-01 at   1 branch  3 node 11
-Computed negative flow of    -0.105E-01 at   2 branch  3 node 14
-Computed negative flow of    -0.142E-01 at   1 branch  3 node 11
-Computed negative flow of    -0.292E-02 at   2 branch  3 node 14
-Computed negative flow of    -0.120E-01 at   1 branch  3 node 11
-Computed negative flow of    -0.941E-02 at   2 branch  3 node 14
-Computed negative flow of    -0.948E-02 at   1 branch  3 node 11
-Computed negative flow of    -0.786E-02 at   2 branch  3 node 14
-Computed negative flow of    -0.900E-02 at   1 branch  3 node 11
-Computed negative flow of    -0.722E-02 at   2 branch  3 node 14
+Computed negative flow of    -0.111E-01 at   1 branch  3 node 11
+Computed negative flow of    -0.691E-02 at   2 branch  3 node 14
+Computed negative flow of    -0.126E-01 at   1 branch  3 node 11
+Computed negative flow of    -0.456E-02 at   2 branch  3 node 14
+Computed negative flow of    -0.132E-01 at   1 branch  3 node 11
+Computed negative flow of    -0.955E-02 at   2 branch  3 node 14
+Computed negative flow of    -0.121E-01 at   1 branch  3 node 11
+Computed negative flow of    -0.459E-02 at   2 branch  3 node 14
+Computed negative flow of    -0.122E-01 at   1 branch  3 node 11
+Computed negative flow of    -0.981E-02 at   2 branch  3 node 14
      5 CALLS TO PCG ROUTINE FOR TIME STEP   7 IN STRESS PERIOD    1
      9 TOTAL ITERATIONS
 
@@ -1069,9 +1069,9 @@ Computed negative flow of    -0.722E-02 at   2 branch  3 node 14
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1  0.3731      0  0.6224E-05  1  0.1744      0  0.2928E-05  1 -0.1807E-01
+  1  0.3731      0  0.6224E-05  1  0.1744      0  0.2928E-05  1 -0.1806E-01
    (  1, 11, 11)  (  1, 12, 10)  (  1, 17, 11)  (  1, 18, 10)  (  1, 20, 11)
-  0 -0.3036E-06  1  0.3207E-02  0  0.5384E-07  1 -0.3609E-03
+  0 -0.3035E-06  1  0.3204E-02  0  0.5379E-07  1 -0.3610E-03
    (  1, 21, 10)  (  1, 19, 11)  (  1, 20, 10)  (  1, 20, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -1079,9 +1079,9 @@ Computed negative flow of    -0.722E-02 at   2 branch  3 node 14
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1  -15.75      0 -0.2538E-03  1  -7.100      0 -0.1192E-03  1  0.7381    
+  1  -15.75      0 -0.2538E-03  1  -7.100      0 -0.1192E-03  1  0.7379    
    (  1, 10, 12)  (  1, 13,  9)  (  1, 18, 10)  (  1, 19,  9)  (  1, 21, 10)
-  0  0.1240E-04  1 -0.1305      0 -0.2192E-05  1  0.1474E-01
+  0  0.1240E-04  1 -0.1304      0 -0.2190E-05  1  0.1474E-01
    (  1, 22,  9)  (  1, 20, 10)  (  1, 21,  9)  (  1, 21, 10)
 
 
@@ -1093,19 +1093,19 @@ Computed negative flow of    -0.722E-02 at   2 branch  3 node 14
  Day   1  Hour  3.38 Branch  node  Discharge
                           1    12     302.2    
                           3    32     0.000    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
-Computed negative flow of    -0.752E-02 at   1 branch  3 node 18
-Computed negative flow of    -0.943E-02 at   2 branch  3 node 21
-Computed negative flow of    -0.772E-02 at   1 branch  3 node 17
-Computed negative flow of    -0.984E-02 at   2 branch  3 node 21
-Computed negative flow of    -0.137E-01 at   1 branch  3 node 17
-Computed negative flow of    -0.669E-02 at   2 branch  3 node 21
-Computed negative flow of    -0.139E-01 at   1 branch  3 node 17
-Computed negative flow of    -0.478E-02 at   2 branch  3 node 21
-Computed negative flow of    -0.120E-01 at   1 branch  3 node 17
-Computed negative flow of    -0.471E-02 at   2 branch  3 node 21
+Computed negative flow of    -0.799E-02 at   1 branch  3 node 18
+Computed negative flow of    -0.769E-02 at   2 branch  3 node 21
+Computed negative flow of    -0.841E-02 at   1 branch  3 node 17
+Computed negative flow of    -0.113E-01 at   2 branch  3 node 21
+Computed negative flow of    -0.148E-01 at   1 branch  3 node 17
+Computed negative flow of    -0.463E-02 at   2 branch  3 node 21
+Computed negative flow of    -0.110E-01 at   1 branch  3 node 17
+Computed negative flow of    -0.505E-03 at   2 branch  3 node 21
+Computed negative flow of    -0.114E-01 at   1 branch  3 node 17
+Computed negative flow of    -0.447E-02 at   2 branch  3 node 21
      5 CALLS TO PCG ROUTINE FOR TIME STEP   8 IN STRESS PERIOD    1
      9 TOTAL ITERATIONS
 
@@ -1116,7 +1116,7 @@ Computed negative flow of    -0.471E-02 at   2 branch  3 node 21
  ---------------------------------------------------------------------------
   1  0.3449      0  0.6615E-05  1  0.1719      0  0.2888E-05  1 -0.2010E-01
    (  1, 11, 11)  (  1, 10, 12)  (  1, 24, 11)  (  1, 25, 10)  (  1, 25, 11)
-  0 -0.3379E-06  1  0.3420E-02  0  0.5737E-07  1 -0.2936E-03
+  0 -0.3379E-06  1  0.3410E-02  0  0.5720E-07  1 -0.2944E-03
    (  1, 26, 10)  (  1, 27, 11)  (  1, 28, 10)  (  1, 28, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -1126,7 +1126,7 @@ Computed negative flow of    -0.471E-02 at   2 branch  3 node 21
  ---------------------------------------------------------------------------
   1  -18.05      0 -0.2336E-03  1  -6.993      0 -0.1175E-03  1  0.8221    
    (  1, 10, 12)  (  1, 13,  9)  (  1, 25, 10)  (  1, 26,  9)  (  1, 26, 10)
-  0  0.1382E-04  1 -0.1395      0 -0.2339E-05  1  0.1201E-01
+  0  0.1382E-04  1 -0.1390      0 -0.2332E-05  1  0.1204E-01
    (  1, 27,  9)  (  1, 28, 10)  (  1, 29,  9)  (  1, 29, 10)
 
 
@@ -1163,7 +1163,7 @@ Computed negative flow of    -0.471E-02 at   2 branch  3 node 21
       -0.0217 -0.0004  0.0000  0.0000  0.0000  0.0000
    8   0.0000  0.0000  0.0000  0.0000  0.0000 -0.0003 -0.0187 -0.9601 -0.0170 -0.0002  0.0000 -0.0002 -0.0170 -0.9601 -0.0187
       -0.0003  0.0000  0.0000  0.0000  0.0000  0.0000
-   9   0.0000  0.0000  0.0000  0.0000  0.0000  0.0000 -0.0003 -0.0170 -0.9220 -0.0153 -0.0004 -0.0153 -0.9220 -0.0170 -0.0003
+   9   0.0000  0.0000  0.0000  0.0000  0.0000  0.0000 -0.0003 -0.0170 -0.9221 -0.0153 -0.0004 -0.0153 -0.9221 -0.0170 -0.0003
        0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
   10   0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000 -0.0002 -0.0153 -0.8718 -0.0229 -0.8718 -0.0153 -0.0002  0.0000
        0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
@@ -1238,23 +1238,23 @@ Computed negative flow of    -0.471E-02 at   2 branch  3 node 21
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =           0.0000               STORAGE =           0.0000
+             STORAGE =          16.9809               STORAGE =          78.2445
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =       21001.0488                 WELLS =      126000.0000
-              DAFLOW =     1615222.5000                DAFLOW =    24058860.0000
+              DAFLOW =     1615223.0000                DAFLOW =    24058870.0000
 
-            TOTAL IN =     1636223.5000              TOTAL IN =    24184860.0000
+            TOTAL IN =     1636241.0000              TOTAL IN =    24184948.0000
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =     1615247.3800               STORAGE =    24058688.0000
-       CONSTANT HEAD =       21001.0508         CONSTANT HEAD =      126000.0080
+             STORAGE =     1615309.5000               STORAGE =    24058962.0000
+       CONSTANT HEAD =       21001.0527         CONSTANT HEAD =      126000.0156
                WELLS =           0.0000                 WELLS =           0.0000
-              DAFLOW =       1.4687E-04                DAFLOW =       1.9925E-03
+              DAFLOW =       3.1480E-04                DAFLOW =       2.1293E-03
 
-           TOTAL OUT =     1636248.3800             TOTAL OUT =    24184688.0000
+           TOTAL OUT =     1636310.5000             TOTAL OUT =    24184962.0000
 
-            IN - OUT =         -24.8771              IN - OUT =         171.9902
+            IN - OUT =         -69.5000              IN - OUT =         -14.0000
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -1267,18 +1267,18 @@ Computed negative flow of    -0.471E-02 at   2 branch  3 node 21
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH  1800.1      30.002     0.50003     2.08344E-02 5.70414E-05
- STRESS PERIOD TIME  14401.      240.01      4.0002     0.16668     4.56331E-04
-         TOTAL TIME  14401.      240.01      4.0002     0.16668     4.56331E-04
+ STRESS PERIOD TIME  14401.      240.01      4.0002     0.16667     4.56331E-04
+         TOTAL TIME  14401.      240.01      4.0002     0.16667     4.56331E-04
 1
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
-Computed negative flow of    -0.971E-02 at   1 branch  3 node 24
-Computed negative flow of    -0.773E-02 at   2 branch  3 node 28
-Computed negative flow of    -0.721E-02 at   2 branch  3 node 28
-Computed negative flow of    -0.105E-01 at   2 branch  3 node 28
-Computed negative flow of    -0.107E-01 at   2 branch  3 node 28
-Computed negative flow of    -0.528E-02 at   2 branch  3 node 28
+Computed negative flow of    -0.105E-01 at   1 branch  3 node 24
+Computed negative flow of    -0.939E-02 at   2 branch  3 node 28
+Computed negative flow of    -0.545E-02 at   2 branch  3 node 28
+Computed negative flow of    -0.101E-01 at   2 branch  3 node 28
+Computed negative flow of    -0.164E-02 at   2 branch  3 node 28
+Computed negative flow of    -0.667E-02 at   2 branch  3 node 28
      5 CALLS TO PCG ROUTINE FOR TIME STEP   9 IN STRESS PERIOD    1
      9 TOTAL ITERATIONS
 
@@ -1287,9 +1287,9 @@ Computed negative flow of    -0.528E-02 at   2 branch  3 node 28
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1  0.3261      0  0.5477E-05  1  0.1649      0  0.2769E-05  1 -0.1951E-01
+  1  0.3261      0  0.5477E-05  1  0.1649      0  0.2769E-05  1 -0.1952E-01
    (  1, 26, 11)  (  1, 27, 10)  (  1, 31, 11)  (  1, 32, 10)  (  1, 34, 11)
-  0 -0.3271E-06  1  0.3009E-02  0  0.5047E-07  1 -0.2178E-03
+  0 -0.3273E-06  1  0.3013E-02  0  0.5053E-07  1 -0.2264E-03
    (  1, 35, 10)  (  1, 34, 11)  (  1, 35, 10)  (  1, 35, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -1297,9 +1297,9 @@ Computed negative flow of    -0.528E-02 at   2 branch  3 node 28
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1  -14.91      0 -0.2231E-03  1  -6.713      0 -0.1127E-03  1  0.7960    
+  1  -14.91      0 -0.2231E-03  1  -6.713      0 -0.1127E-03  1  0.7964    
    (  1, 10, 12)  (  1, 28,  9)  (  1, 32, 10)  (  1, 33,  9)  (  1, 35, 10)
-  0  0.1335E-04  1 -0.1227      0 -0.2058E-05  1  0.8910E-02
+  0  0.1335E-04  1 -0.1229      0 -0.2061E-05  1  0.9263E-02
    (  1, 36,  9)  (  1, 35, 10)  (  1, 36,  9)  (  1, 36, 10)
 
 
@@ -1307,18 +1307,18 @@ Computed negative flow of    -0.528E-02 at   2 branch  3 node 28
  NO OUTPUT CONTROL FOR STRESS PERIOD    1   TIME STEP   9
  Day   1  Hour  4.12 Branch  node  Discharge
                           1    12     345.9    
-                          3    32    0.2173    
+                          3    32    0.2190    
  Day   1  Hour  4.38 Branch  node  Discharge
                           1    12     325.1    
                           3    32     0.000    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
-Computed negative flow of    -0.169E-01 at   1 branch  3 node 31
-Computed negative flow of    -0.144E-01 at   1 branch  3 node 31
-Computed negative flow of    -0.994E-02 at   1 branch  3 node 31
-Computed negative flow of    -0.993E-02 at   1 branch  3 node 31
-Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
+Computed negative flow of    -0.179E-01 at   1 branch  3 node 31
+Computed negative flow of    -0.132E-01 at   1 branch  3 node 31
+Computed negative flow of    -0.879E-02 at   1 branch  3 node 31
+Computed negative flow of    -0.118E-01 at   1 branch  3 node 31
+Computed negative flow of    -0.976E-02 at   1 branch  3 node 31
      5 CALLS TO PCG ROUTINE FOR TIME STEP  10 IN STRESS PERIOD    1
      9 TOTAL ITERATIONS
 
@@ -1329,7 +1329,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  ---------------------------------------------------------------------------
   1  0.3126      0  0.5253E-05  1  0.1646      0  0.2764E-05  1 -0.1355E-01
    (  1, 33, 11)  (  1, 34, 10)  (  1, 38, 11)  (  1, 39, 10)  (  1, 39, 11)
-  0 -0.2264E-06  1  0.2022E-02  0  0.3119E-07  1  0.1097E-03
+  0 -0.2265E-06  1  0.2015E-02  0  0.3108E-07  1  0.1105E-03
    (  1, 40, 10)  (  1, 40, 11)  (  1, 39, 12)  (  1, 26, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -1337,10 +1337,10 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1  -12.73      0 -0.2140E-03  1  -6.700      0 -0.1125E-03  1  0.5516    
+  1  -12.73      0 -0.2140E-03  1  -6.700      0 -0.1125E-03  1  0.5518    
    (  1, 34, 10)  (  1, 35,  9)  (  1, 39, 10)  (  1, 40,  9)  (  1, 40, 10)
-  0  0.8371E-05  1 -0.7590E-01  0 -0.1270E-05  1 -0.4470E-02
-   (  1, 37, 13)  (  1, 39, 12)  (  1, 38, 13)  (  1, 21, 10)
+  0  0.8373E-05  1 -0.7561E-01  0 -0.1265E-05  1 -0.4493E-02
+   (  1, 37, 13)  (  1, 39, 12)  (  1, 38, 13)  (  1, 27, 10)
 
 
 
@@ -1351,7 +1351,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  Day   1  Hour  4.88 Branch  node  Discharge
                           1    12     265.0    
                           3    32     95.90    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      4 CALLS TO PCG ROUTINE FOR TIME STEP  11 IN STRESS PERIOD    1
@@ -1362,9 +1362,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1  0.2996      0  0.5014E-05  1  0.5455E-01  0  0.8211E-06  1  0.4686E-02
+  1  0.2996      0  0.5014E-05  1  0.5456E-01  0  0.8212E-06  1  0.4688E-02
    (  1, 39, 11)  (  1, 40, 10)  (  1, 40, 11)  (  1, 39, 12)  (  1, 26, 11)
-  0  0.7884E-07  1 -0.5972E-03
+  0  0.7888E-07  1 -0.5964E-03
    (  1, 27, 10)  (  1, 33, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -1372,9 +1372,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1  -12.19      0 -0.1958E-03  1  -2.003      0  0.4129E-04  1 -0.1912    
+  1  -12.19      0 -0.1958E-03  1  -2.003      0  0.4129E-04  1 -0.1913    
    (  1, 40, 10)  (  1, 38,  9)  (  1, 39, 12)  (  1, 40, 11)  (  1, 27, 10)
-  0 -0.4725E-05  1  0.2435E-01
+  0 -0.4722E-05  1  0.2432E-01
    (  1,  8, 14)  (  1, 34, 10)
 
 
@@ -1396,25 +1396,25 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =        9937.6680               STORAGE =      473990.5940
+             STORAGE =        9958.8096               STORAGE =      474050.0625
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =       28876.4414                 WELLS =      126000.0000
-              DAFLOW =     2892964.0000                DAFLOW =    15747944.0000
+              DAFLOW =     2892964.7500                DAFLOW =    15747957.0000
 
-            TOTAL IN =     2931778.0000              TOTAL IN =    16347935.0000
+            TOTAL IN =     2931800.0000              TOTAL IN =    16348007.0000
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =     2900620.2500               STORAGE =    16113552.0000
-       CONSTANT HEAD =       28991.6973         CONSTANT HEAD =      130356.2970
+             STORAGE =     2900699.0000               STORAGE =    16113796.0000
+       CONSTANT HEAD =       28991.6992         CONSTANT HEAD =      130356.3203
                WELLS =           0.0000                 WELLS =           0.0000
-              DAFLOW =        2265.3767                DAFLOW =      108732.6330
+              DAFLOW =        2265.3945                DAFLOW =      108733.4844
 
-           TOTAL OUT =     2931877.2500             TOTAL OUT =    16352641.0000
+           TOTAL OUT =     2931956.0000             TOTAL OUT =    16352886.0000
 
-            IN - OUT =         -99.2146              IN - OUT =       -4706.3359
+            IN - OUT =        -156.0000              IN - OUT =       -4879.0000
 
- PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =          -0.03
+ PERCENT DISCREPANCY =          -0.01     PERCENT DISCREPANCY =          -0.03
 
 
 
@@ -1425,10 +1425,10 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
                     SECONDS     MINUTES      HOURS       DAYS        YEARS
                     -----------------------------------------------------------
    TIME STEP LENGTH  1800.1      30.002     0.50003     2.08344E-02 5.70414E-05
- STRESS PERIOD TIME  19801.      330.02      5.5003     0.22918     6.27456E-04
-         TOTAL TIME  19801.      330.02      5.5003     0.22918     6.27456E-04
+ STRESS PERIOD TIME  19801.      330.02      5.5003     0.22918     6.27455E-04
+         TOTAL TIME  19801.      330.02      5.5003     0.22918     6.27455E-04
 1
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      4 CALLS TO PCG ROUTINE FOR TIME STEP  12 IN STRESS PERIOD    1
@@ -1439,9 +1439,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1  0.2533      0  0.3967E-05  1 -0.2228E-01  0 -0.3964E-06  1  0.4142E-02
+  1  0.2533      0  0.3967E-05  1 -0.2228E-01  0 -0.3963E-06  1  0.4142E-02
    (  1, 40, 11)  (  1, 40, 10)  (  1, 11, 11)  (  1,  9, 13)  (  1, 37, 11)
-  0  0.6961E-07  1 -0.5027E-03
+  0  0.6962E-07  1 -0.5031E-03
    (  1, 38, 10)  (  1, 37, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -1449,9 +1449,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1  -9.645      0  0.1620E-03  1   1.062      0  0.1882E-04  1 -0.1686    
+  1  -9.645      0  0.1620E-03  1   1.062      0  0.1882E-04  1 -0.1687    
    (  1, 40, 10)  (  1, 40, 11)  (  1,  9, 13)  (  1,  9, 13)  (  1, 38, 10)
-  0 -0.2834E-05  1  0.2046E-01
+  0 -0.2834E-05  1  0.2048E-01
    (  1, 39,  9)  (  1, 38, 10)
 
 
@@ -1563,23 +1563,23 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =       35362.1484               STORAGE =     1220314.0000
+             STORAGE =       35384.3359               STORAGE =     1220364.1250
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =       31501.5723                 WELLS =      126000.0000
-              DAFLOW =     3099639.7500                DAFLOW =     9919935.0000
+              DAFLOW =     3099640.5000                DAFLOW =     9919936.0000
 
-            TOTAL IN =     3166503.5000              TOTAL IN =    11266249.0000
+            TOTAL IN =     3166526.5000              TOTAL IN =    11266300.0000
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =     3120866.7500               STORAGE =    10571300.0000
-       CONSTANT HEAD =       31761.2402         CONSTANT HEAD =      132931.4530
+             STORAGE =     3120950.2500               STORAGE =    10571530.0000
+       CONSTANT HEAD =       31761.2441         CONSTANT HEAD =      132931.4688
                WELLS =           0.0000                 WELLS =           0.0000
-              DAFLOW =       14045.9785                DAFLOW =      565440.6250
+              DAFLOW =       14046.0195                DAFLOW =      565441.7500
 
-           TOTAL OUT =     3166674.0000             TOTAL OUT =    11269672.0000
+           TOTAL OUT =     3166757.5000             TOTAL OUT =    11269903.0000
 
-            IN - OUT =        -170.4980              IN - OUT =       -3423.0781
+            IN - OUT =        -231.0000              IN - OUT =       -3603.0000
 
  PERCENT DISCREPANCY =          -0.01     PERCENT DISCREPANCY =          -0.03
 
@@ -1595,7 +1595,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  STRESS PERIOD TIME  21601.      360.02      6.0003     0.25001     6.84497E-04
          TOTAL TIME  21601.      360.02      6.0003     0.25001     6.84497E-04
 1
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      4 CALLS TO PCG ROUTINE FOR TIME STEP  13 IN STRESS PERIOD    1
@@ -1608,7 +1608,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  ---------------------------------------------------------------------------
   1  0.1843      0  0.2954E-05  1 -0.1793E-01  0 -0.3840E-06  1  0.3110E-02
    (  1, 40, 11)  (  1, 40, 10)  (  1, 11, 11)  (  1, 10, 12)  (  1, 40, 11)
-  0  0.4724E-07  1 -0.3746E-03
+  0  0.4723E-07  1 -0.3748E-03
    (  1, 40, 10)  (  1, 40, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -1616,10 +1616,10 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1  -7.184      0  0.1234E-03  1   1.022      0 -0.1466E-04  1 -0.1208    
+  1  -7.184      0  0.1234E-03  1   1.022      0 -0.1466E-04  1 -0.1209    
    (  1, 40, 10)  (  1, 40, 11)  (  1, 10, 12)  (  1, 40, 11)  (  1, 10, 12)
-  0  0.2234E-05  1  0.1413E-01
-   (  1, 40, 11)  (  1, 40, 10)
+  0  0.2234E-05  1  0.1418E-01
+   (  1, 40, 11)  (  1, 10, 12)
 
 
 
@@ -1630,7 +1630,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  Day   1  Hour  6.38 Branch  node  Discharge
                           1    12     133.4    
                           3    32     387.7    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      4 CALLS TO PCG ROUTINE FOR TIME STEP  14 IN STRESS PERIOD    1
@@ -1641,9 +1641,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1  0.1196      0  0.1877E-05  1 -0.1419E-01  0 -0.3126E-06  1  0.2252E-02
+  1  0.1196      0  0.1877E-05  1 -0.1419E-01  0 -0.3125E-06  1  0.2251E-02
    (  1, 40, 11)  (  1, 40, 10)  (  1, 11, 11)  (  1, 10, 12)  (  1, 40, 11)
-  0  0.3430E-07  1 -0.2621E-03
+  0  0.3429E-07  1 -0.2622E-03
    (  1, 40, 10)  (  1, 40, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -1651,9 +1651,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1  -4.568      0  0.9135E-04  1  0.8303      0 -0.1132E-04  1 -0.8339E-01
+  1  -4.568      0  0.9135E-04  1  0.8303      0 -0.1132E-04  1 -0.8337E-01
    (  1, 40, 10)  (  1, 40, 11)  (  1, 10, 12)  (  1, 40, 11)  (  1, 40, 10)
-  0  0.1515E-05  1  0.9913E-02
+  0  0.1514E-05  1  0.9900E-02
    (  1, 40, 11)  (  1, 40, 10)
 
 
@@ -1665,7 +1665,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  Day   1  Hour  6.88 Branch  node  Discharge
                           1    12     107.4    
                           3    32     334.1    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      4 CALLS TO PCG ROUTINE FOR TIME STEP  15 IN STRESS PERIOD    1
@@ -1676,9 +1676,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1  0.8006E-01  0 -0.1214E-05  1 -0.1110E-01  0 -0.2046E-06  1  0.1287E-02
+  1  0.8006E-01  0 -0.1214E-05  1 -0.1110E-01  0 -0.2046E-06  1  0.1285E-02
    (  1, 40, 11)  (  1,  1,  1)  (  1, 36, 11)  (  1,  4, 18)  (  1, 38, 11)
-  0  0.2162E-07  1 -0.1587E-03
+  0  0.2159E-07  1 -0.1582E-03
    (  1, 39, 10)  (  1, 40, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -1686,9 +1686,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1   3.211      0  0.7275E-04  1  0.5430      0  0.7568E-05  1 -0.5234E-01
+  1   3.211      0  0.7275E-04  1  0.5430      0  0.7567E-05  1 -0.5227E-01
    (  1,  1,  1)  (  1, 40, 11)  (  1,  4, 18)  (  1, 38,  9)  (  1, 39, 10)
-  0  0.9159E-06  1  0.6901E-02
+  0  0.9157E-06  1  0.7074E-02
    (  1, 40, 11)  (  1, 10, 12)
 
 
@@ -1700,7 +1700,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  Day   1  Hour  7.38 Branch  node  Discharge
                           1    12     87.83    
                           3    32     292.7    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      5 CALLS TO PCG ROUTINE FOR TIME STEP  16 IN STRESS PERIOD    1
@@ -1711,9 +1711,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1 -0.6822E-01  0 -0.1203E-05  1 -0.1014E-01  0 -0.2241E-06  1  0.3450E-02
+  1 -0.6822E-01  0 -0.1203E-05  1 -0.1014E-01  0 -0.2241E-06  1  0.3449E-02
    (  1,  1, 21)  (  1,  1,  1)  (  1, 11, 11)  (  1,  1,  1)  (  1, 38, 11)
-  0  0.5796E-07  1 -0.2387E-02  0 -0.4004E-07  1  0.3047E-04
+  0  0.5794E-07  1 -0.2387E-02  0 -0.4004E-07  1  0.3028E-04
    (  1, 39, 10)  (  1, 32, 11)  (  1, 33, 10)  (  1, 40, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -1721,9 +1721,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1   3.170      0  0.5502E-04  1  0.5890      0  0.6921E-05  1 -0.1408    
+  1   3.170      0  0.5503E-04  1  0.5890      0  0.6919E-05  1 -0.1407    
    (  1,  1,  1)  (  1, 40, 11)  (  1,  1,  1)  (  1, 13,  9)  (  1, 39, 10)
-  0 -0.2365E-05  1  0.9774E-01  0  0.1639E-05  1 -0.1127E-02
+  0 -0.2364E-05  1  0.9775E-01  0  0.1639E-05  1 -0.1120E-02
    (  1, 40,  9)  (  1, 33, 10)  (  1, 34,  9)  (  1, 39, 12)
 
 
@@ -1746,8 +1746,8 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  ...........................................................................................................................
    1  -1.0525 -0.1123 -0.0057 -0.0002  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
        0.0000  0.0000 -0.0002 -0.0057 -0.1123 -1.0525
-   2  -0.1123 -1.0395 -0.1056 -0.0053 -0.0002  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
-       0.0000 -0.0002 -0.0053 -0.1056 -1.0395 -0.1123
+   2  -0.1123 -1.0396 -0.1056 -0.0053 -0.0002  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
+       0.0000 -0.0002 -0.0053 -0.1056 -1.0396 -0.1123
    3  -0.0057 -0.1056 -1.0423 -0.1033 -0.0050 -0.0002  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
       -0.0002 -0.0050 -0.1033 -1.0423 -0.1056 -0.0057
    4  -0.0002 -0.0053 -0.1033 -1.0586 -0.1006 -0.0048 -0.0002  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000 -0.0002
@@ -1764,7 +1764,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
       -0.0001  0.0000  0.0000  0.0000  0.0000  0.0000
   10   0.0000  0.0000  0.0000  0.0000  0.0000  0.0000 -0.0001 -0.0038 -0.0861 -1.1068 -0.1339 -1.1068 -0.0861 -0.0038 -0.0001
        0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
-  11   0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000 -0.0001 -0.0039 -0.0926 -1.1903 -0.0926 -0.0039 -0.0001  0.0000
+  11   0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000 -0.0001 -0.0039 -0.0926 -1.1902 -0.0926 -0.0039 -0.0001  0.0000
        0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
   12   0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000 -0.0010 -0.0481 -1.2473 -0.0481 -0.0010  0.0000  0.0000
        0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
@@ -1835,25 +1835,25 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =      284810.1880               STORAGE =     3945611.0000
+             STORAGE =      284838.3750               STORAGE =     3945687.2500
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =       42002.1016                 WELLS =      126000.0000
-              DAFLOW =     3353409.2500                DAFLOW =      971379.8120
+              DAFLOW =     3353410.5000                DAFLOW =      971385.1250
 
-            TOTAL IN =     3680221.5000              TOTAL IN =     5042991.0000
+            TOTAL IN =     3680251.0000              TOTAL IN =     5043072.5000
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =     3459857.0000               STORAGE =     2109861.7500
-       CONSTANT HEAD =       43105.2930         CONSTANT HEAD =      137229.0310
+             STORAGE =     3459959.0000               STORAGE =     2110018.2500
+       CONSTANT HEAD =       43105.2969         CONSTANT HEAD =      137229.0312
                WELLS =           0.0000                 WELLS =           0.0000
-              DAFLOW =      177542.8590                DAFLOW =     2796087.5000
+              DAFLOW =      177543.3750                DAFLOW =     2796091.7500
 
-           TOTAL OUT =     3680505.2500             TOTAL OUT =     5043178.5000
+           TOTAL OUT =     3680607.7500             TOTAL OUT =     5043339.0000
 
-            IN - OUT =        -283.6133              IN - OUT =        -187.4688
+            IN - OUT =        -356.7500              IN - OUT =        -266.5000
 
- PERCENT DISCREPANCY =          -0.01     PERCENT DISCREPANCY =           0.00
+ PERCENT DISCREPANCY =          -0.01     PERCENT DISCREPANCY =          -0.01
 
 
 
@@ -1867,7 +1867,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  STRESS PERIOD TIME  28801.      480.02      8.0004     0.33335     9.12663E-04
          TOTAL TIME  28801.      480.02      8.0004     0.33335     9.12663E-04
 1
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      5 CALLS TO PCG ROUTINE FOR TIME STEP  17 IN STRESS PERIOD    1
@@ -1878,9 +1878,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1 -0.7636E-01  0 -0.1336E-05  1 -0.1439E-01  0 -0.2834E-06  1  0.2244E-02
+  1 -0.7636E-01  0 -0.1336E-05  1 -0.1439E-01  0 -0.2834E-06  1  0.2243E-02
    (  1,  1, 21)  (  1,  1,  1)  (  1,  1, 21)  (  1,  1,  1)  (  1, 38, 11)
-  0  0.3782E-07  1  0.2158E-02  0  0.3628E-07  1  0.3412E-04
+  0  0.3781E-07  1  0.2158E-02  0  0.3629E-07  1  0.3277E-04
    (  1, 39, 10)  (  1, 31, 11)  (  1, 32, 10)  (  1, 21, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -1888,9 +1888,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1   3.507      0  0.4521E-04  1  0.7417      0  0.7800E-05  1 -0.9187E-01
-   (  1,  1,  1)  (  1,  1,  5)  (  1,  1,  1)  (  1,  3, 19)  (  1, 39, 10)
-  0 -0.1548E-05  1 -0.8863E-01  0 -0.1490E-05  1 -0.1391E-02
+  1   3.507      0  0.4521E-04  1  0.7417      0  0.7800E-05  1 -0.9184E-01
+   (  1,  1,  1)  (  1,  5,  1)  (  1,  1,  1)  (  1,  3, 19)  (  1, 39, 10)
+  0 -0.1548E-05  1 -0.8866E-01  0 -0.1491E-05  1 -0.1335E-02
    (  1, 40,  9)  (  1, 32, 10)  (  1, 33,  9)  (  1, 22, 10)
 
 
@@ -1902,7 +1902,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  Day   1  Hour  8.38 Branch  node  Discharge
                           1    12     62.38    
                           3    32     225.8    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      4 CALLS TO PCG ROUTINE FOR TIME STEP  18 IN STRESS PERIOD    1
@@ -1913,9 +1913,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1 -0.1005      0 -0.1710E-05  1 -0.2818E-01  0 -0.4204E-06  1  0.1665E-02
+  1 -0.1005      0 -0.1710E-05  1 -0.2818E-01  0 -0.4205E-06  1  0.1666E-02
    (  1,  1, 21)  (  1,  1,  1)  (  1,  1, 21)  (  1,  2, 20)  (  1,  2,  2)
-  0  0.2820E-07  1 -0.2741E-03
+  0  0.2822E-07  1 -0.2765E-03
    (  1,  1,  3)  (  1,  2,  2)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -1923,9 +1923,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1   4.469      0  0.4671E-04  1   1.103      0  0.1398E-04  1 -0.7332E-01
-   (  1,  1,  1)  (  1,  1,  5)  (  1,  2, 20)  (  1,  3, 19)  (  1,  1, 21)
-  0  0.9226E-06  1  0.1352E-01
+  1   4.469      0  0.4671E-04  1   1.103      0  0.1398E-04  1 -0.7336E-01
+   (  1,  1,  1)  (  1,  5,  1)  (  1,  2, 20)  (  1,  3, 19)  (  1,  1, 21)
+  0  0.9230E-06  1  0.1359E-01
    (  1, 40, 11)  (  1,  3, 19)
 
 
@@ -1937,7 +1937,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  Day   1  Hour  8.88 Branch  node  Discharge
                           1    12     48.93    
                           3    32     201.9    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      5 CALLS TO PCG ROUTINE FOR TIME STEP  19 IN STRESS PERIOD    1
@@ -1948,9 +1948,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1 -0.1180      0 -0.2015E-05  1 -0.1042E-01  0 -0.1750E-06  1 -0.1798E-02
-   (  1,  1, 21)  (  1,  1,  1)  (  1,  3,  3)  (  1,  2,  4)  (  1, 29, 11)
-  0 -0.3026E-07  1  0.2027E-02  0  0.3412E-07  1  0.4172E-04
+  1 -0.1180      0 -0.2015E-05  1 -0.1042E-01  0 -0.1750E-06  1 -0.1797E-02
+   (  1,  1, 21)  (  1,  1,  1)  (  1,  3,  3)  (  1,  4,  2)  (  1, 29, 11)
+  0 -0.3025E-07  1  0.2026E-02  0  0.3409E-07  1  0.4031E-04
    (  1, 30, 10)  (  1, 29, 11)  (  1, 30, 10)  (  1, 20, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -1958,9 +1958,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1   5.230      0  0.4885E-04  1  0.4523      0  0.9687E-05  1  0.7403E-01
+  1   5.230      0  0.4885E-04  1  0.4523      0  0.9687E-05  1  0.7400E-01
    (  1,  1,  1)  (  1,  5,  1)  (  1,  4, 18)  (  1,  1, 21)  (  1, 30, 10)
-  0  0.1246E-05  1 -0.8338E-01  0 -0.1403E-05  1 -0.1700E-02
+  0  0.1246E-05  1 -0.8330E-01  0 -0.1402E-05  1 -0.1642E-02
    (  1, 31,  9)  (  1, 30, 10)  (  1, 31,  9)  (  1, 21, 10)
 
 
@@ -1972,7 +1972,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  Day   1  Hour  9.38 Branch  node  Discharge
                           1    12     41.40    
                           3    32     179.6    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      4 CALLS TO PCG ROUTINE FOR TIME STEP  20 IN STRESS PERIOD    1
@@ -1983,9 +1983,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1 -0.9357E-01  0 -0.1800E-05  1 -0.7688E-02  0 -0.1661E-06  1  0.1528E-02
+  1 -0.9357E-01  0 -0.1800E-05  1 -0.7688E-02  0 -0.1661E-06  1  0.1529E-02
    (  1,  1, 21)  (  1,  1,  1)  (  1,  5,  5)  (  1,  6, 16)  (  1, 35, 11)
-  0  0.2569E-07  1  0.4514E-03
+  0  0.2569E-07  1  0.4522E-03
    (  1, 36, 10)  (  1, 31, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -1993,9 +1993,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1   4.643      0  0.4991E-04  1  0.4349      0  0.6759E-05  1 -0.6269E-01
-   (  1,  1,  1)  (  1,  1,  5)  (  1,  6, 16)  (  1,  9, 13)  (  1, 36, 10)
-  0 -0.1054E-05  1 -0.1859E-01
+  1   4.643      0  0.4991E-04  1  0.4349      0  0.6759E-05  1 -0.6270E-01
+   (  1,  1,  1)  (  1,  5,  1)  (  1,  6, 16)  (  1,  9, 13)  (  1, 36, 10)
+  0 -0.1054E-05  1 -0.1863E-01
    (  1, 37,  9)  (  1, 32, 10)
 
 
@@ -2107,23 +2107,23 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =      725071.8750               STORAGE =     5710351.0000
+             STORAGE =      725104.1250               STORAGE =     5710411.5000
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =       52502.6328                 WELLS =      126000.0000
-              DAFLOW =     3365865.2500                DAFLOW =        3418.5112
+              DAFLOW =     3365866.2500                DAFLOW =        3418.3589
 
-            TOTAL IN =     4143439.7500              TOTAL IN =     5839769.5000
+            TOTAL IN =     4143473.0000              TOTAL IN =     5839830.0000
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =     3570512.0000               STORAGE =     1154111.0000
-       CONSTANT HEAD =       54578.4609         CONSTANT HEAD =      137700.2340
+             STORAGE =     3570630.2500               STORAGE =     1154271.8750
+       CONSTANT HEAD =       54578.4648         CONSTANT HEAD =      137700.2500
                WELLS =           0.0000                 WELLS =           0.0000
-              DAFLOW =      518672.3440                DAFLOW =     4548503.5000
+              DAFLOW =      518672.8125                DAFLOW =     4548506.5000
 
-           TOTAL OUT =     4143762.7500             TOTAL OUT =     5840314.5000
+           TOTAL OUT =     4143881.5000             TOTAL OUT =     5840478.5000
 
-            IN - OUT =        -323.0469              IN - OUT =        -545.2231
+            IN - OUT =        -408.5000              IN - OUT =        -648.5000
 
  PERCENT DISCREPANCY =          -0.01     PERCENT DISCREPANCY =          -0.01
 
@@ -2139,7 +2139,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  STRESS PERIOD TIME  36002.      600.03      10.001     0.41669     1.14083E-03
          TOTAL TIME  36002.      600.03      10.001     0.41669     1.14083E-03
 1
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      4 CALLS TO PCG ROUTINE FOR TIME STEP  21 IN STRESS PERIOD    1
@@ -2150,9 +2150,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1 -0.7562E-01  0 -0.1601E-05  1 -0.5989E-02  0 -0.1266E-06  1 -0.1429E-02
+  1 -0.7563E-01  0 -0.1602E-05  1 -0.5989E-02  0 -0.1266E-06  1 -0.1429E-02
    (  1,  1, 21)  (  1,  1,  1)  (  1,  8,  8)  (  1,  7, 15)  (  1, 23, 11)
-  0 -0.2409E-07  1  0.9275E-03
+  0 -0.2409E-07  1  0.9261E-03
    (  1, 24, 10)  (  1, 34, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -2162,7 +2162,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  ---------------------------------------------------------------------------
   1   4.111      0  0.4304E-04  1  0.3307      0 -0.4246E-05  1  0.5897E-01
    (  1,  1,  1)  (  1,  2,  6)  (  1,  7, 15)  (  1, 40, 11)  (  1, 24, 10)
-  0  0.9943E-06  1 -0.3806E-01
+  0  0.9943E-06  1 -0.3801E-01
    (  1, 25,  9)  (  1, 35, 10)
 
 
@@ -2174,7 +2174,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  Day   1  Hour 10.38 Branch  node  Discharge
                           1    12     26.00    
                           3    32     145.0    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      4 CALLS TO PCG ROUTINE FOR TIME STEP  22 IN STRESS PERIOD    1
@@ -2185,9 +2185,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1 -0.6211E-01  0 -0.1417E-05  1 -0.5429E-02  0 -0.1014E-06  1 -0.1511E-02
+  1 -0.6211E-01  0 -0.1416E-05  1 -0.5430E-02  0 -0.1014E-06  1 -0.1513E-02
    (  1,  1, 21)  (  1,  1,  1)  (  1, 27, 11)  (  1, 10, 12)  (  1, 22, 11)
-  0 -0.2535E-07  1  0.7994E-04
+  0 -0.2537E-07  1  0.7924E-04
    (  1, 23, 10)  (  1,  3,  3)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -2195,9 +2195,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1   3.620      0  0.3747E-04  1  0.2646      0  0.3706E-05  1  0.6208E-01
+  1   3.620      0  0.3747E-04  1  0.2646      0  0.3706E-05  1  0.6214E-01
    (  1,  1,  1)  (  1,  6,  2)  (  1, 10, 12)  (  1, 29,  9)  (  1, 23, 10)
-  0  0.1041E-05  1 -0.4108E-02
+  0  0.1042E-05  1 -0.4027E-02
    (  1, 24,  9)  (  1,  4, 18)
 
 
@@ -2209,7 +2209,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  Day   1  Hour 10.88 Branch  node  Discharge
                           1    12     20.61    
                           3    32     128.3    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      4 CALLS TO PCG ROUTINE FOR TIME STEP  23 IN STRESS PERIOD    1
@@ -2220,9 +2220,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1 -0.5172E-01  0 -0.1255E-05  1 -0.4956E-02  0 -0.8324E-07  1  0.1861E-02
+  1 -0.5172E-01  0 -0.1255E-05  1 -0.4956E-02  0 -0.8324E-07  1  0.1862E-02
    (  1,  1, 21)  (  1,  1,  1)  (  1, 33, 11)  (  1, 34, 10)  (  1, 40, 11)
-  0  0.2882E-07  1  0.8780E-03
+  0  0.2883E-07  1  0.8780E-03
    (  1, 39, 12)  (  1, 22, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -2230,9 +2230,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1   3.195      0  0.3481E-04  1  0.2019      0  0.3391E-05  1 -0.7034E-01
+  1   3.195      0  0.3481E-04  1  0.2019      0  0.3391E-05  1 -0.7037E-01
    (  1,  1,  1)  (  1, 14,  9)  (  1, 34, 10)  (  1, 35,  9)  (  1, 39, 12)
-  0 -0.1182E-05  1 -0.3611E-01
+  0 -0.1183E-05  1 -0.3611E-01
    (  1, 38, 13)  (  1, 23, 10)
 
 
@@ -2244,7 +2244,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  Day   1  Hour 11.38 Branch  node  Discharge
                           1    12     16.73    
                           3    32     114.1    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      5 CALLS TO PCG ROUTINE FOR TIME STEP  24 IN STRESS PERIOD    1
@@ -2255,9 +2255,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1 -0.4673E-01  0 -0.1131E-05  1 -0.4344E-02  0 -0.6978E-07  1  0.1097E-02
+  1 -0.4673E-01  0 -0.1131E-05  1 -0.4345E-02  0 -0.6976E-07  1  0.1096E-02
    (  1, 12, 11)  (  1, 10, 12)  (  1, 40, 11)  (  1, 23, 10)  (  1, 25, 11)
-  0  0.1843E-07  1 -0.1016E-02  0 -0.1707E-07  1  0.1400E-04
+  0  0.1842E-07  1 -0.1016E-02  0 -0.1707E-07  1  0.1401E-04
    (  1, 26, 10)  (  1, 25, 11)  (  1, 26, 10)  (  1, 28, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -2265,9 +2265,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1   2.943      0  0.3295E-04  1  0.1694      0 -0.2950E-05  1 -0.4505E-01
+  1   2.943      0  0.3295E-04  1  0.1693      0 -0.2951E-05  1 -0.4502E-01
    (  1, 10, 12)  (  1, 15,  9)  (  1, 23, 10)  (  1, 40, 11)  (  1, 26, 10)
-  0 -0.7572E-06  1  0.4176E-01  0  0.7018E-06  1 -0.5740E-03
+  0 -0.7567E-06  1  0.4176E-01  0  0.7018E-06  1 -0.5740E-03
    (  1, 27,  9)  (  1, 26, 10)  (  1, 27,  9)  (  1, 29, 10)
 
 
@@ -2290,8 +2290,8 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  ...........................................................................................................................
    1  -0.4051 -0.1436 -0.0134 -0.0008  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
        0.0000  0.0000 -0.0008 -0.0134 -0.1436 -0.4051
-   2  -0.1437 -0.4982 -0.1370 -0.0125 -0.0007  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
-       0.0000 -0.0007 -0.0125 -0.1370 -0.4982 -0.1437
+   2  -0.1437 -0.4983 -0.1370 -0.0125 -0.0007  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
+       0.0000 -0.0007 -0.0125 -0.1370 -0.4983 -0.1437
    3  -0.0134 -0.1370 -0.5387 -0.1371 -0.0122 -0.0007  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
       -0.0007 -0.0122 -0.1371 -0.5387 -0.1370 -0.0134
    4  -0.0008 -0.0125 -0.1371 -0.5738 -0.1366 -0.0118 -0.0007  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000 -0.0007
@@ -2379,25 +2379,25 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =     1166294.0000               STORAGE =     4910294.5000
+             STORAGE =     1166331.1250               STORAGE =     4910297.5000
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =       63003.1641                 WELLS =      126000.0000
-              DAFLOW =     3365865.2500                DAFLOW =           0.0000
+              DAFLOW =     3365866.2500                DAFLOW =           0.0000
 
-            TOTAL IN =     4595162.5000              TOTAL IN =     5036294.5000
+            TOTAL IN =     4595200.5000              TOTAL IN =     5036297.5000
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =     3652043.0000               STORAGE =      881922.8750
-       CONSTANT HEAD =       66024.8906         CONSTANT HEAD =      137068.7340
+             STORAGE =     3652181.2500               STORAGE =      882164.3750
+       CONSTANT HEAD =       66024.8984         CONSTANT HEAD =      137068.7500
                WELLS =           0.0000                 WELLS =           0.0000
-              DAFLOW =      877439.3130                DAFLOW =     4017418.5000
+              DAFLOW =      877439.6250                DAFLOW =     4017420.2500
 
-           TOTAL OUT =     4595507.0000             TOTAL OUT =     5036410.0000
+           TOTAL OUT =     4595646.0000             TOTAL OUT =     5036653.5000
 
-            IN - OUT =        -344.7891              IN - OUT =        -115.6094
+            IN - OUT =        -445.5000              IN - OUT =        -356.0000
 
- PERCENT DISCREPANCY =          -0.01     PERCENT DISCREPANCY =           0.00
+ PERCENT DISCREPANCY =          -0.01     PERCENT DISCREPANCY =          -0.01
 
 
 
@@ -2411,7 +2411,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  STRESS PERIOD TIME  43202.      720.04      12.001     0.50003     1.36899E-03
          TOTAL TIME  43202.      720.04      12.001     0.50003     1.36899E-03
 1
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      4 CALLS TO PCG ROUTINE FOR TIME STEP  25 IN STRESS PERIOD    1
@@ -2422,9 +2422,9 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1 -0.4326E-01  0 -0.1061E-05  1 -0.3623E-02  0 -0.6081E-07  1  0.1060E-02
+  1 -0.4326E-01  0 -0.1061E-05  1 -0.3623E-02  0 -0.6080E-07  1  0.1060E-02
    (  1, 13, 11)  (  1, 10, 12)  (  1, 29, 11)  (  1, 30, 10)  (  1, 39, 11)
-  0  0.1787E-07  1 -0.3797E-04
+  0  0.1787E-07  1 -0.3873E-04
    (  1, 40, 10)  (  1, 30, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -2434,7 +2434,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  ---------------------------------------------------------------------------
   1   2.754      0  0.3102E-04  1  0.1475      0  0.2475E-05  1 -0.4359E-01
    (  1, 10, 12)  (  1,  9, 13)  (  1, 30, 10)  (  1, 31,  9)  (  1, 40, 10)
-  0 -0.6728E-06  1 -0.1945E-02
+  0 -0.6728E-06  1 -0.1982E-02
    (  1, 37, 13)  (  1,  4, 18)
 
 
@@ -2446,7 +2446,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  Day   1  Hour 12.38 Branch  node  Discharge
                           1    12     12.56    
                           3    32     91.16    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      3 CALLS TO PCG ROUTINE FOR TIME STEP  26 IN STRESS PERIOD    1
@@ -2457,7 +2457,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1 -0.3957E-01  0 -0.9837E-06  1 -0.3132E-02  0 -0.5262E-07  1  0.3160E-03
+  1 -0.3957E-01  0 -0.9836E-06  1 -0.3132E-02  0 -0.5262E-07  1  0.3157E-03
    (  1, 13, 11)  (  1, 10, 12)  (  1, 32, 11)  (  1, 33, 10)  (  1, 35, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -2465,7 +2465,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1   2.548      0  0.2934E-04  1  0.1276      0  0.2143E-05  1  0.1339E-01
+  1   2.548      0  0.2934E-04  1  0.1276      0  0.2143E-05  1  0.1335E-01
    (  1, 10, 12)  (  1,  9, 13)  (  1, 33, 10)  (  1, 34,  9)  (  1,  3, 19)
 
 
@@ -2477,7 +2477,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  Day   1  Hour 12.88 Branch  node  Discharge
                           1    12     11.00    
                           3    32     81.37    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      3 CALLS TO PCG ROUTINE FOR TIME STEP  27 IN STRESS PERIOD    1
@@ -2488,7 +2488,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1 -0.3640E-01  0 -0.8937E-06  1 -0.2495E-02  0 -0.4129E-07  1 -0.2193E-03
+  1 -0.3640E-01  0 -0.8937E-06  1 -0.2495E-02  0 -0.4130E-07  1 -0.2209E-03
    (  1, 13, 11)  (  1, 10, 12)  (  1, 40, 11)  (  1, 31, 10)  (  1,  2,  2)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -2496,7 +2496,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1   2.310      0  0.2717E-04  1  0.1001      0 -0.1706E-05  1  0.1000E-01
+  1   2.310      0  0.2717E-04  1  0.1001      0 -0.1706E-05  1  0.1001E-01
    (  1, 10, 12)  (  1,  9, 13)  (  1, 31, 10)  (  1, 40, 11)  (  1,  3, 19)
 
 
@@ -2508,7 +2508,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  Day   1  Hour 13.38 Branch  node  Discharge
                           1    12     9.823    
                           3    32     73.19    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      3 CALLS TO PCG ROUTINE FOR TIME STEP  28 IN STRESS PERIOD    1
@@ -2519,7 +2519,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1 -0.3341E-01  0 -0.8258E-06  1 -0.3014E-02  0 -0.5049E-07  1  0.2317E-03
+  1 -0.3341E-01  0 -0.8257E-06  1 -0.3014E-02  0 -0.5048E-07  1  0.2323E-03
    (  1, 20, 11)  (  1, 10, 12)  (  1, 39, 11)  (  1, 40, 10)  (  1, 34, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -2527,7 +2527,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1   2.130      0 -0.2605E-04  1  0.1229      0  0.1917E-05  1 -0.9517E-02
+  1   2.130      0 -0.2605E-04  1  0.1229      0  0.1917E-05  1 -0.9542E-02
    (  1, 10, 12)  (  1, 40, 11)  (  1, 40, 10)  (  1, 38,  9)  (  1, 35, 10)
 
 
@@ -2639,25 +2639,25 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =     1511901.5000               STORAGE =     3705513.5000
+             STORAGE =     1511944.3750               STORAGE =     3705596.2500
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =       73503.6953                 WELLS =      126000.0000
-              DAFLOW =     3365865.2500                DAFLOW =           0.0000
+              DAFLOW =     3365866.2500                DAFLOW =           0.0000
 
-            TOTAL IN =     4951270.5000              TOTAL IN =     3831513.5000
+            TOTAL IN =     4951314.5000              TOTAL IN =     3831596.2500
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =     3714646.2500               STORAGE =      681011.8750
-       CONSTANT HEAD =       77399.7188         CONSTANT HEAD =      136133.0310
+             STORAGE =     3714809.2500               STORAGE =      681282.5625
+       CONSTANT HEAD =       77399.7266         CONSTANT HEAD =      136133.0312
                WELLS =           0.0000                 WELLS =           0.0000
-              DAFLOW =     1159597.2500                DAFLOW =     3014826.5000
+              DAFLOW =     1159597.8750                DAFLOW =     3014822.7500
 
-           TOTAL OUT =     4951643.0000             TOTAL OUT =     3831971.5000
+           TOTAL OUT =     4951807.0000             TOTAL OUT =     3832238.2500
 
-            IN - OUT =        -372.7734              IN - OUT =        -457.9062
+            IN - OUT =        -492.5000              IN - OUT =        -642.0000
 
- PERCENT DISCREPANCY =          -0.01     PERCENT DISCREPANCY =          -0.01
+ PERCENT DISCREPANCY =          -0.01     PERCENT DISCREPANCY =          -0.02
 
 
 
@@ -2671,7 +2671,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  STRESS PERIOD TIME  50403.      840.04      14.001     0.58336     1.59716E-03
          TOTAL TIME  50403.      840.04      14.001     0.58336     1.59716E-03
 1
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      3 CALLS TO PCG ROUTINE FOR TIME STEP  29 IN STRESS PERIOD    1
@@ -2682,7 +2682,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1 -0.3113E-01  0 -0.7657E-06  1 -0.2163E-02  0 -0.3366E-07  1 -0.3051E-03
+  1 -0.3113E-01  0 -0.7657E-06  1 -0.2162E-02  0 -0.3366E-07  1 -0.3051E-03
    (  1, 26, 11)  (  1, 10, 12)  (  1, 40, 11)  (  1, 39, 12)  (  1, 27, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -2690,7 +2690,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1   1.972      0 -0.2457E-04  1  0.8190E-01  0 -0.1455E-05  1  0.1259E-01
+  1   1.972      0 -0.2457E-04  1  0.8189E-01  0 -0.1455E-05  1  0.1259E-01
    (  1, 10, 12)  (  1, 40, 11)  (  1, 39, 12)  (  1, 40, 11)  (  1, 28, 10)
 
 
@@ -2702,7 +2702,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  Day   1  Hour 14.38 Branch  node  Discharge
                           1    12     7.904    
                           3    32     58.97    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      3 CALLS TO PCG ROUTINE FOR TIME STEP  30 IN STRESS PERIOD    1
@@ -2713,7 +2713,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1 -0.2920E-01  0 -0.7101E-06  1 -0.1721E-02  0 -0.2890E-07  1 -0.2751E-03
+  1 -0.2920E-01  0 -0.7101E-06  1 -0.1721E-02  0 -0.2890E-07  1 -0.2736E-03
    (  1, 25, 11)  (  1, 10, 12)  (  1, 38, 11)  (  1, 39, 10)  (  1, 18, 11)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
@@ -2721,7 +2721,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1   1.826      0 -0.2419E-04  1  0.7004E-01  0  0.1176E-05  1  0.1131E-01
+  1   1.826      0 -0.2419E-04  1  0.7004E-01  0  0.1176E-05  1  0.1125E-01
    (  1,  9, 13)  (  1, 40, 11)  (  1, 39, 10)  (  1, 40,  9)  (  1, 19, 10)
 
 
@@ -2733,7 +2733,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  Day   1  Hour 14.88 Branch  node  Discharge
                           1    12     7.147    
                           3    32     53.71    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      3 CALLS TO PCG ROUTINE FOR TIME STEP  31 IN STRESS PERIOD    1
@@ -2764,7 +2764,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
  Day   1  Hour 15.38 Branch  node  Discharge
                           1    12     6.464    
                           3    32     49.19    
-  No of DAFLOW steps per MODFLOW step =  2
+  No of DAFLOW steps per MODFLOW step =            2
  
  SOLVING FOR HEAD 
      3 CALLS TO PCG ROUTINE FOR TIME STEP  32 IN STRESS PERIOD    1
@@ -2775,15 +2775,15 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
     HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE    HEAD CHANGE 
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1 -0.2571E-01  0 -0.6168E-06  1 -0.1785E-02  0 -0.2792E-07  1 -0.8831E-04
-   (  1, 30, 11)  (  1,  9, 13)  (  1, 40, 11)  (  1, 39, 12)  (  1,  2,  2)
+  1 -0.2571E-01  0 -0.6168E-06  1 -0.1785E-02  0 -0.2792E-07  1 -0.9034E-04
+   (  1, 30, 11)  (  1,  9, 13)  (  1, 40, 11)  (  1, 39, 12)  (  1,  3,  3)
 
  MAXIMUM RESIDUAL FOR EACH ITERATION (1 INDICATES THE FIRST INNER ITERATION):
 
     RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL       RESIDUAL    
    LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL  LAYER,ROW,COL
  ---------------------------------------------------------------------------
-  1   1.583      0 -0.2146E-04  1  0.6795E-01  0 -0.1170E-05  1  0.4410E-02
+  1   1.583      0 -0.2146E-04  1  0.6795E-01  0 -0.1169E-05  1  0.4529E-02
    (  1,  9, 13)  (  1, 40, 11)  (  1, 39, 12)  (  1, 40, 11)  (  1,  4, 18)
 
 
@@ -2809,7 +2809,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
       25.3000 25.3001 25.3018 25.3213 25.4512 25.5175
    2  24.8512 24.9999 24.8452 24.7199 24.7017 24.7001 24.7000 24.7000 24.7000 24.7000 24.7000 24.7000 24.7000 24.7000 24.7000
       24.7001 24.7017 24.7199 24.8452 24.9999 24.8512
-   3  24.1213 24.2452 24.4345 24.2474 24.1197 24.1016 24.1001 24.1000 24.1000 24.1000 24.1000 24.1000 24.1000 24.1000 24.1001
+   3  24.1214 24.2452 24.4345 24.2474 24.1197 24.1016 24.1001 24.1000 24.1000 24.1000 24.1000 24.1000 24.1000 24.1000 24.1001
       24.1016 24.1197 24.2474 24.4345 24.2452 24.1213
    4  23.5018 23.5199 23.6474 23.8629 23.6487 23.5194 23.5016 23.5001 23.5000 23.5000 23.5000 23.5000 23.5000 23.5001 23.5016
       23.5194 23.6487 23.8629 23.6474 23.5199 23.5018
@@ -2845,7 +2845,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
       14.5000 14.5000 14.5000 14.5000 14.5000 14.5000
   20  13.9000 13.9000 13.9000 13.9000 13.9000 13.9000 13.9000 13.9002 13.9050 13.9900 14.5365 13.9900 13.9050 13.9002 13.9000
       13.9000 13.9000 13.9000 13.9000 13.9000 13.9000
-  21  13.3000 13.3000 13.3000 13.3000 13.3000 13.3000 13.3000 13.3002 13.3049 13.3892 13.9459 13.3892 13.3049 13.3002 13.3000
+  21  13.3000 13.3000 13.3000 13.3000 13.3000 13.3000 13.3000 13.3002 13.3049 13.3892 13.9458 13.3892 13.3049 13.3002 13.3000
       13.3000 13.3000 13.3000 13.3000 13.3000 13.3000
   22  12.7000 12.7000 12.7000 12.7000 12.7000 12.7000 12.7000 12.7002 12.7049 12.7888 13.3532 12.7888 12.7049 12.7002 12.7000
       12.7000 12.7000 12.7000 12.7000 12.7000 12.7000
@@ -2934,7 +2934,7 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
        0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
   20   0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000 -0.0002 -0.0050 -0.0900 -0.6365 -0.0900 -0.0050 -0.0002  0.0000
        0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
-  21   0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000 -0.0002 -0.0049 -0.0892 -0.6459 -0.0892 -0.0049 -0.0002  0.0000
+  21   0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000 -0.0002 -0.0049 -0.0892 -0.6458 -0.0892 -0.0049 -0.0002  0.0000
        0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
   22   0.0000  0.0000  0.0000  0.0000  0.0000  0.0000  0.0000 -0.0002 -0.0049 -0.0888 -0.6532 -0.0888 -0.0049 -0.0002  0.0000
        0.0000  0.0000  0.0000  0.0000  0.0000  0.0000
@@ -2985,25 +2985,25 @@ Computed negative flow of    -0.920E-02 at   1 branch  3 node 31
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =     1768763.5000               STORAGE =     2750538.0000
+             STORAGE =     1768812.5000               STORAGE =     2750595.7500
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =       84004.2266                 WELLS =      126000.0000
-              DAFLOW =     3365865.2500                DAFLOW =           0.0000
+              DAFLOW =     3365866.2500                DAFLOW =           0.0000
 
-            TOTAL IN =     5218633.0000              TOTAL IN =     2876538.0000
+            TOTAL IN =     5218683.0000              TOTAL IN =     2876595.7500
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =     3763535.2500               STORAGE =      535764.4380
-       CONSTANT HEAD =       88697.1953         CONSTANT HEAD =      135236.8750
+             STORAGE =     3763716.2500               STORAGE =      535954.6875
+       CONSTANT HEAD =       88697.2031         CONSTANT HEAD =      135236.8594
                WELLS =           0.0000                 WELLS =           0.0000
-              DAFLOW =     1366808.8800                DAFLOW =     2205922.7500
+              DAFLOW =     1366809.0000                DAFLOW =     2205917.2500
 
-           TOTAL OUT =     5219041.5000             TOTAL OUT =     2876924.0000
+           TOTAL OUT =     5219222.5000             TOTAL OUT =     2877108.7500
 
-            IN - OUT =        -408.3438              IN - OUT =        -386.0625
+            IN - OUT =        -539.5000              IN - OUT =        -513.0000
 
- PERCENT DISCREPANCY =          -0.01     PERCENT DISCREPANCY =          -0.01
+ PERCENT DISCREPANCY =          -0.01     PERCENT DISCREPANCY =          -0.02
 
 
 

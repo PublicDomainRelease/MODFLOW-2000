@@ -1,4 +1,3 @@
-! Time of File Save by ERB: 3/31/2005 12:35PM
 C  I edited all occurrences of common block HUFCOM (in sen1huf2.f, 
 C  lmt6.f, gwfhuf2.f, and obs1bas6.f) to put all REAL arrays before all 
 C  INTEGER arrays.  The original order is OK when both REALs and 
@@ -6,6 +5,19 @@ C  INTEGERs are KIND=4.  But when REALs are promoted to DOUBLE
 C  PRECISION, KIND goes from 4 to 8, and this generates alignment 
 C  problems.  The alignment problems are avoided when all variables of 
 C  larger KIND precede all variables of smaller KIND. -- ERB 6/29/2006
+C=======================================================================
+      SUBROUTINE GWF1HUF2DF(IOHUFHDS,IOHUFFLWS)
+C     ******************************************************************
+C     DEFINE VARIABLES USED IN MODFLOW MAIN.   
+C     Subroutine added 10/23/2006 ERB
+C     ******************************************************************
+      IMPLICIT NONE
+      INTEGER IOHUFHDS, IOHUFFLWS
+      IOHUFHDS = 0
+      IOHUFFLWS = 0
+      RETURN
+      END
+C=======================================================================
       SUBROUTINE GWF1HUF2ALG(ISUM,LCHK,LCVKA,LCSC1,
      &  IN,ITRSS,NCOL,NROW,NLAY,IOUT,IHUFCB,LCWETD,
      &  HDRY,NPER,ISSFLG,LCHGUF,IREWND,
@@ -4472,6 +4484,8 @@ C
 C     ******************************************************************
 C     Calculate the A coefficients for Quadrant II
 C     ******************************************************************
+C 1/10/2007 ERB: Modified to nest IF blocks to avoid out-of-bound array 
+C references
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
@@ -4485,30 +4499,48 @@ C-------Local cell 1, I,J
       TAB1 = VDHT(J,I,K,2)
       TBB1 = VDHT(J,I,K,3)
 C-------Local cell 4, I+1,J
-      IF(I.LT.NROW .AND. IBOUND(J,I+1,K).NE.0) THEN
-        TAA4 = VDHT(J,I+1,K,1)
-        TAB4 = VDHT(J,I+1,K,2)
-        TBB4 = VDHT(J,I+1,K,3)
+      IF (I.LT.NROW) THEN
+        IF (IBOUND(J,I+1,K).NE.0) THEN
+          TAA4 = VDHT(J,I+1,K,1)
+          TAB4 = VDHT(J,I+1,K,2)
+          TBB4 = VDHT(J,I+1,K,3)
+        ELSE
+          TAA4 = TAA1/TMPCOF
+          TAB4 = TAB1/TMPCOF
+          TBB4 = TBB1/TMPCOF
+        ENDIF
       ELSE
         TAA4 = TAA1/TMPCOF
         TAB4 = TAB1/TMPCOF
         TBB4 = TBB1/TMPCOF
       ENDIF
 C-------Local cell 5, I+1,J-1
-      IF(J.GT.1.AND.I.LT.NROW .AND. IBOUND(J-1,I+1,K).NE.0) THEN
-        TAA5 = VDHT(J-1,I+1,K,1)
-        TAB5 = VDHT(J-1,I+1,K,2)
-        TBB5 = VDHT(J-1,I+1,K,3)
+      IF (J.GT.1.AND.I.LT.NROW) THEN
+        IF (IBOUND(J-1,I+1,K).NE.0) THEN
+          TAA5 = VDHT(J-1,I+1,K,1)
+          TAB5 = VDHT(J-1,I+1,K,2)
+          TBB5 = VDHT(J-1,I+1,K,3)
+        ELSE
+          TAA5 = TAA1/TMPCOF
+          TAB5 = TAB1/TMPCOF
+          TBB5 = TBB1/TMPCOF
+        ENDIF
       ELSE
         TAA5 = TAA1/TMPCOF
         TAB5 = TAB1/TMPCOF
         TBB5 = TBB1/TMPCOF
       ENDIF
 C-------Local cell 6, I,J-1
-      IF(J.GT.1 .AND. IBOUND(J-1,I,K).NE.0) THEN
-        TAA6 = VDHT(J-1,I,K,1)
-        TAB6 = VDHT(J-1,I,K,2)
-        TBB6 = VDHT(J-1,I,K,3)
+      IF (J.GT.1) THEN
+        IF (IBOUND(J-1,I,K).NE.0) THEN
+          TAA6 = VDHT(J-1,I,K,1)
+          TAB6 = VDHT(J-1,I,K,2)
+          TBB6 = VDHT(J-1,I,K,3)
+        ELSE
+          TAA6 = TAA1/TMPCOF
+          TAB6 = TAB1/TMPCOF
+          TBB6 = TBB1/TMPCOF
+        ENDIF
       ELSE
         TAA6 = TAA1/TMPCOF
         TAB6 = TAB1/TMPCOF

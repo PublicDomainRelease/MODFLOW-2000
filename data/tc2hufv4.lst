@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.17.01 09/22/2006
+                           VERSION 1.17.02 02/14/2007
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -401,8 +401,8 @@
  SOLVING FOR HEAD 
 
 
-    33 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD    1
-   247 TOTAL ITERATIONS
+    34 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD    1
+   256 TOTAL ITERATIONS
 
  OUTPUT CONTROL FOR STRESS PERIOD    1   TIME STEP   1
     PRINT HEAD FOR ALL LAYERS
@@ -603,28 +603,28 @@
            IN:                                      IN:
            ---                                      ---
              STORAGE =           0.0000               STORAGE =           0.0000
-       CONSTANT HEAD =   500442592.0000         CONSTANT HEAD =        5792.1597
+       CONSTANT HEAD =   500442528.0000         CONSTANT HEAD =        5792.1592
                WELLS =           0.0000                 WELLS =           0.0000
               DRAINS =           0.0000                DRAINS =           0.0000
                   ET =           0.0000                    ET =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
-            RECHARGE =  1145016060.0000              RECHARGE =       13252.5000
+            RECHARGE =  1145016064.0000              RECHARGE =       13252.5000
 
-            TOTAL IN =  1645458690.0000              TOTAL IN =       19044.6602
+            TOTAL IN =  1645458560.0000              TOTAL IN =       19044.6602
 
           OUT:                                     OUT:
           ----                                     ----
              STORAGE =           0.0000               STORAGE =           0.0000
-       CONSTANT HEAD =   367719680.0000         CONSTANT HEAD =        4256.0146
+       CONSTANT HEAD =   367719648.0000         CONSTANT HEAD =        4256.0146
                WELLS =    38880000.0000                 WELLS =         450.0000
               DRAINS =   131848360.0000                DRAINS =        1526.0227
-                  ET =   878410944.0000                    ET =       10166.7930
-     HEAD DEP BOUNDS =   228600464.0000       HEAD DEP BOUNDS =        2645.8386
+                  ET =   878410880.0000                    ET =       10166.7930
+     HEAD DEP BOUNDS =   228600448.0000       HEAD DEP BOUNDS =        2645.8386
             RECHARGE =           0.0000              RECHARGE =           0.0000
 
-           TOTAL OUT =  1645459460.0000             TOTAL OUT =       19044.6680
+           TOTAL OUT =  1645459328.0000             TOTAL OUT =       19044.6680
 
-            IN - OUT =        -792.0000              IN - OUT =      -9.2773E-03
+            IN - OUT =        -768.0000              IN - OUT =      -7.8125E-03
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -987,7 +987,7 @@
      22 WL10-4          635.       635.     -0.488E-03  0.200     -0.977E-04
      23 WL10-6          941.       941.       0.00      0.200       0.00    
      24 WL10-9         0.111E+04  0.111E+04 -0.366E-03  0.200     -0.732E-04
-     25 WL10-11        0.140E+04  0.140E+04  0.488E-03  0.200      0.977E-04
+     25 WL10-11        0.140E+04  0.140E+04  0.366E-03  0.200      0.732E-04
      26 WL10-14        0.128E+04  0.128E+04  0.366E-03  0.200      0.732E-04
      27 WL10-17        0.116E+04  0.116E+04 -0.366E-03  0.200     -0.732E-04
      28 WL11-2          336.       336.      0.336E-03  0.200      0.671E-04
@@ -1013,12 +1013,12 @@
  STATISTICS FOR HEAD RESIDUALS :
  MAXIMUM WEIGHTED RESIDUAL  : 0.977E-04 OBS#      3
  MINIMUM WEIGHTED RESIDUAL  :-0.122E-03 OBS#     30
- AVERAGE WEIGHTED RESIDUAL  : 0.872E-06
+ AVERAGE WEIGHTED RESIDUAL  : 0.291E-06
  # RESIDUALS >= 0. :     26
  # RESIDUALS < 0.  :     16
  NUMBER OF RUNS  :   17  IN   42 OBSERVATIONS
 
- SUM OF SQUARED WEIGHTED RESIDUALS (HEADS ONLY)  0.16950E-06
+ SUM OF SQUARED WEIGHTED RESIDUALS (HEADS ONLY)  0.16533E-06
 
  DATA FOR FLOWS REPRESENTED USING THE DRAIN PACKAGE
 
@@ -1063,7 +1063,7 @@
  SUM OF SQUARED WEIGHTED RESIDUALS
    (GENERAL-HEAD BOUNDARY FLOWS ONLY)  0.16699E-04
 
- SUM OF SQUARED WEIGHTED RESIDUALS (ALL DEPENDENT VARIABLES)  0.98300E-04
+ SUM OF SQUARED WEIGHTED RESIDUALS (ALL DEPENDENT VARIABLES)  0.98296E-04
 
  STATISTICS FOR ALL RESIDUALS :
  AVERAGE WEIGHTED RESIDUAL  : 0.294E-03
@@ -1091,12 +1091,12 @@
     -0.488E-04 -0.366E-04 -0.366E-04 -0.244E-04   0.00       0.00       0.00    
       0.00       0.00      0.122E-04  0.244E-04  0.244E-04  0.244E-04  0.244E-04
      0.244E-04  0.244E-04  0.488E-04  0.488E-04  0.488E-04  0.488E-04  0.610E-04
-     0.671E-04  0.732E-04  0.732E-04  0.732E-04  0.732E-04  0.854E-04  0.977E-04
+     0.671E-04  0.732E-04  0.732E-04  0.732E-04  0.732E-04  0.732E-04  0.854E-04
      0.977E-04  0.977E-04  0.347E-03  0.741E-03  0.128E-02  0.139E-02  0.167E-02
      0.188E-02  0.232E-02  0.879E-02
 
  CORRELATION BETWEEN ORDERED WEIGHTED RESIDUALS AND NORMAL ORDER STATISTICS
- FOR OBSERVATIONS =    0.405    
+ FOR OBSERVATIONS =    0.404    
 
  --------------------------------------------------------------------------
  COMMENTS ON THE INTERPRETATION OF THE CORRELATION BETWEEN

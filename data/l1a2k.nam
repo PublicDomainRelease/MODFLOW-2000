@@ -2,7 +2,7 @@
 # NOTE: Forward slashes (/) in pathnames may need to be converted
 #       to back slashes (\) in some computing environments
 #
-LIST  1 l1a2k_rev.lst
+LIST  1 l1a2k.lst
 BAS6  7 ../data/l1a2k.ba6
 BCF6 10 ../data/l1a2k.bc6
 EVT  11 ../data/l1a2k.evt
@@ -13,4 +13,4 @@ LAK  16 ../data/l1a2k.lak
 DIS  14 ../data/l1a2k.dis
 FHB  21 ../data/l1a2k.fhb
 GAGE 33 ../data/l1a2k.gag
-DATA 37 ../data/l1a2k_rev.got
+DATA 37 l1a2k.got

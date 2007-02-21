@@ -170,10 +170,11 @@ c Parse multiplication and zone array information
    32 IF(ILFLG.NE.0) THEN
          WRITE(IOUT,36) IPCLST(1,I),LINE(IM1:IM2),LINE(IZ1:IZ2)
    36    FORMAT(1X,'               UNIT:',I3,'   MULTIPLIER:',A,
-     &      '   ZONE:',A)
+     &      '   ZONE ARRAY:',A)   ! Changed by ERB 2/5/07
       ELSE
          WRITE(IOUT,37) LINE(IM1:IM2),LINE(IZ1:IZ2)
-   37    FORMAT(1X,'               MULTIPLIER:',A,'   ZONE:',A)
+   37    FORMAT(1X,'               MULTIPLIER:',A,'   ZONE ARRAY:',A)
+         ! Changed by ERB 2/5/07
       END IF
 C
 C  Find the multiplier array number

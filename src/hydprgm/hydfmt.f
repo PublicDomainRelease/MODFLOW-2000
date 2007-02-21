@@ -90,8 +90,12 @@ C----- Read file names
     1 WRITE(*,*) 'Enter name of file with unformatted hydrograph data:'
       READ(*,'(A)') FN1
       IF(FN1.EQ.'        ') GO TO 100
-      OPEN(UNIT=inunit,FILE=FN1,FORM='UNFORMATTED',ACCESS='TRANSPARENT')
 CERB      OPEN(UNIT=inunit,FILE=FN1,FORM='UNFORMATTED',ACCESS='SEQUENTIAL')
+      ! Use the following line when compiling with Absoft compiler
+      !OPEN(UNIT=inunit,FILE=FN1,FORM='UNFORMATTED',ACCESS='TRANSPARENT')
+      ! Use the following line when compiling with Lahey or Intel compiler
+      OPEN(UNIT=inunit,FILE=FN1,FORM='BINARY',ACCESS='SEQUENTIAL')
+
 C----- Read first unformatted header record with number of hydrographs saved
 c       and time units used in the model.
       READ(inunit) NUMH,ITMUNI

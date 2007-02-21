@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.17.01 09/22/2006
+                           VERSION 1.17.02 02/14/2007
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -424,7 +424,7 @@ BEEN SUPERSEDED BY THE SUBSIDENCE AND AQUIFER-SYSTEM COMPACTION PACKAGE.
  ----------------------------------------------------------------------
     -0.1117E-01   -0.1887E-01   -0.2231E-01   -0.6905E-02    0.4997E-03
   (  1, 10,  7) (  1,  2,  6) (  1, 10,  7) (  1,  1,  8) (  1,  2,  7)
-    -0.7484E-04    0.7453E-04    0.4062E-04    0.1117E-04   -0.1293E-05
+    -0.7484E-04    0.7453E-04    0.4061E-04    0.1117E-04   -0.1293E-05
   (  1,  5, 10) (  1,  6,  5) (  1,  7,  5) (  1, 10,  7) (  1,  8,  4)
 
 
@@ -545,21 +545,21 @@ BEEN SUPERSEDED BY THE SUBSIDENCE AND AQUIFER-SYSTEM COMPACTION PACKAGE.
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =      199999.9380               STORAGE =       1.6376E-05
+             STORAGE =      199999.9375               STORAGE =       1.7219E-05
        CONSTANT HEAD =    19683132.0000         CONSTANT HEAD =       19999.9844
-    INTERBED STORAGE =      549999.6250      INTERBED STORAGE =       1.6376E-04
+    INTERBED STORAGE =      549999.6875      INTERBED STORAGE =       1.7219E-04
 
             TOTAL IN =    20433132.0000              TOTAL IN =       19999.9844
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =           0.0000               STORAGE =           0.0000
+             STORAGE =       6.1183E-04               STORAGE =       1.7620E-06
        CONSTANT HEAD =    20433138.0000         CONSTANT HEAD =       20000.0137
     INTERBED STORAGE =           0.0000      INTERBED STORAGE =           0.0000
 
            TOTAL OUT =    20433138.0000             TOTAL OUT =       20000.0137
 
-            IN - OUT =          -6.4375              IN - OUT =      -2.9117E-02
+            IN - OUT =          -6.0000              IN - OUT =      -2.9297E-02
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -818,21 +818,21 @@ BEEN SUPERSEDED BY THE SUBSIDENCE AND AQUIFER-SYSTEM COMPACTION PACKAGE.
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =      199999.9380               STORAGE =       4.0063E-06
+             STORAGE =      199999.9375               STORAGE =       4.7498E-06
        CONSTANT HEAD =    39683132.0000         CONSTANT HEAD =       19999.9961
-    INTERBED STORAGE =      549999.8130      INTERBED STORAGE =       4.0063E-05
+    INTERBED STORAGE =      549999.9375      INTERBED STORAGE =       4.7498E-05
 
             TOTAL IN =    40433132.0000              TOTAL IN =       19999.9961
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =           0.0000               STORAGE =           0.0000
+             STORAGE =       6.0198E-03               STORAGE =       1.8190E-06
        CONSTANT HEAD =    40433144.0000         CONSTANT HEAD =       20000.0039
-    INTERBED STORAGE =           0.0000      INTERBED STORAGE =           0.0000
+    INTERBED STORAGE =       1.5331E-03      INTERBED STORAGE =       1.0410E-06
 
            TOTAL OUT =    40433144.0000             TOTAL OUT =       20000.0039
 
-            IN - OUT =         -12.2500              IN - OUT =      -7.7684E-03
+            IN - OUT =         -12.0000              IN - OUT =      -7.8125E-03
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -1091,21 +1091,21 @@ BEEN SUPERSEDED BY THE SUBSIDENCE AND AQUIFER-SYSTEM COMPACTION PACKAGE.
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =      199999.9380               STORAGE =       2.8114E-07
+             STORAGE =      199999.9375               STORAGE =       2.9119E-06
        CONSTANT HEAD =    59683128.0000         CONSTANT HEAD =       20000.0000
-    INTERBED STORAGE =      549999.8130      INTERBED STORAGE =       2.8114E-06
+    INTERBED STORAGE =      549999.9375      INTERBED STORAGE =       2.9119E-05
 
             TOTAL IN =    60433128.0000              TOTAL IN =       20000.0000
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =           0.0000               STORAGE =           0.0000
-       CONSTANT HEAD =    60433144.0000         CONSTANT HEAD =       20000.0020
-    INTERBED STORAGE =           0.0000      INTERBED STORAGE =           0.0000
+             STORAGE =       1.3067E-02               STORAGE =       1.5451E-06
+       CONSTANT HEAD =    60433144.0000         CONSTANT HEAD =       20000.0000
+    INTERBED STORAGE =       7.2546E-03      INTERBED STORAGE =       1.3061E-06
 
-           TOTAL OUT =    60433144.0000             TOTAL OUT =       20000.0020
+           TOTAL OUT =    60433144.0000             TOTAL OUT =       20000.0000
 
-            IN - OUT =         -16.2500              IN - OUT =      -1.9500E-03
+            IN - OUT =         -16.0000              IN - OUT =           0.0000
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 

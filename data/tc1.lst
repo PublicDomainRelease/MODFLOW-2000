@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.17.01 09/22/2006
+                           VERSION 1.17.02 02/14/2007
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -16,14 +16,14 @@
     NAME        TYPE       VALUE      NOTE
  ----------  ---------  ------------  -----
  WELLS_TR       Q        -1.0741        *
- RCH_ZONE_1     RCH       34.119        *
+ RCH_ZONE_1     RCH       34.120        *
  RCH_ZONE_2     RCH       50.485        *
- RIVERS         RIV      1.38224E-03    *
+ RIVERS         RIV      1.38233E-03    *
  SS_1           SS       1.13827E-03    *
- HK_1           HK       4.25562E-04    *
- VERT_K_CB      VKCB     2.16512E-07    *
- SS_2           SS       6.19594E-05    *
- HK_2           HK       4.82370E-05    *
+ HK_1           HK       4.25563E-04    *
+ VERT_K_CB      VKCB     2.16514E-07    *
+ SS_2           SS       6.19600E-05    *
+ HK_2           HK       4.82372E-05    *
  ------------------------------------------
  * INDICATES VALUE ADJUSTABLE BY PARAMETER-
    ESTIMATION PROCESS
@@ -124,7 +124,7 @@
     HYD. COND. ALONG ROWS is defined by the following parameters:
  HK_1      
 
-    HYD. COND. ALONG ROWS =  4.255623E-04 FOR LAYER   1
+    HYD. COND. ALONG ROWS =  4.255629E-04 FOR LAYER   1
 
   HORIZ. TO VERTICAL ANI. is defined by the following parameters:
  VERT_ANI_1
@@ -134,12 +134,12 @@
          SPECIFIC STORAGE is defined by the following parameters:
  SS_1      
 
-         SPECIFIC STORAGE =  2.276538E-05 FOR LAYER   1
+         SPECIFIC STORAGE =  2.276545E-05 FOR LAYER   1
 
  QUASI3D VERT. HYD. COND. is defined by the following parameters:
  VERT_K_CB 
 
- QUASI3D VERT. HYD. COND. =  2.165115E-07 FOR LAYER   1
+ QUASI3D VERT. HYD. COND. =  2.165144E-07 FOR LAYER   1
 
     HYD. COND. ALONG ROWS is defined by the following parameters:
  HK_2      
@@ -214,7 +214,7 @@
          SPECIFIC STORAGE is defined by the following parameters:
  SS_2      
 
-         SPECIFIC STORAGE =  1.239188E-06 FOR LAYER   2
+         SPECIFIC STORAGE =  1.239199E-06 FOR LAYER   2
 1
                             STRESS PERIOD NO.    1, LENGTH =   1.000000    
                             -----------------------------------------------
@@ -466,20 +466,20 @@
      HEAD DEP BOUNDS =       6.2304E-04       HEAD DEP BOUNDS =       6.2304E-04
             RECHARGE =           4.3461              RECHARGE =           4.3461
 
-            TOTAL IN =           4.3467              TOTAL IN =           4.3467
+            TOTAL IN =           4.3468              TOTAL IN =           4.3468
 
           OUT:                                     OUT:
           ----                                     ----
              STORAGE =           0.0000               STORAGE =           0.0000
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =           0.0000                 WELLS =           0.0000
-       RIVER LEAKAGE =           4.3467         RIVER LEAKAGE =           4.3467
+       RIVER LEAKAGE =           4.3465         RIVER LEAKAGE =           4.3465
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
             RECHARGE =           0.0000              RECHARGE =           0.0000
 
-           TOTAL OUT =           4.3467             TOTAL OUT =           4.3467
+           TOTAL OUT =           4.3465             TOTAL OUT =           4.3465
 
-            IN - OUT =       6.3712E-05              IN - OUT =       6.3712E-05
+            IN - OUT =       2.1124E-04              IN - OUT =       2.1124E-04
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -620,7 +620,7 @@
   11   101.2  110.3  119.3  127.1  134.3  140.5  146.0  150.6  154.3  157.6
        162.3  166.4  169.8  172.3  174.1  175.4  176.3  176.7
   12   101.2  110.3  119.3  127.1  134.4  140.7  146.4  151.4  155.7  159.7
-       163.6  167.2  170.1  172.5  174.2  175.5  176.3  176.7
+       163.6  167.2  170.1  172.4  174.2  175.5  176.3  176.7
   13   101.2  110.3  119.3  127.1  134.4  140.8  146.7  151.8  156.4  160.6
        164.3  167.6  170.4  172.6  174.3  175.5  176.3  176.7
   14   101.2  110.3  119.3  127.2  134.5  140.9  146.8  152.0  156.8  161.0
@@ -642,27 +642,27 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =      186853.2190               STORAGE =           2.1437
+             STORAGE =      186855.0312               STORAGE =           2.1438
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =           0.0000                 WELLS =           0.0000
        RIVER LEAKAGE =           0.0000         RIVER LEAKAGE =           0.0000
      HEAD DEP BOUNDS =          54.3216       HEAD DEP BOUNDS =       6.2322E-04
-            RECHARGE =      378820.7500              RECHARGE =           4.3461
+            RECHARGE =      378822.2812              RECHARGE =           4.3461
 
-            TOTAL IN =      565728.3120              TOTAL IN =           6.4905
+            TOTAL IN =      565731.6250              TOTAL IN =           6.4905
 
           OUT:                                     OUT:
           ----                                     ----
              STORAGE =           0.0000               STORAGE =           0.0000
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
-               WELLS =      187246.6250                 WELLS =           2.1483
-       RIVER LEAKAGE =      378472.2810         RIVER LEAKAGE =           4.3421
+               WELLS =      187247.0625                 WELLS =           2.1483
+       RIVER LEAKAGE =      378485.9062         RIVER LEAKAGE =           4.3423
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
             RECHARGE =           0.0000              RECHARGE =           0.0000
 
-           TOTAL OUT =      565718.8750             TOTAL OUT =           6.4904
+           TOTAL OUT =      565733.0000             TOTAL OUT =           6.4905
 
-            IN - OUT =           9.3841              IN - OUT =       1.0800E-04
+            IN - OUT =          -1.3750              IN - OUT =      -1.5736E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -738,27 +738,27 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =      728111.3130               STORAGE =           2.0699
+             STORAGE =      728113.2500               STORAGE =           2.0699
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =           0.0000                 WELLS =           0.0000
        RIVER LEAKAGE =           0.0000         RIVER LEAKAGE =           0.0000
-     HEAD DEP BOUNDS =         217.9755       HEAD DEP BOUNDS =       6.2586E-04
-            RECHARGE =     1515270.0000              RECHARGE =           4.3461
+     HEAD DEP BOUNDS =         217.9756       HEAD DEP BOUNDS =       6.2586E-04
+            RECHARGE =     1515276.1250              RECHARGE =           4.3461
 
-            TOTAL IN =     2243599.2500              TOTAL IN =           6.4167
+            TOTAL IN =     2243607.2500              TOTAL IN =           6.4167
 
           OUT:                                     OUT:
           ----                                     ----
              STORAGE =           0.0000               STORAGE =           0.0000
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
-               WELLS =      748986.5000                 WELLS =           2.1483
-       RIVER LEAKAGE =     1494616.5000         RIVER LEAKAGE =           4.2685
+               WELLS =      748988.2500                 WELLS =           2.1483
+       RIVER LEAKAGE =     1494636.1250         RIVER LEAKAGE =           4.2685
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
             RECHARGE =           0.0000              RECHARGE =           0.0000
 
-           TOTAL OUT =     2243603.0000             TOTAL OUT =           6.4167
+           TOTAL OUT =     2243624.5000             TOTAL OUT =           6.4168
 
-            IN - OUT =          -3.7120              IN - OUT =      -5.0055E-05
+            IN - OUT =         -17.2500              IN - OUT =      -6.0081E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -834,27 +834,27 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =     1700710.5000               STORAGE =           1.8598
+             STORAGE =     1700714.0000               STORAGE =           1.8598
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =           0.0000                 WELLS =           0.0000
        RIVER LEAKAGE =           0.0000         RIVER LEAKAGE =           0.0000
-     HEAD DEP BOUNDS =         550.0144       HEAD DEP BOUNDS =       6.3491E-04
-            RECHARGE =     3788168.5000              RECHARGE =           4.3461
+     HEAD DEP BOUNDS =         550.0145       HEAD DEP BOUNDS =       6.3491E-04
+            RECHARGE =     3788183.7500              RECHARGE =           4.3461
 
-            TOTAL IN =     5489429.0000              TOTAL IN =           6.2065
+            TOTAL IN =     5489448.0000              TOTAL IN =           6.2065
 
           OUT:                                     OUT:
           ----                                     ----
              STORAGE =           0.0000               STORAGE =           0.0000
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
-               WELLS =     1872466.2500                 WELLS =           2.1483
-       RIVER LEAKAGE =     3616980.5000         RIVER LEAKAGE =           4.0583
+               WELLS =     1872470.6250                 WELLS =           2.1483
+       RIVER LEAKAGE =     3617012.5000         RIVER LEAKAGE =           4.0583
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
             RECHARGE =           0.0000              RECHARGE =           0.0000
 
-           TOTAL OUT =     5489447.0000             TOTAL OUT =           6.2065
+           TOTAL OUT =     5489483.0000             TOTAL OUT =           6.2066
 
-            IN - OUT =         -17.7356              IN - OUT =      -2.7062E-05
+            IN - OUT =         -35.0000              IN - OUT =      -3.4809E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -1049,27 +1049,27 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    10783160.0000               STORAGE =       5.1270E-02
+             STORAGE =    10783192.0000               STORAGE =       5.1270E-02
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =           0.0000                 WELLS =           0.0000
        RIVER LEAKAGE =           0.0000         RIVER LEAKAGE =           0.0000
-     HEAD DEP BOUNDS =       17838.7812       HEAD DEP BOUNDS =       7.5785E-04
-            RECHARGE =   106215144.0000              RECHARGE =           4.3461
+     HEAD DEP BOUNDS =       17838.7793       HEAD DEP BOUNDS =       7.5785E-04
+            RECHARGE =   106215552.0000              RECHARGE =           4.3461
 
-            TOTAL IN =   117016144.0000              TOTAL IN =           4.3981
+            TOTAL IN =   117016584.0000              TOTAL IN =           4.3982
 
           OUT:                                     OUT:
           ----                                     ----
              STORAGE =           0.0000               STORAGE =           0.0000
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
-               WELLS =    52501488.0000                 WELLS =           2.1483
-       RIVER LEAKAGE =    64513272.0000         RIVER LEAKAGE =           2.2497
+               WELLS =    52501604.0000                 WELLS =           2.1483
+       RIVER LEAKAGE =    64513928.0000         RIVER LEAKAGE =           2.2499
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
             RECHARGE =           0.0000              RECHARGE =           0.0000
 
-           TOTAL OUT =   117014760.0000             TOTAL OUT =           4.3980
+           TOTAL OUT =   117015536.0000             TOTAL OUT =           4.3982
 
-            IN - OUT =        1382.7812              IN - OUT =       1.4154E-04
+            IN - OUT =        1048.0000              IN - OUT =      -1.9073E-06
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -1092,36 +1092,36 @@
    OBS#    NAME         VATION     EQUIV.    RESIDUAL  WEIGHT**.5  RESIDUAL
                           *          *
       1 1.0             102.       100.       1.63      0.999       1.63    
-      2 1.1           -0.290E-01 -0.916E-04 -0.289E-01   20.0     -0.578    
-      3 1.12          -0.129     -0.826E-01 -0.463E-01   20.0     -0.927    
+      2 1.1           -0.290E-01 -0.763E-04 -0.289E-01   20.0     -0.578    
+      3 1.12          -0.129     -0.826E-01 -0.464E-01   20.0     -0.927    
       4 2.0             128.       127.       1.12      0.999       1.12    
-      5 2.1           -0.410E-01 -0.337E-01 -0.731E-02   20.0     -0.146    
+      5 2.1           -0.410E-01 -0.337E-01 -0.729E-02   20.0     -0.146    
       6 2.2           -0.557     -0.544     -0.132E-01   20.0     -0.265    
       7 2.8            -11.5      -11.6      0.225E-01   20.0      0.451    
       8 2.12           -14.2      -14.2      0.813E-02   20.0      0.163    
-      9 3.0             157.       157.     -0.452      0.999     -0.452    
+      9 3.0             157.       157.     -0.453      0.999     -0.452    
      10 3.1            -4.38      -4.32     -0.614E-01   20.0      -1.23    
      11 3.12           -42.5      -42.6      0.539E-01   20.0       1.08    
      12 4.0             125.       127.      -2.10      0.999      -2.10    
      13 4.1           -0.670E-01 -0.514E-01 -0.156E-01   20.0     -0.312    
      14 4.12           -14.3      -14.3     -0.534E-01   20.0      -1.07    
-     15 5.0             141.       141.      0.471E-01  0.999      0.471E-01
+     15 5.0             141.       141.      0.471E-01  0.999      0.470E-01
      16 5.1           -0.600E-01 -0.987E-01  0.387E-01   20.0      0.774    
      17 5.12           -21.7      -21.7     -0.184E-01   20.0     -0.368    
      18 6.0             127.       127.     -0.667      0.999     -0.666    
      19 6.1            0.500E-02 -0.384E-01  0.434E-01   20.0      0.867    
-     20 6.12           -14.4      -14.4      0.203E-02   20.0      0.406E-01
+     20 6.12           -14.4      -14.4      0.202E-02   20.0      0.404E-01
      21 7.0             101.       101.     -0.904E-01  0.999     -0.903E-01
-     22 7.1            0.480E-01 -0.274E-02  0.507E-01   20.0       1.01    
-     23 7.12          -0.568     -0.650      0.816E-01   20.0       1.63    
+     22 7.1            0.480E-01 -0.273E-02  0.507E-01   20.0       1.01    
+     23 7.12          -0.568     -0.650      0.815E-01   20.0       1.63    
      24 8.0             158.       157.       1.02      0.999       1.02    
-     25 8.1            -5.53      -5.53      0.157E-02   20.0      0.314E-01
+     25 8.1            -5.53      -5.53      0.156E-02   20.0      0.311E-01
      26 8.12           -43.2      -43.1     -0.110       20.0      -2.21    
      27 9.0             176.       177.     -0.376      0.999     -0.375    
-     28 9.1           -0.992E-03 -0.100      0.992E-01   20.0       1.98    
+     28 9.1           -0.992E-03 -0.100      0.993E-01   20.0       1.99    
      29 9.12           -38.2      -38.4      0.112       20.0       2.25    
      30 0.0             142.       141.      0.998      0.999      0.997    
-     31 0.1           -0.130E-01 -0.167E-01  0.371E-02   20.0      0.742E-01
+     31 0.1           -0.130E-01 -0.167E-01  0.372E-02   20.0      0.745E-01
      32 0.12           -19.9      -19.9     -0.449E-01   20.0     -0.898    
 
  * THE OBSERVATION (AND CORRESPONDING SIMULATED EQUIVALENT) IS HEAD OR TEMPORAL
@@ -1136,28 +1136,28 @@
  # RESIDUALS < 0.  :     15
  NUMBER OF RUNS  :   16  IN   32 OBSERVATIONS
 
- SUM OF SQUARED WEIGHTED RESIDUALS (HEADS ONLY)   36.416    
+ SUM OF SQUARED WEIGHTED RESIDUALS (HEADS ONLY)   36.420    
 
  DATA FOR FLOWS REPRESENTED USING THE RIVER PACKAGE
 
         OBSERVATION      MEAS.      CALC.                          WEIGHTED
    OBS#    NAME          FLOW       FLOW     RESIDUAL  WEIGHT**.5  RESIDUAL
 
-     33 SS             -4.40      -4.35     -0.533E-01   2.50     -0.133    
+     33 SS             -4.40      -4.35     -0.535E-01   2.50     -0.134    
      34 TR3            -4.10      -4.06     -0.417E-01   2.63     -0.110    
-     35 TR12           -2.20      -2.25      0.497E-01   4.76      0.237    
+     35 TR12           -2.20      -2.25      0.499E-01   4.76      0.238    
 
  STATISTICS FOR RIVER FLOW RESIDUALS :
- MAXIMUM WEIGHTED RESIDUAL  : 0.237     OBS#     35
- MINIMUM WEIGHTED RESIDUAL  :-0.133     OBS#     33
- AVERAGE WEIGHTED RESIDUAL  :-0.208E-02
+ MAXIMUM WEIGHTED RESIDUAL  : 0.238     OBS#     35
+ MINIMUM WEIGHTED RESIDUAL  :-0.134     OBS#     33
+ AVERAGE WEIGHTED RESIDUAL  :-0.192E-02
  # RESIDUALS >= 0. :      1
  # RESIDUALS < 0.  :      2
  NUMBER OF RUNS:      2  IN      3 OBSERVATIONS
 
- SUM OF SQUARED WEIGHTED RESIDUALS (RIVER FLOWS ONLY)  0.85939E-01
+ SUM OF SQUARED WEIGHTED RESIDUALS (RIVER FLOWS ONLY)  0.86366E-01
 
- SUM OF SQUARED WEIGHTED RESIDUALS (ALL DEPENDENT VARIABLES)   36.502    
+ SUM OF SQUARED WEIGHTED RESIDUALS (ALL DEPENDENT VARIABLES)   36.506    
 
  STATISTICS FOR ALL RESIDUALS :
  AVERAGE WEIGHTED RESIDUAL  : 0.997E-01
@@ -1182,9 +1182,9 @@
  NUMBER OF RESIDUALS INCLUDED:        35
      -2.21      -2.10      -1.23      -1.07     -0.927     -0.898     -0.666    
     -0.578     -0.452     -0.375     -0.368     -0.312     -0.265     -0.146    
-    -0.133     -0.110     -0.903E-01  0.314E-01  0.406E-01  0.471E-01  0.742E-01
-     0.163      0.237      0.451      0.774      0.867      0.997       1.01    
-      1.02       1.08       1.12       1.63       1.63       1.98       2.25    
+    -0.134     -0.110     -0.903E-01  0.311E-01  0.404E-01  0.470E-01  0.745E-01
+     0.163      0.238      0.451      0.774      0.867      0.997       1.01    
+      1.02       1.08       1.12       1.63       1.63       1.99       2.25    
 
  CORRELATION BETWEEN ORDERED WEIGHTED RESIDUALS AND NORMAL ORDER STATISTICS
  FOR OBSERVATIONS =    0.978    

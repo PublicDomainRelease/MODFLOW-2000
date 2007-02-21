@@ -1,7 +1,8 @@
 ! Time of File Save by ERB: 2/18/2004 11:45AM
 C     Last change:  ERB  14 Jan 2003    4:09 pm
 C=======================================================================
-      SUBROUTINE PES1BAS6DF(IBEFLG,IFO,IOUB,IPES,IPR,IPRAR,IPRINT,
+      SUBROUTINE PES1BAS6DF(IBEALE,IBEFLG,IFO,IOUB,
+     &                      IPES,IPR,IPRAR,IPRINT,
      &                      ITERPF,ITERPK,ITMXP,IUPES,IYCFLG,JMAX,LASTX,
      &                      LCDMXA,LCNIPR,LCNPAR,LCPRM,LCWP,LCWTP,
      &                      LCWTPS,LCW3,LCW4,MPR,MPRAR,NPNGAR,SOSC,SOSR,
@@ -25,6 +26,7 @@ C     PARAMETER-ESTIMATION PROCESS
       BEFIRST = .TRUE.
       IFO = 0
       IOUB = 0
+      IBEALE = 0
       IBEFLG = 0
       IYCFLG = -1
       IPES = 0

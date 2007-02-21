@@ -59,6 +59,7 @@ C----------NRCHOP=1
             ENDIF
 C----------NRCHOP=2
             IF (NRCHOP.EQ.2) THEN
+              IF (IRCH(IC,IR).EQ.0) GOTO 50  ! ERB 1/11/07
               IF (IBOUND(IC,IR,(IRCH(IC,IR))).LT.1) GOTO 50
               IF (IBOUND(IC,IR,(IRCH(IC,IR))).GT.0) THEN
                 RO = SM*DELR(IC)*DELC(IR)

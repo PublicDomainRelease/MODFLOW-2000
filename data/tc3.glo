@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.17.01 09/22/2006
+                           VERSION 1.17.02 02/14/2007
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
@@ -889,7 +889,7 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     1
 
  VALUES FROM SOLVING THE NORMAL EQUATION :
    MARQUARDT PARAMETER ------------------- = 0.25000E-02
-   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-04) = 0.11539E-02
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-04) = 0.11541E-02
         OCCURRED FOR PARAMETER  "WQ_2      " TYPE U
 
  CALCULATION OF DAMPING PARAMETER
@@ -914,7 +914,7 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     1
 
  VALUES FROM SOLVING THE NORMAL EQUATION :
    MARQUARDT PARAMETER ------------------- =  0.0000    
-   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-04) = -.19957E-02
+   MAX. FRAC. PAR. CHANGE (TOL= 0.100E-04) = -.19955E-02
         OCCURRED FOR PARAMETER  "RCH_ZONE_2" TYPE U
 
  CALCULATION OF DAMPING PARAMETER
@@ -1094,9 +1094,9 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     5
  ITER.     PARNAM     MAX. CHANGE       ALLOWED      PARAMETER
  -----   ----------  -------------   -------------  ------------
     1    WQ_1          1.00701         2.00000        1.0000    
-    2    WQ_2         0.719387E-01     2.00000        1.0000    
-    3    WQ_2         0.115390E-02     2.00000        1.0000    
-    4    RCH_ZONE_2  -0.199569E-02     2.00000        1.0000    
+    2    WQ_2         0.719386E-01     2.00000        1.0000    
+    3    WQ_2         0.115410E-02     2.00000        1.0000    
+    4    RCH_ZONE_2  -0.199555E-02     2.00000        1.0000    
 
  SUMS OF SQUARED WEIGHTED RESIDUALS FOR EACH ITERATION
 
@@ -1278,7 +1278,7 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     5
  ..................................................................................................................................
  WQ_1         1.000      0.4383     -3.0033E-02 -5.5110E-03  0.6096     -0.8309      0.4080      7.4510E-03  0.9642      0.3613    
              0.3976      0.2717    
- WQ_2        0.4383       1.000     -3.2233E-02  1.8677E-02  0.4751     -0.5311      0.2723      1.7581E-03  0.4875      0.1871    
+ WQ_2        0.4383       1.000     -3.2233E-02  1.8677E-02  0.4751     -0.5311      0.2723      1.7582E-03  0.4875      0.1871    
              0.2650     -0.1434    
  WQ_3       -3.0033E-02 -3.2233E-02   1.000      0.1558     -5.6008E-02  1.3135E-03 -1.9917E-02 -4.3535E-04 -3.7990E-02 -0.6702    
             -1.8937E-02  9.6525E-03
@@ -1290,7 +1290,7 @@ OBSERVATION SENSITIVITY TABLE(S) FOR PARAMETER-ESTIMATION ITERATION     5
             -0.4932     -0.3332    
  RCH_ZONE_3  0.4080      0.2723     -1.9917E-02 -4.4572E-03  0.4537     -0.5056       1.000      2.2861E-03  0.4552      0.2235    
              0.9995      0.1528    
- rivers      7.4510E-03  1.7581E-03 -4.3535E-04 -1.2756E-03  7.0710E-03 -1.5882E-02  2.2861E-03   1.000      7.9349E-03 -3.7510E-02
+ rivers      7.4510E-03  1.7582E-03 -4.3535E-04 -1.2756E-03  7.0710E-03 -1.5882E-02  2.2861E-03   1.000      7.9349E-03 -3.7510E-02
              2.4306E-03  4.3031E-03
  HK_1        0.9642      0.4875     -3.7990E-02 -8.4634E-03  0.7914     -0.9244      0.4552      7.9349E-03   1.000      0.4077    
              0.4437      0.3012    

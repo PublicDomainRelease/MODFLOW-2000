@@ -1,5 +1,4 @@
-! Time of File Save by ERB: 4/19/2005 5:02PM
-C     Last change:  ERB  21 Nov 2001   10:00 am
+C     Last change:  ERB  11 Jan 2007   10:12 am
       SUBROUTINE SEN1EVT6FM(NCOL,NROW,NLAY,DELR,DELC,RMLT,NEVTOP,IEVT,
      &                  IBOUND,RHS,SURF,EXDP,HNEW,IZON,NMLTAR,NZONAR,IP)
 C-----VERSION 20011121 ERB
@@ -64,6 +63,7 @@ C--------NEVTOP=1
             ENDIF
 C--------NEVTOP=2
             IF (NEVTOP.EQ.2) THEN
+              IF (IEVT(IC,IR).EQ.0) GOTO 50  ! ERB 1/11/07
               IF (IBOUND(IC,IR,(IEVT(IC,IR))).LT.1) GOTO 50
               IF (IBOUND(IC,IR,(IEVT(IC,IR))).GT.0) THEN
                 RO = SM*DELR(IC)*DELC(IR)

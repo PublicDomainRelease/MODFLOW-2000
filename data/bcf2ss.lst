@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.17.01 09/22/2006
+                           VERSION 1.17.02 02/14/2007
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -324,19 +324,19 @@
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =           0.0000                 WELLS =           0.0000
        RIVER LEAKAGE =           0.0000         RIVER LEAKAGE =           0.0000
-            RECHARGE =      150000.0160              RECHARGE =      150000.0160
+            RECHARGE =      150000.0156              RECHARGE =      150000.0156
 
-            TOTAL IN =      150000.0160              TOTAL IN =      150000.0160
+            TOTAL IN =      150000.0156              TOTAL IN =      150000.0156
 
           OUT:                                     OUT:
           ----                                     ----
              STORAGE =           0.0000               STORAGE =           0.0000
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =           0.0000                 WELLS =           0.0000
-       RIVER LEAKAGE =      150000.0160         RIVER LEAKAGE =      150000.0160
+       RIVER LEAKAGE =      150000.0156         RIVER LEAKAGE =      150000.0156
             RECHARGE =           0.0000              RECHARGE =           0.0000
 
-           TOTAL OUT =      150000.0160             TOTAL OUT =      150000.0160
+           TOTAL OUT =      150000.0156             TOTAL OUT =      150000.0156
 
             IN - OUT =           0.0000              IN - OUT =           0.0000
 
@@ -434,7 +434,7 @@
 
 
     12 CALLS TO PCG ROUTINE FOR TIME STEP   1 IN STRESS PERIOD    2
-   110 TOTAL ITERATIONS
+   108 TOTAL ITERATIONS
 
  HEAD/DRAWDOWN PRINTOUT FLAG = 1     TOTAL BUDGET PRINTOUT FLAG = 1
  CELL-BY-CELL FLOW TERM FLAG = 0
@@ -489,21 +489,21 @@
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =           0.0000                 WELLS =           0.0000
        RIVER LEAKAGE =           0.0000         RIVER LEAKAGE =           0.0000
-            RECHARGE =      300000.0310              RECHARGE =      150000.0160
+            RECHARGE =      300000.0312              RECHARGE =      150000.0156
 
-            TOTAL IN =      300000.0310              TOTAL IN =      150000.0160
+            TOTAL IN =      300000.0312              TOTAL IN =      150000.0156
 
           OUT:                                     OUT:
           ----                                     ----
              STORAGE =           0.0000               STORAGE =           0.0000
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =       70000.0000                 WELLS =       70000.0000
-       RIVER LEAKAGE =      230000.0310         RIVER LEAKAGE =       80000.0078
+       RIVER LEAKAGE =      230000.0312         RIVER LEAKAGE =       80000.0078
             RECHARGE =           0.0000              RECHARGE =           0.0000
 
-           TOTAL OUT =      300000.0310             TOTAL OUT =      150000.0000
+           TOTAL OUT =      300000.0312             TOTAL OUT =      150000.0000
 
-            IN - OUT =           0.0000              IN - OUT =       7.8125E-03
+            IN - OUT =           0.0000              IN - OUT =       1.5625E-02
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 

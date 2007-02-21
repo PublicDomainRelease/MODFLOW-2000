@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.17.01 09/22/2006
+                           VERSION 1.17.02 02/14/2007
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -1316,17 +1316,17 @@
                                           NUMBER    NUMBER    STREAM REACH    AQUIFER      STREAM REACH
 
 
-               1         3         9         1         1      30.00000     -0.2360046       30.23600    
+               1         3         9         1         1      30.00000     -0.2360047       30.23600    
                1         3         8         1         2      30.23600     -0.1471985       30.38320    
-               1         3         7         1         3      30.38320     -0.1053253       30.48853    
-               1         3         6         1         4      30.48853      0.8241272E-02   30.48029    
-               1         7         7         2         1      20.00000     -0.9976806E-01   20.09977    
-               1         6         7         2         2      20.09977     -0.1463425       20.24611    
-               1         5         6         2         3      20.24611     -0.2626037E-02   20.24874    
-               1         4         5         2         4      20.24874      0.1832840       20.06545    
-               1         3         5         3         1      50.54574     -0.1347717       50.68051    
-               1         2         4         3         2      50.68051      0.6282958E-01   50.61768    
-               1         1         3         3         3      50.61768      0.2944259       50.32326    
+               1         3         7         1         3      30.38320     -0.1053248       30.48853    
+               1         3         6         1         4      30.48853      0.8241436E-02   30.48029    
+               1         7         7         2         1      20.00000     -0.9976769E-01   20.09977    
+               1         6         7         2         2      20.09977     -0.1463417       20.24611    
+               1         5         6         2         3      20.24611     -0.2625293E-02   20.24873    
+               1         4         5         2         4      20.24873      0.1832834       20.06545    
+               1         3         5         3         1      50.54574     -0.1347719       50.68051    
+               1         2         4         3         2      50.68051      0.6282973E-01   50.61768    
+               1         1         3         3         3      50.61768      0.2944254       50.32325    
 1
               HEAD IN LAYER   1 AT END OF TIME STEP   1 IN STRESS PERIOD    1
   ---------------------------------------------------------------------------
@@ -1452,7 +1452,7 @@
 
            TOTAL OUT =           6.2378             TOTAL OUT =           6.2378
 
-            IN - OUT =       4.0058E-05              IN - OUT =       4.0058E-05
+            IN - OUT =       4.1485E-05              IN - OUT =       4.1485E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -1701,17 +1701,17 @@
                                           NUMBER    NUMBER    STREAM REACH    AQUIFER      STREAM REACH
 
 
-               1         3         9         1         1      100.0000     -0.6311493E-01   100.0631    
-               1         3         8         1         2      100.0631     -0.2961120E-01   100.0927    
-               1         3         7         1         3      100.0927     -0.4876556E-01   100.1415    
-               1         3         6         1         4      100.1415      0.8099365E-02   100.1334    
-               1         7         7         2         1      80.00000     -0.2531433E-01   80.02531    
-               1         6         7         2         2      80.02531     -0.9465942E-01   80.11997    
-               1         5         6         2         3      80.11997      0.4689483E-01   80.07307    
-               1         4         5         2         4      80.07307      0.2025864       79.87049    
-               1         3         5         3         1      180.0039     -0.1580322       180.1619    
-               1         2         4         3         2      180.1619      0.5361938E-01   180.1083    
-               1         1         3         3         3      180.1083      0.2799530       179.8283    
+               1         3         9         1         1      100.0000     -0.6311538E-01   100.0631    
+               1         3         8         1         2      100.0631     -0.2961136E-01   100.0927    
+               1         3         7         1         3      100.0927     -0.4876488E-01   100.1415    
+               1         3         6         1         4      100.1415      0.8099847E-02   100.1334    
+               1         7         7         2         1      80.00000     -0.2531401E-01   80.02531    
+               1         6         7         2         2      80.02531     -0.9466005E-01   80.11997    
+               1         5         6         2         3      80.11997      0.4689504E-01   80.07307    
+               1         4         5         2         4      80.07307      0.2025856       79.87049    
+               1         3         5         3         1      180.0039     -0.1580318       180.1619    
+               1         2         4         3         2      180.1619      0.5361914E-01   180.1083    
+               1         1         3         3         3      180.1083      0.2799536       179.8283    
 1
               HEAD IN LAYER   1 AT END OF TIME STEP   3 IN STRESS PERIOD    2
   ---------------------------------------------------------------------------
@@ -1807,37 +1807,37 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =      242177.5160               STORAGE =           2.6422
+             STORAGE =      242177.6406               STORAGE =           2.6422
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =           0.0000                 WELLS =           0.0000
               DRAINS =           0.0000                DRAINS =           0.0000
        RIVER LEAKAGE =           0.0000         RIVER LEAKAGE =           0.0000
                   ET =           0.0000                    ET =           0.0000
      HEAD DEP BOUNDS =          40.6399       HEAD DEP BOUNDS =       4.7060E-04
-            RECHARGE =      530416.5620              RECHARGE =           6.1390
-      STREAM LEAKAGE =       58633.7852        STREAM LEAKAGE =           0.5912
+            RECHARGE =      530416.5625              RECHARGE =           6.1390
+      STREAM LEAKAGE =       58633.7969        STREAM LEAKAGE =           0.5912
          ET SEGMENTS =           0.0000           ET SEGMENTS =           0.0000
         DRAINS (DRT) =        2624.7478          DRAINS (DRT) =       3.0158E-02
 
-            TOTAL IN =      833893.2500              TOTAL IN =           9.4030
+            TOTAL IN =      833893.3750              TOTAL IN =           9.4030
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =      143726.0940               STORAGE =           0.8429
+             STORAGE =      143726.0469               STORAGE =           0.8429
        CONSTANT HEAD =       86011.7344         CONSTANT HEAD =           0.9534
                WELLS =      190080.0000                 WELLS =           2.2000
-              DRAINS =      131059.3830                DRAINS =           1.7771
-       RIVER LEAKAGE =      164729.2970         RIVER LEAKAGE =           2.1685
+              DRAINS =      131059.3828                DRAINS =           1.7771
+       RIVER LEAKAGE =      164729.2969         RIVER LEAKAGE =           2.1685
                   ET =       57821.6836                    ET =           0.6694
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
             RECHARGE =           0.0000              RECHARGE =           0.0000
-      STREAM LEAKAGE =       28105.6992        STREAM LEAKAGE =           0.4195
+      STREAM LEAKAGE =       28105.6973        STREAM LEAKAGE =           0.4195
          ET SEGMENTS =       29078.5645           ET SEGMENTS =           0.3344
         DRAINS (DRT) =        3280.9253          DRAINS (DRT) =       3.7697E-02
 
-           TOTAL OUT =      833893.3750             TOTAL OUT =           9.4030
+           TOTAL OUT =      833893.3125             TOTAL OUT =           9.4030
 
-            IN - OUT =          -0.1294              IN - OUT =       9.9648E-06
+            IN - OUT =       6.2500E-02              IN - OUT =       1.3351E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -2131,17 +2131,17 @@
                                           NUMBER    NUMBER    STREAM REACH    AQUIFER      STREAM REACH
 
 
-               1         3         9         1         1      100.0000     -0.9395446E-01   100.0940    
-               1         3         8         1         2      100.0940     -0.5559539E-01   100.1496    
-               1         3         7         1         3      100.1496     -0.7095489E-01   100.2205    
-               1         3         6         1         4      100.2205     -0.6530761E-02   100.2270    
-               1         7         7         2         1      80.00000      0.4836426E-01   79.95164    
-               1         6         7         2         2      79.95164     -0.7026061E-01   80.02190    
-               1         5         6         2         3      80.02190      0.4050445E-01   79.98139    
-               1         4         5         2         4      79.98139      0.1913864       79.79001    
-               1         3         5         3         1      180.0170     -0.1679672       180.1850    
-               1         2         4         3         2      180.1850      0.4204407E-01   180.1430    
-               1         1         3         3         3      180.1430      0.2714584       179.8715    
+               1         3         9         1         1      100.0000     -0.9395371E-01   100.0940    
+               1         3         8         1         2      100.0940     -0.5559490E-01   100.1496    
+               1         3         7         1         3      100.1496     -0.7095548E-01   100.2205    
+               1         3         6         1         4      100.2205     -0.6531393E-02   100.2270    
+               1         7         7         2         1      80.00000      0.4836466E-01   79.95164    
+               1         6         7         2         2      79.95164     -0.7026070E-01   80.02190    
+               1         5         6         2         3      80.02190      0.4050516E-01   79.98139    
+               1         4         5         2         4      79.98139      0.1913862       79.79001    
+               1         3         5         3         1      180.0170     -0.1679670       180.1850    
+               1         2         4         3         2      180.1850      0.4204416E-01   180.1430    
+               1         1         3         3         3      180.1430      0.2714585       179.8715    
 1
   VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  3 IN STRESS PERIOD   3
   ------------------------------------------------------------------------------
@@ -2151,15 +2151,15 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =      756898.4380               STORAGE =           1.8091
+             STORAGE =      756898.5625               STORAGE =           1.8091
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =           0.0000                 WELLS =           0.0000
               DRAINS =           0.0000                DRAINS =           0.0000
        RIVER LEAKAGE =           0.0000         RIVER LEAKAGE =           0.0000
                   ET =           0.0000                    ET =           0.0000
      HEAD DEP BOUNDS =         244.0204       HEAD DEP BOUNDS =       7.8520E-04
-            RECHARGE =     2295896.0000              RECHARGE =           6.8113
-      STREAM LEAKAGE =      207885.5000        STREAM LEAKAGE =           0.5938
+            RECHARGE =     2295895.7500              RECHARGE =           6.8113
+      STREAM LEAKAGE =      207885.5156        STREAM LEAKAGE =           0.5938
          ET SEGMENTS =           0.0000           ET SEGMENTS =           0.0000
         DRAINS (DRT) =        8353.0859          DRAINS (DRT) =       2.1755E-02
 
@@ -2167,21 +2167,21 @@
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =      215432.8910               STORAGE =           0.1216
+             STORAGE =      215432.8125               STORAGE =           0.1216
        CONSTANT HEAD =      305845.8750         CONSTANT HEAD =           0.8286
                WELLS =      817344.0000                 WELLS =           2.4200
-              DRAINS =      601183.9380                DRAINS =           1.8209
-       RIVER LEAKAGE =      738623.8130         RIVER LEAKAGE =           2.2235
+              DRAINS =      601183.9375                DRAINS =           1.8209
+       RIVER LEAKAGE =      738623.8125         RIVER LEAKAGE =           2.2235
                   ET =      318127.3750                    ET =           1.0043
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
             RECHARGE =           0.0000              RECHARGE =           0.0000
-      STREAM LEAKAGE =      147411.5470        STREAM LEAKAGE =           0.4653
-         ET SEGMENTS =      112511.9770           ET SEGMENTS =           0.3165
+      STREAM LEAKAGE =      147411.4219        STREAM LEAKAGE =           0.4653
+         ET SEGMENTS =      112511.9766           ET SEGMENTS =           0.3165
         DRAINS (DRT) =       12828.1543          DRAINS (DRT) =       3.6259E-02
 
-           TOTAL OUT =     3269309.5000             TOTAL OUT =           9.2368
+           TOTAL OUT =     3269309.2500             TOTAL OUT =           9.2368
 
-            IN - OUT =         -32.5246              IN - OUT =      -1.2373E-04
+            IN - OUT =         -32.2500              IN - OUT =      -1.2207E-04
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -2475,17 +2475,17 @@
                                           NUMBER    NUMBER    STREAM REACH    AQUIFER      STREAM REACH
 
 
-               1         3         9         1         1      50.00000     -0.1669556       50.16695    
-               1         3         8         1         2      50.16695     -0.1144012       50.28136    
-               1         3         7         1         3      50.28136     -0.1371170       50.41847    
-               1         3         6         1         4      50.41847     -0.4432983E-01   50.46280    
-               1         7         7         2         1      40.00000      0.4530792E-01   39.95469    
-               1         6         7         2         2      39.95469     -0.8599243E-01   40.04068    
-               1         5         6         2         3      40.04068      0.5645751E-03   40.04012    
-               1         4         5         2         4      40.04012      0.1568207       39.88330    
-               1         3         5         3         1      90.34610     -0.1787231       90.52483    
-               1         2         4         3         2      90.52483      0.1157227E-01   90.51325    
-               1         1         3         3         3      90.51325      0.2509033       90.26235    
+               1         3         9         1         1      50.00000     -0.1669555       50.16695    
+               1         3         8         1         2      50.16695     -0.1144017       50.28136    
+               1         3         7         1         3      50.28136     -0.1371166       50.41847    
+               1         3         6         1         4      50.41847     -0.4432916E-01   50.46280    
+               1         7         7         2         1      40.00000      0.4530811E-01   39.95469    
+               1         6         7         2         2      39.95469     -0.8599305E-01   40.04069    
+               1         5         6         2         3      40.04069      0.5650587E-03   40.04012    
+               1         4         5         2         4      40.04012      0.1568203       39.88330    
+               1         3         5         3         1      90.34611     -0.1787230       90.52483    
+               1         2         4         3         2      90.52483      0.1157252E-01   90.51326    
+               1         1         3         3         3      90.51326      0.2509038       90.26236    
 1
   VOLUMETRIC BUDGET FOR ENTIRE MODEL AT END OF TIME STEP  3 IN STRESS PERIOD   4
   ------------------------------------------------------------------------------
@@ -2495,15 +2495,15 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =     1213610.1300               STORAGE =           0.6958
+             STORAGE =     1213610.2500               STORAGE =           0.6958
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =           0.0000                 WELLS =           0.0000
               DRAINS =           0.0000                DRAINS =           0.0000
        RIVER LEAKAGE =           0.0000         RIVER LEAKAGE =           0.0000
                   ET =           0.0000                    ET =           0.0000
      HEAD DEP BOUNDS =         979.9882       HEAD DEP BOUNDS =       1.4234E-03
-            RECHARGE =     7069595.0000              RECHARGE =           9.2085
-      STREAM LEAKAGE =      446555.2190        STREAM LEAKAGE =           0.4652
+            RECHARGE =     7069594.5000              RECHARGE =           9.2085
+      STREAM LEAKAGE =      446555.5000        STREAM LEAKAGE =           0.4652
          ET SEGMENTS =           0.0000           ET SEGMENTS =           0.0000
         DRAINS (DRT) =       15561.7471          DRAINS (DRT) =       1.3589E-02
 
@@ -2511,21 +2511,21 @@
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =      378293.8440               STORAGE =           0.1438
-       CONSTANT HEAD =      705187.0630         CONSTANT HEAD =           0.7552
+             STORAGE =      378293.8125               STORAGE =           0.1438
+       CONSTANT HEAD =      705187.0625         CONSTANT HEAD =           0.7552
                WELLS =     2185920.0000                 WELLS =           2.6400
               DRAINS =     1665462.5000                DRAINS =           2.0922
        RIVER LEAKAGE =     2059319.7500         RIVER LEAKAGE =           2.5374
                   ET =      836979.6250                    ET =           1.0009
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
             RECHARGE =           0.0000              RECHARGE =           0.0000
-      STREAM LEAKAGE =      533459.8750        STREAM LEAKAGE =           0.7275
-         ET SEGMENTS =      350871.8120           ET SEGMENTS =           0.4537
+      STREAM LEAKAGE =      533459.5000        STREAM LEAKAGE =           0.7275
+         ET SEGMENTS =      350871.7812           ET SEGMENTS =           0.4537
         DRAINS (DRT) =       30849.8066          DRAINS (DRT) =       3.3971E-02
 
            TOTAL OUT =     8746344.0000             TOTAL OUT =          10.3846
 
-            IN - OUT =         -42.1964              IN - OUT =      -9.3665E-06
+            IN - OUT =         -42.0000              IN - OUT =      -7.6294E-06
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -2727,24 +2727,24 @@
     SAVE BUDGET
 
     CONSTANT HEAD   PERIOD    5   STEP   8
- LAYER   1   ROW    12   COL    18   RATE   -0.219617    
+ LAYER   1   ROW    12   COL    18   RATE   -0.219616    
  LAYER   1   ROW    13   COL    18   RATE   -0.250400    
 
             LAYER      ROW     COLUMN     STREAM    REACH      FLOW INTO     FLOW INTO     FLOW OUT OF
                                           NUMBER    NUMBER    STREAM REACH    AQUIFER      STREAM REACH
 
 
-               1         3         9         1         1      50.00000     -0.8778839E-01   50.08779    
-               1         3         8         1         2      50.08779     -0.7425842E-01   50.16204    
-               1         3         7         1         3      50.16204     -0.1145752       50.27662    
-               1         3         6         1         4      50.27662     -0.3262176E-01   50.30924    
-               1         7         7         2         1      40.00000      0.1352188       39.86478    
-               1         6         7         2         2      39.86478     -0.2735748E-01   39.89214    
-               1         5         6         2         3      39.89214      0.2897033E-01   39.86317    
-               1         4         5         2         4      39.86317      0.1681580       39.69501    
-               1         3         5         3         1      90.00426     -0.1726944       90.17695    
-               1         2         4         3         2      90.17695      0.1623230E-01   90.16071    
-               1         1         3         3         3      90.16071      0.2528900       89.90782    
+               1         3         9         1         1      50.00000     -0.8778821E-01   50.08779    
+               1         3         8         1         2      50.08779     -0.7425846E-01   50.16204    
+               1         3         7         1         3      50.16204     -0.1145759       50.27662    
+               1         3         6         1         4      50.27662     -0.3262108E-01   50.30924    
+               1         7         7         2         1      40.00000      0.1352195       39.86478    
+               1         6         7         2         2      39.86478     -0.2735696E-01   39.89214    
+               1         5         6         2         3      39.89214      0.2897104E-01   39.86316    
+               1         4         5         2         4      39.86316      0.1681578       39.69500    
+               1         3         5         3         1      90.00424     -0.1726943       90.17693    
+               1         2         4         3         2      90.17693      0.1623170E-01   90.16070    
+               1         1         3         3         3      90.16070      0.2528895       89.90781    
  
  SOLVING FOR HEAD 
      4 CALLS TO PCG ROUTINE FOR TIME STEP   9 IN STRESS PERIOD    5
@@ -2763,17 +2763,17 @@
                                           NUMBER    NUMBER    STREAM REACH    AQUIFER      STREAM REACH
 
 
-               1         3         9         1         1      50.00000     -0.8653869E-01   50.08654    
-               1         3         8         1         2      50.08654     -0.7363739E-01   50.16018    
-               1         3         7         1         3      50.16018     -0.1142273       50.27441    
-               1         3         6         1         4      50.27441     -0.3243408E-01   50.30684    
-               1         7         7         2         1      40.00000      0.1364273       39.86357    
-               1         6         7         2         2      39.86357     -0.2655792E-01   39.89013    
-               1         5         6         2         3      39.89013      0.2937622E-01   39.86075    
-               1         4         5         2         4      39.86075      0.1683334       39.69242    
-               1         3         5         3         1      89.99925     -0.1725906       90.17184    
-               1         2         4         3         2      90.17184      0.1632233E-01   90.15553    
-               1         1         3         3         3      90.15553      0.2529327       89.90260    
+               1         3         9         1         1      50.00000     -0.8653871E-01   50.08654    
+               1         3         8         1         2      50.08654     -0.7363726E-01   50.16018    
+               1         3         7         1         3      50.16018     -0.1142269       50.27441    
+               1         3         6         1         4      50.27441     -0.3243414E-01   50.30684    
+               1         7         7         2         1      40.00000      0.1364270       39.86357    
+               1         6         7         2         2      39.86357     -0.2655813E-01   39.89013    
+               1         5         6         2         3      39.89013      0.2937606E-01   39.86075    
+               1         4         5         2         4      39.86075      0.1683336       39.69242    
+               1         3         5         3         1      89.99925     -0.1725909       90.17184    
+               1         2         4         3         2      90.17184      0.1632169E-01   90.15553    
+               1         1         3         3         3      90.15553      0.2529321       89.90260    
 1
               HEAD IN LAYER   1 AT END OF TIME STEP   9 IN STRESS PERIOD    5
   ---------------------------------------------------------------------------
@@ -2869,37 +2869,37 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =     2938159.2500               STORAGE =       7.3732E-03
+             STORAGE =     2938158.7500               STORAGE =       7.3731E-03
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
                WELLS =           0.0000                 WELLS =           0.0000
               DRAINS =           0.0000                DRAINS =           0.0000
        RIVER LEAKAGE =           0.0000         RIVER LEAKAGE =           0.0000
                   ET =           0.0000                    ET =           0.0000
-     HEAD DEP BOUNDS =       73219.5391       HEAD DEP BOUNDS =       2.7992E-03
-            RECHARGE =   245754704.0000              RECHARGE =           9.2085
-      STREAM LEAKAGE =    15779370.0000        STREAM LEAKAGE =           0.6034
+     HEAD DEP BOUNDS =       73219.5156       HEAD DEP BOUNDS =       2.7992E-03
+            RECHARGE =   245754624.0000              RECHARGE =           9.2085
+      STREAM LEAKAGE =    15779350.0000        STREAM LEAKAGE =           0.6034
          ET SEGMENTS =           0.0000           ET SEGMENTS =           0.0000
-        DRAINS (DRT) =      159382.4380          DRAINS (DRT) =       5.3657E-03
+        DRAINS (DRT) =      159382.3906          DRAINS (DRT) =       5.3657E-03
 
-            TOTAL IN =   264704832.0000              TOTAL IN =           9.8275
+            TOTAL IN =   264704736.0000              TOTAL IN =           9.8275
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =      378297.1250               STORAGE =           0.0000
-       CONSTANT HEAD =    13125355.0000         CONSTANT HEAD =           0.4791
-               WELLS =    76317176.0000                 WELLS =           2.8600
-              DRAINS =    55940836.0000                DRAINS =           2.0781
-       RIVER LEAKAGE =    66453832.0000         RIVER LEAKAGE =           2.4804
-                  ET =    26777394.0000                    ET =           1.0007
+             STORAGE =      378297.0938               STORAGE =       7.8876E-11
+       CONSTANT HEAD =    13125348.0000         CONSTANT HEAD =           0.4791
+               WELLS =    76317144.0000                 WELLS =           2.8600
+              DRAINS =    55940852.0000                DRAINS =           2.0781
+       RIVER LEAKAGE =    66453808.0000         RIVER LEAKAGE =           2.4804
+                  ET =    26777382.0000                    ET =           1.0007
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
             RECHARGE =           0.0000              RECHARGE =           0.0000
-      STREAM LEAKAGE =    14185053.0000        STREAM LEAKAGE =           0.5060
-         ET SEGMENTS =    10777385.0000           ET SEGMENTS =           0.3965
-        DRAINS (DRT) =      749953.3130          DRAINS (DRT) =       2.6828E-02
+      STREAM LEAKAGE =    14185045.0000        STREAM LEAKAGE =           0.5060
+         ET SEGMENTS =    10777381.0000           ET SEGMENTS =           0.3965
+        DRAINS (DRT) =      749953.0000          DRAINS (DRT) =       2.6828E-02
 
-           TOTAL OUT =   264705280.0000             TOTAL OUT =           9.8276
+           TOTAL OUT =   264705216.0000             TOTAL OUT =           9.8276
 
-            IN - OUT =        -446.2109              IN - OUT =      -1.1168E-04
+            IN - OUT =        -480.0000              IN - OUT =      -1.1349E-04
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 

@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.17.01 09/22/2006
+                           VERSION 1.17.02 02/14/2007
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -341,19 +341,19 @@
            ---                                      ---
              STORAGE =           0.0000               STORAGE =           0.0000
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
-     SPECIFIED FLOWS =     1777065.1200       SPECIFIED FLOWS =        5849.1733
+     SPECIFIED FLOWS =     1777065.1250       SPECIFIED FLOWS =        5849.1733
 
-            TOTAL IN =     1777065.1200              TOTAL IN =        5849.1733
+            TOTAL IN =     1777065.1250              TOTAL IN =        5849.1733
 
           OUT:                                     OUT:
           ----                                     ----
              STORAGE =      860090.2500               STORAGE =        2264.6069
-       CONSTANT HEAD =      916104.9380         CONSTANT HEAD =        3582.3157
+       CONSTANT HEAD =      916104.9375         CONSTANT HEAD =        3582.3157
      SPECIFIED FLOWS =           0.0000       SPECIFIED FLOWS =           0.0000
 
            TOTAL OUT =     1776195.2500             TOTAL OUT =        5846.9229
 
-            IN - OUT =         869.9375              IN - OUT =           2.2507
+            IN - OUT =         869.8750              IN - OUT =           2.2505
 
  PERCENT DISCREPANCY =           0.05     PERCENT DISCREPANCY =           0.04
 
@@ -449,13 +449,13 @@
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =     1284297.5000               STORAGE =        2075.0769
-       CONSTANT HEAD =     1611474.1300         CONSTANT HEAD =        3367.9294
+             STORAGE =     1284297.2500               STORAGE =        2075.0767
+       CONSTANT HEAD =     1611474.1250         CONSTANT HEAD =        3367.9294
      SPECIFIED FLOWS =           0.0000       SPECIFIED FLOWS =           0.0000
 
-           TOTAL OUT =     2895771.5000             TOTAL OUT =        5443.0063
+           TOTAL OUT =     2895771.5000             TOTAL OUT =        5443.0059
 
-            IN - OUT =        1541.3750              IN - OUT =           3.2744
+            IN - OUT =        1541.5000              IN - OUT =           3.2749
 
  PERCENT DISCREPANCY =           0.05     PERCENT DISCREPANCY =           0.06
 
@@ -590,7 +590,7 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =      284414.2500               STORAGE =        1836.9204
+             STORAGE =      284414.2500               STORAGE =        1836.9205
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      SPECIFIED FLOWS =     5353000.0000       SPECIFIED FLOWS =        8201.0186
 
@@ -598,13 +598,13 @@
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =     1656062.0000               STORAGE =           0.0000
+             STORAGE =     1656061.6250               STORAGE =           0.0000
        CONSTANT HEAD =     3979499.2500         CONSTANT HEAD =       10050.3271
      SPECIFIED FLOWS =           0.0000       SPECIFIED FLOWS =           0.0000
 
            TOTAL OUT =     5635561.0000             TOTAL OUT =       10050.3271
 
-            IN - OUT =        1853.0000              IN - OUT =         -12.3882
+            IN - OUT =        1853.0000              IN - OUT =         -12.3877
 
  PERCENT DISCREPANCY =           0.03     PERCENT DISCREPANCY =          -0.12
 

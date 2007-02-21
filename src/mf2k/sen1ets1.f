@@ -61,6 +61,7 @@ C--------NETSOP=1
             ENDIF
 C--------NETSOP=2
             IF (NETSOP.EQ.2) THEN
+              IF (IETS(IC,IR).EQ.0) GOTO 50  ! ERB 1/11/07
               IF (IBOUND(IC,IR,(IETS(IC,IR))).LT.1) GOTO 50
               IF (IBOUND(IC,IR,(IETS(IC,IR))).GT.0) THEN
                 RO = SM*DELR(IC)*DELC(IR)

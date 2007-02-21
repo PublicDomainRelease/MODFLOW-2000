@@ -1,5 +1,5 @@
  "GAGE No.  4:  K,I,J Coord. =   1,  6,  8;  STREAM SEGMENT =   4;  REACH =   3 "
- " DATA:   Time        Stage         Flow        Depth        Width       M-P Flow"
+ "DATA:   Time       Stage        Flow        Depth        Width       M-P Flow"
      1.3557E+06   1.0637E+03   6.0855E+00   5.0206E-01   1.0000E+01   7.3113E+00
      2.8469E+06   1.0637E+03   6.0855E+00   5.0206E-01   1.0000E+01   7.3113E+00
      4.4873E+06   1.0637E+03   6.0855E+00   5.0206E-01   1.0000E+01   7.3113E+00

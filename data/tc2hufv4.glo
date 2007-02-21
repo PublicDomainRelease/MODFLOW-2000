@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.17.01 09/22/2006
+                           VERSION 1.17.02 02/14/2007
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
@@ -158,7 +158,7 @@
              ZONE ARRAY: RCHETM    
  READING ON UNIT   39 WITH FORMAT: (I1,17I2)           
 
- HUF2 -- HYDROGEOLOGIC-UNIT FLOW PACKAGE,            VERSION 2.0, 07/02/2003
+ HUF2 -- HYDROGEOLOGIC-UNIT FLOW PACKAGE, VERSION 2.0, 07/02/2003
  INPUT READ FROM UNIT 11
 
  # HUF file for Test Case 2 Variant 4
@@ -641,7 +641,7 @@
         471.0       431.5       549.6       775.6       907.2       949.9    
         856.6       710.0       709.1       704.7       676.9       600.0    
   10   -422.6      -237.4      -37.62       135.4       312.4       451.3    
-        490.3       499.7       607.8       786.3       895.3       953.3    
+        490.3       499.7       607.8       786.3       895.3       953.2    
         924.8       776.8       714.3       702.2       659.1       600.0    
   11   -292.4      -163.6      -15.52       140.9       309.6       426.6    
         496.2       545.8       629.6       812.3       941.1       957.0    
@@ -662,7 +662,7 @@
         9999.       9999.       741.5       742.1       755.5       762.5    
         749.1       706.2       716.2       697.5       693.3       692.3    
   17    9999.       9999.       9999.       9999.       9999.       9999.    
-        9999.       9999.       9999.       742.2       746.7       747.3    
+        9999.       9999.       9999.       742.2       746.7       747.2    
         738.5       721.5       709.4       695.8       694.2       693.7    
   18    9999.       9999.       9999.       9999.       9999.       9999.    
         9999.       9999.       9999.       9999.       744.5       742.2    
@@ -815,157 +815,157 @@
  PARAMETER NAME:HK1          TYPE:HK   UNITS:   5
  The parameter value from the package file is:   1.0000    
 UNIT HGU1      CORRESPONDS TO UNIT NO.     1
-                UNIT:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  1   MULTIPLIER:NONE   ZONE ARRAY:ZLAY1
                 ZONE VALUES:    1
 UNIT HGU2      CORRESPONDS TO UNIT NO.     2
-                UNIT:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  2   MULTIPLIER:NONE   ZONE ARRAY:ZLAY1
                 ZONE VALUES:    1
 UNIT HGU3      CORRESPONDS TO UNIT NO.     3
-                UNIT:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  3   MULTIPLIER:NONE   ZONE ARRAY:ZLAY2
                 ZONE VALUES:    1
 UNIT HGU4      CORRESPONDS TO UNIT NO.     4
-                UNIT:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  4   MULTIPLIER:NONE   ZONE ARRAY:ZLAY2
                 ZONE VALUES:    1
 UNIT HGU5      CORRESPONDS TO UNIT NO.     5
-                UNIT:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                UNIT:  5   MULTIPLIER:NONE   ZONE ARRAY:ZLAY3
                 ZONE VALUES:    1
 
  PARAMETER NAME:HK2          TYPE:HK   UNITS:   5
  The parameter value from the package file is:  1.00000E-02
 UNIT HGU1      CORRESPONDS TO UNIT NO.     1
-                UNIT:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  1   MULTIPLIER:NONE   ZONE ARRAY:ZLAY1
                 ZONE VALUES:    2
 UNIT HGU2      CORRESPONDS TO UNIT NO.     2
-                UNIT:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  2   MULTIPLIER:NONE   ZONE ARRAY:ZLAY1
                 ZONE VALUES:    2
 UNIT HGU3      CORRESPONDS TO UNIT NO.     3
-                UNIT:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  3   MULTIPLIER:NONE   ZONE ARRAY:ZLAY2
                 ZONE VALUES:    2
 UNIT HGU4      CORRESPONDS TO UNIT NO.     4
-                UNIT:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  4   MULTIPLIER:NONE   ZONE ARRAY:ZLAY2
                 ZONE VALUES:    2
 UNIT HGU5      CORRESPONDS TO UNIT NO.     5
-                UNIT:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                UNIT:  5   MULTIPLIER:NONE   ZONE ARRAY:ZLAY3
                 ZONE VALUES:    2
 
  PARAMETER NAME:HK3          TYPE:HK   UNITS:   5
  The parameter value from the package file is:  1.00000E-04
 UNIT HGU1      CORRESPONDS TO UNIT NO.     1
-                UNIT:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  1   MULTIPLIER:NONE   ZONE ARRAY:ZLAY1
                 ZONE VALUES:    3
 UNIT HGU2      CORRESPONDS TO UNIT NO.     2
-                UNIT:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  2   MULTIPLIER:NONE   ZONE ARRAY:ZLAY1
                 ZONE VALUES:    3
 UNIT HGU3      CORRESPONDS TO UNIT NO.     3
-                UNIT:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  3   MULTIPLIER:NONE   ZONE ARRAY:ZLAY2
                 ZONE VALUES:    3
 UNIT HGU4      CORRESPONDS TO UNIT NO.     4
-                UNIT:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  4   MULTIPLIER:NONE   ZONE ARRAY:ZLAY2
                 ZONE VALUES:    3
 UNIT HGU5      CORRESPONDS TO UNIT NO.     5
-                UNIT:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                UNIT:  5   MULTIPLIER:NONE   ZONE ARRAY:ZLAY3
                 ZONE VALUES:    3
 
  PARAMETER NAME:HK4          TYPE:HK   UNITS:   5
  The parameter value from the package file is:  1.00000E-06
 UNIT HGU1      CORRESPONDS TO UNIT NO.     1
-                UNIT:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  1   MULTIPLIER:NONE   ZONE ARRAY:ZLAY1
                 ZONE VALUES:    4
 UNIT HGU2      CORRESPONDS TO UNIT NO.     2
-                UNIT:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  2   MULTIPLIER:NONE   ZONE ARRAY:ZLAY1
                 ZONE VALUES:    4
 UNIT HGU3      CORRESPONDS TO UNIT NO.     3
-                UNIT:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  3   MULTIPLIER:NONE   ZONE ARRAY:ZLAY2
                 ZONE VALUES:    4
 UNIT HGU4      CORRESPONDS TO UNIT NO.     4
-                UNIT:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  4   MULTIPLIER:NONE   ZONE ARRAY:ZLAY2
                 ZONE VALUES:    4
 UNIT HGU5      CORRESPONDS TO UNIT NO.     5
-                UNIT:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                UNIT:  5   MULTIPLIER:NONE   ZONE ARRAY:ZLAY3
                 ZONE VALUES:    4
 
  PARAMETER NAME:VKA12_1      TYPE:VK   UNITS:   4
  The parameter value from the package file is:  0.25000    
 UNIT HGU1      CORRESPONDS TO UNIT NO.     1
-                UNIT:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  1   MULTIPLIER:NONE   ZONE ARRAY:ZLAY1
                 ZONE VALUES:    1
 UNIT HGU2      CORRESPONDS TO UNIT NO.     2
-                UNIT:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  2   MULTIPLIER:NONE   ZONE ARRAY:ZLAY1
                 ZONE VALUES:    1
 UNIT HGU3      CORRESPONDS TO UNIT NO.     3
-                UNIT:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  3   MULTIPLIER:NONE   ZONE ARRAY:ZLAY2
                 ZONE VALUES:    1
 UNIT HGU4      CORRESPONDS TO UNIT NO.     4
-                UNIT:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  4   MULTIPLIER:NONE   ZONE ARRAY:ZLAY2
                 ZONE VALUES:    1
 
  PARAMETER NAME:VKA12_2      TYPE:VK   UNITS:   4
  The parameter value from the package file is:  2.50000E-03
 UNIT HGU1      CORRESPONDS TO UNIT NO.     1
-                UNIT:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  1   MULTIPLIER:NONE   ZONE ARRAY:ZLAY1
                 ZONE VALUES:    2
 UNIT HGU2      CORRESPONDS TO UNIT NO.     2
-                UNIT:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  2   MULTIPLIER:NONE   ZONE ARRAY:ZLAY1
                 ZONE VALUES:    2
 UNIT HGU3      CORRESPONDS TO UNIT NO.     3
-                UNIT:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  3   MULTIPLIER:NONE   ZONE ARRAY:ZLAY2
                 ZONE VALUES:    2
 UNIT HGU4      CORRESPONDS TO UNIT NO.     4
-                UNIT:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  4   MULTIPLIER:NONE   ZONE ARRAY:ZLAY2
                 ZONE VALUES:    2
 
  PARAMETER NAME:VKA12_3      TYPE:VK   UNITS:   4
  The parameter value from the package file is:  2.50000E-05
 UNIT HGU1      CORRESPONDS TO UNIT NO.     1
-                UNIT:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  1   MULTIPLIER:NONE   ZONE ARRAY:ZLAY1
                 ZONE VALUES:    3
 UNIT HGU2      CORRESPONDS TO UNIT NO.     2
-                UNIT:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  2   MULTIPLIER:NONE   ZONE ARRAY:ZLAY1
                 ZONE VALUES:    3
 UNIT HGU3      CORRESPONDS TO UNIT NO.     3
-                UNIT:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  3   MULTIPLIER:NONE   ZONE ARRAY:ZLAY2
                 ZONE VALUES:    3
 UNIT HGU4      CORRESPONDS TO UNIT NO.     4
-                UNIT:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  4   MULTIPLIER:NONE   ZONE ARRAY:ZLAY2
                 ZONE VALUES:    3
 
  PARAMETER NAME:VKA12_4      TYPE:VK   UNITS:   4
  The parameter value from the package file is:  2.50000E-07
 UNIT HGU1      CORRESPONDS TO UNIT NO.     1
-                UNIT:  1   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  1   MULTIPLIER:NONE   ZONE ARRAY:ZLAY1
                 ZONE VALUES:    4
 UNIT HGU2      CORRESPONDS TO UNIT NO.     2
-                UNIT:  2   MULTIPLIER:NONE   ZONE:ZLAY1
+                UNIT:  2   MULTIPLIER:NONE   ZONE ARRAY:ZLAY1
                 ZONE VALUES:    4
 UNIT HGU3      CORRESPONDS TO UNIT NO.     3
-                UNIT:  3   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  3   MULTIPLIER:NONE   ZONE ARRAY:ZLAY2
                 ZONE VALUES:    4
 UNIT HGU4      CORRESPONDS TO UNIT NO.     4
-                UNIT:  4   MULTIPLIER:NONE   ZONE:ZLAY2
+                UNIT:  4   MULTIPLIER:NONE   ZONE ARRAY:ZLAY2
                 ZONE VALUES:    4
 
  PARAMETER NAME:VKA3_1       TYPE:VK   UNITS:   1
  The parameter value from the package file is:   1.0000    
 UNIT HGU5      CORRESPONDS TO UNIT NO.     5
-                UNIT:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                UNIT:  5   MULTIPLIER:NONE   ZONE ARRAY:ZLAY3
                 ZONE VALUES:    1
 
  PARAMETER NAME:VKA3_2       TYPE:VK   UNITS:   1
  The parameter value from the package file is:  1.00000E-02
 UNIT HGU5      CORRESPONDS TO UNIT NO.     5
-                UNIT:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                UNIT:  5   MULTIPLIER:NONE   ZONE ARRAY:ZLAY3
                 ZONE VALUES:    2
 
  PARAMETER NAME:VKA3_3       TYPE:VK   UNITS:   1
  The parameter value from the package file is:  1.00000E-04
 UNIT HGU5      CORRESPONDS TO UNIT NO.     5
-                UNIT:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                UNIT:  5   MULTIPLIER:NONE   ZONE ARRAY:ZLAY3
                 ZONE VALUES:    3
 
  PARAMETER NAME:VKA3_4       TYPE:VK   UNITS:   1
  The parameter value from the package file is:  1.00000E-06
 UNIT HGU5      CORRESPONDS TO UNIT NO.     5
-                UNIT:  5   MULTIPLIER:NONE   ZONE:ZLAY3
+                UNIT:  5   MULTIPLIER:NONE   ZONE ARRAY:ZLAY3
                 ZONE VALUES:    4
 
 Reading PRINTCODE information
@@ -1064,7 +1064,7 @@ HGU5           0     0     0     0     0
 
 
  CORRELATION BETWEEN ORDERED WEIGHTED RESIDUALS AND NORMAL ORDER STATISTICS
- FOR OBSERVATIONS =    0.405    
+ FOR OBSERVATIONS =    0.404    
 
  --------------------------------------------------------------------------
  COMMENTS ON THE INTERPRETATION OF THE CORRELATION BETWEEN

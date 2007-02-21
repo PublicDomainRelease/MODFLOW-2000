@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.17.01 09/22/2006
+                           VERSION 1.17.02 02/14/2007
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -302,7 +302,7 @@
   (  1, 13, 12) (  2, 11, 11) (  3, 11, 10) (  1, 14, 14) (  3,  7, 14)
      0.4169E-02    0.2555E-02    0.9769E-02    0.1082E-01    0.1030E-01
   (  1, 13, 14) (  3, 14, 15) (  1, 14, 14) (  3, 13, 14) (  1, 15, 15)
-     0.2430E-03
+     0.2429E-03
   (  1, 13, 12)
 
 
@@ -494,7 +494,7 @@
 
            TOTAL OUT =    13607603.0000             TOTAL OUT =         157.4954
 
-            IN - OUT =         396.7500              IN - OUT =       4.5929E-03
+            IN - OUT =         397.0000              IN - OUT =       4.5929E-03
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 

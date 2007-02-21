@@ -9,7 +9,7 @@ C
       LOGICAL EX
 C     ------------------------------------------------------------------
 C
-      OPEN(UNIT=*,CARRIAGECONTROL='LIST')
+      !OPEN(UNIT=*,CARRIAGECONTROL='LIST')
 C
       ISUM=1
       INBAS=0
