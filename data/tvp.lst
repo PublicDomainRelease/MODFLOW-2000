@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.17.02 02/14/2007
+                           VERSION 1.17.03 07/25/2007
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -956,7 +956,7 @@
       1      2     16     16      1     16     16  0.200000
 
    19 PARAMETERS HAVE BEEN DEFINED IN ALL PACKAGES.
- (SPACE IS ALLOCATED FOR  500 PARAMETERS.)
+ (SPACE IS ALLOCATED FOR  999 PARAMETERS.)
 1
                             STRESS PERIOD NO.    1, LENGTH =   1.000000    
                             -----------------------------------------------

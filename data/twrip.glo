@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.17.02 02/14/2007
+                           VERSION 1.17.03 07/25/2007
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
@@ -273,4 +273,4 @@
                 ZONE VALUES:    2
 
     9 PARAMETERS HAVE BEEN DEFINED IN ALL PACKAGES.
- (SPACE IS ALLOCATED FOR  500 PARAMETERS.)
+ (SPACE IS ALLOCATED FOR  999 PARAMETERS.)

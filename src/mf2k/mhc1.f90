@@ -85,7 +85,7 @@ CONTAINS
               K, KMAXHEADCHG, KMAXHEADCHGNEG, KMAXHEADCHGPOS
     !
     100 FORMAT(I9,', ',G12.5,', ',I5,', ',I6,', ',I6,', ',   &
-               F7.5,', ',G14.7,', ',G14.7)
+               G12.5,', ',G14.7,', ',G14.7)
     !
     HEADCHG = 0.0
     HEADCHGMAX = 0.0

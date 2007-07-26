@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.17.02 02/14/2007
+                           VERSION 1.17.03 07/25/2007
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -621,7 +621,7 @@
 
  SEGMENT NO.      CDPTH     FDPTH    AWDTH     BWDTH
 
-          5 3.000E-01 3.500E-01 3.800E+00 6.000E-01
+          5    3.000E-01 3.500E-01 3.800E+00 6.000E-01
 
  STREAMFLOW RELATION WITH DEPTH AND WIDTH IS BASED ON TABULATED VALUES
 

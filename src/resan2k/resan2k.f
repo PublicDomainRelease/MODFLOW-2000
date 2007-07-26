@@ -1,4 +1,3 @@
-C     Last change:  ERB  15 Apr 2002   12:56 pm
       PROGRAM RESAN2K
 C       RESIDUALS ANALYSIS PROGRAM BY R. L. COOLEY, USGS, DENVER, COLO.
 C       MODIFIED FOR MODFLOWP BY MARY C. HILL, USGS, DENVER, COLO.
@@ -10,16 +9,16 @@ C***       f77 resanp.f -o resanp
 C       Modified to work with MODFLOW-2000 by E.R. Banta, 8/12/1999
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
       CHARACTER*40 VERSION
-      PARAMETER (VERSION='1.4 07/08/2003')
+      PARAMETER (VERSION='1.5 07/25/2007')
       CHARACTER*4 BLANK
       ALLOCATABLE :: X(:,:), X0(:,:), COV(:,:), W(:), R(:,:), D(:),
      &               G(:), F(:), BUFF2(:), WQ(:,:), WP(:), NIPR(:),
-     &               WTPS(:,:), PRM(:,:)
+     &               WTPS(:,:), PRM(:,:), INFLOBS(:)
       CHARACTER*10 PARNAM
       CHARACTER*12 DID, DID1
       ALLOCATABLE :: PARNAM(:), DID(:), DID1(:)
       CHARACTER*12 TMPDID
-      CHARACTER*80 STRIP2
+      CHARACTER*150 STRIP2
       CHARACTER*80 OUTNAM
       CHARACTER*84 FN
 C *** VARIABLES FOR COOK'S D AND DFBETAS
@@ -113,15 +112,15 @@ C!      EQUIVALENCE (X(1,1),D(1)),(W(1),F(1),WP(1)),(COV(1,1),G(1))
      &  ' OBS# OBSERVATION   PLOT-SYMBOL   COOK''S D')
  1300 FORMAT (3X,'"COOK''S D"',4X,'"OBSERVATION"   "PLOT-SYMBOL"')
  1310 FORMAT (I5,1X,A,4X,1I4,4X,E18.8)
- 1320 FORMAT (' INFLUENTIAL OBSERVATIONS IDENTIFIED:',I5,/)
+ 1320 FORMAT (/,' INFLUENTIAL OBSERVATIONS IDENTIFIED:',I5,/)
  1330 FORMAT (/,' ANALYSIS USING DFBETAS',/,
      &  ' FOR PLOTTING, DFBETA STATISTICS ARE LISTED IN THE _RB OUTPUT '
      &  ,'FILE',//,
      &  ' INFLUENTIAL OBSERVATIONS WITH DFBETA > CRITICAL VALUE ',
      &  '(2/(NOBS+MPR+IPR)**0.5) = ',F5.3//
-     &  ' PARAMETERS INFLUENCED IDENTIFIED BY #'//,
-     &  34X,'PARAMETER NUMBER'/
-     &  ' OBS#   ID          PLOT-SYMBOL',2X,20I2)
+     &  ' PARAMETERS INFLUENCED IDENTIFIED BY #')
+ 1332 FORMAT (/,34X,'PARAMETER NUMBER'/
+     &  ' OBS#   ID          PLOT-SYMBOL',2X,80I3)     
  1340 FORMAT (I5,1X,A,4X,1I4,7X,A)
  1350 FORMAT(6(A10,1X))
  1360 FORMAT('OBSERVATION  SYMBOL  ',500(1X,A10,:,5X))
@@ -231,6 +230,7 @@ C     DYNAMICALLY ALLOCATE MEMORY FOR ARRAYS
      &          BUFF2(NALL), WQ(NQ,NQ), WP(NP), NIPR(IPD),
      &          WTPS(IPD,IPD), PRM(NP,MPD))
       ALLOCATE (PARNAM(NP), DID(NALL), DID1(NALL))
+      ALLOCATE (INFLOBS(NALL))
 C *** VARIABLES FOR COOK'S D AND DFBETAS
       ALLOCATE (E(NALL), CD(NALL), C(NP,NALL), S(NALL), DFBETA(NALL,NP))
       ALLOCATE (ISYM(NALL), ISYM1(NALL))
@@ -444,27 +444,56 @@ C
 C***
 C*** Find DFBETAS > critical value 2/(NTOT)**0.5
 C***
-      NUM = 0
       CUTOFF = NTOT
       CUTOFF = 2.D0/SQRT(CUTOFF)
-      WRITE(IOUT,1330) CUTOFF,(J,J=1,NVAR)
-      DO 420 I=1,NTOT
-        DO 410 J=1,NVAR
-          IF (ABS(DFBETA(I,J)).lt.CUTOFF) GO TO 410
-          STRIP2 = ' '
-          DO 400 K=1,NVAR
-            IF (ABS(DFBETA(I,K)).gt.CUTOFF) THEN
-              STRIP2(2*K:2*K) = '#'
-            ELSE
-              STRIP2(2*K:2*K) = '-'
-            ENDIF
-  400     CONTINUE
-          WRITE(IOUT,1340) I,DID(I),ISYM(I),STRIP2
-          NUM = NUM + 1
-          GO TO 420
-  410   CONTINUE
-  420 CONTINUE
-      WRITE(IOUT,1320) NUM
+      WRITE(IOUT,1330) CUTOFF
+      !
+      ! Revise table to support more than 20 parameters - ERB 7/25/07
+      NPR = 25    ! Number of parameters to print in each table section
+      ! Set up parameter range for first table section
+      NP1 = 1     ! First parameter to print in a table section
+      NP2 = NVAR  ! Last parameter to print in a table section
+      INFLOBS = 0 ! Initialize array to count influential observations
+      IF (NP2 > NPR) THEN
+        NP2 = NPR
+      ENDIF
+      NPP = 0     ! Number of parameters printed
+      DO WHILE (NPP < NVAR)
+        WRITE(IOUT,1332) (J,J=NP1,NP2)
+        DO 420 I=1,NTOT
+          DO 410 J=NP1,NP2
+            IF (ABS(DFBETA(I,J)).lt.CUTOFF) GO TO 410
+            STRIP2 = ' '
+            KP = 0
+            DO 400 K=NP1,NP2
+              KP = KP+1
+              IF (ABS(DFBETA(I,K)).gt.CUTOFF) THEN
+                STRIP2(3*KP:3*KP) = '#'
+              ELSE
+                STRIP2(3*KP:3*KP) = '-'
+              ENDIF
+  400       CONTINUE
+            WRITE(IOUT,1340) I,DID(I),ISYM(I),STRIP2(1:KP*3)
+            INFLOBS(I) = 1
+            GO TO 420
+  410     CONTINUE
+  420   CONTINUE
+        NPROW = NP2-NP1+1 ! Number of parameters printed in this section
+        NPP = NPP+NPROW
+        ! Set up parameter range for next section
+        NP1 = NP2+1
+        NP2 = NVAR
+        NPROWNEXT = NP2-NP1+1
+        IF (NPROWNEXT > NPR) THEN
+          NP2 = NP1+NPR-1
+        ENDIF
+      ENDDO
+      !
+      NUM = 0
+      DO I=1,NTOT
+        NUM = NUM+INFLOBS(I)
+      ENDDO
+      WRITE(IOUT,1320) NUM  ! Number of influential observations
 C
 C     WRITE DFBETA'S TO _RB FILE FOR PLOTTING
 C

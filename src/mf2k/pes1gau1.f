@@ -15,13 +15,13 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
       REAL ABDMXU, ADMXN, ADMXP, ADMXU, AMP, AP1, APU, B1, BDMXU,
      &     BPRI, BUFF, CSA, DDC, DET, DMAX, DMX, DMX1, DMXN, DMXO, DMXP,
-     &     DMXU, H, HOBS, PRM, SOSR, TMPA, TMPB, TOL, W, WP, WT,
+     &     DMXU, H, HOBS, PRM, SOSR, TMPA, TMPB, W, WP, WT,
      &     WTQ, X, XD
       INTEGER I, IAP, IFO, IND, IOSTAR, IOUT, IOWTQ, IP, IP1, IPM, IPNG,
      &        IPR, IPRINT, ITERP, J, JJN, JJP, JJU, JMAX, LN, LNN, MPR,
      &        N, ND, NDMH, NFIT, NHT, NIPR, NOPT, NPE, NP1, NPNG, NPNGAR
       DOUBLE PRECISION ABDMX, ABDMXN, ABDMXP, AP, APN, APO, APP, BDMX,
-     &                 BDMXN, BDMXP, SPR
+     &                 BDMXN, BDMXP, SPR, TOL
       DOUBLE PRECISION C(NPE,NPE), SCLE(NPE), DD(NPE), DTMPA,
      &                 R(NPE*NPE/2+NPE),  S(NPE),
      &                 U(NPE), G, GD, DMXA(ITMXP)

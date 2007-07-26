@@ -1527,7 +1527,7 @@ C     ------------------------------------------------------------------
    10 READ(IN,'(A)') LINE
       IF(LINE(1:1).NE.'#') RETURN
       L=LEN(LINE)
-      IF(L.GT.79) L=79
+      IF(L.GT.200) L=200
       DO 20 I=L,1,-1
       IF(LINE(I:I).NE.' ') GO TO 30
    20 CONTINUE

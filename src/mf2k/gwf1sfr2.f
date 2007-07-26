@@ -1,4 +1,3 @@
-! Time of File Save by ERB: 6/26/2006 5:28PM
 C Revised May 20, 2006 DEP and RGN;
 C The Package was modified to be compatible with modifications made
 C  to the Lake (LAK3) Package for computing Lake Outflow
@@ -859,18 +858,26 @@ C4------CHECK RANGE AND ORDER FOR SEGMENTS AND REACHES.
         Iseg(4, jseg) = ireach
       END DO
 C
-C5------READ SEGMENT INFORMATION FOR FIRST RECHARGE PERIOD. 3/24/05 RGN
-      IF ( Nsfrpar.EQ.0 ) THEN
-        READ (In, *) Itmp, Irdflg, Iptflg
-        Np = 0
-        nlst = Nss
+C5------READ SEGMENT INFORMATION FOR FIRST RECHARGE PERIOD. 7/22/2007 dep
+Cdep    Revised to read segment data for first stress period when
+Cdep    unsaturated flow beneath streams is active 
+      IF ( ISFROPT.GT.1 .AND. NSFRPAR.EQ.0 ) THEN
+        READ (In, *) ITMP, IRDFLG, IPTFLG
+        NP = 0
+        nlst = NSS
         lb = 1
         ichk = 1
         CALL SGWF1SFR2RDSEG(nlst, lb, In, Iout, Seg, Iseg, Idivar,
      +                    Iotsg, Maxpts, Xsec, Qstage, I15, Concq,
      +                    Concrun, Concppt, Nsol, Nsegdim, Nsegck, Nss,
      +                    ichk, Nss, Isfropt, 1)
+
+      ELSEIF ( ISFROPT.GT.0 .AND. NSFRPAR.GT.0 ) THEN
+        WRITE (IOUT, 9050)
+        CALL USTOP(' ')
       END IF
+ 9050 FORMAT (//, '  ***  ERROR- CANNOT HAVE ISFROPT ACTIVE (NEGATIVE', 
+     +        ' NSTRM), WHEN USING PARAMETERS; CODE STOPPING ***')
 C6------COMPUTE UNSATURATED VARIABLE WHEN SPECIFIED BY SEGMENT.
       IF ( Iuzt.EQ.1 ) THEN
         irch = 1
@@ -1015,10 +1022,10 @@ C
       END IF
 C
 C10-----READ PARAMETER DEFINITIONS.
+Cdep  Changed do while loops to do loops 7/22/2007
       IF ( Nsfrpar.GT.0 ) THEN
         lstsum = Nss + 1
-        ii = 1
-        DO WHILE ( ii.LE.Nsfrpar )
+        DO ii= 1, Nsfrpar
           lstbeg = lstsum
           CALL UPARLSTRP(lstsum, Nsegdim, In, Iout, ip, 'SFR', 'SFR',
      +                   Iterp, numinst, Inamloc)
@@ -1031,9 +1038,9 @@ C11-----ASSIGN STARTING INDEX FOR READING INSTANCES.
             ib = 1
           END IF
 C12-----READ LIST(S) OF CELLS, PRECEDED BY INSTANCE NAME IF NUMINST>0.
+Cdep  Revised to change ib loop counter
           lb = lstbeg
-          i = ib
-          DO WHILE ( i.LE.numinst )
+          DO i = ib, numinst
             IF ( i.GT.0 ) CALL UINSRP(i, In, Iout, ip, Iterp)
             ichk = 0
             CALL SGWF1SFR2RDSEG(nlst, lb, In, Iout, Seg, Iseg, Idivar,
@@ -1045,9 +1052,7 @@ C12-----READ LIST(S) OF CELLS, PRECEDED BY INSTANCE NAME IF NUMINST>0.
      +                          Concrun, Concppt, Nsol, Nsegdim, Iouts,
      +                          Isfropt, 1)
             lb = lb + nlst
-            i = i + 1
           END DO
-          ii = ii + 1
         END DO
       END IF
       WRITE (Iout, 9025)
@@ -1235,15 +1240,17 @@ C1------READ ITMP FLAG TO REUSE NON-PARAMETER DATA, 2 PRINTING FLAGS,
 C         AND NUMBER OF PARAMETERS BEING USED IN CURRENT STRESS PERIOD.
       iss = ISSFLG(Kkper)
       zero = 1.0E-7
-      IF ( Kkper.GT.1 ) THEN
-        IF ( Nsfrpar.EQ.0 ) THEN
-          READ (In, *) Itmp, Irdflg, Iptflg
-          Np = 0
+Cdep added NSFRPAR to IF statement  (July 22, 2007)
+      IF ( ISFROPT.GT.1 .AND. Kkper.GT.1 ) THEN
+          READ (In, *) ITMP, IRDFLG, IPTFLG
+          NP = 0
+      ELSE IF ( ISFROPT.LE.1 ) THEN
+        IF ( NSFRPAR.EQ.0 ) THEN
+          READ (In, *) ITMP, IRDFLG, IPTFLG
+          NP = 0 
         ELSE
-          READ (In, *) Itmp, Irdflg, Iptflg, Np
+          READ (In, *) ITMP, IRDFLG, IPTFLG, NP
         END IF
-      ELSE IF ( Nsfrpar.GT.0 ) THEN
-        READ (In, *) ITMP, IRDFLG, IPTFLG, NP      
       END IF
 C
 C2------CHECK FOR TOO MANY SEGMENTS.
@@ -1293,14 +1300,14 @@ C6------READ NON-PARAMETER STREAM SEGMENT DATA.
       IF ( Itmp.GT.0 ) THEN
         lstbeg = 1
         ichk = 1
-crgn changed ELSEIF statement below 10/23/06
-        IF ( ISFROPT.GT.0 ) THEN
-          IF ( Kkper.GT.1 ) CALL SGWF1SFR2RDSEG(Itmp, lstbeg, In, Iout,
+Cdep 7/22/07 changed logic for reading stream segment data
+        IF ( ISFROPT.GT.1 .AND. NSFRPAR.EQ.0  ) THEN
+           IF ( Kkper.GT.1 ) CALL SGWF1SFR2RDSEG(Itmp, lstbeg, In, Iout,
      +         Seg, Iseg, Idivar, Iotsg, Maxpts, Xsec, Qstage, I15, 
      +         Concq,Concrun, Concppt, Nsol, Nsegdim, Nsegck, Nss, ichk,
      +          Nss,Isfropt, Kkper)
-        ELSEIF( NSFRPAR.EQ.0 ) THEN
-          IF ( Kkper.GT.1 )CALL SGWF1SFR2RDSEG(Itmp, lstbeg, In, Iout,
+        ELSE
+           CALL SGWF1SFR2RDSEG(Itmp, lstbeg, In, Iout,
      +         Seg, Iseg, Idivar, Iotsg, Maxpts, Xsec, Qstage, I15,
      +         Concq,Concrun, Concppt, Nsol, Nsegdim, Nsegck, Nss, ichk,
      +          Nss,Isfropt, Kkper)
@@ -5003,10 +5010,24 @@ C2------ONLY READ FIRST 4 VARIABLES TO DETERMINE VALUE OF IUPSEG.
  9002       FORMAT (1X, 'READING ENTRY ', I6, ' OF ITEM 6A')
           ELSE
             WRITE (Iout, 9003) iqseg - Lstbeg + 1
- 9003       FORMAT (1X, 'READING ENTRY ', I6, ' OF ITEM 4A')
+ 9003       FORMAT (1X, 'READING ENTRY ', I6, ' OF ITEM 4B')
           END IF
           CALL USTOP(' ')
-        END IF
+Cdep added error check if unsaturated flow active, icalc is 1 or 2,
+Cdep and changes type between stress periods  7/22/2007
+        ELSE IF ( Isfropt.GT.1 .AND. Kper.GT.1 ) THEN
+          IF ( Iseg(1,n).EQ.1 .OR. Iseg(1,n).EQ.2 ) THEN
+            IF ( Iseg(1,n).NE.icalc ) THEN
+              WRITE (Iout, 9010) n, Kper, Iseg(1,n), icalc
+ 9010         FORMAT (/1X, 'ICALC MUST BE CONSTANT WHEN UNSATURATED',
+     +                ' FLOW IS ACTIVE BENEATH SEGMENT NUMBER (NSEG): ',
+     +                I6, /1X, 'ICALC CHANGED IN STRESS PERIOD: ', I6,
+     +                ' FROM ', I6,' TO ', I6)
+             WRITE (Iout, 9002) iqseg - Lstbeg + 1
+              CALL USTOP(' ')
+            END IF
+          END IF
+        END IF   
 C
 C3------DETERMINE WHERE DATA ARE STORED.
         IF ( Ichk.NE.0 ) THEN
@@ -5021,7 +5042,7 @@ C3b-----STORE DATA IN PARAMETER AREA.
         END IF
         BACKSPACE In
 C
-C4------READ DATA SET 4B FOR SEGMENTS THAT ARE NOT DIVERSIONS.
+C4------READ DATA SET 4B OR 6A FOR SEGMENTS THAT ARE NOT DIVERSIONS.
         IF ( iupseg.LE.0 ) THEN
           IF ( icalc.LE.0 ) THEN
             READ (In, *) idum, Iseg(1, nseg), Iotsg(nseg),
@@ -5045,7 +5066,7 @@ C4------READ DATA SET 4B FOR SEGMENTS THAT ARE NOT DIVERSIONS.
      +                   (Seg(jj, nseg), jj=2, 5)
           END IF
 C
-C5------READ DATA 4B FOR SEGMENTS THAT ARE DIVERSIONS FROM STREAMS.
+C5------READ DATA 4B OR 6A FOR SEGMENTS THAT ARE DIVERSIONS FROM STREAMS.
         ELSE IF ( icalc.LE.0 ) THEN
           READ (In, *) idum, Iseg(1, nseg), Iotsg(nseg),
      +                 (Idivar(ii, nseg), ii=1, 2),
@@ -5070,7 +5091,7 @@ C5------READ DATA 4B FOR SEGMENTS THAT ARE DIVERSIONS FROM STREAMS.
      +                 (Seg(jj, nseg), jj=2, 5)
         END IF
 C
-C6------READ DATA SET 4C.
+C6------READ DATA SET 4C OR 6B.
         IF ( Isfropt.EQ.0 ) THEN
           IF ( icalc.LE.0 ) THEN
             READ (In, *) (Seg(jj, nseg), jj=6, 10)
@@ -5133,7 +5154,7 @@ C6------READ DATA SET 4C.
           END IF
         END IF
 C
-C7------READ DATA SET 4D.
+C7------READ DATA SET 4D OR 6C.
         IF ( Isfropt.EQ.0 ) THEN
           IF ( icalc.LE.0 ) THEN
             READ (In, *) (Seg(jj, nseg), jj=11, 15)
@@ -5202,7 +5223,7 @@ C7------READ DATA SET 4D.
           END IF
         END IF
 C
-C8------READ DATA SET 4E FOR SEGMENT WHEN ICALC IS 2.
+C8------READ DATA SET 4E OR 6D FOR SEGMENT WHEN ICALC IS 2.
         IF ( icalc.EQ.2 ) THEN
 C       READ ONLY ONCE FOR UNSATURATED FLOW 4/19/2006.
           IF ( Kper.EQ.1 .OR. ISFROPT.LE.1 ) THEN
@@ -5211,7 +5232,7 @@ C       READ ONLY ONCE FOR UNSATURATED FLOW 4/19/2006.
           END IF
         END IF
 C
-C9------READ DATA SET 4F FOR SEGMENT WHEN ICALC IS 4.
+C9------READ DATA SET 4F OR 6E FOR SEGMENT WHEN ICALC IS 4.
         IF ( icalc.EQ.4 ) THEN
           nstrpts = Iseg(2, nseg)
           IF ( nstrpts.LT.2 ) THEN
@@ -5236,7 +5257,7 @@ C9------READ DATA SET 4F FOR SEGMENT WHEN ICALC IS 4.
           END IF
         END IF
 C
-C10-----READ DATA SET 4G FOR SEGMENT IF SOLUTES SPECIFIED.
+C10-----READ DATA SET 4G OR 6F FOR SEGMENT IF SOLUTES SPECIFIED.
         IF ( I15.GT.0 ) THEN
           isol = 1
           DO WHILE ( isol.LE.Nsol )
@@ -5356,7 +5377,7 @@ C
 C5------COUNT THE NUMBER OF TIMES A SEGMENT IS DEFINED.
         Nsegck(nseg) = Nsegck(nseg) + 1
 C
-C6------MOVE DATA SET 4A
+C6------MOVE DATA SET 4B
         Iseg(1, nseg) = Iseg(1, iqseg)
         Iotsg(nseg) = Iotsg(iqseg)
         Idivar(1, nseg) = Idivar(1, iqseg)
@@ -5379,7 +5400,7 @@ C6------MOVE DATA SET 4A
           Iseg(2, nseg) = Iseg(2, iqseg)
         END IF
 C
-C7------MOVE DATA SET 4B.
+C7------MOVE DATA SET 4C.
         IF ( icalc.LE.0 ) THEN
           jend = 10
         ELSE IF ( icalc.EQ.1 ) THEN
@@ -5394,7 +5415,7 @@ C7------MOVE DATA SET 4B.
         END DO
         Seg(6, nseg) = Seg(6, nseg)*B(ip)
 C
-C8------MOVE DATA SET 4C.
+C8------MOVE DATA SET 4D.
         IF ( icalc.LE.0 ) THEN
           jend = 15
         ELSE IF ( icalc.EQ.1 ) THEN
@@ -5409,7 +5430,7 @@ C8------MOVE DATA SET 4C.
         END DO
         Seg(11, nseg) = Seg(11, nseg)*B(ip)
 C
-C9------MOVE DATA SET 4D FOR SEGMENT WHEN ICALC IS 2.
+C9------MOVE DATA SET 4E FOR SEGMENT WHEN ICALC IS 2.
         IF ( icalc.EQ.2 ) THEN
           jj = 1
           DO WHILE ( jj.LE.16 )
@@ -5418,7 +5439,7 @@ C9------MOVE DATA SET 4D FOR SEGMENT WHEN ICALC IS 2.
           END DO
         END IF
 C
-C10-----MOVE DATA SET 4E FOR SEGMENT WHEN ICALC IS 4.
+C10-----MOVE DATA SET 4F FOR SEGMENT WHEN ICALC IS 4.
         IF ( icalc.EQ.4 ) THEN
           nstrpts = Iseg(2, nseg)
           jj = 1
@@ -5428,7 +5449,7 @@ C10-----MOVE DATA SET 4E FOR SEGMENT WHEN ICALC IS 4.
           END DO
         END IF
 C
-C11-----MOVE DATA SET 4F FOR SEGMENT IF SOLUTES SPECIFIED.
+C11-----MOVE DATA SET 4G FOR SEGMENT IF SOLUTES SPECIFIED.
         IF ( I15.GT.0 ) THEN
           isol = 1
           DO WHILE ( isol.LE.Nsol )
@@ -5617,7 +5638,8 @@ c rgn added else and write statement.
      +                         , Seg(13, nseg), Seg(9, nseg),
      +                         Seg(14, nseg), Seg(16, nseg)
  9012       FORMAT (I6, 1X, 1P8E10.3, 20X, 1PE10.3)
-          ELSE IF ( Isfropt.GT.1 .AND. Isfropt.LT.4 ) THEN
+Cdep  Revised print output for icalc=1  7/22/2007
+          ELSE IF ( ISFROPT.GE.1 .AND. ISFROPT.LT.4 ) THEN
             WRITE (Iout, 9013) nn, Seg(9, nseg), Seg(14, nseg),
      +                         Seg(16, nseg)
  9013       FORMAT (I6, 3X, 1P2E10.3, 21X, 1PE10.3)
@@ -5661,6 +5683,11 @@ c rgn added else and write statement.
      +                         , Seg(13, nseg), Seg(16, nseg),
      +                         Seg(17, nseg)
  9018       FORMAT (I6, 1X, 1P6E10.3, 40X, 1P2E10.3)
+Cdep  Revised print output for icalc=2  7/22/2007
+          ELSE IF ( ISFROPT.GE.1 .AND. ISFROPT.LT.4 ) THEN
+             WRITE (IOUT, 9019) nn, SEG(16, nseg), 
+     +                         SEG(17, nseg)
+ 9019       FORMAT (I6, 44X, 1P2E10.3) 
           ELSE IF ( Isfropt.EQ.4 ) THEN
             IF ( Kkper.EQ.1 ) THEN
               WRITE (Iout, 9020) nn, Seg(6, nseg), Seg(11, nseg),
@@ -5693,8 +5720,9 @@ c rgn added else and write statement.
  9023         FORMAT (I6, 1X, 1P2E10.3, 80X, 1P2E10.3)
             END IF
           END IF
+Cdep  Revised print output for icalc>2  7/22/2007
         ELSE IF ( icalc.GE.3 ) THEN
-          IF ( Isfropt.EQ.0 ) THEN
+          IF ( ISFROPT.EQ.0 .OR. ISFROPT.GE.4 ) THEN
             WRITE (Iout, 9024) nn, Seg(6, nseg), Seg(11, nseg),
      +                         Seg(7, nseg), Seg(12, nseg), Seg(8, nseg)
      +                         , Seg(13, nseg)
@@ -5778,7 +5806,8 @@ C         WITH ICALC=3.
         IF ( icalc.EQ.3 .AND. iflg.EQ.1 ) THEN
           WRITE (Iout, 9030) nn, Seg(9, nseg), Seg(10, nseg),
      +                       Seg(14, nseg), Seg(15, nseg)
- 9030     FORMAT (5X, I6, 1P4E10.3)
+Cdep  revised format for ICALC 3 output
+ 9030     FORMAT (5X, I6, 3X, 1P4E10.3)
         END IF
         nseg = nseg + 1
       END DO

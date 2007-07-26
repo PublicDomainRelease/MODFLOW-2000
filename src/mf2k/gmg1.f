@@ -332,7 +332,7 @@ C--------------------------------------------------------------------------
         RSQ=BIGR                                                    !ERB
         DAMPA=DAMP                                                  !ERB
         BIGHA=BIGH                                                  !ERB
-        CALL GMG1ADAMP2(RSQ,DDAMP,DAMPA,DUP,DLOW,KITER,BIGHA,IOUT,  !ERB
+        CALL GMG1ADAMP2(RSQ,DDAMP,DAMPA,DUP,DLOW,KITER,BIGHA,IOUT,
      &                  CHGLIMIT)                                   !ERB
       END IF
 

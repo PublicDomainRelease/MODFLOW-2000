@@ -11,7 +11,36 @@ these packages and processes, see mf2k.txt ("Summary of MODFLOW-2000").
 
 NOTE: Any use of trade, product or firm names is for descriptive purposes 
       only and does not imply endorsement by the U.S. Government.
-      
+
+o Version 1.17.03 07/25/2007:
+
+This version includes minor changes and bug fixes.
+
+The maximum number of parameters that can be defined in MODFLOW-2000 was 
+increased from 500 to 999.
+
+Support for use of SFR2 with the HUF Package has been added.
+
+In the GMG Package, the format used for printing of damping parameter to unit 
+IUNITMHC was changed to accomodate a larger range of numeric values.
+
+Bug fixed: SFR2 did not work correctly when some segments were defined using 
+parameters and others were defined without using parameters.
+
+Bug fixed: Program incorrectly stopped with the message "PARAMETER ESTIMATION 
+DID NOT CONVERGE IN THE ALLOTTED NUMBER OF ITERATIONS" when MAX-ITER of the 
+Parameter-Estimation Process input file was specified as 0 and parameter 
+sensitivities were exceedingly small.
+
+Bug fixed: Comment lines in data input files, which are supposed to allow 200 
+characters, were truncated at 79 characters.  
+
+In previous versions of the post-processing program RESAN-2000, the table of 
+"INFLUENTIAL OBSERVATIONS WITH DFBETA > CRITICAL VALUE" in the .#rs output file 
+was incorrectly generated when the number of parameters exceeded 20.  Now, 999 
+parameters are supported.  The current version of RESAN-2000 is 
+'1.5 07/25/2007'. 
+ 
 o Version 1.17.02 02/14/2007:
 
 This version includes fixes to bugs and minor changes in the following 
