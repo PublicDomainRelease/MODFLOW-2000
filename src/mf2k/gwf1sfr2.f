@@ -558,9 +558,10 @@ C-------SUBROUTINE GWF1SFR2RPP
      +                       Iuzt, Isuzn, Nuzst, Uzolsflx, Sy, Thts,
      +                       Thtr, Thti, Eps, Delr, Delc, Uzseep,
      +                       Foldflbt, Nuzrow, Nuzcol, Uhc, Iunitbc6,
-     +                       Sc1, Botm, Nbotm, Strt, Sfruzbd, Iss, Itmp,
-     +                       Irdflg, Iptflg, Np, Nsegck, Iunitlak,
-     +                       Nsslk, Slkotflw, Dlkotflw, Dlkstage)
+     +                       Iunithuf, Sc1, Botm, Nbotm, Strt, Sfruzbd, 
+     +                       Iss, Itmp, Irdflg, Iptflg, Np, Nsegck, 
+     +                       Iunitlak,Nsslk, Slkotflw, Dlkotflw, 
+     +                       Dlkstage)
 C     ******************************************************************
 C     READ STREAM DATA FOR FIRST STRESS PERIOD
 C     VERSION  2.6: JUNE 29, 2006
@@ -576,7 +577,7 @@ C     ------------------------------------------------------------------
      +     Sc1, Seg, Sfruzbd, Sgotflw, Strm, Strt, Sy, Uhc, Xsec
       INTEGER I15, Ibound, Idivar, In, Inamloc, Iotsg, Iout, Iouts
       INTEGER Iseg, Isfropt, Istrm, Isuzn, Iterp, Itrlit, Itrlst,
-     +        Itrlsth, Iunitbc6, Iunitlak, Iuzt, Nsegck, Itrss
+     +        Itrlsth, Iunitbc6, Iunithuf, Iunitlak, Iuzt, Nsegck, Itrss
       INTEGER Ltrlit, Ltrlst, Maxpts, Nbotm, Ncol, Nlay, Nrow, Nsegdim,
      +        Nsfrpar, Nsol, Iss, Itmp, Irdflg, Iptflg, Np
       INTEGER Nss, Nstotrl, Nstrm, Nuzcol, Nuzrow, Nuzst, Nwavst, Nsslk
@@ -691,6 +692,15 @@ C
 C2------READ AND PRINT DATA FOR EACH STREAM REACH.
       nseg = 0
       nreach = 0
+      IF ( Iunithuf.GT.0 ) THEN
+        IF ( ISFROPT.GT.1 ) THEN
+          WRITE (IOUT, 9034)
+ 9034     FORMAT (//, ' ***ERROR***  HUF PACKAGE IS ACTIVE ', 
+     +          'AND ISFROPT IS GREATER THAN 1 ',/, 
+     +          ' PROGRAM IS STOPPING')
+          CALL USTOP(' ')
+        END IF
+      END IF
       IF ( Isfropt.EQ.0 ) THEN
         WRITE (Iout, 9001)
  9001   FORMAT (1X, //3X, 'STREAM NETWORK DESCRIPTION: ', //3X,

@@ -12,14 +12,16 @@ these packages and processes, see mf2k.txt ("Summary of MODFLOW-2000").
 NOTE: Any use of trade, product or firm names is for descriptive purposes 
       only and does not imply endorsement by the U.S. Government.
 
-o Version 1.17.03 07/25/2007:
+o Version 1.17.04 08/03/2007:
 
 This version includes minor changes and bug fixes.
 
 The maximum number of parameters that can be defined in MODFLOW-2000 was 
 increased from 500 to 999.
 
-Support for use of SFR2 with the HUF Package has been added.
+Partial support for use of SFR2 with the HUF Package has been added.  Simulation
+of unsaturated flow below streams by SFR2 in combination with use of the HUF 
+Package is not supported.  Other capabilities of SFR2 may be used with HUF.
 
 In the GMG Package, the format used for printing of damping parameter to unit 
 IUNITMHC was changed to accomodate a larger range of numeric values.

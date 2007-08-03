@@ -58,7 +58,7 @@ METHOD
 
 HISTORY
 
-     MODFLOW-2000 Version 1.17.03 2007/07/25 - This release includes bug
+     MODFLOW-2000 Version 1.17.04 2007/08/03 - This release includes bug
         fixes and minor changes.  Bug fixes and other changes are described 
         in release.txt.
         

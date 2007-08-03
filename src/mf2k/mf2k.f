@@ -28,7 +28,7 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
 C-------ASSIGN VERSION NUMBER AND DATE
       CHARACTER*40 VERSION
-      PARAMETER (VERSION='1.17.03 07/25/2007')
+      PARAMETER (VERSION='1.17.04 08/03/2007')
 C
 C-----DECLARE ARRAY TYPES
       REAL GX, X, RX, XHS
@@ -879,7 +879,7 @@ Crgn  changed calls to sfr2 to support HUF package. 3/26/07
      &         RZ(LCSOLSFLX),X(LCSC2),RZ(LCSTHTS),RZ(LCSTHTR),
      &         RZ(LCSTHTI),RZ(LCSEPS),GX(LCDELR),GX(LCDELC),
      &         RZ(LCSUZSEEP),RZ(LCOLDFLBT),NUZROW,NUZCOL,RX(LCUHC),
-     &         IUNIT(1),X(LCSC1),GX(LCBOTM),NBOTM,GX(LCSTRT),
+     &         IUNIT(1),IUNIT(37),X(LCSC1),GX(LCBOTM),NBOTM,GX(LCSTRT),
      &         RX(LCSFRUZBD),ISSFLG(1),ITMP,IRDFLG,IPTFLG,NP,IR(LCNSEG),
      &         IUNIT(22),NSSLK,RZ(ISLKOTFLW),RZ(IDLKOTFLW),
      &         RZ(IDLKSTAGE))
