@@ -432,6 +432,11 @@ to simulate aquifer-system compaction using the modular
 finite-difference ground-water flow model: U.S. Geological Survey
 Techniques of Water-Resources Investigations, Book 6, Chapter A2, 68 p.
 
+Leake, S.A., and Galloway, D.L., 2007, MODFLOW ground-water model -- User 
+guide to the Subsidence and Aquifer-System Compaction Package (SUB-WT) for 
+Water-Table Aquifers: U.S. Geological Survey Techniques and Methods, Book 6, 
+Chap. A23, 42 p.
+
 McDonald, M.G., Harbaugh, A.W., Orr, B.R., and Ackerman, D.J., 1992, A
 method of converting no-flow cells to variable-head cells for the U.S.
 Geological Survey modular finite-difference ground-water flow model:
@@ -442,6 +447,11 @@ program to simulate lake-aquifer interaction using the MODFLOW
 ground-water flow model and the MOC3D solute-transport model:  U.S.
 Geological Survey Water-Resources Investigations Report 00-4167, 146 p.
 
+Niswonger, R.G. and Prudic, D.E., 2005, Documentation of the Streamflow-
+Routing (SFR2) Package to include unsaturated flow beneath streams--
+A modification to SFR1: U.S. Geological Survey Techniques and Methods, 
+Book 6, Chap. A13, 47 p.
+
 Prudic, D.E., 1989, Documentation of a computer program to simulate
 stream-aquifer relations using a modular, finite-difference,
 ground-water flow model: U.S. Geological Survey Open-File Report
@@ -450,8 +460,3 @@ ground-water flow model: U.S. Geological Survey Open-File Report
 Prudic, D.E., Konikow, L.F., and Banta, E.R., 2004, A new streamflow-routing
 (SFR1) package to simulate stream-aquifer interaction with MODFLOW-2000:
 U.S. Geological Survey Open-File Report 2004-1042, 95 p.
-
-Niswonger, R.G. and Prudic, D.E., 2005, Documentation of the Streamflow-
-Routing (SFR2) Package to include unsaturated flow beneath streams--
-A modification to SFR1: U.S. Geological Survey Techniques and Methods, 
-Book 6, Chap. A13, 47 p.

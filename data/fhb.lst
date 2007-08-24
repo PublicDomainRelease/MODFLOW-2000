@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.17.04 08/03/2007
+                           VERSION 1.18.00 08/23/2007
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -590,7 +590,7 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =      284414.2500               STORAGE =        1836.9205
+             STORAGE =      284414.2500               STORAGE =        1836.9204
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      SPECIFIED FLOWS =     5353000.0000       SPECIFIED FLOWS =        8201.0186
 
@@ -598,7 +598,7 @@
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =     1656061.6250               STORAGE =           0.0000
+             STORAGE =     1656061.7500               STORAGE =           0.0000
        CONSTANT HEAD =     3979499.2500         CONSTANT HEAD =       10050.3271
      SPECIFIED FLOWS =           0.0000       SPECIFIED FLOWS =           0.0000
 

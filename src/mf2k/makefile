@@ -72,6 +72,7 @@ OBJECTS = \
         gwf1sfr2.o \
         gwf1str6.o \
         gwf1sub1.o \
+        gwf1swt1.o \
         gwf1wel6.o \
         hufutl2.o \
         hydmod.o \

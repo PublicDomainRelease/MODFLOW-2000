@@ -1051,7 +1051,7 @@ c     ------------------------------------------------------------------
      &        IGRP1, M2, IGRP2, IMULT, IL,M IR, IC, NE, IOCH, IWELPT,
      &        IOBYND, IIN, IOQSUM, IOC, NWELVL, IOUT, ICBCFL, IWL2CB,
      &        KPER, KSTP, NSTP, NROW, NCOL, NWELL2, IOWELL2, IFRL, IR
-      REAL HDRY, VBVL, BUFF, PERTIM, TOTIM, DELT, q2
+      REAL HDRY, VBVL, BUFF, PERTIM, TOTIM, DELT, q2, WELL2SP
       DOUBLE PRECISION HWELL, PLOSS
       double precision well2
       double precision zero,ratin,ratout,qwsum,qsum,qwbar,DryTest,q,
@@ -1287,7 +1287,11 @@ c6------if cell-by-cell flows will be saved call ubudsv to record them
               q = well2(3,m)
               q2=well2(17,m)
 cljk          call UBDSVB(ioc,ncol, nrow,n,1,1,Q,well2(1,m),
-              call UBDSVB(ioc,ncol, nrow,n,1,1,Q2,well2(1,m),
+Cerb 8/24/07  call UBDSVB(ioc,ncol, nrow,n,1,1,Q2,well2(1,m),
+Cerb 8/24/07  UBDSVB requires REAL arguments; defined WELL2SP so that it gets
+Cerb          promoted w/o loss of precision when using DP compiler option
+              WELL2SP = well2(1,m)  
+              call UBDSVB(ioc,ncol, nrow,n,1,1,Q2,WELL2SP,
      +                    NWELVL,NAUX,5,IBOUND,NLAY)
             enddo
           else                  !!  Write full 3D array

@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.17.04 08/03/2007
+                           VERSION 1.18.00 08/23/2007
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -598,7 +598,7 @@
  
  SOLVING FOR HEAD 
 
- AVERAGE SEED = 0.00923953
+ AVERAGE SEED = 0.00923954
  MINIMUM SEED = 0.00155820
 
      5 ITERATION PARAMETERS CALCULATED FROM AVERAGE SEED:

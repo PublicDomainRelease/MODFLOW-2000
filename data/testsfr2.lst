@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.17.04 08/03/2007
+                           VERSION 1.18.00 08/23/2007
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -3389,7 +3389,7 @@
 
             TOTAL OUT =     11614717.0000              TOTAL OUT =            0.4556
 
-             IN - OUT =         -313.0000               IN - OUT =       -9.6653E-06
+             IN - OUT =         -313.0000               IN - OUT =       -9.6634E-06
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -3743,7 +3743,7 @@
 
             TOTAL OUT =     12455757.0000              TOTAL OUT =            0.3479
 
-             IN - OUT =        -1062.0000               IN - OUT =        1.8626E-08
+             IN - OUT =        -1062.0000               IN - OUT =        2.0489E-08
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -4058,7 +4058,7 @@
 
 
           STREAM LOSS =     12782704.0000            STREAM LOSS =            0.1266
-    CHANGE IN STORAGE =       483711.9375      CHANGE IN STORAGE =       -1.6205E-02
+    CHANGE IN STORAGE =       483711.9062      CHANGE IN STORAGE =       -1.6205E-02
        RECHARGE TO GW =     12300284.0000         RECHARGE TO GW =            0.1428
 
              TOTAL IN =     12782704.0000               TOTAL IN =            0.1428
@@ -4292,14 +4292,14 @@
 
 
           STREAM LOSS =     13026299.0000            STREAM LOSS =        9.3958E-02
-    CHANGE IN STORAGE =       433217.9688      CHANGE IN STORAGE =       -7.2240E-03
+    CHANGE IN STORAGE =       433217.9375      CHANGE IN STORAGE =       -7.2240E-03
        RECHARGE TO GW =     12594342.0000         RECHARGE TO GW =            0.1012
 
              TOTAL IN =     13026299.0000               TOTAL IN =            0.1012
 
             TOTAL OUT =     13027560.0000              TOTAL OUT =            0.1012
 
-             IN - OUT =        -1261.0000               IN - OUT =        3.4459E-08
+             IN - OUT =        -1261.0000               IN - OUT =        4.1910E-08
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -4526,7 +4526,7 @@
 
 
           STREAM LOSS =     13198280.0000            STREAM LOSS =        6.6352E-02
-    CHANGE IN STORAGE =       392973.4062      CHANGE IN STORAGE =       -4.5378E-03
+    CHANGE IN STORAGE =       392973.3750      CHANGE IN STORAGE =       -4.5378E-03
        RECHARGE TO GW =     12806604.0000         RECHARGE TO GW =        7.0889E-02
 
              TOTAL IN =     13198280.0000               TOTAL IN =        7.0889E-02
@@ -4564,7 +4564,7 @@
 
            TOTAL OUT =    22152534.0000             TOTAL OUT =           0.2748
 
-            IN - OUT =         276.0000              IN - OUT =       9.8020E-05
+            IN - OUT =         276.0000              IN - OUT =       9.8109E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.04
 
@@ -4760,14 +4760,14 @@
 
 
           STREAM LOSS =     13523983.0000            STREAM LOSS =            0.1256
-    CHANGE IN STORAGE =       432641.6250      CHANGE IN STORAGE =       -3.3775E-03
+    CHANGE IN STORAGE =       432641.5938      CHANGE IN STORAGE =       -3.3775E-03
        RECHARGE TO GW =     13092577.0000         RECHARGE TO GW =            0.1290
 
              TOTAL IN =     13523983.0000               TOTAL IN =            0.1290
 
             TOTAL OUT =     13525219.0000              TOTAL OUT =            0.1290
 
-             IN - OUT =        -1236.0000               IN - OUT =        4.6566E-10
+             IN - OUT =        -1236.0000               IN - OUT =        6.9849E-10
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -5114,7 +5114,7 @@
 
 
           STREAM LOSS =     14040914.0000            STREAM LOSS =            0.1994
-    CHANGE IN STORAGE =       469576.7188      CHANGE IN STORAGE =       -1.5466E-03
+    CHANGE IN STORAGE =       469576.6875      CHANGE IN STORAGE =       -1.5466E-03
        RECHARGE TO GW =     13572593.0000         RECHARGE TO GW =            0.2010
 
              TOTAL IN =     14040914.0000               TOTAL IN =            0.2010
@@ -5443,7 +5443,7 @@
 
             TOTAL OUT =     15522470.0000              TOTAL OUT =            0.5729
 
-             IN - OUT =        -1226.0000               IN - OUT =        2.7101E-07
+             IN - OUT =        -1226.0000               IN - OUT =        2.7148E-07
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -6821,7 +6821,7 @@
 
             TOTAL OUT =     26130124.0000              TOTAL OUT =            0.3834
 
-             IN - OUT =        -3004.0000               IN - OUT =        3.7253E-09
+             IN - OUT =        -3004.0000               IN - OUT =        7.4506E-09
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -7055,7 +7055,7 @@
 
             TOTAL OUT =     26623342.0000              TOTAL OUT =            0.2081
 
-             IN - OUT =        -3272.0000               IN - OUT =        4.0978E-08
+             IN - OUT =        -3272.0000               IN - OUT =        3.9116E-08
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -7289,7 +7289,7 @@
 
             TOTAL OUT =     27014526.0000              TOTAL OUT =            0.1582
 
-             IN - OUT =        -3366.0000               IN - OUT =        2.1886E-08
+             IN - OUT =        -3366.0000               IN - OUT =        2.1420E-08
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -8667,7 +8667,7 @@
 
             TOTAL OUT =     27715294.0000              TOTAL OUT =        8.1346E-02
 
-             IN - OUT =        -3524.0000               IN - OUT =       -1.4203E-08
+             IN - OUT =        -3524.0000               IN - OUT =       -1.4319E-08
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -9577,7 +9577,7 @@
 
             TOTAL OUT =     29284832.0000              TOTAL OUT =            0.1885
 
-             IN - OUT =        -3880.0000               IN - OUT =        2.8173E-07
+             IN - OUT =        -3880.0000               IN - OUT =        2.9709E-07
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -9608,7 +9608,7 @@
 
            TOTAL OUT =    42571316.0000             TOTAL OUT =           0.2439
 
-            IN - OUT =         812.0000              IN - OUT =       1.5259E-04
+            IN - OUT =         812.0000              IN - OUT =       1.5256E-04
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.06
 
@@ -9804,14 +9804,14 @@
 
 
           STREAM LOSS =     29803624.0000            STREAM LOSS =            0.2017
-    CHANGE IN STORAGE =       418700.5000      CHANGE IN STORAGE =       -1.2870E-03
-       RECHARGE TO GW =     29389286.0000         RECHARGE TO GW =            0.2031
+    CHANGE IN STORAGE =       418700.5312      CHANGE IN STORAGE =       -1.2870E-03
+       RECHARGE TO GW =     29389284.0000         RECHARGE TO GW =            0.2031
 
              TOTAL IN =     29803624.0000               TOTAL IN =            0.2030
 
-            TOTAL OUT =     29807986.0000              TOTAL OUT =            0.2031
+            TOTAL OUT =     29807984.0000              TOTAL OUT =            0.2031
 
-             IN - OUT =        -4362.0000               IN - OUT =       -1.0349E-04
+             IN - OUT =        -4360.0000               IN - OUT =       -1.0345E-04
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =            -0.01
 
@@ -9826,12 +9826,12 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    13781708.0000               STORAGE =       4.3724E-02
+             STORAGE =    13781709.0000               STORAGE =       4.3724E-02
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
       STREAM LEAKAGE =    29431582.0000        STREAM LEAKAGE =           0.2031
 
-            TOTAL IN =    43213288.0000              TOTAL IN =           0.2468
+            TOTAL IN =    43213292.0000              TOTAL IN =           0.2468
 
           OUT:                                     OUT:
           ----                                     ----
@@ -9842,7 +9842,7 @@
 
            TOTAL OUT =    43212420.0000             TOTAL OUT =           0.2467
 
-            IN - OUT =         868.0000              IN - OUT =       1.4065E-04
+            IN - OUT =         872.0000              IN - OUT =       1.4046E-04
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.06
 
@@ -10038,14 +10038,14 @@
 
 
           STREAM LOSS =     30036878.0000            STREAM LOSS =        9.0014E-02
-    CHANGE IN STORAGE =       348316.5625      CHANGE IN STORAGE =       -1.6879E-03
-       RECHARGE TO GW =     29692918.0000         RECHARGE TO GW =        9.1713E-02
+    CHANGE IN STORAGE =       348316.6562      CHANGE IN STORAGE =       -1.6879E-03
+       RECHARGE TO GW =     29692916.0000         RECHARGE TO GW =        9.1713E-02
 
              TOTAL IN =     30036878.0000               TOTAL IN =        9.1702E-02
 
-            TOTAL OUT =     30041234.0000              TOTAL OUT =        9.1713E-02
+            TOTAL OUT =     30041232.0000              TOTAL OUT =        9.1713E-02
 
-             IN - OUT =        -4356.0000               IN - OUT =       -1.1469E-05
+             IN - OUT =        -4354.0000               IN - OUT =       -1.1450E-05
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -10076,7 +10076,7 @@
 
            TOTAL OUT =    43792608.0000             TOTAL OUT =           0.2150
 
-            IN - OUT =         908.0000              IN - OUT =       1.2200E-04
+            IN - OUT =         908.0000              IN - OUT =       1.2186E-04
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.06
 
@@ -10272,14 +10272,14 @@
 
 
           STREAM LOSS =     30130226.0000            STREAM LOSS =        3.5992E-02
-    CHANGE IN STORAGE =       286752.4688      CHANGE IN STORAGE =       -1.3033E-03
-       RECHARGE TO GW =     29847770.0000         RECHARGE TO GW =        3.7295E-02
+    CHANGE IN STORAGE =       286752.5938      CHANGE IN STORAGE =       -1.3033E-03
+       RECHARGE TO GW =     29847768.0000         RECHARGE TO GW =        3.7295E-02
 
              TOTAL IN =     30130226.0000               TOTAL IN =        3.7295E-02
 
-            TOTAL OUT =     30134522.0000              TOTAL OUT =        3.7295E-02
+            TOTAL OUT =     30134520.0000              TOTAL OUT =        3.7295E-02
 
-             IN - OUT =        -4296.0000               IN - OUT =        1.1758E-08
+             IN - OUT =        -4294.0000               IN - OUT =        1.3155E-08
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -10294,7 +10294,7 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    14453472.0000               STORAGE =           0.1717
+             STORAGE =    14453473.0000               STORAGE =           0.1717
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
       STREAM LEAKAGE =    29890198.0000        STREAM LEAKAGE =       3.7295E-02
@@ -10310,7 +10310,7 @@
 
            TOTAL OUT =    44342716.0000             TOTAL OUT =           0.2089
 
-            IN - OUT =         956.0000              IN - OUT =       8.7306E-05
+            IN - OUT =         956.0000              IN - OUT =       8.7559E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.04
 
@@ -10579,20 +10579,20 @@
    1    4   60     1    60    4.2801E-02  1.6371E-04   4.2637E-02  0.000E+00  0.000E+00  0.000E+00  1.22359E+02  2.090E-01  1.513E+00  2.309E-04  1.688E-04 -5.085E-06
    1    4   61     1    61    4.2637E-02  1.6340E-04   4.2474E-02  0.000E+00  0.000E+00  0.000E+00  1.22059E+02  2.087E-01  1.510E+00  2.306E-04  1.682E-04 -4.829E-06
    1    4   62     1    62    4.2474E-02  1.6310E-04   4.2310E-02  0.000E+00  0.000E+00  0.000E+00  1.21758E+02  2.084E-01  1.508E+00  2.302E-04  1.681E-04 -4.976E-06
-   1    4   63     1    63    4.2310E-02  1.6279E-04   4.2148E-02  0.000E+00  0.000E+00  0.000E+00  1.21458E+02  2.081E-01  1.506E+00  2.299E-04  1.696E-04 -6.757E-06
+   1    4   63     1    63    4.2310E-02  1.6279E-04   4.2148E-02  0.000E+00  0.000E+00  0.000E+00  1.21458E+02  2.081E-01  1.506E+00  2.299E-04  1.696E-04 -6.756E-06
    1    4   64     1    64    4.2148E-02  1.6249E-04   4.1985E-02  0.000E+00  0.000E+00  0.000E+00  1.21158E+02  2.078E-01  1.504E+00  2.296E-04  1.698E-04 -7.273E-06
    1    4   65     1    65    4.1985E-02  1.6219E-04   4.1823E-02  0.000E+00  0.000E+00  0.000E+00  1.20857E+02  2.075E-01  1.502E+00  2.292E-04  1.692E-04 -7.009E-06
    1    4   66     1    66    4.1823E-02  1.6188E-04   4.1661E-02  0.000E+00  0.000E+00  0.000E+00  1.20557E+02  2.072E-01  1.499E+00  2.289E-04  1.686E-04 -6.761E-06
    1    4   67     1    67    4.1661E-02  1.6158E-04   4.1500E-02  0.000E+00  0.000E+00  0.000E+00  1.20257E+02  2.069E-01  1.497E+00  2.286E-04  1.681E-04 -6.522E-06
-   1    4   68     1    68    4.1500E-02  1.6127E-04   4.1338E-02  0.000E+00  0.000E+00  0.000E+00  1.19957E+02  2.066E-01  1.495E+00  2.283E-04  1.646E-04 -3.353E-06
-   1    4   69     1    69    4.1338E-02  1.6097E-04   4.1177E-02  0.000E+00  0.000E+00  0.000E+00  1.19656E+02  2.063E-01  1.493E+00  2.279E-04  1.628E-04 -1.863E-06
+   1    4   68     1    68    4.1500E-02  1.6127E-04   4.1338E-02  0.000E+00  0.000E+00  0.000E+00  1.19957E+02  2.066E-01  1.495E+00  2.283E-04  1.646E-04 -3.352E-06
+   1    4   69     1    69    4.1338E-02  1.6097E-04   4.1177E-02  0.000E+00  0.000E+00  0.000E+00  1.19656E+02  2.063E-01  1.493E+00  2.279E-04  1.628E-04 -1.864E-06
    1    4   70     1    70    4.1177E-02  1.6066E-04   4.1017E-02  0.000E+00  0.000E+00  0.000E+00  1.19356E+02  2.060E-01  1.491E+00  2.276E-04  1.666E-04 -5.981E-06
    1    4   71     1    71    4.1017E-02  1.6036E-04   4.0856E-02  0.000E+00  0.000E+00  0.000E+00  1.19056E+02  2.057E-01  1.489E+00  2.273E-04  1.707E-04 -1.035E-05
    1    4   72     1    72    4.0856E-02  1.6006E-04   4.0696E-02  0.000E+00  0.000E+00  0.000E+00  1.18755E+02  2.054E-01  1.486E+00  2.269E-04  1.750E-04 -1.498E-05
    1    4   73     1    73    4.0696E-02  1.5975E-04   4.0536E-02  0.000E+00  0.000E+00  0.000E+00  1.18455E+02  2.050E-01  1.484E+00  2.266E-04  1.796E-04 -1.987E-05
    1    4   74     1    74    4.0536E-02  1.5945E-04   4.0377E-02  0.000E+00  0.000E+00  0.000E+00  1.18155E+02  2.047E-01  1.482E+00  2.262E-04  1.845E-04 -2.504E-05
    1    4   75     1    75    4.0377E-02  1.5914E-04   4.0218E-02  0.000E+00  0.000E+00  0.000E+00  1.17854E+02  2.044E-01  1.480E+00  2.259E-04  1.873E-04 -2.812E-05
-   1    4   76     1    76    4.0218E-02  1.5884E-04   4.0059E-02  0.000E+00  0.000E+00  0.000E+00  1.17554E+02  2.041E-01  1.478E+00  2.256E-04  1.918E-04 -3.299E-05
+   1    4   76     1    76    4.0218E-02  1.5884E-04   4.0059E-02  0.000E+00  0.000E+00  0.000E+00  1.17554E+02  2.041E-01  1.478E+00  2.256E-04  1.918E-04 -3.298E-05
    1    4   77     1    77    4.0059E-02  1.5853E-04   3.9901E-02  0.000E+00  0.000E+00  0.000E+00  1.17254E+02  2.038E-01  1.475E+00  2.252E-04  1.969E-04 -3.835E-05
    1    4   78     1    78    3.9901E-02  1.5823E-04   3.9742E-02  0.000E+00  0.000E+00  0.000E+00  1.16954E+02  2.035E-01  1.473E+00  2.249E-04  2.022E-04 -4.398E-05
    1    4   79     1    79    3.9742E-02  1.5793E-04   3.9584E-02  0.000E+00  0.000E+00  0.000E+00  1.16653E+02  2.032E-01  1.471E+00  2.246E-04  2.078E-04 -4.989E-05
@@ -10626,14 +10626,14 @@
 
 
           STREAM LOSS =     30173372.0000            STREAM LOSS =        1.6662E-02
-    CHANGE IN STORAGE =       245753.3438      CHANGE IN STORAGE =       -4.9243E-03
-       RECHARGE TO GW =     29931988.0000         RECHARGE TO GW =        2.1586E-02
+    CHANGE IN STORAGE =       245753.5625      CHANGE IN STORAGE =       -4.9243E-03
+       RECHARGE TO GW =     29931986.0000         RECHARGE TO GW =        2.1586E-02
 
              TOTAL IN =     30173372.0000               TOTAL IN =        2.1586E-02
 
-            TOTAL OUT =     30177742.0000              TOTAL OUT =        2.1586E-02
+            TOTAL OUT =     30177740.0000              TOTAL OUT =        2.1586E-02
 
-             IN - OUT =        -4370.0000               IN - OUT =       -1.3737E-07
+             IN - OUT =        -4368.0000               IN - OUT =       -1.3690E-07
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -10736,7 +10736,7 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    14903503.0000               STORAGE =           0.1822
+             STORAGE =    14903506.0000               STORAGE =           0.1822
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
       STREAM LEAKAGE =    29974384.0000        STREAM LEAKAGE =       2.1586E-02
@@ -10752,7 +10752,7 @@
 
            TOTAL OUT =    44876920.0000             TOTAL OUT =           0.2037
 
-            IN - OUT =         968.0000              IN - OUT =       7.8052E-05
+            IN - OUT =         968.0000              IN - OUT =       7.8037E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.04
 
@@ -10948,14 +10948,14 @@
 
 
           STREAM LOSS =     30196166.0000            STREAM LOSS =        8.7630E-03
-    CHANGE IN STORAGE =       221329.1250      CHANGE IN STORAGE =       -7.9024E-03
-       RECHARGE TO GW =     29979136.0000         RECHARGE TO GW =        1.6666E-02
+    CHANGE IN STORAGE =       221329.3438      CHANGE IN STORAGE =       -7.9024E-03
+       RECHARGE TO GW =     29979134.0000         RECHARGE TO GW =        1.6666E-02
 
              TOTAL IN =     30196166.0000               TOTAL IN =        1.6665E-02
 
-            TOTAL OUT =     30200466.0000              TOTAL OUT =        1.6666E-02
+            TOTAL OUT =     30200464.0000              TOTAL OUT =        1.6666E-02
 
-             IN - OUT =        -4300.0000               IN - OUT =       -4.4703E-07
+             IN - OUT =        -4298.0000               IN - OUT =       -4.4424E-07
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -10970,12 +10970,12 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    15377574.0000               STORAGE =           0.1820
+             STORAGE =    15377577.0000               STORAGE =           0.1820
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
       STREAM LEAKAGE =    30021524.0000        STREAM LEAKAGE =       1.6666E-02
 
-            TOTAL IN =    45399096.0000              TOTAL IN =           0.1987
+            TOTAL IN =    45399100.0000              TOTAL IN =           0.1987
 
           OUT:                                     OUT:
           ----                                     ----
@@ -10986,7 +10986,7 @@
 
            TOTAL OUT =    45398100.0000             TOTAL OUT =           0.1986
 
-            IN - OUT =         996.0000              IN - OUT =       7.2524E-05
+            IN - OUT =        1000.0000              IN - OUT =       7.2524E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.04
 
@@ -11182,14 +11182,14 @@
 
 
           STREAM LOSS =     30243118.0000            STREAM LOSS =        1.8117E-02
-    CHANGE IN STORAGE =       237078.0156      CHANGE IN STORAGE =        7.9592E-03
-       RECHARGE TO GW =     30010324.0000         RECHARGE TO GW =        1.0158E-02
+    CHANGE IN STORAGE =       237078.2344      CHANGE IN STORAGE =        7.9592E-03
+       RECHARGE TO GW =     30010322.0000         RECHARGE TO GW =        1.0158E-02
 
              TOTAL IN =     30243118.0000               TOTAL IN =        1.8117E-02
 
-            TOTAL OUT =     30247402.0000              TOTAL OUT =        1.8117E-02
+            TOTAL OUT =     30247400.0000              TOTAL OUT =        1.8117E-02
 
-             IN - OUT =        -4284.0000               IN - OUT =       -7.4506E-09
+             IN - OUT =        -4282.0000               IN - OUT =       -7.4506E-09
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -11204,12 +11204,12 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    15855527.0000               STORAGE =           0.1843
+             STORAGE =    15855530.0000               STORAGE =           0.1843
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
       STREAM LEAKAGE =    30052734.0000        STREAM LEAKAGE =       1.0158E-02
 
-            TOTAL IN =    45908260.0000              TOTAL IN =           0.1945
+            TOTAL IN =    45908264.0000              TOTAL IN =           0.1945
 
           OUT:                                     OUT:
           ----                                     ----
@@ -11220,7 +11220,7 @@
 
            TOTAL OUT =    45907236.0000             TOTAL OUT =           0.1944
 
-            IN - OUT =        1024.0000              IN - OUT =       4.2215E-05
+            IN - OUT =        1028.0000              IN - OUT =       4.2215E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.02
 
@@ -11416,14 +11416,14 @@
 
 
           STREAM LOSS =     30595428.0000            STREAM LOSS =            0.1359
-    CHANGE IN STORAGE =       371345.0625      CHANGE IN STORAGE =       -1.0463E-03
-       RECHARGE TO GW =     30228268.0000         RECHARGE TO GW =            0.1369
+    CHANGE IN STORAGE =       371345.2188      CHANGE IN STORAGE =       -1.0463E-03
+       RECHARGE TO GW =     30228266.0000         RECHARGE TO GW =            0.1369
 
              TOTAL IN =     30595428.0000               TOTAL IN =            0.1369
 
-            TOTAL OUT =     30599614.0000              TOTAL OUT =            0.1369
+            TOTAL OUT =     30599612.0000              TOTAL OUT =            0.1369
 
-             IN - OUT =        -4186.0000               IN - OUT =       -5.5064E-08
+             IN - OUT =        -4184.0000               IN - OUT =       -5.5064E-08
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -11438,12 +11438,12 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    16141834.0000               STORAGE =       6.0449E-02
+             STORAGE =    16141837.0000               STORAGE =       6.0449E-02
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
-      STREAM LEAKAGE =    30270656.0000        STREAM LEAKAGE =           0.1369
+      STREAM LEAKAGE =    30270654.0000        STREAM LEAKAGE =           0.1369
 
-            TOTAL IN =    46412488.0000              TOTAL IN =           0.1974
+            TOTAL IN =    46412492.0000              TOTAL IN =           0.1974
 
           OUT:                                     OUT:
           ----                                     ----
@@ -11454,7 +11454,7 @@
 
            TOTAL OUT =    46411504.0000             TOTAL OUT =           0.1973
 
-            IN - OUT =         984.0000              IN - OUT =       3.9607E-05
+            IN - OUT =         988.0000              IN - OUT =       3.9607E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.02
 
@@ -11650,14 +11650,14 @@
 
 
           STREAM LOSS =     30896268.0000            STREAM LOSS =            0.1161
-    CHANGE IN STORAGE =       355922.0000      CHANGE IN STORAGE =       -8.4202E-04
-       RECHARGE TO GW =     30544722.0000         RECHARGE TO GW =            0.1169
+    CHANGE IN STORAGE =       355922.1250      CHANGE IN STORAGE =       -8.4202E-04
+       RECHARGE TO GW =     30544720.0000         RECHARGE TO GW =            0.1169
 
              TOTAL IN =     30896268.0000               TOTAL IN =            0.1169
 
-            TOTAL OUT =     30900644.0000              TOTAL OUT =            0.1169
+            TOTAL OUT =     30900642.0000              TOTAL OUT =            0.1169
 
-             IN - OUT =        -4376.0000               IN - OUT =        4.4412E-08
+             IN - OUT =        -4374.0000               IN - OUT =        4.4471E-08
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -11672,12 +11672,12 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    16332118.0000               STORAGE =       7.7477E-02
+             STORAGE =    16332122.0000               STORAGE =       7.7477E-02
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
-      STREAM LEAKAGE =    30586972.0000        STREAM LEAKAGE =           0.1169
+      STREAM LEAKAGE =    30586970.0000        STREAM LEAKAGE =           0.1169
 
-            TOTAL IN =    46919088.0000              TOTAL IN =           0.1944
+            TOTAL IN =    46919092.0000              TOTAL IN =           0.1944
 
           OUT:                                     OUT:
           ----                                     ----
@@ -11688,7 +11688,7 @@
 
            TOTAL OUT =    46918100.0000             TOTAL OUT =           0.1943
 
-            IN - OUT =         988.0000              IN - OUT =       5.8800E-05
+            IN - OUT =         992.0000              IN - OUT =       5.8800E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.03
 
@@ -12004,14 +12004,14 @@
 
 
           STREAM LOSS =     31158580.0000            STREAM LOSS =            0.1011
-    CHANGE IN STORAGE =       343158.5312      CHANGE IN STORAGE =       -5.8175E-04
-       RECHARGE TO GW =     30819492.0000         RECHARGE TO GW =            0.1017
+    CHANGE IN STORAGE =       343158.6562      CHANGE IN STORAGE =       -5.8175E-04
+       RECHARGE TO GW =     30819490.0000         RECHARGE TO GW =            0.1017
 
              TOTAL IN =     31158580.0000               TOTAL IN =            0.1017
 
-            TOTAL OUT =     31162650.0000              TOTAL OUT =            0.1017
+            TOTAL OUT =     31162648.0000              TOTAL OUT =            0.1017
 
-             IN - OUT =        -4070.0000               IN - OUT =        5.2038E-08
+             IN - OUT =        -4068.0000               IN - OUT =        5.2038E-08
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -12114,10 +12114,10 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    16559205.0000               STORAGE =       9.0987E-02
+             STORAGE =    16559209.0000               STORAGE =       9.0987E-02
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
-      STREAM LEAKAGE =    30861746.0000        STREAM LEAKAGE =           0.1017
+      STREAM LEAKAGE =    30861744.0000        STREAM LEAKAGE =           0.1017
 
             TOTAL IN =    47420952.0000              TOTAL IN =           0.1927
 
@@ -12326,14 +12326,14 @@
 
 
           STREAM LOSS =     32482686.0000            STREAM LOSS =            0.5109
-    CHANGE IN STORAGE =       751453.9375      CHANGE IN STORAGE =        2.8481E-02
-       RECHARGE TO GW =     31735544.0000         RECHARGE TO GW =            0.4824
+    CHANGE IN STORAGE =       751454.0625      CHANGE IN STORAGE =        2.8481E-02
+       RECHARGE TO GW =     31735542.0000         RECHARGE TO GW =            0.4824
 
              TOTAL IN =     32482686.0000               TOTAL IN =            0.5109
 
-            TOTAL OUT =     32486998.0000              TOTAL OUT =            0.5109
+            TOTAL OUT =     32486996.0000              TOTAL OUT =            0.5109
 
-             IN - OUT =        -4312.0000               IN - OUT =        1.7881E-07
+             IN - OUT =        -4310.0000               IN - OUT =        2.3842E-07
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -12348,12 +12348,12 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    16600329.0000               STORAGE =           0.0000
+             STORAGE =    16600333.0000               STORAGE =           0.0000
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
-      STREAM LEAKAGE =    31777584.0000        STREAM LEAKAGE =           0.4824
+      STREAM LEAKAGE =    31777582.0000        STREAM LEAKAGE =           0.4824
 
-            TOTAL IN =    48377912.0000              TOTAL IN =           0.4824
+            TOTAL IN =    48377916.0000              TOTAL IN =           0.4824
 
           OUT:                                     OUT:
           ----                                     ----
@@ -12364,7 +12364,7 @@
 
            TOTAL OUT =    48376880.0000             TOTAL OUT =           0.4823
 
-            IN - OUT =        1032.0000              IN - OUT =       8.2284E-05
+            IN - OUT =        1036.0000              IN - OUT =       8.2165E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.02
 
@@ -12560,14 +12560,14 @@
 
 
           STREAM LOSS =     33186256.0000            STREAM LOSS =            0.2714
-    CHANGE IN STORAGE =       571106.8125      CHANGE IN STORAGE =       -1.8064E-02
-       RECHARGE TO GW =     32620596.0000         RECHARGE TO GW =            0.2895
+    CHANGE IN STORAGE =       571106.9375      CHANGE IN STORAGE =       -1.8064E-02
+       RECHARGE TO GW =     32620594.0000         RECHARGE TO GW =            0.2895
 
              TOTAL IN =     33186256.0000               TOTAL IN =            0.2895
 
-            TOTAL OUT =     33191702.0000              TOTAL OUT =            0.2895
+            TOTAL OUT =     33191700.0000              TOTAL OUT =            0.2895
 
-             IN - OUT =        -5446.0000               IN - OUT =       -3.7253E-08
+             IN - OUT =        -5444.0000               IN - OUT =       -1.1176E-08
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -12582,23 +12582,23 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    16600573.0000               STORAGE =       2.8893E-06
+             STORAGE =    16600577.0000               STORAGE =       2.8893E-06
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
-      STREAM LEAKAGE =    32662602.0000        STREAM LEAKAGE =           0.2895
+      STREAM LEAKAGE =    32662600.0000        STREAM LEAKAGE =           0.2895
 
             TOTAL IN =    49263176.0000              TOTAL IN =           0.2895
 
           OUT:                                     OUT:
           ----                                     ----
-             STORAGE =    16750614.0000               STORAGE =       8.2468E-02
+             STORAGE =    16750613.0000               STORAGE =       8.2468E-02
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =    32511488.0000       HEAD DEP BOUNDS =           0.2069
       STREAM LEAKAGE =           0.0000        STREAM LEAKAGE =           0.0000
 
-           TOTAL OUT =    49262104.0000             TOTAL OUT =           0.2894
+           TOTAL OUT =    49262100.0000             TOTAL OUT =           0.2894
 
-            IN - OUT =        1072.0000              IN - OUT =       9.9361E-05
+            IN - OUT =        1076.0000              IN - OUT =       9.9301E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.03
 
@@ -12795,13 +12795,13 @@
 
           STREAM LOSS =     33943668.0000            STREAM LOSS =            0.2922
     CHANGE IN STORAGE =       555995.4375      CHANGE IN STORAGE =       -7.9077E-03
-       RECHARGE TO GW =     33393052.0000         RECHARGE TO GW =            0.3001
+       RECHARGE TO GW =     33393050.0000         RECHARGE TO GW =            0.3001
 
              TOTAL IN =     33943668.0000               TOTAL IN =            0.3001
 
-            TOTAL OUT =     33949048.0000              TOTAL OUT =            0.3001
+            TOTAL OUT =     33949044.0000              TOTAL OUT =            0.3001
 
-             IN - OUT =        -5380.0000               IN - OUT =        6.5193E-09
+             IN - OUT =        -5376.0000               IN - OUT =        8.3819E-09
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -12816,12 +12816,12 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    16600573.0000               STORAGE =       3.1480E-08
+             STORAGE =    16600577.0000               STORAGE =       3.1480E-08
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
-      STREAM LEAKAGE =    33435124.0000        STREAM LEAKAGE =           0.3001
+      STREAM LEAKAGE =    33435122.0000        STREAM LEAKAGE =           0.3001
 
-            TOTAL IN =    50035696.0000              TOTAL IN =           0.3001
+            TOTAL IN =    50035700.0000              TOTAL IN =           0.3001
 
           OUT:                                     OUT:
           ----                                     ----
@@ -12832,7 +12832,7 @@
 
            TOTAL OUT =    50034592.0000             TOTAL OUT =           0.3000
 
-            IN - OUT =        1104.0000              IN - OUT =       8.3417E-05
+            IN - OUT =        1108.0000              IN - OUT =       8.3238E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.03
 
@@ -13028,14 +13028,14 @@
 
 
           STREAM LOSS =     34481820.0000            STREAM LOSS =            0.2077
-    CHANGE IN STORAGE =       476292.5312      CHANGE IN STORAGE =       -4.9407E-03
-       RECHARGE TO GW =     34011092.0000         RECHARGE TO GW =            0.2127
+    CHANGE IN STORAGE =       476292.5625      CHANGE IN STORAGE =       -4.9407E-03
+       RECHARGE TO GW =     34011088.0000         RECHARGE TO GW =            0.2127
 
              TOTAL IN =     34481820.0000               TOTAL IN =            0.2127
 
-            TOTAL OUT =     34487384.0000              TOTAL OUT =            0.2127
+            TOTAL OUT =     34487380.0000              TOTAL OUT =            0.2127
 
-             IN - OUT =        -5564.0000               IN - OUT =       -2.7008E-08
+             IN - OUT =        -5560.0000               IN - OUT =       -3.6787E-08
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -13050,12 +13050,12 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    16614628.0000               STORAGE =       1.1309E-02
+             STORAGE =    16614632.0000               STORAGE =       1.1309E-02
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
       STREAM LEAKAGE =    34053280.0000        STREAM LEAKAGE =           0.2127
 
-            TOTAL IN =    50667908.0000              TOTAL IN =           0.2240
+            TOTAL IN =    50667912.0000              TOTAL IN =           0.2240
 
           OUT:                                     OUT:
           ----                                     ----
@@ -13066,7 +13066,7 @@
 
            TOTAL OUT =    50666728.0000             TOTAL OUT =           0.2239
 
-            IN - OUT =        1180.0000              IN - OUT =       9.1031E-05
+            IN - OUT =        1184.0000              IN - OUT =       9.1031E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.04
 
@@ -13383,13 +13383,13 @@
 
           STREAM LOSS =     34813132.0000            STREAM LOSS =            0.1278
     CHANGE IN STORAGE =       415474.8750      CHANGE IN STORAGE =       -6.9909E-03
-       RECHARGE TO GW =     34403044.0000         RECHARGE TO GW =            0.1348
+       RECHARGE TO GW =     34403040.0000         RECHARGE TO GW =            0.1348
 
              TOTAL IN =     34813132.0000               TOTAL IN =            0.1348
 
-            TOTAL OUT =     34818520.0000              TOTAL OUT =            0.1348
+            TOTAL OUT =     34818516.0000              TOTAL OUT =            0.1348
 
-             IN - OUT =        -5388.0000               IN - OUT =       -2.3812E-05
+             IN - OUT =        -5384.0000               IN - OUT =       -2.3812E-05
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -13492,12 +13492,12 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    16759607.0000               STORAGE =       6.6515E-02
+             STORAGE =    16759611.0000               STORAGE =       6.6515E-02
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
       STREAM LEAKAGE =    34445436.0000        STREAM LEAKAGE =           0.1348
 
-            TOTAL IN =    51205044.0000              TOTAL IN =           0.2013
+            TOTAL IN =    51205048.0000              TOTAL IN =           0.2013
 
           OUT:                                     OUT:
           ----                                     ----
@@ -13508,7 +13508,7 @@
 
            TOTAL OUT =    51203832.0000             TOTAL OUT =           0.2013
 
-            IN - OUT =        1212.0000              IN - OUT =       6.9126E-05
+            IN - OUT =        1216.0000              IN - OUT =       6.9126E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.03
 
@@ -13705,13 +13705,13 @@
 
           STREAM LOSS =     34920764.0000            STREAM LOSS =        4.1477E-02
     CHANGE IN STORAGE =       323185.0000      CHANGE IN STORAGE =       -3.7165E-03
-       RECHARGE TO GW =     34602644.0000         RECHARGE TO GW =        4.5196E-02
+       RECHARGE TO GW =     34602640.0000         RECHARGE TO GW =        4.5196E-02
 
              TOTAL IN =     34920764.0000               TOTAL IN =        4.5194E-02
 
-            TOTAL OUT =     34925828.0000              TOTAL OUT =        4.5196E-02
+            TOTAL OUT =     34925824.0000              TOTAL OUT =        4.5196E-02
 
-             IN - OUT =        -5064.0000               IN - OUT =       -2.1416E-06
+             IN - OUT =        -5060.0000               IN - OUT =       -2.1390E-06
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -13726,12 +13726,12 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    17074402.0000               STORAGE =           0.1498
+             STORAGE =    17074406.0000               STORAGE =           0.1498
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
       STREAM LEAKAGE =    34645264.0000        STREAM LEAKAGE =       4.5196E-02
 
-            TOTAL IN =    51719664.0000              TOTAL IN =           0.1950
+            TOTAL IN =    51719672.0000              TOTAL IN =           0.1950
 
           OUT:                                     OUT:
           ----                                     ----
@@ -13742,7 +13742,7 @@
 
            TOTAL OUT =    51718420.0000             TOTAL OUT =           0.1950
 
-            IN - OUT =        1244.0000              IN - OUT =       6.3613E-05
+            IN - OUT =        1252.0000              IN - OUT =       6.3613E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.03
 
@@ -13938,14 +13938,14 @@
 
 
           STREAM LOSS =     35155948.0000            STREAM LOSS =        9.0874E-02
-    CHANGE IN STORAGE =       367843.5000      CHANGE IN STORAGE =       -2.8452E-03
-       RECHARGE TO GW =     34793744.0000         RECHARGE TO GW =        9.3719E-02
+    CHANGE IN STORAGE =       367843.4688      CHANGE IN STORAGE =       -2.8452E-03
+       RECHARGE TO GW =     34793740.0000         RECHARGE TO GW =        9.3719E-02
 
              TOTAL IN =     35155948.0000               TOTAL IN =        9.3719E-02
 
-            TOTAL OUT =     35161588.0000              TOTAL OUT =        9.3719E-02
+            TOTAL OUT =     35161584.0000              TOTAL OUT =        9.3719E-02
 
-             IN - OUT =        -5640.0000               IN - OUT =        1.5832E-08
+             IN - OUT =        -5636.0000               IN - OUT =        1.5832E-08
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -13960,12 +13960,12 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    17383516.0000               STORAGE =       9.8392E-02
+             STORAGE =    17383520.0000               STORAGE =       9.8392E-02
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
       STREAM LEAKAGE =    34836152.0000        STREAM LEAKAGE =       9.3719E-02
 
-            TOTAL IN =    52219668.0000              TOTAL IN =           0.1921
+            TOTAL IN =    52219672.0000              TOTAL IN =           0.1921
 
           OUT:                                     OUT:
           ----                                     ----
@@ -13976,7 +13976,7 @@
 
            TOTAL OUT =    52218416.0000             TOTAL OUT =           0.1921
 
-            IN - OUT =        1252.0000              IN - OUT =       4.2722E-05
+            IN - OUT =        1256.0000              IN - OUT =       4.2737E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.02
 
@@ -14173,13 +14173,13 @@
 
           STREAM LOSS =     35540268.0000            STREAM LOSS =            0.1484
     CHANGE IN STORAGE =       401594.9062      CHANGE IN STORAGE =       -2.0235E-03
-       RECHARGE TO GW =     35144700.0000         RECHARGE TO GW =            0.1504
+       RECHARGE TO GW =     35144696.0000         RECHARGE TO GW =            0.1504
 
              TOTAL IN =     35540268.0000               TOTAL IN =            0.1504
 
-            TOTAL OUT =     35546296.0000              TOTAL OUT =            0.1504
+            TOTAL OUT =     35546292.0000              TOTAL OUT =            0.1504
 
-             IN - OUT =        -6028.0000               IN - OUT =       -7.4506E-09
+             IN - OUT =        -6024.0000               IN - OUT =       -3.9581E-09
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -14194,12 +14194,12 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    17531574.0000               STORAGE =       4.2348E-02
+             STORAGE =    17531578.0000               STORAGE =       4.2348E-02
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
       STREAM LEAKAGE =    35186996.0000        STREAM LEAKAGE =           0.1504
 
-            TOTAL IN =    52718568.0000              TOTAL IN =           0.1927
+            TOTAL IN =    52718576.0000              TOTAL IN =           0.1927
 
           OUT:                                     OUT:
           ----                                     ----
@@ -14210,7 +14210,7 @@
 
            TOTAL OUT =    52717336.0000             TOTAL OUT =           0.1927
 
-            IN - OUT =        1232.0000              IN - OUT =       5.4136E-05
+            IN - OUT =        1240.0000              IN - OUT =       5.4136E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.03
 
@@ -14406,14 +14406,14 @@
 
 
           STREAM LOSS =     35540268.0000            STREAM LOSS =            0.0000
-    CHANGE IN STORAGE =       214373.0312      CHANGE IN STORAGE =       -2.0036E-02
-       RECHARGE TO GW =     35332352.0000         RECHARGE TO GW =        2.0036E-02
+    CHANGE IN STORAGE =       214372.9688      CHANGE IN STORAGE =       -2.0036E-02
+       RECHARGE TO GW =     35332348.0000         RECHARGE TO GW =        2.0036E-02
 
              TOTAL IN =     35540268.0000               TOTAL IN =        2.0036E-02
 
-            TOTAL OUT =     35546724.0000              TOTAL OUT =        2.0036E-02
+            TOTAL OUT =     35546720.0000              TOTAL OUT =        2.0036E-02
 
-             IN - OUT =        -6456.0000               IN - OUT =            0.0000
+             IN - OUT =        -6452.0000               IN - OUT =            0.0000
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -14428,12 +14428,12 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    17839190.0000               STORAGE =           0.1681
+             STORAGE =    17839194.0000               STORAGE =           0.1681
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
       STREAM LEAKAGE =    35374716.0000        STREAM LEAKAGE =       2.0036E-02
 
-            TOTAL IN =    53213904.0000              TOTAL IN =           0.1881
+            TOTAL IN =    53213912.0000              TOTAL IN =           0.1881
 
           OUT:                                     OUT:
           ----                                     ----
@@ -14444,7 +14444,7 @@
 
            TOTAL OUT =    53212704.0000             TOTAL OUT =           0.1881
 
-            IN - OUT =        1200.0000              IN - OUT =       2.0608E-05
+            IN - OUT =        1208.0000              IN - OUT =       2.0608E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.01
 
@@ -14715,14 +14715,14 @@
    1    4   62     1    62    8.6632E-01  5.4656E-04   8.6577E-01  0.000E+00  0.000E+00  0.000E+00  1.22241E+02  6.907E-01  2.639E+00  4.590E-04  5.442E-04  2.398E-06
    1    4   63     1    63    8.6577E-01  5.4638E-04   8.6523E-01  0.000E+00  0.000E+00  0.000E+00  1.21941E+02  6.905E-01  2.639E+00  4.589E-04  5.439E-04  2.444E-06
    1    4   64     1    64    8.6523E-01  5.4620E-04   8.6468E-01  0.000E+00  0.000E+00  0.000E+00  1.21640E+02  6.903E-01  2.638E+00  4.589E-04  5.098E-04  3.640E-05
-   1    4   65     1    65    8.6468E-01  5.4602E-04   8.6414E-01  0.000E+00  0.000E+00  0.000E+00  1.21340E+02  6.901E-01  2.638E+00  4.588E-04  4.629E-04  8.312E-05
+   1    4   65     1    65    8.6468E-01  5.4602E-04   8.6414E-01  0.000E+00  0.000E+00  0.000E+00  1.21340E+02  6.901E-01  2.638E+00  4.588E-04  4.629E-04  8.311E-05
    1    4   66     1    66    8.6414E-01  5.4585E-04   8.6359E-01  0.000E+00  0.000E+00  0.000E+00  1.21040E+02  6.899E-01  2.638E+00  4.587E-04  4.133E-04  1.325E-04
    1    4   67     1    67    8.6359E-01  5.4567E-04   8.6304E-01  0.000E+00  0.000E+00  0.000E+00  1.20740E+02  6.897E-01  2.638E+00  4.587E-04  3.610E-04  1.847E-04
    1    4   68     1    68    8.6304E-01  5.4549E-04   8.6250E-01  0.000E+00  0.000E+00  0.000E+00  1.20439E+02  6.895E-01  2.637E+00  4.586E-04  3.059E-04  2.396E-04
    1    4   69     1    69    8.6250E-01  5.4531E-04   8.6195E-01  0.000E+00  0.000E+00  0.000E+00  1.20139E+02  6.892E-01  2.637E+00  4.585E-04  2.480E-04  2.973E-04
    1    4   70     1    70    8.6195E-01  5.4513E-04   8.6141E-01  0.000E+00  0.000E+00  0.000E+00  1.19839E+02  6.890E-01  2.637E+00  4.585E-04  1.873E-04  3.579E-04
    1    4   71     1    71    8.6141E-01  5.4496E-04   8.6086E-01  0.000E+00  0.000E+00  0.000E+00  1.19539E+02  6.888E-01  2.637E+00  4.584E-04  1.237E-04  4.212E-04
-   1    4   72     1    72    8.6086E-01  5.4478E-04   8.6032E-01  0.000E+00  0.000E+00  0.000E+00  1.19239E+02  6.886E-01  2.636E+00  4.583E-04  5.722E-05  4.876E-04
+   1    4   72     1    72    8.6086E-01  5.4478E-04   8.6032E-01  0.000E+00  0.000E+00  0.000E+00  1.19239E+02  6.886E-01  2.636E+00  4.583E-04  5.721E-05  4.876E-04
    1    4   73     1    73    8.6032E-01  5.4460E-04   8.5977E-01  0.000E+00  0.000E+00  0.000E+00  1.18938E+02  6.884E-01  2.636E+00  4.583E-04  3.705E-05  5.076E-04
    1    4   74     1    74    8.5977E-01  5.4442E-04   8.5923E-01  0.000E+00  0.000E+00  0.000E+00  1.18638E+02  6.882E-01  2.636E+00  4.582E-04  6.303E-05  4.814E-04
    1    4   75     1    75    8.5923E-01  5.4424E-04   8.5869E-01  0.000E+00  0.000E+00  0.000E+00  1.18338E+02  6.880E-01  2.636E+00  4.581E-04  9.098E-05  4.533E-04
@@ -14760,14 +14760,14 @@
 
 
           STREAM LOSS =     35682416.0000            STREAM LOSS =        5.4863E-02
-    CHANGE IN STORAGE =       314809.1250      CHANGE IN STORAGE =        2.1519E-02
-       RECHARGE TO GW =     35374624.0000         RECHARGE TO GW =        3.3344E-02
+    CHANGE IN STORAGE =       314809.0625      CHANGE IN STORAGE =        2.1519E-02
+       RECHARGE TO GW =     35374620.0000         RECHARGE TO GW =        3.3344E-02
 
              TOTAL IN =     35682416.0000               TOTAL IN =        5.4863E-02
 
-            TOTAL OUT =     35689432.0000              TOTAL OUT =        5.4863E-02
+            TOTAL OUT =     35689428.0000              TOTAL OUT =        5.4863E-02
 
-             IN - OUT =        -7016.0000               IN - OUT =            0.0000
+             IN - OUT =        -7012.0000               IN - OUT =            0.0000
 
   PERCENT DISCREPANCY =            0.00      PERCENT DISCREPANCY =             0.00
 
@@ -14870,12 +14870,12 @@
 
            IN:                                      IN:
            ---                                      ---
-             STORAGE =    18277522.0000               STORAGE =           0.1495
+             STORAGE =    18277526.0000               STORAGE =           0.1495
        CONSTANT HEAD =           0.0000         CONSTANT HEAD =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
       STREAM LEAKAGE =    35416488.0000        STREAM LEAKAGE =       3.3344E-02
 
-            TOTAL IN =    53694008.0000              TOTAL IN =           0.1829
+            TOTAL IN =    53694016.0000              TOTAL IN =           0.1829
 
           OUT:                                     OUT:
           ----                                     ----
@@ -14886,7 +14886,7 @@
 
            TOTAL OUT =    53692848.0000             TOTAL OUT =           0.1829
 
-            IN - OUT =        1160.0000              IN - OUT =       2.2918E-05
+            IN - OUT =        1168.0000              IN - OUT =       2.2903E-05
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.01
 

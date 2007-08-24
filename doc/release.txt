@@ -11,6 +11,18 @@ these packages and processes, see mf2k.txt ("Summary of MODFLOW-2000").
 
 NOTE: Any use of trade, product or firm names is for descriptive purposes 
       only and does not imply endorsement by the U.S. Government.
+      
+o Version 1.18.00 08/23/2007:      
+
+This version introduces the Subsidence for Water-Table Aquifers (SWT) Package.
+Details on theory and use of the new package can be found in U.S. Geological
+Survey Techniques and Methods 6-A23, by Leake and Galloway. The SWT Package is
+an alternative to the existing SUB and IBS packages.
+
+This version fixes a bug that was introduced at version 1.17.04 that 
+affected the use of SFR2 with BCF and HUF.
+
+Also fixed is a bug that affected compilation of the MNW1 Package.
 
 o Version 1.17.04 08/03/2007:
 

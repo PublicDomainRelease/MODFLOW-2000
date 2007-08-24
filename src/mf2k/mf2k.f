@@ -28,7 +28,7 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
 C-------ASSIGN VERSION NUMBER AND DATE
       CHARACTER*40 VERSION
-      PARAMETER (VERSION='1.17.04 08/03/2007')
+      PARAMETER (VERSION='1.18.00 08/23/2007')
 C
 C-----DECLARE ARRAY TYPES
       REAL GX, X, RX, XHS
@@ -108,7 +108,7 @@ C
      &           'ADV2', 'COB ', 'ZONE', 'MULT', 'DROB', 'RVOB', 'GBOB',  ! 35
      &           'STOB', 'HUF2', 'CHOB', 'ETS ', 'DRT ', 'DTOB', 'GMG ',  ! 42
      &           'HYD ', 'SFR ', 'sfob', 'GAGE', 'LVDA', '    ', 'LMT6',  ! 49
-     &           'MNW1', 'DAF ', 'DAFG', 'KDEP', 'SUB ', '    ', '    ',  ! 56
+     &           'MNW1', 'DAF ', 'DAFG', 'KDEP', 'SUB ', 'SWT ', '    ',  ! 56
      &           '    ', '    ', '    ', 'unc ', '    ', '    ', '    ',  ! 63
      &           37*'    '/
 C     ------------------------------------------------------------------
@@ -683,6 +683,8 @@ cgzh mnw dp
      2                  ITMIN,NNDB,NDB,NPZ,NN,NND1,ND1,ND2,IDSAVE,
      3                  IDREST,ISSFLG,NPER,NSTP,NSTPT,IUNIT(54),IOUT,
      4                  IUNIT(9),LCV,ISEN)
+        IF(IUNIT(55).GT.0)
+     1      CALL GWF1SWT1AL(IUNIT(55),IOUT)
         IF(IUNIT(20).GT.0)
      1      CALL GWF1CHD6ALP(ISUMRX,LCCHDS,NCHDS,MXCHD,IUNIT(20),IOUT,
      2                       NCHDVL,IFREFM,NPCHD,IPCBEG,NNPCHD,NOPRCH)
@@ -889,7 +891,7 @@ Crgn  changed calls to sfr2 to support HUF package. 3/26/07
             END IF
           ELSEIF(IUNIT(1).GT.0)THEN
 Cdep  Added three new variables for computing lake outflow in Lake Package
-            CALL GWF1SFR2RPP(ITRSS, RX(LCSTRM),IR(ICSTRM),
+            CALL GWF1SFR2RPP(ITRSS,RX(LCSTRM),IR(ICSTRM),
      2       NSTRM,IUNIT(44),IOUTG,RX(LCSEG),IR(ICSEG),NSS,
      3       IR(LCIVAR),IR(LCOTSG),RX(LCOTFLW),RX(LCDVFLW),MAXPTS,
      4       RX(LCXSEC),RX(LCQSTG),IUNIT(15),RX(LSCONQ),
@@ -903,11 +905,11 @@ Cdep  Added three new variables for computing lake outflow in Lake Package
      &       RZ(LCSOLSFLX),RX(LCSC2),RZ(LCSTHTS),RZ(LCSTHTR),
      &       RZ(LCSTHTI),RZ(LCSEPS),GX(LCDELR),GX(LCDELC),
      &       RZ(LCSUZSEEP),RZ(LCOLDFLBT),NUZROW,NUZCOL,RX(LCUHC),
-     &       IUNIT(1),RX(LCSC1),GX(LCBOTM),NBOTM,GX(LCSTRT),
+     &       IUNIT(1),IUNIT(37),RX(LCSC1),GX(LCBOTM),NBOTM,GX(LCSTRT),
      &       RX(LCSFRUZBD),ISSFLG(1),ITMP,IRDFLG,IPTFLG,NP,IR(LCNSEG),
      &       IUNIT(22),NSSLK,RZ(ISLKOTFLW),RZ(IDLKOTFLW),RZ(IDLKSTAGE))
           ELSEIF(IUNIT(37).GT.0)THEN
-            CALL GWF1SFR2RPP(ITRSS, RX(LCSTRM),IR(ICSTRM),
+            CALL GWF1SFR2RPP(ITRSS,RX(LCSTRM),IR(ICSTRM),
      2         NSTRM,IUNIT(44),IOUTG,RX(LCSEG),IR(ICSEG),NSS,
      3         IR(LCIVAR),IR(LCOTSG),RX(LCOTFLW),RX(LCDVFLW),MAXPTS,
      4         RX(LCXSEC),RX(LCQSTG),IUNIT(15),RX(LSCONQ),
@@ -921,7 +923,7 @@ Cdep  Added three new variables for computing lake outflow in Lake Package
      &         RZ(LCSOLSFLX),X(LCSC1),RZ(LCSTHTS),RZ(LCSTHTR),
      &         RZ(LCSTHTI),RZ(LCSEPS),GX(LCDELR),GX(LCDELC),
      &         RZ(LCSUZSEEP),RZ(LCOLDFLBT),NUZROW,NUZCOL,RX(LCUHC),
-     &         IUNIT(1),X(LCSC1),GX(LCBOTM),NBOTM,GX(LCSTRT),
+     &         IUNIT(1),IUNIT(37),X(LCSC1),GX(LCBOTM),NBOTM,GX(LCSTRT),
      &         RX(LCSFRUZBD),ISSFLG(1),ITMP,IRDFLG,IPTFLG,NP,IR(LCNSEG),
      &         IUNIT(22),NSSLK,RZ(ISLKOTFLW),RZ(IDLKOTFLW),
      &         RZ(IDLKSTAGE))
@@ -947,6 +949,10 @@ Cdep  End change from SFR1 to SFR2
      2                  GX(LCBUFF),NCOL,NROW,NLAY,NODES,NPER,NSTP,
      3                  ISUBOC,NND1,ND1,ND2,NDB,NNDB,NPZ,NN,IDSAVE,
      4                  IDREST,NSTPT,IUNIT(54),IOUT)
+        IF(IUNIT(55).GT.0)
+     1      CALL GWF1SWT1AR(NCOL,NROW,NLAY,NPER,ISSFLG,NSTP,ITERP,
+     2                  ISEN,LAYCBD,IG(LCIBOU),GZ(LCHNEW),GX(LCBOTM),
+     3                  GX(LCBUFF),GX(LCDELR),GX(LCDELC),IUNIT(55),IOUT)
         IF(IUNIT(20).GT.0)
      1      CALL GWF1CHD6RPPD(IUNIT(20),IOUTG,NCHDVL,NCOL,NROW,NLAY,
      2                        NPCHD,RX(LCCHDS),IPCBEG,MXCHD,IFREFM,
@@ -998,6 +1004,10 @@ C7------SIMULATE EACH STRESS PERIOD.
           IF(IUNIT(54).GT.0)
      1        CALL GWF1SUB1ST(GZ(LCHNEW),NNDB,NDB,ISSFLG,NROW,NCOL,
      1                        NODES,NPER,KPER,NN)
+        IF(IUNIT(55).GT.0)
+     1      CALL GWF1SWT1ST(IG(LCIBOU),GZ(LCHNEW),GX(LCBOTM),
+     2                      GX(LCBUFF),GX(LCDELR),GX(LCDELC),ISSFLG,
+     3                      NROW,NCOL,NLAY,NPER,KKPER,IOUT)
 C
 C7B-----READ AND PREPARE INFORMATION FOR STRESS PERIOD.
 C----------READ USING PACKAGE READ AND PREPARE MODULES.
@@ -1326,6 +1336,11 @@ CLAK
      4                            NODES,DELT,AC1,AC2,HCLOSE,KKITER,
      5                            ITMIN,NN,NND1,ND1,ND2,NDB,NNDB,NPZ,
      6                            ISSFLG(KKPER),IUNIT(9))
+              IF(IUNIT(55).GT.0)
+     1            CALL GWF1SWT1FM(GX(LCRHS),GX(LCHCOF),IG(LCIBOU),
+     2                            GZ(LCHNEW),GX(LCHOLD),GX(LCBOTM),
+     3                            NCOL,NROW,NLAY,DELT,ISSFLG(KKPER),
+     4                            kkper,iout)
 Cdep  Changed SFR1 to SFR2
               IF (IUNIT(44).GT.0)
      1               CALL GWF1SFR2FM(RX(LCSTRM),IR(ICSTRM),
@@ -1692,6 +1707,12 @@ C--INTERBED STORAGE
      3                          VBNM,NN,NND1,ND1,ND2,NDB,NNDB,NPZ,NCOL,
      4                          NROW,NLAY,NODES,DELT,MSUM,NIUNIT,KKSTP,
      5                          KKPER,ISUBCB,ICBCFL,ISSFLG(KKPER),IOUT)
+            IF(IUNIT(55).GT.0)
+     1          CALL GWF1SWT1BD(GX(LCBUFF),IG(LCIBOU),GZ(LCHNEW),
+     2                          GX(LCHOLD),GX(LCBOTM),GX(LCDELR),
+     3                          GX(LCDELC),NCOL,NROW,NLAY,DELT,VBVL,
+     4                          VBNM,MSUM,KSTP,KPER,ICBCFL,
+     5                          NIUNIT,ISSFLG(KKPER),IOUT)
 C--STREAM-AQUIFER RELATIONS (SFR2 PACKAGE)
 C-----ADDED DELEAK MAY 12, 2004
 Cdep  Changed SFR1 to SFR2
@@ -1801,6 +1822,9 @@ C------PRINT OVERALL WATER BUDGET.
      2                          KKPER,NSTP(KKPER),GX(LCBUFF),NODES,NN,
      3                          ND1,ND2,NND1,NNDB,NDB,ISSFLG(KKPER),
      4                          IUNIT(54),IOUT)
+            IF(IUNIT(55).GT.0)
+     1          CALL GWF1SWT1OT(NCOL,NROW,NLAY,PERTIM,TOTIM,KKSTP,KKPER,
+     1                      NSTP(KKPER),GX(LCBUFF),IOUT)
 C------PRINT AND/OR SAVE HEADS INTERPOLATED TO HYDROGEOLOGIC UNITS
             IF(IUNIT(37).GT.0.AND.(IOHUFHDS.NE.0.OR.IOHUFFLWS.NE.0))
      &          CALL GWF1HUF2OT(IOHUFHDS,IOHUFFLWS,GZ(LCHNEW),IHEDFM,

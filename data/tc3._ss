@@ -1,19 +1,19 @@
  ITERATION  SSWR-(HEAD OBSERVATIONS ONLY)
      1        701.4283    
-     2        30.37578    
+     2        30.37573    
      3        25.63227    
-     4        25.63292    
-     5        25.63964    
+     4        25.63294    
+     5        25.63966    
  ITERATION  SSWR-(PRIOR INFORMATION ONLY)
      1        0.000000    
      2        1.423705    
      3        1.560002    
      4        1.559283    
-     5        1.552529    
+     5        1.552528    
  ITERATION  SSWR-(TOTAL FOR ALL OBSERVATIONS AND PRIOR INFORMATION)
      1        701.4283    
-     2        31.79948    
+     2        31.79943    
      3        27.19227    
-     4        27.19220    
-     5        27.19217    
- STANDARD ERROR OF THE REGRESSION:   1.022669    
+     4        27.19222    
+     5        27.19218    
+ STANDARD ERROR OF THE REGRESSION:   1.022670    

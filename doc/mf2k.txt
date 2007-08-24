@@ -58,6 +58,10 @@ METHOD
 
 HISTORY
 
+     MODFLOW-2000 Version 1.18.00 2007/08/23 - Added the SWT Package to 
+        support simulation of subsidence in water-table aquifers.  It also
+        includes bug fixes.
+
      MODFLOW-2000 Version 1.17.04 2007/08/03 - This release includes bug
         fixes and minor changes.  Bug fixes and other changes are described 
         in release.txt.
@@ -397,6 +401,8 @@ PACKAGES
          SUB1 -- Subsidence and Aquifer-System Compaction Package
          SFR2 -- Stream-Flow Routing Package, version 2
          GMG1 -- Geometric MultiGrid Solver Package
+         SWT1 -- Subsidence and Aquifer-System Compaction Package
+                 for Water-Table Aquifers
 
 ADDITIONAL CAPABILITIES:
 
@@ -642,6 +648,14 @@ DOCUMENTATION
      ground-water model -- GMG linear equation solver package 
      documentation:  U.S. Geological Survey Open-File Report 2004-1261, 
      47 p.  <http://pubs.water.usgs.gov/ofr2004-1261/>
+     
+  The SWT Package is documented in:
+  
+     Leake, S.A., and Galloway, D.L., 2007, MODFLOW ground-water model -- 
+     User guide to the Subsidence and Aquifer-System Compaction Package 
+     (SUB-WT) for Water-Table Aquifers: U.S. Geological Survey Techniques
+     and Methods, Book 6, Chap. A23, 42 p. 
+     <http://pubs.usgs.gov/tm/2007/06A23/pdf/TM6a23.pdf>
 
 
 CONTACTS
