@@ -1061,6 +1061,7 @@ c     ------------------------------------------------------------------
      1          ibound(nodes), buff(nodes)
       dimension iowell2(3)
       dimension hnew(nodes)
+      dimension well2sp(1)
       double precision hnew
 c
       character*16 text,vbnm(msum),AUXTXT(5)
@@ -1290,7 +1291,7 @@ cljk          call UBDSVB(ioc,ncol, nrow,n,1,1,Q,well2(1,m),
 Cerb 8/24/07  call UBDSVB(ioc,ncol, nrow,n,1,1,Q2,well2(1,m),
 Cerb 8/24/07  UBDSVB requires REAL arguments; defined WELL2SP so that it gets
 Cerb          promoted w/o loss of precision when using DP compiler option
-              WELL2SP = well2(1,m)  
+              WELL2SP(1) = well2(1,m)  
               call UBDSVB(ioc,ncol, nrow,n,1,1,Q2,WELL2SP,
      +                    NWELVL,NAUX,5,IBOUND,NLAY)
             enddo

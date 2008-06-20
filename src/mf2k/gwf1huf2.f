@@ -527,7 +527,7 @@ c======================================================================
      & IBOUND,HNEW,CR,CC,CV,DELR,DELC,BOTM,HK,VKA,SC1,
      & ITRSS,NCOL,NROW,NLAY,IOUT,WETDRY,NHUF,NBOTM,RMLT,IZON,NMLTAR,
      & NZONAR,HUFTHK,HKCC,HDRY,KITER,KSTP,KPER,IHGUFLG,HUFTMP,
-     & ILVDA,VDHD,VDHT,IWETIT,IHDWET,WETFCT,GS,A9)
+     & ILVDA,VDHD,VDHT,IWETIT,IHDWET,WETFCT,GS,A9,HNOFLO)
 C
 C     ******************************************************************
 C     SUBSTITUTE AND PREPARE DATA FOR HYDROGEOLOGIC-UNIT FLOW PACKAGE
@@ -645,11 +645,12 @@ C---Populate MODEL arrays
           IF(ABS(THCKU).LT.1E-4) GOTO 130
           BOTU=TOPU-THCKU
 C-----Determine which layer(s) unit applies to
+          IFLG=1                                                         ! sc1_fix
           CALL SGWF1HUF2HSRCH(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,BOTU,
      &                        HNEW,IBOUND,KT,KB,IFLG)
 C-----Skip unit if thickness is zero
           IF(IFLG.EQ.1) GOTO 130
-C-----Populate arrays
+C-----Populate HK and VKA arrays                                         ! sc1_fix
           CALL SGWF1HUF2HK(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,BOTU,KT,
      &                     KB,HK,HKCC,HUFHK,HUFHANI,HUFKDEP(NU),NHUF,NU,
      &                     HNEW,GS)
@@ -661,6 +662,12 @@ C
      &       KSTP.EQ.0) THEN
             TOPU = HUFTHK(J,I,NU,1)
             BOTU = TOPU - THCKU
+C-----Determine which layer(s) unit applies to, assuming for the sake of ! sc1_fix
+c       computing SC1 that every layer is confined                       ! sc1_fix
+            IFLG=0                                                       ! sc1_fix
+            CALL SGWF1HUF2HSRCH(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,BOTU, ! sc1_fix
+     &                        HNEW,IBOUND,KT,KB,IFLG)                    ! sc1_fix
+C-----Populate SC1 array                                                 ! sc1_fix
             CALL SGWF1HUF2SC1(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,
      &                        BOTU,SC1,HUFSS,KT,KB,NHUF,NU)
           ENDIF
@@ -670,7 +677,7 @@ C
 C
 C3------CHECK HUF DATA.
       CALL SGWF1HUF2N(HNEW,IBOUND,HK,VKA,
-     &       NCOL,NROW,NLAY,IOUT,WETDRY,BOTM,NBOTM)
+     &       NCOL,NROW,NLAY,IOUT,WETDRY,BOTM,NBOTM,HNOFLO)
 C
 C-------CALCULATE CV
       CALL SGWF1HUF2VCND(IBOUND,CV,VKA,DELR,DELC,
@@ -858,7 +865,7 @@ C---Check to see if negative thickness
         IF(THCK.LE.0.0) GOTO 300
         IF(HGUVANI(NU).EQ.0.) THEN
           IF(HUFVK(NU).EQ.0.) THEN
-            WRITE(IOUT,500) I,J,NU
+            WRITE(IOUT,500) J,I,NU
             CALL USTOP(' ')
           ENDIF
           VKA(J,I,KL)=VKA(J,I,KL)+THCK/HUFVK(NU)
@@ -867,10 +874,10 @@ C---Check to see if negative thickness
           IF(LAMBDA.NE.0.) CALL SGWF1HUF2KDEP(LAMBDA,RMID1,RMID2,
      &                                      GS(J,I),MULTKDEP)
           IF(HUFHK(NU).EQ.0.) THEN
-            WRITE(IOUT,510) I,J,NU
+            WRITE(IOUT,510) J,I,NU
             CALL USTOP(' ')
           ELSEIF(MULTKDEP.EQ.0.) THEN
-            WRITE(IOUT,520) I,J,NU
+            WRITE(IOUT,520) J,I,NU
             CALL USTOP(' ')
           ENDIF
           VKA(J,I,KL)=VKA(J,I,KL)+THCK*HUFVK(NU)/(MULTKDEP*HUFHK(NU))
@@ -928,6 +935,7 @@ C           FIND TOP AND BOTTOM LAYERS THIS UNIT APPLIES TO
             IF(ABS(THCKU).LT.1E-4) GOTO 210
             BOTU=TOPU-THCKU
 C-----------Determine which layer(s) unit applies to
+            IFLG=1                                                       ! sc1_fix
             CALL SGWF1HUF2HSRCH(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,
      &                          BOTU,HNEW,IBOUND,KT,KB,IFLG)
             IF(IFLG.EQ.1) GOTO 210
@@ -1059,7 +1067,10 @@ c======================================================================
 C
 C     ******************************************************************
 C     Search for top and bottom layer the unit applies to.
-C     Values for IFLG:
+C     Values for IFLG on input:                                          ! sc1_fix
+C       IFLG = 0, Do not adjust top of unconfined layer to HNEW          ! sc1_fix
+C       IFLG <> 0, Adjust top of unconfined layer to HNEW                ! sc1_fix
+C     Values for IFLG on output:                                         ! sc1_fix
 C       IFLG = 0, Unit successfully found
 C       IFLG = 1, Unit not found
 C     ******************************************************************
@@ -1073,6 +1084,7 @@ C     ------------------------------------------------------------------
       COMMON /HUFCOM/HGUHANI(999),HGUVANI(999),LTHUF(999),LAYWT(999)
 C
 C Reset IFLG
+      IHNEW=IFLG                                                         ! sc1_fix
       IFLG=1
 C
 C Loop through layers to determine where unit applies
@@ -1081,8 +1093,9 @@ C First, search for top
       DO 100 KT=1,NLAY
         IF(IBOUND(J,I,KT).EQ.0) GOTO 100
         TOP=BOTM(J,I,LBOTM(KT)-1)
-C---Adjust top of model layer for unconfined layer
-        IF(LTHUF(KT).NE.0.AND.HNEW(J,I,KT).LT.TOP) TOP=HNEW(J,I,KT)
+C---Adjust top of model layer for unconfined layer (if IFLG<>0 on input) ! sc1_fix
+        IF(IHNEW.NE.0.AND.LTHUF(KT).NE.0.AND.HNEW(J,I,KT).LT.TOP)        ! sc1_fix
+     &    TOP=HNEW(J,I,KT)                                               ! sc1_fix
 C---If unit top is in this layer, exit loop
         IF(TOPU.LE.TOP.AND.TOPU.GT.BOTM(J,I,LBOTM(KT))) GOTO 110
 C---If unit top is above model top, adjust unit top elevation, exit loop
@@ -1102,8 +1115,8 @@ C Now search for bottom
       DO 200 KKB=KT,NLAY
         IF(IBOUND(J,I,KKB).EQ.0) GOTO 200
         TOP=BOTM(J,I,LBOTM(KKB)-1)
-C---Adjust top of model layer for unconfined layer
-        IF(LTHUF(KKB).NE.0.AND.HNEW(J,I,KKB).LT.TOP)
+C---Adjust top of model layer for unconfined layer (if IFLG<>0 on input) ! sc1_fix
+        IF(IHNEW.NE.0.AND.LTHUF(KKB).NE.0.AND.HNEW(J,I,KKB).LT.TOP)      ! sc1_fix
      &    TOP=HNEW(J,I,KKB)
 C---If unit bottom is in this layer, set KB=KKB, return
         IF(BOTU.LE.TOP.AND.BOTU.GE.BOTM(J,I,LBOTM(KKB))) THEN
@@ -1175,7 +1188,7 @@ C4------RETURN
 
 c======================================================================
       SUBROUTINE SGWF1HUF2N(HNEW,IBOUND,HK,VKA,NCOL,
-     &  NROW,NLAY,IOUT,WETDRY,BOTM,NBOTM)
+     &  NROW,NLAY,IOUT,WETDRY,BOTM,NBOTM,HNOFLO)
 C
 C     ******************************************************************
 C     INITIALIZE AND CHECK HUF DATA
@@ -1194,7 +1207,7 @@ C
       COMMON /HUFCOM/HGUHANI(999),HGUVANI(999),LTHUF(999),LAYWT(999)
 C     ------------------------------------------------------------------
       ZERO=0.
-      HCNV=888.88
+      HCNV=HNOFLO
       IZFLG=0
 C
 C-------CONVERT CELL TO NO FLOW IF CELL THICKNESS IS 0.
@@ -1210,9 +1223,13 @@ C-------CONVERT CELL TO NO FLOW IF CELL THICKNESS IS 0.
             HNEW(J,I,K)=HCNV
             IF(LAYWT(K).NE.0) WETDRY(J,I,LAYWT(K))=ZERO
             WRITE(IOUT,25) K,I,J
-   25       FORMAT(1X,
-     &  'Converting cell to no flow due to 0 thickness (Layer,row,col)',
-     &     I4,',',I4,',',I4)
+!   25       FORMAT(1X,
+!     &  'Converting cell to no flow due to 0 thickness (Layer,row,col)',
+!     &     I4,',',I4,',',I4)
+   25       FORMAT(1X,'WARNING: Converting cell to no flow due to 0',
+     &      ' thickness (Layer,row,col)',I4,',',I4,',',I4,/,1X,
+     &      'Head at this cell set to HNOFLO. To avoid warning, set',
+     &      ' IBOUND=0 or thickness>0.')
          END IF
       END IF
    30 CONTINUE
@@ -1894,7 +1911,7 @@ c======================================================================
      &    VKA,BOTM,DELR,DELC,DELT,ITRSS,ISS,NCOL,NROW,NLAY,IOUT,WETDRY,
      &    NBOTM,NHUF,RMLT,IZON,NMLTAR,NZONAR,HUFTHK,HKCC,HDRY,KITER,
      &    KSTP,KPER,HUFTMP,IHGUFLG,ILVDA,VDHD,VDHT,
-     &    IWETIT,IHDWET,WETFCT,GS,A9)
+     &    IWETIT,IHDWET,WETFCT,GS,A9,HNOFLO)
 C     ******************************************************************
 C     ADD LEAKAGE CORRECTION AND STORAGE TO HCOF AND RHS, AND CALCULATE
 C     CONDUCTANCE AS REQUIRED.
@@ -1933,9 +1950,8 @@ C          BRANCH CONDUCTANCES
      &   ITRSS,NCOL,NROW,NLAY,IOUT,WETDRY,NHUF,NBOTM,RMLT,IZON,
      &   NMLTAR,NZONAR,HUFTHK,HKCC,HDRY,KITER,KSTP,KPER,
      &   IHGUFLG,HUFTMP,ILVDA,VDHD,VDHT,IWETIT,
-     &   IHDWET,WETFCT,GS,A9)
+     &   IHDWET,WETFCT,GS,A9,HNOFLO)
       ENDIF
-
       IF(ILVDA.GT.0) CALL GWF1HUF2VDFM(HNEW,IBOUND,CR,CC,VDHT,
      &                                 RHS,NCOL,NROW,NLAY,A9)
 C
@@ -2099,7 +2115,7 @@ C-----------Compute contributions for this unit to flow in layer
 C-------------Layer converts, water table is coming down
                 IF(HN.LT.TOPU.AND.HN.GT.BOTU) THEN
 C---------------New head is in this unit
-                  CHCOF=RMLT0*BNP
+                  CHCOF=CHCOF+RMLT0*BNP
                   CRHS=CRHS+RMLT0*BNP*TOPU
                   IF(IFLG.EQ.1) CRHS=CRHS-RMLT0*BNP*HN
                 ELSEIF(HN.LT.BOTU) THEN
@@ -2122,7 +2138,7 @@ C---------------Water table is coming down
                   IF(HO.LT.TOPU.AND.HO.GT.BOTU .AND.
      &               HN.LT.TOPU.AND.HN.GT.BOTU) THEN
 C-----------------Old and new heads are both in this unit
-                    CHCOF=RMLT0*BNP
+                    CHCOF=CHCOF+RMLT0*BNP
                     CRHS=CRHS+RMLT0*BNP*HO
                     IF(IFLG.EQ.1) CRHS=CRHS-RMLT0*BNP*HN
                   ELSEIF(HO.LT.TOPU.AND.HO.GT.BOTU) THEN
@@ -2130,7 +2146,7 @@ C-----------------Old head is in this unit
                     CRHS=CRHS+RMLT0*BNP*(HO-BOTU)
                   ELSEIF(HN.LT.TOPU.AND.HN.GT.BOTU) THEN
 C-----------------New head is in this unit
-                    CHCOF=RMLT0*BNP
+                    CHCOF=CHCOF+RMLT0*BNP
                     CRHS=CRHS+RMLT0*BNP*TOPU
                     IF(IFLG.EQ.1) CRHS=CRHS-RMLT0*BNP*HN
                   ELSEIF(HO.GT.TOPU.AND.HN.LT.BOTU) THEN
@@ -2142,7 +2158,7 @@ C---------------Water table is going up
                   IF(HO.LT.TOPU.AND.HO.GT.BOTU .AND.
      &               HN.LT.TOPU.AND.HN.GT.BOTU) THEN
 C-----------------Old and new heads are both in this unit
-                    CHCOF=RMLT0*BNP
+                    CHCOF=CHCOF+RMLT0*BNP
                     CRHS=CRHS+RMLT0*BNP*HO
                     IF(IFLG.EQ.1) CRHS=CRHS-RMLT0*BNP*HN
                   ELSEIF(HO.LT.TOPU.AND.HO.GT.BOTU) THEN
@@ -2150,7 +2166,7 @@ C-----------------Old head is in this unit
                     CRHS=CRHS+RMLT0*BNP*(HO-TOPU)
                   ELSEIF(HN.LT.TOPU.AND.HN.GT.BOTU) THEN
 C-----------------New head is in this unit
-                    CHCOF=RMLT0*BNP
+                    CHCOF=CHCOF+RMLT0*BNP
                     CRHS=CRHS+RMLT0*BNP*BOTU
                     IF(IFLG.EQ.1) CRHS=CRHS-RMLT0*BNP*HN
                   ELSEIF(HO.LT.BOTU.AND.HN.GT.TOPU) THEN
@@ -2865,6 +2881,7 @@ C-----LOOP THROUGH ROWS AND COLUMNS
             ENDIF
             BOTU=TOPU-THCKU
             IF(ICNT.LT.3) THEN
+              IFLG=1                                                     ! sc1_fix
               CALL SGWF1HUF2HSRCH(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,
      &                            BOTU,HNEW,IBOUND,KT,KB,IFLG)
 C-------------UNIT ABOVE/BELOW MODEL
@@ -3200,6 +3217,7 @@ C4------CONSTANT-HEAD CELL.
             GOTO 300
           ENDIF
           BOTU=TOPU-THCKU
+          IFLG=1                                                         ! sc1_fix
           CALL SGWF1HUF2HSRCH(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,BOTU,
      &                        HNEW,IBOUND,KT,KB,IFLG)
 C-------UNIT ABOVE/BELOW MODEL
@@ -3955,6 +3973,7 @@ c     a parameter
           IF(ABS(THCKU).LT.1E-4) GOTO 130
           BOTU=TOPU-THCKU
 C-----Determine which layer(s) unit applies to
+          IFLG=1                                                         ! sc1_fix
           CALL SGWF1HUF2HSRCH(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,BOTU,
      &                        HNEW,IBOUND,KT,KB,IFLG)
 C-----Skip unit if thickness is zero
@@ -4332,65 +4351,105 @@ C
       ZERO = 0.0
       H1 = HNEW(J,I,K)
 C-------Local cell 2, I,J+1
-      IF(J.LT.NCOL .AND. IBOUND(J+1,I,K).NE.0) THEN
-        H2 = HNEW(J+1,I,K)
-        IBD2 = IABS(IBOUND(J+1,I,K))
+      IF(J.LT.NCOL) THEN
+        IF (IBOUND(J+1,I,K).NE.0) THEN
+          H2 = HNEW(J+1,I,K)
+          IBD2 = IABS(IBOUND(J+1,I,K))
+        ELSE
+          H2 = ZERO
+          IBD2 = 0
+        ENDIF
       ELSE
         H2 = ZERO
         IBD2 = 0
       ENDIF
 C-------Local cell 3, I+1,J+1
-      IF(I.LT.NROW.AND.J.LT.NCOL.AND.IBOUND(J+1,I+1,K).NE.0) THEN
-        H3 = HNEW(J+1,I+1,K)
-        IBD3 = IABS(IBOUND(J+1,I+1,K))
+      IF(I.LT.NROW.AND.J.LT.NCOL) THEN
+        IF (IBOUND(J+1,I+1,K).NE.0) THEN
+          H3 = HNEW(J+1,I+1,K)
+          IBD3 = IABS(IBOUND(J+1,I+1,K))
+        ELSE
+          H3 = ZERO
+          IBD3 = 0
+        ENDIF
       ELSE
         H3 = ZERO
         IBD3 = 0
       ENDIF
 C-------Local cell 4, I+1,J
-      IF(I.LT.NROW .AND. IBOUND(J,I+1,K).NE.0) THEN
-        H4 = HNEW(J,I+1,K)
-        IBD4 = IABS(IBOUND(J,I+1,K))
+      IF(I.LT.NROW) THEN
+        IF (IBOUND(J,I+1,K).NE.0) THEN
+          H4 = HNEW(J,I+1,K)
+          IBD4 = IABS(IBOUND(J,I+1,K))
+        ELSE
+          H4 = ZERO
+          IBD4 = 0
+        ENDIF
       ELSE
         H4 = ZERO
         IBD4 = 0
       ENDIF
 C-------Local cell 5, I+1,J-1
-      IF(J.GT.1.AND.I.LT.NROW .AND. IBOUND(J-1,I+1,K).NE.0) THEN
-        H5 = HNEW(J-1,I+1,K)
-        IBD5 = IABS(IBOUND(J-1,I+1,K))
+      IF(J.GT.1.AND.I.LT.NROW) THEN
+        IF (IBOUND(J-1,I+1,K).NE.0) THEN
+          H5 = HNEW(J-1,I+1,K)
+          IBD5 = IABS(IBOUND(J-1,I+1,K))
+        ELSE
+          H5 = ZERO
+          IBD5 = 0
+        ENDIF
       ELSE
         H5 = ZERO
         IBD5 = 0
       ENDIF
 C-------Local cell 6, I,J-1
-      IF(J.GT.1 .AND. IBOUND(J-1,I,K).NE.0) THEN
-        H6 = HNEW(J-1,I,K)
-        IBD6 = IABS(IBOUND(J-1,I,K))
+      IF(J.GT.1) THEN
+        IF (IBOUND(J-1,I,K).NE.0) THEN
+          H6 = HNEW(J-1,I,K)
+          IBD6 = IABS(IBOUND(J-1,I,K))
+        ELSE
+          H6 = ZERO
+          IBD6 = 0
+        ENDIF
       ELSE
         H6 = ZERO
         IBD6 = 0
       ENDIF
 C-------Local cell 7, I-1,J-1
-      IF(I.GT.1.AND.J.GT.1 .AND. IBOUND(J-1,I-1,K).NE.0) THEN
-        H7 = HNEW(J-1,I-1,K)
-        IBD7 = IABS(IBOUND(J-1,I-1,K))
+      IF(I.GT.1.AND.J.GT.1) THEN
+        IF (IBOUND(J-1,I-1,K).NE.0) THEN
+          H7 = HNEW(J-1,I-1,K)
+          IBD7 = IABS(IBOUND(J-1,I-1,K))
+        ELSE
+          H7 = ZERO
+          IBD7 = 0
+        ENDIF
       ELSE
         H7 = ZERO
         IBD7 = 0
       ENDIF
 C-------Local cell 8, I-1,J
-      IF(I.GT.1 .AND. IBOUND(J,I-1,K).NE.0) THEN
-        H8 = HNEW(J,I-1,K)
-        IBD8 = IABS(IBOUND(J,I-1,K))
+      IF(I.GT.1) THEN
+        IF (IBOUND(J,I-1,K).NE.0) THEN
+          H8 = HNEW(J,I-1,K)
+          IBD8 = IABS(IBOUND(J,I-1,K))
+        ELSE
+          H8 = ZERO
+          IBD8 = 0
+        ENDIF
       ELSE
         H8 = ZERO
         IBD8 = 0
       ENDIF
 C-------Local cell 9, I-1,J+1
-      IF(J.LT.NCOL.AND.I.GT.1 .AND. IBOUND(J+1,I-1,K).NE.0) THEN
-        H9 = HNEW(J+1,I-1,K)
-        IBD9 = IABS(IBOUND(J+1,I-1,K))
+      IF(J.LT.NCOL.AND.I.GT.1) THEN
+        IF (IBOUND(J+1,I-1,K).NE.0) THEN
+          H9 = HNEW(J+1,I-1,K)
+          IBD9 = IABS(IBOUND(J+1,I-1,K))
+        ELSE
+          H9 = ZERO
+          IBD9 = 0
+        ENDIF
       ELSE
         H9 = ZERO
         IBD9 = 0
@@ -4408,6 +4467,8 @@ C
 C     ******************************************************************
 C     Calculate the A coefficients for Quadrant I
 C     ******************************************************************
+C 11/30/2007 ERB: Modified to nest IF blocks to avoid out-of-bound array 
+C references
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
@@ -4421,36 +4482,53 @@ C-------Local cell 1, I,J
       TAB1 = VDHT(J,I,K,2)
       TBB1 = VDHT(J,I,K,3)
 C-------Local cell 2, I,J+1
-      IF(J.LT.NCOL .AND. IBOUND(J+1,I,K).NE.0) THEN
-        TAA2 = VDHT(J+1,I,K,1)
-        TAB2 = VDHT(J+1,I,K,2)
-        TBB2 = VDHT(J+1,I,K,3)
+      IF(J.LT.NCOL) THEN
+        IF (IBOUND(J+1,I,K).NE.0) THEN
+          TAA2 = VDHT(J+1,I,K,1)
+          TAB2 = VDHT(J+1,I,K,2)
+          TBB2 = VDHT(J+1,I,K,3)
+        ELSE
+          TAA2 = TAA1/TMPCOF
+          TAB2 = TAB1/TMPCOF
+          TBB2 = TBB1/TMPCOF
+        ENDIF
       ELSE
         TAA2 = TAA1/TMPCOF
         TAB2 = TAB1/TMPCOF
         TBB2 = TBB1/TMPCOF
       ENDIF
 C-------Local cell 3, I+1,J+1
-      IF(I.LT.NROW.AND.J.LT.NCOL.AND.IBOUND(J+1,I+1,K).NE.0) THEN
-        TAA3 = VDHT(J+1,I+1,K,1)
-        TAB3 = VDHT(J+1,I+1,K,2)
-        TBB3 = VDHT(J+1,I+1,K,3)
+      IF(I.LT.NROW .AND. J.LT.NCOL) THEN
+        IF (IBOUND(J+1,I+1,K).NE.0) THEN
+          TAA3 = VDHT(J+1,I+1,K,1)
+          TAB3 = VDHT(J+1,I+1,K,2)
+          TBB3 = VDHT(J+1,I+1,K,3)
+        ELSE
+          TAA3 = TAA1/TMPCOF
+          TAB3 = TAB1/TMPCOF
+          TBB3 = TBB1/TMPCOF
+        ENDIF
       ELSE
         TAA3 = TAA1/TMPCOF
         TAB3 = TAB1/TMPCOF
         TBB3 = TBB1/TMPCOF
       ENDIF
 C-------Local cell 4, I+1,J
-      IF(I.LT.NROW .AND. IBOUND(J,I+1,K).NE.0) THEN
-        TAA4 = VDHT(J,I+1,K,1)
-        TAB4 = VDHT(J,I+1,K,2)
-        TBB4 = VDHT(J,I+1,K,3)
+      IF(I.LT.NROW) THEN
+        IF (IBOUND(J,I+1,K).NE.0) THEN
+          TAA4 = VDHT(J,I+1,K,1)
+          TAB4 = VDHT(J,I+1,K,2)
+          TBB4 = VDHT(J,I+1,K,3)
+        ELSE
+          TAA4 = TAA1/TMPCOF
+          TAB4 = TAB1/TMPCOF
+          TBB4 = TBB1/TMPCOF
+        ENDIF
       ELSE
         TAA4 = TAA1/TMPCOF
         TAB4 = TAB1/TMPCOF
         TBB4 = TBB1/TMPCOF
       ENDIF
-
       CALL SGWF1HUF2VDCOFD(D1234,TAA1,TAB1,TBB1,TAA2,TAB2,TBB2,
      &                     TAA3,TAB3,TBB3,TAA4,TAB4,TBB4)
       CALL SGWF1HUF2VDCOFAS1(AS11234,TAA1,TAB1,TBB1,TAA2,TAB2,TBB2,
@@ -4578,6 +4656,8 @@ C
 C     ******************************************************************
 C     Calculate the A coefficients for Quadrant III
 C     ******************************************************************
+C 11/30/2007 ERB: Modified to nest IF blocks to avoid out-of-bound array 
+C references
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
@@ -4591,30 +4671,48 @@ C-------Local cell 1, I,J
       TAB1 = VDHT(J,I,K,2)
       TBB1 = VDHT(J,I,K,3)
 C-------Local cell 6, I,J-1
-      IF(J.GT.1 .AND. IBOUND(J-1,I,K).NE.0) THEN
-        TAA6 = VDHT(J-1,I,K,1)
-        TAB6 = VDHT(J-1,I,K,2)
-        TBB6 = VDHT(J-1,I,K,3)
+      IF(J.GT.1) THEN
+        IF (IBOUND(J-1,I,K).NE.0) THEN
+          TAA6 = VDHT(J-1,I,K,1)
+          TAB6 = VDHT(J-1,I,K,2)
+          TBB6 = VDHT(J-1,I,K,3)
+        ELSE
+          TAA6 = TAA1/TMPCOF
+          TAB6 = TAB1/TMPCOF
+          TBB6 = TBB1/TMPCOF
+        ENDIF
       ELSE
         TAA6 = TAA1/TMPCOF
         TAB6 = TAB1/TMPCOF
         TBB6 = TBB1/TMPCOF
       ENDIF
 C-------Local cell 7, I-1,J-1
-      IF(I.GT.1.AND.J.GT.1 .AND. IBOUND(J-1,I-1,K).NE.0) THEN
-        TAA7 = VDHT(J-1,I-1,K,1)
-        TAB7 = VDHT(J-1,I-1,K,2)
-        TBB7 = VDHT(J-1,I-1,K,3)
+      IF(I.GT.1 .AND. J.GT.1) THEN
+        IF (IBOUND(J-1,I-1,K).NE.0) THEN
+          TAA7 = VDHT(J-1,I-1,K,1)
+          TAB7 = VDHT(J-1,I-1,K,2)
+          TBB7 = VDHT(J-1,I-1,K,3)
+        ELSE
+          TAA7 = TAA1/TMPCOF
+          TAB7 = TAB1/TMPCOF
+          TBB7 = TBB1/TMPCOF
+        ENDIF
       ELSE
         TAA7 = TAA1/TMPCOF
         TAB7 = TAB1/TMPCOF
         TBB7 = TBB1/TMPCOF
       ENDIF
 C-------Local cell 8, I-1,J
-      IF(I.GT.1 .AND. IBOUND(J,I-1,K).NE.0) THEN
-        TAA8 = VDHT(J,I-1,K,1)
-        TAB8 = VDHT(J,I-1,K,2)
-        TBB8 = VDHT(J,I-1,K,3)
+      IF(I.GT.1) THEN
+        IF (IBOUND(J,I-1,K).NE.0) THEN
+          TAA8 = VDHT(J,I-1,K,1)
+          TAB8 = VDHT(J,I-1,K,2)
+          TBB8 = VDHT(J,I-1,K,3)
+        ELSE
+          TAA8 = TAA1/TMPCOF
+          TAB8 = TAB1/TMPCOF
+          TBB8 = TBB1/TMPCOF
+        ENDIF
       ELSE
         TAA8 = TAA1/TMPCOF
         TAB8 = TAB1/TMPCOF
@@ -4652,6 +4750,8 @@ C
 C     ******************************************************************
 C     Calculate the A coefficients for Quadrant IV
 C     ******************************************************************
+C 11/30/2007 ERB: Modified to nest IF blocks to avoid out-of-bound array 
+C references
 C
 C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
@@ -4665,30 +4765,48 @@ C-------Local cell 1, I,J
       TAB1 = VDHT(J,I,K,2)
       TBB1 = VDHT(J,I,K,3)
 C-------Local cell 2, I,J+1
-      IF(J.LT.NCOL .AND. IBOUND(J+1,I,K).NE.0) THEN
-        TAA2 = VDHT(J+1,I,K,1)
-        TAB2 = VDHT(J+1,I,K,2)
-        TBB2 = VDHT(J+1,I,K,3)
+      IF(J.LT.NCOL) THEN
+        IF (IBOUND(J+1,I,K).NE.0) THEN
+          TAA2 = VDHT(J+1,I,K,1)
+          TAB2 = VDHT(J+1,I,K,2)
+          TBB2 = VDHT(J+1,I,K,3)
+        ELSE
+          TAA2 = TAA1/TMPCOF
+          TAB2 = TAB1/TMPCOF
+          TBB2 = TBB1/TMPCOF
+        ENDIF
       ELSE
         TAA2 = TAA1/TMPCOF
         TAB2 = TAB1/TMPCOF
         TBB2 = TBB1/TMPCOF
       ENDIF
 C-------Local cell 8, I-1,J
-      IF(I.GT.1 .AND. IBOUND(J,I-1,K).NE.0) THEN
-        TAA8 = VDHT(J,I-1,K,1)
-        TAB8 = VDHT(J,I-1,K,2)
-        TBB8 = VDHT(J,I-1,K,3)
+      IF(I.GT.1) THEN
+        IF (IBOUND(J,I-1,K).NE.0) THEN
+          TAA8 = VDHT(J,I-1,K,1)
+          TAB8 = VDHT(J,I-1,K,2)
+          TBB8 = VDHT(J,I-1,K,3)
+        ELSE
+          TAA8 = TAA1/TMPCOF
+          TAB8 = TAB1/TMPCOF
+          TBB8 = TBB1/TMPCOF
+        ENDIF
       ELSE
         TAA8 = TAA1/TMPCOF
         TAB8 = TAB1/TMPCOF
         TBB8 = TBB1/TMPCOF
       ENDIF
 C-------Local cell 9, I-1,J+1
-      IF(J.LT.NCOL.AND.I.GT.1 .AND. IBOUND(J+1,I-1,K).NE.0) THEN
-        TAA9 = VDHT(J+1,I-1,K,1)
-        TAB9 = VDHT(J+1,I-1,K,2)
-        TBB9 = VDHT(J+1,I-1,K,3)
+      IF(J.LT.NCOL .AND. I.GT.1) THEN
+        IF (IBOUND(J+1,I-1,K).NE.0) THEN
+          TAA9 = VDHT(J+1,I-1,K,1)
+          TAB9 = VDHT(J+1,I-1,K,2)
+          TBB9 = VDHT(J+1,I-1,K,3)
+        ELSE
+          TAA9 = TAA1/TMPCOF
+          TAB9 = TAB1/TMPCOF
+          TBB9 = TBB1/TMPCOF
+        ENDIF
       ELSE
         TAA9 = TAA1/TMPCOF
         TAB9 = TAB1/TMPCOF

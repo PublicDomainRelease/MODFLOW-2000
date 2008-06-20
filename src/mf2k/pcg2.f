@@ -208,22 +208,22 @@ C     ------------------------------------------------------------------
       BIGGESTPOS = HUGE(BIGH)
       BIGGESTNEG = -BIGGESTPOS
 C
-c      IF(NITER.EQ.0) THEN
-c        WRITE(IOUT,895)
-c        IFIRST=1
-c        IF(NLAY .GT. 1) THEN
-c          NODESM1LAY=NODES-NCOL*NROW
-c          WRITE(IOUT,900) (I,CC(I),CR(I),CV(I),HCOF(I),
-c     1     RHS(I),HNEW(I),IBOUND(I),I=1,NODESM1LAY)
-c          IFIRST=NODESM1LAY+1
-c        ENDIF
-c        WRITE(IOUT,901) (I,CC(I),CR(I),HCOF(I),
-c     1     RHS(I),HNEW(I),IBOUND(I),I=IFIRST,NODES)
-c      ENDIF
-c 895  FORMAT ('     I',5X,'CC',13X,'CR',13X,'CV',12X,'HCOF',12X,'RHS',
-c     &        12X,'HNEW',7X,'IBOUND')
-c 900  FORMAT (I6,6G15.8,I5)
-c 901  FORMAT (I6,2G15.8,15X,3G15.8,I5)
+!      IF(NITER.EQ.0) THEN
+!        WRITE(IOUT,895)
+!        IFIRST=1
+!        IF(NLAY .GT. 1) THEN
+!          NODESM1LAY=NODES-NCOL*NROW
+!          WRITE(IOUT,900) (I,CC(I),CR(I),CV(I),HCOF(I),
+!     1     RHS(I),HNEW(I),IBOUND(I),I=1,NODESM1LAY)
+!          IFIRST=NODESM1LAY+1
+!        ENDIF
+!        WRITE(IOUT,901) (I,CC(I),CR(I),HCOF(I),
+!     1     RHS(I),HNEW(I),IBOUND(I),I=IFIRST,NODES)
+!      ENDIF
+! 895  FORMAT ('     I',5X,'CC',13X,'CR',13X,'CV',12X,'HCOF',12X,'RHS',
+!     &        12X,'HNEW',7X,'IBOUND')
+! 900  FORMAT (I6,6G15.8,I5)
+! 901  FORMAT (I6,2G15.8,15X,3G15.8,I5)
       DDAMP=DAMP
 C-------ASSIGN VARIABLE EQUAL TO THE NUMBER OF CELLS IN ONE LAYER
       NRC = NROW*NCOL

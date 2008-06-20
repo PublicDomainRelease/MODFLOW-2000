@@ -412,6 +412,10 @@ C-----------CONVERT T2LOF, T2ROF AND T2COF IF NEEDED mch 03/20/2006
             T2LOF=T2LOFR-0.5
             T2ROF=-T2ROFR+0.5
             T2COF=T2COFR-0.5
+          ELSE             ! Added 12/5/2007 ERB
+            T2LOF=T2LOFR   ! Added 12/5/2007 ERB
+            T2ROF=-T2ROFR  ! Added 12/5/2007 ERB
+            T2COF=T2COFR   ! Added 12/5/2007 ERB
           ENDIF
 CERB
 CERB  ASSIGN OBSERVATION TIME -- THIS WILL NEED TO BE MODIFIED TO

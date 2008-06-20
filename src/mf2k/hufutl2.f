@@ -98,6 +98,17 @@ C  Parse the rest of the parameter definition.
          IPLOC(2,NP)=ICLSUM
       END IF
       IACTIVE(NP)=0
+C Insert error check for SYTP parameters to ensure only one cluster is
+C specified, written by Alden Provost and modified by ERB 12/12/2007.
+C  If SYTP, check for more than one cluster.
+      IF (PARTYP(NP).EQ.'SYTP') THEN
+         IF (IPLOC(2,NP).GT.IPLOC(1,NP)) THEN
+            WRITE(IOUT,112)
+  112       FORMAT(/,1X,'ERROR: MORE THAN ONE CLUSTER HAS BEEN ',
+     &         'SPECIFIED FOR A PARAMETER OF TYPE SYTP.')
+            CALL USTOP(' ')
+         END IF
+      END IF
 C
       IF(IPLOC(2,NP).GT.MXCLST) THEN
           WRITE(IOUT,117) IPLOC(2,NP),MXCLST
@@ -134,7 +145,20 @@ C  Store layer number for LVDA
           IF(PARTYP(NP).EQ.'LVDA') THEN
             CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,IPCLST(1,I),R,-1,IN)
           ELSEIF(PARTYP(NP).EQ.'SYTP')THEN
-            CALL URWORD(LINE,LLOC,ISTART,ISTOP,2,IPCLST(1,I),R,-1,IN)
+            ! Store 1 as layer number for SYTP
+            CALL URWORD(LINE,LLOC,ISTART,ISTOP,1,NDUM,R,-1,IN)
+C Insert error check for SYTP parameters to ensure that first word is SYTP,
+C written by Alden Provost and modified by ERB 12/12/2007.
+C  If SYTP, check for HGUNAM other than "SYTP".
+            PN=LINE(ISTART:ISTOP)
+            IF (PN.NE.'SYTP') THEN
+               WRITE(IOUT,150) TRIM(PN)
+  150          FORMAT(/,1X,'ERROR: HGUNAM WAS SET TO "',A,'" FOR A ',
+     &            'PARAMETER OF TYPE SYTP.',/,
+     &            1X,'FOR SYTP PARAMETERS, ',
+     &            'HGUNAM MUST BE SET TO "SYTP".')
+               CALL USTOP(' ')
+            END IF
             IPCLST(1,I)=1
           ELSE
 C  Find hydrogeologic-unit number

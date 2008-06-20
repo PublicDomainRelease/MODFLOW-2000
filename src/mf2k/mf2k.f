@@ -28,7 +28,7 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
 C-------ASSIGN VERSION NUMBER AND DATE
       CHARACTER*40 VERSION
-      PARAMETER (VERSION='1.18.00 08/23/2007')
+      PARAMETER (VERSION='1.18.01 06/20/2008')
 C
 C-----DECLARE ARRAY TYPES
       REAL GX, X, RX, XHS
@@ -817,7 +817,7 @@ C---------BASIC PACKAGE
      2                       GX(LCCR),GX(LCCC),GX(LCCV),GX(LCDELR),
      3                       GX(LCDELC),RX(LCSC2),RX(LCTRPY),IUNIT(1),
      4                       ISS,NCOL,NROW,NLAY,IOUT,RX(LCWETD),IWDFLG,
-     5                       RX(LCCVWD))
+     5                       RX(LCCVWD),HNOFLO)
 C-------SUBSTITUTE AND PREPARE FOR PACKAGES WITH NO REWIND
         IF(IUNIT(23).GT.0)
      1      CALL GWF1LPF1SP(IG(LCIBOU),GZ(LCHNEW),GX(LCCR),GX(LCCC),
@@ -825,7 +825,8 @@ C-------SUBSTITUTE AND PREPARE FOR PACKAGES WITH NO REWIND
      3                      X(LCHK),X(LCVKA),X(LCVKCB),X(LCHANI),
      4                      X(LCSC1),X(LCSC2),ITRSS,NCOL,NROW,NLAY,IOUT,
      5                      X(LCWETD),NPLPF,NBOTM,GX(LCRMLT),IG(LCIZON),
-     6                      NMLTAR,NZONAR,IX(LCLAYF),GX(LCBUFF),ITERPK)
+     6                      NMLTAR,NZONAR,IX(LCLAYF),GX(LCBUFF),ITERPK,
+     7                      HNOFLO)
         IF(IUNIT(37).GT.0)
      1     CALL GWF1HUF2SP(IG(LCIBOU),GZ(LCHNEW),GX(LCCR),GX(LCCC),
      2                      GX(LCCV),GX(LCDELR),GX(LCDELC),GX(LCBOTM),
@@ -835,7 +836,7 @@ C-------SUBSTITUTE AND PREPARE FOR PACKAGES WITH NO REWIND
      6                      X(LCHKCC),HDRY,0,0,0,IX(LCHGUF),
      7                      X(LCHUFTMP),IUNIT(47),
      8                      X(LCVDHD),X(LCVDHT),IWETIT,
-     9                      IHDWET,WETFCT,X(LCGS),X(LCA9))
+     9                      IHDWET,WETFCT,X(LCGS),X(LCA9),HNOFLO)
 C---------FLOW-SIMULATION OPTIONS
         IF(IUNIT(2).GT.0)
      1      CALL GWF1WEL6RPPD(IUNIT(2),IOUTG,NWELVL,IWELAL,NCOL,NROW,
@@ -1259,7 +1260,7 @@ C7C2A---FORMULATE THE FINITE DIFFERENCE EQUATIONS.
      &                            KKITER,KSTP,KPER,X(LCHUFTMP),
      &                            IX(LCHGUF),
      &                            IUNIT(47),X(LCVDHD),X(LCVDHT),IWETIT,
-     &                            IHDWET,WETFCT,X(LCGS),X(LCA9))
+     &                            IHDWET,WETFCT,X(LCGS),X(LCA9),HNOFLO)
               IF (IUNIT(21).GT.0)
      &            CALL GWF1HFB6FM(GX(LCBOTM),GX(LCCC),GX(LCCR),
      &                            GX(LCDELC),GX(LCDELR),RX(LCHFB),

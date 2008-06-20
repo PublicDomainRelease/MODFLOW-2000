@@ -58,6 +58,10 @@ METHOD
 
 HISTORY
 
+     MODFLOW-2000 Version 1.18.01 2008/06/20 - This release includes bug
+        fixes and minor changes.  Bug fixes and other changes are described 
+        in release.txt.
+
      MODFLOW-2000 Version 1.18.00 2007/08/23 - Added the SWT Package to 
         support simulation of subsidence in water-table aquifers.  It also
         includes bug fixes.

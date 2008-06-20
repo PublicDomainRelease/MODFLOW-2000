@@ -4,6 +4,7 @@ C     Last change:  ERB  16 Feb 2000   11:08 am
      &                   IERRX,IERRU)
 C
       IERR = 0
+      IERRX = 0
       WRITE(IOUT,10)
       WRITE(IOUT,10) ISUMGX-1,LENGX
    10 FORMAT(1X,I10,'  ELEMENTS OF GX ARRAY USED OUT OF ',I10)
@@ -31,6 +32,7 @@ C=======================================================================
      &                  NDD,NDAR,MPRD,MPRAR,IPRD,IPRAR)
 C
       IERR = 0
+      IERRX = 0
       WRITE(IOUT,10)
       WRITE(IOUT,10) ISUM-1,LENX
    10 FORMAT(1X,I10,'  ELEMENTS OF X ARRAY USED OUT OF ',I10)
@@ -87,6 +89,7 @@ C=======================================================================
      1                   IERRX,IERRU)
 C
       IERR = 0
+      IERRX = 0
       WRITE(IOUT,10)
       WRITE(IOUT,10) ISUMRX-1,LENRX
    10 FORMAT(1X,I10,'  ELEMENTS OF RX ARRAY USED OUT OF ',I10)

@@ -1,4 +1,3 @@
-! Time of File Save by ERB: 3/31/2005 2:48PM
 C  Data definitions for Named Parameters
 C  Explicitly declare all variables to enable subroutines that include
 C  this file to use the IMPLICIT NONE statement - ERB 2/9/2004.
@@ -37,6 +36,8 @@ C                      that instance 1 of a time-varying parameter is
 C                      active
 C      IACTIVE >  1 is the number of the active instance of a
 C                      time-varying parameter
+C      IACTIVE = -99 indicates parameter is listed in SEN file but not defined 
+C                      in a package input file
 C
 C  B(p) -- Parameter value
 C  PARNAM(p) -- Parameter name

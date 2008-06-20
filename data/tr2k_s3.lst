@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.18.00 08/23/2007
+                           VERSION 1.18.01 06/20/2008
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -1001,7 +1001,7 @@ SUB1 -- SUBSIDENCE PACKAGE, VERSION 1, 06/21/88 INPUT READ FROM UNIT 19
 
            TOTAL OUT =    43402400.0000             TOTAL OUT =       58877.2109
 
-            IN - OUT =          88.0000              IN - OUT =      -7.0313E-02
+            IN - OUT =          88.0000              IN - OUT =      -7.0312E-02
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -3687,7 +3687,7 @@ SUB1 -- SUBSIDENCE PACKAGE, VERSION 1, 06/21/88 INPUT READ FROM UNIT 19
 
            TOTAL OUT =   313975712.0000             TOTAL OUT =       55446.9844
 
-            IN - OUT =        -384.0000              IN - OUT =      -3.9063E-02
+            IN - OUT =        -384.0000              IN - OUT =      -3.9062E-02
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -5115,7 +5115,7 @@ SUB1 -- SUBSIDENCE PACKAGE, VERSION 1, 06/21/88 INPUT READ FROM UNIT 19
 
            TOTAL OUT =   453870144.0000             TOTAL OUT =       54038.3906
 
-            IN - OUT =        -192.0000              IN - OUT =      -3.9063E-02
+            IN - OUT =        -192.0000              IN - OUT =      -3.9062E-02
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -5319,7 +5319,7 @@ SUB1 -- SUBSIDENCE PACKAGE, VERSION 1, 06/21/88 INPUT READ FROM UNIT 19
 
            TOTAL OUT =   473569152.0000             TOTAL OUT =       53850.6094
 
-            IN - OUT =        -224.0000              IN - OUT =      -3.9063E-02
+            IN - OUT =        -224.0000              IN - OUT =      -3.9062E-02
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 

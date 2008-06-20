@@ -11,6 +11,45 @@ these packages and processes, see mf2k.txt ("Summary of MODFLOW-2000").
 
 NOTE: Any use of trade, product or firm names is for descriptive purposes 
       only and does not imply endorsement by the U.S. Government.
+
+o Version 1.18.01 06/20/2008:      
+
+This version includes minor changes and bug fixes.
+
+An "Examples" section has been added to Time-varying-parameters.pdf in the 
+"doc" directory.  Two example input files illustrate the use of time-varying 
+list-type and array-type parameters.
+
+Changes were made to HUF2 to check for input errors related to parameter type 
+SYTP.
+
+HUF2, LPF, and BCF were revised to change handling of the situation where input 
+specifies no nonzero conductances to a cell specified as active.  In previous 
+versions, head at these cells was assigned a value of 888.88.  Now the head is 
+assigned the value input for HNOFLO.  In HUF2, a similar situation arises when 
+input defines cell thickness less than or equal to zero; in this case, head now 
+is assigned as HNOFLO (rather than 888.88) and a warning is written to the List 
+or Global output file.
+
+Bug fix: HUF2 output related to errors encountered in calculation of vertical
+conductance incorrectly identified row and column indices.
+
+Bug fix: Multiple SY parameters and clusters were not handled correctly by 
+HUF2.  Previously, contributions to the coefficient matrix from multiple SY 
+parameters/clusters were not summed; only the last cluster processed by the 
+storage conversion routine made a contribution.  This resulted in erroneous 
+handling of unconfined storage when more than one SY parameter or cluster 
+was applied at a given cell.
+
+Bug fix: A bug was fixed to allow proper calculation of SC1. When SC1 is
+computed for a cell, the contribution from a given hydrogeologic unit
+(HGU) depends on the thickness of the HGU within the cell. Previously,
+the method of computing SC1 allowed the portion an HGU that is above
+the topmost active cell or below the bottommost active cell to be
+included in the HGU thickness within those cells.
+
+Bug fix: A divide-by-zero error occurred when the SUB package was used in a 
+model for which PERLEN was specified as 0.0 for a steady-state stress period.
       
 o Version 1.18.00 08/23/2007:      
 
