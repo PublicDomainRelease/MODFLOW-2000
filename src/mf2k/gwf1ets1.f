@@ -2,7 +2,7 @@
      &                       NCOL,NROW,NETSOP,IN,IOUT,IETSCB,IFREFM,
      &                       NPETS,IETSPF,NETSEG,LCPXDP,LCPETM,NSEGAR)
 C
-C-----VERSION 20000620 ERB
+C-----VERSION 20100315 ERB
 C     ******************************************************************
 C     ALLOCATE ARRAY STORAGE FOR EVAPOTRANSPIRATION SEGMENTS
 C     ******************************************************************
@@ -24,6 +24,12 @@ C     ------------------------------------------------------------------
   550 FORMAT(1X,'OPTION 1 -- EVAPOTRANSPIRATION FROM TOP LAYER')
   560 FORMAT(1X,'OPTION 2 -- EVAPOTRANSPIRATION FROM ONE SPECIFIED',
      &   ' NODE IN EACH VERTICAL COLUMN')
+  564 FORMAT(1X,'OPTION 3 -- EVAPOTRANSPIRATION FROM UPPERMOST ACTIVE ',
+     &   'CELL')
+!  566 FORMAT(1X,'OPTION 4 -- EVAPOTRANSPIRATION FROM UPPERMOST ACTIVE ',
+!     &   'CELL IN STACK OF',/,1X,
+!     &   'CONTIGUOUS ACTIVE CELLS THAT INCLUDES BOTTOMMOST ACTIVE ',
+!     &   'CELL')
   570 FORMAT(1X,'CELL-BY-CELL FLOWS WILL BE SAVED ON UNIT ',I4)
   580 FORMAT(1X,I10,' ELEMENTS IN RX ARRAY ARE USED BY ETS')
   590 FORMAT(1X,I10,' ELEMENTS IN IR ARRAY ARE USED BY ETS')
@@ -49,7 +55,8 @@ C       SEGMENTS (NETSEG) (ITEM 1)
       ENDIF
 C
 C3------CHECK TO SEE THAT ET OPTION IS LEGAL.
-      IF (NETSOP.GE.1.AND.NETSOP.LE.2) GO TO 10
+!      IF (NETSOP.GE.1 .AND. NETSOP.LE.4) GO TO 10
+      IF (NETSOP.GE.1 .AND. NETSOP.LE.3) GO TO 10
 C
 C3A-----OPTION IS ILLEGAL -- PRINT A MESSAGE & ABORT SIMULATION.
       WRITE(IOUT,540)
@@ -59,6 +66,8 @@ C4------OPTION IS LEGAL -- PRINT THE OPTION CODE.
    10 CONTINUE
       IF (NETSOP.EQ.1) WRITE(IOUT,550)
       IF (NETSOP.EQ.2) WRITE(IOUT,560)
+      IF (NETSOP.EQ.3) WRITE(IOUT,564) ! Add option 3 ERB 9/7/2006
+!      IF (NETSOP.EQ.4) WRITE(IOUT,566) ! Add option 4 ERB 9/7/2006
 C
 C5------IF CELL-BY-CELL FLOWS ARE TO BE SAVED, THEN PRINT UNIT NUMBER.
       IF (IETSCB.GT.0) WRITE(IOUT,570) IETSCB
@@ -289,7 +298,7 @@ C=======================================================================
      &                      HNEW,NCOL,NROW,NLAY,NETSEG,PXDP,PETM,
      &                      NSEGAR)
 C
-C-----VERSION 20000620 ERB
+C-----VERSION 20100315 ERB
 C     ******************************************************************
 C        ADD EVAPOTRANSPIRATION TO RHS AND HCOF
 C     ******************************************************************
@@ -308,12 +317,51 @@ C1------PROCESS EACH HORIZONTAL CELL LOCATION
       DO 30 IR=1,NROW
         DO 20 IC=1,NCOL
 C
-C2------SET THE LAYER INDEX EQUAL TO 1      .
-          IL=1
-C
-C3------IF OPTION 2 IS SPECIFIED THEN GET LAYER INDEX FROM IETS ARRAY
-          IF (NETSOP.EQ.2) IL=IETS(IC,IR)
-          IF (IL.EQ.0) GO TO 20  ! ERB 1/11/07
+          IF (NETSOP.EQ.1) THEN
+C2----------SET THE LAYER INDEX EQUAL TO 1      .
+            IL=1
+          ELSEIF (NETSOP.EQ.2) THEN
+C3----------GET LAYER INDEX FROM IETS ARRAY
+            IL=IETS(IC,IR)
+            IF (IL.EQ.0) GO TO 20  ! ERB 1/11/07
+          ELSEIF (NETSOP.EQ.3) THEN
+C3A---------FIND UPPERMOST ACTIVE CELL
+            IL = 1 ! If stack is inactive, this is the default
+            FINDFIRST: DO ILQ=1,NLAY
+              IF (IBOUND(IC,IR,ILQ).NE.0) THEN
+                IL = ILQ
+                EXIT FINDFIRST
+              ENDIF
+            ENDDO FINDFIRST
+!          ELSEIF (NETSOP.EQ.4) THEN
+!C3B---------FIND UPPERMOST ACTIVE CELL IN CONTIGUOUS STACK OF ACTIVE CELLS
+!C           THAT INCLUDES LOWERMOST ACTIVE CELL
+!            IL = 1 ! If stack is inactive, this is the default
+!            FINDLAY: DO KL=NLAY,1,-1
+!              IF (IBOUND(IC,IR,KL)==0) THEN
+!                ! Cell is inactive, go up a layer
+!                CYCLE FINDLAY
+!              ELSE
+!                ! Cell is active (variable-head or constant-head)
+!                IF (KL>1) THEN
+!                  IF (IBOUND(IC,IR,KL-1) .NE. 0) THEN
+!                    ! Cell above is active; go up a layer
+!                    CYCLE FINDLAY
+!                  ENDIF
+!                ENDIF
+!              ENDIF
+!              !   Cell is active and cell above is either (a) inactive, or
+!              !   (b) nonexistent because this cell is in layer 1:
+!              !   Evapotranspiration is from this cell.
+!              IL = KL
+!              !   Check IL and higher cells for constant head
+!              DO KLC=1,IL
+!C5B-------------IF CELL IS CONSTANT HEAD MOVE ON TO NEXT HORIZONTAL LOCATION.
+!                IF(IBOUND(IC,IR,KLC).LT.0) GOTO 20
+!              ENDDO
+!              EXIT FINDLAY
+!            ENDDO FINDLAY
+          ENDIF
 C
 C4------IF THE CELL IS EXTERNAL IGNORE IT.
           IF (IBOUND(IC,IR,IL).GT.0) THEN
@@ -389,7 +437,7 @@ C=======================================================================
      &                      NROW,NLAY,DELT,VBVL,VBNM,MSUM,KSTP,KPER,
      &                      IETSCB,ICBCFL,BUFF,IOUT,PERTIM,TOTIM,NETSEG,
      &                      PXDP,PETM,NSEGAR)
-C-----VERSION 20000620 ERB
+C-----VERSION 201003215 ERB
 C     ******************************************************************
 C     CALCULATE VOLUMETRIC BUDGET FOR EVAPOTRANSPIRATION SEGMENTS
 C     ******************************************************************
@@ -427,12 +475,53 @@ C3------PROCESS EACH HORIZONTAL CELL LOCATION.
       DO 70 IR=1,NROW
         DO 60 IC=1,NCOL
 C
-C4------SET THE LAYER INDEX EQUAL TO 1.
-          IL=1
-C
-C5------IF OPTION 2 IS SPECIFIED THEN GET LAYER INDEX FROM IETS ARRAY.
-          IF (NETSOP.EQ.2) IL=IETS(IC,IR)
-          IF (IL.EQ.0) GO TO 60  ! ERB 1/11/07
+          IF (NETSOP.EQ.1) THEN
+C2----------SET THE LAYER INDEX EQUAL TO 1      .
+            IL=1
+          ELSEIF (NETSOP.EQ.2) THEN
+C3----------GET LAYER INDEX FROM IETS ARRAY
+            IL=IETS(IC,IR)
+            IF (IL.EQ.0) GO TO 60  ! ERB 1/11/07
+          ELSEIF (NETSOP.EQ.3) THEN
+C3A---------FIND UPPERMOST ACTIVE CELL
+            IL = 1 ! If stack is inactive, this is the default
+            FINDFIRST: DO ILQ=1,NLAY
+              IF (IBOUND(IC,IR,ILQ).NE.0) THEN
+                IL = ILQ
+                EXIT FINDFIRST
+              ENDIF
+            ENDDO FINDFIRST
+            IETS(IC,IR) = IL
+!          ELSEIF (NETSOP.EQ.4) THEN
+!C3B---------FIND UPPERMOST ACTIVE CELL IN CONTIGUOUS STACK OF ACTIVE CELLS
+!C           THAT INCLUDES LOWERMOST ACTIVE CELL
+!            IL = 1 ! If stack is inactive, this is the default
+!            FINDLAY: DO KL=NLAY,1,-1
+!              IF (IBOUND(IC,IR,KL)==0) THEN
+!                ! Cell is inactive, go up a layer
+!                CYCLE FINDLAY
+!              ELSE
+!                ! Cell is active (variable-head or constant-head)
+!                IF (KL>1) THEN
+!                  IF (IBOUND(IC,IR,KL-1) .NE. 0) THEN
+!                    ! Cell above is active; go up a layer
+!                    CYCLE FINDLAY
+!                  ENDIF
+!                ENDIF
+!              ENDIF
+!              !   Cell is active and cell above is either (a) inactive, or
+!              !   (b) nonexistent because this cell is in layer 1:
+!              !   Evapotranspiration is from this cell.
+!              IL = KL
+!              !   Check IL and higher cells for constant head
+!              DO KLC=1,IL
+!C5B-------------IF CELL IS CONSTANT HEAD MOVE ON TO NEXT HORIZONTAL LOCATION.
+!                IF(IBOUND(IC,IR,KLC).LT.0) GOTO 60
+!              ENDDO
+!              EXIT FINDLAY
+!            ENDDO FINDLAY
+!            IETS(IC,IR) = IL
+          ENDIF
 C
 C6------IF CELL IS EXTERNAL THEN IGNORE IT.
           IF (IBOUND(IC,IR,IL).GT.0) THEN

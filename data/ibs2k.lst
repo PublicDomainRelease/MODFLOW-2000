@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.18.01 06/20/2008
+                           VERSION 1.19.00 03/15/2010
 
 
  This model run combines GLOBAL and LIST output into this single file.
@@ -424,7 +424,7 @@ BEEN SUPERSEDED BY THE SUBSIDENCE AND AQUIFER-SYSTEM COMPACTION PACKAGE.
  ----------------------------------------------------------------------
     -0.1117E-01   -0.1887E-01   -0.2231E-01   -0.6905E-02    0.4997E-03
   (  1, 10,  7) (  1,  2,  6) (  1, 10,  7) (  1,  1,  8) (  1,  2,  7)
-    -0.7484E-04    0.7453E-04    0.4061E-04    0.1117E-04   -0.1293E-05
+    -0.7484E-04    0.7453E-04    0.4062E-04    0.1117E-04   -0.1293E-05
   (  1,  5, 10) (  1,  6,  5) (  1,  7,  5) (  1, 10,  7) (  1,  8,  4)
 
 

@@ -645,12 +645,12 @@ C---Populate MODEL arrays
           IF(ABS(THCKU).LT.1E-4) GOTO 130
           BOTU=TOPU-THCKU
 C-----Determine which layer(s) unit applies to
-          IFLG=1                                                         ! sc1_fix
+          IFLG=1
           CALL SGWF1HUF2HSRCH(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,BOTU,
      &                        HNEW,IBOUND,KT,KB,IFLG)
 C-----Skip unit if thickness is zero
           IF(IFLG.EQ.1) GOTO 130
-C-----Populate HK and VKA arrays                                         ! sc1_fix
+C-----Populate HK and VKA arrays
           CALL SGWF1HUF2HK(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,BOTU,KT,
      &                     KB,HK,HKCC,HUFHK,HUFHANI,HUFKDEP(NU),NHUF,NU,
      &                     HNEW,GS)
@@ -662,12 +662,12 @@ C
      &       KSTP.EQ.0) THEN
             TOPU = HUFTHK(J,I,NU,1)
             BOTU = TOPU - THCKU
-C-----Determine which layer(s) unit applies to, assuming for the sake of ! sc1_fix
-c       computing SC1 that every layer is confined                       ! sc1_fix
-            IFLG=0                                                       ! sc1_fix
-            CALL SGWF1HUF2HSRCH(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,BOTU, ! sc1_fix
-     &                        HNEW,IBOUND,KT,KB,IFLG)                    ! sc1_fix
-C-----Populate SC1 array                                                 ! sc1_fix
+C-----Determine which layer(s) unit applies to, assuming for the sake of
+c       computing SC1 that every layer is confined
+            IFLG=0
+            CALL SGWF1HUF2HSRCH(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,BOTU,
+     &                        HNEW,IBOUND,KT,KB,IFLG)
+C-----Populate SC1 array
             CALL SGWF1HUF2SC1(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,
      &                        BOTU,SC1,HUFSS,KT,KB,NHUF,NU)
           ENDIF
@@ -935,7 +935,7 @@ C           FIND TOP AND BOTTOM LAYERS THIS UNIT APPLIES TO
             IF(ABS(THCKU).LT.1E-4) GOTO 210
             BOTU=TOPU-THCKU
 C-----------Determine which layer(s) unit applies to
-            IFLG=1                                                       ! sc1_fix
+            IFLG=1
             CALL SGWF1HUF2HSRCH(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,
      &                          BOTU,HNEW,IBOUND,KT,KB,IFLG)
             IF(IFLG.EQ.1) GOTO 210
@@ -1067,10 +1067,10 @@ c======================================================================
 C
 C     ******************************************************************
 C     Search for top and bottom layer the unit applies to.
-C     Values for IFLG on input:                                          ! sc1_fix
-C       IFLG = 0, Do not adjust top of unconfined layer to HNEW          ! sc1_fix
-C       IFLG <> 0, Adjust top of unconfined layer to HNEW                ! sc1_fix
-C     Values for IFLG on output:                                         ! sc1_fix
+C     Values for IFLG on input:
+C       IFLG = 0, Do not adjust top of unconfined layer to HNEW
+C       IFLG <> 0, Adjust top of unconfined layer to HNEW
+C     Values for IFLG on output:
 C       IFLG = 0, Unit successfully found
 C       IFLG = 1, Unit not found
 C     ******************************************************************
@@ -1084,7 +1084,7 @@ C     ------------------------------------------------------------------
       COMMON /HUFCOM/HGUHANI(999),HGUVANI(999),LTHUF(999),LAYWT(999)
 C
 C Reset IFLG
-      IHNEW=IFLG                                                         ! sc1_fix
+      IHNEW=IFLG
       IFLG=1
 C
 C Loop through layers to determine where unit applies
@@ -1093,9 +1093,9 @@ C First, search for top
       DO 100 KT=1,NLAY
         IF(IBOUND(J,I,KT).EQ.0) GOTO 100
         TOP=BOTM(J,I,LBOTM(KT)-1)
-C---Adjust top of model layer for unconfined layer (if IFLG<>0 on input) ! sc1_fix
-        IF(IHNEW.NE.0.AND.LTHUF(KT).NE.0.AND.HNEW(J,I,KT).LT.TOP)        ! sc1_fix
-     &    TOP=HNEW(J,I,KT)                                               ! sc1_fix
+C---Adjust top of model layer for unconfined layer (if IFLG<>0 on input)
+        IF(IHNEW.NE.0.AND.LTHUF(KT).NE.0.AND.HNEW(J,I,KT).LT.TOP)
+     &    TOP=HNEW(J,I,KT)
 C---If unit top is in this layer, exit loop
         IF(TOPU.LE.TOP.AND.TOPU.GT.BOTM(J,I,LBOTM(KT))) GOTO 110
 C---If unit top is above model top, adjust unit top elevation, exit loop
@@ -1115,8 +1115,8 @@ C Now search for bottom
       DO 200 KKB=KT,NLAY
         IF(IBOUND(J,I,KKB).EQ.0) GOTO 200
         TOP=BOTM(J,I,LBOTM(KKB)-1)
-C---Adjust top of model layer for unconfined layer (if IFLG<>0 on input) ! sc1_fix
-        IF(IHNEW.NE.0.AND.LTHUF(KKB).NE.0.AND.HNEW(J,I,KKB).LT.TOP)      ! sc1_fix
+C---Adjust top of model layer for unconfined layer (if IFLG<>0 on input)
+        IF(IHNEW.NE.0.AND.LTHUF(KKB).NE.0.AND.HNEW(J,I,KKB).LT.TOP)
      &    TOP=HNEW(J,I,KKB)
 C---If unit bottom is in this layer, set KB=KKB, return
         IF(BOTU.LE.TOP.AND.BOTU.GE.BOTM(J,I,LBOTM(KKB))) THEN
@@ -2881,7 +2881,7 @@ C-----LOOP THROUGH ROWS AND COLUMNS
             ENDIF
             BOTU=TOPU-THCKU
             IF(ICNT.LT.3) THEN
-              IFLG=1                                                     ! sc1_fix
+              IFLG=1
               CALL SGWF1HUF2HSRCH(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,
      &                            BOTU,HNEW,IBOUND,KT,KB,IFLG)
 C-------------UNIT ABOVE/BELOW MODEL
@@ -3012,35 +3012,12 @@ C     ------------------------------------------------------------------
       COMMON /DISCOM/LBOTM(999),LAYCBD(999)
       COMMON /HUFCOM/HGUHANI(999),HGUVANI(999),LTHUF(999),LAYWT(999)
 C     ------------------------------------------------------------------
-
-C
-C     SORT HYDROGEOLOGIC UNITS
-      CALL SGWF1HUF2IND(NCOL,NROW,NHUF,HUFTHK,1,1,INDX)
-C     CHECK SORTING TO CORRECT FOR ZERO-THICKNESS UNITS
-      DO 50 NU=1,NHUF
-        IF(HUFTHK(1,1,INDX(NU),2).EQ.0) THEN
-          DO 60 I=1,NROW
-          DO 60 J=1,NCOL
-            IF(HUFTHK(J,I,INDX(NU),2).GT.0) THEN
-              IF(NU.GT.1 .AND. HUFTHK(J,I,INDX(NU),1).LT.
-     &           HUFTHK(J,I,INDX(NU-1),1)) THEN
-                NNU=INDX(NU)
-                INDX(NU)=INDX(NU-1)
-                INDX(NU-1)=NNU
-              ELSEIF(NU.LT.NHUF .AND. HUFTHK(J,I,INDX(NU),1).GT.
-     &               HUFTHK(J,I,INDX(NU+1),1)) THEN
-                NNU=INDX(NU)
-                INDX(NU)=INDX(NU+1)
-                INDX(NU+1)=NNU
-              ENDIF
-            ENDIF
-   60     CONTINUE
-        ENDIF
-   50 CONTINUE
 C
 C-----LOOP THROUGH ROWS AND COLUMNS
       DO 100 I=1,NROW
       DO 200 J=1,NCOL
+C       SORT HYDROGEOLOGIC UNITS
+        CALL SGWF1HUF2IND(NCOL,NROW,NHUF,HUFTHK,J,I,INDX)
 C Zero out arrays
         DO 210 NU=1,NHUF
           HUFHK(NU)=0.
@@ -3217,7 +3194,7 @@ C4------CONSTANT-HEAD CELL.
             GOTO 300
           ENDIF
           BOTU=TOPU-THCKU
-          IFLG=1                                                         ! sc1_fix
+          IFLG=1
           CALL SGWF1HUF2HSRCH(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,BOTU,
      &                        HNEW,IBOUND,KT,KB,IFLG)
 C-------UNIT ABOVE/BELOW MODEL
@@ -3973,7 +3950,7 @@ c     a parameter
           IF(ABS(THCKU).LT.1E-4) GOTO 130
           BOTU=TOPU-THCKU
 C-----Determine which layer(s) unit applies to
-          IFLG=1                                                         ! sc1_fix
+          IFLG=1
           CALL SGWF1HUF2HSRCH(NCOL,NROW,NLAY,BOTM,NBOTM,I,J,TOPU,BOTU,
      &                        HNEW,IBOUND,KT,KB,IFLG)
 C-----Skip unit if thickness is zero

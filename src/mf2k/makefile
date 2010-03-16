@@ -66,6 +66,8 @@ OBJECTS = \
         gwf1lak3.o \
         gwf1lpf1.o \
         gwf1mnw1.o \
+        gwf1mnw2.o \
+        gwf1mnwi.o \
         gwf1rch6.o \
         gwf1res1.o \
         gwf1riv6.o \

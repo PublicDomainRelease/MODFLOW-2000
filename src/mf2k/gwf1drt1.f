@@ -333,7 +333,7 @@ C     ------------------------------------------------------------------
       COMMON /DRTCOM/DRTAUX(5)
       CHARACTER*16 DRTAUX
       CHARACTER*16 VBNM(MSUM),TEXT
-      DOUBLE PRECISION HNEW,HHNEW,EEL,CC,CEL,RATIN,RATOUT,QQ
+      DOUBLE PRECISION HNEW,HHNEW,EEL,CC,CEL,RATIN,RATOUT,QQ,QQIN
 C
       DIMENSION VBVL(4,MSUM),DRTF(NDRTVL,MXDRT),HNEW(NCOL,NROW,NLAY),
      &          IBOUND(NCOL,NROW,NLAY),BUFF(NCOL,NROW,NLAY)
@@ -383,9 +383,13 @@ C5A-----GET LAYER, ROW & COLUMN OF CELL CONTAINING DRAIN.
         IF (IDRTFL.GT.0) THEN
           QIN=ZERO
           ILR = DRTF(6,L)
-          IRR = DRTF(7,L)
-          ICR = DRTF(8,L)
-          IF (IBOUND(ICR,IRR,ILR) .LE. 0) ILR = 0
+          IF (ILR.NE.0) THEN
+            IRR = DRTF(7,L)
+            ICR = DRTF(8,L)
+! Following line commented out to ensure that NDRTCL+NRFLOW records
+! are written to CBC file. -- ERB 2/26/2010            
+!            IF (IBOUND(ICR,IRR,ILR) .LE. 0) ILR = 0
+          ENDIF
         END IF
 C
 C5B-----IF CELL IS NO-FLOW OR CONSTANT-HEAD, IGNORE IT.

@@ -1,7 +1,7 @@
 readme.unix
 
 
-                  MODFLOW-2000 - Version: 1.18.01 06/20/2008
+                  MODFLOW-2000 - Version: 1.19.00 03/15/2010
          Three-dimensional finite-difference ground-water flow model
 
 
@@ -12,7 +12,7 @@ This version of MODFLOW-2000 is packaged for computers using the Unix
 operating system.
 
 This version of MODFLOW is referred to as MODFLOW-2000 in order to
-distinguish it from older versions.  See the file doc\Mf2k.txt for
+distinguish it from older versions.  See the file Mf2k.txt for
 descriptions, references, and additional contacts for this software.
 Instructions for installation, execution, and testing are provided
 below.
@@ -33,7 +33,7 @@ A. DISTRIBUTION FILE
 
 The following distribution file is for use on computers running Unix:
 
-         mf2k1_18_01.tar.Z
+         mf2k1_19_00.tar.gz
 
 The distribution file contains:
 
@@ -50,23 +50,26 @@ B. EXTRACTING FILES
 
 The distribution file contains numerous individual files that have been
 combined into one file using the tar command and compressed using the
-compress command.  To extract the individual files, the distribution file
-mf2k1_18_01.tar.Z first must be uncompressed using the command:
+gzip command.  To extract the individual files, the distribution file
+mf2k1_19_00.tar.gz first must be uncompressed using the command:
 
-uncompress mf2k1_18_01.tar.Z
+gunzip mf2k1_19_00.tar.gz
 
-Execution of the uncompress command will produce the file mf2k1_18_01.tar.  This
+Execution of the gunzip command will produce the file mf2k1_19_00.tar.  This
 file is used to generate the individual files with the command:
 
-tar -xf mf2k1_18_01.tar
+tar -xf mf2k1_19_00.tar
 
 Execution of the tar command will generate the following directory structure:
 
 
    |
-   |--mf2k.1_18
+   |--mf2k.1_19
    |    |--data      ; standard data sets used in verification tests
-   |    |--doc       ; documentation files
+   |    |--doc       ; original documentation files for MODFLOW-2000
+   |    |    |
+   |    |    |--updates   ; documentation for updates
+   |    |
    |    |--src       ; source code
    |         |
    |         |--mf2k      ; MODFLOW-2000 source code
@@ -83,11 +86,11 @@ Execution of the tar command will generate the following directory structure:
    |    |--test      ; empty -- for use in testing MODFLOW-2000
 
 
-It is recommended that no user files are kept in the mf2k.1_18 directory
-structure.  If you do plan to put files in the mf2k.1_18 directory
+It is recommended that no user files are kept in the mf2k.1_19 directory
+structure.  If you do plan to put files in the mf2k.1_19 directory
 structure, do so only by creating subdirectories.
 
-Included in directory mf2k.1_18\doc are various documentation files.  Some of
+Included in directory mf2k.1_19\doc are various documentation files.  Some of
 them are Portable Document Format (PDF) files. The PDF files are readable
 and printable on various computer platforms using Acrobat Reader from Adobe.
 The Acrobat Reader is freely available from the following World Wide Web
@@ -98,7 +101,7 @@ sites:
 
 C. COMPILING
 
-The source code provided in the mf2k.1_18\src directories must be compiled to
+The source code provided in the mf2k.1_19\src directories must be compiled to
 produce executable files for use on computers running Unix.  However, no
 support can be provided for users generating their own versions of the
 source code.  
@@ -117,10 +120,10 @@ MODFLOW-2000 is run.
 
 When compiling MODFLOW-2000 for use in the typical serial-processing (as 
 opposed to parallel-processing) mode, all required source-code files except 
-one are in the mf2k.1_18\src\mf2k\ directory.  In addition to the files in 
-the mf2k.1_18\src\mf2k\ directory,the file para-non.f in the 
-mf2k.1_18\src\mf2k\serial\ directory must be compiled.  The makefile in the 
-mf2k.1_18\src\mf2k directory can be used with the "make" command.  It will 
+one are in the mf2k.1_19\src\mf2k\ directory.  In addition to the files in 
+the mf2k.1_19\src\mf2k\ directory,the file para-non.f in the 
+mf2k.1_19\src\mf2k\serial\ directory must be compiled.  The makefile in the 
+mf2k.1_19\src\mf2k directory can be used with the "make" command.  It will 
 look for para-non.f in the serial directory and will compile and link the 
 program for serial processing.
 
@@ -131,7 +134,7 @@ To make the executable versions of the programs accessible from any
 directory, the directory(ies) containing the executables (generated when the
 programs are compiled) should be included in the PATH environment variable.
 One option would be to put all the executable files in this release into an
-mf2k.1_18/bin directory.  Also, if a prior release of MODFLOW-2000 is
+mf2k.1_19/bin directory.  Also, if a prior release of MODFLOW-2000 is
 installed on your system, the directory containing the executables for the
 prior release should be removed from the PATH environment variable.
 
@@ -177,7 +180,7 @@ F. TESTING
 
 Test data sets are provided to verify that MODFLOW-2000 is correctly
 installed and running on the system.  The tests may also be looked at as
-examples of how to use the program.  The directory MF2K.1_18\data contains
+examples of how to use the program.  The directory MF2K.1_19\data contains
 the input data and expected results for each test.  To run one of the test
 cases (for example, the twri test), cd to the "test" directory and execute
 MODFLOW-2000 in the following form:
@@ -203,12 +206,12 @@ test name      description of test
  twrip         Example problem in OFR 00-92 with parameters
  tc1obsen      Test Case 1 in OFR 00-184 with OBS and SEN, but not PES
  tc1           Test Case 1 in OFR 00-184 with PES and noise in
-               observations
- tc1-TRUE      Test Case 1 in OFR 00-184 with PES and without
-               observation noise 
+                 observations
+ tc1-true      Test Case 1 in OFR 00-184 with PES and without
+                 observation noise 
  tc2           Test Case 2 in OFR 00-184
  tc3           Similar to Problem 4.2-2 in TWRI 3-B4 [Cooley and
-               Naff (1990)]
+                 Naff (1990)]
  bcf2ss        Problem 1 in OFR 91-536 converted to MODFLOW-2000
  str           Example problem in OFR 88-729 converted to MODFLOW-2000
  fhb           Example problem in OFR 97-571 converted to MODFLOW-2000
@@ -217,20 +220,33 @@ test name      description of test
  tc1huf        Test case is described in OFR 00-342
  tc2hufv4      Test case is described in OFR 00-342
  ibs2k         Storage-depletion test problem described in TWRI 6-A2
-               converted to MODFLOW-2000
+                 converted to MODFLOW-2000
  l1a2k         Transient version of Test Simulation 1 in WRIR 00-4167
-               converted to MODFLOW-2000
+                 converted to MODFLOW-2000
  l1b2k         Steady-state version of Test Simulation 1 in WRIR 00-4167
-               converted to MODFLOW-2000
+                 converted to MODFLOW-2000
  tvp           Undocumented test case demonstrating the use of time-
-               varying parameters.
+                 varying parameters.
  mnw1          Example problem in OFR 02-293 for MNW Package.
  example3      Example 3 in Appendix D of OFR 99-217 for DAF Package.
  tr2k_s3       Example problem in OFR 03-233 for SUB Package.
  test1ss       Test simulation 1 (steady) in OFR 2004-1042 for SFR1 
-               Package.
+                 Package.
  test1tr       Test simulation 1 (transient) in OFR 2004-1042 for SFR1 
-               Package.
+                 Package.
  testsfr2      "Hypothetical test simulation" described in TM6-A13 for 
-               SFR2 Package.
+                 SFR2 Package.
  swtex4        "Sample Simulation" described in TM6-A23 for SWT1 Package
+ mnw2-fig28    Example problem for MNW2 described in Appendix 2 of 
+                 Techniques and Methods 6-A30, as well as most output
+                 files needed to assess the simulation results.  The
+                 ".FHD" output file of calculated heads is not included 
+                 because of its relatively large file size.  The results 
+                 of this simulation are also illustrated in Figure 28 of 
+                 the report.
+ l1c2k         Drying and rewetting version of Test Simulation 1 in 
+                 Merritt and Konikow (2000) converted to MODFLOW-2000.
+ l2a_2k        Test Simulation 2 in Merritt and Konikow (2000) converted
+                 to MODFLOW-2000. 
+ l3_2k         Test Simulation 3 in Merritt and Konikow (2000) converted 
+                 to MODFLOW-2000.

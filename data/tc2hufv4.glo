@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.18.01 06/20/2008
+                           VERSION 1.19.00 03/15/2010
 
 
  This model run produced both GLOBAL and LIST files.  This is the GLOBAL file.
@@ -1038,14 +1038,14 @@ HGU5           0     0     0     0     0
       SMALLEST WEIGHTED RESIDUALS      |       LARGEST WEIGHTED RESIDUALS
                 WEIGHTED   PERCENT OF  |                 WEIGHTED   PERCENT OF
  NAME           RESIDUAL    OBJ FUNC   |  NAME           RESIDUAL    OBJ FUNC
- GHB3          -0.173E-02     3.06     |  DRN3           0.879E-02    78.54
+ GHB3          -0.173E-02     3.06     |  DRN3           0.879E-02    78.55
  GHB1          -0.142E-02     2.04     |  GHB5           0.232E-02     5.48
- WL12-13       -0.122E-03     0.02     |  GHB2           0.188E-02     3.59
- WL12-10       -0.122E-03     0.02     |  GHB4           0.167E-02     2.82
+ WL12-10       -0.122E-03     0.02     |  GHB2           0.188E-02     3.59
+ WL12-13       -0.977E-04     0.01     |  GHB4           0.167E-02     2.82
  WL4-2         -0.977E-04     0.01     |  DRN2           0.139E-02     1.96
 
  STATISTICS FOR ALL RESIDUALS :
- AVERAGE WEIGHTED RESIDUAL  : 0.294E-03
+ AVERAGE WEIGHTED RESIDUAL  : 0.295E-03
  # RESIDUALS >= 0. :     34
  # RESIDUALS < 0.  :     18
  NUMBER OF RUNS  :   21  IN   52 OBSERVATIONS

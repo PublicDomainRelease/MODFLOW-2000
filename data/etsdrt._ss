@@ -1,22 +1,22 @@
  ITERATION  SSWR-(HEAD OBSERVATIONS ONLY)
      1        215149.6    
-     2        6082.631    
-     3        95.65462    
-     4       0.2113826    
-     5       0.1059088E-04
-     6       0.3637979E-07
+     2        6082.645    
+     3        95.65493    
+     4       0.2113056    
+     5       0.1042645E-04
+     6       0.9022187E-07
  ITERATION  SSWR-(DRT-PACKAGE FLOW OBSERVATIONS ONLY)
      1        372.1394    
      2        25.28245    
-     3       0.6956174    
+     3       0.6956041    
      4       0.7396670E-03
-     5       0.2387081E-08
+     5       0.2290643E-08
      6       0.9942027E-12
  ITERATION  SSWR-(TOTAL FOR ALL OBSERVATIONS)
      1        215521.7    
-     2        6107.914    
-     3        96.35023    
-     4       0.2121222    
-     5       0.1059327E-04
-     6       0.3638078E-07
- STANDARD ERROR OF THE REGRESSION:  0.4375818E-04
+     2        6107.927    
+     3        96.35053    
+     4       0.2120453    
+     5       0.1042874E-04
+     6       0.9022287E-07
+ STANDARD ERROR OF THE REGRESSION:  0.6890988E-04

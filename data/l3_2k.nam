@@ -1,0 +1,26 @@
+# NAME file for test case l3_2k
+#
+# NOTE: Forward slashes (/) in pathnames may need to be converted
+#       to back slashes (\) in some computing environments
+#
+# Output files
+LIST  1  l3_2k.lst
+DATA 26  l3_2k.gs1
+DATA 27  l3_2k.gs2
+DATA 28  l3_2k.gs3
+DATA 29  l3_2k.gs4
+#
+# Input files
+BAS6  7  ../data/l3_2k.ba6
+BCF6 10  ../data/l3_2k.bc6
+EVT  11  ../data/l3_2k.evt
+RCH  12  ../data/l3_2k.rch
+SIP  13  ../data/l3_2k.sip
+#pcg  13 ../data/l3_2k.pcg
+OC   17  ../data/l3_2k.oc
+FHB  21  ../data/l3_2k.fhb
+LAK 16   ../data/l3_2k.lak
+DIS 22   ../data/l3_2k.dis
+GAGE 24  ../data/l3_2k.gge
+
+

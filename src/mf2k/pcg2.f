@@ -355,6 +355,10 @@ C                 SURROUNDING CELLS ARE INACTIVE
               IBOUND(N) = 0
               HCOF(N) = 0.
               RHS(N) = 0.
+              WRITE(IOUT,27) K,I,J
+   27           FORMAT (/,
+     &        ' ISOLATED CELL IS BEING ELIMINATED (LAYER,ROW,COL):',
+     &        3I6,/,' (PCG2AP)')
               GOTO 30
             ENDIF
 C

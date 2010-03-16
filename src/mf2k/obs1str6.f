@@ -274,6 +274,18 @@ C     ------------------------------------------------------------------
      &' ALL PARAMETERS EXCEPT THOSE THAT CONTROL THE HYDRAULIC',
      &' CONDUCTIVITY OF THE',/,
      &' STREAM BED.  (SEE TEXT FOR MORE INFORMATION).')
+  502 FORMAT (/,
+     &' FOR THE CELLS LISTED BELOW, ONE OF TWO CONDITIONS EXIST, AS',
+     &' INDICATED BY THE',/,
+     &' ABSENCE OR PRESENCE OF AN ASTERISK (*). IF THE OBSERVATION',
+     &' IS BEING USED FOR',/,
+     &' PARAMETER ESTIMATION, THESE CONDITIONS CAN DIMINISH THE',
+     &' IMPACT OF THE',/,
+     &' OBSERVATION FOR SOME PARAMETERS.',/,
+     &' NO *: AQUIFER HEAD AT THE STREAM CELL IS BELOW THE BOTTOM',
+     &' OF THE STREAMBED.',/,
+     &' *   : SEEPAGE TO THE AQUIFER IS LIMITED BY AVAILABLE',
+     &' STREAMFLOW.')
   505 FORMAT (/,' OBS# ',I6,', ID ',A,', TIME STEP ',I5)
   515 FORMAT ('   SEGMENT REACH')
   520 FORMAT (3I7)
@@ -345,7 +357,10 @@ C-------------CALCULATE FLOWS
                   IF (HHNEW.LE.RBOT .OR. ISTRF.EQ.1) THEN
                     HH = C*(HB-RBOT)
                     IF (ISTRF.EQ.1) HH = STRM(10,NB)
-                    IF (JRBOT.EQ.0) WRITE (IOUT,500)
+                    IF (JRBOT.EQ.0) THEN
+                      WRITE (IOUT,500)
+                      WRITE (IOUT,502)
+                    ENDIF
                     JRBOT = 1
                     IF (IRBOT.EQ.0) THEN
                       WRITE (IOUT,505) NHT + NT, OBSNAM(NHT+NT), ITS

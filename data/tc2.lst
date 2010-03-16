@@ -1,6 +1,6 @@
                                   MODFLOW-2000
       U.S. GEOLOGICAL SURVEY MODULAR FINITE-DIFFERENCE GROUND-WATER FLOW MODEL
-                           VERSION 1.18.01 06/20/2008
+                           VERSION 1.19.00 03/15/2010
 
 
  This model run produced both GLOBAL and LIST files.  This is the LIST file.
@@ -17,12 +17,12 @@
  ----------  ---------  ------------  -----
  HK_1           HK       0.99997        *
  HK_2           HK       1.00001E-02    *
- HK_3           HK       1.00002E-04    *
- HK_4           HK       1.00023E-06    *
+ HK_3           HK       1.00001E-04    *
+ HK_4           HK       1.00018E-06    *
  ANIV_12        VANI      4.0001        *
  ANIV_3         VANI      1.0001        *
- RCHRAT         RCH      3.10003E-04    *
- ETMAX          EVT      3.99963E-04    *
+ RCHRAT         RCH      3.10002E-04    *
+ ETMAX          EVT      3.99969E-04    *
  C_GHB          GHB       1.0000        *
  C_DRN          DRN       1.0000        *
  ------------------------------------------
@@ -412,7 +412,7 @@
   HORIZ. TO VERTICAL ANI. is defined by the following parameters:
  ANIV_12   
 
-  HORIZ. TO VERTICAL ANI. =   4.00007     FOR LAYER   1
+  HORIZ. TO VERTICAL ANI. =   4.00006     FOR LAYER   1
 
     HYD. COND. ALONG ROWS is defined by the following parameters:
  HK_1      
@@ -485,7 +485,7 @@
   HORIZ. TO VERTICAL ANI. is defined by the following parameters:
  ANIV_12   
 
-  HORIZ. TO VERTICAL ANI. =   4.00007     FOR LAYER   2
+  HORIZ. TO VERTICAL ANI. =   4.00006     FOR LAYER   2
 
     HYD. COND. ALONG ROWS is defined by the following parameters:
  HK_1      
@@ -557,7 +557,7 @@
   HORIZ. TO VERTICAL ANI. is defined by the following parameters:
  ANIV_3    
 
-  HORIZ. TO VERTICAL ANI. =   1.00012     FOR LAYER   3
+  HORIZ. TO VERTICAL ANI. =   1.00010     FOR LAYER   3
 1
                             STRESS PERIOD NO.    1, LENGTH =   86400.00    
                             -----------------------------------------------
@@ -616,17 +616,17 @@
    5    0.000       0.000       0.000       0.000       0.000       0.000    
         0.000       0.000       0.000       0.000       0.000       0.000    
         0.000       0.000       0.000       0.000       0.000       0.000    
-   6    0.000       0.000       0.000       0.000       0.000      3.9996E-04
-       3.9996E-04  3.9996E-04   0.000       0.000       0.000       0.000    
+   6    0.000       0.000       0.000       0.000       0.000      3.9997E-04
+       3.9997E-04  3.9997E-04   0.000       0.000       0.000       0.000    
         0.000       0.000       0.000       0.000       0.000       0.000    
-   7    0.000       0.000       0.000       0.000       0.000      3.9996E-04
-       3.9996E-04  3.9996E-04   0.000       0.000       0.000       0.000    
+   7    0.000       0.000       0.000       0.000       0.000      3.9997E-04
+       3.9997E-04  3.9997E-04   0.000       0.000       0.000       0.000    
         0.000       0.000       0.000       0.000       0.000       0.000    
-   8    0.000       0.000       0.000       0.000       0.000      3.9996E-04
-       3.9996E-04  3.9996E-04   0.000       0.000       0.000       0.000    
+   8    0.000       0.000       0.000       0.000       0.000      3.9997E-04
+       3.9997E-04  3.9997E-04   0.000       0.000       0.000       0.000    
         0.000       0.000       0.000       0.000       0.000       0.000    
-   9    0.000       0.000       0.000       0.000       0.000      3.9996E-04
-       3.9996E-04  3.9996E-04   0.000       0.000       0.000       0.000    
+   9    0.000       0.000       0.000       0.000       0.000      3.9997E-04
+       3.9997E-04  3.9997E-04   0.000       0.000       0.000       0.000    
         0.000       0.000       0.000       0.000       0.000       0.000    
   10    0.000       0.000       0.000       0.000       0.000       0.000    
         0.000       0.000       0.000       0.000       0.000       0.000    
@@ -940,28 +940,28 @@
            IN:                                      IN:
            ---                                      ---
              STORAGE =           0.0000               STORAGE =           0.0000
-       CONSTANT HEAD =   288836288.0000         CONSTANT HEAD =        3343.0127
+       CONSTANT HEAD =   288841760.0000         CONSTANT HEAD =        3343.0759
                WELLS =           0.0000                 WELLS =           0.0000
               DRAINS =           0.0000                DRAINS =           0.0000
                   ET =           0.0000                    ET =           0.0000
      HEAD DEP BOUNDS =           0.0000       HEAD DEP BOUNDS =           0.0000
-            RECHARGE =  1145025280.0000              RECHARGE =       13252.6074
+            RECHARGE =  1145022976.0000              RECHARGE =       13252.5811
 
-            TOTAL IN =  1433861632.0000              TOTAL IN =       16595.6211
+            TOTAL IN =  1433864704.0000              TOTAL IN =       16595.6562
 
           OUT:                                     OUT:
           ----                                     ----
              STORAGE =           0.0000               STORAGE =           0.0000
-       CONSTANT HEAD =   375639968.0000         CONSTANT HEAD =        4347.6851
+       CONSTANT HEAD =   375638304.0000         CONSTANT HEAD =        4347.6655
                WELLS =    38880000.0000                 WELLS =         450.0000
-              DRAINS =   136763056.0000                DRAINS =        1582.9058
-                  ET =   652628800.0000                    ET =        7553.5737
-     HEAD DEP BOUNDS =   229960880.0000       HEAD DEP BOUNDS =        2661.5842
+              DRAINS =   136763152.0000                DRAINS =        1582.9067
+                  ET =   652634240.0000                    ET =        7553.6372
+     HEAD DEP BOUNDS =   229960832.0000       HEAD DEP BOUNDS =        2661.5837
             RECHARGE =           0.0000              RECHARGE =           0.0000
 
-           TOTAL OUT =  1433872640.0000             TOTAL OUT =       16595.7480
+           TOTAL OUT =  1433876480.0000             TOTAL OUT =       16595.7930
 
-            IN - OUT =      -11008.0000              IN - OUT =          -0.1270
+            IN - OUT =      -11776.0000              IN - OUT =          -0.1367
 
  PERCENT DISCREPANCY =           0.00     PERCENT DISCREPANCY =           0.00
 
@@ -983,115 +983,115 @@
         OBSERVATION     OBSER-     SIMUL.                          WEIGHTED
    OBS#    NAME         VATION     EQUIV.    RESIDUAL  WEIGHT**.5  RESIDUAL
                           *          *
-      1 WL2-4           983.       983.      0.122E-03  0.200      0.244E-04
-      2 WL2-7          0.102E+04  0.102E+04   0.00      0.200       0.00    
-      3 WL2-10         0.119E+04  0.119E+04  0.244E-03  0.200      0.488E-04
-      4 WL4-2           294.       294.      0.458E-03  0.200      0.916E-04
-      5 WL4-6           969.       969.      0.427E-03  0.200      0.854E-04
-      6 WL4-9          0.118E+04  0.118E+04  0.244E-03  0.200      0.488E-04
-      7 WL4-12         0.120E+04  0.120E+04  0.244E-03  0.200      0.488E-04
+      1 WL2-4           983.       983.      0.366E-03  0.200      0.732E-04
+      2 WL2-7          0.102E+04  0.102E+04  0.244E-03  0.200      0.488E-04
+      3 WL2-10         0.119E+04  0.119E+04  0.366E-03  0.200      0.732E-04
+      4 WL4-2           294.       294.      0.488E-03  0.200      0.977E-04
+      5 WL4-6           969.       969.      0.671E-03  0.200      0.134E-03
+      6 WL4-9          0.118E+04  0.118E+04  0.366E-03  0.200      0.732E-04
+      7 WL4-12         0.120E+04  0.120E+04  0.366E-03  0.200      0.732E-04
       8 WL5-4           776.       776.     -0.122E-02  0.200     -0.244E-03
-      9 WL6-2           194.       194.      0.641E-03  0.200      0.128E-03
-     10 WL6-6           968.       968.      0.275E-02  0.200      0.549E-03
-     11 WL6-8           973.       973.     -0.854E-03  0.200     -0.171E-03
-     12 WL6-11         0.120E+04  0.120E+04  0.366E-03  0.200      0.732E-04
-     13 WL6-14         0.120E+04  0.120E+04  0.610E-03  0.200      0.122E-03
-     14 WL6-16         0.120E+04  0.120E+04  0.122E-03  0.200      0.244E-04
-     15 WL8-2           217.       217.      0.122E-03  0.200      0.244E-04
-     16 WL8-4           666.       666.      0.183E-03  0.200      0.366E-04
-     17 WL8-7          0.104E+04  0.104E+04 -0.366E-03  0.200     -0.732E-04
-     18 WL8-10         0.124E+04  0.124E+04   0.00      0.200       0.00    
-     19 WL8-13         0.126E+04  0.126E+04 -0.244E-03  0.200     -0.488E-04
-     20 WL8-16         0.120E+04  0.120E+04  0.110E-02  0.200      0.220E-03
-     21 WL9-3           460.       460.     -0.153E-03  0.200     -0.305E-04
-     22 WL10-4          655.       655.     -0.366E-03  0.200     -0.732E-04
+      9 WL6-2           194.       194.      0.687E-03  0.200      0.137E-03
+     10 WL6-6           968.       968.      0.244E-02  0.200      0.488E-03
+     11 WL6-8           973.       973.     -0.488E-03  0.200     -0.977E-04
+     12 WL6-11         0.120E+04  0.120E+04  0.610E-03  0.200      0.122E-03
+     13 WL6-14         0.120E+04  0.120E+04  0.732E-03  0.200      0.146E-03
+     14 WL6-16         0.120E+04  0.120E+04  0.244E-03  0.200      0.488E-04
+     15 WL8-2           217.       217.      0.244E-03  0.200      0.488E-04
+     16 WL8-4           666.       666.      0.305E-03  0.200      0.610E-04
+     17 WL8-7          0.104E+04  0.104E+04 -0.122E-03  0.200     -0.244E-04
+     18 WL8-10         0.124E+04  0.124E+04  0.122E-03  0.200      0.244E-04
+     19 WL8-13         0.126E+04  0.126E+04   0.00      0.200       0.00    
+     20 WL8-16         0.120E+04  0.120E+04  0.122E-02  0.200      0.244E-03
+     21 WL9-3           460.       460.       0.00      0.200       0.00    
+     22 WL10-4          655.       655.     -0.122E-03  0.200     -0.244E-04
      23 WL10-6          969.       969.      0.488E-03  0.200      0.977E-04
-     24 WL10-9         0.113E+04  0.113E+04 -0.122E-03  0.200     -0.244E-04
-     25 WL10-11        0.140E+04  0.140E+04  0.244E-03  0.200      0.488E-04
-     26 WL10-14        0.128E+04  0.128E+04 -0.488E-03  0.200     -0.977E-04
-     27 WL10-17        0.116E+04  0.116E+04  0.488E-03  0.200      0.977E-04
-     28 WL11-2          346.       346.      0.488E-03  0.200      0.977E-04
-     29 WL12-8         0.108E+04  0.108E+04 -0.244E-03  0.200     -0.488E-04
+     24 WL10-9         0.113E+04  0.113E+04   0.00      0.200       0.00    
+     25 WL10-11        0.140E+04  0.140E+04  0.488E-03  0.200      0.977E-04
+     26 WL10-14        0.128E+04  0.128E+04 -0.244E-03  0.200     -0.488E-04
+     27 WL10-17        0.116E+04  0.116E+04  0.732E-03  0.200      0.146E-03
+     28 WL11-2          346.       346.      0.549E-03  0.200      0.110E-03
+     29 WL12-8         0.108E+04  0.108E+04   0.00      0.200       0.00    
      30 WL12-10        0.132E+04  0.132E+04  0.122E-03  0.200      0.244E-04
-     31 WL12-13        0.148E+04  0.148E+04  0.854E-03  0.200      0.171E-03
-     32 WL12-16        0.122E+04  0.122E+04 -0.366E-03  0.200     -0.732E-04
+     31 WL12-13        0.148E+04  0.148E+04  0.977E-03  0.200      0.195E-03
+     32 WL12-16        0.122E+04  0.122E+04 -0.244E-03  0.200     -0.488E-04
      33 WL13-11        0.149E+04  0.149E+04  0.610E-03  0.200      0.122E-03
-     34 WL13-15        0.132E+04  0.132E+04 -0.122E-03  0.200     -0.244E-04
-     35 WL14-9         0.123E+04  0.123E+04  0.366E-03  0.200      0.732E-04
+     34 WL13-15        0.132E+04  0.132E+04   0.00      0.200       0.00    
+     35 WL14-9         0.123E+04  0.123E+04  0.488E-03  0.200      0.977E-04
      36 WL14-12        0.141E+04  0.141E+04 -0.122E-03  0.200     -0.244E-04
-     37 WL14-17        0.119E+04  0.119E+04 -0.244E-03  0.200     -0.488E-04
-     38 WL15-14        0.122E+04  0.122E+04   0.00      0.200       0.00    
-     39 WL16-12        0.127E+04  0.127E+04 -0.366E-03  0.200     -0.732E-04
+     37 WL14-17        0.119E+04  0.119E+04 -0.122E-03  0.200     -0.244E-04
+     38 WL15-14        0.122E+04  0.122E+04  0.122E-03  0.200      0.244E-04
+     39 WL16-12        0.127E+04  0.127E+04 -0.244E-03  0.200     -0.488E-04
      40 WL16-16        0.120E+04  0.120E+04  0.732E-03  0.200      0.146E-03
      41 WL18-13        0.124E+04  0.124E+04 -0.110E-02  0.200     -0.220E-03
-     42 WL18-18        0.120E+04  0.120E+04 -0.122E-03  0.200     -0.244E-04
+     42 WL18-18        0.120E+04  0.120E+04   0.00      0.200       0.00    
 
  * THE OBSERVATION (AND CORRESPONDING SIMULATED EQUIVALENT) IS HEAD OR TEMPORAL
    CHANGE IN HEAD, AS SPECIFIED IN THE "HOB" INPUT FILE.  NEGATIVE TEMPORAL
    CHANGES INDICATE DRAWDOWN.
 
  STATISTICS FOR HEAD RESIDUALS :
- MAXIMUM WEIGHTED RESIDUAL  : 0.549E-03 OBS#     10
+ MAXIMUM WEIGHTED RESIDUAL  : 0.488E-03 OBS#     10
  MINIMUM WEIGHTED RESIDUAL  :-0.244E-03 OBS#      8
- AVERAGE WEIGHTED RESIDUAL  : 0.263E-04
- # RESIDUALS >= 0. :     26
- # RESIDUALS < 0.  :     16
- NUMBER OF RUNS  :   22  IN   42 OBSERVATIONS
+ AVERAGE WEIGHTED RESIDUAL  : 0.512E-04
+ # RESIDUALS >= 0. :     32
+ # RESIDUALS < 0.  :     10
+ NUMBER OF RUNS  :   17  IN   42 OBSERVATIONS
 
- SUM OF SQUARED WEIGHTED RESIDUALS (HEADS ONLY)  0.69376E-06
+ SUM OF SQUARED WEIGHTED RESIDUALS (HEADS ONLY)  0.67853E-06
 
  DATA FOR FLOWS REPRESENTED USING THE DRAIN PACKAGE
 
        OBSERVATION      MEAS.      CALC.                          WEIGHTED
   OBS#    NAME          FLOW       FLOW     RESIDUAL  WEIGHT**.5  RESIDUAL
 
-    43 DRN1           -573.      -573.      0.183E-02  0.581E-02  0.106E-04
-    44 DRN2           -848.      -848.      0.372E-02  0.393E-02  0.146E-04
-    45 DRN3           -135.      -135.      0.595E-03  0.247E-01  0.147E-04
-    46 DRN4           -19.4      -19.4     -0.687E-04  0.171     -0.118E-04
-    47 DRN5           -6.54      -6.54     -0.119E-04  0.510     -0.608E-05
+    43 DRN1           -573.      -573.      0.214E-02  0.581E-02  0.124E-04
+    44 DRN2           -848.      -848.      0.439E-02  0.393E-02  0.173E-04
+    45 DRN3           -135.      -135.      0.656E-03  0.247E-01  0.162E-04
+    46 DRN4           -19.4      -19.4     -0.120E-03  0.171     -0.206E-04
+    47 DRN5           -6.54      -6.54     -0.858E-05  0.510     -0.438E-05
 
  STATISTICS FOR DRAIN FLOW RESIDUALS :
- MAXIMUM WEIGHTED RESIDUAL  : 0.147E-04 OBS#     45
- MINIMUM WEIGHTED RESIDUAL  :-0.118E-04 OBS#     46
- AVERAGE WEIGHTED RESIDUAL  : 0.442E-05
+ MAXIMUM WEIGHTED RESIDUAL  : 0.173E-04 OBS#     44
+ MINIMUM WEIGHTED RESIDUAL  :-0.206E-04 OBS#     46
+ AVERAGE WEIGHTED RESIDUAL  : 0.418E-05
  # RESIDUALS >= 0. :      3
  # RESIDUALS < 0.  :      2
  NUMBER OF RUNS:      2  IN      5 OBSERVATIONS
 
- SUM OF SQUARED WEIGHTED RESIDUALS (DRAIN FLOWS ONLY)  0.71824E-09
+ SUM OF SQUARED WEIGHTED RESIDUALS (DRAIN FLOWS ONLY)  0.11579E-08
 
  DATA FOR FLOWS REPRESENTED USING THE GENERAL-HEAD BOUNDARY PACKAGE
 
         OBSERVATION      MEAS.      CALC.                          WEIGHTED
    OBS#    NAME          FLOW       FLOW     RESIDUAL  WEIGHT**.5  RESIDUAL
 
-     48 GHB1           -612.      -612.     -0.195E-02  0.545E-02 -0.106E-04
+     48 GHB1           -612.      -612.     -0.214E-02  0.545E-02 -0.116E-04
      49 GHB2           -691.      -691.     -0.311E-02  0.483E-02 -0.150E-04
-     50 GHB3           -663.      -663.     -0.232E-02  0.503E-02 -0.117E-04
-     51 GHB4           -657.      -657.     -0.220E-02  0.507E-02 -0.111E-04
-     52 GHB5           -38.8      -38.8      0.954E-04  0.860E-01  0.820E-05
+     50 GHB3           -663.      -663.     -0.244E-02  0.503E-02 -0.123E-04
+     51 GHB4           -657.      -657.     -0.238E-02  0.507E-02 -0.121E-04
+     52 GHB5           -38.8      -38.8     -0.992E-04  0.860E-01 -0.853E-05
 
  STATISTICS FOR GENERAL-HEAD BOUNDARY FLOW RESIDUALS :
- MAXIMUM WEIGHTED RESIDUAL  : 0.820E-05 OBS#     52
+ MAXIMUM WEIGHTED RESIDUAL  :-0.853E-05 OBS#     52
  MINIMUM WEIGHTED RESIDUAL  :-0.150E-04 OBS#     49
- AVERAGE WEIGHTED RESIDUAL  :-0.805E-05
- # RESIDUALS >= 0. :      1
- # RESIDUALS < 0.  :      4
- NUMBER OF RUNS:      2  IN      5 OBSERVATIONS
+ AVERAGE WEIGHTED RESIDUAL  :-0.119E-04
+ # RESIDUALS >= 0. :      0
+ # RESIDUALS < 0.  :      5
+ NUMBER OF RUNS:      1  IN      5 OBSERVATIONS
 
  SUM OF SQUARED WEIGHTED RESIDUALS
-   (GENERAL-HEAD BOUNDARY FLOWS ONLY)  0.66634E-09
+   (GENERAL-HEAD BOUNDARY FLOWS ONLY)  0.73029E-09
 
- SUM OF SQUARED WEIGHTED RESIDUALS (ALL DEPENDENT VARIABLES)  0.69515E-06
+ SUM OF SQUARED WEIGHTED RESIDUALS (ALL DEPENDENT VARIABLES)  0.68042E-06
 
  STATISTICS FOR ALL RESIDUALS :
- AVERAGE WEIGHTED RESIDUAL  : 0.209E-04
- # RESIDUALS >= 0. :     30
- # RESIDUALS < 0.  :     22
- NUMBER OF RUNS  :   25  IN   52 OBSERVATIONS
+ AVERAGE WEIGHTED RESIDUAL  : 0.406E-04
+ # RESIDUALS >= 0. :     35
+ # RESIDUALS < 0.  :     17
+ NUMBER OF RUNS  :   18  IN   52 OBSERVATIONS
 
- INTERPRETING THE CALCULATED RUNS STATISTIC VALUE OF    -0.254    
+ INTERPRETING THE CALCULATED RUNS STATISTIC VALUE OF     -1.72    
  NOTE: THE FOLLOWING APPLIES ONLY IF 
         # RESIDUALS >= 0 . IS GREATER THAN 10 AND 
         # RESIDUALS < 0.   IS GREATER THAN 10
@@ -1106,17 +1106,17 @@
 
  ORDERED DEPENDENT-VARIABLE WEIGHTED RESIDUALS
  NUMBER OF RESIDUALS INCLUDED:        52
-    -0.244E-03 -0.220E-03 -0.171E-03 -0.977E-04 -0.732E-04 -0.732E-04 -0.732E-04
-    -0.732E-04 -0.488E-04 -0.488E-04 -0.488E-04 -0.305E-04 -0.244E-04 -0.244E-04
-    -0.244E-04 -0.244E-04 -0.150E-04 -0.118E-04 -0.117E-04 -0.111E-04 -0.106E-04
-    -0.608E-05   0.00       0.00       0.00      0.820E-05  0.106E-04  0.146E-04
-     0.147E-04  0.244E-04  0.244E-04  0.244E-04  0.244E-04  0.366E-04  0.488E-04
-     0.488E-04  0.488E-04  0.488E-04  0.732E-04  0.732E-04  0.854E-04  0.916E-04
-     0.977E-04  0.977E-04  0.977E-04  0.122E-03  0.122E-03  0.128E-03  0.146E-03
-     0.171E-03  0.220E-03  0.549E-03
+    -0.244E-03 -0.220E-03 -0.977E-04 -0.488E-04 -0.488E-04 -0.488E-04 -0.244E-04
+    -0.244E-04 -0.244E-04 -0.244E-04 -0.206E-04 -0.150E-04 -0.123E-04 -0.121E-04
+    -0.116E-04 -0.853E-05 -0.438E-05   0.00       0.00       0.00       0.00    
+      0.00       0.00      0.124E-04  0.162E-04  0.173E-04  0.244E-04  0.244E-04
+     0.244E-04  0.488E-04  0.488E-04  0.488E-04  0.610E-04  0.732E-04  0.732E-04
+     0.732E-04  0.732E-04  0.977E-04  0.977E-04  0.977E-04  0.977E-04  0.110E-03
+     0.122E-03  0.122E-03  0.134E-03  0.137E-03  0.146E-03  0.146E-03  0.146E-03
+     0.195E-03  0.244E-03  0.488E-03
 
  CORRELATION BETWEEN ORDERED WEIGHTED RESIDUALS AND NORMAL ORDER STATISTICS
- FOR OBSERVATIONS =    0.840    
+ FOR OBSERVATIONS =    0.867    
 
  --------------------------------------------------------------------------
  COMMENTS ON THE INTERPRETATION OF THE CORRELATION BETWEEN

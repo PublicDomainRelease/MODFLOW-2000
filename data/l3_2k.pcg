@@ -1,0 +1,4 @@
+# PCG Package input file for hypothetical test simulation
+# Test of SFR2 Package
+900  20  1                             Item 1:  MXITER ITER1 NPCOND
+.000015   0.1  0.99  1  0  3  0.14   Item 2:  HCLOSE RCLOSE RELAX NBPOL IPRPCG MUTPCG DAMP

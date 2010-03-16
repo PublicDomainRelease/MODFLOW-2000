@@ -1,0 +1,20 @@
+# MNW2 Sample Problem for Documentation
+#   Pumping with constraints
+#
+# Output files
+LIST   14 mnw2-fig28.lst
+DATA   81 mnw2-fig28.qsu
+DATA   82 mnw2-fig28.byn
+DATA   45 mnw2-fig28.wla
+DATA   33 mnw2-fig28.fhd
+#
+# Input files
+DIS    15 ../data/mnw2-fig28.dis
+BAS6   18 ../data/mnw2-fig28.bas
+OC     19 ../data/mnw2-fig28.oc
+LPF    20 ../data/mnw2-fig28.lpf
+RCH    21 ../data/mnw2-fig28.rch
+PCG    22 ../data/mnw2-fig28.pcg
+MNW2   23 ../data/mnw2-fig28.mnw2
+MNWI   79 ../data/mnw2-fig28.mnwi
+WEL    80 ../data/mnw2-fig28.wel

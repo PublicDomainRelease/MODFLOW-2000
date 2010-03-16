@@ -1,10 +1,3 @@
-C  I edited all occurrences of common block HUFCOM (in sen1huf2.f, 
-C  lmt6.f, gwfhuf2.f, and obs1bas6.f) to put all REAL arrays before all 
-C  INTEGER arrays.  The original order is OK when both REALs and 
-C  INTEGERs are KIND=4.  But when REALs are promoted to DOUBLE 
-C  PRECISION, KIND goes from 4 to 8, and this generates alignment 
-C  problems.  The alignment problems are avoided when all variables of 
-C  larger KIND precede all variables of smaller KIND. -- ERB 6/29/2006
 C
 C ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 C LINK-MT3DMS (LMT) PACKAGE FOR MODFLOW-2000
@@ -20,6 +13,7 @@ C     Version 6.0: 05-25-2001 cz
 C             6.1: 05-01-2002 cz
 C             6.2: 07-15-2003 cz
 C             6.3: 05-10-2005 cz
+c             6.4: 02-26-2010 cz
 C ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 C
 C
@@ -1069,7 +1063,7 @@ C
      & BUFF(NCOL,NROW,NLAY),HOLD(NCOL,NROW,NLAY),
      & VDHT(NCOL,NROW,NLAY,3)
       COMMON /DISCOM/LBOTM(999),LAYCBD(999)
-      COMMON /HUFCOM/HGUHANI(999),HGUVANI(999),LTHUF(999),LAYWT(999)
+      COMMON /HUFCOM/LTHUF(999),HGUHANI(999),HGUVANI(999),LAYWT(999)
       COMMON /LINKMT3D/ILMTFMT
 C
 C--CALCULATE AND SAVE SATURATED THICKNESS
@@ -2279,7 +2273,7 @@ C SAVE DRT (Drain with Return Flow) CELL LOCATIONS AND
 C VOLUMETRIC FLOW RATES FOR USE BY MT3D
 C ******************************************************************
 C Modified from Banta (2000)
-C last modified: 7-15-2003
+C last modified: 2-26-2010
 C
       CHARACTER*16 TEXT
       DOUBLE PRECISION HNEW,HHNEW,EEL,CC,CEL,QQ
@@ -2318,24 +2312,26 @@ C--GET DRAIN PARAMETERS FROM DRAIN-RETURN LIST.
         HHNEW=HNEW(IC,IR,IL)
 C
 C--IF HEAD HIGHER THAN DRAIN, CALCULATE Q=C*(EL-HHNEW).
-C--SUBTRACT Q FROM RATOUT.
+        QQ=0.
         IF (HHNEW.GT.EEL) THEN
           CC=C
           CEL=C*EL
           QQ=CEL - CC*HHNEW
           Q=QQ
-          ILR=0
-          IF (IDRTFL.GT.0) THEN
-            ILR = DRTF(6,L)
-            IF (ILR.NE.0) THEN
-              IRR = DRTF(7,L)
-              ICR = DRTF(8,L)
-              RFPROP = DRTF(9,L)
-              QQIN = RFPROP*(CC*HHNEW-CEL)
-              QIN = QQIN
-            ENDIF
+        ENDIF
+C        
+        ILR=0
+        IF (IDRTFL.GT.0) THEN
+          ILR = DRTF(6,L)
+          IF (ILR.NE.0) THEN
+            IRR = DRTF(7,L)
+            ICR = DRTF(8,L)
+            RFPROP = DRTF(9,L)
+            QQIN = -RFPROP * QQ
+            QIN = QQIN
           ENDIF
         ENDIF
+C        
    99   CONTINUE     
 C
 C--WRITE DRT LOCATION AND RATE (both host and recipient)

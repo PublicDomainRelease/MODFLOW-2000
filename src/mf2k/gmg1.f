@@ -1,4 +1,31 @@
-! Time of File Save by ERB: 6/29/2006 4:14PM
+! Time of File Save by ERB: 6/20/2006 4:31PM
+
+C***********************************************************************
+C     SUBROUTINE RESPRINT IS CALLED FROM THE SOLVER FOR OUTPUT
+C     OF REDUCTION HISTORY.
+C
+C     THE ITERATION (I), THE RESIDUAL (RES), AND THE
+C     CONVERGENCE FACTOR (CFAC) ARE PRINTED.
+C***********************************************************************
+      SUBROUTINE RESPRINT(IOUT,I,RES,CFAC)
+C      !DEC$ ATTRIBUTES ALIAS:'_resprint' :: RESPRINT
+      IMPLICIT NONE
+      INTEGER IOUT,I
+      DOUBLEPRECISION RES,CFAC
+C
+C---- PRINT RESIDUALS
+C
+      WRITE(IOUT,100) I,RES,CFAC
+C
+C--------------------------------------------------------------------
+C     FORMAT STATEMENTS
+C--------------------------------------------------------------------
+  100 FORMAT(1X,'ITER:',I4,
+     &       2X,'RES: ',1P,E10.4,
+     &       2X,'CFAC: ',0P,F5.3)
+C
+      RETURN
+      END
 C***********************************************************************
 C SUBROUTINE ARGUMENTS:
 C
@@ -94,7 +121,7 @@ C--------------------------------------------------------------------
         READ(LINE,*) ISM,ISC,DUP,DLOW,CHGLIMIT !ERB
       ELSE                                     !ERB
         WRITE(IOUT,400)                        !ERB
-  400 FORMAT(/,1X,'ERROR IN GMG INPUT: IADAMP MUST BE ONE OF 0, 1,',  !ERB
+  400 FORMAT(/,1X,'ERROR IN GMG INPUT: IADAMP MUST BE ONE OF 0, 1,',
      &    ' OR 2 (GMG1ALG)')                   !ERB
         CALL USTOP(' ')                        !ERB
       ENDIF                                    !ERB
@@ -167,10 +194,10 @@ C--------------------------------------------------------------------
      &       1X,"-------------------------------------------------")
 C
   510 FORMAT(1X,"COOLEY'S ADAPTIVE DAMPING METHOD IMPLEMENTED")
-  512 FORMAT(1X,'RELATIVE REDUCED RESIDUAL ADAPTIVE DAMPING METHOD',   !ERB
-     &' WILL BE USED')                                                 !ERB
-  513 FORMAT(5X,'WITH DUP = ',G9.3,' DLOW = ',G9.3,' AND CHGLIMIT = ', !ERB
-     &G9.3)                                                            !ERB
+  512 FORMAT(1X,'RELATIVE REDUCED RESIDUAL ADAPTIVE DAMPING METHOD',   
+     &' WILL BE USED')                                                 
+  513 FORMAT(5X,'WITH DUP = ',G9.3,' DLOW = ',G9.3,' AND CHGLIMIT = ', 
+     &G9.3)                                                            
   520 FORMAT(1X,'ILU SMOOTHING IMPLEMENTED')
   525 FORMAT(1X,'SGS SMOOTHING IMPLEMENTED')
 C
@@ -332,7 +359,7 @@ C--------------------------------------------------------------------------
         RSQ=BIGR                                                    !ERB
         DAMPA=DAMP                                                  !ERB
         BIGHA=BIGH                                                  !ERB
-        CALL GMG1ADAMP2(RSQ,DDAMP,DAMPA,DUP,DLOW,KITER,BIGHA,IOUT,
+        CALL GMG1ADAMP2(RSQ,DDAMP,DAMPA,DUP,DLOW,KITER,BIGHA,IOUT,  !ERB
      &                  CHGLIMIT)                                   !ERB
       END IF
 
@@ -373,43 +400,13 @@ C
   510 FORMAT(1X,'-------------------------------------',
      &          '--------------------',/,
      &       1X,'PCG ITERATIONS                    : ',I4,/,
-     &       1X,'DAMPING                           : ',0P,E10.4,/,   !ERB
+     &       1X,'DAMPING                           : ',0P,E10.4,/,  
      &       1X,'L2-NORM OF RESIDUAL               : ',1P,E10.4,/,
      &       1X,'MAX HEAD CHANGE                   : ',1P,E10.4,/,
      &       1X,'MAX HEAD CHANGE AT (COL,ROW,LAY)  : (',
      &           I6,',',I6,',',I6,')',/,
      &       1X,'-------------------------------------',
      &          '--------------------',/)
-C
-      RETURN
-      END
-
-C***********************************************************************
-C     SUBROUTINE RESPRINT IS CALLED FROM THE SOLVER FOR OUTPUT
-C     OF REDUCTION HISTORY.
-C
-C     THE ITERATION (I), THE RESIDUAL (RES), AND THE
-C     CONVERGENCE FACTOR (CFAC) ARE PRINTED.
-C***********************************************************************
-      SUBROUTINE RESPRINT(IOUT,I,RES,CFAC)
-      ! The following line is needed when GMG is compiled with Intel
-      ! Visual Fortran 9.0 and MS Visual C++ .NET 2003.  It should
-      ! be treated as a comment by other compilers.
-      !DEC$ ATTRIBUTES ALIAS:'_resprint' :: RESPRINT
-      IMPLICIT NONE
-      INTEGER IOUT,I
-      DOUBLEPRECISION RES,CFAC
-C
-C---- PRINT RESIDUALS
-C
-      WRITE(IOUT,100) I,RES,CFAC
-C
-C--------------------------------------------------------------------
-C     FORMAT STATEMENTS
-C--------------------------------------------------------------------
-  100 FORMAT(1X,'ITER:',I4,
-     &       2X,'RES: ',1P,E10.4,
-     &       2X,'CFAC: ',0P,F5.3)
 C
       RETURN
       END

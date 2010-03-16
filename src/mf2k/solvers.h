@@ -4,7 +4,10 @@
 
 /* Append underscore to fortran modual name */
 #ifdef _UF
-#define resprint resprint_
+  #define resprint   resprint_
+#endif
+#ifndef _UF
+  #define resprint   RESPRINT
 #endif
 
 #include "r_vector.h"

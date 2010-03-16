@@ -1025,6 +1025,8 @@ c  Specify Q and solve for head;  add Q to RHS accumulator.
             rhs(n) = rhs(n) - qact
           endif
           well2(3,m) = qact
+C--SEAWAT: ADDED FOLLOWING LINE SO MNW FLUX IS AVAILABLE TO MT3D
+          well2(17,m) = qact
         endif
       enddo       !    End of DO WHILE loop
 c
