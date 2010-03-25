@@ -1,7 +1,7 @@
 readme.unix
 
 
-                  MODFLOW-2000 - Version: 1.19.00 03/15/2010
+                  MODFLOW-2000 - Version: 1.19.01 03/25/2010
          Three-dimensional finite-difference ground-water flow model
 
 
@@ -33,7 +33,7 @@ A. DISTRIBUTION FILE
 
 The following distribution file is for use on computers running Unix:
 
-         mf2k1_19_00.tar.gz
+         mf2k1_19_01.tar.gz
 
 The distribution file contains:
 
@@ -51,14 +51,14 @@ B. EXTRACTING FILES
 The distribution file contains numerous individual files that have been
 combined into one file using the tar command and compressed using the
 gzip command.  To extract the individual files, the distribution file
-mf2k1_19_00.tar.gz first must be uncompressed using the command:
+mf2k1_19_01.tar.gz first must be uncompressed using the command:
 
-gunzip mf2k1_19_00.tar.gz
+gunzip mf2k1_19_01.tar.gz
 
-Execution of the gunzip command will produce the file mf2k1_19_00.tar.  This
+Execution of the gunzip command will produce the file mf2k1_19_01.tar.  This
 file is used to generate the individual files with the command:
 
-tar -xf mf2k1_19_00.tar
+tar -xf mf2k1_19_01.tar
 
 Execution of the tar command will generate the following directory structure:
 

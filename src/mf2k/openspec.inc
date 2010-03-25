@@ -1,4 +1,3 @@
-! Time of File Save by ERB: 4/7/2005 9:22AM
 C     Last change:  ERB  12 Apr 2001   10:00 am
 C
 C  Code in this file defines values for OPEN-statement specifiers.  Some
@@ -18,7 +17,7 @@ C
 C    Standard Fortran -- Use unless there is a reason to do otherwise.
       DATA ACCESS/'SEQUENTIAL'/
 C
-C    Non-standard Fortran that causes code compiled by Absoft
+C    Non-standard Fortran that causes code compiled by Lahey or Absoft
 C    Fortran on personal computers to use unstructured non-formatted
 C    files. This may make it possible for the non-formatted files used
 C    by MODFLOW to be used with programs that are compiled by other
@@ -29,14 +28,14 @@ C  FORM specifier --
 C
 C    Standard Fortran, which results in vender dependent (non-portable)
 C    files.  Use unless there is a reason to do otherwise.
-C      DATA FORM/'UNFORMATTED'/
+      DATA FORM/'UNFORMATTED'/
 C
-C    Non-standard Fortran that causes code compiled by Intel (Compaq, Digital)
-C    or Lahey Fortran on personal computers to use unstructured non-formatted
+C    Non-standard Fortran that causes code compiled by Compaq (Digital)
+C    Fortran on personal computers to use unstructured non-formatted
 C    files.  This may make it possible for the non-formatted files used
 C    by MODFLOW to be used with programs that are compiled by other
 C    compilers.
-      DATA FORM/'BINARY'/
+C      DATA FORM/'BINARY'/
 C
 C
 C  OPEN-statement specifiers related to file-sharing.

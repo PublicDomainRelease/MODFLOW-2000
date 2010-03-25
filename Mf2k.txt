@@ -58,6 +58,11 @@ METHOD
 
 HISTORY
 
+     MODFLOW-2000 Version 1.19.01 2010/03/25 - This release corrects a
+        minor bug in the GMG Package, and the Unix distribution includes
+        a revised openspec.inc file to correct a problem introduced at
+        version 1.19.00.
+
      MODFLOW-2000 Version 1.19.00 2010/03/15 - This release includes the
         revised Multi-Node Well (MNW2) Package, and other changes and bug
         fixes, as described in release.txt.

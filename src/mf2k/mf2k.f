@@ -28,7 +28,7 @@ C        SPECIFICATIONS:
 C     ------------------------------------------------------------------
 C-------ASSIGN VERSION NUMBER AND DATE
       CHARACTER*40 VERSION
-      PARAMETER (VERSION='1.19.00 03/15/2010')
+      PARAMETER (VERSION='1.19.01 03/25/2010')
 C
 C-----DECLARE ARRAY TYPES
       REAL GX, X, RX, XHS
